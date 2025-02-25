@@ -16,11 +16,12 @@ You're all set!
 - Login Server (vskylogin)
   - Enter the vskylogin directory
   - `yarn`
+  - ([Setup the `.env` file](../vskylogin/README.md))
   - `yarn dev`
 - Signing Server (vskysigningserver)
   - Enter the vskysigningserver directory
   - `yarn`
-  - Setup the `.env` file.
+  - ([Setup the `.env` file](../vskylogin/README.md))
   - `yarn dev`
 
 ## iOS/Android Build

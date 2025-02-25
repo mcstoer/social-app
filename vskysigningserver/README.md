@@ -17,4 +17,3 @@ This is for signing login requests.
 - `DEFAULT_URL`: URL for the RPC server for the chain.
 
 - `PORT`: port that this server runs on.
-```
