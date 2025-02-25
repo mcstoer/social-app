@@ -11,17 +11,17 @@ You're all set!
 
 - Web App
   - As above.
-  - Remember to setup the `.env` file.
+  - Remember to setup the environment variables.
     - `TEST_USERNAME` and `TEST_PASSWORD` are needed to test the login with Bluesky.
 - Login Server (vskylogin)
-  - Enter the vskylogin directory
+  - Go to the vskylogin directory.
   - `yarn`
-  - ([Setup the `.env` file](../vskylogin/README.md))
+  - [Setup the environment variables](../vskylogin/README.md#environment-variables)
   - `yarn dev`
 - Signing Server (vskysigningserver)
-  - Enter the vskysigningserver directory
+  - Go to the vskysigningserver directory.
   - `yarn`
-  - ([Setup the `.env` file](../vskylogin/README.md))
+  - [Setup the environment variables](../vskysigningserver/README.md#environment-variables)
   - `yarn dev`
 
 ## iOS/Android Build
