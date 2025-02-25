@@ -25,6 +25,7 @@ import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
+import {useVerusDaemonApi} from '#/state/queries/verus'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
 import {VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
@@ -85,6 +86,7 @@ export const LoginForm = ({
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {rpcInterface, idInterface} = useSessionVskyApi()
   const isVskyService = serviceUrl === VSKY_SERVICE
+  const {callDaemon} = useVerusDaemonApi()
 
   const [loginUri, setLoginUri] = useState<string>('')
 
@@ -266,12 +268,23 @@ export const LoginForm = ({
       try {
         const isValid = await idInterface.verifyLoginConsentResponse(loginRes)
         if (isValid) {
-          identifierValueRef.current = process.env.TEST_USERNAME
-          passwordValueRef.current = process.env.TEST_PASSWORD
           const identity = await rpcInterface.getIdentity(loginRes.signing_id)
           if (identity.result) {
             vskySessionValueRef.current.name = identity.result.identity.name
-            onPressNext()
+
+            // Get the Bluesky credentials from the user's encrypted storage.
+            // TODO: Implement the credential fetching using the daemon.
+            const result = await callDaemon('getblockchaininfo')
+            if (result.error) {
+              logger.warn(
+                'Failed to fetch the credentials from encrypted storage.',
+              )
+              setError(_(msg`Unable to get credentials for login.`))
+            } else {
+              identifierValueRef.current = process.env.TEST_USERNAME
+              passwordValueRef.current = process.env.TEST_PASSWORD
+              onPressNext()
+            }
           } else {
             logger.warn('Failed to login due to invalid login response')
             setError(_(msg`Unable to validate the Verisky login.`))
