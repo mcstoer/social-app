@@ -46,24 +46,92 @@ export class FeedCurator {
     languages?: string
   ): Promise<string[]> {
     try {
+      // Log inputs
+      console.log('==== LLM FEED CURATION STARTED ====');
+      console.log('INPUT - Personality:', personality);
+      console.log('INPUT - Languages:', languages || 'Not specified');
+      console.log('INPUT - Subscriptions count:', subscriptions.length);
+      console.log('INPUT - Posts count:', posts.length);
+      
+      // Log sample of subscriptions
+      console.log('INPUT - Subscriptions sample (first 5):');
+      subscriptions.slice(0, 5).forEach((sub, i) => {
+        console.log(`SUB ${i+1}: @${sub.user_handle} - ${sub.user_bio}`);
+      });
+      
+      // Log sample of posts
+      console.log('INPUT - Posts sample (first 3):');
+      posts.slice(0, 3).forEach((post, i) => {
+        console.log(`POST ${i+1}:\n${post}\n---`);
+      });
+      
+      // Format inputs for the LLM
       const stringified_subscriptions = this.stringifySubscriptions(subscriptions)
       const stringified_posts = this.stringifyPosts(posts)
       
+      // Build what would be the prompt in a real implementation
+      const simulatedPrompt = `
+TASK: You are a social media feed curator. Select posts that would be interesting to a user with this profile:
+
+USER PERSONALITY:
+${personality}
+
+USER PREFERRED LANGUAGES:
+${languages || 'English'}
+
+USER SUBSCRIPTIONS:
+${stringified_subscriptions.substring(0, 500)}... [truncated for log]
+
+POSTS TO CURATE:
+${stringified_posts.substring(0, 500)}... [truncated for log]
+
+Select posts that best match the user's interests, personality, and subscriptions.
+Return the indices of selected posts (1-indexed).
+`;
+      
+      // Log the simulated prompt
+      console.log('SIMULATED PROMPT (excerpt):\n', simulatedPrompt);
+      
       // In an actual implementation, this would call an LLM API
       // For now, we'll simulate the LLM response with a basic algorithm
+      console.log('RUNNING SIMULATED LLM CURATION...');
       
       // Simple filtering algorithm (in a real implementation, this would be LLM-based)
       const selectedIndices = this.simulateLLMCuration(posts, personality, languages)
       
+      // Log the algorithm's selection details
+      console.log('ALGORITHM SELECTION - Selected indices:', selectedIndices);
+      console.log('ALGORITHM SELECTION - Selected post count:', selectedIndices.length);
+      console.log('ALGORITHM SELECTION - Selection percentage:', 
+        Math.round((selectedIndices.length / posts.length) * 100) + '%');
+      
+      // Log sample of selected posts
+      console.log('SELECTED POSTS SAMPLE (first 3):');
+      selectedIndices.slice(0, 3).forEach(idx => {
+        console.log(`SELECTED POST INDEX ${idx}:\n${posts[idx]}\n---`);
+      });
+      
       // Return selected posts
-      // Add a special marker to the posts to make them easier to identify
-      return selectedIndices.map(idx => {
+      const finalPosts = selectedIndices.map(idx => {
         // We keep the original post text intact to make it easier to identify later
         return posts[idx]
-      })
+      });
+      
+      console.log('FINAL OUTPUT - Total posts returned:', finalPosts.length);
+      console.log('==== LLM FEED CURATION COMPLETED ====');
+      
+      return finalPosts;
       
     } catch (error) {
-      logger.error('Error in curate feed:', {error: String(error)})
+      console.error('ERROR IN FEED CURATION:', error);
+      logger.error('Error in curate feed:', {
+        error: String(error),
+        stack: error instanceof Error ? error.stack : 'No stack trace',
+        personality: personality,
+        languagesCount: languages ? languages.length : 0,
+        postsCount: posts.length,
+        subscriptionsCount: subscriptions.length
+      });
       return []
     }
   }
@@ -72,39 +140,112 @@ export class FeedCurator {
    * Simulates LLM-based curation (in actual implementation, this would call the LLM API)
    */
   private simulateLLMCuration(posts: string[], personality: string, languages?: string): number[] {
+    console.log('SIMULATION - Starting LLM simulation with personality:', personality);
+    console.log('SIMULATION - Using selection criteria based on content patterns...');
+    
     // Simple algorithm to select about half of the posts
     const selectedIndices: number[] = []
+    
+    // Create a map to track selection reasons for debugging
+    const selectionReasons: Record<number, string[]> = {}
+    
+    // Track selection statistics
+    let skippedShortPosts = 0;
+    let selectedQuestionsCount = 0;
+    let selectedLinksCount = 0;
+    let selectedEmphasisCount = 0;
+    let selectedPositionCount = 0;
+    let selectedPersonalityMatchCount = 0;
+    
+    // Attempt to parse personality keywords for matching
+    const personalityLower = personality.toLowerCase();
+    const personalityKeywords = personalityLower
+      .split(/[,.\s]+/)
+      .filter(word => word.length > 4)
+      .map(word => word.trim());
+    
+    console.log('SIMULATION - Extracted personality keywords:', personalityKeywords);
     
     // Select posts based on length and content patterns
     for (let i = 0; i < posts.length; i++) {
       const post = posts[i]
+      const reasons: string[] = [];
       
       // Skip very short posts
-      if (post.length < 10) continue
+      if (post.length < 10) {
+        skippedShortPosts++;
+        continue;
+      }
       
-      // Select posts that might be more interesting based on content
-      if (
-        // Posts with questions
-        post.includes('?') ||
-        // Posts with links (potential resources)
-        post.includes('http') ||
-        // Posts with emphasis
-        post.includes('!') ||
-        // Select some posts simply based on position (for variety)
-        i % 3 === 0
-      ) {
-        selectedIndices.push(i)
+      // Check for questions (potential engagement)
+      if (post.includes('?')) {
+        reasons.push('Contains question');
+        selectedQuestionsCount++;
+      }
+      
+      // Check for links (potential resources)
+      if (post.includes('http')) {
+        reasons.push('Contains link');
+        selectedLinksCount++;
+      }
+      
+      // Check for emphasis or excitement
+      if (post.includes('!')) {
+        reasons.push('Contains emphasis');
+        selectedEmphasisCount++;
+      }
+      
+      // Select some posts based on position for variety
+      if (i % 3 === 0) {
+        reasons.push('Position-based selection');
+        selectedPositionCount++;
+      }
+      
+      // Check for personality keyword matches
+      const postLower = post.toLowerCase();
+      const matchedKeywords = personalityKeywords.filter(keyword => 
+        postLower.includes(keyword)
+      );
+      
+      if (matchedKeywords.length > 0) {
+        reasons.push(`Matched personality keywords: ${matchedKeywords.join(', ')}`);
+        selectedPersonalityMatchCount++;
+      }
+      
+      // If any selection criteria were met, add to selected indices
+      if (reasons.length > 0) {
+        selectedIndices.push(i);
+        selectionReasons[i] = reasons;
       }
     }
     
     // Ensure we return at least some posts
     if (selectedIndices.length === 0 && posts.length > 0) {
+      console.log('SIMULATION - No posts matched criteria, selecting fallback posts');
       // If no posts were selected, select a few based on position
       for (let i = 0; i < Math.min(posts.length, 5); i++) {
-        selectedIndices.push(i)
+        selectedIndices.push(i);
+        selectionReasons[i] = ['Fallback selection'];
       }
     }
     
-    return selectedIndices
+    // Log selection statistics
+    console.log('SIMULATION STATS - Posts skipped (too short):', skippedShortPosts);
+    console.log('SIMULATION STATS - Posts with questions:', selectedQuestionsCount);
+    console.log('SIMULATION STATS - Posts with links:', selectedLinksCount);
+    console.log('SIMULATION STATS - Posts with emphasis:', selectedEmphasisCount);
+    console.log('SIMULATION STATS - Posts selected by position:', selectedPositionCount);
+    console.log('SIMULATION STATS - Posts matching personality keywords:', selectedPersonalityMatchCount);
+    
+    // Log selection reasons for first 10 posts
+    console.log('SELECTION REASONS (sample):');
+    const sampleIndices = selectedIndices.slice(0, 10);
+    sampleIndices.forEach(idx => {
+      console.log(`Post ${idx} selected because: ${selectionReasons[idx].join(', ')}`);
+    });
+    
+    console.log('SIMULATION - Finished with', selectedIndices.length, 'posts selected');
+    
+    return selectedIndices;
   }
 }
