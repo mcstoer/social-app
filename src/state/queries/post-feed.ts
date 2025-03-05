@@ -59,6 +59,7 @@ export type FeedDescriptor =
   | `feedgen|${FeedUri}`
   | `likes|${ActorDid}`
   | `list|${ListUri}`
+  | `llm-curated|${FeedUri}`
 export interface FeedParams {
   mergeFeedEnabled?: boolean
   mergeFeedSources?: string[]
@@ -452,7 +453,17 @@ function createApi({
   agent: BskyAgent
   enableFollowingToDiscoverFallback: boolean
 }) {
-  if (feedDesc === 'following') {
+  // Check if this is a special llm-curated feed
+  if (feedDesc.startsWith('llm-curated')) {
+    // The format is 'llm-curated|sourceFeedUri'
+    const [_, sourceFeed] = feedDesc.split('|')
+    // Import dynamically to avoid circular dependencies
+    const {LLMCuratedFeedAPI} = require('#/lib/api/feed/llm-curated')
+    return new LLMCuratedFeedAPI({
+      agent,
+      feedParams: {sourceFeed},
+    })
+  } else if (feedDesc === 'following') {
     if (feedParams.mergeFeedEnabled) {
       return new MergeFeedAPI({
         agent,

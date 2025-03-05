@@ -422,6 +422,13 @@ function commonScreens(Stack: typeof HomeTab, unreadCountLabel?: string) {
         options={{title: title(msg`Feeds`)}}
       />
       <Stack.Screen
+        name="CustomFeed"
+        getComponent={() => require('#/screens/CustomFeed').CustomFeedScreen}
+        options={({route}) => ({
+          title: route.params?.name || title(msg`Custom Feed`),
+        })}
+      />
+      <Stack.Screen
         name="StarterPack"
         getComponent={() => StarterPackScreen}
         options={{title: title(msg`Starter Pack`)}}

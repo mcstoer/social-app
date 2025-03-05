@@ -29,6 +29,7 @@ import {FAB} from '../util/fab/FAB'
 import {ListMethods} from '../util/List'
 import {LoadLatestBtn} from '../util/load-latest/LoadLatestBtn'
 import {MainScrollProvider} from '../util/MainScrollProvider'
+import {LLMCurateFeedButton} from './LLMCurateFeedButton'
 
 const POLL_FREQ = 60e3 // 60sec
 
@@ -127,10 +128,20 @@ export function FeedPage({
   }, [scrollToTop, feed, queryClient, setHasNew])
 
   const shouldPrefetch = isNative && isPageAdjacent
+  const showLLMCurationButton = !feed.startsWith('llm-curated') && feedInfo && isPageFocused
+  
   return (
     <View testID={testID}>
       <MainScrollProvider>
         <FeedFeedbackProvider value={feedFeedback}>
+          {showLLMCurationButton && (
+            <View style={{paddingHorizontal: 16, paddingTop: 8, flexDirection: 'row', justifyContent: 'flex-end'}}>
+              <LLMCurateFeedButton 
+                feed={feed}
+                savedFeed={savedFeedConfig}
+              />
+            </View>
+          )}
           <PostFeed
             testID={testID ? `${testID}-feed` : undefined}
             enabled={isPageFocused || shouldPrefetch}

@@ -60,6 +60,7 @@ export type CommonNavigatorParams = {
   MessagesSettings: undefined
   NotificationSettings: undefined
   Feeds: undefined
+  CustomFeed: {name: string; feed: string}
   Start: {name: string; rkey: string}
   StarterPack: {name: string; rkey: string; new?: boolean}
   StarterPackShort: {code: string}
@@ -112,6 +113,7 @@ export type AllNavigatorParams = CommonNavigatorParams & {
   SearchTab: undefined
   Search: {q?: string}
   Feeds: undefined
+  CustomFeed: {name: string; feed: string}
   NotificationsTab: undefined
   Notifications: undefined
   MyProfileTab: undefined
