@@ -15,18 +15,43 @@ export type WorkerResponse = {
   type: 'FEED_CURATED'
   curatedFeed: string[]
   feedId: string
+  logs?: string[]  // Add logs to send back
 } | {
   type: 'ERROR'
   error: string
+  logs?: string[]  // Add logs to send back
+} | {
+  type: 'DEBUG_LOG'  // New message type for logs
+  message: string
 }
 
 // Create a web worker context
 const ctx: Worker = self as any
 
-// Helper function to log from worker (will show up in main thread console)
+// Create a log collection
+const logMessages: string[] = []
+
+// Helper function to log from worker and collect logs to send back
 function workerLog(...args: any[]) {
-  // Use console.log but prefix with WORKER for clarity
-  console.log('WORKER:', ...args);
+  const message = ['WORKER:', ...args].map(arg => 
+    typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+  ).join(' ')
+  
+  // Store the log message to send back to main thread
+  logMessages.push(message)
+  
+  // Also log it in worker context (may not appear in browser console in all browsers)
+  console.log(message)
+  
+  // Send logs immediately to main thread too
+  try {
+    ctx.postMessage({
+      type: 'DEBUG_LOG',
+      message
+    })
+  } catch (e) {
+    // Ignore postMessage errors
+  }
 }
 
 // Process messages from the main thread
@@ -87,7 +112,8 @@ ctx.addEventListener('message', async (event: MessageEvent<WorkerRequest>) => {
       ctx.postMessage({
         type: 'FEED_CURATED',
         curatedFeed: result,
-        feedId
+        feedId,
+        logs: logMessages // Include all logs in the response
       })
       
       workerLog('===== FEED WORKER: CURATION COMPLETED SUCCESSFULLY =====');
@@ -102,7 +128,8 @@ ctx.addEventListener('message', async (event: MessageEvent<WorkerRequest>) => {
       
       ctx.postMessage({
         type: 'ERROR',
-        error: error instanceof Error ? error.message : String(error)
+        error: error instanceof Error ? error.message : String(error),
+        logs: logMessages // Include all logs in the error response
       })
       
       workerLog('Error message sent back to main thread');

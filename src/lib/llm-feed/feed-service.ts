@@ -10,6 +10,10 @@ const LLM_API_KEY = process.env.EXPO_PUBLIC_LLM_API_KEY || ''
 const LLM_BASE_URL = process.env.EXPO_PUBLIC_LLM_BASE_URL || 'https://api.mistral.ai/v1'
 const FEED_CACHE_EXPIRY = 1000 * 60 * 15 // 15 minutes
 
+// DEBUG FLAG: Set to true to bypass web workers and use direct curation
+// This helps isolate issues by avoiding web worker complications
+const DEBUG_BYPASS_WORKER = true
+
 // Feed cache type
 interface CachedFeed {
   posts: string[]
@@ -38,8 +42,16 @@ class LLMFeedService {
     console.log('FEED SERVICE - Web Worker support check:', {
       isWeb: isWeb,
       workersSupported: typeof Worker !== 'undefined',
-      workerConstructible: typeof Worker === 'function'
+      workerConstructible: typeof Worker === 'function',
+      debugBypassEnabled: DEBUG_BYPASS_WORKER
     });
+    
+    if (DEBUG_BYPASS_WORKER) {
+      console.log('FEED SERVICE - DEBUG MODE: Bypassing web worker, using direct curation');
+      this.worker = null;
+      this.curator = new FeedCurator(LLM_API_KEY, LLM_BASE_URL);
+      return;
+    }
     
     if (isWeb) {
       try {
@@ -52,6 +64,20 @@ class LLMFeedService {
           console.log('FEED SERVICE - Received message from worker');
           const response = event.data
           console.log('FEED SERVICE - Worker response type:', response.type);
+          
+          // Handle debug logs from worker
+          if (response.type === 'DEBUG_LOG') {
+            console.log('WORKER LOG:', response.message);
+            return; // Just log and return, no other processing needed
+          }
+          
+          // Handle logs in any response
+          if ('logs' in response && response.logs && response.logs.length > 0) {
+            console.log('FEED SERVICE - Worker logs:');
+            response.logs.forEach(log => {
+              console.log(log);
+            });
+          }
           
           if (response.type === 'FEED_CURATED') {
             console.log('FEED SERVICE - Received FEED_CURATED response:', {
