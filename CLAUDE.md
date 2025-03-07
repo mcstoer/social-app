@@ -20,6 +20,3 @@
 
 ## Repo Organization
 The codebase follows a modular structure with core functionality in `src/` directory. Main areas: components, lib, screens, state, view.
-
-## Goal:
-The goal is to convert this fork of the Bluesky social app (which has some existing code supporting integration with the Verus blockchain for posts) to use 

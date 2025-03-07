@@ -6,8 +6,8 @@ import {FeedCurator} from './feed-curator'
 import {UserProfile} from './types'
 
 // Constants
-const LLM_API_KEY = process.env.EXPO_PUBLIC_LLM_API_KEY || ''
-const LLM_BASE_URL = process.env.EXPO_PUBLIC_LLM_BASE_URL || 'https://api.mistral.ai/v1'
+const LLM_API_KEY = process.env.EXPO_PUBLIC_LLM_API_KEY || 'YaYRpfI7BiIX0yTac43qMjt0h2XugirD'
+const LLM_BASE_URL = process.env.EXPO_PUBLIC_LLM_BASE_URL || 'https://api.deepinfra.com/v1/openai' // TODO !EA -- need to figure out how to set this in the app itself
 const FEED_CACHE_EXPIRY = 1000 * 60 * 15 // 15 minutes
 
 // DEBUG FLAG: Set to true to bypass web workers and use direct curation

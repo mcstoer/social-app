@@ -1,6 +1,10 @@
 import {BskyAgent} from '@atproto/api'
 import {UserProfile} from './types'
 import {logger} from '#/logger'
+import OpenAI from 'openai'
+import { FEED_PROMPTS } from './prompts'
+
+// Notably, this code is separate from bluesky's normal code/flow, it can be customized at will so long as it still returns the needed information
 
 /**
  * Implements LLM-based feed curation functionality
@@ -8,10 +12,18 @@ import {logger} from '#/logger'
 export class FeedCurator {
   private apiKey: string
   private baseURL: string
+  private openai: OpenAI | null = null
+  private readonly defaultMaxPosts = 50;
+  private readonly feedSourcesDivisor = 2;
   
   constructor(apiKey: string, baseURL: string) {
     this.apiKey = apiKey
     this.baseURL = baseURL
+    this.openai = new OpenAI({
+      baseURL: baseURL,
+      apiKey: apiKey,
+      dangerouslyAllowBrowser: true // Allow browser usage with caution
+    })
   }
   
   /**
@@ -70,57 +82,67 @@ export class FeedCurator {
       const stringified_posts = this.stringifyPosts(posts)
       
       // Build what would be the prompt in a real implementation
-      const simulatedPrompt = `
-TASK: You are a social media feed curator. Select posts that would be interesting to a user with this profile:
-
-USER PERSONALITY:
+      const promptMessages = [...FEED_PROMPTS.POST_CURATION,
+          {
+              role: 'user',
+              content: `User personality: 
+"""
 ${personality}
+"""
 
-USER PREFERRED LANGUAGES:
-${languages || 'English'}
+User subscriptions list:
+"""
+${stringified_subscriptions}
+"""
 
-USER SUBSCRIPTIONS:
-${stringified_subscriptions.substring(0, 500)}... [truncated for log]
+----
 
-POSTS TO CURATE:
-${stringified_posts.substring(0, 500)}... [truncated for log]
+Some raw materials (recent posts from the subscribers) to make a feed from:
+"""
+${stringified_posts}
+"""
 
-Select posts that best match the user's interests, personality, and subscriptions.
-Return the indices of selected posts (1-indexed).
-`;
+Preferred languages:
+"""
+${languages}
+"""
+
+Note that user subscriptions are shown to give you additional hints about their interests. The user's subscriptions may not show up in the raw materials you see, and in fact you do not know who has written each individual post.
+
+Only select posts that are in the preferred languages.
+
+NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.
+Prioritize putting more important posts first. But ensure variety.`
+        }
+    ]
       
-      // Log the simulated prompt
-      console.log('SIMULATED PROMPT (excerpt):\n', simulatedPrompt);
+      const openai = this.openai || null;
+      if (!openai) {
+        throw new Error('OpenAI client is not initialized');
+      }
       
-      // In an actual implementation, this would call an LLM API
-      // For now, we'll simulate the LLM response with a basic algorithm
-      console.log('RUNNING SIMULATED LLM CURATION...');
+      const chatCompletion = await openai.chat.completions.create({
+        messages: promptMessages as any,
+        model: 'meta-llama/Meta-Llama-3-70B-Instruct',
+        max_completion_tokens: 500
+      })
+
+      console.log('SIMULATED PROMPT:\n', promptMessages);
+      const selectedIndices = [...new Set(
+          chatCompletion.choices[0].message.content?.
+              split('\n')
+              .map(line => parseInt(line.trim()))
+              .filter(num => !isNaN(num))  // Only keep valid numbers
+              .map(num => num - 1)  // Convert to 0-based indices
+              .filter(idx => idx >= 0 && idx < posts.length)  // Ensure index is valid
+      )];
+
+      // Limit the number of selected posts
+      const maxPosts = Math.floor(this.defaultMaxPosts / this.feedSourcesDivisor);
+      const limitedIndices = selectedIndices.slice(0, maxPosts);
       
-      // Simple filtering algorithm (in a real implementation, this would be LLM-based)
-      const selectedIndices = this.simulateLLMCuration(posts, personality, languages)
-      
-      // Log the algorithm's selection details
-      console.log('ALGORITHM SELECTION - Selected indices:', selectedIndices);
-      console.log('ALGORITHM SELECTION - Selected post count:', selectedIndices.length);
-      console.log('ALGORITHM SELECTION - Selection percentage:', 
-        Math.round((selectedIndices.length / posts.length) * 100) + '%');
-      
-      // Log sample of selected posts
-      console.log('SELECTED POSTS SAMPLE (first 3):');
-      selectedIndices.slice(0, 3).forEach(idx => {
-        console.log(`SELECTED POST INDEX ${idx}:\n${posts[idx]}\n---`);
-      });
-      
-      // Return selected posts
-      const finalPosts = selectedIndices.map(idx => {
-        // We keep the original post text intact to make it easier to identify later
-        return posts[idx]
-      });
-      
-      console.log('FINAL OUTPUT - Total posts returned:', finalPosts.length);
-      console.log('==== LLM FEED CURATION COMPLETED ====');
-      
-      return finalPosts;
+      // Return selected posts in the order specified by the deduplicated indices
+      return limitedIndices.map(idx => posts[idx as number]);
       
     } catch (error) {
       console.error('ERROR IN FEED CURATION:', error);

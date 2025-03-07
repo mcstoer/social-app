@@ -14,7 +14,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   private curatedFeedId: string | null = null
   private curatedPostUris: Set<string> = new Set()
   private isCurating: boolean = false
-  private feedParams: {sourceFeed: string}
+  private feedParams: {sourceFeed: string} // To make this more appropriate to the actual spec, we don't just do it as-is; we want it to take its source posts from the user's followed feeds (if they have none it'll just be whats-hot ofc). But we want to narrow it already. We don't want to just have a source feed we want all of them to be the "source" and to make more in the background.
 
   constructor({
     agent,
