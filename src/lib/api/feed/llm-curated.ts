@@ -337,8 +337,39 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       const posts = llmFeedService.getNextFeedFromBank();
       
       if (!posts || posts.length === 0) {
-        console.log('LLM CURATED API - No feeds available in bank, returning empty feed');
-        return { cursor: undefined, feed: [] }
+        console.log('LLM CURATED API - No feeds available in bank, creating temporary post');
+        // Create a temporary loading post instead of returning empty feed
+        const timestamp = new Date().toISOString();
+        const loadingPost = {
+          post: {
+            uri: `at://did:plc:temporary/app.bsky.feed.post/loading-${Date.now()}`,
+            cid: 'temporary',
+            author: {
+              did: 'did:plc:bsky',
+              handle: 'bsky.app',
+              displayName: 'Bluesky',
+              avatar: 'https://bsky.social/static/logo.png',
+              viewer: {},
+              labels: []
+            },
+            record: {
+              text: 'Creating your personalized AI feed... This might take a moment.',
+              $type: 'app.bsky.feed.post',
+              createdAt: timestamp
+            },
+            indexedAt: timestamp,
+            viewer: {},
+            replyCount: 0,
+            repostCount: 0,
+            likeCount: 0,
+            labels: []
+          }
+        };
+        
+        return { 
+          cursor: undefined, 
+          feed: [loadingPost] 
+        };
       }
       
       console.log(`LLM CURATED API - Got feed with ${posts.length} posts from bank`);
@@ -348,16 +379,34 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       // in the raw feed by content, or fetch a new raw feed if needed
       
       try {
-        // Get a fresh feed to match against if we don't have one
-        if (this.rawFeed.length === 0) {
-          console.log('LLM CURATED API - Fetching fresh source feed to match posts against');
-          const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
-            feed: this.feedParams.sourceFeed,
-            limit: 100, // Get more posts to increase match chances
+        // Always fetch more posts to match against when in AI mode - this increases matching chances
+        console.log('LLM CURATED API - Fetching multiple source feeds to match posts against');
+        
+        // Get first source
+        console.log('LLM CURATED API - Fetching primary source feed:', this.feedParams.sourceFeed);
+        const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
+          feed: this.feedParams.sourceFeed,
+          limit: 100,
+        });
+        
+        this.rawFeed = sourceFeedResult.data.feed;
+        console.log(`LLM CURATED API - Fetched ${this.rawFeed.length} posts from source feed`);
+        
+        // Also get home timeline for better matching
+        try {
+          console.log('LLM CURATED API - Fetching home timeline for additional matching');
+          const homeResult = await this.agent.app.bsky.feed.getTimeline({
+            limit: 100,
           });
           
-          this.rawFeed = sourceFeedResult.data.feed;
-          console.log(`LLM CURATED API - Fetched ${this.rawFeed.length} posts from source feed`);
+          if (homeResult?.data?.feed) {
+            const existingUris = new Set(this.rawFeed.map(p => p.post.uri));
+            const newPosts = homeResult.data.feed.filter(p => !existingUris.has(p.post.uri));
+            this.rawFeed = [...this.rawFeed, ...newPosts];
+            console.log(`LLM CURATED API - Added ${newPosts.length} unique posts from home timeline`);
+          }
+        } catch (error) {
+          console.error('LLM CURATED API - Error fetching home timeline:', error);
         }
         
         // Match the curated post texts to actual posts in the raw feed
