@@ -123,7 +123,7 @@ Prioritize putting more important posts first. But ensure variety.`
       
       const chatCompletion = await openai.chat.completions.create({
         messages: promptMessages as any,
-        model: 'meta-llama/Meta-Llama-3-70B-Instruct',
+        model: 'mistralai/Mistral-Small-24B-Instruct-2501',
         max_completion_tokens: 500
       })
 
@@ -136,6 +136,9 @@ Prioritize putting more important posts first. But ensure variety.`
               .map(num => num - 1)  // Convert to 0-based indices
               .filter(idx => idx >= 0 && idx < posts.length)  // Ensure index is valid
       )];
+
+      console.log('SELECTED INDICES:', selectedIndices);
+      console.log('POSTS:', posts);
 
       // Limit the number of selected posts
       const maxPosts = Math.floor(this.defaultMaxPosts / this.feedSourcesDivisor);
@@ -156,118 +159,5 @@ Prioritize putting more important posts first. But ensure variety.`
       });
       return []
     }
-  }
-  
-  /**
-   * Simulates LLM-based curation (in actual implementation, this would call the LLM API)
-   */
-  private simulateLLMCuration(posts: string[], personality: string, languages?: string): number[] {
-    console.log('SIMULATION - Starting LLM simulation with personality:', personality);
-    console.log('SIMULATION - Using selection criteria based on content patterns...');
-    
-    // Simple algorithm to select about half of the posts
-    const selectedIndices: number[] = []
-    
-    // Create a map to track selection reasons for debugging
-    const selectionReasons: Record<number, string[]> = {}
-    
-    // Track selection statistics
-    let skippedShortPosts = 0;
-    let selectedQuestionsCount = 0;
-    let selectedLinksCount = 0;
-    let selectedEmphasisCount = 0;
-    let selectedPositionCount = 0;
-    let selectedPersonalityMatchCount = 0;
-    
-    // Attempt to parse personality keywords for matching
-    const personalityLower = personality.toLowerCase();
-    const personalityKeywords = personalityLower
-      .split(/[,.\s]+/)
-      .filter(word => word.length > 4)
-      .map(word => word.trim());
-    
-    console.log('SIMULATION - Extracted personality keywords:', personalityKeywords);
-    
-    // Select posts based on length and content patterns
-    for (let i = 0; i < posts.length; i++) {
-      const post = posts[i]
-      const reasons: string[] = [];
-      
-      // Skip very short posts
-      if (post.length < 10) {
-        skippedShortPosts++;
-        continue;
-      }
-      
-      // Check for questions (potential engagement)
-      if (post.includes('?')) {
-        reasons.push('Contains question');
-        selectedQuestionsCount++;
-      }
-      
-      // Check for links (potential resources)
-      if (post.includes('http')) {
-        reasons.push('Contains link');
-        selectedLinksCount++;
-      }
-      
-      // Check for emphasis or excitement
-      if (post.includes('!')) {
-        reasons.push('Contains emphasis');
-        selectedEmphasisCount++;
-      }
-      
-      // Select some posts based on position for variety
-      if (i % 3 === 0) {
-        reasons.push('Position-based selection');
-        selectedPositionCount++;
-      }
-      
-      // Check for personality keyword matches
-      const postLower = post.toLowerCase();
-      const matchedKeywords = personalityKeywords.filter(keyword => 
-        postLower.includes(keyword)
-      );
-      
-      if (matchedKeywords.length > 0) {
-        reasons.push(`Matched personality keywords: ${matchedKeywords.join(', ')}`);
-        selectedPersonalityMatchCount++;
-      }
-      
-      // If any selection criteria were met, add to selected indices
-      if (reasons.length > 0) {
-        selectedIndices.push(i);
-        selectionReasons[i] = reasons;
-      }
-    }
-    
-    // Ensure we return at least some posts
-    if (selectedIndices.length === 0 && posts.length > 0) {
-      console.log('SIMULATION - No posts matched criteria, selecting fallback posts');
-      // If no posts were selected, select a few based on position
-      for (let i = 0; i < Math.min(posts.length, 5); i++) {
-        selectedIndices.push(i);
-        selectionReasons[i] = ['Fallback selection'];
-      }
-    }
-    
-    // Log selection statistics
-    console.log('SIMULATION STATS - Posts skipped (too short):', skippedShortPosts);
-    console.log('SIMULATION STATS - Posts with questions:', selectedQuestionsCount);
-    console.log('SIMULATION STATS - Posts with links:', selectedLinksCount);
-    console.log('SIMULATION STATS - Posts with emphasis:', selectedEmphasisCount);
-    console.log('SIMULATION STATS - Posts selected by position:', selectedPositionCount);
-    console.log('SIMULATION STATS - Posts matching personality keywords:', selectedPersonalityMatchCount);
-    
-    // Log selection reasons for first 10 posts
-    console.log('SELECTION REASONS (sample):');
-    const sampleIndices = selectedIndices.slice(0, 10);
-    sampleIndices.forEach(idx => {
-      console.log(`Post ${idx} selected because: ${selectionReasons[idx].join(', ')}`);
-    });
-    
-    console.log('SIMULATION - Finished with', selectedIndices.length, 'posts selected');
-    
-    return selectedIndices;
   }
 }
