@@ -1,6 +1,6 @@
 import React from 'react';
 import {llmFeedService} from './feed-service';
-import {useSession} from '#/state/session';
+import {useSession, useAgent} from '#/state/session';
 import {usePreferencesQuery} from '#/state/queries/preferences';
 
 // Create context to share the LLM feed service instance
@@ -16,16 +16,32 @@ export function LLMFeedServiceProvider({
   children: React.ReactNode;
 }) {
   // Get dependencies from React hooks
-  const {agent} = useSession();
+  const session = useSession();
   const {data: preferences} = usePreferencesQuery();
+  
+  // Get the agent directly from the AgentContext
+  // This will throw an error if used outside SessionProvider
+  let agent = null;
+  try {
+    agent = useAgent();
+  } catch (error) {
+    console.log('LLMFeedServiceProvider: Agent not available yet');
+  }
   
   // Inject agent whenever it changes
   React.useEffect(() => {
+    console.log('LLMFeedServiceProvider: Session state:', {
+      hasSession: session.hasSession,
+      currentAccount: !!session.currentAccount,
+      agentAvailable: !!agent
+    });
+    
+    // Use the agent directly from the useAgent hook
     if (agent) {
       console.log('LLMFeedServiceProvider: Setting agent dependency');
       llmFeedService.setAgent(agent);
     }
-  }, [agent]);
+  }, [session, agent]);
   
   // Inject preferences whenever they change
   React.useEffect(() => {

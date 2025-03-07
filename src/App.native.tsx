@@ -152,11 +152,14 @@ function InnerApp() {
                                             <TrendingConfigProvider>
                                               <GestureHandlerRootView
                                                 style={s.h100pct}>
-                                                <IntentDialogProvider>
-                                                  <TestCtrls />
-                                                  <Shell />
-                                                  <NuxDialogs />
-                                                </IntentDialogProvider>
+                                                {/* Place LLMFeedServiceProvider here where it has access to QueryClient and all other providers */}
+                                                <LLMFeedServiceProvider>
+                                                  <IntentDialogProvider>
+                                                    <TestCtrls />
+                                                    <Shell />
+                                                    <NuxDialogs />
+                                                  </IntentDialogProvider>
+                                                </LLMFeedServiceProvider>
                                               </GestureHandlerRootView>
                                             </TrendingConfigProvider>
                                           </ProgressGuideProvider>
@@ -217,10 +220,7 @@ function App() {
                                 <SafeAreaProvider
                                   initialMetrics={initialWindowMetrics}>
                                   <LightStatusBarProvider>
-                                    {/* Add LLMFeedServiceProvider here to ensure dependencies are available */}
-                                    <LLMFeedServiceProvider>
-                                      <InnerApp />
-                                    </LLMFeedServiceProvider>
+                                    <InnerApp />
                                   </LightStatusBarProvider>
                                 </SafeAreaProvider>
                               </StarterPackProvider>
