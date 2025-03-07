@@ -60,6 +60,7 @@ import {useStarterPackEntry} from '#/components/hooks/useStarterPackEntry'
 import {Provider as IntentDialogProvider} from '#/components/intents/IntentDialogs'
 import {Provider as PortalProvider} from '#/components/Portal'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
+import {LLMFeedServiceProvider} from '#/lib/llm-feed/LLMFeedServiceProvider'
 
 /**
  * Begin geolocation ASAP
@@ -129,10 +130,13 @@ function InnerApp() {
                                           <SafeAreaProvider>
                                             <ProgressGuideProvider>
                                               <TrendingConfigProvider>
-                                                <IntentDialogProvider>
-                                                  <Shell />
-                                                  <NuxDialogs />
-                                                </IntentDialogProvider>
+                                                {/* Place LLMFeedServiceProvider here where it has access to QueryClient and all other providers */}
+                                                <LLMFeedServiceProvider>
+                                                  <IntentDialogProvider>
+                                                    <Shell />
+                                                    <NuxDialogs />
+                                                  </IntentDialogProvider>
+                                                </LLMFeedServiceProvider>
                                               </TrendingConfigProvider>
                                             </ProgressGuideProvider>
                                           </SafeAreaProvider>

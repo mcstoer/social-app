@@ -27,29 +27,11 @@ export function LLMCurateFeedButton({feed, savedFeed}: LLMCurateFeedButtonProps)
   const canCurate = feed.startsWith('feedgen')
   const feedUri = feed.split('|')[1]
   
-  // Import dependencies
-  const {llmFeedService} = require('#/lib/llm-feed/feed-service')
-  const {useSession} = require('#/state/session')
-  const {usePreferencesQuery} = require('#/state/queries/preferences')
+  // Import the hook from our new provider
+  const {useLLMFeedService} = require('#/lib/llm-feed/LLMFeedServiceProvider')
   
-  // Get agent and preferences from React hooks
-  const {agent} = useSession()
-  const {data: preferences} = usePreferencesQuery()
-  
-  // Inject dependencies into the service
-  React.useEffect(() => {
-    if (agent) {
-      console.log('Injecting agent into feed service');
-      llmFeedService.setAgent(agent);
-    }
-  }, [agent]);
-  
-  React.useEffect(() => {
-    if (preferences) {
-      console.log('Injecting preferences into feed service');
-      llmFeedService.setPreferences(preferences);
-    }
-  }, [preferences]);
+  // Get the feed service from context
+  const llmFeedService = useLLMFeedService()
   
   // Check if AI mode is enabled
   const [aiModeEnabled, setAiModeEnabled] = React.useState(() => 

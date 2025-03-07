@@ -72,6 +72,7 @@ import {Provider as PortalProvider} from '#/components/Portal'
 import {Splash} from '#/Splash'
 import {BottomSheetProvider} from '../modules/bottom-sheet'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
+import {LLMFeedServiceProvider} from '#/lib/llm-feed/LLMFeedServiceProvider'
 
 SplashScreen.preventAutoHideAsync()
 if (isIOS) {
@@ -216,7 +217,10 @@ function App() {
                                 <SafeAreaProvider
                                   initialMetrics={initialWindowMetrics}>
                                   <LightStatusBarProvider>
-                                    <InnerApp />
+                                    {/* Add LLMFeedServiceProvider here to ensure dependencies are available */}
+                                    <LLMFeedServiceProvider>
+                                      <InnerApp />
+                                    </LLMFeedServiceProvider>
                                   </LightStatusBarProvider>
                                 </SafeAreaProvider>
                               </StarterPackProvider>
