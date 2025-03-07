@@ -376,6 +376,16 @@ class LLMFeedService {
     if (this.aiModeEnabled === enabled) return
     
     console.log(`FEED SERVICE - AI mode ${enabled ? 'enabled' : 'disabled'}`);
+    
+    // Check if dependencies are available when enabling
+    if (enabled) {
+      if (!this.agent || !this.preferences) {
+        console.warn('FEED SERVICE - Enabling AI mode but dependencies are not yet set');
+        console.warn('FEED SERVICE - Agent:', !!this.agent, 'Preferences:', !!this.preferences);
+        console.warn('FEED SERVICE - Will try to start loop after dependencies are available');
+      }
+    }
+    
     this.aiModeEnabled = enabled
     
     if (enabled) {
@@ -403,6 +413,23 @@ class LLMFeedService {
     }
     
     console.log('FEED SERVICE - Starting AI mode loop');
+    
+    // Check if dependencies are set before starting the loop
+    if (!this.agent || !this.preferences) {
+      console.error('FEED SERVICE - Cannot start AI mode loop: dependencies not set');
+      console.error('FEED SERVICE - Agent:', !!this.agent, 'Preferences:', !!this.preferences);
+      console.error('FEED SERVICE - Please wait for dependencies to be injected from React components');
+      
+      // Check again in a short time
+      setTimeout(() => {
+        if (this.aiModeEnabled) {
+          console.log('FEED SERVICE - Retrying to start AI mode loop...');
+          this.startAIModeLoop();
+        }
+      }, 2000);
+      
+      return;
+    }
     
     // Immediately run the loop once
     this.runAIModeLoop()
