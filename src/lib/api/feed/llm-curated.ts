@@ -456,7 +456,17 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       // or when the user has seen all posts from the previous feed
       
       // Try to get a new feed from the bank that hasn't been consumed yet
+      console.log('LLM CURATED API - PAGINATION DEBUG - Current bank state before getNextFeedFromBank:');
+      // Get total bank size and consumed status for debugging
+      const bankInfo = llmFeedService.debugGetFeedBankStatus(); // We'll add this method shortly
+      console.log(`LLM CURATED API - PAGINATION DEBUG - Bank size: ${bankInfo.total}, Consumed feeds: ${bankInfo.consumed}, Unused feeds: ${bankInfo.unconsumed}`);
+      
       const freshPosts = llmFeedService.getNextFeedFromBank();
+      console.log(`LLM CURATED API - PAGINATION DEBUG - getNextFeedFromBank returned:`, freshPosts ? `${freshPosts.length} posts` : 'null');
+      
+      // Log bank state after fetch to see if anything changed
+      const bankInfoAfter = llmFeedService.debugGetFeedBankStatus();
+      console.log(`LLM CURATED API - PAGINATION DEBUG - Bank after fetch: Total=${bankInfoAfter.total}, Consumed=${bankInfoAfter.consumed}, Unused=${bankInfoAfter.unconsumed}`);
       
       if (freshPosts && freshPosts.length > 0) {
         console.log(`LLM CURATED API - Found fresh feed with ${freshPosts.length} posts for pagination`);

@@ -217,7 +217,30 @@ let PostFeed = ({
     isFetchingNextPage,
     fetchNextPage,
   } = usePostFeedQuery(feed, feedParams, opts)
-  const lastFetchedAt = data?.pages[0].fetchedAt
+  
+  // Special logging for AI mode feed
+  if (feed === 'ai-mode-feed') {
+    console.log('POST FEED - AI mode feed query status:', {
+      isFetched,
+      isFetching,
+      isFetchingNextPage,
+      hasNextPage,
+      pagesCount: data?.pages?.length || 0,
+      error: error ? String(error) : undefined
+    });
+    
+    if (data?.pages?.length) {
+      data.pages.forEach((page, i) => {
+        console.log(`POST FEED - AI feed page ${i} details:`, {
+          cursor: page.cursor,
+          slicesCount: page.slices.length,
+          apiType: page.api.constructor.name
+        });
+      });
+    }
+  }
+  
+  const lastFetchedAt = data?.pages[0]?.fetchedAt
   if (lastFetchedAt) {
     lastFetchRef.current = lastFetchedAt
   }
@@ -539,7 +562,27 @@ let PostFeed = ({
   }, [refetch, setIsPTRing, onHasNew, feed, feedType])
 
   const onEndReached = React.useCallback(async () => {
-    if (isFetching || !hasNextPage || isError) return
+    console.log(`POST FEED - onEndReached called for feed: ${feed}`);
+    console.log(`POST FEED - Feed state:`, {
+      isFetching,
+      hasNextPage,
+      isError,
+      itemCount: feedItems.length
+    });
+    
+    if (isFetching || !hasNextPage || isError) {
+      console.log(`POST FEED - Skipping fetchNextPage due to:`, {
+        isFetching,
+        hasNextPage,
+        isError
+      });
+      return;
+    }
+
+    // Special logging for AI mode feed
+    if (feed === 'ai-mode-feed') {
+      console.log('POST FEED - End reached for AI mode feed - will attempt to fetch more posts');
+    }
 
     logEvent('feed:endReached', {
       feedType: feedType,
@@ -547,8 +590,11 @@ let PostFeed = ({
       itemCount: feedItems.length,
     })
     try {
-      await fetchNextPage()
+      console.log('POST FEED - Calling fetchNextPage()');
+      await fetchNextPage();
+      console.log('POST FEED - fetchNextPage completed');
     } catch (err) {
+      console.error('POST FEED - Error in fetchNextPage:', err);
       logger.error('Failed to load more posts', {message: err})
     }
   }, [

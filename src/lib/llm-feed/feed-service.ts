@@ -784,7 +784,17 @@ class LLMFeedService {
     }
     
     // Mark as consumed
-    nextFeed.consumed = true;
+    console.log(`FEED SERVICE - DEBUG - Marking feed as consumed: ${nextFeed.feedId}`);
+    console.log(`FEED SERVICE - DEBUG - Feed consumed status before: ${nextFeed.consumed}`);
+    nextFeed.consumed = true; 
+    console.log(`FEED SERVICE - DEBUG - Feed consumed status after: ${nextFeed.consumed}`);
+    
+    // Log all feeds for debugging
+    console.log('FEED SERVICE - DEBUG - All feeds after marking:');
+    this.feedBank.forEach((feed, index) => {
+      console.log(`FEED SERVICE - DEBUG - Feed ${index}: ID=${feed.feedId}, consumed=${feed.consumed}, posts=${feed.posts.length}`);
+    });
+    
     console.log(`FEED SERVICE - Retrieved feed from bank: ${nextFeed.feedId}`);
     console.log(`FEED SERVICE - Feed post count: ${nextFeed.posts.length}`);
     console.log(`FEED SERVICE - Feed age: ${Math.round((Date.now() - nextFeed.timestamp) / 1000)}s`);
@@ -804,6 +814,33 @@ class LLMFeedService {
   /**
    * Add a curated feed to the feed bank
    */
+  /**
+   * Get debug information about the feed bank state
+   * This is used for debugging pagination issues
+   */
+  public debugGetFeedBankStatus() {
+    const total = this.feedBank.length;
+    const consumed = this.feedBank.filter(feed => feed.consumed).length;
+    const unconsumed = this.feedBank.filter(feed => !feed.consumed).length;
+    
+    const details = this.feedBank.map((feed, index) => ({
+      index,
+      id: feed.feedId,
+      posts: feed.posts.length,
+      age: Math.round((Date.now() - feed.timestamp) / 1000) + 's',
+      consumed: feed.consumed
+    }));
+    
+    console.log('FEED SERVICE - DEBUG FEED BANK - Details:', details);
+    
+    return {
+      total,
+      consumed,
+      unconsumed,
+      details
+    };
+  }
+  
   public addToFeedBank(feedId: string, posts: string[]) {
     console.log('===== FEED SERVICE - ADD TO FEED BANK =====');
     console.log(`FEED SERVICE - Adding feed to bank: ${feedId}`);

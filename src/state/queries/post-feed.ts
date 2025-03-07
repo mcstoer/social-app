@@ -230,13 +230,29 @@ export function usePostFeedQuery(
       }
     },
     initialPageParam: undefined,
-    getNextPageParam: lastPage =>
-      lastPage.cursor
+    getNextPageParam: lastPage => {
+      console.log('POST FEED QUERY - getNextPageParam called with cursor:', lastPage.cursor);
+      
+      // Special handling for AI Mode feed to ensure pagination always works
+      if (feedDesc === 'ai-mode-feed') {
+        console.log('POST FEED QUERY - AI Mode feed getNextPageParam handling');
+        // For AI mode, we always want pagination to work to check for new feeds
+        if (lastPage.cursor) {
+          console.log('POST FEED QUERY - AI Mode returning cursor:', lastPage.cursor);
+          return {
+            api: lastPage.api,
+            cursor: lastPage.cursor,
+          };
+        }
+      }
+      
+      return lastPage.cursor
         ? {
             api: lastPage.api,
             cursor: lastPage.cursor,
           }
-        : undefined,
+        : undefined;
+    },
     select: useCallback(
       (data: InfiniteData<FeedPageUnselected, RQPageParam>) => {
         // If the selection depends on some data, that data should
