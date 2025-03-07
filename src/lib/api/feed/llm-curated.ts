@@ -366,8 +366,11 @@ export class LLMCuratedFeedAPI implements FeedAPI {
           }
         };
         
+        // Important: We return a cursor here even with the placeholder post
+        // This ensures pagination will be triggered when user scrolls to bottom
+        // The pagination code will check for new feeds in the feed bank
         return { 
-          cursor: undefined, 
+          cursor: 'placeholder', 
           feed: [loadingPost] 
         };
       }
@@ -428,7 +431,13 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         
         // Return the matched posts, with pagination if needed
         const responseSlice = matchedPosts.slice(0, limit);
-        const nextCursor = matchedPosts.length > limit ? limit.toString() : undefined;
+        
+        // Always set a cursor even if we have fewer posts than the limit
+        // This ensures pagination is triggered when the user scrolls to the bottom
+        // which will allow checking for new feeds
+        const nextCursor = matchedPosts.length > limit 
+          ? limit.toString() 
+          : 'continue'; // Signal that we should try to get more feeds
         
         return {
           cursor: nextCursor,
@@ -439,10 +448,76 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         return { cursor: undefined, feed: [] }
       }
     } else {
-      // For subsequent pages, we would use the cursor to get more results
-      // For now we'll just return an empty array since we're not handling pagination yet
+      // This is a pagination request (when user has scrolled down)
+      console.log('LLM CURATED API - Pagination request received with cursor:', cursor);
+      
+      // For pagination in AI mode, we should check for fresh feeds in the bank
+      // This is important when the initial placeholder was shown
+      // or when the user has seen all posts from the previous feed
+      
+      // Try to get a new feed from the bank that hasn't been consumed yet
+      const freshPosts = llmFeedService.getNextFeedFromBank();
+      
+      if (freshPosts && freshPosts.length > 0) {
+        console.log(`LLM CURATED API - Found fresh feed with ${freshPosts.length} posts for pagination`);
+        
+        // Collect posts from multiple sources to maximize matching chances
+        try {
+          // Refresh our raw feed data for better matching
+          console.log('LLM CURATED API - Refreshing source feeds for pagination');
+          const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
+            feed: this.feedParams.sourceFeed,
+            limit: 100,
+          });
+          
+          this.rawFeed = sourceFeedResult.data.feed;
+          
+          // Try to add home timeline for more matching options
+          try {
+            const homeResult = await this.agent.app.bsky.feed.getTimeline({
+              limit: 100,
+            });
+            
+            if (homeResult?.data?.feed) {
+              const existingUris = new Set(this.rawFeed.map(p => p.post.uri));
+              const newPosts = homeResult.data.feed.filter(p => !existingUris.has(p.post.uri));
+              this.rawFeed = [...this.rawFeed, ...newPosts];
+            }
+          } catch (error) {
+            console.error('LLM CURATED API - Error fetching home timeline for pagination:', error);
+          }
+          
+          // Match the fresh posts against our raw feed
+          const matchedPosts: BskyFeedViewPost[] = [];
+          
+          for (const postText of freshPosts) {
+            const matchingPost = this.rawFeed.find(post => {
+              const record = post.post.record as any;
+              return record?.text === postText;
+            });
+            
+            if (matchingPost) {
+              matchedPosts.push(matchingPost);
+            }
+          }
+          
+          console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${freshPosts.length} posts for pagination`);
+          
+          if (matchedPosts.length > 0) {
+            // Return the matched posts
+            return {
+              cursor: 'end', // Signal there won't be more pagination after this
+              feed: matchedPosts,
+            };
+          }
+        } catch (error) {
+          console.error('LLM CURATED API - Error processing pagination:', error);
+        }
+      }
+      
+      // If we couldn't get a fresh feed or match any posts, return empty
       console.log('LLM CURATED API - No additional AI feed pages available');
-      return { cursor: undefined, feed: [] }
+      return { cursor: undefined, feed: [] };
     }
   }
 }
