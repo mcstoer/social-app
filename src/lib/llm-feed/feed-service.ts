@@ -765,6 +765,25 @@ class LLMFeedService {
     
     if (unconsumedFeeds.length === 0) {
       console.log('FEED SERVICE - No unconsumed feeds available');
+      
+      // If we have no unconsumed feeds but have feeds in the bank, reset the consumed flag
+      // on the oldest feed to make it available again
+      if (this.feedBank.length > 0) {
+        console.log('FEED SERVICE - Resetting consumed flag on oldest feed to make it available');
+        // Sort all feeds by timestamp to find the oldest
+        const sortedFeeds = [...this.feedBank].sort((a, b) => a.timestamp - b.timestamp);
+        const oldestFeed = sortedFeeds[0];
+        
+        // Reset the consumed flag
+        oldestFeed.consumed = false;
+        
+        console.log(`FEED SERVICE - Reset consumed flag on feed ${oldestFeed.feedId}`);
+        console.log(`FEED SERVICE - Feed has ${oldestFeed.posts.length} posts`);
+        
+        // Return the posts from the oldest feed
+        return oldestFeed.posts;
+      }
+      
       return null;
     }
     
@@ -788,6 +807,15 @@ class LLMFeedService {
     console.log(`FEED SERVICE - DEBUG - Feed consumed status before: ${nextFeed.consumed}`);
     nextFeed.consumed = true; 
     console.log(`FEED SERVICE - DEBUG - Feed consumed status after: ${nextFeed.consumed}`);
+    
+    // Find the feed in the main feedBank and update its consumed status
+    const feedBankIndex = this.feedBank.findIndex(f => f.feedId === nextFeed.feedId);
+    if (feedBankIndex >= 0) {
+      this.feedBank[feedBankIndex].consumed = true;
+      console.log(`FEED SERVICE - Updated consumed status in main feed bank at index ${feedBankIndex}`);
+    } else {
+      console.error(`FEED SERVICE - Could not find feed ${nextFeed.feedId} in main feed bank!`);
+    }
     
     // Log all feeds for debugging
     console.log('FEED SERVICE - DEBUG - All feeds after marking:');
@@ -919,5 +947,6 @@ class LLMFeedService {
   }
 }
 
-// Export a singleton instance
+// Export the class type and singleton instance
+export type {LLMFeedService}
 export const llmFeedService = new LLMFeedService()

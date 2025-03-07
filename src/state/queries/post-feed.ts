@@ -475,6 +475,13 @@ function createApi({
   if (feedDesc === 'ai-mode-feed') {
     // For AI mode, we use the LLM curated API with the AI mode flag
     const {LLMCuratedFeedAPI} = require('#/lib/api/feed/llm-curated')
+    // Get the feed service from the singleton
+    // We need to make sure we're using the same instance that's being managed by React
+    const {llmFeedService} = require('#/lib/llm-feed/feed-service')
+    
+    console.log('CREATE API - Creating LLMCuratedFeedAPI with feed service:', !!llmFeedService);
+    console.log('CREATE API - Feed bank size in service:', llmFeedService.debugGetFeedBankStatus().total);
+    
     // Use a default source feed for AI mode, with the aiMode flag set
     const sourceFeed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
     return new LLMCuratedFeedAPI({
@@ -483,6 +490,7 @@ function createApi({
         sourceFeed,
         aiMode: true 
       },
+      feedService: llmFeedService, // Pass feed service to the API
     })
   }
   // Check if this is a special llm-curated feed
@@ -491,9 +499,16 @@ function createApi({
     const [_, sourceFeed] = feedDesc.split('|')
     // Import dynamically to avoid circular dependencies
     const {LLMCuratedFeedAPI} = require('#/lib/api/feed/llm-curated')
+    // Get the feed service from the singleton
+    const {llmFeedService} = require('#/lib/llm-feed/feed-service')
+    
+    console.log('CREATE API - Creating LLMCuratedFeedAPI for regular curation with feed service:', !!llmFeedService);
+    console.log('CREATE API - Feed bank size in service for regular curation:', llmFeedService.debugGetFeedBankStatus().total);
+    
     return new LLMCuratedFeedAPI({
       agent,
       feedParams: {sourceFeed},
+      feedService: llmFeedService, // Pass feed service to the API
     })
   } else if (feedDesc === 'following') {
     if (feedParams.mergeFeedEnabled) {

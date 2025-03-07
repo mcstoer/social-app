@@ -3,9 +3,12 @@ import {AppBskyFeedDefs, BskyAgent} from '@atproto/api'
 type BskyFeedViewPost = AppBskyFeedDefs.FeedViewPost
 
 import {FeedAPI, FeedAPIResponse} from './types'
-import {llmFeedService} from '../../llm-feed/feed-service'
+import type {LLMFeedService} from '../../llm-feed/feed-service' // Import as type only
 import {UserProfile} from '../../llm-feed/types'
 import {getCurrentUserProfile} from '../../llm-feed/user-profile'
+
+// Get the LLMFeedService from the global context
+let globalLLMFeedService: LLMFeedService | null = null;
 
 export class LLMCuratedFeedAPI implements FeedAPI {
   private agent: BskyAgent
@@ -19,12 +22,26 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   constructor({
     agent,
     feedParams,
+    feedService,
   }: {
     agent: BskyAgent
     feedParams: {sourceFeed: string; aiMode?: boolean}
+    feedService?: LLMFeedService
   }) {
+    console.log('LLM CURATED API - Constructor called with params:', 
+      'sourceFeed:', feedParams.sourceFeed,
+      'aiMode:', feedParams.aiMode,
+      'feedService provided:', !!feedService);
     this.agent = agent
     this.feedParams = feedParams
+    
+    // Store the provided feed service in the global variable
+    if (feedService) {
+      globalLLMFeedService = feedService;
+      console.log('LLM CURATED API - Using provided feed service instance');
+    } else {
+      console.warn('LLM CURATED API - No feed service provided! AI feeds may not work properly');
+    }
   }
 
   async fetch({
@@ -48,6 +65,37 @@ export class LLMCuratedFeedAPI implements FeedAPI {
     
     // Special handling for AI mode
     if (this.feedParams.aiMode) {
+      if (!globalLLMFeedService) {
+        console.error('LLM CURATED API - Feed service not available for AI mode!');
+        return {
+          cursor: undefined,
+          feed: [{
+            post: {
+              uri: `at://did:plc:temporary/app.bsky.feed.post/error-${Date.now()}`,
+              cid: 'temporary',
+              author: {
+                did: 'did:plc:bsky',
+                handle: 'bsky.app',
+                displayName: 'Bluesky',
+                avatar: 'https://bsky.social/static/logo.png',
+                viewer: {},
+                labels: []
+              },
+              record: {
+                text: 'Error: Feed service not available. Please try toggling AI mode off and on again.',
+                $type: 'app.bsky.feed.post',
+                createdAt: new Date().toISOString()
+              },
+              indexedAt: new Date().toISOString(),
+              viewer: {},
+              replyCount: 0,
+              repostCount: 0,
+              likeCount: 0,
+              labels: []
+            }
+          }]
+        };
+      }
       return this.fetchAIModeFeed({cursor, limit})
     }
     
@@ -96,7 +144,12 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         this.isCurating = true
         
         console.log('LLM CURATED API - Calling feed service to curate posts');
-        this.curatedFeedId = await llmFeedService.curateFeed(
+        if (!globalLLMFeedService) {
+          console.error('LLM CURATED API - Feed service not available for curation!');
+          throw new Error('Feed service not available');
+        }
+        
+        this.curatedFeedId = await globalLLMFeedService.curateFeed(
           this.rawFeed,
           this.userProfile
         )
@@ -120,7 +173,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
             // This was in the original code but could cause memory leaks or duplicate handlers
             // Removing this line and only setting up the listener once
             console.log('LLM CURATED API - Not re-adding event listener (fixed potential bug)')
-            // llmFeedService.on('feed-updated', onFeedUpdated)
+            // globalLLMFeedService.on('feed-updated', onFeedUpdated)
           } else {
             console.log('LLM CURATED API - Feed ID does not match our feed ID, ignoring update');
             console.log('LLM CURATED API - Received ID:', feedId);
@@ -130,11 +183,13 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         
         // Listen for feed updates
         console.log('LLM CURATED API - Setting up feed-updated listener');
-        llmFeedService.on('feed-updated', onFeedUpdated)
+        if (globalLLMFeedService) {
+          globalLLMFeedService.on('feed-updated', onFeedUpdated);
+        }
         
         // Get the cached feed if available (might be available immediately if cached)
         console.log('LLM CURATED API - Checking for cached feed...');
-        const cachedFeed = llmFeedService.getCachedFeed(this.curatedFeedId)
+        const cachedFeed = globalLLMFeedService ? globalLLMFeedService.getCachedFeed(this.curatedFeedId) : null
         
         if (cachedFeed) {
           console.log('LLM CURATED API - Found cached feed with', cachedFeed.length, 'posts');
@@ -319,7 +374,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   
   /**
    * Fetch feed in AI Mode
-   * Uses the feed bank managed by the llmFeedService to provide AI-curated posts
+   * Uses the feed bank managed by the global LLM feed service to provide AI-curated posts
    */
   private async fetchAIModeFeed({
     cursor,
@@ -334,44 +389,19 @@ export class LLMCuratedFeedAPI implements FeedAPI {
     if (!cursor) {
       // Get the next available feed from the bank
       console.log('LLM CURATED API - Getting next feed from bank...');
-      const posts = llmFeedService.getNextFeedFromBank();
+      if (!globalLLMFeedService) {
+        console.error('LLM CURATED API - Feed service not available!');
+        return { cursor: undefined, feed: [] };
+      }
+      const posts = globalLLMFeedService.getNextFeedFromBank();
       
       if (!posts || posts.length === 0) {
-        console.log('LLM CURATED API - No feeds available in bank, creating temporary post');
-        // Create a temporary loading post instead of returning empty feed
-        const timestamp = new Date().toISOString();
-        const loadingPost = {
-          post: {
-            uri: `at://did:plc:temporary/app.bsky.feed.post/loading-${Date.now()}`,
-            cid: 'temporary',
-            author: {
-              did: 'did:plc:bsky',
-              handle: 'bsky.app',
-              displayName: 'Bluesky',
-              avatar: 'https://bsky.social/static/logo.png',
-              viewer: {},
-              labels: []
-            },
-            record: {
-              text: 'Creating your personalized AI feed... This might take a moment.',
-              $type: 'app.bsky.feed.post',
-              createdAt: timestamp
-            },
-            indexedAt: timestamp,
-            viewer: {},
-            replyCount: 0,
-            repostCount: 0,
-            likeCount: 0,
-            labels: []
-          }
-        };
-        
-        // Important: We return a cursor here even with the placeholder post
-        // This ensures pagination will be triggered when user scrolls to bottom
-        // The pagination code will check for new feeds in the feed bank
+        console.log('LLM CURATED API - No feeds available in bank, returning empty feed');
+        // No feeds available yet, just return an empty feed
+        // The UI will show loading state automatically
         return { 
-          cursor: 'placeholder', 
-          feed: [loadingPost] 
+          cursor: '0', // Return numeric cursor to trigger pagination
+          feed: [] 
         };
       }
       
@@ -434,10 +464,11 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         
         // Always set a cursor even if we have fewer posts than the limit
         // This ensures pagination is triggered when the user scrolls to the bottom
-        // which will allow checking for new feeds
+        // Return numeric cursor if we have more posts, otherwise use a signal for the client
+        // to try fetching again later
         const nextCursor = matchedPosts.length > limit 
           ? limit.toString() 
-          : 'continue'; // Signal that we should try to get more feeds
+          : '0'; // Using a numeric index to be consistent with regular feed mode
         
         return {
           cursor: nextCursor,
@@ -458,14 +489,19 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       // Try to get a new feed from the bank that hasn't been consumed yet
       console.log('LLM CURATED API - PAGINATION DEBUG - Current bank state before getNextFeedFromBank:');
       // Get total bank size and consumed status for debugging
-      const bankInfo = llmFeedService.debugGetFeedBankStatus(); // We'll add this method shortly
+      if (!globalLLMFeedService) {
+        console.error('LLM CURATED API - Feed service not available for pagination!');
+        return { cursor: undefined, feed: [] };
+      }
+      
+      const bankInfo = globalLLMFeedService.debugGetFeedBankStatus();
       console.log(`LLM CURATED API - PAGINATION DEBUG - Bank size: ${bankInfo.total}, Consumed feeds: ${bankInfo.consumed}, Unused feeds: ${bankInfo.unconsumed}`);
       
-      const freshPosts = llmFeedService.getNextFeedFromBank();
+      const freshPosts = globalLLMFeedService.getNextFeedFromBank();
       console.log(`LLM CURATED API - PAGINATION DEBUG - getNextFeedFromBank returned:`, freshPosts ? `${freshPosts.length} posts` : 'null');
       
       // Log bank state after fetch to see if anything changed
-      const bankInfoAfter = llmFeedService.debugGetFeedBankStatus();
+      const bankInfoAfter = globalLLMFeedService.debugGetFeedBankStatus();
       console.log(`LLM CURATED API - PAGINATION DEBUG - Bank after fetch: Total=${bankInfoAfter.total}, Consumed=${bankInfoAfter.consumed}, Unused=${bankInfoAfter.unconsumed}`);
       
       if (freshPosts && freshPosts.length > 0) {
@@ -514,9 +550,9 @@ export class LLMCuratedFeedAPI implements FeedAPI {
           console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${freshPosts.length} posts for pagination`);
           
           if (matchedPosts.length > 0) {
-            // Return the matched posts
+            // Return the matched posts with a numeric cursor to remain consistent
             return {
-              cursor: 'end', // Signal there won't be more pagination after this
+              cursor: matchedPosts.length < limit ? undefined : limit.toString(),
               feed: matchedPosts,
             };
           }
