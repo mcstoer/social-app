@@ -130,6 +130,22 @@ export function FeedPage({
   const shouldPrefetch = isNative && isPageAdjacent
   const showLLMCurationButton = !feed.startsWith('llm-curated') && feedInfo && isPageFocused
   
+  // Import the LLM feed service
+  const {llmFeedService} = require('#/lib/llm-feed/feed-service')
+  
+  // Track AI mode state
+  const [aiModeEnabled, setAiModeEnabled] = React.useState(() => 
+    llmFeedService.isAIModeEnabled()
+  )
+  
+  // Listen for AI mode changes
+  React.useEffect(() => {
+    const unsubscribe = llmFeedService.on('ai-mode-changed', (enabled) => {
+      setAiModeEnabled(enabled)
+    })
+    return unsubscribe
+  }, [])
+  
   return (
     <View testID={testID}>
       <MainScrollProvider>
@@ -142,22 +158,47 @@ export function FeedPage({
               />
             </View>
           )}
-          <PostFeed
-            testID={testID ? `${testID}-feed` : undefined}
-            enabled={isPageFocused || shouldPrefetch}
-            feed={feed}
-            feedParams={feedParams}
-            pollInterval={POLL_FREQ}
-            disablePoll={hasNew || !isPageFocused}
-            scrollElRef={scrollElRef}
-            onScrolledDownChange={setIsScrolledDown}
-            onHasNew={setHasNew}
-            renderEmptyState={renderEmptyState}
-            renderEndOfFeed={renderEndOfFeed}
-            headerOffset={headerOffset}
-            savedFeedConfig={savedFeedConfig}
-            isVideoFeed={isVideoFeed}
-          />
+          
+          {aiModeEnabled ? (
+            // Show AI-curated feed when in AI mode
+            <PostFeed
+              testID={testID ? `${testID}-feed-ai` : undefined}
+              enabled={isPageFocused || shouldPrefetch}
+              feed="ai-mode-feed" // Special identifier for AI mode
+              feedParams={{
+                aiMode: true, // Signal to the feed that we're in AI mode
+                ...feedParams
+              }}
+              pollInterval={POLL_FREQ}
+              disablePoll={hasNew || !isPageFocused}
+              scrollElRef={scrollElRef}
+              onScrolledDownChange={setIsScrolledDown}
+              onHasNew={setHasNew}
+              renderEmptyState={renderEmptyState}
+              renderEndOfFeed={renderEndOfFeed}
+              headerOffset={headerOffset}
+              savedFeedConfig={savedFeedConfig}
+              isVideoFeed={isVideoFeed}
+            />
+          ) : (
+            // Show normal feed when not in AI mode
+            <PostFeed
+              testID={testID ? `${testID}-feed` : undefined}
+              enabled={isPageFocused || shouldPrefetch}
+              feed={feed}
+              feedParams={feedParams}
+              pollInterval={POLL_FREQ}
+              disablePoll={hasNew || !isPageFocused}
+              scrollElRef={scrollElRef}
+              onScrolledDownChange={setIsScrolledDown}
+              onHasNew={setHasNew}
+              renderEmptyState={renderEmptyState}
+              renderEndOfFeed={renderEndOfFeed}
+              headerOffset={headerOffset}
+              savedFeedConfig={savedFeedConfig}
+              isVideoFeed={isVideoFeed}
+            />
+          )}
         </FeedFeedbackProvider>
       </MainScrollProvider>
       {(isScrolledDown || hasNew) && (

@@ -14,14 +14,14 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   private curatedFeedId: string | null = null
   private curatedPostUris: Set<string> = new Set()
   private isCurating: boolean = false
-  private feedParams: {sourceFeed: string} // To make this more appropriate to the actual spec, we don't just do it as-is; we want it to take its source posts from the user's followed feeds (if they have none it'll just be whats-hot ofc). But we want to narrow it already. We don't want to just have a source feed we want all of them to be the "source" and to make more in the background.
+  private feedParams: {sourceFeed: string; aiMode?: boolean} // Added aiMode flag to support AI mode
 
   constructor({
     agent,
     feedParams,
   }: {
     agent: BskyAgent
-    feedParams: {sourceFeed: string}
+    feedParams: {sourceFeed: string; aiMode?: boolean}
   }) {
     this.agent = agent
     this.feedParams = feedParams
@@ -37,6 +37,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
     console.log('===== LLM CURATED API - FETCH STARTED =====');
     console.log('LLM CURATED API - fetch called with cursor:', cursor || 'none', 'limit:', limit);
     console.log('LLM CURATED API - Source feed:', this.feedParams.sourceFeed);
+    console.log('LLM CURATED API - AI Mode:', this.feedParams.aiMode ? 'enabled' : 'disabled');
     console.log('LLM CURATED API - Current feed state:', {
       hasProfile: !!this.userProfile,
       curatedFeedId: this.curatedFeedId || 'none',
@@ -44,6 +45,11 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       curatedPostUrisCount: this.curatedPostUris.size,
       isCurating: this.isCurating
     });
+    
+    // Special handling for AI mode
+    if (this.feedParams.aiMode) {
+      return this.fetchAIModeFeed({cursor, limit})
+    }
     
     // If we don't have a user profile yet, try to get it
     if (!this.userProfile) {
@@ -309,5 +315,85 @@ export class LLMCuratedFeedAPI implements FeedAPI {
     }
     
     return undefined
+  }
+  
+  /**
+   * Fetch feed in AI Mode
+   * Uses the feed bank managed by the llmFeedService to provide AI-curated posts
+   */
+  private async fetchAIModeFeed({
+    cursor,
+    limit,
+  }: {
+    cursor?: string
+    limit: number
+  }): Promise<FeedAPIResponse> {
+    console.log('===== LLM CURATED API - FETCH AI MODE FEED =====');
+    
+    // If this is the first request or we're refreshing, get a new feed from the bank
+    if (!cursor) {
+      // Get the next available feed from the bank
+      console.log('LLM CURATED API - Getting next feed from bank...');
+      const posts = llmFeedService.getNextFeedFromBank();
+      
+      if (!posts || posts.length === 0) {
+        console.log('LLM CURATED API - No feeds available in bank, returning empty feed');
+        return { cursor: undefined, feed: [] }
+      }
+      
+      console.log(`LLM CURATED API - Got feed with ${posts.length} posts from bank`);
+      
+      // We need to convert text posts back to FeedViewPost objects
+      // For now, since we don't have a direct way to do this, we'll try to match with the posts
+      // in the raw feed by content, or fetch a new raw feed if needed
+      
+      try {
+        // Get a fresh feed to match against if we don't have one
+        if (this.rawFeed.length === 0) {
+          console.log('LLM CURATED API - Fetching fresh source feed to match posts against');
+          const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
+            feed: this.feedParams.sourceFeed,
+            limit: 100, // Get more posts to increase match chances
+          });
+          
+          this.rawFeed = sourceFeedResult.data.feed;
+          console.log(`LLM CURATED API - Fetched ${this.rawFeed.length} posts from source feed`);
+        }
+        
+        // Match the curated post texts to actual posts in the raw feed
+        const matchedPosts: BskyFeedViewPost[] = [];
+        
+        for (const postText of posts) {
+          // Find a post with matching text
+          const matchingPost = this.rawFeed.find(post => {
+            const record = post.post.record as any;
+            return record?.text === postText;
+          });
+          
+          if (matchingPost) {
+            matchedPosts.push(matchingPost);
+          }
+        }
+        
+        console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${posts.length} curated posts`);
+        
+        // Return the matched posts, with pagination if needed
+        const responseSlice = matchedPosts.slice(0, limit);
+        const nextCursor = matchedPosts.length > limit ? limit.toString() : undefined;
+        
+        return {
+          cursor: nextCursor,
+          feed: responseSlice,
+        }
+      } catch (error) {
+        console.error('LLM CURATED API - Error fetching AI mode feed:', error);
+        return { cursor: undefined, feed: [] }
+      }
+    } else {
+      // For subsequent pages, we would use the cursor to get more results
+      // For now we'll just return an empty array since we're not handling pagination yet
+      console.log('LLM CURATED API - No additional AI feed pages available');
+      return { cursor: undefined, feed: [] }
+    }
   }
 }

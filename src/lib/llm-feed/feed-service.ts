@@ -14,10 +14,23 @@ const FEED_CACHE_EXPIRY = 1000 * 60 * 15 // 15 minutes
 // This helps isolate issues by avoiding web worker complications
 const DEBUG_BYPASS_WORKER = true
 
+// Constants for AI mode
+const FEED_BANK_SIZE_LIMIT = 5 // Maximum number of feeds to keep in the bank
+const FEED_BANK_EXPIRY = 1000 * 60 * 60 // 1 hour
+const AI_MODE_LOOP_INTERVAL = 5000 // 5 seconds
+
 // Feed cache type
 interface CachedFeed {
   posts: string[]
   timestamp: number
+}
+
+// Feed bank item type
+interface FeedBankItem {
+  feedId: string
+  posts: string[]
+  timestamp: number
+  consumed: boolean
 }
 
 // Event types for the service
@@ -25,6 +38,8 @@ export type FeedServiceEvents = {
   'feed-updated': (feedId: string, posts: string[]) => void
   'feed-error': (error: string) => void
   'feed-processing': (isProcessing: boolean) => void
+  'ai-mode-changed': (enabled: boolean) => void
+  'feed-bank-updated': (feedBank: FeedBankItem[]) => void
 }
 
 class LLMFeedService {
@@ -33,6 +48,10 @@ class LLMFeedService {
   private feedCache: Map<string, CachedFeed> = new Map()
   private isProcessing = false
   private events = new EventEmitter<FeedServiceEvents>()
+  private aiModeEnabled = false
+  private feedBank: FeedBankItem[] = []
+  private aiModeLoopTimer: NodeJS.Timeout | null = null
+  private seenPostUris = new Set<string>()
 
   constructor() {
     this.initWorker()
@@ -323,6 +342,335 @@ class LLMFeedService {
   // Clear all cached feeds
   public clearAllCaches() {
     this.feedCache.clear()
+  }
+  
+  // AI Mode methods
+  
+  /**
+   * Enable or disable AI mode
+   * When enabled, the service will continuously generate AI-curated feeds
+   */
+  public setAIMode(enabled: boolean) {
+    if (this.aiModeEnabled === enabled) return
+    
+    console.log(`FEED SERVICE - AI mode ${enabled ? 'enabled' : 'disabled'}`);
+    this.aiModeEnabled = enabled
+    
+    if (enabled) {
+      this.startAIModeLoop()
+    } else {
+      this.stopAIModeLoop()
+    }
+    
+    this.events.emit('ai-mode-changed', enabled)
+  }
+  
+  /**
+   * Check if AI mode is enabled
+   */
+  public isAIModeEnabled(): boolean {
+    return this.aiModeEnabled
+  }
+  
+  /**
+   * Start the background loop for AI mode
+   */
+  private startAIModeLoop() {
+    if (this.aiModeLoopTimer) {
+      clearInterval(this.aiModeLoopTimer)
+    }
+    
+    console.log('FEED SERVICE - Starting AI mode loop');
+    
+    // Immediately run the loop once
+    this.runAIModeLoop()
+    
+    // Then set up the regular interval
+    this.aiModeLoopTimer = setInterval(() => {
+      this.runAIModeLoop()
+    }, AI_MODE_LOOP_INTERVAL)
+  }
+  
+  /**
+   * Stop the background loop for AI mode
+   */
+  private stopAIModeLoop() {
+    console.log('FEED SERVICE - Stopping AI mode loop');
+    
+    if (this.aiModeLoopTimer) {
+      clearInterval(this.aiModeLoopTimer)
+      this.aiModeLoopTimer = null
+    }
+  }
+  
+  /**
+   * The main AI mode loop logic
+   * - Checks if the feed bank needs to be replenished
+   * - Triggers feed curation if needed
+   * - Updates user profile if needed
+   */
+  private async runAIModeLoop() {
+    if (!this.aiModeEnabled || this.isProcessing) {
+      return
+    }
+    
+    try {
+      // Check if we need to add more feeds to the bank
+      if (this.shouldReplenishFeedBank()) {
+        console.log('FEED SERVICE - Feed bank needs replenishment');
+        await this.replenishFeedBank()
+      } else {
+        console.log('FEED SERVICE - Feed bank is adequately stocked');
+      }
+      
+      // Future: Update user profile based on recent interactions
+      // await this.updateUserProfile()
+      
+    } catch (error) {
+      console.error('FEED SERVICE - Error in AI mode loop:', error)
+    }
+  }
+  
+  /**
+   * Check if the feed bank needs replenishment
+   */
+  private shouldReplenishFeedBank(): boolean {
+    // Clean expired feeds from the bank
+    this.cleanFeedBank()
+    
+    // Check if we have enough valid feeds
+    const validFeeds = this.feedBank.filter(feed => !feed.consumed)
+    return validFeeds.length < FEED_BANK_SIZE_LIMIT
+  }
+  
+  /**
+   * Clean expired feeds from the feed bank
+   */
+  private cleanFeedBank() {
+    const now = Date.now()
+    const initialLength = this.feedBank.length
+    
+    this.feedBank = this.feedBank.filter(feed => {
+      return (now - feed.timestamp) < FEED_BANK_EXPIRY
+    })
+    
+    if (initialLength !== this.feedBank.length) {
+      console.log(`FEED SERVICE - Cleaned feed bank, removed ${initialLength - this.feedBank.length} expired feeds`);
+      this.events.emit('feed-bank-updated', this.feedBank)
+    }
+  }
+  
+  /**
+   * Replenish the feed bank with a new curated feed
+   * This collects posts from multiple feeds and creates an AI-curated feed
+   */
+  private async replenishFeedBank() {
+    if (this.isProcessing) {
+      console.log('FEED SERVICE - Feed curation already in progress, skipping replenishment');
+      return;
+    }
+    
+    try {
+      console.log('FEED SERVICE - Starting feed bank replenishment');
+      
+      // Use the agent from state
+      const {agent} = await import('#/state/session');
+      if (!agent.hasSession) {
+        console.error('FEED SERVICE - No active session, cannot replenish feed bank');
+        return;
+      }
+      
+      // Get the user's preferred feeds
+      const {usePreferencesQuery} = await import('#/state/queries/preferences');
+      const preferences = usePreferencesQuery.getState();
+      
+      if (!preferences) {
+        console.error('FEED SERVICE - No preferences available, cannot replenish feed bank');
+        return;
+      }
+      
+      // Collect posts from random feeds
+      const savedFeeds = preferences.savedFeeds.filter(f => 
+        f.type === 'feed' || f.type === 'list'
+      );
+      
+      if (savedFeeds.length === 0) {
+        console.error('FEED SERVICE - No saved feeds available, cannot replenish feed bank');
+        return;
+      }
+      
+      // Randomly select up to 3 feeds
+      const shuffledFeeds = [...savedFeeds].sort(() => Math.random() - 0.5);
+      const selectedFeeds = shuffledFeeds.slice(0, Math.min(3, shuffledFeeds.length));
+      
+      console.log(`FEED SERVICE - Selected ${selectedFeeds.length} feeds for collecting posts`);
+      
+      // Collect posts from each feed
+      const allPosts: AppBskyFeedDefs.FeedViewPost[] = [];
+      
+      for (const feed of selectedFeeds) {
+        try {
+          console.log(`FEED SERVICE - Fetching posts from feed: ${feed.value}`);
+          
+          // Use a different approach based on feed type
+          let result;
+          if (feed.type === 'feed') {
+            result = await agent.app.bsky.feed.getFeed({
+              feed: feed.value,
+              limit: 30,
+            });
+          } else if (feed.type === 'list') {
+            result = await agent.app.bsky.feed.getListFeed({
+              list: feed.value,
+              limit: 30,
+            });
+          }
+          
+          if (result?.data?.feed) {
+            allPosts.push(...result.data.feed);
+            console.log(`FEED SERVICE - Added ${result.data.feed.length} posts from ${feed.value}`);
+          }
+        } catch (error) {
+          console.error(`FEED SERVICE - Error fetching feed ${feed.value}:`, error);
+        }
+      }
+      
+      // Deduplicate posts
+      const dedupedPosts = this.deduplicatePosts(allPosts);
+      console.log(`FEED SERVICE - Collected ${dedupedPosts.length} unique posts from feeds`);
+      
+      if (dedupedPosts.length < 10) {
+        console.warn('FEED SERVICE - Not enough posts collected for curation');
+        return;
+      }
+      
+      // Get the user profile
+      const {getCurrentUserProfile} = await import('./user-profile');
+      const profile = await getCurrentUserProfile(agent);
+      
+      if (!profile) {
+        console.error('FEED SERVICE - Could not get user profile for feed curation');
+        return;
+      }
+      
+      // Extract post texts
+      const postTexts = dedupedPosts.map(post => {
+        const record = post.post.record as AppBskyFeedPost.Record;
+        return record.text;
+      });
+      
+      // Curate the feed
+      this.setProcessing(true);
+      
+      try {
+        // Use the feed curator directly since we're not exposing this to the UI
+        if (!this.curator) {
+          console.error('FEED SERVICE - Feed curator not initialized');
+          this.setProcessing(false);
+          return;
+        }
+        
+        const curatedFeed = await this.curator.curateFeed(
+          profile.subscriptions,
+          postTexts,
+          profile.personality,
+          profile.languages
+        );
+        
+        console.log(`FEED SERVICE - Successfully curated feed with ${curatedFeed.length} posts`);
+        
+        // Generate a feed ID
+        const feedId = `ai-feed-bank-${Date.now()}`;
+        
+        // Add to feed bank
+        this.addToFeedBank(feedId, curatedFeed);
+        
+        this.setProcessing(false);
+      } catch (error) {
+        console.error('FEED SERVICE - Error during feed curation:', error);
+        this.setProcessing(false);
+      }
+      
+    } catch (error) {
+      console.error('FEED SERVICE - Error replenishing feed bank:', error);
+      this.setProcessing(false);
+    }
+  }
+  
+  /**
+   * Get the next available feed from the feed bank
+   * Returns null if no feeds are available
+   */
+  public getNextFeedFromBank(): string[] | null {
+    this.cleanFeedBank()
+    
+    // Find the oldest unconsumed feed
+    const nextFeed = this.feedBank
+      .filter(feed => !feed.consumed)
+      .sort((a, b) => a.timestamp - b.timestamp)[0]
+    
+    if (!nextFeed) {
+      console.log('FEED SERVICE - No feeds available in feed bank');
+      return null
+    }
+    
+    // Mark as consumed
+    nextFeed.consumed = true
+    console.log(`FEED SERVICE - Retrieved feed from bank: ${nextFeed.feedId}`);
+    
+    // Notify listeners
+    this.events.emit('feed-bank-updated', this.feedBank)
+    
+    return nextFeed.posts
+  }
+  
+  /**
+   * Add a curated feed to the feed bank
+   */
+  public addToFeedBank(feedId: string, posts: string[]) {
+    this.feedBank.push({
+      feedId,
+      posts,
+      timestamp: Date.now(),
+      consumed: false
+    })
+    
+    // Keep the bank size under the limit
+    if (this.feedBank.length > FEED_BANK_SIZE_LIMIT) {
+      // Remove the oldest consumed feed, or the oldest feed if all are unconsumed
+      const consumedFeeds = this.feedBank.filter(feed => feed.consumed)
+      if (consumedFeeds.length > 0) {
+        // Sort consumed feeds by timestamp (oldest first)
+        const oldestConsumed = consumedFeeds.sort((a, b) => a.timestamp - b.timestamp)[0]
+        this.feedBank = this.feedBank.filter(feed => feed.feedId !== oldestConsumed.feedId)
+      } else {
+        // Remove the oldest feed
+        this.feedBank.sort((a, b) => a.timestamp - b.timestamp)
+        this.feedBank.shift()
+      }
+    }
+    
+    console.log(`FEED SERVICE - Added feed to bank: ${feedId}, bank size: ${this.feedBank.length}`);
+    this.events.emit('feed-bank-updated', this.feedBank)
+  }
+  
+  /**
+   * Helper function to deduplicate posts by URI
+   */
+  public deduplicatePosts(posts: AppBskyFeedDefs.FeedViewPost[]): AppBskyFeedDefs.FeedViewPost[] {
+    const deduplicated: AppBskyFeedDefs.FeedViewPost[] = []
+    const seenUris = new Set<string>()
+    
+    for (const post of posts) {
+      const uri = post.post.uri
+      if (!seenUris.has(uri) && !this.seenPostUris.has(uri)) {
+        seenUris.add(uri)
+        this.seenPostUris.add(uri)
+        deduplicated.push(post)
+      }
+    }
+    
+    return deduplicated
   }
 }
 
