@@ -19,6 +19,7 @@ import {useSetHomeBadge} from '#/state/home-badge'
 import {SavedFeedSourceInfo} from '#/state/queries/feed'
 import {RQKEY as FEED_RQKEY} from '#/state/queries/post-feed'
 import {FeedDescriptor, FeedParams} from '#/state/queries/post-feed'
+import {usePreferencesQuery} from '#/state/queries/preferences'
 import {truncateAndInvalidate} from '#/state/queries/util'
 import {useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
@@ -130,8 +131,27 @@ export function FeedPage({
   const shouldPrefetch = isNative && isPageAdjacent
   const showLLMCurationButton = !feed.startsWith('llm-curated') && feedInfo && isPageFocused
   
-  // Import the LLM feed service
+  // Import dependencies
   const {llmFeedService} = require('#/lib/llm-feed/feed-service')
+  
+  // Get agent and preferences from existing hook
+  const {agent} = useSession()
+  const {data: preferences} = usePreferencesQuery()
+  
+  // Inject dependencies into the service
+  React.useEffect(() => {
+    if (agent) {
+      console.log('FeedPage: Injecting agent into feed service');
+      llmFeedService.setAgent(agent);
+    }
+  }, [agent]);
+  
+  React.useEffect(() => {
+    if (preferences) {
+      console.log('FeedPage: Injecting preferences into feed service');
+      llmFeedService.setPreferences(preferences);
+    }
+  }, [preferences]);
   
   // Track AI mode state
   const [aiModeEnabled, setAiModeEnabled] = React.useState(() => 

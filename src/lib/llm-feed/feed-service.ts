@@ -52,9 +52,31 @@ class LLMFeedService {
   private feedBank: FeedBankItem[] = []
   private aiModeLoopTimer: NodeJS.Timeout | null = null
   private seenPostUris = new Set<string>()
+  
+  // Dependencies that will be injected from React components
+  private agent: any = null
+  private preferences: any = null
 
   constructor() {
     this.initWorker()
+  }
+  
+  /**
+   * Set the agent dependency
+   * Should be called from a React component that has access to the agent
+   */
+  public setAgent(agent: any) {
+    console.log('FEED SERVICE - Agent set:', !!agent);
+    this.agent = agent;
+  }
+  
+  /**
+   * Set the preferences dependency
+   * Should be called from a React component that has access to user preferences
+   */
+  public setPreferences(preferences: any) {
+    console.log('FEED SERVICE - Preferences set:', !!preferences);
+    this.preferences = preferences;
   }
 
   private initWorker() {
@@ -515,20 +537,17 @@ class LLMFeedService {
     try {
       console.log('FEED SERVICE - Starting feed bank replenishment');
       
-      // Use the agent from state
-      const sessionModule = await import('#/state/session');
-      console.log('FEED SERVICE - Session module imported:', !!sessionModule);
-      
-      if (!sessionModule || !sessionModule.agent) {
-        console.error('FEED SERVICE - Session module or agent not available');
+      // Check if agent is available via dependency injection
+      console.log('FEED SERVICE - Checking for agent dependency');
+      if (!this.agent) {
+        console.error('FEED SERVICE - Agent dependency not set, cannot replenish feed bank');
+        console.error('FEED SERVICE - Make sure to call setAgent() from a React component');
         return;
       }
-      
-      const agent = sessionModule.agent;
-      console.log('FEED SERVICE - Agent available:', !!agent);
+      console.log('FEED SERVICE - Agent dependency available');
       
       // Check if agent has an active session
-      const hasSession = agent && agent.session;
+      const hasSession = this.agent && this.agent.session;
       console.log('FEED SERVICE - Agent has session:', !!hasSession);
       
       if (!hasSession) {
@@ -536,33 +555,19 @@ class LLMFeedService {
         return;
       }
       
-      // Get the user's preferred feeds
-      console.log('FEED SERVICE - Importing preferences module');
-      const preferencesModule = await import('#/state/queries/preferences');
-      console.log('FEED SERVICE - Preferences module imported:', !!preferencesModule);
-      
-      if (!preferencesModule || !preferencesModule.usePreferencesQuery) {
-        console.error('FEED SERVICE - Preferences module not available');
+      // Check if preferences are available via dependency injection
+      console.log('FEED SERVICE - Checking for preferences dependency');
+      if (!this.preferences) {
+        console.error('FEED SERVICE - Preferences dependency not set, cannot replenish feed bank');
+        console.error('FEED SERVICE - Make sure to call setPreferences() from a React component');
         return;
       }
-      
-      const usePreferencesQuery = preferencesModule.usePreferencesQuery;
-      console.log('FEED SERVICE - usePreferencesQuery available:', !!usePreferencesQuery);
-      console.log('FEED SERVICE - usePreferencesQuery.getState available:', !!usePreferencesQuery.getState);
-      
-      // Get preferences state
-      const preferences = usePreferencesQuery.getState();
-      console.log('FEED SERVICE - Preferences:', !!preferences);
-      
-      if (!preferences) {
-        console.error('FEED SERVICE - No preferences available, cannot replenish feed bank');
-        return;
-      }
+      console.log('FEED SERVICE - Preferences dependency available');
       
       // Collect posts from random feeds
-      console.log('FEED SERVICE - Total saved feeds:', preferences.savedFeeds?.length || 0);
+      console.log('FEED SERVICE - Total saved feeds:', this.preferences.savedFeeds?.length || 0);
       
-      const savedFeeds = (preferences.savedFeeds || []).filter(f => 
+      const savedFeeds = (this.preferences.savedFeeds || []).filter(f => 
         f.type === 'feed' || f.type === 'list'
       );
       
@@ -591,12 +596,12 @@ class LLMFeedService {
           // Use a different approach based on feed type
           let result;
           if (feed.type === 'feed') {
-            result = await agent.app.bsky.feed.getFeed({
+            result = await this.agent.app.bsky.feed.getFeed({
               feed: feed.value,
               limit: 30,
             });
           } else if (feed.type === 'list') {
-            result = await agent.app.bsky.feed.getListFeed({
+            result = await this.agent.app.bsky.feed.getListFeed({
               list: feed.value,
               limit: 30,
             });
@@ -634,8 +639,8 @@ class LLMFeedService {
       }
       
       const getCurrentUserProfile = userProfileModule.getCurrentUserProfile;
-      console.log('FEED SERVICE - Calling getCurrentUserProfile');
-      const profile = await getCurrentUserProfile(agent);
+      console.log('FEED SERVICE - Calling getCurrentUserProfile with injected agent');
+      const profile = await getCurrentUserProfile(this.agent);
       console.log('FEED SERVICE - Got user profile:', !!profile);
       
       if (!profile) {
