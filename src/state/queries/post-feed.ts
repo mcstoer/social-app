@@ -55,6 +55,7 @@ type ListUri = string
 
 export type FeedDescriptor =
   | 'following'
+  | 'ai-mode-feed'  // Special feed descriptor for AI mode
   | `author|${ActorDid}|${AuthorFilter}`
   | `feedgen|${FeedUri}`
   | `likes|${ActorDid}`
@@ -64,6 +65,7 @@ export interface FeedParams {
   mergeFeedEnabled?: boolean
   mergeFeedSources?: string[]
   feedCacheKey?: 'discover' | 'explore' | undefined
+  aiMode?: boolean  // Flag to indicate if this is an AI-mode feed
 }
 
 type RQPageParam = {cursor: string | undefined; api: FeedAPI} | undefined
@@ -453,8 +455,22 @@ function createApi({
   agent: BskyAgent
   enableFollowingToDiscoverFallback: boolean
 }) {
+  // Check if this is the AI mode feed
+  if (feedDesc === 'ai-mode-feed') {
+    // For AI mode, we use the LLM curated API with the AI mode flag
+    const {LLMCuratedFeedAPI} = require('#/lib/api/feed/llm-curated')
+    // Use a default source feed for AI mode, with the aiMode flag set
+    const sourceFeed = 'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot'
+    return new LLMCuratedFeedAPI({
+      agent,
+      feedParams: {
+        sourceFeed,
+        aiMode: true 
+      },
+    })
+  }
   // Check if this is a special llm-curated feed
-  if (feedDesc.startsWith('llm-curated')) {
+  else if (feedDesc.startsWith('llm-curated')) {
     // The format is 'llm-curated|sourceFeedUri'
     const [_, sourceFeed] = feedDesc.split('|')
     // Import dynamically to avoid circular dependencies
