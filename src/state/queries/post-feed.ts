@@ -236,16 +236,24 @@ export function usePostFeedQuery(
       // Special handling for AI Mode feed to ensure pagination always works
       if (feedDesc === 'ai-mode-feed') {
         console.log('POST FEED QUERY - AI Mode feed getNextPageParam handling');
-        // For AI mode, we always want pagination to work to check for new feeds
-        if (lastPage.cursor) {
+        
+        // For AI mode, we use numeric cursors to ensure pagination works reliably
+        // We return a page param even for cursor '0' to trigger continued pagination
+        if (lastPage.cursor !== undefined) {
           console.log('POST FEED QUERY - AI Mode returning cursor:', lastPage.cursor);
           return {
             api: lastPage.api,
             cursor: lastPage.cursor,
           };
         }
+        
+        // Only when cursor is explicitly undefined (not '0', not null) do we stop pagination
+        // This prevents pagination from trying repeatedly when we've explicitly signaled the end
+        console.log('POST FEED QUERY - AI Mode reached end of pagination (undefined cursor)');
+        return undefined;
       }
       
+      // Standard handling for non-AI feeds
       return lastPage.cursor
         ? {
             api: lastPage.api,

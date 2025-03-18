@@ -28,14 +28,14 @@ interface CachedFeed {
 // Feed bank item type
 interface FeedBankItem {
   feedId: string
-  posts: string[]
+  postIds: string[] // Store post IDs instead of text content
   timestamp: number
   consumed: boolean
 }
 
 // Event types for the service
 export type FeedServiceEvents = {
-  'feed-updated': (feedId: string, posts: string[]) => void
+  'feed-updated': (feedId: string, postIds: string[]) => void
   'feed-error': (error: string) => void
   'feed-processing': (isProcessing: boolean) => void
   'ai-mode-changed': (enabled: boolean) => void
@@ -243,12 +243,18 @@ class LLMFeedService {
       throw new Error('Feed curation already in progress')
     }
     
-    // Extract post text from the feed posts
-    console.log('FEED SERVICE - Extracting post text for curation...');
-    const postTexts = rawPosts.map(post => {
+    // Create CuratorPost objects with ID and text
+    console.log('FEED SERVICE - Creating CuratorPost objects with ID and text...');
+    const curatorPosts = rawPosts.map(post => {
       const record = post.post.record as AppBskyFeedPost.Record
-      return record.text
+      return {
+        id: post.post.uri,
+        text: record?.text || `Post from ${post.post.author.handle}`
+      }
     })
+    
+    // Filter out any posts without text for curation
+    const validCuratorPosts = curatorPosts.filter(post => !!post.text)
     
     // Generate a feed ID based on the user profile
     const feedId = `llm-feed-${profile.name}-${Date.now()}`
@@ -295,28 +301,35 @@ class LLMFeedService {
         console.log('FEED SERVICE - Calling curator with profile:', {
           name: profile.name,
           subscriptions: profile.subscriptions.length,
-          postTexts: postTexts.length,
+          validCuratorPosts: validCuratorPosts.length,
         });
         
-        const curatedFeed = await this.curator.curateFeed(
+        // Only proceed if we have valid posts
+        if (validCuratorPosts.length === 0) {
+          console.error('FEED SERVICE - No valid posts for curation!');
+          this.setProcessing(false);
+          throw new Error('No valid posts for curation');
+        }
+        
+        const curatedPostIds = await this.curator.curateFeed(
           profile.subscriptions,
-          postTexts,
+          validCuratorPosts,
           profile.personality,
           profile.languages
         )
         
-        console.log('FEED SERVICE - Curator returned', curatedFeed.length, 'posts');
+        console.log('FEED SERVICE - Curator returned', curatedPostIds.length, 'post IDs');
         
         // Cache the result
         this.feedCache.set(feedId, {
-          posts: curatedFeed,
+          posts: curatedPostIds,
           timestamp: Date.now()
         })
         console.log('FEED SERVICE - Results cached with ID:', feedId);
         
         // Emit feed updated event
-        this.events.emit('feed-updated', feedId, curatedFeed)
-        console.log('FEED SERVICE - Emitted feed-updated event with', curatedFeed.length, 'posts');
+        this.events.emit('feed-updated', feedId, curatedPostIds)
+        console.log('FEED SERVICE - Emitted feed-updated event with', curatedPostIds.length, 'post IDs');
         
         this.setProcessing(false)
         console.log('FEED SERVICE - Processing set to false, curation complete');
@@ -680,13 +693,16 @@ class LLMFeedService {
         languages: profile.languages || 'none',
       });
       
-      // Extract post texts
-      console.log('FEED SERVICE - Extracting post texts');
-      const postTexts = dedupedPosts.map(post => {
+      // Create CuratorPost objects with ID and text
+      console.log('FEED SERVICE - Creating CuratorPost objects with ID and text');
+      const curatorPosts = dedupedPosts.map(post => {
         const record = post.post.record as AppBskyFeedPost.Record;
-        return record.text;
+        return {
+          id: post.post.uri,
+          text: record.text
+        };
       });
-      console.log(`FEED SERVICE - Extracted ${postTexts.length} post texts`);
+      console.log(`FEED SERVICE - Created ${curatorPosts.length} curator posts`);
       
       // Curate the feed
       console.log('FEED SERVICE - Setting processing flag to true');
@@ -704,20 +720,20 @@ class LLMFeedService {
         console.log('FEED SERVICE - Starting feed curation process');
         console.log('FEED SERVICE - Inputs:', {
           subscriptionsCount: profile.subscriptions.length,
-          postTextsCount: postTexts.length,
+          curatorPostsCount: curatorPosts.length,
           personalityLength: profile.personality.length,
         });
         
-        const curatedFeed = await this.curator.curateFeed(
+        const curatedPostIds = await this.curator.curateFeed(
           profile.subscriptions,
-          postTexts,
+          curatorPosts,
           profile.personality,
           profile.languages
         );
         
-        console.log(`FEED SERVICE - Successfully curated feed with ${curatedFeed.length} posts`);
-        if (curatedFeed.length > 0) {
-          console.log('FEED SERVICE - First curated post preview:', curatedFeed[0].substring(0, 50) + '...');
+        console.log(`FEED SERVICE - Successfully curated feed with ${curatedPostIds.length} post IDs`);
+        if (curatedPostIds.length > 0) {
+          console.log('FEED SERVICE - First curated post ID:', curatedPostIds[0]);
         }
         
         // Generate a feed ID
@@ -726,7 +742,7 @@ class LLMFeedService {
         
         // Add to feed bank
         console.log('FEED SERVICE - Adding feed to bank');
-        this.addToFeedBank(feedId, curatedFeed);
+        this.addToFeedBank(feedId, curatedPostIds);
         
         console.log('FEED SERVICE - Setting processing flag to false');
         this.setProcessing(false);
@@ -766,22 +782,48 @@ class LLMFeedService {
     if (unconsumedFeeds.length === 0) {
       console.log('FEED SERVICE - No unconsumed feeds available');
       
-      // If we have no unconsumed feeds but have feeds in the bank, reset the consumed flag
-      // on the oldest feed to make it available again
+      // If all feeds are consumed but we still have feeds in the bank,
+      // mark some feeds as unconsumed to allow recycling
       if (this.feedBank.length > 0) {
-        console.log('FEED SERVICE - Resetting consumed flag on oldest feed to make it available');
-        // Sort all feeds by timestamp to find the oldest
+        console.log('FEED SERVICE - Recycling consumed feeds since all are consumed');
+        
+        // Reset consumed flags on oldest half of the feeds to ensure variety
         const sortedFeeds = [...this.feedBank].sort((a, b) => a.timestamp - b.timestamp);
-        const oldestFeed = sortedFeeds[0];
+        const recycleCount = Math.max(1, Math.floor(sortedFeeds.length / 2));
         
-        // Reset the consumed flag
-        oldestFeed.consumed = false;
+        console.log(`FEED SERVICE - Will recycle ${recycleCount} oldest feeds`);
         
-        console.log(`FEED SERVICE - Reset consumed flag on feed ${oldestFeed.feedId}`);
-        console.log(`FEED SERVICE - Feed has ${oldestFeed.posts.length} posts`);
+        // Reset consumed flag on oldest feeds
+        for (let i = 0; i < recycleCount; i++) {
+          // Get the feed reference from the original feedBank array
+          const feedId = sortedFeeds[i].feedId;
+          const feedIndex = this.feedBank.findIndex(f => f.feedId === feedId);
+          
+          if (feedIndex >= 0) {
+            // Mark as unconsumed directly in the main feedBank array
+            this.feedBank[feedIndex].consumed = false;
+            console.log(`FEED SERVICE - Reset consumed flag on feed ${feedId} at index ${feedIndex}`);
+          }
+        }
         
-        // Return the posts from the oldest feed
-        return oldestFeed.posts;
+        // After resetting flags, find an unconsumed feed to return
+        const newUnconsumedFeeds = this.feedBank.filter(feed => !feed.consumed);
+        if (newUnconsumedFeeds.length > 0) {
+          // Choose the oldest recycled feed
+          const oldestFeed = newUnconsumedFeeds.sort((a, b) => a.timestamp - b.timestamp)[0];
+          console.log(`FEED SERVICE - Returning recycled feed ${oldestFeed.feedId} with ${oldestFeed.postIds.length} post IDs`);
+          
+          // Mark this one as consumed right away to prevent double-serving
+          const feedIndex = this.feedBank.findIndex(f => f.feedId === oldestFeed.feedId);
+          if (feedIndex >= 0) {
+            this.feedBank[feedIndex].consumed = true;
+          }
+          
+          // Notify listeners of state change
+          this.events.emit('feed-bank-updated', this.feedBank);
+          
+          return oldestFeed.postIds;
+        }
       }
       
       return null;
@@ -792,9 +834,10 @@ class LLMFeedService {
     console.log('FEED SERVICE - Sorted unconsumed feeds by age (oldest first)');
     sortedUnconsumed.forEach((feed, index) => {
       const age = Math.round((Date.now() - feed.timestamp) / 1000);
-      console.log(`FEED SERVICE - Feed ${index}: ID=${feed.feedId}, age=${age}s, postCount=${feed.posts.length}`);
+      console.log(`FEED SERVICE - Feed ${index}: ID=${feed.feedId}, age=${age}s, postCount=${feed.postIds.length}`);
     });
     
+    // Select the oldest feed for consumption
     const nextFeed = sortedUnconsumed[0];
     
     if (!nextFeed) {
@@ -802,41 +845,44 @@ class LLMFeedService {
       return null;
     }
     
-    // Mark as consumed
-    console.log(`FEED SERVICE - DEBUG - Marking feed as consumed: ${nextFeed.feedId}`);
-    console.log(`FEED SERVICE - DEBUG - Feed consumed status before: ${nextFeed.consumed}`);
-    nextFeed.consumed = true; 
-    console.log(`FEED SERVICE - DEBUG - Feed consumed status after: ${nextFeed.consumed}`);
-    
-    // Find the feed in the main feedBank and update its consumed status
+    // Get the feed directly from the feedBank to ensure we update the correct reference
     const feedBankIndex = this.feedBank.findIndex(f => f.feedId === nextFeed.feedId);
     if (feedBankIndex >= 0) {
+      // Mark as consumed directly in the feedBank array
+      console.log(`FEED SERVICE - DEBUG - Marking feed as consumed: ${nextFeed.feedId}`);
+      console.log(`FEED SERVICE - DEBUG - Feed consumed status before: ${this.feedBank[feedBankIndex].consumed}`);
+      
+      // Update consumed status in original array to ensure proper state tracking
       this.feedBank[feedBankIndex].consumed = true;
-      console.log(`FEED SERVICE - Updated consumed status in main feed bank at index ${feedBankIndex}`);
+      
+      console.log(`FEED SERVICE - DEBUG - Feed consumed status after: ${this.feedBank[feedBankIndex].consumed}`);
+      console.log(`FEED SERVICE - Updated consumed status in feed bank at index ${feedBankIndex}`);
     } else {
-      console.error(`FEED SERVICE - Could not find feed ${nextFeed.feedId} in main feed bank!`);
+      console.error(`FEED SERVICE - Could not find feed ${nextFeed.feedId} in feed bank!`);
+      // If we can't find the feed, something is wrong with our state - return null
+      return null;
     }
     
     // Log all feeds for debugging
     console.log('FEED SERVICE - DEBUG - All feeds after marking:');
     this.feedBank.forEach((feed, index) => {
-      console.log(`FEED SERVICE - DEBUG - Feed ${index}: ID=${feed.feedId}, consumed=${feed.consumed}, posts=${feed.posts.length}`);
+      console.log(`FEED SERVICE - DEBUG - Feed ${index}: ID=${feed.feedId}, consumed=${feed.consumed}, posts=${feed.postIds.length}`);
     });
     
     console.log(`FEED SERVICE - Retrieved feed from bank: ${nextFeed.feedId}`);
-    console.log(`FEED SERVICE - Feed post count: ${nextFeed.posts.length}`);
+    console.log(`FEED SERVICE - Feed post IDs count: ${nextFeed.postIds.length}`);
     console.log(`FEED SERVICE - Feed age: ${Math.round((Date.now() - nextFeed.timestamp) / 1000)}s`);
     
-    if (nextFeed.posts.length > 0) {
-      console.log('FEED SERVICE - Sample post:', nextFeed.posts[0].substring(0, 50) + '...');
+    if (nextFeed.postIds.length > 0) {
+      console.log('FEED SERVICE - Sample post ID:', nextFeed.postIds[0]);
     }
     
-    // Notify listeners
+    // Notify listeners of state change
     this.events.emit('feed-bank-updated', this.feedBank);
     console.log('FEED SERVICE - Notified listeners of bank update');
     
     console.log('===== FEED SERVICE - GET NEXT FEED FROM BANK COMPLETED =====');
-    return nextFeed.posts;
+    return nextFeed.postIds;
   }
   
   /**
@@ -869,16 +915,16 @@ class LLMFeedService {
     };
   }
   
-  public addToFeedBank(feedId: string, posts: string[]) {
+  public addToFeedBank(feedId: string, postIds: string[]) {
     console.log('===== FEED SERVICE - ADD TO FEED BANK =====');
     console.log(`FEED SERVICE - Adding feed to bank: ${feedId}`);
-    console.log(`FEED SERVICE - Posts count: ${posts.length}`);
+    console.log(`FEED SERVICE - Post IDs count: ${postIds.length}`);
     console.log('FEED SERVICE - Current bank size before adding:', this.feedBank.length);
     
     // Create new feed bank item
     const newFeedItem = {
       feedId,
-      posts,
+      postIds,
       timestamp: Date.now(),
       consumed: false
     };

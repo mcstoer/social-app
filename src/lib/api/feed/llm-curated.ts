@@ -15,7 +15,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   private userProfile: UserProfile | null = null
   private rawFeed: BskyFeedViewPost[] = []
   private curatedFeedId: string | null = null
-  private curatedPostUris: Set<string> = new Set()
+  private curatedPostIds: Set<string> = new Set()
   private isCurating: boolean = false
   private feedParams: {sourceFeed: string; aiMode?: boolean} // Added aiMode flag to support AI mode
 
@@ -59,7 +59,7 @@ export class LLMCuratedFeedAPI implements FeedAPI {
       hasProfile: !!this.userProfile,
       curatedFeedId: this.curatedFeedId || 'none',
       rawFeedLength: this.rawFeed.length,
-      curatedPostUrisCount: this.curatedPostUris.size,
+      curatedPostIdsCount: this.curatedPostIds?.size || 0,
       isCurating: this.isCurating
     });
     
@@ -227,20 +227,20 @@ export class LLMCuratedFeedAPI implements FeedAPI {
     }
   }
 
-  private processCuratedFeed(curatedPosts: string[]) {
-    console.log('LLM CURATED API - Processing curated feed with', curatedPosts.length, 'posts');
+  private processCuratedFeed(curatedPostIds: string[]) {
+    console.log('LLM CURATED API - Processing curated feed with', curatedPostIds.length, 'post IDs');
     
-    // Log a sample of the curated posts
-    if (curatedPosts.length > 0) {
-      console.log('LLM CURATED API - Curated posts sample (first 3):');
-      curatedPosts.slice(0, 3).forEach((text, idx) => {
-        console.log(`CURATED TEXT ${idx+1}: ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}`);
+    // Log a sample of the curated post IDs
+    if (curatedPostIds.length > 0) {
+      console.log('LLM CURATED API - Curated post IDs sample (first 3):');
+      curatedPostIds.slice(0, 3).forEach((id, idx) => {
+        console.log(`CURATED POST ID ${idx+1}: ${id}`);
       });
     }
     
-    // Store the URIs of posts that were selected by the LLM
-    this.curatedPostUris = new Set(curatedPosts)
-    console.log('LLM CURATED API - Stored', this.curatedPostUris.size, 'post texts in curatedPostUris set');
+    // Store the IDs of posts that were selected by the LLM
+    this.curatedPostIds = new Set(curatedPostIds)
+    console.log('LLM CURATED API - Stored', this.curatedPostIds.size, 'post IDs in curatedPostIds set');
     
     this.isCurating = false
     console.log('LLM CURATED API - Set isCurating to false');
@@ -249,52 +249,40 @@ export class LLMCuratedFeedAPI implements FeedAPI {
   private buildResponse(limit: number, cursor?: string): FeedAPIResponse {
     console.log('LLM CURATED API - Building response, limit:', limit, 'cursor:', cursor || 'none');
     console.log('LLM CURATED API - Raw feed length:', this.rawFeed.length);
-    console.log('LLM CURATED API - Curated post URIs count:', this.curatedPostUris.size);
+    console.log('LLM CURATED API - Curated post IDs count:', this.curatedPostIds?.size || 0);
     console.log('LLM CURATED API - Is curation in progress:', this.isCurating);
     
-    // If we have a curated feed, filter the raw feed based on the curated post URIs
+    // If we have a curated feed, filter the raw feed based on the curated post IDs
     let resultFeed: BskyFeedViewPost[] = []
     
-    if (this.curatedPostUris.size > 0) {
+    if (this.curatedPostIds && this.curatedPostIds.size > 0) {
       console.log('LLM CURATED API - Using curated feed filter logic');
       
-      // Log some raw feed samples with text contents to debug matching
+      // Log some raw feed samples to debug matching
       console.log('LLM CURATED API - Raw feed sample before filtering:');
       this.rawFeed.slice(0, 3).forEach((post, idx) => {
-        const record = post.post.record as any;
         console.log(`RAW POST ${idx+1}:`);
         console.log(`- URI: ${post.post.uri}`);
         console.log(`- Author: @${post.post.author.handle}`);
-        console.log(`- Text: ${record?.text || 'No text'}`);
-        console.log(`- Will match: ${record?.text && this.curatedPostUris.has(record.text)}`);
+        console.log(`- Will match: ${this.curatedPostIds.has(post.post.uri)}`);
       });
       
       // Track matching stats
       let totalPostsChecked = 0;
-      let postsWithText = 0;
       let postsMatchingCuration = 0;
       
-      // Filter to only include curated posts
-      // Keep the original post objects but filter based on text content
-      // Note: we're comparing by text content which is not ideal but works for prototype
+      // Filter to only include curated posts by URI
       resultFeed = this.rawFeed.filter(post => {
         totalPostsChecked++;
-        const record = post.post.record as any;
-        
-        if (record?.text) {
-          postsWithText++;
-          const matches = this.curatedPostUris.has(record.text);
-          if (matches) postsMatchingCuration++;
-          return matches;
-        }
-        return false;
+        const matches = this.curatedPostIds.has(post.post.uri);
+        if (matches) postsMatchingCuration++;
+        return matches;
       })
       
       console.log('LLM CURATED API - Filter stats:', {
         totalPostsChecked,
-        postsWithText,
         postsMatchingCuration,
-        percentMatched: postsWithText > 0 ? Math.round((postsMatchingCuration / postsWithText) * 100) + '%' : '0%'
+        percentMatched: totalPostsChecked > 0 ? Math.round((postsMatchingCuration / totalPostsChecked) * 100) + '%' : '0%'
       });
       
       // If we don't have any posts after filtering, use a subset of the raw feed 
@@ -393,37 +381,34 @@ export class LLMCuratedFeedAPI implements FeedAPI {
         console.error('LLM CURATED API - Feed service not available!');
         return { cursor: undefined, feed: [] };
       }
-      const posts = globalLLMFeedService.getNextFeedFromBank();
+      const postIds = globalLLMFeedService.getNextFeedFromBank();
       
-      if (!posts || posts.length === 0) {
+      if (!postIds || postIds.length === 0) {
         console.log('LLM CURATED API - No feeds available in bank, returning empty feed');
-        // No feeds available yet, just return an empty feed
-        // The UI will show loading state automatically
+        // No feeds available yet, just return an empty feed with a cursor to trigger pagination
         return { 
-          cursor: '0', // Return numeric cursor to trigger pagination
+          cursor: '0', 
           feed: [] 
         };
       }
       
-      console.log(`LLM CURATED API - Got feed with ${posts.length} posts from bank`);
-      
-      // We need to convert text posts back to FeedViewPost objects
-      // For now, since we don't have a direct way to do this, we'll try to match with the posts
-      // in the raw feed by content, or fetch a new raw feed if needed
+      console.log(`LLM CURATED API - Got feed with ${postIds.length} post IDs from bank`);
       
       try {
-        // Always fetch more posts to match against when in AI mode - this increases matching chances
+        // Collect posts from multiple sources to maximize matching chances
         console.log('LLM CURATED API - Fetching multiple source feeds to match posts against');
         
-        // Get first source
+        // Create an array to store all source posts for matching
+        let allSourcePosts: BskyFeedViewPost[] = [];
+        
+        // Get primary source feed
         console.log('LLM CURATED API - Fetching primary source feed:', this.feedParams.sourceFeed);
         const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
           feed: this.feedParams.sourceFeed,
           limit: 100,
         });
-        
-        this.rawFeed = sourceFeedResult.data.feed;
-        console.log(`LLM CURATED API - Fetched ${this.rawFeed.length} posts from source feed`);
+        allSourcePosts = [...sourceFeedResult.data.feed];
+        console.log(`LLM CURATED API - Fetched ${allSourcePosts.length} posts from source feed`);
         
         // Also get home timeline for better matching
         try {
@@ -433,137 +418,259 @@ export class LLMCuratedFeedAPI implements FeedAPI {
           });
           
           if (homeResult?.data?.feed) {
-            const existingUris = new Set(this.rawFeed.map(p => p.post.uri));
+            const existingUris = new Set(allSourcePosts.map(p => p.post.uri));
             const newPosts = homeResult.data.feed.filter(p => !existingUris.has(p.post.uri));
-            this.rawFeed = [...this.rawFeed, ...newPosts];
+            allSourcePosts = [...allSourcePosts, ...newPosts];
             console.log(`LLM CURATED API - Added ${newPosts.length} unique posts from home timeline`);
           }
         } catch (error) {
           console.error('LLM CURATED API - Error fetching home timeline:', error);
         }
         
-        // Match the curated post texts to actual posts in the raw feed
-        const matchedPosts: BskyFeedViewPost[] = [];
+        // Try fetching popular feeds to increase matching chances
+        try {
+          const popularFeedUris = [
+            'at://did:plc:z72i7hdynmk6r22z27h6tvur/app.bsky.feed.generator/whats-hot',
+            'at://did:plc:jfhpnnst6flqway4eaeqzj2a/app.bsky.feed.generator/for-science'
+          ];
+          
+          for (const feedUri of popularFeedUris) {
+            if (feedUri !== this.feedParams.sourceFeed) {
+              const feedResult = await this.agent.app.bsky.feed.getFeed({
+                feed: feedUri,
+                limit: 50,
+              });
+              
+              if (feedResult?.data?.feed) {
+                const existingUris = new Set(allSourcePosts.map(p => p.post.uri));
+                const newPosts = feedResult.data.feed.filter(p => !existingUris.has(p.post.uri));
+                allSourcePosts = [...allSourcePosts, ...newPosts];
+                console.log(`LLM CURATED API - Added ${newPosts.length} unique posts from ${feedUri}`);
+              }
+            }
+          }
+        } catch (error) {
+          console.error('LLM CURATED API - Error fetching additional feeds:', error);
+        }
         
-        for (const postText of posts) {
-          // Find a post with matching text
-          const matchingPost = this.rawFeed.find(post => {
-            const record = post.post.record as any;
-            return record?.text === postText;
-          });
+        // Save all sources for future pagination
+        this.rawFeed = allSourcePosts;
+        
+        // Match posts by post ID
+        const matchedPosts: BskyFeedViewPost[] = [];
+        const unmatchedIds: string[] = [];
+        
+        // First pass - direct URI matching
+        for (const postId of postIds) {
+          // Find post with matching URI
+          const matchingPost = allSourcePosts.find(post => post.post.uri === postId);
           
           if (matchingPost) {
             matchedPosts.push(matchingPost);
+          } else {
+            unmatchedIds.push(postId);
           }
         }
         
-        console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${posts.length} curated posts`);
+        // We don't need a second pass with text matching anymore since we're using IDs
+        if (unmatchedIds.length > 0) {
+          console.log(`LLM CURATED API - Could not find ${unmatchedIds.length} posts by URI. First unmatched ID:`, 
+            unmatchedIds[0]);
+        }
         
-        // Return the matched posts, with pagination if needed
+        console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${postIds.length} curated posts`);
+        
+        if (matchedPosts.length === 0) {
+          // If we couldn't match any posts, create placeholder posts with the IDs
+          console.log(`LLM CURATED API - Creating ${Math.min(postIds.length, limit)} placeholder posts with IDs`);
+          const placeholderPosts: BskyFeedViewPost[] = [];
+          
+          // Create placeholder posts for the first 'limit' post IDs
+          for (let i = 0; i < Math.min(postIds.length, limit); i++) {
+            placeholderPosts.push({
+              post: {
+                uri: postIds[i] || `at://did:plc:temporary/app.bsky.feed.post/ai-curated-${Date.now()}-${i}`,
+                cid: `temporary-${Date.now()}-${i}`,
+                author: {
+                  did: 'did:plc:bsky',
+                  handle: 'bsky.app',
+                  displayName: 'AI Feed',
+                  avatar: 'https://bsky.social/static/logo.png',
+                  viewer: {},
+                  labels: []
+                },
+                record: {
+                  text: `Post ID: ${postIds[i]}`,
+                  $type: 'app.bsky.feed.post',
+                  createdAt: new Date().toISOString()
+                },
+                indexedAt: new Date().toISOString(),
+                viewer: {},
+                replyCount: 0,
+                repostCount: 0,
+                likeCount: 0,
+                labels: []
+              }
+            });
+          }
+          
+          if (placeholderPosts.length > 0) {
+            return {
+              cursor: placeholderPosts.length < limit ? undefined : '0',
+              feed: placeholderPosts
+            };
+          }
+        }
+        
+        // Return matched posts with pagination
         const responseSlice = matchedPosts.slice(0, limit);
         
-        // Always set a cursor even if we have fewer posts than the limit
-        // This ensures pagination is triggered when the user scrolls to the bottom
-        // Return numeric cursor if we have more posts, otherwise use a signal for the client
-        // to try fetching again later
+        // Ensure pagination continues when needed
         const nextCursor = matchedPosts.length > limit 
           ? limit.toString() 
-          : '0'; // Using a numeric index to be consistent with regular feed mode
+          : '0'; // Use '0' to trigger additional feed fetch
         
         return {
           cursor: nextCursor,
           feed: responseSlice,
-        }
+        };
       } catch (error) {
         console.error('LLM CURATED API - Error fetching AI mode feed:', error);
-        return { cursor: undefined, feed: [] }
+        return { cursor: undefined, feed: [] };
       }
     } else {
-      // This is a pagination request (when user has scrolled down)
+      // This is a pagination request (user scrolled to bottom)
       console.log('LLM CURATED API - Pagination request received with cursor:', cursor);
       
-      // For pagination in AI mode, we should check for fresh feeds in the bank
-      // This is important when the initial placeholder was shown
-      // or when the user has seen all posts from the previous feed
-      
-      // Try to get a new feed from the bank that hasn't been consumed yet
-      console.log('LLM CURATED API - PAGINATION DEBUG - Current bank state before getNextFeedFromBank:');
-      // Get total bank size and consumed status for debugging
+      // Try to get next feed from bank
       if (!globalLLMFeedService) {
         console.error('LLM CURATED API - Feed service not available for pagination!');
         return { cursor: undefined, feed: [] };
       }
       
+      // Log bank state for debugging
       const bankInfo = globalLLMFeedService.debugGetFeedBankStatus();
       console.log(`LLM CURATED API - PAGINATION DEBUG - Bank size: ${bankInfo.total}, Consumed feeds: ${bankInfo.consumed}, Unused feeds: ${bankInfo.unconsumed}`);
       
-      const freshPosts = globalLLMFeedService.getNextFeedFromBank();
-      console.log(`LLM CURATED API - PAGINATION DEBUG - getNextFeedFromBank returned:`, freshPosts ? `${freshPosts.length} posts` : 'null');
+      // Try to get a fresh feed from the bank
+      const freshPostIds = globalLLMFeedService.getNextFeedFromBank();
+      console.log(`LLM CURATED API - PAGINATION DEBUG - getNextFeedFromBank returned:`, freshPostIds ? `${freshPostIds.length} post IDs` : 'null');
       
-      // Log bank state after fetch to see if anything changed
+      // Log updated bank state
       const bankInfoAfter = globalLLMFeedService.debugGetFeedBankStatus();
       console.log(`LLM CURATED API - PAGINATION DEBUG - Bank after fetch: Total=${bankInfoAfter.total}, Consumed=${bankInfoAfter.consumed}, Unused=${bankInfoAfter.unconsumed}`);
       
-      if (freshPosts && freshPosts.length > 0) {
-        console.log(`LLM CURATED API - Found fresh feed with ${freshPosts.length} posts for pagination`);
+      if (freshPostIds && freshPostIds.length > 0) {
+        console.log(`LLM CURATED API - Found fresh feed with ${freshPostIds.length} post IDs for pagination`);
         
-        // Collect posts from multiple sources to maximize matching chances
-        try {
-          // Refresh our raw feed data for better matching
-          console.log('LLM CURATED API - Refreshing source feeds for pagination');
-          const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
-            feed: this.feedParams.sourceFeed,
-            limit: 100,
-          });
-          
-          this.rawFeed = sourceFeedResult.data.feed;
-          
-          // Try to add home timeline for more matching options
+        // Ensure we have an up-to-date raw feed for matching
+        if (this.rawFeed.length < 50) {
           try {
-            const homeResult = await this.agent.app.bsky.feed.getTimeline({
+            console.log('LLM CURATED API - Refreshing source feeds for pagination');
+            const sourceFeedResult = await this.agent.app.bsky.feed.getFeed({
+              feed: this.feedParams.sourceFeed,
               limit: 100,
             });
             
-            if (homeResult?.data?.feed) {
-              const existingUris = new Set(this.rawFeed.map(p => p.post.uri));
-              const newPosts = homeResult.data.feed.filter(p => !existingUris.has(p.post.uri));
-              this.rawFeed = [...this.rawFeed, ...newPosts];
+            this.rawFeed = sourceFeedResult.data.feed;
+            
+            // Add home timeline
+            try {
+              const homeResult = await this.agent.app.bsky.feed.getTimeline({
+                limit: 100,
+              });
+              
+              if (homeResult?.data?.feed) {
+                const existingUris = new Set(this.rawFeed.map(p => p.post.uri));
+                const newPosts = homeResult.data.feed.filter(p => !existingUris.has(p.post.uri));
+                this.rawFeed = [...this.rawFeed, ...newPosts];
+              }
+            } catch (error) {
+              console.error('LLM CURATED API - Error fetching home timeline for pagination:', error);
             }
           } catch (error) {
-            console.error('LLM CURATED API - Error fetching home timeline for pagination:', error);
+            console.error('LLM CURATED API - Error refreshing feeds for pagination:', error);
           }
+        }
+        
+        // Match posts by URI
+        const matchedPosts: BskyFeedViewPost[] = [];
+        const unmatchedIds: string[] = [];
+        
+        // Direct URI matching
+        for (const postId of freshPostIds) {
+          const matchingPost = this.rawFeed.find(post => post.post.uri === postId);
           
-          // Match the fresh posts against our raw feed
-          const matchedPosts: BskyFeedViewPost[] = [];
+          if (matchingPost) {
+            matchedPosts.push(matchingPost);
+          } else {
+            unmatchedIds.push(postId);
+          }
+        }
+        
+        // Log unmatched IDs
+        if (unmatchedIds.length > 0) {
+          console.log(`LLM CURATED API - Could not find ${unmatchedIds.length} post IDs for pagination. First unmatched ID:`, 
+            unmatchedIds[0]);
+        }
+        
+        console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${freshPostIds.length} posts for pagination`);
+        
+        if (matchedPosts.length === 0) {
+          // If we couldn't match any posts, create placeholder posts with IDs
+          console.log(`LLM CURATED API - Creating ${Math.min(freshPostIds.length, limit)} placeholder posts for AI content`);
+          const placeholderPosts: BskyFeedViewPost[] = [];
           
-          for (const postText of freshPosts) {
-            const matchingPost = this.rawFeed.find(post => {
-              const record = post.post.record as any;
-              return record?.text === postText;
-            });
-            
-            if (matchingPost) {
-              matchedPosts.push(matchingPost);
+          for (let i = 0; i < Math.min(freshPostIds.length, limit); i++) {
+            placeholderPosts.push({
+              post: {
+                uri: freshPostIds[i] || `at://did:plc:temporary/app.bsky.feed.post/ai-curated-${Date.now()}-${i}`,
+                cid: `temporary-${Date.now()}-${i}`,
+                author: {
+                  did: 'did:plc:bsky',
+                  handle: 'bsky.app',
+                  displayName: 'AI Feed', 
+                  avatar: 'https://bsky.social/static/logo.png',
+                  viewer: {},
+                  labels: []
+                },
+                record: {
+                  text: `Post ID: ${freshPostIds[i]}`,
+                  $type: 'app.bsky.feed.post',
+                  createdAt: new Date().toISOString()
+                },
+                indexedAt: new Date().toISOString(),
+                viewer: {},
+                replyCount: 0,
+                repostCount: 0,
+                likeCount: 0,
+                labels: []
+              }
+              });
             }
           }
           
-          console.log(`LLM CURATED API - Matched ${matchedPosts.length} out of ${freshPosts.length} posts for pagination`);
-          
-          if (matchedPosts.length > 0) {
-            // Return the matched posts with a numeric cursor to remain consistent
+          if (placeholderPosts.length > 0) {
             return {
-              cursor: matchedPosts.length < limit ? undefined : limit.toString(),
-              feed: matchedPosts,
+              cursor: placeholderPosts.length < limit ? undefined : '0',
+              feed: placeholderPosts
             };
           }
-        } catch (error) {
-          console.error('LLM CURATED API - Error processing pagination:', error);
         }
+        
+        // Return matched posts with pagination
+        return {
+          cursor: matchedPosts.length < limit ? undefined : '0',
+          feed: matchedPosts,
+        };
       }
       
-      // If we couldn't get a fresh feed or match any posts, return empty
+      // If we couldn't get a fresh feed or failed to match posts, return empty with numeric cursor
+      // This ensures the client will try to paginate again later
       console.log('LLM CURATED API - No additional AI feed pages available');
-      return { cursor: undefined, feed: [] };
+      return { 
+        cursor: '0', 
+        feed: [] 
+      };
     }
   }
-}

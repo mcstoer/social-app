@@ -331,7 +331,7 @@ async function main() {
         const overseer = new PersonalityOverseer(
             'YaYRpfI7BiIX0yTac43qMjt0h2XugirD',
             'https://api.deepinfra.com/v1/openai',
-            'meta-llama/Llama-3.2-1B-Instruct'  // No auth credentials = public API
+            'meta-llama/Llama-3.1-8B-Instruct'  // No auth credentials = public API
         );
         
         const baseDir = path.join(__dirname, 'personality_outputs');
