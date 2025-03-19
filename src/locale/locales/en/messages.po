@@ -582,6 +582,14 @@ msgstr ""
 msgid "Advanced"
 msgstr ""
 
+#: src/view/com/feeds/LLMCurateFeedButton.tsx:108
+msgid "AI Curate"
+msgstr ""
+
+#: src/view/com/feeds/LLMCurateFeedButton.tsx:83
+msgid "AI Mode"
+msgstr ""
+
 #: src/view/screens/Notifications.tsx:86
 msgid "All"
 msgstr ""
@@ -1864,7 +1872,7 @@ msgstr ""
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:173
 #: src/components/StarterPack/ProfileStarterPacks.tsx:269
-#: src/Navigation.tsx:437
+#: src/Navigation.tsx:444
 msgid "Create a starter pack"
 msgstr ""
 
@@ -1926,6 +1934,10 @@ msgstr ""
 #: src/view/com/auth/server-input/index.tsx:142
 #: src/view/com/auth/server-input/index.tsx:143
 msgid "Custom"
+msgstr ""
+
+#: src/Navigation.tsx:428
+msgid "Custom Feed"
 msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:103
@@ -2433,7 +2445,7 @@ msgstr ""
 msgid "Edit your profile description"
 msgstr ""
 
-#: src/Navigation.tsx:442
+#: src/Navigation.tsx:449
 msgid "Edit your starter pack"
 msgstr ""
 
@@ -3441,8 +3453,8 @@ msgstr ""
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr ""
 
-#: src/Navigation.tsx:621
-#: src/Navigation.tsx:641
+#: src/Navigation.tsx:628
+#: src/Navigation.tsx:648
 #: src/view/shell/bottom-bar/BottomBar.tsx:162
 #: src/view/shell/desktop/LeftNav.tsx:594
 #: src/view/shell/Drawer.tsx:396
@@ -3961,7 +3973,7 @@ msgstr ""
 
 #: src/screens/Profile/ProfileFeed/index.tsx:221
 #: src/screens/Profile/Sections/Feed.tsx:98
-#: src/view/com/feeds/FeedPage.tsx:155
+#: src/view/com/feeds/FeedPage.tsx:211
 #: src/view/screens/ProfileList.tsx:851
 msgid "Load new posts"
 msgstr ""
@@ -4075,7 +4087,7 @@ msgstr ""
 msgid "Message is too long"
 msgstr ""
 
-#: src/Navigation.tsx:636
+#: src/Navigation.tsx:643
 #: src/screens/Messages/ChatList.tsx:293
 #: src/screens/Messages/ChatList.tsx:317
 msgid "Messages"
@@ -4392,7 +4404,7 @@ msgstr ""
 msgid "New post"
 msgstr ""
 
-#: src/view/com/feeds/FeedPage.tsx:166
+#: src/view/com/feeds/FeedPage.tsx:222
 msgctxt "action"
 msgid "New post"
 msgstr ""
@@ -4613,7 +4625,7 @@ msgstr ""
 msgid "Notification Sounds"
 msgstr ""
 
-#: src/Navigation.tsx:631
+#: src/Navigation.tsx:638
 #: src/view/screens/Notifications.tsx:128
 #: src/view/shell/bottom-bar/BottomBar.tsx:235
 #: src/view/shell/desktop/LeftNav.tsx:631
@@ -6031,7 +6043,7 @@ msgstr ""
 #: src/components/dms/dialogs/SearchablePeopleList.tsx:488
 #: src/components/forms/SearchInput.tsx:34
 #: src/components/forms/SearchInput.tsx:36
-#: src/Navigation.tsx:626
+#: src/Navigation.tsx:633
 #: src/view/com/modals/ListAddRemoveUsers.tsx:76
 #: src/view/screens/Search/Search.tsx:570
 #: src/view/screens/Search/Search.tsx:849
@@ -6680,8 +6692,8 @@ msgstr ""
 msgid "Something wrong? Let us know."
 msgstr ""
 
-#: src/App.native.tsx:121
-#: src/App.web.tsx:97
+#: src/App.native.tsx:122
+#: src/App.web.tsx:98
 msgid "Sorry! Your session expired. Please sign in again."
 msgstr ""
 
@@ -6737,8 +6749,8 @@ msgstr ""
 msgid "Start chat with {displayName}"
 msgstr ""
 
-#: src/Navigation.tsx:427
-#: src/Navigation.tsx:432
+#: src/Navigation.tsx:434
+#: src/Navigation.tsx:439
 #: src/screens/StarterPack/Wizard/index.tsx:186
 msgid "Starter Pack"
 msgstr ""
@@ -7114,7 +7126,7 @@ msgstr ""
 msgid "There was an issue fetching notifications. Tap here to try again."
 msgstr ""
 
-#: src/view/com/posts/PostFeed.tsx:593
+#: src/view/com/posts/PostFeed.tsx:639
 msgid "There was an issue fetching posts. Tap here to try again."
 msgstr ""
 
@@ -7926,7 +7938,7 @@ msgstr ""
 msgid "Video failed to process"
 msgstr ""
 
-#: src/Navigation.tsx:448
+#: src/Navigation.tsx:455
 msgid "Video Feed"
 msgstr ""
 
