@@ -25,7 +25,6 @@ import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
-import {useVerusDaemonApi} from '#/state/queries/verus'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
 import {VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
@@ -86,7 +85,6 @@ export const LoginForm = ({
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {rpcInterface, idInterface} = useSessionVskyApi()
   const isVskyService = serviceUrl === VSKY_SERVICE
-  const {callDaemon} = useVerusDaemonApi()
 
   const [loginUri, setLoginUri] = useState<string>('')
 
@@ -262,6 +260,9 @@ export const LoginForm = ({
         return
       }
 
+      // Clear the polling for a response if we get a valid response.
+      clearInterval(intervalRef)
+
       const res = await response.json()
       const loginRes = new primitives.LoginConsentResponse(res)
 
@@ -272,18 +273,44 @@ export const LoginForm = ({
           if (identity.result) {
             vskySessionValueRef.current.name = identity.result.identity.name
 
-            // Get the Bluesky credentials from the user's encrypted storage.
-            // TODO: Implement the credential fetching using the daemon.
-            const result = await callDaemon('getblockchaininfo')
-            if (result.error) {
-              logger.warn(
-                'Failed to fetch the credentials from encrypted storage.',
-              )
-              setError(_(msg`Unable to get credentials for login.`))
-            } else {
-              identifierValueRef.current = process.env.TEST_USERNAME
-              passwordValueRef.current = process.env.TEST_PASSWORD
+            // Get the Bluesky credentials from the credentials in the login request.
+            const credentials = loginRes.decision.credentials
+            const username = credentials.find(
+              cred =>
+                cred.credentialKey ===
+                primitives.IDENTITY_CREDENTIAL_USERNAME.vdxfid,
+            )?.credential
+
+            const password = credentials.find(
+              cred =>
+                cred.credentialKey ===
+                primitives.IDENTITY_CREDENTIAL_PASSWORD.vdxfid,
+            )?.credential
+
+            if (username && password) {
+              // JSON.stringify avoids misinterpreting parts of the username or password as control characters.
+              identifierValueRef.current = JSON.stringify(username).slice(1, -1)
+              passwordValueRef.current = JSON.stringify(password).slice(1, -1)
               onPressNext()
+            } else {
+              if (!username && !password) {
+                logger.warn(
+                  'Failed to find the username and password from the Verisky login.',
+                )
+                setError(
+                  _(msg`Missing username and password from Verisky login.`),
+                )
+              } else if (!username) {
+                logger.warn(
+                  'Failed to find the username from the Verisky login.',
+                )
+                setError(_(msg`Missing username from Verisky login.`))
+              } else if (!password) {
+                logger.warn(
+                  'Failed to find the password from the Verisky login.',
+                )
+                setError(_(msg`Missing password from Verisky login.`))
+              }
             }
           } else {
             logger.warn('Failed to login due to invalid login response')
@@ -300,8 +327,6 @@ export const LoginForm = ({
         logger.warn('Failed to verify Verisky login response', {error: errMsg})
         setError(cleanError(errMsg))
       }
-
-      clearInterval(intervalRef)
     }
 
     const intervalRef = setInterval(() => {

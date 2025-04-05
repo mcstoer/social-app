@@ -3429,9 +3429,9 @@
     "@bitgo/blake2b-wasm" "^3.0.1"
     nanoassert "^2.0.0"
 
-"@bitgo/utxo-lib@git+https://github.com/VerusCoin/BitGoJS.git#3c6efada45b6a4fc2a1065951c307016dca7f953":
+"@bitgo/utxo-lib@git+https://github.com/VerusCoin/BitGoJS.git#2b0f428afbdbc0aa9541aa60b310c8f4c41fd2c5":
   version "1.9.6"
-  resolved "git+https://github.com/VerusCoin/BitGoJS.git#3c6efada45b6a4fc2a1065951c307016dca7f953"
+  resolved "git+https://github.com/VerusCoin/BitGoJS.git#2b0f428afbdbc0aa9541aa60b310c8f4c41fd2c5"
   dependencies:
     "@bitgo/blake2b" "3.0.1"
     bech32 "0.0.3"
@@ -19235,30 +19235,39 @@ vary@^1, vary@~1.1.2:
     bs58check "2.0.0"
     create-hash "1.2.0"
 
+"verus-typescript-primitives@git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class":
+  version "1.0.0"
+  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#4368bf8780c00e779f83cd1c37a0412d10449aa4"
+  dependencies:
+    base64url "3.0.1"
+    bech32 "2.0.0"
+    bn.js "5.2.1"
+    bs58check "2.0.0"
+    create-hash "1.2.0"
+
 "verusd-rpc-ts-client@git+https://github.com/VerusCoin/verusd-rpc-ts-client.git":
   version "0.1.0"
-  uid "80fa22bc486e476b9c4b7448fa287a608c3f8857"
   resolved "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git#80fa22bc486e476b9c4b7448fa287a608c3f8857"
   dependencies:
     axios "1.7.4"
     verus-typescript-primitives "git+https://github.com/VerusCoin/verus-typescript-primitives.git"
 
-"verusd-rpc-ts-client@https://github.com/VerusCoin/verusd-rpc-ts-client.git":
+"verusd-rpc-ts-client@git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credential-class":
   version "0.1.0"
-  resolved "https://github.com/VerusCoin/verusd-rpc-ts-client.git#80fa22bc486e476b9c4b7448fa287a608c3f8857"
+  resolved "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#5b71fd77250ae54d4165a3fac25aeaca93fd0fd1"
   dependencies:
     axios "1.7.4"
-    verus-typescript-primitives "git+https://github.com/VerusCoin/verus-typescript-primitives.git"
+    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class"
 
-"verusid-ts-client@https://github.com/VerusCoin/verusid-ts-client.git":
+"verusid-ts-client@git+https://github.com/mcstoer/verusid-ts-client.git#credential-class":
   version "0.1.0"
-  resolved "https://github.com/VerusCoin/verusid-ts-client.git#a8538489efb45f24551e0ae9644dc3813e913403"
+  resolved "git+https://github.com/mcstoer/verusid-ts-client.git#e1ecfb6b22d5cec88445f3a9ce2fe94d357cda71"
   dependencies:
-    "@bitgo/utxo-lib" "git+https://github.com/VerusCoin/BitGoJS.git#3c6efada45b6a4fc2a1065951c307016dca7f953"
+    "@bitgo/utxo-lib" "git+https://github.com/VerusCoin/BitGoJS.git#2b0f428afbdbc0aa9541aa60b310c8f4c41fd2c5"
     axios "1.7.4"
     bignumber.js "9.1.0"
     bn.js "5.2.1"
-    verus-typescript-primitives "git+https://github.com/VerusCoin/verus-typescript-primitives.git"
+    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class"
     verusd-rpc-ts-client "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git"
 
 vlq@^1.0.0:
