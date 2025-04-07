@@ -16,11 +16,9 @@ let lastLogin: any
 
 app.post('/confirm-login', async req => {
   lastLogin = req.body
-  console.log(lastLogin)
 })
 
 app.get('/get-login', async (_, res) => {
-  console.log(lastLogin)
   if (!lastLogin) {
     res.status(204).send('No login received.')
   } else {
