@@ -126,7 +126,13 @@ With the data descriptors, the command should look similar to the following.
 }'
 ```
 
-## Setting up with the Desktop Wallet
+## Setting up Deeplinks with the Desktop Wallet
+
+### Windows
+
+Deeplinks should work out of the box when you install the Desktop Wallet on Windows.
+
+### Linux
 
 For deeplinks to work on Linux, the operating system needs to be able to associate the desktop wallet with the deeplinks. The guide at in the description of a pull request at [https://github.com/VerusCoin/Verus-Desktop/pull/259](https://github.com/VerusCoin/Verus-Desktop/pull/259). It explains methods to get this association set up. I personally use the first method, [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher), that does it on running the appimage.
 
@@ -134,11 +140,10 @@ For deeplinks to work on Linux, the operating system needs to be able to associa
 
 ### Setting up the Environment
 
-The project requires `Node.js` and `yarn`. 
-Get Node.js 20 at [https://nodejs.org/en/blog/release/v20.9.0](https://nodejs.org/en/blog/release/v20.9.0). Afterwards, open a terminal and run
-```bash
-npm install --global yarn
-```
+The project requires:
+- Node.js 20 [https://nodejs.org/en/blog/release/v20.9.0](https://nodejs.org/en/blog/release/v20.9.0)
+- yarn (install after Node.js  with `npm install --global yarn`
+- [GitHub CLI](https://cli.github.com/) or [Git for Windows](https://gitforwindows.org/)
 
 ### Getting the Code
 
@@ -151,7 +156,7 @@ gh repo clone https://github.com/mcstoer/social-app.git  -- --branch verusky-dem
 cd social-app
 ```
 
-For [Git for Windows](https://gitforwindows.org/) (`git`), open a terminal and run
+For Git for Windows (`git`), open a terminal and run
 ```
 git clone https://github.com/mcstoer/social-app.git --branch verusky-demo
 cd social-app
@@ -161,18 +166,21 @@ cd social-app
 
 You will need three terminals in total, one for each local server.
 
+#### Terminal 1
 In the `social-app` directory, run the main social media app
 ```bash
 yarn
 yarn web
 ```
 
+#### Terminal 2
 In `social-app/vskylogin` directory, run the login server
 ```bash
 yarn
 yarn web
 ```
 
+#### Terminal 3
 In `social-app/vskysigningserver` directory, and do either of the following to setup the `.env` file.
 
 <details open>
@@ -202,9 +210,10 @@ yarn web
 ## Login Process Demo
 
 1. Visit [http://localhost:19006](http://localhost:19006), the web app's URL.
-2. Click "Sign in".
-3. With the account provider as "VeruSky", click "Next".
-4. This should pop up the verus.id login screen if the desktop wallet is properly associated with the deeplink.
-5. Review the login prompts and make sure to select the identity that has the credentials in it.
-6. Click "Done" and return back to the web app. The login should then complete.
-7. Going into "Settings" and then "Account" should show you the identity's name at the top.
+2. Click the "Sign in" button.
+3. With the account provider as "VeruSky", click the "Next" button. You may have to wait briefly for the "Next" button to load.
+4. This should automatically open the Desktop Wallet if deeplinks are properly configured.
+    - If this does not open on Linux, check [Setting up Deeplinks with the Desktop Wallet](#setting-up-deeplinks-with-the-desktop-wallet)
+6. Review the login prompts and select the identity containing the credentials (`VeruSky@`).
+7. Click "Done" and return back to the web app. The login should then complete after a brief moment.
+8. Going into "Settings" and then "Account" will show you the identity's name at the top, above the email address.
