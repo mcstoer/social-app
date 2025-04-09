@@ -147,7 +147,8 @@ The project requires:
 
 ### Getting the Code
 
-Get the VeruSky code from [https://github.com/mcstoer/social-app/tree/verusky-demo](https://github.com/mcstoer/social-app/tree/verusky-demo) and checkout the `verusky-demo` branch.
+Get the VeruSky code **directly** from the `verusky-demo` branch at [https://github.com/mcstoer/social-app/tree/verusky-demo](https://github.com/mcstoer/social-app/tree/verusky-demo).
+The `verusky-demo` branch has no filenames with colons, as those cause issues on Windows.
 
 For GitHub CLI (`gh`), open a terminal and run
 ```
@@ -177,7 +178,7 @@ yarn web
 In `social-app/vskylogin` directory, run the login server
 ```bash
 yarn
-yarn web
+yarn dev
 ```
 
 #### Terminal 3
@@ -204,7 +205,7 @@ In `social-app/vskysigningserver` directory, and do either of the following to s
 After creating the `.env` file, then run the signing server.
 ```bash
 yarn
-yarn web
+yarn dev
 ```
 
 ## Login Process Demo
