@@ -130,36 +130,74 @@ With the data descriptors, the command should look similar to the following.
 
 For deeplinks to work on Linux, the operating system needs to be able to associate the desktop wallet with the deeplinks. The guide at in the description of a pull request at [https://github.com/VerusCoin/Verus-Desktop/pull/259](https://github.com/VerusCoin/Verus-Desktop/pull/259). It explains methods to get this association set up. I personally use the first method, [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher), that does it on running the appimage.
 
-
 ## Setting up VeruSky
-
-Get the VeruSky code from [https://github.com/mcstoer/social-app/tree/verusky](https://github.com/mcstoer/social-app/tree/verusky) and checkout the `verusky` branch.
 
 ### Setting up the Environment
 
-The project requires `nvm`, `Node.js` and `yarn`. Use `nvm install 20` and `nvm use 20` to get Node.js 20. Afterwards, use `npm install --global yarn` to install yarn. 
+The project requires `Node.js` and `yarn`. 
+Get Node.js 20 at [https://nodejs.org/en/blog/release/v20.9.0](https://nodejs.org/en/blog/release/v20.9.0). Afterwards, open a terminal and run
+```bash
+npm install --global yarn
+```
 
-My current setup uses `nvm` 0.40.1, `Node.js` 20.19.0 and `yarn` 1.22.22.
+### Getting the Code
+
+Get the VeruSky code from [https://github.com/mcstoer/social-app/tree/verusky-demo](https://github.com/mcstoer/social-app/tree/verusky-demo) and checkout the `verusky-demo` branch.
+
+For GitHub CLI (`gh`), open a terminal and run
+```
+gh auth login
+gh repo clone https://github.com/mcstoer/social-app.git  -- --branch verusky-demo
+cd social-app
+```
+
+For [Git for Windows](https://gitforwindows.org/) (`git`), open a terminal and run
+```
+git clone https://github.com/mcstoer/social-app.git --branch verusky-demo
+cd social-app
+```
 
 ### Running the VeruSky Web App
 
-This follows in instructions in repository, which can be found at [https://github.com/mcstoer/social-app/blob/verusky/docs/build.md](https://github.com/mcstoer/social-app/blob/verusky/docs/build.md).
+You will need three terminals in total, one for each local server.
 
-To run the main social media app, do the following.
-1. `yarn`
-2. `yarn web`
+In the `social-app` directory, run the main social media app
+```bash
+yarn
+yarn web
+```
 
-To run the login server, open another terminal window, enter the `vskylogin` directory, and do the following.
-1. `yarn`
-2. `yarn web`
+In `social-app/vskylogin` directory, run the login server
+```bash
+yarn
+yarn web
+```
 
-To run the signing server, open another terminal window, enter the `vskysigningserver` directory, and do the following.
+In `social-app/vskysigningserver` directory, and do either of the following to setup the `.env` file.
+
+<details open>
+<summary>If you have the contents for an <code>.env</code> file for the signing server:</summary>
+
+1. Create a `.env` file.
+2. Copy the contents into the file.
+
+</details>
+
+<details>
+<summary>If you do not have the contents:</summary>
+    
 1. Copy the `.env.example` file to `.env`.
 2. Find an identity you want to use to sign the requests. This should be the same identity used for **scopes** in the credentials from above.
 3. Get the i-address and associated WIF for that identity.
 4. Set `IADDRESS` and `WIF` variables to the matching values for the identity.
-5. `yarn`
-6. `yarn web`
+   
+</details>
+
+After creating the `.env` file, then run the signing server.
+```bash
+yarn
+yarn web
+```
 
 ## Login Process Demo
 
