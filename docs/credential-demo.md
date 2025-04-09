@@ -134,7 +134,7 @@ Deeplinks should work out of the box when you install the Desktop Wallet on Wind
 
 ### Linux
 
-For deeplinks to work on Linux, the operating system needs to be able to associate the desktop wallet with the deeplinks. The guide at in the description of a pull request at [https://github.com/VerusCoin/Verus-Desktop/pull/259](https://github.com/VerusCoin/Verus-Desktop/pull/259). It explains methods to get this association set up. I personally use the first method, [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher), that does it on running the appimage.
+For deeplinks to work on Linux, the operating system needs to be able to associate the desktop wallet with the deeplinks. This requires either using a tool like AppImageLauncher, or manually setting up the association. See the guide in this [pull request](https://github.com/VerusCoin/Verus-Desktop/pull/259) for details.
 
 ## Setting up VeruSky
 
