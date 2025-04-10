@@ -144,12 +144,23 @@ The project requires:
 - Node.js 20 [https://nodejs.org/en/blog/release/v20.9.0](https://nodejs.org/en/blog/release/v20.9.0)
     - When installing Node.js, keep the default options.
 - yarn (install after Node.js  with `npm install --global yarn`)
-- [GitHub CLI](https://cli.github.com/) or [Git for Windows](https://gitforwindows.org/)
+- [Git for Windows](https://gitforwindows.org/)
 
 ### Getting the Code
 
 Get the VeruSky code **directly** from the `verusky-demo` branch at [https://github.com/mcstoer/social-app/tree/verusky-demo](https://github.com/mcstoer/social-app/tree/verusky-demo).
 The `verusky-demo` branch has no filenames with colons, as those cause issues on Windows.
+
+For Git for Windows (`git`), open a terminal and run
+```
+git clone https://github.com/mcstoer/social-app.git --branch verusky-demo
+cd social-app
+```
+
+<details>
+<summary>If Git for Windows is <strong>not</strong> working</summary>
+    
+Download [GitHub CLI](https://cli.github.com/)
 
 For GitHub CLI (`gh`), open a terminal and run
 ```
@@ -157,12 +168,9 @@ gh auth login
 gh repo clone https://github.com/mcstoer/social-app.git  -- --branch verusky-demo
 cd social-app
 ```
+   
+</details>
 
-For Git for Windows (`git`), open a terminal and run
-```
-git clone https://github.com/mcstoer/social-app.git --branch verusky-demo
-cd social-app
-```
 
 ### Running the VeruSky Web App
 
