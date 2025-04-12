@@ -12,6 +12,7 @@ import {
   type NativeStackScreenProps,
 } from '#/lib/routes/types'
 import {logEvent} from '#/lib/statsig/statsig'
+import { aiModeFeedInfo } from 'lib/llm-feed/feed-infos.ts'
 import {isWeb} from '#/platform/detection'
 import {emitSoftReset} from '#/state/events'
 import {
@@ -78,6 +79,8 @@ export function HomeScreen(props: Props) {
   ])
 
   if (preferences && pinnedFeedInfos && !isPinnedFeedsLoading) {
+    // Add AI feed into 2nd position
+    pinnedFeedInfos.splice(1, 0, aiModeFeedInfo);
     return (
       <Layout.Screen testID="HomeScreen">
         <HomeScreenReady

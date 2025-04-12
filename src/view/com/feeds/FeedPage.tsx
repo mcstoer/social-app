@@ -24,6 +24,8 @@ import {truncateAndInvalidate} from '#/state/queries/util'
 import {useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
 import {useHeaderOffset} from '#/components/hooks/useHeaderOffset'
+import { FeedAPIRuntimeCreatorProvider } from 'lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
+import { AIFeedAPIRuntimeCreator } from 'lib/llm-feed/feed-api-runtime-creators/AIFeedAPIRuntimeCreator'
 import {PostFeed} from '../posts/PostFeed'
 import {FAB} from '../util/fab/FAB'
 import {type ListMethods} from '../util/List'
@@ -128,6 +130,7 @@ export function FeedPage({
 
   const shouldPrefetch = isNative && isPageAdjacent
   return (
+    <FeedAPIRuntimeCreatorProvider runtimeCreator={AIFeedAPIRuntimeCreator.getInstance()}>
     <View testID={testID}>
       <MainScrollProvider>
         <FeedFeedbackProvider value={feedFeedback}>
@@ -168,5 +171,6 @@ export function FeedPage({
         />
       )}
     </View>
+    </FeedAPIRuntimeCreatorProvider>
   )
 }
