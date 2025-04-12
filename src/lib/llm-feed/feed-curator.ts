@@ -1,16 +1,6 @@
-import {BskyAgent} from '@atproto/api'
-import {UserProfile} from './types'
 import {logger} from '#/logger'
 import OpenAI from 'openai'
 import { FEED_PROMPTS } from './prompts'
-
-/**
- * Interface for post data sent to curator
- */
-export interface CuratorPost {
-  id: string;     // Unique ID (post URI)
-  text: string;   // Post text content for LLM to analyze
-}
 
 // Notably, this code is separate from bluesky's normal code/flow, it can be customized at will so long as it still returns the needed information
 
@@ -48,10 +38,10 @@ export class FeedCurator {
   /**
    * Creates a string representation of posts for LLM prompt
    */
-  private stringifyPosts(posts: CuratorPost[]): string {
+  private stringifyPosts(posts: string[]): string {
     let stringified_posts = ""
     for (let idx = 0; idx < posts.length; idx++) {
-      stringified_posts += `POST INDEX: ${idx + 1}\nPost content:\n${posts[idx].text}\n--end content--\n\n`
+      stringified_posts += `POST INDEX: ${idx + 1}\nPost content:\n${posts[idx]}\n--end content--\n\n`
     }
     return stringified_posts
   }
@@ -61,10 +51,10 @@ export class FeedCurator {
    */
   public async curateFeed(
     subscriptions: {user_handle: string, user_bio: string}[],
-    posts: CuratorPost[],
+    posts: string[],
     personality: string,
     languages?: string
-  ): Promise<string[]> {
+  ): Promise<number[]> {
     try {
       // Log inputs
       console.log('==== LLM FEED CURATION STARTED ====');
@@ -82,7 +72,7 @@ export class FeedCurator {
       // Log sample of posts
       console.log('INPUT - Posts sample (first 3):');
       posts.slice(0, 3).forEach((post, i) => {
-        console.log(`POST ${i+1}:\n${post?.text || 'No text available'}\n---`);
+        console.log(`POST ${i+1}:\n${post || 'No text available'}\n---`);
       });
       
       // Format inputs for the LLM
@@ -115,7 +105,7 @@ Preferred languages:
 ${languages}
 """
 
-Note that user subscriptions are shown to give you additional hints about their interests. The user's subscriptions may not show up in the raw materials you see, and in fact you do not know who has written each individual post.
+Note that user subscriptions are shown to give you additional hints about their interests. The user's subscriptions may not show up in the raw materials you see, and in fact you may not know who has written each individual post.
 
 Only select posts that are in the preferred languages.
 
@@ -146,14 +136,10 @@ Prioritize putting more important posts first. But ensure variety.`
       )];
 
       console.log('SELECTED INDICES:', selectedIndices);
-      console.log('POSTS:', posts.map(p => p.text));
-
-      // Limit the number of selected posts
-      const maxPosts = Math.floor(this.defaultMaxPosts / this.feedSourcesDivisor);
-      const limitedIndices = selectedIndices.slice(0, maxPosts);
+      console.log('POSTS:', posts);
       
       // Return selected post IDs in the order specified by the deduplicated indices
-      return limitedIndices.map(idx => posts[idx as number].id);
+      return selectedIndices;
       
     } catch (error) {
       console.error('ERROR IN FEED CURATION:', error);
