@@ -9,26 +9,21 @@ export interface UserProfile {
 }
 
 /**
- * Feed options for customization
+ * aiModeFeedDescriptor: A constant string literal used to identify the AI mode feed.
+ * This simple string serves as a unique key for a specific type of feed.
  */
-export interface FeedOptions {
-  maxPosts?: number;
-  temperature?: number;
-}
+export const aiModeFeedDescriptor = 'ai-mode-feed';
 
 /**
- * Type for feed curation request
+ * llmCuratedFeedPrefix: A constant string used as a prefix for LLM-curated feed descriptors.
+ * This prefix helps to categorize and identify feeds generated or influenced by Language Model Models.
  */
-export interface CurationRequest {
-  posts: string[];
-  profile: UserProfile;
-  options?: FeedOptions;
-}
+export const llmCuratedFeedPrefix = 'llm-curated|';
 
 /**
- * Type for feed curation response
+ * AIFeedDescriptor: A TypeScript type defining the possible descriptors for AI-related feeds.
+ * It can be the exact string 'ai-mode-feed' or a template literal indicating an LLM-curated feed.
  */
-export interface CurationResponse {
-  curatedPosts: string[];
-  feedId: string;
-}
+export type AIFeedDescriptor =
+  | 'ai-mode-feed'
+  | `llm-curated|${string}`;
