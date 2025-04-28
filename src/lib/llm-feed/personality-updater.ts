@@ -6,6 +6,7 @@ import {logger} from '#/logger'
 
 // --- Constants ---
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
+const AUTOUPDATE_ENABLED_KEY = 'llm_personality_autoupdate_enabled'
 const DEFAULT_PERSONALITY =
   'Interested in a variety of topics including technology, science, art, and culture.'
 const LLM_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501' // Or your preferred model
@@ -382,6 +383,16 @@ export class PersonalityUpdater {
   // --- Core Update Logic ---
 
   public async updatePersonality(): Promise<void> {
+    try {
+      const autoUpdateEnabled = await AsyncStorage.getItem(AUTOUPDATE_ENABLED_KEY);
+      if (autoUpdateEnabled === 'false') {
+        logger.info("PersonalityUpdater: Automatic updates disabled by user setting. Aborting update.");
+        return;
+      }
+    } catch (e) {
+      logger.error('PersonalityUpdater: Failed to read auto-update setting, proceeding with update.', { message: e });
+    }
+
     logger.info('PersonalityUpdater: Starting personality update process...')
 
     if (!this.agent.session) {
