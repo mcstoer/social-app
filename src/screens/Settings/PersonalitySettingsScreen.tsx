@@ -84,7 +84,7 @@ export function PersonalitySettingsScreen({}: Props) {
             </Trans>
           </Text>
           <View>
-            <Text style={[a.pb_xs, a.font_bold]}>
+            <Text style={[a.pb_xs, a.font_bold, {color: 'white'}]}>
               <Trans>Personality Description</Trans>
             </Text>
             <TextInput
@@ -92,11 +92,10 @@ export function PersonalitySettingsScreen({}: Props) {
                 a.border,
                 a.rounded_md,
                 a.p_md,
-                a.leading_normal,
-                {minHeight: 80, textAlignVertical: 'top'},
                 t.atoms.border_contrast_medium,
                 t.atoms.text,
                 pal.view,
+                {minHeight: 100},
               ]}
               value={personality}
               onChangeText={setPersonality}
@@ -104,7 +103,7 @@ export function PersonalitySettingsScreen({}: Props) {
               placeholderTextColor={pal.textLight.color}
               editable={!isLoading}
               multiline={true}
-              numberOfLines={4}
+              scrollEnabled={true}
               accessibilityLabel={_(msg`Describe your interests and personality`)}
               accessibilityHint={_(msg`Input field for LLM personality`)}
             />
