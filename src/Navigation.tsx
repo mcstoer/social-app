@@ -104,6 +104,7 @@ import {LanguageSettingsScreen} from './screens/Settings/LanguageSettings'
 import {PrivacyAndSecuritySettingsScreen} from './screens/Settings/PrivacyAndSecuritySettings'
 import {SettingsScreen} from './screens/Settings/Settings'
 import {ThreadPreferencesScreen} from './screens/Settings/ThreadPreferences'
+import {PersonalitySettingsScreen} from './screens/Settings/PersonalitySettingsScreen'
 import TopicScreen from './screens/Topic'
 
 const navigationRef = createNavigationContainerRef<AllNavigatorParams>()
@@ -388,6 +389,14 @@ function commonScreens(Stack: typeof HomeTab, unreadCountLabel?: string) {
         getComponent={() => AppIconSettingsScreen}
         options={{
           title: title(msg`App Icon`),
+          requireAuth: true,
+        }}
+      />
+      <Stack.Screen
+        name="PersonalitySettings"
+        getComponent={() => PersonalitySettingsScreen}
+        options={{
+          title: title(msg`LLM Personality`),
           requireAuth: true,
         }}
       />
