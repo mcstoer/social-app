@@ -1,8 +1,10 @@
 import {BskyAgent} from '@atproto/api'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {UserProfile} from './types'
 
 // Default personality description if none is provided
 const DEFAULT_PERSONALITY = 'Interested in a variety of topics including technology, science, art, and culture.'
+const ASYNC_STORAGE_KEY = 'llm_personality_preference'
 
 /**
  * Extract user information from Bluesky to create a UserProfile for LLM feed generation
@@ -50,10 +52,30 @@ export async function getCurrentUserProfile(agent: BskyAgent): Promise<UserProfi
       console.warn('Could not get user language preferences:', error)
     }
     
+    // Get custom personality from AsyncStorage, fallback to profile description, then default
+    let personality = DEFAULT_PERSONALITY
+    try {
+      const storedPersonality = await AsyncStorage.getItem(ASYNC_STORAGE_KEY)
+      if (storedPersonality) {
+        personality = storedPersonality
+      } else if (profile.description) {
+        personality = profile.description
+      }
+    } catch (e) {
+      console.warn('Could not read personality preference from storage:', e)
+      // If storage fails, fallback to profile description if available
+      if (profile.description) {
+        personality = profile.description
+      }
+    }
+
+    console.log("USER PERSONALITY:")
+    console.log(personality)
+
     return {
       name: profile.handle,
       subscriptions,
-      personality: profile.description || DEFAULT_PERSONALITY,
+      personality,
       languages,
     }
   } catch (error) {

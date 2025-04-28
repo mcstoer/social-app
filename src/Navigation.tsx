@@ -413,6 +413,14 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         }}
       />
       <Stack.Screen
+        name="PersonalitySettings"
+        getComponent={() => PersonalitySettingsScreen}
+        options={{
+          title: title(msg`LLM Personality`),
+          requireAuth: true,
+        }}
+      />
+      <Stack.Screen
         name="Hashtag"
         getComponent={() => HashtagScreen}
         options={{title: title(msg`Hashtag`)}}
