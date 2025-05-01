@@ -13,6 +13,7 @@ dotenv.config()
 const port = process.env.PORT || 21001
 
 let lastLogin: any
+let lastCredentialUpdate: any
 
 app.post('/confirm-login', async req => {
   lastLogin = req.body
@@ -25,6 +26,24 @@ app.get('/get-login', async (_, res) => {
     res.status(200).json(lastLogin)
     // Clean up the last login after relaying it.
     lastLogin = null
+  }
+})
+
+// New endpoint to store credential update response
+app.post('/confirm-credential-update', async req => {
+  lastCredentialUpdate = req.body
+})
+
+// New endpoint to retrieve credential update response
+app.get('/get-credential-update', async (req, res) => {
+  const {requestId} = req.query
+
+  if (!lastCredentialUpdate || lastCredentialUpdate.requestId !== requestId) {
+    res.status(204).send('No credential update response received.')
+  } else {
+    res.status(200).json(lastCredentialUpdate)
+    // Clean up after relaying
+    lastCredentialUpdate = null
   }
 })
 

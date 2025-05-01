@@ -20173,9 +20173,9 @@ vary@^1, vary@~1.1.2:
     bs58check "2.0.0"
     create-hash "1.2.0"
 
-"verus-typescript-primitives@git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class-iur":
+"verus-typescript-primitives@git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request":
   version "1.0.0"
-  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#02909300fb884b6274d95a01f0b3473a32e9cb4d"
+  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#5313b587b9bcc8035b10ab90d829a6323381443e"
   dependencies:
     base64url "3.0.1"
     bech32 "2.0.0"
@@ -20184,23 +20184,23 @@ vary@^1, vary@~1.1.2:
     bs58check "2.0.0"
     create-hash "1.2.0"
 
-"verusd-rpc-ts-client@git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credential-class-iur":
+"verusd-rpc-ts-client@git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credentials-identity-update-request":
   version "0.1.0"
-  resolved "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#2656f2a12c89dfa5b5c2f9b422387251dd2e78fe"
+  resolved "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#bddfce0ba0017468dec18fcb0e8f801b624fa06b"
   dependencies:
     axios "1.7.4"
-    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class-iur"
+    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request"
 
-"verusid-ts-client@git+https://github.com/mcstoer/verusid-ts-client.git#credential-class-iur":
+"verusid-ts-client@git+https://github.com/mcstoer/verusid-ts-client.git#credentials-identity-update-request":
   version "0.1.0"
-  resolved "git+https://github.com/mcstoer/verusid-ts-client.git#e146dbb3df4604ca7ee2d39e5b6c3141515030d4"
+  resolved "git+https://github.com/mcstoer/verusid-ts-client.git#bc803f94b6fdf5a708f45e86757940fe7d0a1aa7"
   dependencies:
     "@bitgo/utxo-lib" "git+https://github.com/VerusCoin/BitGoJS.git#80abaccd57652215bd5d9ebbe969ffe9c4266d25"
     axios "1.7.4"
     bignumber.js "9.1.0"
     bn.js "5.2.1"
-    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class-iur"
-    verusd-rpc-ts-client "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credential-class-iur"
+    verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request"
+    verusd-rpc-ts-client "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credentials-identity-update-request"
 
 vlq@^1.0.0:
   version "1.0.1"
