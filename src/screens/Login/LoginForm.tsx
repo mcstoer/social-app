@@ -24,6 +24,7 @@ import {isNetworkError} from '#/lib/strings/errors'
 import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
+import {useModalControls} from '#/state/modals'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
@@ -86,6 +87,7 @@ export const LoginForm = ({
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {rpcInterface, idInterface} = useSessionVskyApi()
   const isVskyService = serviceUrl === VSKY_SERVICE
+  const {openModal} = useModalControls()
 
   const [loginUri, setLoginUri] = useState<string>('')
 
@@ -196,17 +198,31 @@ export const LoginForm = ({
 
       const isManualLoginAfterVskyFailed = isVskyService && needsManualLogin
 
+      onAttemptSuccess()
+      setHasCheckedForStarterPack(true)
+      requestNotificationsPermission('Login')
+
+      await setShowLoggedOut(false)
+
+      /*
+      openModal({
+          name: 'change-password'
+      })
+          */
+
+      // Wait until the login screen is gone before showing the modal.
       // TODO: In the future, ask the user if they want to store credentials
-      if (isManualLoginAfterVskyFailed) {
+      if (true || isManualLoginAfterVskyFailed) {
         logger.debug(
           'Successfully logged in manually after VeruSky login failed',
         )
+        setTimeout(() => {
+          openModal({
+            name: 'update-verusky-credentials',
+            password: password,
+          })
+        }, 500)
       }
-
-      onAttemptSuccess()
-      setShowLoggedOut(false)
-      setHasCheckedForStarterPack(true)
-      requestNotificationsPermission('Login')
     } catch (e: any) {
       const errMsg = e.toString()
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)

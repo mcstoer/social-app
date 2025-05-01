@@ -151,6 +151,17 @@ export function AccountSettingsScreen({}: Props) {
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
+          {currentAccount?.type === 'vsky' && (
+            <SettingsList.PressableItem
+              label={_(msg`Update VeruSky Credentials`)}
+              onPress={() => openModal({name: 'update-verusky-credentials'})}>
+              <SettingsList.ItemIcon icon={LockIcon} />
+              <SettingsList.ItemText>
+                <Trans>Update VeruSky Credentials</Trans>
+              </SettingsList.ItemText>
+              <SettingsList.Chevron />
+            </SettingsList.PressableItem>
+          )}
           <SettingsList.PressableItem
             label={_(msg`Handle`)}
             accessibilityHint={_(msg`Opens change handle dialog`)}
