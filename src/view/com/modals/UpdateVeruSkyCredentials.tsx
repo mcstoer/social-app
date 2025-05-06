@@ -3,6 +3,20 @@ import {ActivityIndicator, SafeAreaView, StyleSheet, View} from 'react-native'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import {
+  Credential,
+  DATA_TYPE_OBJECT_CREDENTIAL,
+  DATA_TYPE_VDXFDATA,
+  IDENTITY_CREDENTIAL_PLAINLOGIN,
+  IDENTITY_CREDENTIALS,
+  IdentityID,
+  IdentityUpdateRequestDetails,
+  PartialIdentity,
+  PartialSignData,
+  type PartialSignDataInitData,
+  VDXF_UNI_VALUE_VERSION_CURRENT,
+  VdxfUniValue,
+} from 'verus-typescript-primitives'
 
 import {
   LOCAL_DEV_VSKY_LOGIN_SERVER,
@@ -73,6 +87,7 @@ export function Component({password: initialPassword}: {password?: string}) {
 
       try {
         // Endpoint will be similar to the get-login endpoint in vskylogin
+        // Pass the details to the server to generate the request.
         const response = await fetch(
           `${LOCAL_DEV_VSKY_LOGIN_SERVER}/get-credential-update?requestId=${updateRequestId}`,
         )
@@ -148,42 +163,98 @@ export function Component({password: initialPassword}: {password?: string}) {
       return
     }
 
+    if (currentAccount?.type !== 'vsky') {
+      setError(_(msg`Unable to update credentials for non-VeruSky accounts`))
+      return
+    }
+
     setError('')
     setIsProcessing(true)
+
+    // Set the scope in the signing server for now.
+    // TODO: Change scope setting for mobile.
+    const cred = new Credential({
+      version: Credential.VERSION_CURRENT,
+      credentialKey: IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid,
+      credential: [email, password],
+      scopes: ['App1@'], // TODO: Make this updated in the signing server?
+    })
+    const values = [{[DATA_TYPE_OBJECT_CREDENTIAL.vdxfid]: cred}]
+
+    const signdataMap = new Map<string, PartialSignData>()
+    const data: PartialSignDataInitData = {
+      address: IdentityID.fromAddress(currentAccount.id),
+      datatype: DATA_TYPE_VDXFDATA,
+      data: new VdxfUniValue({
+        values: values,
+        version: VDXF_UNI_VALUE_VERSION_CURRENT,
+      }),
+    }
+    signdataMap.set(IDENTITY_CREDENTIALS.vdxfid, new PartialSignData(data))
+
     try {
+      /*
+      // Get the updated identity for the account.
+      const identity = (await rpcInterface.getIdentity(currentAccount.id)).result?.identity
+
+      if (!identity) {
+        throw new Error("Unable to get the updated identity for the account.")
+      }
+        */
+
+      const accountPartialIdentity = new PartialIdentity({
+        name: currentAccount.name + '@',
+      })
+
+      const details = new IdentityUpdateRequestDetails({
+        identity: accountPartialIdentity,
+        signdatamap: signdataMap, // Don't do this for partialsigndata.
+      })
+
       // Here we'll implement the logic to send the update request
       // This will differ between web and mobile implementations
       if (isWeb) {
         // Web implementation using signing server
         const response = await fetch(
-          `${LOCAL_DEV_VSKY_SIGNING_SERVER}/api/v1/update-credentials`,
+          `${LOCAL_DEV_VSKY_SIGNING_SERVER}/api/v1/identityupdates/update-credentials`,
           {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              email,
-              password,
-            }),
+            body: JSON.stringify(details.toJson()),
           },
         )
 
         if (!response.ok) {
-          throw new Error('Failed to update credentials')
+          logger.warn('Failed to initiate credential update', {
+            status: response.status,
+            statusText: response.statusText,
+          })
+          setError(_(msg`Failed to update credentials`))
         }
 
-        const data = await response.json()
+        const res = await response.json()
 
-        if (data.requestId) {
-          // Save the request ID for polling
-          setUpdateRequestId(data.requestId)
+        if (res.error) {
+          logger.warn('Failed to get credential update URI', {error: res.error})
+          setError('Failed to initiate credential update')
+          setIsProcessing(false)
+          return
+        }
+
+        if (res.uri && res.requestId) {
+          setUpdateRequestId(res.requestId)
           setStage(Stages.AwaitingResponse)
-
-          // Start polling for the update response
+          // Open deeplink in same window
+          window.location.href = res.uri
+          // Start polling for response
           checkForUpdateResponse()
         } else {
-          throw new Error('Missing request ID in response')
+          logger.warn('Failed to get credential update URI', {
+            error: 'No URI or requestId returned',
+          })
+          setError('Failed to initiate credential update')
         }
       } else if (isNative) {
         // Mobile implementation will be different

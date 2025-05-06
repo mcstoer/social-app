@@ -20175,7 +20175,7 @@ vary@^1, vary@~1.1.2:
 
 "verus-typescript-primitives@git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request":
   version "1.0.0"
-  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#5313b587b9bcc8035b10ab90d829a6323381443e"
+  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#0f78affa3b38b0f6f7bb16a11f244073d0b0c1e1"
   dependencies:
     base64url "3.0.1"
     bech32 "2.0.0"
@@ -20186,14 +20186,14 @@ vary@^1, vary@~1.1.2:
 
 "verusd-rpc-ts-client@git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credentials-identity-update-request":
   version "0.1.0"
-  resolved "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#bddfce0ba0017468dec18fcb0e8f801b624fa06b"
+  resolved "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#64f624e6923d80a23771721fd3fd4f58f7f67f52"
   dependencies:
     axios "1.7.4"
     verus-typescript-primitives "git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request"
 
 "verusid-ts-client@git+https://github.com/mcstoer/verusid-ts-client.git#credentials-identity-update-request":
   version "0.1.0"
-  resolved "git+https://github.com/mcstoer/verusid-ts-client.git#bc803f94b6fdf5a708f45e86757940fe7d0a1aa7"
+  resolved "git+https://github.com/mcstoer/verusid-ts-client.git#d52a269006edbd63d7c70f10fe2317efc79e879c"
   dependencies:
     "@bitgo/utxo-lib" "git+https://github.com/VerusCoin/BitGoJS.git#80abaccd57652215bd5d9ebbe969ffe9c4266d25"
     axios "1.7.4"
