@@ -8,32 +8,32 @@ import {
 } from 'react-native'
 import * as Clipboard from 'expo-clipboard'
 import {
-  AppBskyFeedDefs,
-  AppBskyFeedPost,
-  AppBskyFeedThreadgate,
+  type AppBskyFeedDefs,
+  type AppBskyFeedPost,
+  type AppBskyFeedThreadgate,
   AtUri,
-  RichText as RichTextAPI,
+  type RichText as RichTextAPI,
 } from '@atproto/api'
 import {msg, plural} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {IS_INTERNAL} from '#/lib/app-info'
-import {POST_CTRL_HITSLOP} from '#/lib/constants'
+import {DISCOVER_DEBUG_DIDS, POST_CTRL_HITSLOP} from '#/lib/constants'
 import {CountWheel} from '#/lib/custom-animations/CountWheel'
 import {AnimatedLikeIcon} from '#/lib/custom-animations/LikeIcon'
 import {useHaptics} from '#/lib/haptics'
+import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {makeProfileLink} from '#/lib/routes/links'
 import {shareUrl} from '#/lib/sharing'
 import {useGate} from '#/lib/statsig/statsig'
 import {toShareUrl} from '#/lib/strings/url-helpers'
-import {Shadow} from '#/state/cache/types'
+import {type Shadow} from '#/state/cache/types'
 import {useFeedFeedbackContext} from '#/state/feed-feedback'
 import {
   usePostLikeMutationQueue,
   usePostRepostMutationQueue,
 } from '#/state/queries/post'
 import {useRequireAuth, useSession} from '#/state/session'
-import {useComposerControls} from '#/state/shell/composer'
 import {
   ProgressGuideAction,
   useProgressGuideControls,
@@ -60,6 +60,7 @@ let PostCtrls = ({
   onPostReply,
   logContext,
   threadgateRecord,
+  onShowLess,
 }: {
   big?: boolean
   post: Shadow<AppBskyFeedDefs.PostView>
@@ -71,10 +72,11 @@ let PostCtrls = ({
   onPostReply?: (postUri: string | undefined) => void
   logContext: 'FeedItem' | 'PostThreadItem' | 'Post' | 'ImmersiveVideo'
   threadgateRecord?: AppBskyFeedThreadgate.Record
+  onShowLess?: (interaction: AppBskyFeedDefs.Interaction) => void
 }): React.ReactNode => {
   const t = useTheme()
   const {_, i18n} = useLingui()
-  const {openComposer} = useComposerControls()
+  const {openComposer} = useOpenComposer()
   const {currentAccount} = useSession()
   const [queueLike, queueUnlike] = usePostLikeMutationQueue(post, logContext)
   const [queueRepost, queueUnrepost] = usePostRepostMutationQueue(
@@ -87,7 +89,10 @@ let PostCtrls = ({
   const {captureAction} = useProgressGuideControls()
   const playHaptic = useHaptics()
   const gate = useGate()
-  const isDiscoverDebugUser = IS_INTERNAL || gate('debug_show_feedcontext')
+  const isDiscoverDebugUser =
+    IS_INTERNAL ||
+    DISCOVER_DEBUG_DIDS[currentAccount?.did || ''] ||
+    gate('debug_show_feedcontext')
   const isBlocked = Boolean(
     post.author.viewer?.blocking ||
       post.author.viewer?.blockedBy ||
@@ -375,6 +380,7 @@ let PostCtrls = ({
           hitSlop={POST_CTRL_HITSLOP}
           timestamp={post.indexedAt}
           threadgateRecord={threadgateRecord}
+          onShowLess={onShowLess}
         />
       </View>
       {isDiscoverDebugUser && feedContext && (
