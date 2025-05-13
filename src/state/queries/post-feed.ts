@@ -29,16 +29,16 @@ import {aggregateUserInterests} from '#/lib/api/feed/utils'
 import {FeedTuner, type FeedTunerFn} from '#/lib/api/feed-manip'
 import {DISCOVER_FEED_URI} from '#/lib/constants'
 import {BSKY_FEED_OWNER_DIDS} from '#/lib/constants'
+import  {type FeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreator'
+import {useFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
+import {FeedAPIRuntimeCreatorService} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorService'
+import {type AIFeedDescriptor} from '#/lib/llm-feed/types'
 import {logger} from '#/logger'
 import {STALE} from '#/state/queries'
 import {DEFAULT_LOGGED_OUT_PREFERENCES} from '#/state/queries/preferences/const'
 import {useAgent} from '#/state/session'
 import * as userActionHistory from '#/state/userActionHistory'
 import {KnownError} from '#/view/com/posts/PostFeedErrorMessage'
-import { AIFeedDescriptor } from 'lib/llm-feed/types'
-import { useFeedAPIRuntimeCreator } from 'lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext';
-import type { FeedAPIRuntimeCreator } from 'lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreator';
-import { FeedAPIRuntimeCreatorService } from 'lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorService';
 import {useFeedTuners} from '../preferences/feed-tuners'
 import {useModerationOpts} from '../preferences/moderation-opts'
 import {usePreferencesQuery} from './preferences'
@@ -134,7 +134,7 @@ export function usePostFeedQuery(
 ) {
   // Obtain the FeedAPIRuntimeCreator object, mainly used to implement custom
   // feeds outside of main Bluesky code (such as AI feed)
-  const runtimeCreator = useFeedAPIRuntimeCreator();
+  const runtimeCreator = useFeedAPIRuntimeCreator()
   const feedTuners = useFeedTuners(feedDesc)
   const moderationOpts = useModerationOpts()
   const {data: preferences} = usePreferencesQuery()
@@ -468,20 +468,21 @@ function createApi({
   // If the feed descriptor represents an AI filtered feed...
   // (or something else if another FeedAPIRuntimeCreator is used)
 
-  const dynamicFeedAPI: FeedAPI | null = FeedAPIRuntimeCreatorService.maybeCreateAPI(
-    runtimeCreator, // Using the already fetched runtimeCreator!
-    {
-      agent,
-      feedDesc,
-      feedParams,
-      feedTuners,
-      userInterests,
-    },
-  );
+  const dynamicFeedAPI: FeedAPI | null =
+    FeedAPIRuntimeCreatorService.maybeCreateAPI(
+      runtimeCreator, // Using the already fetched runtimeCreator!
+      {
+        agent,
+        feedDesc,
+        feedParams,
+        feedTuners,
+        userInterests,
+      },
+    )
 
   // If the creator wants to handle that feed...
   if (dynamicFeedAPI != null) {
-    return dynamicFeedAPI;
+    return dynamicFeedAPI
   }
 
   if (feedDesc === 'following') {
