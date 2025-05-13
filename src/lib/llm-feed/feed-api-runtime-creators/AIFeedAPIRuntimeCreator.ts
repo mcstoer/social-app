@@ -1,8 +1,11 @@
-import { FeedAPIRuntimeCreator, FeedAPICreationArgs } from './FeedAPIRuntimeCreator';
-import { FeedAPI } from 'lib/api/feed/types';
-import { aiModeFeedDescriptor } from 'lib/llm-feed/types';
-import { ShellAIFeedAPI } from '../ai-merged-feed/ShellAIFeedAPI';
-import { preferences } from './FeedAPIRuntimeCreatorContext';
+import {type FeedAPI} from '#/lib/api/feed/types'
+import {aiModeFeedDescriptor} from '#/lib/llm-feed/types'
+import {ShellAIFeedAPI} from '../ai-merged-feed/ShellAIFeedAPI'
+import {
+  type FeedAPICreationArgs,
+  type FeedAPIRuntimeCreator,
+} from './FeedAPIRuntimeCreator'
+import {preferences} from './FeedAPIRuntimeCreatorContext'
 
 /**
  * AIFeedAPIRuntimeCreator: Creates and manages the AI-driven merged feed API.
@@ -12,7 +15,7 @@ import { preferences } from './FeedAPIRuntimeCreatorContext';
  * of the AI-driven feed and ensures that only one instance is active.
  */
 export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
-  private static instance: AIFeedAPIRuntimeCreator | null = null;
+  private static instance: AIFeedAPIRuntimeCreator | null = null
 
   /**
    * getInstance(): Returns a singleton instance of AIFeedAPIRuntimeCreator.
@@ -25,12 +28,12 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
    */
   static getInstance(): AIFeedAPIRuntimeCreator {
     if (!AIFeedAPIRuntimeCreator.instance) {
-      AIFeedAPIRuntimeCreator.instance = new AIFeedAPIRuntimeCreator();
+      AIFeedAPIRuntimeCreator.instance = new AIFeedAPIRuntimeCreator()
     }
-    return AIFeedAPIRuntimeCreator.instance;
+    return AIFeedAPIRuntimeCreator.instance
   }
 
-  private cache: FeedAPI | null = null;
+  private cache: FeedAPI | null = null
 
   /**
    * initializeAIFeed(): Initializes the AI feed and returns a cached instance if available.
@@ -47,27 +50,27 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
     // If the AI feed API has already been created and cached, return the existing instance.
     // This avoids redundant initialization, which can be resource-intensive.
     if (this.cache != null) {
-      return this.cache;
+      return this.cache
     }
 
-    const agent = args.agent;
+    const agent = args.agent
 
     // 1. Ensure preferences data is available before proceeding.
     if (!preferences) {
-      throw new Error('Preferences data is unavailable.');
+      throw new Error('Preferences data is unavailable.')
     }
 
     // 2. Create a new instance of the ShellAIFeedAPI with the necessary dependencies.
-    const shellFeed = new ShellAIFeedAPI(agent, preferences.savedFeeds);
+    const shellFeed = new ShellAIFeedAPI(agent, preferences.savedFeeds)
 
     // 3. Initiate the asynchronous initialization process of the AI feed.
     // This allows the feed to start fetching and analyzing data in the background.
-    shellFeed.startInitialization();
+    shellFeed.startInitialization()
 
     // 4. Cache the created ShellAIFeedAPI instance for future use and return it.
-    this.cache = shellFeed;
+    this.cache = shellFeed
 
-    return this.cache;
+    return this.cache
   }
 
   /**
@@ -90,14 +93,14 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
     //
     // This allows to start curating posts well in advance to improve performance and
     // diversity.
-    const aiModeFeedAPI = this.initializeAIFeed(args);
+    const aiModeFeedAPI = this.initializeAIFeed(args)
 
     // Check if this creator should handle the provided feed descriptor.
     // It should only return the AI feed API when the descriptor explicitly asks for the AI mode feed.
     if (args.feedDesc !== aiModeFeedDescriptor) {
-      return null; // This creator does not handle the requested feed descriptor.
+      return null // This creator does not handle the requested feed descriptor.
     }
 
-    return aiModeFeedAPI; // Return the initialized AI feed API instance.
+    return aiModeFeedAPI // Return the initialized AI feed API instance.
   }
 }

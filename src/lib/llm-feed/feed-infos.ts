@@ -1,8 +1,8 @@
-import { RichText } from '@atproto/api';
-import {SavedFeedSourceInfo} from '#/state/queries/feed';
-import { aiModeFeedDescriptor } from './types';
+import {RichText} from '@atproto/api'
 
-// See Google Document about structure of SavedFeedSourceInfo to learn more about the fields.
+import {type SavedFeedSourceInfo} from '#/state/queries/feed'
+import {aiModeFeedDescriptor} from './types'
+
 export const aiModeFeedInfo: SavedFeedSourceInfo = {
   type: 'feed',
   displayName: 'AI mode',
@@ -28,4 +28,4 @@ export const aiModeFeedInfo: SavedFeedSourceInfo = {
     pinned: true,
   },
   contentMode: undefined,
-};
+}
