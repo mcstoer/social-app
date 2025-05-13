@@ -80,13 +80,15 @@ export function HomeScreen(props: Props) {
 
   if (preferences && pinnedFeedInfos && !isPinnedFeedsLoading) {
     // Add AI feed into 2nd position
-    pinnedFeedInfos.splice(1, 0, aiModeFeedInfo)
+    // Create a new array instead of mutating the one from the hook
+    const feedInfosWithAI = [...pinnedFeedInfos]
+    feedInfosWithAI.splice(1, 0, aiModeFeedInfo)
     return (
       <Layout.Screen testID="HomeScreen">
         <HomeScreenReady
           {...props}
           preferences={preferences}
-          pinnedFeedInfos={pinnedFeedInfos}
+          pinnedFeedInfos={feedInfosWithAI}
         />
       </Layout.Screen>
     )
