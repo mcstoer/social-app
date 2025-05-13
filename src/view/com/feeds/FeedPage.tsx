@@ -9,6 +9,8 @@ import {useQueryClient} from '@tanstack/react-query'
 import {VIDEO_FEED_URIS} from '#/lib/constants'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {ComposeIcon2} from '#/lib/icons'
+import {AIFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/AIFeedAPIRuntimeCreator'
+import {FeedAPIRuntimeCreatorProvider} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
 import {getRootNavigation, getTabState, TabState} from '#/lib/routes/helpers'
 import {type AllNavigatorParams} from '#/lib/routes/types'
 import {logEvent} from '#/lib/statsig/statsig'
@@ -128,45 +130,50 @@ export function FeedPage({
 
   const shouldPrefetch = isNative && isPageAdjacent
   return (
-    <View testID={testID}>
-      <MainScrollProvider>
-        <FeedFeedbackProvider value={feedFeedback}>
-          <PostFeed
-            testID={testID ? `${testID}-feed` : undefined}
-            enabled={isPageFocused || shouldPrefetch}
-            feed={feed}
-            feedParams={feedParams}
-            pollInterval={POLL_FREQ}
-            disablePoll={hasNew || !isPageFocused}
-            scrollElRef={scrollElRef}
-            onScrolledDownChange={setIsScrolledDown}
-            onHasNew={setHasNew}
-            renderEmptyState={renderEmptyState}
-            renderEndOfFeed={renderEndOfFeed}
-            headerOffset={headerOffset}
-            savedFeedConfig={savedFeedConfig}
-            isVideoFeed={isVideoFeed}
+    <FeedAPIRuntimeCreatorProvider
+      runtimeCreator={AIFeedAPIRuntimeCreator.getInstance()}>
+      <View testID={testID}>
+        <MainScrollProvider>
+          <FeedFeedbackProvider value={feedFeedback}>
+            <PostFeed
+              testID={testID ? `${testID}-feed` : undefined}
+              enabled={isPageFocused || shouldPrefetch}
+              feed={feed}
+              feedParams={feedParams}
+              pollInterval={POLL_FREQ}
+              disablePoll={hasNew || !isPageFocused}
+              scrollElRef={scrollElRef}
+              onScrolledDownChange={setIsScrolledDown}
+              onHasNew={setHasNew}
+              renderEmptyState={renderEmptyState}
+              renderEndOfFeed={renderEndOfFeed}
+              headerOffset={headerOffset}
+              savedFeedConfig={savedFeedConfig}
+              isVideoFeed={isVideoFeed}
+            />
+          </FeedFeedbackProvider>
+        </MainScrollProvider>
+        {(isScrolledDown || hasNew) && (
+          <LoadLatestBtn
+            onPress={onPressLoadLatest}
+            label={_(msg`Load new posts`)}
+            showIndicator={hasNew}
           />
-        </FeedFeedbackProvider>
-      </MainScrollProvider>
-      {(isScrolledDown || hasNew) && (
-        <LoadLatestBtn
-          onPress={onPressLoadLatest}
-          label={_(msg`Load new posts`)}
-          showIndicator={hasNew}
-        />
-      )}
+        )}
 
-      {hasSession && (
-        <FAB
-          testID="composeFAB"
-          onPress={onPressCompose}
-          icon={<ComposeIcon2 strokeWidth={1.5} size={29} style={s.white} />}
-          accessibilityRole="button"
-          accessibilityLabel={_(msg({message: `New post`, context: 'action'}))}
-          accessibilityHint=""
-        />
-      )}
-    </View>
+        {hasSession && (
+          <FAB
+            testID="composeFAB"
+            onPress={onPressCompose}
+            icon={<ComposeIcon2 strokeWidth={1.5} size={29} style={s.white} />}
+            accessibilityRole="button"
+            accessibilityLabel={_(
+              msg({message: `New post`, context: 'action'}),
+            )}
+            accessibilityHint=""
+          />
+        )}
+      </View>
+    </FeedAPIRuntimeCreatorProvider>
   )
 }

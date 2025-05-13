@@ -29,6 +29,10 @@ import {aggregateUserInterests} from '#/lib/api/feed/utils'
 import {FeedTuner, type FeedTunerFn} from '#/lib/api/feed-manip'
 import {DISCOVER_FEED_URI} from '#/lib/constants'
 import {BSKY_FEED_OWNER_DIDS} from '#/lib/constants'
+import  {type FeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreator'
+import {useFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
+import {FeedAPIRuntimeCreatorService} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorService'
+import {type AIFeedDescriptor} from '#/lib/llm-feed/types'
 import {logger} from '#/logger'
 import {STALE} from '#/state/queries'
 import {DEFAULT_LOGGED_OUT_PREFERENCES} from '#/state/queries/preferences/const'
@@ -60,6 +64,7 @@ export type FeedDescriptor =
   | `feedgen|${FeedUri}`
   | `likes|${ActorDid}`
   | `list|${ListUri}`
+  | AIFeedDescriptor
   | 'demo'
 export interface FeedParams {
   mergeFeedEnabled?: boolean
@@ -127,6 +132,9 @@ export function usePostFeedQuery(
   params?: FeedParams,
   opts?: {enabled?: boolean; ignoreFilterFor?: string},
 ) {
+  // Obtain the FeedAPIRuntimeCreator object, mainly used to implement custom
+  // feeds outside of main Bluesky code (such as AI feed)
+  const runtimeCreator = useFeedAPIRuntimeCreator()
   const feedTuners = useFeedTuners(feedDesc)
   const moderationOpts = useModerationOpts()
   const {data: preferences} = usePreferencesQuery()
@@ -188,6 +196,7 @@ export function usePostFeedQuery(
               userInterests,
               // Not in the query key. Reacting to it switching isn't important:
               enableFollowingToDiscoverFallback,
+              runtimeCreator,
             }),
             cursor: undefined,
           }
@@ -446,6 +455,7 @@ function createApi({
   userInterests,
   agent,
   enableFollowingToDiscoverFallback,
+  runtimeCreator,
 }: {
   feedDesc: FeedDescriptor
   feedParams: FeedParams
@@ -453,7 +463,28 @@ function createApi({
   userInterests?: string
   agent: BskyAgent
   enableFollowingToDiscoverFallback: boolean
+  runtimeCreator: FeedAPIRuntimeCreator | undefined
 }) {
+  // If the feed descriptor represents an AI filtered feed...
+  // (or something else if another FeedAPIRuntimeCreator is used)
+
+  const dynamicFeedAPI: FeedAPI | null =
+    FeedAPIRuntimeCreatorService.maybeCreateAPI(
+      runtimeCreator, // Using the already fetched runtimeCreator!
+      {
+        agent,
+        feedDesc,
+        feedParams,
+        feedTuners,
+        userInterests,
+      },
+    )
+
+  // If the creator wants to handle that feed...
+  if (dynamicFeedAPI != null) {
+    return dynamicFeedAPI
+  }
+
   if (feedDesc === 'following') {
     if (feedParams.mergeFeedEnabled) {
       return new MergeFeedAPI({
