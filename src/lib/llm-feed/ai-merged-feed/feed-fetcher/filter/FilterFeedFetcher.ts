@@ -1,4 +1,4 @@
-import { FeedAPIResponse } from 'lib/api/feed/types';
+import { FeedAPIResponse } from '#/lib/api/feed/types';
 import { BskyFeedFetcher } from '../BskyFeedFetcher';
 import { PostFilter } from './PostFilter';
 

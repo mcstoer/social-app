@@ -4,8 +4,8 @@
  * This module simplifies the process of creating FeedAPIs by taking the runtime creator
  * as an argument, allowing for flexible usage within React components.
  */
-import type { FeedAPI } from 'lib/api/feed/types';
-import type { FeedAPIRuntimeCreator, FeedAPICreationArgs } from './FeedAPIRuntimeCreator';
+import type { FeedAPI } from '#/lib/api/feed/types';
+import type { FeedAPICreationArgs,FeedAPIRuntimeCreator } from './FeedAPIRuntimeCreator';
 
 /**
  * Service class for creating FeedAPIs using a provided runtime creator.

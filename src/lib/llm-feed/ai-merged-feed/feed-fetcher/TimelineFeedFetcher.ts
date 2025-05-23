@@ -1,7 +1,8 @@
 import { BskyAgent } from '@atproto/api';
+
+import { FeedAPIResponse } from '#/lib/api/feed/types';
 import { BskyFeedFetcher } from './BskyFeedFetcher';
 import { BskyFeedFetcherUtil } from './BskyFeedFetcherUtil';
-import { FeedAPIResponse } from 'lib/api/feed/types';
 
 /**
  * TimelineFeedFetcher: Fetches posts from the user's timeline.
