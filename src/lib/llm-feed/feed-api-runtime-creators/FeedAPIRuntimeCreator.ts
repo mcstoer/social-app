@@ -7,9 +7,10 @@
  */
 
 import { BskyAgent } from '@atproto/api';
+
+import { FeedAPI } from '#/lib/api/feed/types';
+import type { FeedTunerFn } from '#/lib/api/feed-manip';
 import type { FeedDescriptor, FeedParams } from '#/state/queries/post-feed';
-import type { FeedTunerFn } from 'lib/api/feed-manip';
-import { FeedAPI } from 'lib/api/feed/types';
 
 /**
  * Defines the contract for a runtime FeedAPI creator.
