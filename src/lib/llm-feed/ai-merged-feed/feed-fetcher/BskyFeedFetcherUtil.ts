@@ -1,6 +1,7 @@
-import { FeedAPIResponse } from 'lib/api/feed/types';
 import { AppBskyFeedDefs } from '@atproto/api';
 import { Response } from '@atproto/api/src/client/types/app/bsky/feed/getTimeline';
+
+import { FeedAPIResponse } from '#/lib/api/feed/types';
 
 /**
  * BskyFeedFetcherUtil: Provides utility functions for handling Bluesky feed responses.

@@ -1,4 +1,4 @@
-import { FeedAPIResponse } from 'lib/api/feed/types';
+import { type FeedAPIResponse } from '#/lib/api/feed/types';
 
 /**
  * BskyFeedFetcher: A generic interface for fetching posts from a single Bluesky feed.
