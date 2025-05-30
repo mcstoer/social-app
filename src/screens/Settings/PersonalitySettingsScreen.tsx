@@ -1,28 +1,32 @@
-import React, {useState, useEffect, useCallback} from 'react'
-import {View, TextInput, Switch, ActivityIndicator} from 'react-native'
-import {useFocusEffect} from '@react-navigation/native'
+import React, {useCallback,useEffect, useState} from 'react'
+import {ActivityIndicator,Switch, TextInput, View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {useFocusEffect} from '@react-navigation/native'
 
 import {usePalette} from '#/lib/hooks/usePalette'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
+import {LLM_API_KEY, LLM_BASE_URL} from '#/lib/llm-feed/env'
+import {PersonalityUpdater} from '#/lib/llm-feed/personality-updater'
 import {CommonNavigatorParams, NativeStackScreenProps} from '#/lib/routes/types'
 import {logger} from '#/logger'
-import {ScrollView} from '#/view/com/util/Views'
-import {ViewHeader} from '#/view/com/util/ViewHeader'
-import {Text} from '#/view/com/util/text/Text'
-import {Button} from '#/view/com/util/forms/Button'
-import * as Toast from '#/view/com/util/Toast'
-import {atoms as a, useTheme, tokens} from '#/alf'
 import {useAgent} from '#/state/session'
-import {PersonalityUpdater} from '#/lib/llm-feed/personality-updater'
-import {LLM_API_KEY, LLM_BASE_URL} from '#/lib/llm-feed/env'
+import {Button} from '#/view/com/util/forms/Button'
+import {Text} from '#/view/com/util/text/Text'
+import * as Toast from '#/view/com/util/Toast'
+import {ViewHeader} from '#/view/com/util/ViewHeader'
+import {ScrollView} from '#/view/com/util/Views'
+import {atoms as a, tokens,useTheme} from '#/alf'
 
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
 const AUTOUPDATE_ENABLED_KEY = 'llm_personality_autoupdate_enabled'
+const LLM_API_KEY_STORAGE_KEY = 'llm_api_key'
+const LLM_BASE_URL_STORAGE_KEY = 'llm_base_url'
+const LLM_MODEL_NAME_STORAGE_KEY = 'llm_model_name'
 const DEFAULT_PERSONALITY =
   'Interested in a variety of topics including technology, science, art, and culture.'
+const DEFAULT_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501'
 
 type Props = NativeStackScreenProps<CommonNavigatorParams, 'PersonalitySettings'>
 export function PersonalitySettingsScreen({}: Props) {
@@ -36,6 +40,9 @@ export function PersonalitySettingsScreen({}: Props) {
   const [isSaving, setIsSaving] = useState(false)
   const [isManualUpdating, setIsManualUpdating] = useState(false)
   const [isAutoUpdateEnabled, setIsAutoUpdateEnabled] = useState(true)
+  const [llmApiKey, setLlmApiKey] = useState<string>('')
+  const [llmBaseUrl, setLlmBaseUrl] = useState<string>('')
+  const [llmModelName, setLlmModelName] = useState<string>('')
 
   const loadSettings = useCallback(async () => {
     setIsLoading(true)
@@ -45,44 +52,59 @@ export function PersonalitySettingsScreen({}: Props) {
 
       const storedAutoUpdate = await AsyncStorage.getItem(AUTOUPDATE_ENABLED_KEY)
       setIsAutoUpdateEnabled(storedAutoUpdate !== 'false')
+
+      const storedApiKey = await AsyncStorage.getItem(LLM_API_KEY_STORAGE_KEY)
+      setLlmApiKey(storedApiKey || LLM_API_KEY || '')
+
+      const storedBaseUrl = await AsyncStorage.getItem(LLM_BASE_URL_STORAGE_KEY)
+      setLlmBaseUrl(storedBaseUrl || LLM_BASE_URL || '')
+
+      const storedModelName = await AsyncStorage.getItem(LLM_MODEL_NAME_STORAGE_KEY)
+      setLlmModelName(storedModelName || DEFAULT_MODEL_NAME)
     } catch (e) {
       logger.error('Failed to load personality settings', {message: e})
       setPersonality(DEFAULT_PERSONALITY)
       setIsAutoUpdateEnabled(true)
+      setLlmApiKey(LLM_API_KEY || '')
+      setLlmBaseUrl(LLM_BASE_URL || '')
+      setLlmModelName(DEFAULT_MODEL_NAME)
       Toast.show(_(msg`Failed to load your preferences.`), 'xmark')
     } finally {
       setIsLoading(false)
     }
   }, [_])
 
-  const savePersonality = useCallback(async () => {
+  const saveSettings = useCallback(async () => {
     setIsSaving(true)
     try {
       await AsyncStorage.setItem(ASYNC_STORAGE_KEY, personality)
-      Toast.show(_(msg`Preference saved`))
+      await AsyncStorage.setItem(LLM_API_KEY_STORAGE_KEY, llmApiKey)
+      await AsyncStorage.setItem(LLM_BASE_URL_STORAGE_KEY, llmBaseUrl)
+      await AsyncStorage.setItem(LLM_MODEL_NAME_STORAGE_KEY, llmModelName)
+      Toast.show(_(msg`Settings saved`))
     } catch (e) {
-      logger.error('Failed to save personality setting', {message: e})
-      Toast.show(_(msg`Failed to save your preference.`), 'xmark')
+      logger.error('Failed to save settings', {message: e})
+      Toast.show(_(msg`Failed to save your settings.`), 'xmark')
     } finally {
       setIsSaving(false)
     }
-  }, [_, personality])
+  }, [_, personality, llmApiKey, llmBaseUrl, llmModelName])
 
   const handleManualUpdate = useCallback(async () => {
     if (!agent?.session) {
       Toast.show(_(msg`You must be logged in to update personality automatically.`))
       return
     }
-    if (!LLM_API_KEY || !LLM_BASE_URL) {
+    if (!llmApiKey || !llmBaseUrl) {
       logger.error('Manual Personality Update: LLM API Key or Base URL missing.')
-      Toast.show(_(msg`Configuration error. Cannot update personality.`))
+      Toast.show(_(msg`Please configure LLM API settings first.`))
       return
     }
 
     setIsManualUpdating(true)
     Toast.show(_(msg`Updating personality based on recent activity...`))
     try {
-      const updater = new PersonalityUpdater(LLM_API_KEY, LLM_BASE_URL, agent)
+      const updater = new PersonalityUpdater(llmApiKey, llmBaseUrl, agent)
       await updater.updatePersonality()
       Toast.show(_(msg`Personality updated successfully!`))
       await loadSettings()
@@ -92,7 +114,7 @@ export function PersonalitySettingsScreen({}: Props) {
     } finally {
       setIsManualUpdating(false)
     }
-  }, [agent, _, loadSettings])
+  }, [agent, _, loadSettings, llmApiKey, llmBaseUrl])
 
   const handleToggleAutoUpdate = useCallback(async (newValue: boolean) => {
     setIsAutoUpdateEnabled(newValue)
@@ -160,7 +182,7 @@ export function PersonalitySettingsScreen({}: Props) {
               <Button
                 type="primary"
                 label={_(msg`Save Manual Changes`)}
-                onPress={savePersonality}
+                onPress={saveSettings}
                 disabled={isSaving || isLoading || isManualUpdating}
               />
             </View>
@@ -194,6 +216,81 @@ export function PersonalitySettingsScreen({}: Props) {
                 disabled={isManualUpdating || isLoading}
               />
               {isManualUpdating && <ActivityIndicator color={t.palette.primary_500} />}
+            </View>
+          </View>
+          <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
+            <Text style={[a.font_bold, a.text_lg]}>
+              <Trans>LLM Configuration</Trans>
+            </Text>
+            <View style={a.gap_sm}>
+              <Text style={[a.pb_xs, a.font_bold]}>
+                <Trans>API Key</Trans>
+              </Text>
+              <TextInput
+                style={[
+                  a.border,
+                  a.rounded_md,
+                  a.p_md,
+                  t.atoms.border_contrast_medium,
+                  t.atoms.text,
+                  pal.view,
+                  (isLoading || isSaving) && {opacity: 0.6},
+                ]}
+                value={llmApiKey}
+                onChangeText={setLlmApiKey}
+                placeholder="Enter your LLM API key"
+                placeholderTextColor={pal.textLight.color}
+                editable={!isLoading && !isSaving}
+                secureTextEntry={true}
+                accessibilityLabel={_(msg`LLM API Key`)}
+                accessibilityHint={_(msg`Input field for LLM API key`)}
+              />
+            </View>
+            <View style={a.gap_sm}>
+              <Text style={[a.pb_xs, a.font_bold]}>
+                <Trans>Base URL</Trans>
+              </Text>
+              <TextInput
+                style={[
+                  a.border,
+                  a.rounded_md,
+                  a.p_md,
+                  t.atoms.border_contrast_medium,
+                  t.atoms.text,
+                  pal.view,
+                  (isLoading || isSaving) && {opacity: 0.6},
+                ]}
+                value={llmBaseUrl}
+                onChangeText={setLlmBaseUrl}
+                placeholder="https://api.deepinfra.com/v1/openai"
+                placeholderTextColor={pal.textLight.color}
+                editable={!isLoading && !isSaving}
+                accessibilityLabel={_(msg`LLM Base URL`)}
+                accessibilityHint={_(msg`Input field for LLM API base URL`)}
+              />
+            </View>
+            <View style={a.gap_sm}>
+              <Text style={[a.pb_xs, a.font_bold]}>
+                <Trans>Model Name</Trans>
+              </Text>
+              <TextInput
+                style={[
+                  a.border,
+                  a.rounded_md,
+                  a.p_md,
+                  t.atoms.border_contrast_medium,
+                  t.atoms.text,
+                  pal.view,
+                  (isLoading || isSaving) && {opacity: 0.6},
+                ]}
+                value={llmModelName}
+                onChangeText={setLlmModelName}
+                placeholder={DEFAULT_MODEL_NAME}
+                placeholderTextColor={pal.textLight.color}
+                editable={!isLoading && !isSaving}
+                accessibilityLabel={_(msg`LLM Model Name`)}
+                accessibilityHint={_(msg`Input field for LLM model name`)}
+              />
             </View>
           </View>
         </View>

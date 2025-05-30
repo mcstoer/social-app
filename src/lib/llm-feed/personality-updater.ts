@@ -1,15 +1,17 @@
-import {BskyAgent, AppBskyActorDefs} from '@atproto/api'
+import {AppBskyActorDefs,BskyAgent} from '@atproto/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import OpenAI from 'openai'
 import type {ChatCompletionMessageParam} from 'openai/resources/chat/completions'
+
 import {logger} from '#/logger'
 
 // --- Constants ---
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
 const AUTOUPDATE_ENABLED_KEY = 'llm_personality_autoupdate_enabled'
+const LLM_MODEL_NAME_STORAGE_KEY = 'llm_model_name'
 const DEFAULT_PERSONALITY =
   'Interested in a variety of topics including technology, science, art, and culture.'
-const LLM_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501' // Or your preferred model
+const DEFAULT_LLM_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501' // Or your preferred model
 
 // --- Types (Adapted from PersonalityOverseer) ---
 interface FollowedFeed {
@@ -439,11 +441,22 @@ export class PersonalityUpdater {
       ]
 
       logger.debug('PersonalityUpdater: Sending request to LLM...')
-      // console.log("PROMPT MESSAGES:", JSON.stringify(messages, null, 2)); // DEBUG: Log full prompt
+      // // console.log("PROMPT MESSAGES:", JSON.stringify(messages, null, 2)); // DEBUG: Log full prompt
 
       // 5. Call LLM
+      // Load model name from AsyncStorage
+      let modelName = DEFAULT_LLM_MODEL_NAME
+      try {
+        const storedModelName = await AsyncStorage.getItem(LLM_MODEL_NAME_STORAGE_KEY)
+        if (storedModelName) {
+          modelName = storedModelName
+        }
+      } catch (e) {
+        logger.warn('PersonalityUpdater: Could not load model name from storage, using default.', { message: e })
+      }
+
       const chatCompletion = await this.openai.chat.completions.create({
-        model: LLM_MODEL_NAME,
+        model: modelName,
         messages: messages,
         // max_tokens: 500, // Adjust as needed
       })
@@ -455,7 +468,7 @@ export class PersonalityUpdater {
       }
 
       logger.debug('PersonalityUpdater: Received response from LLM.')
-      // console.log("LLM RAW RESPONSE:", content); // DEBUG: Log raw response
+      // // console.log("LLM RAW RESPONSE:", content); // DEBUG: Log raw response
 
       // 6. Parse response
       const match = content.match(/<Personality>([\s\S]*?)<\/Personality>/)
@@ -477,7 +490,7 @@ export class PersonalityUpdater {
         logger.info(
           'PersonalityUpdater: Updated personality saved to AsyncStorage.',
         )
-        // console.log("NEW PERSONALITY:", newPersonality); // DEBUG: Log new personality
+        // // console.log("NEW PERSONALITY:", newPersonality); // DEBUG: Log new personality
       } else if (!newPersonality) {
         logger.warn(
           'PersonalityUpdater: Extracted personality was empty, not saving.',
