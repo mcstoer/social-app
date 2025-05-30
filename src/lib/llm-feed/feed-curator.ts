@@ -57,22 +57,22 @@ export class FeedCurator {
   ): Promise<number[]> {
     try {
       // Log inputs
-      console.log('==== LLM FEED CURATION STARTED ====');
-      console.log('INPUT - Personality:', personality);
-      console.log('INPUT - Languages:', languages || 'Not specified');
-      console.log('INPUT - Subscriptions count:', subscriptions.length);
-      console.log('INPUT - Posts count:', posts.length);
+      // console.log('==== LLM FEED CURATION STARTED ====');
+      // console.log('INPUT - Personality:', personality);
+      // console.log('INPUT - Languages:', languages || 'Not specified');
+      // console.log('INPUT - Subscriptions count:', subscriptions.length);
+      // console.log('INPUT - Posts count:', posts.length);
       
       // Log sample of subscriptions
-      console.log('INPUT - Subscriptions sample (first 5):');
+      // console.log('INPUT - Subscriptions sample (first 5):');
       subscriptions.slice(0, 5).forEach((sub, i) => {
-        console.log(`SUB ${i+1}: @${sub.user_handle} - ${sub.user_bio}`);
+        // console.log(`SUB ${i+1}: @${sub.user_handle} - ${sub.user_bio}`);
       });
       
       // Log sample of posts
-      console.log('INPUT - Posts sample (first 3):');
+      // console.log('INPUT - Posts sample (first 3):');
       posts.slice(0, 3).forEach((post, i) => {
-        console.log(`POST ${i+1}:\n${post || 'No text available'}\n---`);
+        // console.log(`POST ${i+1}:\n${post || 'No text available'}\n---`);
       });
       
       // Format inputs for the LLM
@@ -125,7 +125,7 @@ Prioritize putting more important posts first. But ensure variety.`
         max_completion_tokens: 500
       })
 
-      console.log('SIMULATED PROMPT:\n', promptMessages);
+      // console.log('SIMULATED PROMPT:\n', promptMessages);
       const selectedIndices = [...new Set(
           chatCompletion.choices[0].message.content?.
               split('\n')
@@ -135,8 +135,8 @@ Prioritize putting more important posts first. But ensure variety.`
               .filter(idx => idx >= 0 && idx < posts.length)  // Ensure index is valid
       )];
 
-      console.log('SELECTED INDICES:', selectedIndices);
-      console.log('POSTS:', posts);
+      // console.log('SELECTED INDICES:', selectedIndices);
+      // console.log('POSTS:', posts);
       
       // Return selected post IDs in the order specified by the deduplicated indices
       return selectedIndices;

@@ -1,19 +1,20 @@
-import { BskyAgent, AppBskyActorDefs } from '@atproto/api';
+import { AppBskyActorDefs,BskyAgent } from '@atproto/api';
+
  import {
   FeedAPI,
   FeedAPIResponse,
- } from 'lib/api/feed/types';
- import { AIMergedFeed } from './AIMergedFeed'; // AI-powered feed implementation
- import { getCurrentUserProfile } from '../user-profile'; // Function to fetch user profile
- import { FeedCurator } from '../feed-curator'; // Class for AI curation logic
+ } from '#/lib/api/feed/types';
  import { LLM_API_KEY, LLM_BASE_URL } from '../env'; // Constants for LLM API access
- import { SavedFeedConverter } from './feed-fetcher/SavedFeedConverter'; // Converts saved feeds
- import { FilterSavedFeedConverter } from './feed-fetcher/FilterSavedFeedConverter'; // Filters saved feeds
- import { TimelineFeedFetcher } from './feed-fetcher/TimelineFeedFetcher'; // Fetches timeline feed
+ import { FeedCurator } from '../feed-curator'; // Class for AI curation logic
+ import { getCurrentUserProfile } from '../user-profile'; // Function to fetch user profile
+ import { AIMergedFeed } from './AIMergedFeed'; // AI-powered feed implementation
+ import { AIMergedFeedScheduler } from './AIMergedFeedScheduler'; // Schedules feed updates
+ import { DiverseBackgroundFetcher } from './feed-fetcher/DiverseBackgroundFetcher'; // Fetches diverse background posts
 import { AICuratorFilter } from './feed-fetcher/filter/AICuratorFilter'; // AI filter plug-in for FilterFeedFetcher
  import { FilterFeedFetcher } from './feed-fetcher/filter/FilterFeedFetcher'; // Filters a single feed fetcher
- import { DiverseBackgroundFetcher } from './feed-fetcher/DiverseBackgroundFetcher'; // Fetches diverse background posts
- import { AIMergedFeedScheduler } from './AIMergedFeedScheduler'; // Schedules feed updates
+ import { FilterSavedFeedConverter } from './feed-fetcher/FilterSavedFeedConverter'; // Filters saved feeds
+ import { SavedFeedConverter } from './feed-fetcher/SavedFeedConverter'; // Converts saved feeds
+ import { TimelineFeedFetcher } from './feed-fetcher/TimelineFeedFetcher'; // Fetches timeline feed
 
  /**
   * ShellAIFeedAPI: A wrapper around the AI-powered feed API, handling asynchronous initialization.
@@ -50,6 +51,11 @@ export class ShellAIFeedAPI implements FeedAPI {
    */
   private async initializeRealFeed(): Promise<void> {
     try {
+      // 0. Check if user is logged in
+      if (!this.agent.hasSession) {
+        throw new Error('User is not logged in.');
+      }
+
       // 1. Fetch user profile data
       const userProfile = await getCurrentUserProfile(this.agent);
       if (!userProfile) {
@@ -125,7 +131,12 @@ export class ShellAIFeedAPI implements FeedAPI {
 
     // 2. Wait for initialization if realFeed is not ready
     if (!this.realFeed) {
-      await this.initializationPromise;
+      try {
+        await this.initializationPromise;
+      } catch (error) {
+        // Propagate the error if initialization failed (e.g. user not logged in)
+        throw error;
+      }
 
       // 3. Throw an error if initialization failed
       if (!this.realFeed) {
@@ -156,7 +167,12 @@ export class ShellAIFeedAPI implements FeedAPI {
 
     // 2. Wait for initialization if realFeed is not ready
     if (!this.realFeed) {
-      await this.initializationPromise;
+      try {
+        await this.initializationPromise;
+      } catch (error) {
+        // Propagate the error if initialization failed (e.g. user not logged in)
+        throw error;
+      }
 
       // 3. Throw an error if initialization failed
       if (!this.realFeed) {
