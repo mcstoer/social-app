@@ -69,8 +69,8 @@ export async function getCurrentUserProfile(agent: BskyAgent): Promise<UserProfi
       }
     }
 
-    console.log("USER PERSONALITY:")
-    console.log(personality)
+    // console.log("USER PERSONALITY:")
+    // console.log(personality)
 
     return {
       name: profile.handle,
