@@ -11,13 +11,15 @@ import { FEED_PROMPTS } from './prompts'
 export class FeedCurator {
   private apiKey: string
   private baseURL: string
+  private modelName: string
   private openai: OpenAI | null = null
   private readonly defaultMaxPosts = 50;
   private readonly feedSourcesDivisor = 2;
   
-  constructor(apiKey: string, baseURL: string) {
+  constructor(apiKey: string, baseURL: string, modelName: string = 'mistralai/Mistral-Small-24B-Instruct-2501') {
     this.apiKey = apiKey
     this.baseURL = baseURL
+    this.modelName = modelName
     this.openai = new OpenAI({
       baseURL: baseURL,
       apiKey: apiKey,
@@ -122,7 +124,7 @@ Prioritize putting more important posts first. But ensure variety.`
       
       const chatCompletion = await openai.chat.completions.create({
         messages: promptMessages as any,
-        model: 'mistralai/Mistral-Small-24B-Instruct-2501',
+        model: this.modelName,
         max_completion_tokens: 500
       })
 
