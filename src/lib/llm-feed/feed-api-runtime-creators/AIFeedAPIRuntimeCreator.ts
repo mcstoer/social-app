@@ -45,6 +45,17 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
   }
 
   /**
+   * clearCache(): Clears the cached AI feed instance.
+   * 
+   * This method should be called when settings that affect the AI feed are updated,
+   * such as the API key or base URL. It forces the next request to create a new
+   * instance with the updated settings.
+   */
+  clearCache(): void {
+    this.cache = null;
+  }
+
+  /**
    * initializeAIFeed(): Initializes the AI feed and returns a cached instance if available.
    *
    * This private method is responsible for creating and starting the asynchronous
