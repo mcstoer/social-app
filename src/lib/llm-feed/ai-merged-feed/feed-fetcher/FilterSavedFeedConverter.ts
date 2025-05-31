@@ -1,9 +1,9 @@
-import { AppBskyActorDefs } from '@atproto/api';
+import { type AppBskyActorDefs } from '@atproto/api';
 
-import { BskyFeedFetcher } from './BskyFeedFetcher';
-import { PostFilter } from './filter/PostFilter';
+import { type BskyFeedFetcher } from './BskyFeedFetcher';
 import { FilterFeedFetcher } from './filter/FilterFeedFetcher';
-import { SavedFeedConverter } from './SavedFeedConverter';
+import { type PostFilter } from './filter/PostFilter';
+import { type SavedFeedConverter } from './SavedFeedConverter';
 
 
 /**

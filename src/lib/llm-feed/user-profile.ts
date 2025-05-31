@@ -1,6 +1,7 @@
-import {BskyAgent} from '@atproto/api'
+import {type BskyAgent} from '@atproto/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {UserProfile} from './types'
+
+import {type UserProfile} from './types'
 
 // Default personality description if none is provided
 const DEFAULT_PERSONALITY = 'Interested in a variety of topics including technology, science, art, and culture.'

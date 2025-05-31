@@ -1,6 +1,6 @@
-import { FeedAPIResponse } from '#/lib/api/feed/types';
-import { BskyFeedFetcher } from '../BskyFeedFetcher';
-import { PostFilter } from './PostFilter';
+import { type FeedAPIResponse } from '#/lib/api/feed/types';
+import { type BskyFeedFetcher } from '../BskyFeedFetcher';
+import { type PostFilter } from './PostFilter';
 
 /**
  * FilterFeedFetcher: Filters posts obtained via a wrapped BskyFeedFetcher.

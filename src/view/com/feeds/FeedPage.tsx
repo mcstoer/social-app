@@ -25,6 +25,7 @@ import {type FeedDescriptor, type FeedParams} from '#/state/queries/post-feed'
 import {truncateAndInvalidate} from '#/state/queries/util'
 import {useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
+import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {useHeaderOffset} from '#/components/hooks/useHeaderOffset'
 import {PostFeed} from '../posts/PostFeed'
 import {FAB} from '../util/fab/FAB'
@@ -56,6 +57,7 @@ export function FeedPage({
   feedInfo: SavedFeedSourceInfo
 }) {
   const {hasSession} = useSession()
+  const {requestSwitchToAccount} = useLoggedOutViewControls()
   const {_} = useLingui()
   const navigation = useNavigation<NavigationProp<AllNavigatorParams>>()
   const queryClient = useQueryClient()
@@ -74,6 +76,9 @@ export function FeedPage({
     const _isVideoFeed = isBskyVideoFeed || feedIsVideoMode
     return isNative && _isVideoFeed
   }, [feedInfo])
+
+  const aiFeedRuntimeCreator = AIFeedAPIRuntimeCreator.getInstance()
+  aiFeedRuntimeCreator.setRequestSwitchToAccount(requestSwitchToAccount)
 
   React.useEffect(() => {
     if (isPageFocused) {

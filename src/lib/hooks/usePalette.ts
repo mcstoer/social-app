@@ -1,7 +1,7 @@
 import {useMemo} from 'react'
-import {TextStyle, ViewStyle} from 'react-native'
+import {type TextStyle, type ViewStyle} from 'react-native'
 
-import {PaletteColor, PaletteColorName, useTheme} from '../ThemeContext'
+import {type PaletteColor, type PaletteColorName, useTheme} from '../ThemeContext'
 
 export interface UsePaletteValue {
   colors: PaletteColor

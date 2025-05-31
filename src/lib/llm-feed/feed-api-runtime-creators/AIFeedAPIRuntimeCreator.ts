@@ -16,6 +16,7 @@ import {preferences} from './FeedAPIRuntimeCreatorContext'
  */
 export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
   private static instance: AIFeedAPIRuntimeCreator | null = null
+  private requestSwitchToAccountInternal: ((props: {requestedAccount?: string | undefined;}) => void) | null = null;
 
   /**
    * getInstance(): Returns a singleton instance of AIFeedAPIRuntimeCreator.
@@ -34,6 +35,14 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
   }
 
   private cache: FeedAPI | null = null
+
+  /**
+   * setRequestSwitchToAccount(): Stores the function to trigger the sign-in flow.
+   * @param fn - The function from useLoggedOutViewControls.
+   */
+  setRequestSwitchToAccount(fn: (props: {requestedAccount?: string | undefined;}) => void): void {
+    this.requestSwitchToAccountInternal = fn;
+  }
 
   /**
    * initializeAIFeed(): Initializes the AI feed and returns a cached instance if available.
@@ -61,7 +70,17 @@ export class AIFeedAPIRuntimeCreator implements FeedAPIRuntimeCreator {
     }
 
     // 2. Create a new instance of the ShellAIFeedAPI with the necessary dependencies.
-    const shellFeed = new ShellAIFeedAPI(agent, preferences.savedFeeds)
+    if (!this.requestSwitchToAccountInternal) {
+      // This should ideally not happen if called after setRequestSwitchToAccount
+      // Consider throwing an error or a more robust handling if this case is critical
+      console.warn('AIFeedAPIRuntimeCreator: requestSwitchToAccount function not set. Sign-in redirect might not work.');
+      // Fallback or throw error - for now, proceeding without it, but this is a risk
+    }
+    const shellFeed = new ShellAIFeedAPI(
+      agent,
+      preferences.savedFeeds,
+      this.requestSwitchToAccountInternal || (() => { console.error('requestSwitchToAccount not available'); }), // Provide a no-op or error if not set
+    );
 
     // 3. Initiate the asynchronous initialization process of the AI feed.
     // This allows the feed to start fetching and analyzing data in the background.

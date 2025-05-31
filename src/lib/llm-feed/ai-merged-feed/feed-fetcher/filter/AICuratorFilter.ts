@@ -1,7 +1,7 @@
-import { AppBskyFeedDefs, AppBskyFeedPost } from '@atproto/api';
+import { type AppBskyFeedDefs, type AppBskyFeedPost } from '@atproto/api';
 
-import { FeedCurator } from 'lib/llm-feed/feed-curator.ts';
-import { PostFilter } from './PostFilter';
+import { type FeedCurator } from '#/lib/llm-feed/feed-curator.ts';
+import { type PostFilter } from './PostFilter';
 
 /**
  * AICuratorFilter: Filters posts using AI so it matches interest guessed by personality, preferred languages and followings.

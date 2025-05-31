@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {AppBskyActorDefs, moderateProfile, ModerationOpts} from '@atproto/api'
+import {type AppBskyActorDefs, moderateProfile, type ModerationOpts} from '@atproto/api'
 import {msg, Plural, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
@@ -8,9 +8,9 @@ import {makeProfileLink} from '#/lib/routes/links'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {atoms as a, useTheme} from '#/alf'
-import {Link, LinkProps} from '#/components/Link'
+import {Link, type LinkProps} from '#/components/Link'
 import {Text} from '#/components/Typography'
-import * as bsky from '#/types/bsky'
+import type * as bsky from '#/types/bsky'
 
 const AVI_SIZE = 30
 const AVI_SIZE_SMALL = 20

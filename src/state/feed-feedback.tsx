@@ -1,12 +1,12 @@
 import React from 'react'
-import {AppState, AppStateStatus} from 'react-native'
-import {AppBskyFeedDefs} from '@atproto/api'
+import {AppState, type AppStateStatus} from 'react-native'
+import {type AppBskyFeedDefs} from '@atproto/api'
 import throttle from 'lodash.throttle'
 
 import {FEEDBACK_FEEDS, STAGING_FEEDS} from '#/lib/constants'
 import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
-import {FeedDescriptor, FeedPostSliceItem} from '#/state/queries/post-feed'
+import {type FeedDescriptor, type FeedPostSliceItem} from '#/state/queries/post-feed'
 import {getItemsForFeedback} from '#/view/com/posts/PostFeed'
 import {useAgent} from './session'
 

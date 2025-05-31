@@ -1,5 +1,6 @@
-import React, {createContext, useContext, useMemo} from 'react'
-import {BskyAgent, ModerationOpts} from '@atproto/api'
+import {createContext, useContext, useMemo} from 'react'
+import {BskyAgent, type ModerationOpts} from '@atproto/api'
+import type React from 'react';
 
 import {useHiddenPosts, useLabelDefinitions} from '#/state/preferences'
 import {DEFAULT_LOGGED_OUT_LABEL_PREFERENCES} from '#/state/queries/preferences/moderation'

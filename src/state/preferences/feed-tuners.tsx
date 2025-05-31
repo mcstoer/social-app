@@ -1,7 +1,7 @@
 import {useMemo} from 'react'
 
 import {FeedTuner} from '#/lib/api/feed-manip'
-import {FeedDescriptor} from '../queries/post-feed'
+import {type FeedDescriptor} from '../queries/post-feed'
 import {usePreferencesQuery} from '../queries/preferences'
 import {useSession} from '../session'
 import {useLanguagePrefs} from './languages'

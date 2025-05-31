@@ -1,4 +1,4 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
 
 /**
  * ShouldFetchScheduler: Intelligent feed content evaluator for fetching decisions.

@@ -1,7 +1,7 @@
-import {AppBskyActorDefs,BskyAgent} from '@atproto/api'
+import {type AppBskyActorDefs,type BskyAgent} from '@atproto/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import OpenAI from 'openai'
-import type {ChatCompletionMessageParam} from 'openai/resources/chat/completions'
+import  {type ChatCompletionMessageParam} from 'openai/resources/chat/completions'
 
 import {logger} from '#/logger'
 
