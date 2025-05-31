@@ -1,4 +1,5 @@
 import { type AppBskyActorDefs,type BskyAgent } from '@atproto/api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
  import {
   type FeedAPI,
@@ -15,6 +16,12 @@ import { AICuratorFilter } from './feed-fetcher/filter/AICuratorFilter'; // AI f
  import { FilterSavedFeedConverter } from './feed-fetcher/FilterSavedFeedConverter'; // Filters saved feeds
  import { SavedFeedConverter } from './feed-fetcher/SavedFeedConverter'; // Converts saved feeds
  import { TimelineFeedFetcher } from './feed-fetcher/TimelineFeedFetcher'; // Fetches timeline feed
+
+// AsyncStorage keys
+const LLM_API_KEY_STORAGE_KEY = 'llm_api_key';
+const LLM_BASE_URL_STORAGE_KEY = 'llm_base_url';
+const LLM_MODEL_NAME_STORAGE_KEY = 'llm_model_name';
+const DEFAULT_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501';
 
  /**
   * ShellAIFeedAPI: A wrapper around the AI-powered feed API, handling asynchronous initialization.
@@ -74,10 +81,39 @@ export class ShellAIFeedAPI implements FeedAPI {
         throw new Error('Failed to get user profile.');
       }
 
-      // 2. Create the AI feed curator
-      const curator = new FeedCurator(LLM_API_KEY, LLM_BASE_URL);
+      // 2. Load API key, base URL, and model name from AsyncStorage or use defaults
+      let apiKey = LLM_API_KEY;
+      let baseUrl = LLM_BASE_URL;
+      let modelName = DEFAULT_MODEL_NAME;
+      
+      try {
+        const storedApiKey = await AsyncStorage.getItem(LLM_API_KEY_STORAGE_KEY);
+        const storedBaseUrl = await AsyncStorage.getItem(LLM_BASE_URL_STORAGE_KEY);
+        const storedModelName = await AsyncStorage.getItem(LLM_MODEL_NAME_STORAGE_KEY);
+        
+        if (storedApiKey) {
+          apiKey = storedApiKey;
+        }
+        
+        if (storedBaseUrl) {
+          baseUrl = storedBaseUrl;
+        }
+        
+        if (storedModelName) {
+          modelName = storedModelName;
+        }
+        
+        console.log('ShellAIFeedAPI: Using API key from:', storedApiKey ? 'AsyncStorage' : 'env.ts');
+        console.log('ShellAIFeedAPI: Using base URL:', baseUrl);
+        console.log('ShellAIFeedAPI: Using model name:', modelName);
+      } catch (error) {
+        console.warn('ShellAIFeedAPI: Failed to load API settings from AsyncStorage, using defaults', error);
+      }
 
-      // 3. Construct the AI curator filter
+      // 3. Create the AI feed curator with loaded values
+      const curator = new FeedCurator(apiKey, baseUrl, modelName);
+
+      // 4. Construct the AI curator filter
       const aiCuratorFilter = new AICuratorFilter(
         curator,
         userProfile.subscriptions || [],
@@ -85,13 +121,13 @@ export class ShellAIFeedAPI implements FeedAPI {
         userProfile.languages
       );
 
-      // 4. Create feed fetchers and converters
+      // 5. Create feed fetchers and converters
       const filterSavedFeedConverter = new FilterSavedFeedConverter(
         new SavedFeedConverter(this.agent),
         aiCuratorFilter
       );
 
-      // 5. Combine all feed fetchers
+      // 6. Combine all feed fetchers
       const fetchers = [
         new FilterFeedFetcher(
           new TimelineFeedFetcher(this.agent),
@@ -100,21 +136,21 @@ export class ShellAIFeedAPI implements FeedAPI {
         ...filterSavedFeedConverter.convert(this.savedFeeds),
       ];
 
-      // 6. Create the background post fetcher and scheduler
+      // 7. Create the background post fetcher and scheduler
       const backgroundFetcher = new DiverseBackgroundFetcher(fetchers);
       const scheduler = new AIMergedFeedScheduler(backgroundFetcher, 100);
 
-      // 7. Start fetching in background...
+      // 8. Start fetching in background...
       scheduler.wait();
 
-      // 8. Initialize the real AI feed
+      // 9. Initialize the real AI feed
       this.realFeed = new AIMergedFeed(
         backgroundFetcher.sourcePostLists(),
         scheduler,
         scheduler
       );
     } catch (error) {
-      // 9. Rethrow any errors during initialization
+      // 10. Rethrow any errors during initialization
       console.error('Failed to initialize real AI feed:', error);
       throw error;
     }

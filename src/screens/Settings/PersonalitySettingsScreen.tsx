@@ -8,6 +8,7 @@ import {useFocusEffect} from '@react-navigation/native'
 import {usePalette} from '#/lib/hooks/usePalette'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {LLM_API_KEY, LLM_BASE_URL} from '#/lib/llm-feed/env'
+import {AIFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/AIFeedAPIRuntimeCreator'
 import {PersonalityUpdater} from '#/lib/llm-feed/personality-updater'
 import {type CommonNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
 import {logger} from '#/logger'
@@ -82,6 +83,10 @@ export function PersonalitySettingsScreen({}: Props) {
       await AsyncStorage.setItem(LLM_API_KEY_STORAGE_KEY, llmApiKey)
       await AsyncStorage.setItem(LLM_BASE_URL_STORAGE_KEY, llmBaseUrl)
       await AsyncStorage.setItem(LLM_MODEL_NAME_STORAGE_KEY, llmModelName)
+      
+      // Clear the AI feed cache to force reload with new settings
+      AIFeedAPIRuntimeCreator.getInstance().clearCache()
+      
       Toast.show(_(msg`Settings saved`))
     } catch (e) {
       logger.error('Failed to save settings', {message: e})

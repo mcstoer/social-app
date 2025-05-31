@@ -6,7 +6,7 @@ import {useAgent, useSession} from '#/state/session'
 import {PersonalityUpdater} from './personality-updater'
 
 // Hardcoded values
-const HARDCODED_LLM_API_KEY = 'YaYRpfI7BiIX0yTac43qMjt0h2XugirD'
+const HARDCODED_LLM_API_KEY = 'JKNzduptcUlwUvi6gdcSlqBllOgXYyZr'
 const HARDCODED_LLM_BASE_URL = 'https://api.deepinfra.com/v1/openai'
 
 const UPDATE_INTERVAL_MS = 10 * 60 * 1000 // 10 minutes
