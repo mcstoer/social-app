@@ -154,7 +154,7 @@ export function PersonalitySettingsScreen({}: Props) {
             </Trans>
           </Text>
           <View style={a.gap_sm}>
-            <Text style={[a.pb_xs, a.font_bold]}>
+            <Text style={[a.pb_xs, a.font_bold, t.atoms.text]}>
               <Trans>Personality Description</Trans>
             </Text>
             <TextInput
@@ -188,12 +188,12 @@ export function PersonalitySettingsScreen({}: Props) {
             </View>
           </View>
           <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
-            <Text style={[a.font_bold, a.text_lg]}>
+            <Text style={[a.font_bold, a.text_lg, t.atoms.text]}>
               <Trans>Automatic Updates</Trans>
             </Text>
             <View style={[a.flex_row, a.align_center, a.justify_between]}>
               <View style={{flexShrink: 1}}>
-                <Text style={[a.font_bold]}>
+                <Text style={[a.font_bold, t.atoms.text]}>
                   <Trans>Enable automatic updates</Trans>
                 </Text>
                 <Text style={[t.atoms.text_contrast_medium]}>
@@ -219,11 +219,11 @@ export function PersonalitySettingsScreen({}: Props) {
             </View>
           </View>
           <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
-            <Text style={[a.font_bold, a.text_lg]}>
+            <Text style={[a.font_bold, a.text_lg, t.atoms.text]}>
               <Trans>LLM Configuration</Trans>
             </Text>
             <View style={a.gap_sm}>
-              <Text style={[a.pb_xs, a.font_bold]}>
+              <Text style={[a.pb_xs, a.font_bold, t.atoms.text]}>
                 <Trans>API Key</Trans>
               </Text>
               <TextInput
@@ -247,7 +247,7 @@ export function PersonalitySettingsScreen({}: Props) {
               />
             </View>
             <View style={a.gap_sm}>
-              <Text style={[a.pb_xs, a.font_bold]}>
+              <Text style={[a.pb_xs, a.font_bold, t.atoms.text]}>
                 <Trans>Base URL</Trans>
               </Text>
               <TextInput
@@ -270,7 +270,7 @@ export function PersonalitySettingsScreen({}: Props) {
               />
             </View>
             <View style={a.gap_sm}>
-              <Text style={[a.pb_xs, a.font_bold]}>
+              <Text style={[a.pb_xs, a.font_bold, t.atoms.text]}>
                 <Trans>Model Name</Trans>
               </Text>
               <TextInput
