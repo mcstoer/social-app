@@ -1,4 +1,4 @@
-import {Route, RouteParams} from './types'
+import {type Route, type RouteParams} from './types'
 
 export class Router {
   routes: [string, Route][] = []

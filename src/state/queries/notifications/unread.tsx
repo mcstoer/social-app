@@ -14,7 +14,7 @@ import {useAgent, useSession} from '#/state/session'
 import {useModerationOpts} from '../../preferences/moderation-opts'
 import {truncateAndInvalidate} from '../util'
 import {RQKEY as RQKEY_NOTIFS} from './feed'
-import {CachedFeedPage, FeedPage} from './types'
+import {type CachedFeedPage, type FeedPage} from './types'
 import {fetchPage} from './util'
 
 const UPDATE_INTERVAL = 30 * 1e3 // 30sec

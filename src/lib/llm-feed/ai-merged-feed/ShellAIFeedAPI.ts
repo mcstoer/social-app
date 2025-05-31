@@ -1,8 +1,8 @@
-import { AppBskyActorDefs,BskyAgent } from '@atproto/api';
+import { type AppBskyActorDefs,type BskyAgent } from '@atproto/api';
 
  import {
-  FeedAPI,
-  FeedAPIResponse,
+  type FeedAPI,
+  type FeedAPIResponse,
  } from '#/lib/api/feed/types';
  import { LLM_API_KEY, LLM_BASE_URL } from '../env'; // Constants for LLM API access
  import { FeedCurator } from '../feed-curator'; // Class for AI curation logic
@@ -28,16 +28,24 @@ export class ShellAIFeedAPI implements FeedAPI {
   private initializationPromise: Promise<void> | null = null; // Promise tracking initialization
   private agent: BskyAgent; // Bluesky agent for API interactions
   private savedFeeds: AppBskyActorDefs.SavedFeed[]; // Array of saved feeds
+  private requestSwitchToAccount: (props: {requestedAccount?: string | undefined;}) => void; // Updated signature
+  private userNotLoggedIn: boolean = false; // Track if user is not logged in
 
   /**
    * Constructor: Initializes the ShellAIFeedAPI with the Bluesky agent and saved feeds.
    *
    * @param agent - The Bluesky agent instance.
    * @param savedFeeds - An array of SavedFeed objects.
+   * @param requestSwitchToAccount - Function to trigger sign-in flow.
    */
-  constructor(agent: BskyAgent, savedFeeds: AppBskyActorDefs.SavedFeed[]) {
+  constructor(
+    agent: BskyAgent,
+    savedFeeds: AppBskyActorDefs.SavedFeed[],
+    requestSwitchToAccount: (props: {requestedAccount?: string | undefined;}) => void,
+  ) {
     this.agent = agent;
     this.savedFeeds = savedFeeds;
+    this.requestSwitchToAccount = requestSwitchToAccount; // Store the function
   }
 
   /**
@@ -53,7 +61,11 @@ export class ShellAIFeedAPI implements FeedAPI {
     try {
       // 0. Check if user is logged in
       if (!this.agent.hasSession) {
-        throw new Error('User is not logged in.');
+        this.userNotLoggedIn = true; // Set flag
+        this.requestSwitchToAccount({requestedAccount: 'none'}); // Call the stored function
+        // Return early without throwing an error that would be displayed to the user
+        // The redirect will happen, so we just need to prevent further initialization
+        return;
       }
 
       // 1. Fetch user profile data
@@ -138,6 +150,14 @@ export class ShellAIFeedAPI implements FeedAPI {
         throw error;
       }
 
+      // 3. If user is not logged in, return empty feed instead of throwing error
+      if (this.userNotLoggedIn) {
+        return {
+          cursor: options.cursor,
+          feed: [],
+        };
+      }
+
       // 3. Throw an error if initialization failed
       if (!this.realFeed) {
         throw new Error('AI Feed initialization failed.');
@@ -172,6 +192,11 @@ export class ShellAIFeedAPI implements FeedAPI {
       } catch (error) {
         // Propagate the error if initialization failed (e.g. user not logged in)
         throw error;
+      }
+
+      // 3. If user is not logged in, return empty array instead of throwing error
+      if (this.userNotLoggedIn) {
+        return [];
       }
 
       // 3. Throw an error if initialization failed

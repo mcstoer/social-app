@@ -1,5 +1,5 @@
 import {
-  AppBskyActorDefs,
+  type AppBskyActorDefs,
   AppBskyEmbedRecord,
   AppBskyEmbedRecordWithMedia,
   AppBskyFeedDefs,
@@ -9,7 +9,7 @@ import {
 import * as bsky from '#/types/bsky'
 import {isPostInLanguage} from '../../locale/helpers'
 import {FALLBACK_MARKER_POST} from './feed/home'
-import {ReasonFeedSource} from './feed/types'
+import {type ReasonFeedSource} from './feed/types'
 
 type FeedViewPost = AppBskyFeedDefs.FeedViewPost
 

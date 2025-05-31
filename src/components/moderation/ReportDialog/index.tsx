@@ -1,7 +1,7 @@
 import React from 'react'
 import {Pressable, View} from 'react-native'
-import {ScrollView} from 'react-native-gesture-handler'
-import {AppBskyLabelerDefs} from '@atproto/api'
+import {type ScrollView} from 'react-native-gesture-handler'
+import {type AppBskyLabelerDefs} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
@@ -33,9 +33,9 @@ import {useSubmitReportMutation} from './action'
 import {DMCA_LINK} from './const'
 import {useCopyForSubject} from './copy'
 import {initialState, reducer} from './state'
-import {ReportDialogProps, ReportSubject} from './types'
+import {type ReportDialogProps, type ReportSubject} from './types'
 import {parseReportSubject} from './utils/parseReportSubject'
-import {ReportOption, useReportOptions} from './utils/useReportOptions'
+import {type ReportOption, useReportOptions} from './utils/useReportOptions'
 
 export {useDialogControl as useReportDialogControl} from '#/components/Dialog'
 

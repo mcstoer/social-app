@@ -1,5 +1,6 @@
-import {logger} from '#/logger'
 import OpenAI from 'openai'
+
+import {logger} from '#/logger'
 import { FEED_PROMPTS } from './prompts'
 
 // Notably, this code is separate from bluesky's normal code/flow, it can be customized at will so long as it still returns the needed information

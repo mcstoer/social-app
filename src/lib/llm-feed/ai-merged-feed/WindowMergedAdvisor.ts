@@ -1,4 +1,4 @@
-import { ForwardSlidingWindow } from './ForwardSlidingWindow';
+import { type ForwardSlidingWindow } from './ForwardSlidingWindow';
 
 /**
  * WindowMergedAdvisor: Interface for notifying an external component about the pace of post consumption.

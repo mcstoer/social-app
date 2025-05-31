@@ -1,5 +1,5 @@
 import React, {useCallback,useEffect, useState} from 'react'
-import {ActivityIndicator,Switch, TextInput, View} from 'react-native'
+import {ActivityIndicator,Switch, TextInput, TouchableOpacity, View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -9,7 +9,7 @@ import {usePalette} from '#/lib/hooks/usePalette'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {LLM_API_KEY, LLM_BASE_URL} from '#/lib/llm-feed/env'
 import {PersonalityUpdater} from '#/lib/llm-feed/personality-updater'
-import {CommonNavigatorParams, NativeStackScreenProps} from '#/lib/routes/types'
+import {type CommonNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
 import {logger} from '#/logger'
 import {useAgent} from '#/state/session'
 import {Button} from '#/view/com/util/forms/Button'
@@ -43,6 +43,7 @@ export function PersonalitySettingsScreen({}: Props) {
   const [llmApiKey, setLlmApiKey] = useState<string>('')
   const [llmBaseUrl, setLlmBaseUrl] = useState<string>('')
   const [llmModelName, setLlmModelName] = useState<string>('')
+  const [isApiKeyRevealed, setIsApiKeyRevealed] = useState(false)
 
   const loadSettings = useCallback(async () => {
     setIsLoading(true)
@@ -178,14 +179,6 @@ export function PersonalitySettingsScreen({}: Props) {
               accessibilityLabel={_(msg`Describe your interests and personality`)}
               accessibilityHint={_(msg`Input field for LLM personality`)}
             />
-            <View style={[a.flex_row, a.justify_end]}>
-              <Button
-                type="primary"
-                label={_(msg`Save Manual Changes`)}
-                onPress={saveSettings}
-                disabled={isSaving || isLoading || isManualUpdating}
-              />
-            </View>
           </View>
           <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
             <Text style={[a.font_bold, a.text_lg, t.atoms.text]}>
@@ -241,10 +234,19 @@ export function PersonalitySettingsScreen({}: Props) {
                 placeholder="Enter your LLM API key"
                 placeholderTextColor={pal.textLight.color}
                 editable={!isLoading && !isSaving}
-                secureTextEntry={true}
+                secureTextEntry={!isApiKeyRevealed}
                 accessibilityLabel={_(msg`LLM API Key`)}
                 accessibilityHint={_(msg`Input field for LLM API key`)}
               />
+              <TouchableOpacity
+                onPress={() => setIsApiKeyRevealed(!isApiKeyRevealed)}
+                style={[a.flex_row, a.justify_end, a.gap_sm]}
+                accessibilityLabel={isApiKeyRevealed ? _(msg`Hide API key`) : _(msg`Reveal API key`)}
+                accessibilityHint={isApiKeyRevealed ? _(msg`Press to hide the API key`) : _(msg`Press to reveal the API key`)}>
+                <Text style={[t.atoms.text_contrast_medium]}>
+                  {isApiKeyRevealed ? _(msg`Hide`) : _(msg`Reveal`)}
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={a.gap_sm}>
               <Text style={[a.pb_xs, a.font_bold, t.atoms.text]}>
@@ -292,6 +294,14 @@ export function PersonalitySettingsScreen({}: Props) {
                 accessibilityHint={_(msg`Input field for LLM model name`)}
               />
             </View>
+          </View>
+          <View style={[a.flex_row, a.justify_end, a.pt_xl]}>
+            <Button
+              type="primary"
+              label={_(msg`Save Settings`)}
+              onPress={saveSettings}
+              disabled={isSaving || isLoading || isManualUpdating}
+            />
           </View>
         </View>
       </ScrollView>

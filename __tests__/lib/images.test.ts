@@ -4,7 +4,7 @@ import RNFetchBlob from 'rn-fetch-blob'
 
 import {
   downloadAndResize,
-  DownloadAndResizeOpts,
+  type DownloadAndResizeOpts,
   getResizedDimensions,
 } from '../../src/lib/media/manip'
 

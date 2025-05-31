@@ -1,13 +1,13 @@
 import {
-  AppBskyActorDefs,
-  AppBskyGraphDefs,
-  AppBskyGraphGetList,
-  BskyAgent,
+  type AppBskyActorDefs,
+  type AppBskyGraphDefs,
+  type AppBskyGraphGetList,
+  type BskyAgent,
 } from '@atproto/api'
 import {
-  InfiniteData,
-  QueryClient,
-  QueryKey,
+  type InfiniteData,
+  type QueryClient,
+  type QueryKey,
   useInfiniteQuery,
   useQuery,
 } from '@tanstack/react-query'

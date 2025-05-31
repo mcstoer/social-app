@@ -1,16 +1,16 @@
 import {
-  AppBskyFeedDefs,
+  type AppBskyFeedDefs,
   AppBskyGraphDefs,
-  AppBskyGraphGetStarterPack,
+  type AppBskyGraphGetStarterPack,
   AppBskyGraphStarterpack,
-  AppBskyRichtextFacet,
+  type AppBskyRichtextFacet,
   AtUri,
-  BskyAgent,
+  type BskyAgent,
   RichText,
 } from '@atproto/api'
-import {StarterPackView} from '@atproto/api/dist/client/types/app/bsky/graph/defs'
+import {type StarterPackView} from '@atproto/api/dist/client/types/app/bsky/graph/defs'
 import {
-  QueryClient,
+  type QueryClient,
   useMutation,
   useQuery,
   useQueryClient,

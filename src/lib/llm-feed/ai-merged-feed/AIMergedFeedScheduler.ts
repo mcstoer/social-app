@@ -1,9 +1,10 @@
 // AIMergedFeedScheduler.ts
 
-import { AppBskyFeedDefs } from '@atproto/api';
-import { CombinedScheduler } from './CombinedScheduler';
-import { ForwardSlidingWindow } from './ForwardSlidingWindow';
-import { BackgroundPostFetcher } from './BackgroundPostFetcher';
+import { type AppBskyFeedDefs } from '@atproto/api';
+
+import { type BackgroundPostFetcher } from './BackgroundPostFetcher';
+import { type CombinedScheduler } from './CombinedScheduler';
+import { type ForwardSlidingWindow } from './ForwardSlidingWindow';
 
 /**
  * AIMergedFeedScheduler: An implementation of the CombinedScheduler interface.

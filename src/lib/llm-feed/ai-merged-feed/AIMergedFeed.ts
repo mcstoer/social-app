@@ -1,10 +1,10 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
 
 import { type FeedAPI, type FeedAPIResponse } from '#/lib/api/feed/types'; // Import FeedAPI and FeedAPIResponse
-import { Cursor } from './Cursor';
-import { PostWaiter } from './PostWaiter';
+import { type Cursor } from './Cursor';
+import { type PostWaiter } from './PostWaiter';
 import { StringCursorManager } from './StringCursorManager';
-import { WindowMergedAdvisor } from './WindowMergedAdvisor';
+import { type WindowMergedAdvisor } from './WindowMergedAdvisor';
 
 
 /**

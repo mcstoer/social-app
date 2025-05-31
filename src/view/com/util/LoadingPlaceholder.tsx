@@ -1,10 +1,10 @@
 import {useMemo} from 'react'
 import {
-  DimensionValue,
-  StyleProp,
+  type DimensionValue,
+  type StyleProp,
   StyleSheet,
   View,
-  ViewStyle,
+  type ViewStyle,
 } from 'react-native'
 
 import {usePalette} from '#/lib/hooks/usePalette'

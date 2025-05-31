@@ -2,7 +2,7 @@ import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {CommonNavigatorParams, NativeStackScreenProps} from '#/lib/routes/types'
+import {type CommonNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
 import {
   usePreferencesQuery,
   useSetThreadViewPreferencesMutation,

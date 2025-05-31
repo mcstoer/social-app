@@ -1,13 +1,13 @@
 import {
-  AppBskyActorDefs,
-  AppBskyActorGetSuggestions,
-  AppBskyGraphGetSuggestedFollowsByActor,
+  type AppBskyActorDefs,
+  type AppBskyActorGetSuggestions,
+  type AppBskyGraphGetSuggestedFollowsByActor,
   moderateProfile,
 } from '@atproto/api'
 import {
-  InfiniteData,
-  QueryClient,
-  QueryKey,
+  type InfiniteData,
+  type QueryClient,
+  type QueryKey,
   useInfiniteQuery,
   useQuery,
 } from '@tanstack/react-query'

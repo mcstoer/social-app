@@ -1,7 +1,7 @@
 import React, {memo} from 'react'
-import {RefreshControl, ViewToken} from 'react-native'
+import {RefreshControl, type ViewToken} from 'react-native'
 import {
-  FlatListPropsWithLayout,
+  type FlatListPropsWithLayout,
   runOnJS,
   useSharedValue,
 } from 'react-native-reanimated'

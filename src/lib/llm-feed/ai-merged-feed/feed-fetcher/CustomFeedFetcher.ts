@@ -1,7 +1,7 @@
-import { BskyAgent } from '@atproto/api';
+import { type BskyAgent } from '@atproto/api';
 
-import { FeedAPIResponse } from '#/lib/api/feed/types';
-import { BskyFeedFetcher } from './BskyFeedFetcher';
+import { type FeedAPIResponse } from '#/lib/api/feed/types';
+import { type BskyFeedFetcher } from './BskyFeedFetcher';
 import { BskyFeedFetcherUtil } from './BskyFeedFetcherUtil';
 
 /**

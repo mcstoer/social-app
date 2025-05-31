@@ -1,5 +1,5 @@
 import {AtUri} from '@atproto/api'
-import {QueryClient, useQuery, UseQueryResult} from '@tanstack/react-query'
+import {type QueryClient, useQuery, type UseQueryResult} from '@tanstack/react-query'
 
 import {STALE} from '#/state/queries'
 import {useAgent} from '#/state/session'
