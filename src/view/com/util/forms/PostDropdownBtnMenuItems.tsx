@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react'
+import React, {memo} from 'react'
 import {
   Platform,
   type PressableProps,
@@ -7,20 +7,25 @@ import {
 } from 'react-native'
 import * as Clipboard from 'expo-clipboard'
 import {
-  AppBskyFeedDefs,
+  type AppBskyFeedDefs,
   AppBskyFeedPost,
-  AppBskyFeedThreadgate,
+  type AppBskyFeedThreadgate,
   AtUri,
-  RichText as RichTextAPI,
+  type RichText as RichTextAPI,
 } from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useNavigation} from '@react-navigation/native'
 
+import {IS_INTERNAL} from '#/lib/app-info'
+import {DISCOVER_DEBUG_DIDS} from '#/lib/constants'
 import {useOpenLink} from '#/lib/hooks/useOpenLink'
 import {getCurrentRoute} from '#/lib/routes/helpers'
 import {makeProfileLink} from '#/lib/routes/links'
-import {CommonNavigatorParams, NavigationProp} from '#/lib/routes/types'
+import {
+  type CommonNavigatorParams,
+  type NavigationProp,
+} from '#/lib/routes/types'
 import {shareText, shareUrl} from '#/lib/sharing'
 import {logEvent} from '#/lib/statsig/statsig'
 import {richTextToString} from '#/lib/strings/rich-text-helpers'
@@ -28,12 +33,11 @@ import {toShareUrl} from '#/lib/strings/url-helpers'
 import {getTranslatorLink} from '#/locale/helpers'
 import {logger} from '#/logger'
 import {isWeb} from '#/platform/detection'
-import {Shadow} from '#/state/cache/post-shadow'
+import {type Shadow} from '#/state/cache/post-shadow'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {useFeedFeedbackContext} from '#/state/feed-feedback'
 import {useLanguagePrefs} from '#/state/preferences'
 import {useHiddenPosts, useHiddenPostsApi} from '#/state/preferences'
-import {useDevModeEnabled} from '#/state/preferences/dev-mode'
 import {usePinnedPostMutation} from '#/state/queries/pinned-post'
 import {
   usePostDeleteMutation,
@@ -58,6 +62,7 @@ import {
 } from '#/components/dialogs/PostInteractionSettingsDialog'
 import {SendViaChatDialog} from '#/components/dms/dialogs/ShareViaChatDialog'
 import {ArrowOutOfBox_Stroke2_Corner0_Rounded as Share} from '#/components/icons/ArrowOutOfBox'
+import {Atom_Stroke2_Corner0_Rounded as AtomIcon} from '#/components/icons/Atom'
 import {BubbleQuestion_Stroke2_Corner0_Rounded as Translate} from '#/components/icons/Bubble'
 import {Clipboard_Stroke2_Corner2_Rounded as ClipboardIcon} from '#/components/icons/Clipboard'
 import {CodeBrackets_Stroke2_Corner0_Rounded as CodeBrackets} from '#/components/icons/CodeBrackets'
@@ -85,19 +90,24 @@ import {
   useReportDialogControl,
 } from '#/components/moderation/ReportDialog'
 import * as Prompt from '#/components/Prompt'
+import {useDevMode} from '#/storage/hooks/dev-mode'
+import * as bsky from '#/types/bsky'
 import * as Toast from '../Toast'
 
 let PostDropdownMenuItems = ({
   post,
   postFeedContext,
+  postReqId,
   record,
   richText,
   timestamp,
   threadgateRecord,
+  onShowLess,
 }: {
   testID: string
   post: Shadow<AppBskyFeedDefs.PostView>
   postFeedContext: string | undefined
+  postReqId: string | undefined
   record: AppBskyFeedPost.Record
   richText: RichTextAPI
   style?: StyleProp<ViewStyle>
@@ -105,6 +115,7 @@ let PostDropdownMenuItems = ({
   size?: 'lg' | 'md' | 'sm'
   timestamp: string
   threadgateRecord?: AppBskyFeedThreadgate.Record
+  onShowLess?: (interaction: AppBskyFeedDefs.Interaction) => void
 }): React.ReactNode => {
   const {hasSession, currentAccount} = useSession()
   const {gtMobile} = useBreakpoints()
@@ -131,7 +142,7 @@ let PostDropdownMenuItems = ({
   const hideReplyConfirmControl = useDialogControl()
   const {mutateAsync: toggleReplyVisibility} =
     useToggleReplyVisibilityMutation()
-  const [devModeEnabled] = useDevModeEnabled()
+  const [devModeEnabled] = useDevMode()
 
   const postUri = post.uri
   const postCid = post.cid
@@ -180,10 +191,10 @@ let PostDropdownMenuItems = ({
     langPrefs.primaryLanguage,
   )
 
-  const onDeletePost = React.useCallback(() => {
+  const onDeletePost = () => {
     deletePostMutate({uri: postUri}).then(
       () => {
-        Toast.show(_(msg`Post deleted`))
+        Toast.show(_(msg({message: 'Post deleted', context: 'toast'})))
 
         const route = getCurrentRoute(navigation.getState())
         if (route.name === 'PostThread') {
@@ -206,18 +217,9 @@ let PostDropdownMenuItems = ({
         Toast.show(_(msg`Failed to delete post, please try again`), 'xmark')
       },
     )
-  }, [
-    navigation,
-    postUri,
-    deletePostMutate,
-    postAuthor,
-    currentAccount,
-    isAuthor,
-    href,
-    _,
-  ])
+  }
 
-  const onToggleThreadMute = React.useCallback(() => {
+  const onToggleThreadMute = () => {
     try {
       if (isThreadMuted) {
         unmuteThread()
@@ -237,66 +239,83 @@ let PostDropdownMenuItems = ({
         )
       }
     }
-  }, [isThreadMuted, unmuteThread, _, muteThread])
+  }
 
-  const onCopyPostText = React.useCallback(() => {
+  const onCopyPostText = () => {
     const str = richTextToString(richText, true)
 
     Clipboard.setStringAsync(str)
     Toast.show(_(msg`Copied to clipboard`), 'clipboard-check')
-  }, [_, richText])
+  }
 
-  const onPressTranslate = React.useCallback(async () => {
+  const onPressTranslate = async () => {
     await openLink(translatorUrl, true)
-  }, [openLink, translatorUrl])
 
-  const onHidePost = React.useCallback(() => {
+    if (
+      bsky.dangerousIsType<AppBskyFeedPost.Record>(
+        post.record,
+        AppBskyFeedPost.isRecord,
+      )
+    ) {
+      logger.metric('translate', {
+        sourceLanguages: post.record.langs ?? [],
+        targetLanguage: langPrefs.primaryLanguage,
+        textLength: post.record.text.length,
+      })
+    }
+  }
+
+  const onHidePost = () => {
     hidePost({uri: postUri})
-  }, [postUri, hidePost])
+  }
 
-  const hideInPWI = React.useMemo(() => {
-    return !!postAuthor.labels?.find(
-      label => label.val === '!no-unauthenticated',
-    )
-  }, [postAuthor])
+  const hideInPWI = !!postAuthor.labels?.find(
+    label => label.val === '!no-unauthenticated',
+  )
 
   const showLoggedOutWarning =
     postAuthor.did !== currentAccount?.did && hideInPWI
 
-  const onSharePost = React.useCallback(() => {
+  const onSharePost = () => {
     const url = toShareUrl(href)
     shareUrl(url)
-  }, [href])
+  }
 
-  const onPressShowMore = React.useCallback(() => {
+  const onPressShowMore = () => {
     feedFeedback.sendInteraction({
       event: 'app.bsky.feed.defs#requestMore',
       item: postUri,
       feedContext: postFeedContext,
+      reqId: postReqId,
     })
-    Toast.show(_(msg`Feedback sent!`))
-  }, [feedFeedback, postUri, postFeedContext, _])
+    Toast.show(_(msg({message: 'Feedback sent!', context: 'toast'})))
+  }
 
-  const onPressShowLess = React.useCallback(() => {
+  const onPressShowLess = () => {
     feedFeedback.sendInteraction({
       event: 'app.bsky.feed.defs#requestLess',
       item: postUri,
       feedContext: postFeedContext,
+      reqId: postReqId,
     })
-    Toast.show(_(msg`Feedback sent!`))
-  }, [feedFeedback, postUri, postFeedContext, _])
-
-  const onSelectChatToShareTo = React.useCallback(
-    (conversation: string) => {
-      navigation.navigate('MessagesConversation', {
-        conversation,
-        embed: postUri,
+    if (onShowLess) {
+      onShowLess({
+        item: postUri,
+        feedContext: postFeedContext,
       })
-    },
-    [navigation, postUri],
-  )
+    } else {
+      Toast.show(_(msg({message: 'Feedback sent!', context: 'toast'})))
+    }
+  }
 
-  const onToggleQuotePostAttachment = React.useCallback(async () => {
+  const onSelectChatToShareTo = (conversation: string) => {
+    navigation.navigate('MessagesConversation', {
+      conversation,
+      embed: postUri,
+    })
+  }
+
+  const onToggleQuotePostAttachment = async () => {
     if (!quoteEmbed) return
 
     const action = quoteEmbed.isDetached ? 'reattach' : 'detach'
@@ -314,10 +333,12 @@ let PostDropdownMenuItems = ({
           : _(msg`Quote post was re-attached`),
       )
     } catch (e: any) {
-      Toast.show(_(msg`Updating quote attachment failed`))
+      Toast.show(
+        _(msg({message: 'Updating quote attachment failed', context: 'toast'})),
+      )
       logger.error(`Failed to ${action} quote`, {safeMessage: e.message})
     }
-  }, [_, quoteEmbed, post, toggleQuoteDetachment])
+  }
 
   const canHidePostForMe = !isAuthor && !isPostHidden
   const canEmbed = isWeb && gtMobile && !hideInPWI
@@ -325,7 +346,7 @@ let PostDropdownMenuItems = ({
     !isAuthor && isRootPostAuthor && !isPostHidden && isReply
   const canDetachQuote = quoteEmbed && quoteEmbed.isOwnedByViewer
 
-  const onToggleReplyVisibility = React.useCallback(async () => {
+  const onToggleReplyVisibility = async () => {
     // TODO no threadgate?
     if (!canHideReplyForEveryone) return
 
@@ -341,47 +362,42 @@ let PostDropdownMenuItems = ({
       Toast.show(
         isHide
           ? _(msg`Reply was successfully hidden`)
-          : _(msg`Reply visibility updated`),
+          : _(msg({message: 'Reply visibility updated', context: 'toast'})),
       )
     } catch (e: any) {
-      Toast.show(_(msg`Updating reply visibility failed`))
+      Toast.show(
+        _(msg({message: 'Updating reply visibility failed', context: 'toast'})),
+      )
       logger.error(`Failed to ${action} reply`, {safeMessage: e.message})
     }
-  }, [
-    _,
-    isReplyHiddenByThreadgate,
-    rootUri,
-    postUri,
-    canHideReplyForEveryone,
-    toggleReplyVisibility,
-  ])
+  }
 
-  const onPressPin = useCallback(() => {
+  const onPressPin = () => {
     logEvent(isPinned ? 'post:unpin' : 'post:pin', {})
     pinPostMutate({
       postUri,
       postCid,
       action: isPinned ? 'unpin' : 'pin',
     })
-  }, [isPinned, pinPostMutate, postCid, postUri])
+  }
 
-  const onBlockAuthor = useCallback(async () => {
+  const onBlockAuthor = async () => {
     try {
       await queueBlock()
-      Toast.show(_(msg`Account blocked`))
+      Toast.show(_(msg({message: 'Account blocked', context: 'toast'})))
     } catch (e: any) {
       if (e?.name !== 'AbortError') {
         logger.error('Failed to block account', {message: e})
         Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
       }
     }
-  }, [_, queueBlock])
+  }
 
-  const onMuteAuthor = useCallback(async () => {
+  const onMuteAuthor = async () => {
     if (postAuthor.viewer?.muted) {
       try {
         await queueUnmute()
-        Toast.show(_(msg`Account unmuted`))
+        Toast.show(_(msg({message: 'Account unmuted', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
           logger.error('Failed to unmute account', {message: e})
@@ -391,7 +407,7 @@ let PostDropdownMenuItems = ({
     } else {
       try {
         await queueMute()
-        Toast.show(_(msg`Account muted`))
+        Toast.show(_(msg({message: 'Account muted', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
           logger.error('Failed to mute account', {message: e})
@@ -399,15 +415,22 @@ let PostDropdownMenuItems = ({
         }
       }
     }
-  }, [_, queueMute, queueUnmute, postAuthor.viewer?.muted])
+  }
 
-  const onShareATURI = useCallback(() => {
+  const onShareATURI = () => {
     shareText(postUri)
-  }, [postUri])
+  }
 
-  const onShareAuthorDID = useCallback(() => {
+  const onShareAuthorDID = () => {
     shareText(postAuthor.did)
-  }, [postAuthor.did])
+  }
+
+  const onReportMisclassification = () => {
+    const url = `https://docs.google.com/forms/d/e/1FAIpQLSd0QPqhNFksDQf1YyOos7r1ofCLvmrKAH1lU042TaS3GAZaWQ/viewform?entry.1756031717=${toShareUrl(
+      href,
+    )}`
+    openLink(url)
+  }
 
   return (
     <>
@@ -521,6 +544,20 @@ let PostDropdownMenuItems = ({
             </Menu.Group>
           </>
         )}
+
+        {hasSession &&
+          IS_INTERNAL &&
+          DISCOVER_DEBUG_DIDS[currentAccount?.did ?? ''] && (
+            <Menu.Item
+              testID="postDropdownReportMisclassificationBtn"
+              label={_(msg`Assign topic - help train Discover!`)}
+              onPress={onReportMisclassification}>
+              <Menu.ItemText>
+                {_(msg`Assign topic - help train Discover!`)}
+              </Menu.ItemText>
+              <Menu.ItemIcon icon={AtomIcon} position="right" />
+            </Menu.Item>
+          )}
 
         {hasSession && (
           <>

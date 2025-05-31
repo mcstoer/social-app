@@ -1,7 +1,7 @@
-import {NavigationState, PartialState} from '@react-navigation/native'
-import type {NativeStackNavigationProp} from '@react-navigation/native-stack'
+import {type NavigationState, type PartialState} from '@react-navigation/native'
+import {type NativeStackNavigationProp} from '@react-navigation/native-stack'
 
-import {VideoFeedSourceContext} from '#/screens/VideoFeed/types'
+import {type VideoFeedSourceContext} from '#/screens/VideoFeed/types'
 
 export type {NativeStackScreenProps} from '@react-navigation/native-stack'
 
@@ -13,6 +13,7 @@ export type CommonNavigatorParams = {
   ModerationMutedAccounts: undefined
   ModerationBlockedAccounts: undefined
   ModerationInteractionSettings: undefined
+  ModerationVerificationSettings: undefined
   Settings: undefined
   Profile: {name: string; hideBackButton?: boolean}
   ProfileFollowers: {name: string}
@@ -51,13 +52,15 @@ export type CommonNavigatorParams = {
   AccountSettings: undefined
   PrivacyAndSecuritySettings: undefined
   ContentAndMediaSettings: undefined
+  SettingsInterests: undefined
   AboutSettings: undefined
   AppIconSettings: undefined
   Search: {q?: string}
   Hashtag: {tag: string; author?: string}
   Topic: {topic: string}
-  MessagesConversation: {conversation: string; embed?: string}
+  MessagesConversation: {conversation: string; embed?: string; accept?: true}
   MessagesSettings: undefined
+  MessagesInbox: undefined
   NotificationSettings: undefined
   Feeds: undefined
   CustomFeed: {name: string; feed: string}

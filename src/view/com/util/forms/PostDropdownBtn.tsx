@@ -1,4 +1,4 @@
-import React, {memo, useMemo, useState} from 'react'
+import {memo, useMemo, useState} from 'react'
 import {
   Pressable,
   type PressableProps,
@@ -6,16 +6,17 @@ import {
   type ViewStyle,
 } from 'react-native'
 import {
-  AppBskyFeedDefs,
-  AppBskyFeedPost,
-  AppBskyFeedThreadgate,
-  RichText as RichTextAPI,
+  type AppBskyFeedDefs,
+  type AppBskyFeedPost,
+  type AppBskyFeedThreadgate,
+  type RichText as RichTextAPI,
 } from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import type React from 'react'
 
 import {useTheme} from '#/lib/ThemeContext'
-import {Shadow} from '#/state/cache/post-shadow'
+import {type Shadow} from '#/state/cache/post-shadow'
 import {atoms as a, useTheme as useAlf} from '#/alf'
 import {DotGrid_Stroke2_Corner0_Rounded as DotsHorizontal} from '#/components/icons/DotGrid'
 import {useMenuControl} from '#/components/Menu'
@@ -27,6 +28,7 @@ let PostDropdownBtn = ({
   testID,
   post,
   postFeedContext,
+  postReqId,
   record,
   richText,
   style,
@@ -34,10 +36,12 @@ let PostDropdownBtn = ({
   size,
   timestamp,
   threadgateRecord,
+  onShowLess,
 }: {
   testID: string
   post: Shadow<AppBskyFeedDefs.PostView>
   postFeedContext: string | undefined
+  postReqId: string | undefined
   record: AppBskyFeedPost.Record
   richText: RichTextAPI
   style?: StyleProp<ViewStyle>
@@ -45,6 +49,7 @@ let PostDropdownBtn = ({
   size?: 'lg' | 'md' | 'sm'
   timestamp: string
   threadgateRecord?: AppBskyFeedThreadgate.Record
+  onShowLess?: (interaction: AppBskyFeedDefs.Interaction) => void
 }): React.ReactNode => {
   const theme = useTheme()
   const alf = useAlf()
@@ -96,10 +101,12 @@ let PostDropdownBtn = ({
             testID={testID}
             post={post}
             postFeedContext={postFeedContext}
+            postReqId={postReqId}
             record={record}
             richText={richText}
             timestamp={timestamp}
             threadgateRecord={threadgateRecord}
+            onShowLess={onShowLess}
           />
         )}
       </Menu.Root>

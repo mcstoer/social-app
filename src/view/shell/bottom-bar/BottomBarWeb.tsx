@@ -112,11 +112,8 @@ export function BottomBarWeb() {
               <NavItem
                 routeName="Messages"
                 href="/messages"
-                notificationCount={
-                  unreadMessageCount.count > 0
-                    ? unreadMessageCount.numUnread
-                    : undefined
-                }>
+                notificationCount={unreadMessageCount.numUnread}
+                hasNew={unreadMessageCount.hasNew}>
                 {({isActive}) => {
                   const Icon = isActive ? MessageFilled : Message
                   return (
@@ -268,7 +265,7 @@ const NavItem: React.FC<{
       {children({isActive})}
       {notificationCount ? (
         <View
-          style={styles.notificationCount}
+          style={[styles.notificationCount, styles.notificationCountWeb]}
           aria-label={_(
             msg`${plural(notificationCount, {
               one: '# unread item',

@@ -15,6 +15,7 @@ export const router = new Router({
   ModerationMutedAccounts: '/moderation/muted-accounts',
   ModerationBlockedAccounts: '/moderation/blocked-accounts',
   ModerationInteractionSettings: '/moderation/interaction-settings',
+  ModerationVerificationSettings: '/moderation/verification-settings',
   // profiles, threads, lists
   Profile: ['/profile/:name', '/profile/:name/rss'],
   ProfileFollowers: '/profile/:name/followers',
@@ -46,6 +47,7 @@ export const router = new Router({
   AccountSettings: '/settings/account',
   PrivacyAndSecuritySettings: '/settings/privacy-and-security',
   ContentAndMediaSettings: '/settings/content-and-media',
+  SettingsInterests: '/settings/interests',
   AboutSettings: '/settings/about',
   AppIconSettings: '/settings/app-icon',
   // support
@@ -60,6 +62,7 @@ export const router = new Router({
   // DMs
   Messages: '/messages',
   MessagesSettings: '/messages/settings',
+  MessagesInbox: '/messages/inbox',
   MessagesConversation: '/messages/:conversation',
   // starter packs
   Start: '/start/:name/:rkey',

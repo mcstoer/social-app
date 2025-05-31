@@ -1,13 +1,15 @@
-import React, {ComponentProps} from 'react'
-import {GestureResponderEvent, View} from 'react-native'
+import React, {type ComponentProps} from 'react'
+import {type GestureResponderEvent, View} from 'react-native'
 import Animated from 'react-native-reanimated'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
 import {msg, plural, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs'
+import {type BottomTabBarProps} from '@react-navigation/bottom-tabs'
 import {StackActions} from '@react-navigation/native'
 
+import {useActorStatus} from '#/lib/actor-status'
 import {PressableScale} from '#/lib/custom-animations/PressableScale'
+import {BOTTOM_BAR_AVI} from '#/lib/demo'
 import {useHaptics} from '#/lib/haptics'
 import {useDedupe} from '#/lib/hooks/useDedupe'
 import {useMinimalShellFooterTransform} from '#/lib/hooks/useMinimalShellTransform'
@@ -47,6 +49,7 @@ import {
   Message_Stroke2_Corner0_Rounded as Message,
   Message_Stroke2_Corner0_Rounded_Filled as MessageFilled,
 } from '#/components/icons/Message'
+import {useDemoMode} from '#/storage/hooks/demo-mode'
 import {styles} from './BottomBarStyles'
 
 type TabOptions =
@@ -124,6 +127,9 @@ export function BottomBar({navigation}: BottomTabBarProps) {
     accountSwitchControl.open()
   }, [accountSwitchControl, playHaptic])
 
+  const [demoMode] = useDemoMode()
+  const {isActive: live} = useActorStatus(profile)
+
   return (
     <>
       <SwitchAccountDialog control={accountSwitchControl} />
@@ -199,6 +205,7 @@ export function BottomBar({navigation}: BottomTabBarProps) {
               }
               onPress={onPressMessages}
               notificationCount={numUnreadMessages.numUnread}
+              hasNew={numUnreadMessages.hasNew}
               accessible={true}
               accessibilityRole="tab"
               accessibilityLabel={_(msg`Chat`)}
@@ -255,25 +262,39 @@ export function BottomBar({navigation}: BottomTabBarProps) {
                         pal.text,
                         styles.profileIcon,
                         styles.onProfile,
-                        {borderColor: pal.text.color},
+                        {
+                          borderColor: pal.text.color,
+                          borderWidth: live ? 0 : 1,
+                        },
                       ]}>
                       <UserAvatar
-                        avatar={profile?.avatar}
-                        size={iconWidth - 3}
+                        avatar={demoMode ? BOTTOM_BAR_AVI : profile?.avatar}
+                        size={iconWidth - 2}
                         // See https://github.com/bluesky-social/social-app/pull/1801:
                         usePlainRNImage={true}
                         type={profile?.associated?.labeler ? 'labeler' : 'user'}
+                        live={live}
+                        hideLiveBadge
                       />
                     </View>
                   ) : (
                     <View
-                      style={[styles.ctrlIcon, pal.text, styles.profileIcon]}>
+                      style={[
+                        styles.ctrlIcon,
+                        pal.text,
+                        styles.profileIcon,
+                        {
+                          borderWidth: live ? 0 : 1,
+                        },
+                      ]}>
                       <UserAvatar
-                        avatar={profile?.avatar}
-                        size={iconWidth - 3}
+                        avatar={demoMode ? BOTTOM_BAR_AVI : profile?.avatar}
+                        size={iconWidth - 2}
                         // See https://github.com/bluesky-social/social-app/pull/1801:
                         usePlainRNImage={true}
                         type={profile?.associated?.labeler ? 'labeler' : 'user'}
+                        live={live}
+                        hideLiveBadge
                       />
                     </View>
                   )}

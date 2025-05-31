@@ -1,4 +1,9 @@
-import {Platform, StyleProp, StyleSheet, ViewStyle} from 'react-native'
+import {
+  Platform,
+  type StyleProp,
+  StyleSheet,
+  type ViewStyle,
+} from 'react-native'
 
 import * as tokens from '#/alf/tokens'
 import {ios, native, platform, web} from '#/alf/util/platform'
@@ -22,6 +27,9 @@ export const atoms = {
   relative: {
     position: 'relative',
   },
+  static: {
+    position: 'static',
+  },
   sticky: web({
     position: 'sticky',
   }),
@@ -30,6 +38,18 @@ export const atoms = {
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  top_0: {
+    top: 0,
+  },
+  right_0: {
+    right: 0,
+  },
+  bottom_0: {
+    bottom: 0,
+  },
+  left_0: {
+    left: 0,
   },
   z_10: {
     zIndex: 10,
@@ -58,7 +78,7 @@ export const atoms = {
   }),
 
   /*
-   * Width
+   * Width & Height
    */
   w_full: {
     width: '100%',
@@ -69,6 +89,12 @@ export const atoms = {
   h_full_vh: web({
     height: '100vh',
   }),
+  max_w_full: {
+    maxWidth: '100%',
+  },
+  max_h_full: {
+    maxHeight: '100%',
+  },
 
   /**
    * Used for the outermost components on screens, to ensure that they can fill
@@ -93,6 +119,9 @@ export const atoms = {
   /*
    * Border radius
    */
+  rounded_0: {
+    borderRadius: 0,
+  },
   rounded_2xs: {
     borderRadius: tokens.borderRadius._2xs,
   },
@@ -104,6 +133,9 @@ export const atoms = {
   },
   rounded_md: {
     borderRadius: tokens.borderRadius.md,
+  },
+  rounded_lg: {
+    borderRadius: tokens.borderRadius.lg,
   },
   rounded_full: {
     borderRadius: tokens.borderRadius.full,
@@ -174,6 +206,9 @@ export const atoms = {
   },
   flex_grow: {
     flexGrow: 1,
+  },
+  flex_grow_0: {
+    flexGrow: 0,
   },
   flex_shrink: {
     flexShrink: 1,
@@ -336,6 +371,9 @@ export const atoms = {
   },
   border_r: {
     borderRightWidth: StyleSheet.hairlineWidth,
+  },
+  border_transparent: {
+    borderColor: 'transparent',
   },
   curve_circular: ios({
     borderCurve: 'circular',
@@ -919,8 +957,8 @@ export const atoms = {
     userSelect: 'all',
   },
   outline_inset_1: {
-    outlineOffset: '-1px',
-  } as StyleProp<ViewStyle>,
+    outlineOffset: -1,
+  },
 
   /*
    * Text decoration
