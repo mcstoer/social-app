@@ -1,9 +1,9 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
 
-import { FeedAPIResponse } from '#/lib/api/feed/types';
-import { BackgroundPostFetcher } from '../BackgroundPostFetcher';
-import { ShouldFetchScheduler } from '../ShouldFetchScheduler';
-import { BskyFeedFetcher } from './BskyFeedFetcher';
+import { type FeedAPIResponse } from '#/lib/api/feed/types';
+import { type BackgroundPostFetcher } from '../BackgroundPostFetcher';
+import { type ShouldFetchScheduler } from '../ShouldFetchScheduler';
+import { type BskyFeedFetcher } from './BskyFeedFetcher';
 
 /**
  * DiverseBackgroundFetcher: Implements background fetching from a diverse list of Bluesky feeds.

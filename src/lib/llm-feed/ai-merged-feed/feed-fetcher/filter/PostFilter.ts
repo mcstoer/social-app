@@ -1,4 +1,4 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
 
 /**
  * PostFilter: Filter class to filter the list of posts, without any reliance on the custom implementation.

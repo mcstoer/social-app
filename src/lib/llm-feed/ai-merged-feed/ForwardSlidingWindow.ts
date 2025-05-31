@@ -1,4 +1,4 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
 
 /**
  * ForwardSlidingWindow: Manages a forward-moving sliding window for a specific feed source.

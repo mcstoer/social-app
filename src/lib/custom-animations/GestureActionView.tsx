@@ -1,5 +1,5 @@
 import React from 'react'
-import {ColorValue, Dimensions, StyleSheet, View} from 'react-native'
+import {type ColorValue, Dimensions, StyleSheet, View} from 'react-native'
 import {Gesture, GestureDetector} from 'react-native-gesture-handler'
 import Animated, {
   clamp,

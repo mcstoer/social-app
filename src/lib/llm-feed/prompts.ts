@@ -1,4 +1,4 @@
-import type { ChatCompletionMessageParam } from 'openai/src/resources/chat/completions'
+import  { type ChatCompletionMessageParam } from 'openai/src/resources/chat/completions'
 
 export const FEED_PROMPTS = {
     FEED_SELECTION: [{role: 'system', content: `You are an advanced recommendation AI. Given a user's interests and preferences, help select the most relevant feed sources to provide a relevant content to them. Select each relevant source by index, with each source on a new line.

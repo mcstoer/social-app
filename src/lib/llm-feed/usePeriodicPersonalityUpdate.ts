@@ -1,8 +1,9 @@
 import React, {useEffect, useRef} from 'react'
-import {useAgent, useSession} from '#/state/session'
-import {PersonalityUpdater} from './personality-updater'
+
 // import { LLM_API_KEY, LLM_BASE_URL } from './env'; // Removed import
 import {logger} from '#/logger'
+import {useAgent, useSession} from '#/state/session'
+import {PersonalityUpdater} from './personality-updater'
 
 // Hardcoded values
 const HARDCODED_LLM_API_KEY = 'YaYRpfI7BiIX0yTac43qMjt0h2XugirD'

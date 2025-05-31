@@ -1,5 +1,5 @@
 import React from 'react'
-import {AppBskyUnspeccedDefs} from '@atproto/api'
+import {type AppBskyUnspeccedDefs} from '@atproto/api'
 import {hasMutedWord} from '@atproto/api/dist/moderation/mutewords'
 import {useQuery} from '@tanstack/react-query'
 

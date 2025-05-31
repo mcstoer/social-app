@@ -1,5 +1,6 @@
-import { BskyAgent, AppBskyActorDefs } from '@atproto/api';
-import { BskyFeedFetcher } from './BskyFeedFetcher';
+import { type AppBskyActorDefs,type BskyAgent } from '@atproto/api';
+
+import { type BskyFeedFetcher } from './BskyFeedFetcher';
 import { CustomFeedFetcher } from './CustomFeedFetcher';
 import { ListFeedFetcher } from './ListFeedFetcher';
 

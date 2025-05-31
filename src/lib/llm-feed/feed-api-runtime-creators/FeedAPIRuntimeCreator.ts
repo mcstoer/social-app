@@ -6,11 +6,11 @@
  * enabling the creation of new feed types without modifying core Bluesky code.
  */
 
-import { BskyAgent } from '@atproto/api';
+import { type BskyAgent } from '@atproto/api';
 
-import { FeedAPI } from '#/lib/api/feed/types';
-import type { FeedTunerFn } from '#/lib/api/feed-manip';
-import type { FeedDescriptor, FeedParams } from '#/state/queries/post-feed';
+import { type FeedAPI } from '#/lib/api/feed/types';
+import  { type FeedTunerFn } from '#/lib/api/feed-manip';
+import  { type FeedDescriptor, type FeedParams } from '#/state/queries/post-feed';
 
 /**
  * Defines the contract for a runtime FeedAPI creator.

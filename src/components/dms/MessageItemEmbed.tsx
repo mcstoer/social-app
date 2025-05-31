@@ -1,6 +1,6 @@
 import React from 'react'
 import {useWindowDimensions, View} from 'react-native'
-import {AppBskyEmbedRecord} from '@atproto/api'
+import {type AppBskyEmbedRecord} from '@atproto/api'
 
 import {PostEmbeds, PostEmbedViewContext} from '#/view/com/util/post-embeds'
 import {atoms as a, native, tokens, useTheme, web} from '#/alf'

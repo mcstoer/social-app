@@ -1,5 +1,9 @@
 import {useEffect, useState} from 'react'
-import {View} from 'react-native'
+import {StyleSheet, View} from 'react-native'
+import {
+  FontAwesomeIcon,
+  type FontAwesomeIconStyle,
+} from '@fortawesome/react-native-fontawesome'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import lande from 'lande'

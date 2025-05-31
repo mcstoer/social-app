@@ -1,5 +1,6 @@
-import { AppBskyFeedDefs } from '@atproto/api';
-import { ShouldFetchScheduler } from './ShouldFetchScheduler';
+import { type AppBskyFeedDefs } from '@atproto/api';
+
+import { type ShouldFetchScheduler } from './ShouldFetchScheduler';
 
 /**
  * BackgroundPostFetcher: Manages the automated retrieval of posts for a seamless feed experience.

@@ -1,4 +1,5 @@
-import { AppBskyFeedDefs } from '@atproto/api';
+import { type AppBskyFeedDefs } from '@atproto/api';
+
 import { Cursor } from './Cursor';
 
 /**

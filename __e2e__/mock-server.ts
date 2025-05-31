@@ -1,7 +1,7 @@
 import {createServer as createHTTPServer} from 'node:http'
 import {parse} from 'node:url'
 
-import {createServer, TestPDS} from '../jest/test-pds'
+import {createServer, type TestPDS} from '../jest/test-pds'
 
 async function main() {
   let server: TestPDS

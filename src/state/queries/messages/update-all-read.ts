@@ -1,4 +1,4 @@
-import {ChatBskyConvoListConvos} from '@atproto/api'
+import {type ChatBskyConvoListConvos} from '@atproto/api'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 
 import {logger} from '#/logger'

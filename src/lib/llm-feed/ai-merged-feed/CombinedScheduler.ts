@@ -1,6 +1,6 @@
-import { PostWaiter } from './PostWaiter';
-import { ShouldFetchScheduler } from './ShouldFetchScheduler';
-import { WindowMergedAdvisor } from './WindowMergedAdvisor';
+import { type PostWaiter } from './PostWaiter';
+import { type ShouldFetchScheduler } from './ShouldFetchScheduler';
+import { type WindowMergedAdvisor } from './WindowMergedAdvisor';
 
 /**
  * CombinedScheduler: Interface that merges the functionalities of PostWaiter,
