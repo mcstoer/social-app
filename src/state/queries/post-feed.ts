@@ -29,7 +29,7 @@ import {aggregateUserInterests} from '#/lib/api/feed/utils'
 import {FeedTuner, type FeedTunerFn} from '#/lib/api/feed-manip'
 import {DISCOVER_FEED_URI} from '#/lib/constants'
 import {BSKY_FEED_OWNER_DIDS} from '#/lib/constants'
-import  {type FeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreator'
+import {type FeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreator'
 import {useFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
 import {FeedAPIRuntimeCreatorService} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorService'
 import {type AIFeedDescriptor} from '#/lib/llm-feed/types'
@@ -97,6 +97,7 @@ export interface FeedPostSlice {
   isIncompleteThread: boolean
   isFallbackMarker: boolean
   feedContext: string | undefined
+  reqId: string | undefined
   feedPostUri: string
   reason?:
     | AppBskyFeedDefs.ReasonRepost
@@ -325,6 +326,7 @@ export function usePostFeedQuery(
                     userActionHistory.seen(
                       slice.items.map(item => ({
                         feedContext: slice.feedContext,
+                        reqId: slice.reqId,
                         likeCount: item.post.likeCount ?? 0,
                         repostCount: item.post.repostCount ?? 0,
                         replyCount: item.post.replyCount ?? 0,
@@ -342,6 +344,7 @@ export function usePostFeedQuery(
                     isIncompleteThread: slice.isIncompleteThread,
                     isFallbackMarker: slice.isFallbackMarker,
                     feedContext: slice.feedContext,
+                    reqId: slice.reqId,
                     reason: slice.reason,
                     feedPostUri: slice.feedPostUri,
                     items: slice.items.map((item, i) => {

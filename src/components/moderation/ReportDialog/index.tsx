@@ -51,7 +51,7 @@ export function ReportDialog(
     [props.subject],
   )
   const onClose = React.useCallback(() => {
-    logger.metric('reportDialog:close', {})
+    logger.metric('reportDialog:close', {}, {statsig: false})
   }, [])
   return (
     <Dialog.Outer control={props.control} onClose={onClose}>
@@ -155,17 +155,21 @@ function Inner(props: ReportDialogProps) {
         }),
       )
       setSuccess(true)
-      logger.metric('reportDialog:success', {
-        reason: state.selectedOption?.reason!,
-        labeler: state.selectedLabeler?.creator.handle!,
-        details: !!state.details,
-      })
+      logger.metric(
+        'reportDialog:success',
+        {
+          reason: state.selectedOption?.reason!,
+          labeler: state.selectedLabeler?.creator.handle!,
+          details: !!state.details,
+        },
+        {statsig: false},
+      )
       // give time for user feedback
       setTimeout(() => {
         props.control.close()
       }, 1e3)
     } catch (e: any) {
-      logger.metric('reportDialog:failure', {})
+      logger.metric('reportDialog:failure', {}, {statsig: false})
       logger.error(e, {
         source: 'ReportDialog',
       })
@@ -179,9 +183,13 @@ function Inner(props: ReportDialogProps) {
   }, [_, submitReport, state, dispatch, props, setPending, setSuccess])
 
   React.useEffect(() => {
-    logger.metric('reportDialog:open', {
-      subjectType: props.subject.type,
-    })
+    logger.metric(
+      'reportDialog:open',
+      {
+        subjectType: props.subject.type,
+      },
+      {statsig: false},
+    )
   }, [props.subject])
 
   return (

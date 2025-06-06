@@ -55,7 +55,7 @@ export function QrCodeDialog({
       if (isNative) {
         const res = await requestMediaLibraryPermissionsAsync()
 
-        if (!res) {
+        if (!res.granted) {
           Toast.show(
             _(
               msg`You must grant access to your photo library to save a QR code`,
@@ -155,6 +155,7 @@ export function QrCodeDialog({
 
   return (
     <Dialog.Outer control={control}>
+      <Dialog.Handle />
       <Dialog.ScrollableInner
         label={_(msg`Create a QR code for a starter pack`)}>
         <View style={[a.flex_1, a.align_center, a.gap_5xl]}>
@@ -197,6 +198,7 @@ export function QrCodeDialog({
             )}
           </React.Suspense>
         </View>
+        <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>
   )

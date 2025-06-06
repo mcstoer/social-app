@@ -21,7 +21,7 @@ import {Post} from '#/view/com/post/Post'
 import {List} from '#/view/com/util/List'
 import {atoms as a, web} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
-import {ArrowOutOfBox_Stroke2_Corner0_Rounded as Share} from '#/components/icons/ArrowOutOfBox'
+import {ArrowOutOfBoxModified_Stroke2_Corner2_Rounded as Share} from '#/components/icons/ArrowOutOfBox'
 import * as Layout from '#/components/Layout'
 import {ListFooter, ListMaybePlaceholder} from '#/components/Lists'
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {View} from 'react-native'
 import {type AppBskyActorDefs, AppBskyFeedDefs} from '@atproto/api'
 import {msg} from '@lingui/macro'
@@ -25,7 +25,6 @@ import {type FeedDescriptor, type FeedParams} from '#/state/queries/post-feed'
 import {truncateAndInvalidate} from '#/state/queries/util'
 import {useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
-import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {useHeaderOffset} from '#/components/hooks/useHeaderOffset'
 import {PostFeed} from '../posts/PostFeed'
 import {FAB} from '../util/fab/FAB'
@@ -57,19 +56,18 @@ export function FeedPage({
   feedInfo: SavedFeedSourceInfo
 }) {
   const {hasSession} = useSession()
-  const {requestSwitchToAccount} = useLoggedOutViewControls()
   const {_} = useLingui()
   const navigation = useNavigation<NavigationProp<AllNavigatorParams>>()
   const queryClient = useQueryClient()
   const {openComposer} = useOpenComposer()
-  const [isScrolledDown, setIsScrolledDown] = React.useState(false)
+  const [isScrolledDown, setIsScrolledDown] = useState(false)
   const setMinimalShellMode = useSetMinimalShellMode()
   const headerOffset = useHeaderOffset()
   const feedFeedback = useFeedFeedback(feed, hasSession)
-  const scrollElRef = React.useRef<ListMethods>(null)
-  const [hasNew, setHasNew] = React.useState(false)
+  const scrollElRef = useRef<ListMethods>(null)
+  const [hasNew, setHasNew] = useState(false)
   const setHomeBadge = useSetHomeBadge()
-  const isVideoFeed = React.useMemo(() => {
+  const isVideoFeed = useMemo(() => {
     const isBskyVideoFeed = VIDEO_FEED_URIS.includes(feedInfo.uri)
     const feedIsVideoMode =
       feedInfo.contentMode === AppBskyFeedDefs.CONTENTMODEVIDEO
@@ -77,16 +75,13 @@ export function FeedPage({
     return isNative && _isVideoFeed
   }, [feedInfo])
 
-  const aiFeedRuntimeCreator = AIFeedAPIRuntimeCreator.getInstance()
-  aiFeedRuntimeCreator.setRequestSwitchToAccount(requestSwitchToAccount)
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPageFocused) {
       setHomeBadge(hasNew)
     }
   }, [isPageFocused, hasNew, setHomeBadge])
 
-  const scrollToTop = React.useCallback(() => {
+  const scrollToTop = useCallback(() => {
     scrollElRef.current?.scrollToOffset({
       animated: isNative,
       offset: -headerOffset,
@@ -94,7 +89,7 @@ export function FeedPage({
     setMinimalShellMode(false)
   }, [headerOffset, setMinimalShellMode])
 
-  const onSoftReset = React.useCallback(() => {
+  const onSoftReset = useCallback(() => {
     const isScreenFocused =
       getTabState(getRootNavigation(navigation).getState(), 'Home') ===
       TabState.InsideAtRoot
@@ -108,21 +103,21 @@ export function FeedPage({
         reason: 'soft-reset',
       })
     }
-  }, [navigation, isPageFocused, scrollToTop, queryClient, feed, setHasNew])
+  }, [navigation, isPageFocused, scrollToTop, queryClient, feed])
 
   // fires when page within screen is activated/deactivated
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isPageFocused) {
       return
     }
     return listenSoftReset(onSoftReset)
   }, [onSoftReset, isPageFocused])
 
-  const onPressCompose = React.useCallback(() => {
+  const onPressCompose = useCallback(() => {
     openComposer({})
   }, [openComposer])
 
-  const onPressLoadLatest = React.useCallback(() => {
+  const onPressLoadLatest = useCallback(() => {
     scrollToTop()
     truncateAndInvalidate(queryClient, FEED_RQKEY(feed))
     setHasNew(false)
@@ -131,7 +126,7 @@ export function FeedPage({
       feedUrl: feed,
       reason: 'load-latest',
     })
-  }, [scrollToTop, feed, queryClient, setHasNew])
+  }, [scrollToTop, feed, queryClient])
 
   const shouldPrefetch = isNative && isPageAdjacent
   return (
