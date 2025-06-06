@@ -1,4 +1,4 @@
-import React from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {View} from 'react-native'
 import {type AppBskyActorDefs, AppBskyFeedDefs} from '@atproto/api'
 import {msg} from '@lingui/macro'
@@ -9,6 +9,8 @@ import {useQueryClient} from '@tanstack/react-query'
 import {VIDEO_FEED_URIS} from '#/lib/constants'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {ComposeIcon2} from '#/lib/icons'
+import {AIFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/AIFeedAPIRuntimeCreator'
+import {FeedAPIRuntimeCreatorProvider} from '#/lib/llm-feed/feed-api-runtime-creators/FeedAPIRuntimeCreatorContext'
 import {getRootNavigation, getTabState, TabState} from '#/lib/routes/helpers'
 import {type AllNavigatorParams} from '#/lib/routes/types'
 import {logEvent} from '#/lib/statsig/statsig'
@@ -58,14 +60,14 @@ export function FeedPage({
   const navigation = useNavigation<NavigationProp<AllNavigatorParams>>()
   const queryClient = useQueryClient()
   const {openComposer} = useOpenComposer()
-  const [isScrolledDown, setIsScrolledDown] = React.useState(false)
+  const [isScrolledDown, setIsScrolledDown] = useState(false)
   const setMinimalShellMode = useSetMinimalShellMode()
   const headerOffset = useHeaderOffset()
   const feedFeedback = useFeedFeedback(feed, hasSession)
-  const scrollElRef = React.useRef<ListMethods>(null)
-  const [hasNew, setHasNew] = React.useState(false)
+  const scrollElRef = useRef<ListMethods>(null)
+  const [hasNew, setHasNew] = useState(false)
   const setHomeBadge = useSetHomeBadge()
-  const isVideoFeed = React.useMemo(() => {
+  const isVideoFeed = useMemo(() => {
     const isBskyVideoFeed = VIDEO_FEED_URIS.includes(feedInfo.uri)
     const feedIsVideoMode =
       feedInfo.contentMode === AppBskyFeedDefs.CONTENTMODEVIDEO
@@ -73,13 +75,13 @@ export function FeedPage({
     return isNative && _isVideoFeed
   }, [feedInfo])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPageFocused) {
       setHomeBadge(hasNew)
     }
   }, [isPageFocused, hasNew, setHomeBadge])
 
-  const scrollToTop = React.useCallback(() => {
+  const scrollToTop = useCallback(() => {
     scrollElRef.current?.scrollToOffset({
       animated: isNative,
       offset: -headerOffset,
@@ -87,7 +89,7 @@ export function FeedPage({
     setMinimalShellMode(false)
   }, [headerOffset, setMinimalShellMode])
 
-  const onSoftReset = React.useCallback(() => {
+  const onSoftReset = useCallback(() => {
     const isScreenFocused =
       getTabState(getRootNavigation(navigation).getState(), 'Home') ===
       TabState.InsideAtRoot
@@ -101,21 +103,21 @@ export function FeedPage({
         reason: 'soft-reset',
       })
     }
-  }, [navigation, isPageFocused, scrollToTop, queryClient, feed, setHasNew])
+  }, [navigation, isPageFocused, scrollToTop, queryClient, feed])
 
   // fires when page within screen is activated/deactivated
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isPageFocused) {
       return
     }
     return listenSoftReset(onSoftReset)
   }, [onSoftReset, isPageFocused])
 
-  const onPressCompose = React.useCallback(() => {
+  const onPressCompose = useCallback(() => {
     openComposer({})
   }, [openComposer])
 
-  const onPressLoadLatest = React.useCallback(() => {
+  const onPressLoadLatest = useCallback(() => {
     scrollToTop()
     truncateAndInvalidate(queryClient, FEED_RQKEY(feed))
     setHasNew(false)
@@ -124,49 +126,54 @@ export function FeedPage({
       feedUrl: feed,
       reason: 'load-latest',
     })
-  }, [scrollToTop, feed, queryClient, setHasNew])
+  }, [scrollToTop, feed, queryClient])
 
   const shouldPrefetch = isNative && isPageAdjacent
   return (
-    <View testID={testID}>
-      <MainScrollProvider>
-        <FeedFeedbackProvider value={feedFeedback}>
-          <PostFeed
-            testID={testID ? `${testID}-feed` : undefined}
-            enabled={isPageFocused || shouldPrefetch}
-            feed={feed}
-            feedParams={feedParams}
-            pollInterval={POLL_FREQ}
-            disablePoll={hasNew || !isPageFocused}
-            scrollElRef={scrollElRef}
-            onScrolledDownChange={setIsScrolledDown}
-            onHasNew={setHasNew}
-            renderEmptyState={renderEmptyState}
-            renderEndOfFeed={renderEndOfFeed}
-            headerOffset={headerOffset}
-            savedFeedConfig={savedFeedConfig}
-            isVideoFeed={isVideoFeed}
+    <FeedAPIRuntimeCreatorProvider
+      runtimeCreator={AIFeedAPIRuntimeCreator.getInstance()}>
+      <View testID={testID}>
+        <MainScrollProvider>
+          <FeedFeedbackProvider value={feedFeedback}>
+            <PostFeed
+              testID={testID ? `${testID}-feed` : undefined}
+              enabled={isPageFocused || shouldPrefetch}
+              feed={feed}
+              feedParams={feedParams}
+              pollInterval={POLL_FREQ}
+              disablePoll={hasNew || !isPageFocused}
+              scrollElRef={scrollElRef}
+              onScrolledDownChange={setIsScrolledDown}
+              onHasNew={setHasNew}
+              renderEmptyState={renderEmptyState}
+              renderEndOfFeed={renderEndOfFeed}
+              headerOffset={headerOffset}
+              savedFeedConfig={savedFeedConfig}
+              isVideoFeed={isVideoFeed}
+            />
+          </FeedFeedbackProvider>
+        </MainScrollProvider>
+        {(isScrolledDown || hasNew) && (
+          <LoadLatestBtn
+            onPress={onPressLoadLatest}
+            label={_(msg`Load new posts`)}
+            showIndicator={hasNew}
           />
-        </FeedFeedbackProvider>
-      </MainScrollProvider>
-      {(isScrolledDown || hasNew) && (
-        <LoadLatestBtn
-          onPress={onPressLoadLatest}
-          label={_(msg`Load new posts`)}
-          showIndicator={hasNew}
-        />
-      )}
+        )}
 
-      {hasSession && (
-        <FAB
-          testID="composeFAB"
-          onPress={onPressCompose}
-          icon={<ComposeIcon2 strokeWidth={1.5} size={29} style={s.white} />}
-          accessibilityRole="button"
-          accessibilityLabel={_(msg({message: `New post`, context: 'action'}))}
-          accessibilityHint=""
-        />
-      )}
-    </View>
+        {hasSession && (
+          <FAB
+            testID="composeFAB"
+            onPress={onPressCompose}
+            icon={<ComposeIcon2 strokeWidth={1.5} size={29} style={s.white} />}
+            accessibilityRole="button"
+            accessibilityLabel={_(
+              msg({message: `New post`, context: 'action'}),
+            )}
+            accessibilityHint=""
+          />
+        )}
+      </View>
+    </FeedAPIRuntimeCreatorProvider>
   )
 }

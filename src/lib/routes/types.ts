@@ -58,6 +58,7 @@ export type CommonNavigatorParams = {
   Search: {q?: string}
   Hashtag: {tag: string; author?: string}
   Topic: {topic: string}
+  PersonalitySettings: undefined
   MessagesConversation: {conversation: string; embed?: string; accept?: true}
   MessagesSettings: undefined
   MessagesInbox: undefined

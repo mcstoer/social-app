@@ -1,10 +1,10 @@
 import React from 'react'
 import {useNavigation} from '@react-navigation/core'
-import {NavigationState} from '@react-navigation/native'
-import type {NavigationAction} from '@react-navigation/routers'
+import {type NavigationState} from '@react-navigation/native'
+import  {type NavigationAction} from '@react-navigation/routers'
 
 import {useDedupe} from '#/lib/hooks/useDedupe'
-import {AllNavigatorParams, NavigationProp} from '#/lib/routes/types'
+import {type AllNavigatorParams, type NavigationProp} from '#/lib/routes/types'
 
 export type DebouncedNavigationProp = Pick<
   NavigationProp,

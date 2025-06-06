@@ -34,6 +34,7 @@ import {Provider as LabelDefsProvider} from '#/state/preferences/label-defs'
 import {Provider as ModerationOptsProvider} from '#/state/preferences/moderation-opts'
 import {Provider as UnreadNotifsProvider} from '#/state/queries/notifications/unread'
 import {Provider as VerusDaemonProvider} from '#/state/queries/verus'
+import {Provider as ServiceConfigProvider} from '#/state/service-config'
 import {
   Provider as SessionProvider,
   type SessionAccount,
@@ -48,7 +49,7 @@ import {Provider as ProgressGuideProvider} from '#/state/shell/progress-guide'
 import {Provider as SelectedFeedProvider} from '#/state/shell/selected-feed'
 import {Provider as StarterPackProvider} from '#/state/shell/starter-pack'
 import {Provider as HiddenRepliesProvider} from '#/state/threadgate-hidden-replies'
-import {Provider as TrendingConfigProvider} from '#/state/trending-config'
+import {Provider as UnstablePostSourceProvider} from '#/state/unstable-post-source'
 import {Provider as ActiveVideoProvider} from '#/view/com/util/post-embeds/ActiveVideoWebContext'
 import {Provider as VideoVolumeProvider} from '#/view/com/util/post-embeds/VideoVolumeContext'
 import * as Toast from '#/view/com/util/Toast'
@@ -132,17 +133,19 @@ function InnerApp() {
                                           <MutedThreadsProvider>
                                             <SafeAreaProvider>
                                               <ProgressGuideProvider>
-                                                <TrendingConfigProvider>
-                                                  <IntentDialogProvider>
-                                                  <VerusDaemonProvider
-                                                    url={
-                                                      LOCAL_DEV_VSKY_LOGIN_SERVER
-                                                    }>
-                                                      <Shell />
-                                                      <NuxDialogs />
-                                                  </VerusDaemonProvider>
-                                                  </IntentDialogProvider>
-                                                </TrendingConfigProvider>
+                                                <ServiceConfigProvider>
+                                                  <UnstablePostSourceProvider>
+                                                    <IntentDialogProvider>
+                                                      <VerusDaemonProvider
+                                                        url={
+                                                          LOCAL_DEV_VSKY_LOGIN_SERVER
+                                                        }>
+                                                        <Shell />
+                                                        <NuxDialogs />
+                                                      </VerusDaemonProvider>
+                                                    </IntentDialogProvider>
+                                                  </UnstablePostSourceProvider>
+                                                </ServiceConfigProvider>
                                               </ProgressGuideProvider>
                                             </SafeAreaProvider>
                                           </MutedThreadsProvider>

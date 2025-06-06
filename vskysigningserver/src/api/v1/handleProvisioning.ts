@@ -1,4 +1,3 @@
- 
 // @ts-ignore: No type definitions for crypto-browserify
 import * as crypto from 'crypto-browserify'
 import * as dotenv from 'dotenv'
@@ -15,17 +14,17 @@ import {
   LoginConsentProvisioningChallenge,
   LoginConsentProvisioningDecision,
   LoginConsentProvisioningRequest,
-  LoginConsentProvisioningResponse,
+  type LoginConsentProvisioningResponse,
   LoginConsentProvisioningResult,
   ProvisioningTxid,
   toBase58Check,
 } from 'verus-typescript-primitives'
 import {ProvisioningRequest} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningRequest'
-import {ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningResponse'
+import {type ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningResponse'
 import VerusdRpcInterface from 'verusd-rpc-ts-client/src/VerusdRpcInterface'
 import {VerusIdInterface} from 'verusid-ts-client'
 
-import {callRPCDaemon, rpcResult} from './callRPCDaemon'
+import {callRPCDaemon, type rpcResult} from './callRPCDaemon'
 
 dotenv.config()
 
@@ -175,7 +174,7 @@ export const registerNameCommitment = async (
   ).result
 
   // The identity object must have the fully qualified name.
-   
+
   // @ts-ignore
   const parentFqn = parentId.fullyqualifiedname
 
@@ -428,10 +427,10 @@ export const transferIdentity = async (
   ).result
 
   // The identity object must have the fully qualified name.
-   
+
   // @ts-ignore
   const fqn = transferIdentityObject.fullyqualifiedname
-   
+
   // @ts-ignore
   const identityAddress = transferIdentityObject.identity.identityaddress
 

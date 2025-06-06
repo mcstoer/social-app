@@ -1,11 +1,11 @@
 import React from 'react'
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native'
-import {AppBskyEmbedImages} from '@atproto/api'
+import {type StyleProp, StyleSheet, View, type ViewStyle} from 'react-native'
+import {type AppBskyEmbedImages} from '@atproto/api'
 
-import {HandleRef, useHandleRef} from '#/lib/hooks/useHandleRef'
+import {type HandleRef, useHandleRef} from '#/lib/hooks/useHandleRef'
 import {PostEmbedViewContext} from '#/view/com/util/post-embeds/types'
 import {atoms as a, useBreakpoints} from '#/alf'
-import {Dimensions} from '../../lightbox/ImageViewing/@types'
+import {type Dimensions} from '../../lightbox/ImageViewing/@types'
 import {GalleryItem} from './Gallery'
 
 interface ImageLayoutGridProps {

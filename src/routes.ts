@@ -49,6 +49,7 @@ export const router = new Router({
   SettingsInterests: '/settings/interests',
   AboutSettings: '/settings/about',
   AppIconSettings: '/settings/app-icon',
+  PersonalitySettings: '/settings/personality',
   // support
   Support: '/support',
   PrivacyPolicy: '/support/privacy',

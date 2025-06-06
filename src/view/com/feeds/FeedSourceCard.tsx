@@ -2,10 +2,10 @@ import React from 'react'
 import {
   Linking,
   Pressable,
-  StyleProp,
+  type StyleProp,
   StyleSheet,
   View,
-  ViewStyle,
+  type ViewStyle,
 } from 'react-native'
 import {AtUri} from '@atproto/api'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
@@ -17,11 +17,11 @@ import {usePalette} from '#/lib/hooks/usePalette'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {s} from '#/lib/styles'
 import {logger} from '#/logger'
-import {FeedSourceInfo, useFeedSourceInfoQuery} from '#/state/queries/feed'
+import {type FeedSourceInfo, useFeedSourceInfoQuery} from '#/state/queries/feed'
 import {
   useAddSavedFeedsMutation,
   usePreferencesQuery,
-  UsePreferencesQueryResponse,
+  type UsePreferencesQueryResponse,
   useRemoveFeedMutation,
 } from '#/state/queries/preferences'
 import {FeedLoadingPlaceholder} from '#/view/com/util/LoadingPlaceholder'
