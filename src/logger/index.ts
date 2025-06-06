@@ -6,7 +6,12 @@ import {type MetricEvents} from '#/logger/metrics'
 import {bitdriftTransport} from '#/logger/transports/bitdrift'
 import {consoleTransport} from '#/logger/transports/console'
 import {sentryTransport} from '#/logger/transports/sentry'
-import {LogContext, LogLevel, type Metadata, type Transport} from '#/logger/types'
+import {
+  LogContext,
+  LogLevel,
+  type Metadata,
+  type Transport,
+} from '#/logger/types'
 import {enabledLogLevels} from '#/logger/util'
 import {isNative} from '#/platform/detection'
 
@@ -99,7 +104,7 @@ export class Logger {
        * Optionally also send to StatSig
        */
       statsig?: boolean
-    } = {statsig: false},
+    } = {statsig: true},
   ) {
     logEvent(event, metadata, {
       lake: !options.statsig,

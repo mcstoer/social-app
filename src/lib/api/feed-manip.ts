@@ -187,6 +187,10 @@ export class FeedViewPostsSlice {
     return this._feedPost.feedContext
   }
 
+  get reqId() {
+    return this._feedPost.reqId
+  }
+
   get isRepost() {
     const reason = this._feedPost.reason
     return AppBskyFeedDefs.isReasonRepost(reason)

@@ -8,7 +8,7 @@ import {atoms as a} from '#/alf'
 export const RQKEY = 'video-thumbnail'
 
 export function clearThumbnailCache(queryClient: QueryClient) {
-  clearCache()
+  clearCache().catch(() => {})
   queryClient.resetQueries({queryKey: [RQKEY]})
 }
 

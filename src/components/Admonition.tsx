@@ -1,4 +1,4 @@
-import React from 'react'
+import {createContext, useContext} from 'react'
 import {type StyleProp, View, type ViewStyle} from 'react-native'
 
 import {atoms as a, useBreakpoints, useTheme} from '#/alf'
@@ -20,13 +20,13 @@ type Context = {
   type: 'info' | 'tip' | 'warning' | 'error'
 }
 
-const Context = React.createContext<Context>({
+const Context = createContext<Context>({
   type: 'info',
 })
 
 export function Icon() {
   const t = useTheme()
-  const {type} = React.useContext(Context)
+  const {type} = useContext(Context)
   const Icon = {
     info: InfoIcon,
     tip: TipIcon,
