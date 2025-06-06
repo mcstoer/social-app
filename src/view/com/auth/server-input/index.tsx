@@ -4,7 +4,7 @@ import {useWindowDimensions} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {BSKY_SERVICE} from '#/lib/constants'
+import {BSKY_SERVICE, VSKY_SERVICE} from '#/lib/constants'
 import {logEvent} from '#/lib/statsig/statsig'
 import * as persisted from '#/state/persisted'
 import {useSession} from '#/state/session'
@@ -29,7 +29,7 @@ export function ServerInputDialog({
   const formRef = useRef<DialogInnerRef>(null)
 
   // persist these options between dialog open/close
-  const [fixedOption, setFixedOption] = useState(BSKY_SERVICE)
+  const [fixedOption, setFixedOption] = useState(VSKY_SERVICE)
   const [previousCustomAddress, setPreviousCustomAddress] = useState('')
 
   const onClose = useCallback(() => {
@@ -133,6 +133,9 @@ function DialogInner({
           label="Preferences"
           values={[fixedOption]}
           onChange={values => setFixedOption(values[0])}>
+          <ToggleButton.Button name={VSKY_SERVICE} label={_(msg`VeruSky`)}>
+            <ToggleButton.ButtonText>{_(msg`VeruSky`)}</ToggleButton.ButtonText>
+          </ToggleButton.Button>
           <ToggleButton.Button name={BSKY_SERVICE} label={_(msg`Bluesky`)}>
             <ToggleButton.ButtonText>{_(msg`Bluesky`)}</ToggleButton.ButtonText>
           </ToggleButton.Button>
@@ -143,6 +146,12 @@ function DialogInner({
             <ToggleButton.ButtonText>{_(msg`Custom`)}</ToggleButton.ButtonText>
           </ToggleButton.Button>
         </ToggleButton.Group>
+
+        {fixedOption === VSKY_SERVICE && isFirstTimeUser && (
+          <Admonition type="tip">
+            <Trans>VeruSky adds unique features on top of Bluesky.</Trans>
+          </Admonition>
+        )}
 
         {fixedOption === BSKY_SERVICE && isFirstTimeUser && (
           <Admonition type="tip">
@@ -204,7 +213,12 @@ function DialogInner({
               a.leading_snug,
               a.flex_1,
             ]}>
-            {isFirstTimeUser ? (
+            {fixedOption === VSKY_SERVICE ? (
+              <Trans>
+                If you're a developer, you can use the VeruSky features in your
+                own app.
+              </Trans>
+            ) : isFirstTimeUser ? (
               <Trans>
                 If you're a developer, you can host your own server.
               </Trans>
@@ -214,11 +228,13 @@ function DialogInner({
                 provider. If you're a developer, you can host your own server.
               </Trans>
             )}{' '}
-            <InlineLinkText
-              label={_(msg`Learn more about self hosting your PDS.`)}
-              to="https://atproto.com/guides/self-hosting">
-              <Trans>Learn more.</Trans>
-            </InlineLinkText>
+            {fixedOption !== VSKY_SERVICE && (
+              <InlineLinkText
+                label={_(msg`Learn more about self hosting your PDS.`)}
+                to="https://atproto.com/guides/self-hosting">
+                <Trans>Learn more.</Trans>
+              </InlineLinkText>
+            )}
           </P>
         </View>
 

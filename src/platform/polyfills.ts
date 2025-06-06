@@ -2,6 +2,9 @@ import 'react-native-url-polyfill/auto'
 import 'fast-text-encoding'
 export {}
 
+// Fix Buffer in react native.
+global.Buffer = global.Buffer || require('buffer').Buffer
+
 /**
 https://github.com/MaxArt2501/base64-js
 The MIT License (MIT)

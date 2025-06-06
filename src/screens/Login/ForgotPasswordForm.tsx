@@ -80,7 +80,7 @@ export const ForgotPasswordForm = ({
       titleText={<Trans>Reset password</Trans>}>
       <View>
         <TextField.LabelText>
-          <Trans>Hosting provider</Trans>
+          <Trans>Account provider</Trans>
         </TextField.LabelText>
         <HostingProvider
           serviceUrl={serviceUrl}

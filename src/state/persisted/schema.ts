@@ -8,10 +8,11 @@ import {PlatformInfo} from '../../../modules/expo-bluesky-swiss-army'
 const externalEmbedOptions = ['show', 'hide'] as const
 
 /**
- * A account persisted to storage. Stored in the `accounts[]` array. Contains
+ * A Bluesky account persisted to storage. Stored in the `accounts[]` array. Contains
  * base account info and access tokens.
  */
-const accountSchema = z.object({
+const bskyAccountSchema = z.object({
+  type: z.literal('bsky'),
   service: z.string(),
   did: z.string(),
   handle: z.string(),
@@ -30,6 +31,22 @@ const accountSchema = z.object({
   pdsUrl: z.string().optional(),
   isSelfHosted: z.boolean().optional(),
 })
+
+/**
+ * An second account with an ID persisted to storage. It extends the existing Bluesky account in order to stay compatible with it.
+ */
+const vskyAccountSchema = bskyAccountSchema.extend({
+  type: z.literal('vsky'),
+  auth: z.string(),
+  id: z.string(),
+  name: z.string(),
+})
+
+const accountSchema = z.discriminatedUnion('type', [
+  bskyAccountSchema,
+  vskyAccountSchema,
+])
+
 export type PersistedAccount = z.infer<typeof accountSchema>
 
 /**
@@ -40,10 +57,21 @@ export type PersistedAccount = z.infer<typeof accountSchema>
  * optional. They should be considered deprecated and not used, but are kept
  * here for backwards compat.
  */
-const currentAccountSchema = accountSchema.extend({
+const currentBskyAccountSchema = bskyAccountSchema.extend({
   service: z.string().optional(),
   handle: z.string().optional(),
 })
+
+const currentVskyAccountSchema = vskyAccountSchema.extend({
+  service: z.string().optional(),
+  handle: z.string().optional(),
+})
+
+const currentAccountSchema = z.discriminatedUnion('type', [
+  currentBskyAccountSchema,
+  currentVskyAccountSchema,
+])
+
 export type PersistedCurrentAccount = z.infer<typeof currentAccountSchema>
 
 const schema = z.object({

@@ -97,6 +97,8 @@ stats.json
 # environment variables
 .env
 .env.*
+!vskysigningserver/.env.example
+!vskylogin/.env.example
 
 # Firebase (Android) Google services
 google-services.json

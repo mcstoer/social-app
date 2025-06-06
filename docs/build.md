@@ -7,6 +7,21 @@
 
 You're all set!
 
+## Running the VeruSky Web App
+
+- Web App
+  - As above.
+- Login Server (vskylogin)
+  - Go to the vskylogin directory.
+  - `yarn`
+  - [Setup the environment variables](../vskylogin/README.md#environment-variables)
+  - `yarn dev`
+- Signing Server (vskysigningserver)
+  - Go to the vskysigningserver directory.
+  - `yarn`
+  - [Setup the environment variables](../vskysigningserver/README.md#environment-variables)
+  - `yarn dev`
+
 ## iOS/Android Build
 
 ### Native Environment Setup

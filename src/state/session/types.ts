@@ -1,3 +1,6 @@
+import {type VerusdRpcInterface} from 'verusd-rpc-ts-client'
+import {type VerusIdInterface} from 'verusid-ts-client'
+
 import {type LogEvents} from '#/lib/statsig/statsig'
 import {type PersistedAccount} from '#/state/persisted'
 
@@ -29,6 +32,7 @@ export type SessionApiContext = {
       identifier: string
       password: string
       authFactorToken?: string | undefined
+      vskySession?: VskySession
     },
     logContext: LogEvents['account:loggedIn']['logContext'],
   ) => Promise<void>
@@ -40,4 +44,15 @@ export type SessionApiContext = {
   ) => void
   resumeSession: (account: SessionAccount) => Promise<void>
   removeAccount: (account: SessionAccount) => void
+}
+
+export type SessionVskyApiContext = {
+  rpcInterface: VerusdRpcInterface
+  idInterface: VerusIdInterface
+}
+
+export type VskySession = {
+  auth: string
+  id: string
+  name: string
 }

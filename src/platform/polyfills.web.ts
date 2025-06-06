@@ -1,8 +1,16 @@
 import 'array.prototype.findlast/auto'
+
 /// <reference lib="dom" />
+import {Buffer} from 'buffer'
 
 // @ts-ignore whatever typescript wants to complain about here, I dont care about -prf
 window.setImmediate = (cb: () => void) => setTimeout(cb, 0)
+
+// Add to fix for Buffer being undefined.
+if (window) {
+  // @ts-ignore Assigning buffer to global window
+  window.Buffer = Buffer
+}
 
 if (process.env.NODE_ENV !== 'production') {
   // In development, react-native-web's <View> tries to validate that

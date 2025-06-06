@@ -47,6 +47,12 @@ cfg.resolver.resolveRequest = (context, moduleName, platform) => {
   return context.resolveRequest(context, moduleName, platform)
 }
 
+// Fix stream in react native for the libraries that need it.
+cfg.resolver.extraNodeModules = {
+  ...cfg.resolver.extraNodeModules,
+  stream: require.resolve('stream-browserify'),
+}
+
 cfg.transformer.getTransformOptions = async () => ({
   transform: {
     experimentalImportSupport: true,
