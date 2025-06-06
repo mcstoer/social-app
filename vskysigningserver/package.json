@@ -1,0 +1,41 @@
+{
+  "name": "vskysigningserver",
+  "version": "0.1.0",
+  "bin": {
+    "vsky-signing-server": "bin/vsky-signing-server.js"
+  },
+  "scripts": {
+    "dev": "tsx --watch src/local_server.ts",
+    "build": "tsc",
+    "compile": "tsc",
+    "pretest": "yarn run compile",
+    "posttest": "yarn run lint",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.7.5",
+    "globals": "^15.13.0",
+    "jest": "^29.7.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.17.0"
+  },
+  "dependencies": {
+    "@codegenie/serverless-express": "^4.15.0",
+    "aws-sdk": "^2.1684.0",
+    "axios": "^1.7.9",
+    "base64url": "https://github.com/VerusCoin/base64url.git",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsdoc": "^4.0.4",
+    "verusd-rpc-ts-client": "https://github.com/mcstoer/verusd-rpc-ts-client.git#getblockcount",
+    "verusid-ts-client": "git+https://github.com/mcstoer/verusid-ts-client.git#credential-class",
+    "zod": "^3.23.8"
+  }
+}

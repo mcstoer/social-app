@@ -1,4 +1,8 @@
-import {type AtpSessionData, type AtpSessionEvent, BskyAgent} from '@atproto/api'
+import {
+  type AtpSessionData,
+  type AtpSessionEvent,
+  BskyAgent,
+} from '@atproto/api'
 import {TID} from '@atproto/common-web'
 
 import {networkRetry} from '#/lib/async/retry'
@@ -19,7 +23,7 @@ import {
   configureModerationForAccount,
   configureModerationForGuest,
 } from './moderation'
-import {type SessionAccount} from './types'
+import {type SessionAccount, type VskySession} from './types'
 import {isSessionExpired, isSignupQueued} from './util'
 
 export function createPublicAgent() {
@@ -35,7 +39,21 @@ export async function createAgentAndResume(
     event: AtpSessionEvent,
   ) => void,
 ) {
-  const agent = new BskyAppAgent({service: storedAccount.service})
+  let agent: BskyAppAgent
+  // Restore either the standard BskyAppAgent or the VskyAppAgent.
+  if (storedAccount.type === 'vsky') {
+    const vskyAppAgent = new VskyAppAgent({service: storedAccount.service})
+    // Restore the VeruSky session separately from standard session.
+    vskyAppAgent.vskySession = {
+      auth: storedAccount.auth,
+      id: storedAccount.id,
+      name: storedAccount.name,
+    }
+    agent = vskyAppAgent
+  } else {
+    agent = new BskyAppAgent({service: storedAccount.service})
+  }
+
   if (storedAccount.pdsUrl) {
     agent.sessionManager.pdsUrl = new URL(storedAccount.pdsUrl)
   }
@@ -194,23 +212,50 @@ export function agentToSessionAccountOrThrow(agent: BskyAgent): SessionAccount {
 export function agentToSessionAccount(
   agent: BskyAgent,
 ): SessionAccount | undefined {
-  if (!agent.session) {
-    return undefined
-  }
-  return {
-    service: agent.service.toString(),
-    did: agent.session.did,
-    handle: agent.session.handle,
-    email: agent.session.email,
-    emailConfirmed: agent.session.emailConfirmed || false,
-    emailAuthFactor: agent.session.emailAuthFactor || false,
-    refreshJwt: agent.session.refreshJwt,
-    accessJwt: agent.session.accessJwt,
-    signupQueued: isSignupQueued(agent.session.accessJwt),
-    active: agent.session.active,
-    status: agent.session.status as SessionAccount['status'],
-    pdsUrl: agent.pdsUrl?.toString(),
-    isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
+  if (agent instanceof VskyAppAgent) {
+    if (!agent.session) {
+      return undefined
+    }
+    return {
+      type: 'vsky',
+      auth: agent.vskySession.auth,
+      id: agent.vskySession.id,
+      name: agent.vskySession.name,
+      service: agent.service.toString(),
+      did: agent.session.did,
+      handle: agent.session.handle,
+      email: agent.session.email,
+      emailConfirmed: agent.session.emailConfirmed || false,
+      emailAuthFactor: agent.session.emailAuthFactor || false,
+      refreshJwt: agent.session.refreshJwt,
+      accessJwt: agent.session.accessJwt,
+      signupQueued: isSignupQueued(agent.session.accessJwt),
+      active: agent.session.active,
+      status: agent.session.status as SessionAccount['status'],
+      pdsUrl: agent.pdsUrl?.toString(),
+      isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
+    }
+    // Handle the existing BskyAgent the same as before.
+  } else if (agent instanceof BskyAgent) {
+    if (!agent.session) {
+      return undefined
+    }
+    return {
+      type: 'bsky',
+      service: agent.service.toString(),
+      did: agent.session.did,
+      handle: agent.session.handle,
+      email: agent.session.email,
+      emailConfirmed: agent.session.emailConfirmed || false,
+      emailAuthFactor: agent.session.emailAuthFactor || false,
+      refreshJwt: agent.session.refreshJwt,
+      accessJwt: agent.session.accessJwt,
+      signupQueued: isSignupQueued(agent.session.accessJwt),
+      active: agent.session.active,
+      status: agent.session.status as SessionAccount['status'],
+      pdsUrl: agent.pdsUrl?.toString(),
+      isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
+    }
   }
 }
 
@@ -307,3 +352,88 @@ class BskyAppAgent extends BskyAgent {
 }
 
 export type {BskyAppAgent}
+
+export async function createVskyAgentAndLogin(
+  {
+    service,
+    identifier,
+    password,
+    authFactorToken,
+    vskySession,
+  }: {
+    service: string
+    identifier: string
+    password: string
+    authFactorToken?: string
+    vskySession?: VskySession
+  },
+  onSessionChange: (
+    agent: BskyAgent,
+    did: string,
+    event: AtpSessionEvent,
+  ) => void,
+) {
+  // Set the service to the Bluesky creating an authenticated agent.
+  service = BSKY_SERVICE
+  const agent = new VskyAppAgent({service})
+  if (vskySession) {
+    agent.vskySession = vskySession
+  }
+  await agent.login({identifier, password, authFactorToken})
+
+  const account = agentToSessionAccountOrThrow(agent)
+  const gates = tryFetchGates(account.did, 'prefer-fresh-gates')
+  const moderation = configureModerationForAccount(agent, account)
+  return agent.prepare(gates, moderation, onSessionChange)
+}
+
+// Not exported. Use factories above to create it.
+class VskyAppAgent extends BskyAppAgent {
+  public vskySession: VskySession = {
+    auth: '',
+    id: '',
+    name: '',
+  }
+
+  persistSessionHandler: ((event: AtpSessionEvent) => void) | undefined =
+    undefined
+
+  async prepare(
+    // Not awaited in the calling code so we can delay blocking on them.
+    gates: Promise<void>,
+    moderation: Promise<void>,
+    onSessionChange: (
+      agent: BskyAgent,
+      did: string,
+      event: AtpSessionEvent,
+    ) => void,
+  ) {
+    // There's nothing else left to do, so block on them here.
+    await Promise.all([gates, moderation])
+
+    // Now the agent is ready.
+    const account = agentToSessionAccountOrThrow(this)
+    let lastSession = this.sessionManager.session
+    this.persistSessionHandler = event => {
+      if (this.sessionManager.session) {
+        lastSession = this.sessionManager.session
+      } else if (event === 'network-error') {
+        // Put it back, we'll try again later.
+        this.sessionManager.session = lastSession
+      }
+
+      onSessionChange(this, account.did, event)
+      if (event !== 'create' && event !== 'update') {
+        addSessionErrorLog(account.did, event)
+      }
+    }
+    return {account, agent: this}
+  }
+
+  dispose() {
+    this.sessionManager.session = undefined
+    this.persistSessionHandler = undefined
+  }
+}
+
+export type {VskyAppAgent}

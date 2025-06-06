@@ -33,6 +33,7 @@ import {Provider as PrefsStateProvider} from '#/state/preferences'
 import {Provider as LabelDefsProvider} from '#/state/preferences/label-defs'
 import {Provider as ModerationOptsProvider} from '#/state/preferences/moderation-opts'
 import {Provider as UnreadNotifsProvider} from '#/state/queries/notifications/unread'
+import {Provider as VerusDaemonProvider} from '#/state/queries/verus'
 import {Provider as ServiceConfigProvider} from '#/state/service-config'
 import {
   Provider as SessionProvider,
@@ -62,6 +63,7 @@ import {useStarterPackEntry} from '#/components/hooks/useStarterPackEntry'
 import {Provider as IntentDialogProvider} from '#/components/intents/IntentDialogs'
 import {Provider as PortalProvider} from '#/components/Portal'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
+import {LOCAL_DEV_VSKY_LOGIN_SERVER} from './lib/constants'
 
 /**
  * Begin geolocation ASAP
@@ -134,8 +136,13 @@ function InnerApp() {
                                                 <ServiceConfigProvider>
                                                   <UnstablePostSourceProvider>
                                                     <IntentDialogProvider>
-                                                      <Shell />
-                                                      <NuxDialogs />
+                                                      <VerusDaemonProvider
+                                                        url={
+                                                          LOCAL_DEV_VSKY_LOGIN_SERVER
+                                                        }>
+                                                        <Shell />
+                                                        <NuxDialogs />
+                                                      </VerusDaemonProvider>
                                                     </IntentDialogProvider>
                                                   </UnstablePostSourceProvider>
                                                 </ServiceConfigProvider>

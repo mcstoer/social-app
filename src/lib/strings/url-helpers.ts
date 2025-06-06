@@ -2,7 +2,7 @@ import {AtUri} from '@atproto/api'
 import psl from 'psl'
 import TLDs from 'tlds'
 
-import {BSKY_SERVICE} from '#/lib/constants'
+import {BSKY_SERVICE, VSKY_SERVICE} from '#/lib/constants'
 import {isInvalidHandle} from '#/lib/strings/handles'
 import {startUriToStarterPackUri} from '#/lib/strings/starter-pack'
 import {logger} from '#/logger'
@@ -51,6 +51,9 @@ export function makeRecordUri(
 export function toNiceDomain(url: string): string {
   try {
     const urlp = new URL(url)
+    if (`https://${urlp.host}` === VSKY_SERVICE) {
+      return 'VeruSky'
+    }
     if (`https://${urlp.host}` === BSKY_SERVICE) {
       return 'Bluesky Social'
     }
