@@ -9,16 +9,10 @@ import { FEED_PROMPTS } from './prompts'
  * Implements LLM-based feed curation functionality
  */
 export class FeedCurator {
-  private apiKey: string
-  private baseURL: string
   private modelName: string
   private openai: OpenAI | null = null
-  private readonly defaultMaxPosts = 50;
-  private readonly feedSourcesDivisor = 2;
   
   constructor(apiKey: string, baseURL: string, modelName: string = 'mistralai/Mistral-Small-24B-Instruct-2501') {
-    this.apiKey = apiKey
-    this.baseURL = baseURL
     this.modelName = modelName
     this.openai = new OpenAI({
       baseURL: baseURL,
