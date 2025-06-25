@@ -7324,12 +7324,12 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: src/screens/Settings/PersonalitySettingsScreen.tsx:90
+#: src/screens/ModerationInteractionSettings/index.tsx:102
+msgctxt "toast"
 msgid "Settings saved"
 msgstr ""
 
-#: src/screens/ModerationInteractionSettings/index.tsx:102
-msgctxt "toast"
+#: src/screens/Settings/PersonalitySettingsScreen.tsx:90
 msgid "Settings saved"
 msgstr ""
 
