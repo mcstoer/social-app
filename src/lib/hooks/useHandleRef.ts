@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import {type AnimatedRef, measure, type MeasuredDimensions} from 'react-native-reanimated'
+import {AnimatedRef, measure, MeasuredDimensions} from 'react-native-reanimated'
 
 export type HandleRef = {
   (node: any): void

@@ -1,10 +1,10 @@
 import React from 'react'
 import {View} from 'react-native'
 import {
-  type AppBskyGraphDefs,
+  AppBskyGraphDefs,
   AtUri,
   moderateUserList,
-  type ModerationUI,
+  ModerationUI,
 } from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
@@ -22,10 +22,10 @@ import {
   Outer,
   SaveButton,
 } from '#/components/FeedCard'
-import {Link as InternalLink, type LinkProps} from '#/components/Link'
+import {Link as InternalLink, LinkProps} from '#/components/Link'
 import * as Hider from '#/components/moderation/Hider'
 import {Text} from '#/components/Typography'
-import type * as bsky from '#/types/bsky'
+import * as bsky from '#/types/bsky'
 
 /*
  * This component is based on `FeedCard` and is tightly coupled with that

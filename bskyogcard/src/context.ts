@@ -4,7 +4,7 @@ import {fileURLToPath} from 'node:url'
 
 import {AtpAgent} from '@atproto/api'
 
-import {type Config} from './config.js'
+import {Config} from './config.js'
 
 const __DIRNAME = path.dirname(fileURLToPath(import.meta.url))
 

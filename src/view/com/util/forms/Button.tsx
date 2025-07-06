@@ -1,16 +1,16 @@
 import React from 'react'
 import {
   ActivityIndicator,
-  type GestureResponderEvent,
-  type NativeSyntheticEvent,
-  type NativeTouchEvent,
+  GestureResponderEvent,
+  NativeSyntheticEvent,
+  NativeTouchEvent,
   Pressable,
-  type PressableStateCallbackType,
-  type StyleProp,
+  PressableStateCallbackType,
+  StyleProp,
   StyleSheet,
-  type TextStyle,
+  TextStyle,
   View,
-  type ViewStyle,
+  ViewStyle,
 } from 'react-native'
 
 import {choose} from '#/lib/functions'

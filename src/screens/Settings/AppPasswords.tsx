@@ -7,12 +7,12 @@ import Animated, {
   LinearTransition,
   StretchOutY,
 } from 'react-native-reanimated'
-import {type ComAtprotoServerListAppPasswords} from '@atproto/api'
+import {ComAtprotoServerListAppPasswords} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import {type NativeStackScreenProps} from '@react-navigation/native-stack'
+import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
-import {type CommonNavigatorParams} from '#/lib/routes/types'
+import {CommonNavigatorParams} from '#/lib/routes/types'
 import {cleanError} from '#/lib/strings/errors'
 import {isWeb} from '#/platform/detection'
 import {

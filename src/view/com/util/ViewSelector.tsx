@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {
-  type NativeScrollEvent,
-  type NativeSyntheticEvent,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
   Pressable,
   RefreshControl,
   ScrollView,

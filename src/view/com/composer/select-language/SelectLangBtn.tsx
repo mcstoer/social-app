@@ -2,7 +2,7 @@ import {useCallback, useMemo} from 'react'
 import {Keyboard, StyleSheet} from 'react-native'
 import {
   FontAwesomeIcon,
-  type FontAwesomeIconStyle,
+  FontAwesomeIconStyle,
 } from '@fortawesome/react-native-fontawesome'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
@@ -19,8 +19,8 @@ import {
 } from '#/state/preferences/languages'
 import {
   DropdownButton,
-  type DropdownItem,
-  type DropdownItemButton,
+  DropdownItem,
+  DropdownItemButton,
 } from '#/view/com/util/forms/DropdownButton'
 import {Text} from '#/view/com/util/text/Text'
 import {codeToLanguageName} from '../../../../locale/helpers'

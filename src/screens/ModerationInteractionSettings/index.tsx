@@ -9,7 +9,7 @@ import {usePostInteractionSettingsMutation} from '#/state/queries/post-interacti
 import {createPostgateRecord} from '#/state/queries/postgate/util'
 import {
   usePreferencesQuery,
-  type UsePreferencesQueryResponse,
+  UsePreferencesQueryResponse,
 } from '#/state/queries/preferences'
 import {
   threadgateAllowUISettingToAllowRecordValue,

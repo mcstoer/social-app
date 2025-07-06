@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import {
   FontAwesomeIcon,
-  type FontAwesomeIconStyle,
+  FontAwesomeIconStyle,
 } from '@fortawesome/react-native-fontawesome'
 
 import {usePalette} from '#/lib/hooks/usePalette'

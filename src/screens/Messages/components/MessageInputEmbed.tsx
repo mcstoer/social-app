@@ -9,10 +9,10 @@ import {
 } from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import {type RouteProp, useNavigation, useRoute} from '@react-navigation/native'
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 
 import {makeProfileLink} from '#/lib/routes/links'
-import {type CommonNavigatorParams, type NavigationProp} from '#/lib/routes/types'
+import {CommonNavigatorParams, NavigationProp} from '#/lib/routes/types'
 import {
   convertBskyAppUrlIfNeeded,
   isBskyPostUrl,

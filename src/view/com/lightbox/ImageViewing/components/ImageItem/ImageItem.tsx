@@ -2,14 +2,14 @@
 
 import React from 'react'
 import {View} from 'react-native'
-import {type PanGesture} from 'react-native-gesture-handler'
-import {type SharedValue} from 'react-native-reanimated'
+import {PanGesture} from 'react-native-gesture-handler'
+import {SharedValue} from 'react-native-reanimated'
 
-import {type Dimensions} from '#/lib/media/types'
+import {Dimensions} from '#/lib/media/types'
 import {
-  type Dimensions as ImageDimensions,
-  type ImageSource,
-  type Transform,
+  Dimensions as ImageDimensions,
+  ImageSource,
+  Transform,
 } from '../../@types'
 
 type Props = {

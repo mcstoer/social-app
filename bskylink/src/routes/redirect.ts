@@ -2,9 +2,9 @@ import assert from 'node:assert'
 
 import {DAY, SECOND} from '@atproto/common'
 import escapeHTML from 'escape-html'
-import {type Express} from 'express'
+import {Express} from 'express'
 
-import {type AppContext} from '../context.js'
+import {AppContext} from '../context.js'
 import {handler} from './util.js'
 
 const INTERNAL_IP_REGEX = new RegExp(

@@ -1,4 +1,4 @@
-import {type BskyAgent, type ComAtprotoRepoUploadBlob} from '@atproto/api'
+import {BskyAgent, ComAtprotoRepoUploadBlob} from '@atproto/api'
 
 /**
  * @note It is recommended, on web, to use the `file` instance of the file

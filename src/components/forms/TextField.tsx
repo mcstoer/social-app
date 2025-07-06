@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  type AccessibilityProps,
+  AccessibilityProps,
   StyleSheet,
   TextInput,
-  type TextInputProps,
-  type TextStyle,
+  TextInputProps,
+  TextStyle,
   View,
-  type ViewStyle,
+  ViewStyle,
 } from 'react-native'
 
 import {HITSLOP_20} from '#/lib/constants'
@@ -16,13 +16,13 @@ import {
   applyFonts,
   atoms as a,
   ios,
-  type TextStyleProp,
+  TextStyleProp,
   useAlf,
   useTheme,
   web,
 } from '#/alf'
 import {useInteractionState} from '#/components/hooks/useInteractionState'
-import {type Props as SVGIconProps} from '#/components/icons/common'
+import {Props as SVGIconProps} from '#/components/icons/common'
 import {Text} from '#/components/Typography'
 
 const Context = React.createContext<{

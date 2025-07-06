@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {type SharedValue} from 'react-native-reanimated'
+import {SharedValue} from 'react-native-reanimated'
 
 import {isNative} from '#/platform/detection'
 

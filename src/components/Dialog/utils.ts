@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {type DialogControlProps} from '#/components/Dialog/types'
+import {DialogControlProps} from '#/components/Dialog/types'
 
 export function useAutoOpen(control: DialogControlProps, showTimeout?: number) {
   React.useEffect(() => {

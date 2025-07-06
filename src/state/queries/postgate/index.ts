@@ -2,10 +2,10 @@ import React from 'react'
 import {
   AppBskyEmbedRecord,
   AppBskyEmbedRecordWithMedia,
-  type AppBskyFeedDefs,
+  AppBskyFeedDefs,
   AppBskyFeedPostgate,
   AtUri,
-  type BskyAgent,
+  BskyAgent,
 } from '@atproto/api'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 

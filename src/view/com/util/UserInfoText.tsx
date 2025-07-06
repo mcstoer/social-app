@@ -1,10 +1,10 @@
-import {type StyleProp, StyleSheet, type TextStyle} from 'react-native'
-import {type AppBskyActorGetProfile as GetProfile} from '@atproto/api'
+import {StyleProp, StyleSheet, TextStyle} from 'react-native'
+import {AppBskyActorGetProfile as GetProfile} from '@atproto/api'
 
 import {makeProfileLink} from '#/lib/routes/links'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
-import {type TypographyVariant} from '#/lib/ThemeContext'
+import {TypographyVariant} from '#/lib/ThemeContext'
 import {STALE} from '#/state/queries'
 import {useProfileQuery} from '#/state/queries/profile'
 import {TextLinkOnWebOnly} from './Link'

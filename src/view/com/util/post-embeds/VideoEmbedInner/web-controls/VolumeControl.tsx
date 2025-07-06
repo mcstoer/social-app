@@ -1,9 +1,8 @@
-import {useCallback} from 'react'
+import React, {useCallback} from 'react'
 import {View} from 'react-native'
 import Animated, {FadeIn, FadeOut} from 'react-native-reanimated'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import type React from 'react';
 
 import {isSafari, isTouchDevice} from '#/lib/browser'
 import {atoms as a} from '#/alf'

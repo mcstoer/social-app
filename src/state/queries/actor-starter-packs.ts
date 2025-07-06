@@ -1,8 +1,8 @@
-import {type AppBskyGraphGetActorStarterPacks} from '@atproto/api'
+import {AppBskyGraphGetActorStarterPacks} from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 

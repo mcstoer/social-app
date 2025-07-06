@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  type ImageStyle,
+  ImageStyle,
   Keyboard,
-  type LayoutChangeEvent,
+  LayoutChangeEvent,
   StyleSheet,
   TouchableOpacity,
   View,
-  type ViewStyle,
+  ViewStyle,
 } from 'react-native'
 import {Image} from 'expo-image'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
@@ -14,14 +14,14 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
-import {type Dimensions} from '#/lib/media/types'
+import {Dimensions} from '#/lib/media/types'
 import {colors, s} from '#/lib/styles'
 import {isNative} from '#/platform/detection'
-import {type ComposerImage, cropImage} from '#/state/gallery'
+import {ComposerImage, cropImage} from '#/state/gallery'
 import {Text} from '#/view/com/util/text/Text'
 import {useTheme} from '#/alf'
 import * as Dialog from '#/components/Dialog'
-import {type PostAction} from '../state/composer'
+import {PostAction} from '../state/composer'
 import {EditImageDialog} from './EditImageDialog'
 import {ImageAltTextDialog} from './ImageAltTextDialog'
 

@@ -1,13 +1,13 @@
-import {type ImagePickerAsset} from 'expo-image-picker'
+import {ImagePickerAsset} from 'expo-image-picker'
 import {
-  type AppBskyFeedPostgate,
+  AppBskyFeedPostgate,
   AppBskyRichtextFacet,
-  type BskyPreferences,
+  BskyPreferences,
   RichText,
 } from '@atproto/api'
 import {nanoid} from 'nanoid/non-secure'
 
-import {type SelfLabel} from '#/lib/moderation'
+import {SelfLabel} from '#/lib/moderation'
 import {insertMentionAt} from '#/lib/strings/mention-manip'
 import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {
@@ -15,17 +15,17 @@ import {
   postUriToRelativePath,
   toBskyAppUrl,
 } from '#/lib/strings/url-helpers'
-import {type ComposerImage, createInitialImages} from '#/state/gallery'
+import {ComposerImage, createInitialImages} from '#/state/gallery'
 import {createPostgateRecord} from '#/state/queries/postgate/util'
-import {type Gif} from '#/state/queries/tenor'
+import {Gif} from '#/state/queries/tenor'
 import {threadgateRecordToAllowUISetting} from '#/state/queries/threadgate'
-import {type ThreadgateAllowUISetting} from '#/state/queries/threadgate'
-import {type ComposerOpts} from '#/state/shell/composer'
+import {ThreadgateAllowUISetting} from '#/state/queries/threadgate'
+import {ComposerOpts} from '#/state/shell/composer'
 import {
-  type LinkFacetMatch,
+  LinkFacetMatch,
   suggestLinkCardUri,
 } from '#/view/com/composer/text-input/text-input-util'
-import {createVideoState, type VideoAction, videoReducer, type VideoState} from './video'
+import {createVideoState, VideoAction, videoReducer, VideoState} from './video'
 
 type ImagesMedia = {
   type: 'images'

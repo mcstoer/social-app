@@ -2,7 +2,7 @@ import {BskyAgent} from '@atproto/api'
 import {describe, expect, it, jest} from '@jest/globals'
 
 import {agentToSessionAccountOrThrow} from '../agent'
-import {type Action, getInitialState, reducer, type State} from '../reducer'
+import {Action, getInitialState, reducer, State} from '../reducer'
 
 jest.mock('jwt-decode', () => ({
   jwtDecode(_token: string) {

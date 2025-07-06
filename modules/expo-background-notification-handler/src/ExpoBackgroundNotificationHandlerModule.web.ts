@@ -1,6 +1,6 @@
 import {
-  type BackgroundNotificationHandlerPreferences,
-  type ExpoBackgroundNotificationHandlerModule,
+  BackgroundNotificationHandlerPreferences,
+  ExpoBackgroundNotificationHandlerModule,
 } from './ExpoBackgroundNotificationHandler.types'
 
 // Stub for web

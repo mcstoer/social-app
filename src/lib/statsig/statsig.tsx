@@ -1,17 +1,17 @@
 import React from 'react'
 import {Platform} from 'react-native'
-import {AppState, type AppStateStatus} from 'react-native'
+import {AppState, AppStateStatus} from 'react-native'
 import {Statsig, StatsigProvider} from 'statsig-react-native-expo'
 
 import {BUNDLE_DATE, BUNDLE_IDENTIFIER, IS_TESTFLIGHT} from '#/lib/app-info'
 import {logger} from '#/logger'
-import {type MetricEvents} from '#/logger/metrics'
+import {MetricEvents} from '#/logger/metrics'
 import {isWeb} from '#/platform/detection'
 import * as persisted from '#/state/persisted'
 import {useSession} from '../../state/session'
 import {timeout} from '../async/timeout'
 import {useNonReactiveCallback} from '../hooks/useNonReactiveCallback'
-import {type Gate} from './gates'
+import {Gate} from './gates'
 
 const SDK_KEY = 'client-SXJakO39w9vIhl3D44u8UupyzFl4oZ2qPIkjwcvuPsV'
 

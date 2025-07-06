@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {ActivityIndicator, Keyboard, View} from 'react-native'
-import {type ComAtprotoServerDescribeServer} from '@atproto/api'
+import {ComAtprotoServerDescribeServer} from '@atproto/api'
 import {BskyAgent} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'

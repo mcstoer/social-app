@@ -2,7 +2,7 @@ import React from 'react'
 import {requireNativeModule} from 'expo'
 import {requireNativeViewManager} from 'expo-modules-core'
 
-import {type GifViewProps} from './GifView.types'
+import {GifViewProps} from './GifView.types'
 
 const NativeModule = requireNativeModule('ExpoBlueskyGifView')
 const NativeView: React.ComponentType<

@@ -18,16 +18,16 @@
 
 import {useCallback, useEffect, useMemo, useRef} from 'react'
 import {
-  type AppBskyActorDefs,
+  AppBskyActorDefs,
   AppBskyFeedDefs,
   AppBskyFeedPost,
   AtUri,
   moderatePost,
 } from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
   useQueryClient,
 } from '@tanstack/react-query'
@@ -41,7 +41,7 @@ import {
   embedViewRecordToPostView,
   getEmbeddedPost,
 } from '../util'
-import {type FeedPage} from './types'
+import {FeedPage} from './types'
 import {useUnreadNotificationsApi} from './unread'
 import {fetchPage} from './util'
 

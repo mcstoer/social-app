@@ -1,8 +1,8 @@
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import {type NativeStackScreenProps} from '@react-navigation/native-stack'
+import {NativeStackScreenProps} from '@react-navigation/native-stack'
 
-import {type CommonNavigatorParams} from '#/lib/routes/types'
+import {CommonNavigatorParams} from '#/lib/routes/types'
 import {isNative} from '#/platform/detection'
 import {
   useHapticsDisabled,

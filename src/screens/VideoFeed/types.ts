@@ -1,4 +1,4 @@
-import {type AuthorFilter} from '#/state/queries/post-feed'
+import {AuthorFilter} from '#/state/queries/post-feed'
 
 /**
  * Kind of like `FeedDescriptor` but not

@@ -1,18 +1,18 @@
 import React from 'react'
 import {
-  type AppBskyLabelerDefs,
+  AppBskyLabelerDefs,
   BskyAgent,
-  type ComAtprotoLabelDefs,
-  type InterpretedLabelValueDefinition,
+  ComAtprotoLabelDefs,
+  InterpretedLabelValueDefinition,
   LABELS,
-  type ModerationCause,
-  type ModerationOpts,
-  type ModerationUI,
+  ModerationCause,
+  ModerationOpts,
+  ModerationUI,
 } from '@atproto/api'
 
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
-import {type AppModerationCause} from '#/components/Pills'
+import {AppModerationCause} from '#/components/Pills'
 
 export const ADULT_CONTENT_LABELS = ['sexual', 'nudity', 'porn']
 export const OTHER_SELF_LABELS = ['graphic-media']

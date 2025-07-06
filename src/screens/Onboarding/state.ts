@@ -3,7 +3,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {logger} from '#/logger'
-import {type AvatarColor, type Emoji} from '#/screens/Onboarding/StepProfile/types'
+import {AvatarColor, Emoji} from '#/screens/Onboarding/StepProfile/types'
 
 export type OnboardingState = {
   hasPrev: boolean

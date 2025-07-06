@@ -1,9 +1,9 @@
 import React from 'react'
-import {Keyboard, Platform, type StyleProp, View, type ViewStyle} from 'react-native'
+import {Keyboard, Platform, StyleProp, View, ViewStyle} from 'react-native'
 import {
-  type AppBskyFeedDefs,
+  AppBskyFeedDefs,
   AppBskyFeedPost,
-  type AppBskyGraphDefs,
+  AppBskyGraphDefs,
   AtUri,
 } from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
@@ -13,7 +13,7 @@ import {HITSLOP_10} from '#/lib/constants'
 import {makeListLink, makeProfileLink} from '#/lib/routes/links'
 import {isNative} from '#/platform/detection'
 import {
-  type ThreadgateAllowUISetting,
+  ThreadgateAllowUISetting,
   threadgateViewToAllowUISetting,
 } from '#/state/queries/threadgate'
 import {atoms as a, useTheme} from '#/alf'

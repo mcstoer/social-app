@@ -1,11 +1,11 @@
 import * as React from 'react'
-import {type ScrollView, View} from 'react-native'
+import {ScrollView, View} from 'react-native'
 import {useAnimatedRef} from 'react-native-reanimated'
 
-import {Pager, type PagerRef, type RenderTabBarFnProps} from '#/view/com/pager/Pager'
+import {Pager, PagerRef, RenderTabBarFnProps} from '#/view/com/pager/Pager'
 import {atoms as a, web} from '#/alf'
 import * as Layout from '#/components/Layout'
-import {type ListMethods} from '../util/List'
+import {ListMethods} from '../util/List'
 import {TabBar} from './TabBar'
 
 export interface PagerWithHeaderChildParams {

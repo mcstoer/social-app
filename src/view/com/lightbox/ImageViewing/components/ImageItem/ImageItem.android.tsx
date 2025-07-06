@@ -3,11 +3,11 @@ import {ActivityIndicator, StyleSheet} from 'react-native'
 import {
   Gesture,
   GestureDetector,
-  type PanGesture,
+  PanGesture,
 } from 'react-native-gesture-handler'
 import Animated, {
   runOnJS,
-  type SharedValue,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedRef,
   useAnimatedStyle,
@@ -16,10 +16,10 @@ import Animated, {
 } from 'react-native-reanimated'
 import {Image} from 'expo-image'
 
-import  {
-  type Dimensions as ImageDimensions,
-  type ImageSource,
-  type Transform,
+import type {
+  Dimensions as ImageDimensions,
+  ImageSource,
+  Transform,
 } from '../../@types'
 import {
   applyRounding,
@@ -28,7 +28,7 @@ import {
   prependPinch,
   prependTransform,
   readTransform,
-  type TransformMatrix,
+  TransformMatrix,
 } from '../../transforms'
 
 const MIN_SCREEN_ZOOM = 2

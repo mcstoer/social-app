@@ -1,17 +1,17 @@
 import * as React from 'react'
 import {
-  type LayoutChangeEvent,
-  type NativeScrollEvent,
-  type ScrollView,
+  LayoutChangeEvent,
+  NativeScrollEvent,
+  ScrollView,
   StyleSheet,
   View,
 } from 'react-native'
 import Animated, {
-  type AnimatedRef,
+  AnimatedRef,
   runOnJS,
   runOnUI,
   scrollTo,
-  type SharedValue,
+  SharedValue,
   useAnimatedRef,
   useAnimatedStyle,
   useSharedValue,
@@ -20,9 +20,9 @@ import Animated, {
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {ScrollProvider} from '#/lib/ScrollContext'
 import {isIOS} from '#/platform/detection'
-import {Pager, type PagerRef, type RenderTabBarFnProps} from '#/view/com/pager/Pager'
+import {Pager, PagerRef, RenderTabBarFnProps} from '#/view/com/pager/Pager'
 import {useTheme} from '#/alf'
-import {type ListMethods} from '../util/List'
+import {ListMethods} from '../util/List'
 import {PagerHeaderProvider} from './PagerHeaderContext'
 import {TabBar} from './TabBar'
 

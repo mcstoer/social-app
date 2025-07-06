@@ -1,4 +1,4 @@
-import {type AppBskyActorDefs} from '@atproto/api'
+import {AppBskyActorDefs} from '@atproto/api'
 
 export type Data = Record<string, unknown> | undefined
 

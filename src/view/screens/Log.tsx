@@ -7,7 +7,7 @@ import {useFocusEffect} from '@react-navigation/native'
 
 import {usePalette} from '#/lib/hooks/usePalette'
 import {useGetTimeAgo} from '#/lib/hooks/useTimeAgo'
-import {type CommonNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
+import {CommonNavigatorParams, NativeStackScreenProps} from '#/lib/routes/types'
 import {s} from '#/lib/styles'
 import {getEntries} from '#/logger/logDump'
 import {useTickEveryMinute} from '#/state/shell'

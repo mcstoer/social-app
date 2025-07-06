@@ -1,4 +1,4 @@
-import {getLikelyType,LikelyType} from '../../src/lib/link-meta/link-meta'
+import {LikelyType, getLikelyType} from '../../src/lib/link-meta/link-meta'
 
 describe('getLikelyType', () => {
   it('correctly handles non-parsed url', async () => {

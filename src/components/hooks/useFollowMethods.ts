@@ -2,13 +2,13 @@ import React from 'react'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {type LogEvents} from '#/lib/statsig/statsig'
+import {LogEvents} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
-import {type Shadow} from '#/state/cache/types'
+import {Shadow} from '#/state/cache/types'
 import {useProfileFollowMutationQueue} from '#/state/queries/profile'
 import {useRequireAuth} from '#/state/session'
 import * as Toast from '#/view/com/util/Toast'
-import type * as bsky from '#/types/bsky'
+import * as bsky from '#/types/bsky'
 
 export function useFollowMethods({
   profile,

@@ -1,5 +1,5 @@
 import React, {
-  type ComponentProps,
+  ComponentProps,
   forwardRef,
   useCallback,
   useMemo,
@@ -7,16 +7,16 @@ import React, {
   useState,
 } from 'react'
 import {
-  type NativeSyntheticEvent,
+  NativeSyntheticEvent,
   Text as RNText,
-  type TextInput as RNTextInput,
-  type TextInputSelectionChangeEventData,
+  TextInput as RNTextInput,
+  TextInputSelectionChangeEventData,
   View,
 } from 'react-native'
 import {AppBskyRichtextFacet, RichText} from '@atproto/api'
 import PasteInput, {
-  type PastedFile,
-  type PasteInputRef,
+  PastedFile,
+  PasteInputRef,
 } from '@mattermost/react-native-paste-input'
 
 import {POST_IMG_MAX} from '#/lib/constants'
@@ -27,7 +27,7 @@ import {getMentionAt, insertMentionAt} from '#/lib/strings/mention-manip'
 import {useTheme} from '#/lib/ThemeContext'
 import {isAndroid, isNative} from '#/platform/detection'
 import {
-  type LinkFacetMatch,
+  LinkFacetMatch,
   suggestLinkCardUri,
 } from '#/view/com/composer/text-input/text-input-util'
 import {atoms as a, useAlf} from '#/alf'

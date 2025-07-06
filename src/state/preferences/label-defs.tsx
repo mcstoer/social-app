@@ -1,5 +1,5 @@
 import React from 'react'
-import {type AppBskyLabelerDefs, type InterpretedLabelValueDefinition} from '@atproto/api'
+import {AppBskyLabelerDefs, InterpretedLabelValueDefinition} from '@atproto/api'
 
 import {useLabelDefinitionsQuery} from '../queries/preferences'
 

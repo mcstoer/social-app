@@ -1,9 +1,9 @@
 import {
-  type ChatBskyConvoDefs,
-  type ChatBskyConvoListConvos,
-  type ChatBskyConvoMuteConvo,
+  ChatBskyConvoDefs,
+  ChatBskyConvoListConvos,
+  ChatBskyConvoMuteConvo,
 } from '@atproto/api'
-import {type InfiniteData, useMutation, useQueryClient} from '@tanstack/react-query'
+import {InfiniteData, useMutation, useQueryClient} from '@tanstack/react-query'
 
 import {DM_SERVICE_HEADERS} from '#/state/queries/messages/const'
 import {useAgent} from '#/state/session'

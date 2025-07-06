@@ -3,13 +3,13 @@ import {View} from 'react-native'
 import {
   Gesture,
   GestureDetector,
-  type NativeGesture,
+  NativeGesture,
 } from 'react-native-gesture-handler'
 import Animated, {
   interpolate,
   runOnJS,
   runOnUI,
-  type SharedValue,
+  SharedValue,
   useAnimatedReaction,
   useAnimatedStyle,
   useSharedValue,
@@ -20,7 +20,7 @@ import {
   useSafeAreaInsets,
 } from 'react-native-safe-area-context'
 import {useEventListener} from 'expo'
-import {type VideoPlayer} from 'expo-video'
+import {VideoPlayer} from 'expo-video'
 
 import {formatTime} from '#/view/com/util/post-embeds/VideoEmbedInner/web-controls/utils'
 import {tokens} from '#/alf'

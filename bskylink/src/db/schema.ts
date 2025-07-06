@@ -1,4 +1,4 @@
-import {type Selectable} from 'kysely'
+import {Selectable} from 'kysely'
 
 export type DbSchema = {
   link: Link

@@ -1,6 +1,6 @@
 import {memo, useEffect, useMemo, useState} from 'react'
 import {View} from 'react-native'
-import {type AppBskyActorDefs, type AppBskyFeedPost, AtUri} from '@atproto/api'
+import {AppBskyActorDefs, AppBskyFeedPost, AtUri} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 

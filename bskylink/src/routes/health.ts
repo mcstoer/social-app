@@ -1,7 +1,7 @@
-import {type Express} from 'express'
+import {Express} from 'express'
 import {sql} from 'kysely'
 
-import {type AppContext} from '../context.js'
+import {AppContext} from '../context.js'
 import {handler} from './util.js'
 
 export default function (ctx: AppContext, app: Express) {

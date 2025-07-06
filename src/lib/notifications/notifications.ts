@@ -1,12 +1,12 @@
 import React from 'react'
 import * as Notifications from 'expo-notifications'
 import {getBadgeCountAsync, setBadgeCountAsync} from 'expo-notifications'
-import {type BskyAgent} from '@atproto/api'
+import {BskyAgent} from '@atproto/api'
 
 import {logEvent} from '#/lib/statsig/statsig'
 import {Logger} from '#/logger'
 import {devicePlatform, isAndroid, isNative} from '#/platform/detection'
-import {type SessionAccount, useAgent, useSession} from '#/state/session'
+import {SessionAccount, useAgent, useSession} from '#/state/session'
 import BackgroundNotificationHandler from '../../../modules/expo-background-notification-handler'
 
 const SERVICE_DID = (serviceUrl?: string) =>

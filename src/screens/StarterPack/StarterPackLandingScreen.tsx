@@ -5,7 +5,7 @@ import {
   AppBskyGraphDefs,
   AppBskyGraphStarterpack,
   AtUri,
-  type ModerationOpts,
+  ModerationOpts,
 } from '@atproto/api'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {msg, Trans} from '@lingui/macro'

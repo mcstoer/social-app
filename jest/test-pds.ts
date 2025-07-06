@@ -1,5 +1,5 @@
 import {AtUri, BskyAgent} from '@atproto/api'
-import {type TestBsky, TestNetwork} from '@atproto/dev-env'
+import {TestBsky, TestNetwork} from '@atproto/dev-env'
 import fs from 'fs'
 import net from 'net'
 import path from 'path'

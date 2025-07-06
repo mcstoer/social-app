@@ -1,6 +1,6 @@
 /* eslint-disable bsky-internal/avoid-unwrapped-text */
 import React from 'react'
-import {type AppBskyGraphDefs, AppBskyGraphStarterpack} from '@atproto/api'
+import {AppBskyGraphDefs, AppBskyGraphStarterpack} from '@atproto/api'
 
 import {Butterfly} from './Butterfly.js'
 import {Img} from './Img.js'

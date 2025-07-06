@@ -1,6 +1,6 @@
-import {type ChatBskyConvoDefs} from '@atproto/api'
+import {ChatBskyConvoDefs} from '@atproto/api'
 import {
-  type QueryClient,
+  QueryClient,
   useMutation,
   useQuery,
   useQueryClient,
@@ -11,7 +11,7 @@ import {DM_SERVICE_HEADERS} from '#/state/queries/messages/const'
 import {useOnMarkAsRead} from '#/state/queries/messages/list-conversations'
 import {useAgent} from '#/state/session'
 import {
-  type ConvoListQueryData,
+  ConvoListQueryData,
   getConvoFromQueryData,
   RQKEY_ROOT as LIST_CONVOS_KEY,
 } from './list-conversations'

@@ -1,8 +1,8 @@
-import {type AppBskyActorDefs, type AppBskyGraphGetMutes} from '@atproto/api'
+import {AppBskyActorDefs, AppBskyGraphGetMutes} from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 

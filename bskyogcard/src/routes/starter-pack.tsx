@@ -1,9 +1,9 @@
 import assert from 'node:assert'
 
 import React from 'react'
-import {type AppBskyGraphDefs, AtUri} from '@atproto/api'
+import {AppBskyGraphDefs, AtUri} from '@atproto/api'
 import resvg from '@resvg/resvg-js'
-import {type Express} from 'express'
+import {Express} from 'express'
 import satori from 'satori'
 
 import {
@@ -11,7 +11,7 @@ import {
   STARTERPACK_HEIGHT,
   STARTERPACK_WIDTH,
 } from '../components/StarterPack.js'
-import {type AppContext} from '../context.js'
+import {AppContext} from '../context.js'
 import {httpLogger} from '../logger.js'
 import {loadEmojiAsSvg} from '../util.js'
 import {handler, originVerifyMiddleware} from './util.js'

@@ -2,7 +2,7 @@ import {useMemo} from 'react'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {type AppIconSet} from '#/screens/Settings/AppIconSettings/types'
+import {AppIconSet} from '#/screens/Settings/AppIconSettings/types'
 
 export function useAppIconSets() {
   const {_} = useLingui()

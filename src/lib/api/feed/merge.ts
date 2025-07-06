@@ -1,14 +1,14 @@
-import {type AppBskyFeedDefs, type AppBskyFeedGetTimeline, type BskyAgent} from '@atproto/api'
+import {AppBskyFeedDefs, AppBskyFeedGetTimeline, BskyAgent} from '@atproto/api'
 import shuffle from 'lodash.shuffle'
 
 import {bundleAsync} from '#/lib/async/bundle'
 import {timeout} from '#/lib/async/timeout'
 import {feedUriToHref} from '#/lib/strings/url-helpers'
 import {getContentLanguages} from '#/state/preferences/languages'
-import {type FeedParams} from '#/state/queries/post-feed'
+import {FeedParams} from '#/state/queries/post-feed'
 import {FeedTuner} from '../feed-manip'
-import {type FeedTunerFn} from '../feed-manip'
-import {type FeedAPI, type FeedAPIResponse, type ReasonFeedSource} from './types'
+import {FeedTunerFn} from '../feed-manip'
+import {FeedAPI, FeedAPIResponse, ReasonFeedSource} from './types'
 import {createBskyTopicsHeader, isBlueskyOwnedFeed} from './utils'
 
 const REQUEST_WAIT_MS = 500 // 500ms

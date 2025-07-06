@@ -3,14 +3,14 @@ import {View} from 'react-native'
 import {DrawerGestureContext} from 'react-native-drawer-layout'
 import {Gesture, GestureDetector} from 'react-native-gesture-handler'
 import PagerView, {
-  type PagerViewOnPageScrollEventData,
-  type PagerViewOnPageSelectedEvent,
-  type PagerViewOnPageSelectedEventData,
-  type PageScrollStateChangedNativeEventData,
+  PagerViewOnPageScrollEventData,
+  PagerViewOnPageSelectedEvent,
+  PagerViewOnPageSelectedEventData,
+  PageScrollStateChangedNativeEventData,
 } from 'react-native-pager-view'
 import Animated, {
   runOnJS,
-  type SharedValue,
+  SharedValue,
   useEvent,
   useHandler,
   useSharedValue,

@@ -1,17 +1,17 @@
 import {useCallback, useMemo, useState} from 'react'
 import {View} from 'react-native'
-import {type ChatBskyConvoDefs, type ChatBskyConvoListConvos} from '@atproto/api'
+import {ChatBskyConvoDefs, ChatBskyConvoListConvos} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useFocusEffect, useNavigation} from '@react-navigation/native'
-import {type InfiniteData, type UseInfiniteQueryResult} from '@tanstack/react-query'
+import {InfiniteData, UseInfiniteQueryResult} from '@tanstack/react-query'
 
 import {useAppState} from '#/lib/hooks/useAppState'
 import {useInitialNumToRender} from '#/lib/hooks/useInitialNumToRender'
 import {
-  type CommonNavigatorParams,
-  type NativeStackScreenProps,
-  type NavigationProp,
+  CommonNavigatorParams,
+  NativeStackScreenProps,
+  NavigationProp,
 } from '#/lib/routes/types'
 import {cleanError} from '#/lib/strings/errors'
 import {logger} from '#/logger'

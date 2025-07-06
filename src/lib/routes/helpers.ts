@@ -1,6 +1,6 @@
-import {type NavigationProp} from '@react-navigation/native'
+import {NavigationProp} from '@react-navigation/native'
 
-import {type RouteParams, type State} from './types'
+import {RouteParams, State} from './types'
 
 export function getRootNavigation<T extends {}>(
   nav: NavigationProp<T>,

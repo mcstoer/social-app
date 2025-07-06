@@ -1,9 +1,9 @@
 import {useCallback, useState} from 'react'
 import {
-  type AppBskyFeedDefs,
+  AppBskyFeedDefs,
   AppBskyFeedPost,
   moderatePost,
-  type ModerationDecision,
+  ModerationDecision,
 } from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'

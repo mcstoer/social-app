@@ -1,4 +1,4 @@
-import {type AppBskyLabelerDefs} from '@atproto/api'
+import {AppBskyLabelerDefs} from '@atproto/api'
 import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query'
 import {z} from 'zod'
 

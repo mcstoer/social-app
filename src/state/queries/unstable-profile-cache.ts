@@ -1,7 +1,7 @@
 import {useCallback} from 'react'
-import {type QueryClient, useQueryClient} from '@tanstack/react-query'
+import {QueryClient, useQueryClient} from '@tanstack/react-query'
 
-import type * as bsky from '#/types/bsky'
+import * as bsky from '#/types/bsky'
 
 const unstableProfileViewCacheQueryKeyRoot = 'unstableProfileViewCache'
 export const unstableProfileViewCacheQueryKey = (didOrHandle: string) => [

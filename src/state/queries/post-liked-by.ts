@@ -1,8 +1,8 @@
-import {type AppBskyActorDefs, type AppBskyFeedGetLikes} from '@atproto/api'
+import {AppBskyActorDefs, AppBskyFeedGetLikes} from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 

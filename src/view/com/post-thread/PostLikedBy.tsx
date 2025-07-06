@@ -1,5 +1,5 @@
 import {useCallback, useMemo, useState} from 'react'
-import {type AppBskyFeedGetLikes as GetLikes} from '@atproto/api'
+import {AppBskyFeedGetLikes as GetLikes} from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 

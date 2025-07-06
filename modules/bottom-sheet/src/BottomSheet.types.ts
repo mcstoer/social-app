@@ -1,5 +1,5 @@
-import {type ColorValue, type NativeSyntheticEvent} from 'react-native'
-import type React from 'react'
+import React from 'react'
+import {ColorValue, NativeSyntheticEvent} from 'react-native'
 
 export type BottomSheetState = 'closed' | 'closing' | 'open' | 'opening'
 

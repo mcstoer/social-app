@@ -1,5 +1,5 @@
 import {
-  type ImagePickerAsset,
+  ImagePickerAsset,
   launchImageLibraryAsync,
   UIImagePickerPreferredAssetRepresentationMode,
 } from 'expo-image-picker'

@@ -1,5 +1,5 @@
 import React from 'react'
-import {type TextStyle, View, type ViewStyle} from 'react-native'
+import {TextStyle, View, ViewStyle} from 'react-native'
 
 import {capitalize} from '#/lib/strings/capitalize'
 import {useInterestsDisplayNames} from '#/screens/Onboarding/state'

@@ -1,16 +1,16 @@
 import React from 'react'
-import {StyleSheet, type TextProps} from 'react-native'
+import {StyleSheet, TextProps} from 'react-native'
 import {UITextView} from 'react-native-uitextview'
 
 import {lh, s} from '#/lib/styles'
-import {type TypographyVariant, useTheme} from '#/lib/ThemeContext'
+import {TypographyVariant, useTheme} from '#/lib/ThemeContext'
 import {logger} from '#/logger'
 import {isIOS, isWeb} from '#/platform/detection'
 import {applyFonts, useAlf} from '#/alf'
 import {
   childHasEmoji,
   renderChildrenWithEmoji,
-  type StringChild,
+  StringChild,
 } from '#/alf/typography'
 
 export type CustomTextProps = Omit<TextProps, 'children'> & {

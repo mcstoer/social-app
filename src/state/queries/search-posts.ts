@@ -1,15 +1,15 @@
 import React from 'react'
 import {
-  type AppBskyActorDefs,
-  type AppBskyFeedDefs,
-  type AppBskyFeedSearchPosts,
+  AppBskyActorDefs,
+  AppBskyFeedDefs,
+  AppBskyFeedSearchPosts,
   AtUri,
   moderatePost,
 } from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 

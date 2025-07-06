@@ -1,6 +1,6 @@
 import React from 'react'
 import {View} from 'react-native'
-import {type AppBskyActorDefs, sanitizeMutedWordValue} from '@atproto/api'
+import {AppBskyActorDefs, sanitizeMutedWordValue} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
@@ -16,7 +16,7 @@ import {
   native,
   useBreakpoints,
   useTheme,
-  type ViewStyleProp,
+  ViewStyleProp,
   web,
 } from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'

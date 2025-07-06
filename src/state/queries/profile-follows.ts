@@ -1,8 +1,8 @@
-import {type AppBskyActorDefs, type AppBskyGraphGetFollows} from '@atproto/api'
+import {AppBskyActorDefs, AppBskyGraphGetFollows} from '@atproto/api'
 import {
-  type InfiniteData,
-  type QueryClient,
-  type QueryKey,
+  InfiniteData,
+  QueryClient,
+  QueryKey,
   useInfiniteQuery,
 } from '@tanstack/react-query'
 

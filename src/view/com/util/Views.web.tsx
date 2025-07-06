@@ -14,12 +14,12 @@
 
 import React from 'react'
 import {
-  type FlatList,
-  type FlatListProps,
-  type ScrollViewProps,
+  FlatList,
+  FlatListProps,
+  ScrollViewProps,
   StyleSheet,
   View,
-  type ViewProps,
+  ViewProps,
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 

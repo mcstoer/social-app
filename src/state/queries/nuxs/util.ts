@@ -1,8 +1,8 @@
-import {type AppBskyActorDefs, nuxSchema} from '@atproto/api'
+import {AppBskyActorDefs, nuxSchema} from '@atproto/api'
 
 import {
-  type AppNux,
-  type Nux,
+  AppNux,
+  Nux,
   nuxNames,
   NuxSchemas,
 } from '#/state/queries/nuxs/definitions'

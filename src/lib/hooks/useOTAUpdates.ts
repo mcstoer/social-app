@@ -1,5 +1,5 @@
 import React from 'react'
-import {Alert, AppState, type AppStateStatus} from 'react-native'
+import {Alert, AppState, AppStateStatus} from 'react-native'
 import {nativeBuildVersion} from 'expo-application'
 import {
   checkForUpdateAsync,

@@ -5,7 +5,7 @@ import {useLingui} from '@lingui/react'
 import {logEvent} from '#/lib/statsig/statsig'
 import {
   ProgressGuideToast,
-  type ProgressGuideToastRef,
+  ProgressGuideToastRef,
 } from '#/components/ProgressGuide/Toast'
 import {
   usePreferencesQuery,

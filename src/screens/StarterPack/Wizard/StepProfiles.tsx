@@ -1,7 +1,7 @@
 import {useState} from 'react'
-import {type ListRenderItemInfo, View} from 'react-native'
+import {ListRenderItemInfo, View} from 'react-native'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-controller'
-import {type AppBskyActorDefs, type ModerationOpts} from '@atproto/api'
+import {AppBskyActorDefs, ModerationOpts} from '@atproto/api'
 import {Trans} from '@lingui/macro'
 
 import {isNative} from '#/platform/detection'
@@ -16,7 +16,7 @@ import {Loader} from '#/components/Loader'
 import {ScreenTransition} from '#/components/StarterPack/Wizard/ScreenTransition'
 import {WizardProfileCard} from '#/components/StarterPack/Wizard/WizardListCard'
 import {Text} from '#/components/Typography'
-import type * as bsky from '#/types/bsky'
+import * as bsky from '#/types/bsky'
 
 function keyExtractor(item: AppBskyActorDefs.ProfileViewBasic) {
   return item?.did ?? ''

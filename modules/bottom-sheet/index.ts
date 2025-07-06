@@ -1,8 +1,8 @@
 import {BottomSheet} from './src/BottomSheet'
 import {
   BottomSheetSnapPoint,
-  type BottomSheetState,
-  type BottomSheetViewProps,
+  BottomSheetState,
+  BottomSheetViewProps,
 } from './src/BottomSheet.types'
 import {BottomSheetNativeComponent} from './src/BottomSheetNativeComponent'
 import {

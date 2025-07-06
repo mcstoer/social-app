@@ -1,7 +1,7 @@
-import {type ImagePickerAsset} from 'expo-image-picker'
-import {type AppBskyVideoDefs, type BlobRef, type BskyAgent} from '@atproto/api'
-import {type JobStatus} from '@atproto/api/dist/client/types/app/bsky/video/defs'
-import {type I18n} from '@lingui/core'
+import {ImagePickerAsset} from 'expo-image-picker'
+import {AppBskyVideoDefs, BlobRef, BskyAgent} from '@atproto/api'
+import {JobStatus} from '@atproto/api/dist/client/types/app/bsky/video/defs'
+import {I18n} from '@lingui/core'
 import {msg} from '@lingui/macro'
 
 import {AbortError} from '#/lib/async/cancelable'
@@ -11,7 +11,7 @@ import {
   UploadLimitError,
   VideoTooLargeError,
 } from '#/lib/media/video/errors'
-import {type CompressedVideo} from '#/lib/media/video/types'
+import {CompressedVideo} from '#/lib/media/video/types'
 import {uploadVideo} from '#/lib/media/video/upload'
 import {createVideoAgent} from '#/lib/media/video/util'
 import {logger} from '#/logger'

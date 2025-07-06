@@ -1,9 +1,9 @@
 import assert from 'node:assert'
 
 import bodyParser from 'body-parser'
-import {type Express, type Request} from 'express'
+import {Express, Request} from 'express'
 
-import {type AppContext} from '../context.js'
+import {AppContext} from '../context.js'
 import {LinkType} from '../db/schema.js'
 import {randomId} from '../util.js'
 import {handler} from './util.js'

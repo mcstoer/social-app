@@ -1,6 +1,6 @@
 import {AtpAgent} from '@atproto/api'
 
-import {type SupportedMimeTypes, VIDEO_SERVICE} from '#/lib/constants'
+import {SupportedMimeTypes, VIDEO_SERVICE} from '#/lib/constants'
 
 export const createVideoEndpointUrl = (
   route: string,

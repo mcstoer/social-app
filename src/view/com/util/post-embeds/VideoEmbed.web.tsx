@@ -1,9 +1,8 @@
-import {useCallback, useEffect, useRef, useState} from 'react'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
 import {View} from 'react-native'
-import {type AppBskyEmbedVideo} from '@atproto/api'
+import {AppBskyEmbedVideo} from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import type React from 'react';
 
 import {isFirefox} from '#/lib/browser'
 import {ConstrainedImage} from '#/view/com/util/images/AutoSizedImage'

@@ -1,5 +1,5 @@
 import {useMemo} from 'react'
-import {type ChatBskyConvoLeaveConvo, type ChatBskyConvoListConvos} from '@atproto/api'
+import {ChatBskyConvoLeaveConvo, ChatBskyConvoListConvos} from '@atproto/api'
 import {
   useMutation,
   useMutationState,

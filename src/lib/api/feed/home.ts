@@ -1,9 +1,9 @@
-import {type AppBskyFeedDefs, type BskyAgent} from '@atproto/api'
+import {AppBskyFeedDefs, BskyAgent} from '@atproto/api'
 
 import {PROD_DEFAULT_FEED} from '#/lib/constants'
 import {CustomFeedAPI} from './custom'
 import {FollowingFeedAPI} from './following'
-import {type FeedAPI, type FeedAPIResponse} from './types'
+import {FeedAPI, FeedAPIResponse} from './types'
 
 // HACK
 // the feed API does not include any facilities for passing down

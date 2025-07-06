@@ -1,8 +1,8 @@
-import {type AtpSessionEvent} from '@atproto/api'
+import {AtpSessionEvent} from '@atproto/api'
 
 import {createPublicAgent} from './agent'
 import {wrapSessionReducerForLogging} from './logging'
-import {type SessionAccount} from './types'
+import {SessionAccount} from './types'
 
 // A hack so that the reducer can't read anything from the agent.
 // From the reducer's point of view, it should be a completely opaque object.

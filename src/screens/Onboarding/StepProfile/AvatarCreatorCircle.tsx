@@ -1,7 +1,7 @@
 import React from 'react'
 import {View} from 'react-native'
 
-import {type Avatar} from '#/screens/Onboarding/StepProfile/index'
+import {Avatar} from '#/screens/Onboarding/StepProfile/index'
 import {atoms as a, useTheme} from '#/alf'
 
 export function AvatarCreatorCircle({

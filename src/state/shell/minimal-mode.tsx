@@ -1,5 +1,5 @@
 import React from 'react'
-import {type SharedValue, useSharedValue, withSpring} from 'react-native-reanimated'
+import {SharedValue, useSharedValue, withSpring} from 'react-native-reanimated'
 
 type StateContext = {
   headerMode: SharedValue<number>

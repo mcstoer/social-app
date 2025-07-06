@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  type StyleProp,
+  StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
-  type ViewStyle,
+  ViewStyle,
 } from 'react-native'
 import {
   AppBskyEmbedExternal,
@@ -12,10 +12,10 @@ import {
   AppBskyEmbedRecord,
   AppBskyEmbedRecordWithMedia,
   AppBskyEmbedVideo,
-  type AppBskyFeedDefs,
+  AppBskyFeedDefs,
   AppBskyFeedPost,
   moderatePost,
-  type ModerationDecision,
+  ModerationDecision,
   RichText as RichTextAPI,
 } from '@atproto/api'
 import {AtUri} from '@atproto/api'
@@ -43,7 +43,7 @@ import {Link} from '../Link'
 import {PostMeta} from '../PostMeta'
 import {Text} from '../text/Text'
 import {PostEmbeds} from '.'
-import {type QuoteEmbedViewContext} from './types'
+import {QuoteEmbedViewContext} from './types'
 
 export function MaybeQuoteEmbed({
   embed,

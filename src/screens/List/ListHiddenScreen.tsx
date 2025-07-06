@@ -11,7 +11,7 @@ import {logger} from '#/logger'
 import {RQKEY_ROOT as listQueryRoot} from '#/state/queries/list'
 import {useListBlockMutation, useListMuteMutation} from '#/state/queries/list'
 import {
-  type UsePreferencesQueryResponse,
+  UsePreferencesQueryResponse,
   useRemoveFeedMutation,
 } from '#/state/queries/preferences'
 import {useSession} from '#/state/session'

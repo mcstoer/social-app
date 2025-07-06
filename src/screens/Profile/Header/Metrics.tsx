@@ -1,10 +1,10 @@
 import {View} from 'react-native'
-import {type AppBskyActorDefs} from '@atproto/api'
+import {AppBskyActorDefs} from '@atproto/api'
 import {msg, plural} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {makeProfileLink} from '#/lib/routes/links'
-import {type Shadow} from '#/state/cache/types'
+import {Shadow} from '#/state/cache/types'
 import {formatCount} from '#/view/com/util/numeric/format'
 import {atoms as a, useTheme} from '#/alf'
 import {InlineLinkText} from '#/components/Link'

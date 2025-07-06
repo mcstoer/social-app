@@ -1,6 +1,6 @@
-import {type AppBskyLabelerDefs, ComAtprotoModerationDefs} from '@atproto/api'
+import {AppBskyLabelerDefs, ComAtprotoModerationDefs} from '@atproto/api'
 
-import {type ReportOption} from './utils/useReportOptions'
+import {ReportOption} from './utils/useReportOptions'
 
 export type ReportState = {
   selectedOption?: ReportOption

@@ -15,7 +15,7 @@ import {
   TitleText,
 } from '#/screens/Onboarding/Layout'
 import {
-  type ApiResponseMap,
+  ApiResponseMap,
   Context,
   useInterestsDisplayNames,
 } from '#/screens/Onboarding/state'
