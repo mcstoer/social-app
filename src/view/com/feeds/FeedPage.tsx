@@ -80,7 +80,7 @@ export function FeedPage({
   const aiFeedRuntimeCreator = AIFeedAPIRuntimeCreator.getInstance()
   aiFeedRuntimeCreator.setRequestSwitchToAccount(requestSwitchToAccount)
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isPageFocused) {
       setHomeBadge(hasNew)
     }
