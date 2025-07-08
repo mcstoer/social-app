@@ -3,7 +3,7 @@ import {render} from '@testing-library/react-native'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {RootSiblingParent} from 'react-native-root-siblings'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
-import {RootStoreModel, RootStoreProvider} from '../src/state'
+import {RootStoreProvider, RootStoreModel} from '../src/state'
 
 import {ThemeProvider} from '../src/lib/ThemeContext'
 
