@@ -1,21 +1,20 @@
 import {
-  type $Typed,
-  type AppBskyActorDefs,
-  type AppBskyGraphGetStarterPack,
-  type BskyAgent,
-  type ComAtprotoRepoApplyWrites,
-  type Facet,
+  $Typed,
+  AppBskyActorDefs,
+  AppBskyGraphGetStarterPack,
+  BskyAgent,
+  ComAtprotoRepoApplyWrites,
+  Facet,
 } from '@atproto/api'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useMutation} from '@tanstack/react-query'
-
 import {until} from '#/lib/async/until'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {enforceLen} from '#/lib/strings/helpers'
 import {useAgent} from '#/state/session'
-import type * as bsky from '#/types/bsky'
+import * as bsky from '#/types/bsky'
 
 export const createStarterPackList = async ({
   name,
