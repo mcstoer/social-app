@@ -1,20 +1,19 @@
-import {memo, useMemo, useState} from 'react'
+import React, {memo, useMemo, useState} from 'react'
 import {View} from 'react-native'
 import {
-  type $Typed,
-  type AppBskyActorDefs,
-  type ChatBskyConvoDefs,
-  type ComAtprotoModerationCreateReport,
+  $Typed,
+  AppBskyActorDefs,
+  ChatBskyConvoDefs,
+  ComAtprotoModerationCreateReport,
   RichText as RichTextAPI,
 } from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {StackActions, useNavigation} from '@react-navigation/native'
 import {useMutation} from '@tanstack/react-query'
-import type React from 'react';
 
-import {type ReportOption} from '#/lib/moderation/useReportOptions'
-import {type NavigationProp} from '#/lib/routes/types'
+import {ReportOption} from '#/lib/moderation/useReportOptions'
+import {NavigationProp} from '#/lib/routes/types'
 import {isNative} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {useLeaveConvo} from '#/state/queries/messages/leave-conversation'
