@@ -1,116 +1,114 @@
-import * as React from 'react'
-import {i18n, type MessageDescriptor} from '@lingui/core'
-import {msg} from '@lingui/macro'
-import {
-  type BottomTabBarProps,
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs'
-import {
-  CommonActions,
-  createNavigationContainerRef,
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-  StackActions,
-} from '@react-navigation/native'
-
-import {timeout} from '#/lib/async/timeout'
-import {useColorSchemeStyle} from '#/lib/hooks/useColorSchemeStyle'
-import {useWebScrollRestoration} from '#/lib/hooks/useWebScrollRestoration'
-import {buildStateObject} from '#/lib/routes/helpers'
-import {
-  type AllNavigatorParams,
-  type BottomTabNavigatorParams,
-  type FlatNavigatorParams,
-  type HomeTabNavigatorParams,
-  type MessagesTabNavigatorParams,
-  type MyProfileTabNavigatorParams,
-  type NotificationsTabNavigatorParams,
-  type SearchTabNavigatorParams,
-} from '#/lib/routes/types'
-import {type RouteParams, type State} from '#/lib/routes/types'
-import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'
-import {bskyTitle} from '#/lib/strings/headings'
-import {logger} from '#/logger'
-import {isNative, isWeb} from '#/platform/detection'
-import {useUnreadNotifications} from '#/state/queries/notifications/unread'
-import {useSession} from '#/state/session'
-import {
-  shouldRequestEmailConfirmation,
-  snoozeEmailConfirmationPrompt,
-} from '#/state/shell/reminders'
-import {CommunityGuidelinesScreen} from '#/view/screens/CommunityGuidelines'
-import {CopyrightPolicyScreen} from '#/view/screens/CopyrightPolicy'
-import {DebugModScreen} from '#/view/screens/DebugMod'
-import {FeedsScreen} from '#/view/screens/Feeds'
-import {HomeScreen} from '#/view/screens/Home'
-import {ListsScreen} from '#/view/screens/Lists'
-import {LogScreen} from '#/view/screens/Log'
-import {ModerationBlockedAccounts} from '#/view/screens/ModerationBlockedAccounts'
-import {ModerationModlistsScreen} from '#/view/screens/ModerationModlists'
-import {ModerationMutedAccounts} from '#/view/screens/ModerationMutedAccounts'
-import {NotFoundScreen} from '#/view/screens/NotFound'
-import {NotificationsScreen} from '#/view/screens/Notifications'
-import {PostThreadScreen} from '#/view/screens/PostThread'
-import {PrivacyPolicyScreen} from '#/view/screens/PrivacyPolicy'
-import {ProfileScreen} from '#/view/screens/Profile'
-import {ProfileFeedLikedByScreen} from '#/view/screens/ProfileFeedLikedBy'
-import {ProfileListScreen} from '#/view/screens/ProfileList'
-import {SavedFeeds} from '#/view/screens/SavedFeeds'
-import {Storybook} from '#/view/screens/Storybook'
-import {SupportScreen} from '#/view/screens/Support'
-import {TermsOfServiceScreen} from '#/view/screens/TermsOfService'
-import {BottomBar} from '#/view/shell/bottom-bar/BottomBar'
-import {createNativeStackNavigatorWithAuth} from '#/view/shell/createNativeStackNavigatorWithAuth'
-import {SharedPreferencesTesterScreen} from '#/screens/E2E/SharedPreferencesTesterScreen'
-import HashtagScreen from '#/screens/Hashtag'
-import {MessagesScreen} from '#/screens/Messages/ChatList'
-import {MessagesConversationScreen} from '#/screens/Messages/Conversation'
-import {MessagesInboxScreen} from '#/screens/Messages/Inbox'
-import {MessagesSettingsScreen} from '#/screens/Messages/Settings'
-import {ModerationScreen} from '#/screens/Moderation'
-import {Screen as ModerationVerificationSettings} from '#/screens/Moderation/VerificationSettings'
-import {Screen as ModerationInteractionSettings} from '#/screens/ModerationInteractionSettings'
-import {PostLikedByScreen} from '#/screens/Post/PostLikedBy'
-import {PostQuotesScreen} from '#/screens/Post/PostQuotes'
-import {PostRepostedByScreen} from '#/screens/Post/PostRepostedBy'
-import {ProfileKnownFollowersScreen} from '#/screens/Profile/KnownFollowers'
-import {ProfileFeedScreen} from '#/screens/Profile/ProfileFeed'
-import {ProfileFollowersScreen} from '#/screens/Profile/ProfileFollowers'
-import {ProfileFollowsScreen} from '#/screens/Profile/ProfileFollows'
-import {ProfileLabelerLikedByScreen} from '#/screens/Profile/ProfileLabelerLikedBy'
-import {SearchScreen} from '#/screens/Search'
-import {AppearanceSettingsScreen} from '#/screens/Settings/AppearanceSettings'
-import {AppIconSettingsScreen} from '#/screens/Settings/AppIconSettings'
-import {NotificationSettingsScreen} from '#/screens/Settings/NotificationSettings'
-import {SettingsInterests} from '#/screens/Settings/SettingsInterests'
-import {
-  StarterPackScreen,
-  StarterPackScreenShort,
-} from '#/screens/StarterPack/StarterPackScreen'
-import {Wizard} from '#/screens/StarterPack/Wizard'
-import {VideoFeed} from '#/screens/VideoFeed'
-import {type Theme, useTheme} from '#/alf'
-import {
-  EmailDialogScreenID,
-  useEmailDialogControl,
-} from '#/components/dialogs/EmailDialog'
-import {router} from '#/routes'
+import * as React from 'react'	import * as React from 'react'
+import {i18n, type MessageDescriptor} from '@lingui/core'	import {i18n, type MessageDescriptor} from '@lingui/core'
+import {msg} from '@lingui/macro'	import {msg} from '@lingui/macro'
+import {	import {
+  type BottomTabBarProps,	  type BottomTabBarProps,
+  createBottomTabNavigator,	  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs'	} from '@react-navigation/bottom-tabs'
+import {	import {
+  CommonActions,	  CommonActions,
+  createNavigationContainerRef,	  createNavigationContainerRef,
+  DarkTheme,	  DarkTheme,
+  DefaultTheme,	  DefaultTheme,
+  NavigationContainer,	  NavigationContainer,
+  StackActions,	  StackActions,
+} from '@react-navigation/native'	} from '@react-navigation/native'
+import {timeout} from '#/lib/async/timeout'	import {timeout} from '#/lib/async/timeout'
+import {useColorSchemeStyle} from '#/lib/hooks/useColorSchemeStyle'	import {useColorSchemeStyle} from '#/lib/hooks/useColorSchemeStyle'
+import {useWebScrollRestoration} from '#/lib/hooks/useWebScrollRestoration'	import {useWebScrollRestoration} from '#/lib/hooks/useWebScrollRestoration'
+import {buildStateObject} from '#/lib/routes/helpers'	import {buildStateObject} from '#/lib/routes/helpers'
+import {	import {
+  type AllNavigatorParams,	  type AllNavigatorParams,
+  type BottomTabNavigatorParams,	  type BottomTabNavigatorParams,
+  type FlatNavigatorParams,	  type FlatNavigatorParams,
+  type HomeTabNavigatorParams,	  type HomeTabNavigatorParams,
+  type MessagesTabNavigatorParams,	  type MessagesTabNavigatorParams,
+  type MyProfileTabNavigatorParams,	  type MyProfileTabNavigatorParams,
+  type NotificationsTabNavigatorParams,	  type NotificationsTabNavigatorParams,
+  type SearchTabNavigatorParams,	  type SearchTabNavigatorParams,
+} from '#/lib/routes/types'	} from '#/lib/routes/types'
+import {type RouteParams, type State} from '#/lib/routes/types'	import {type RouteParams, type State} from '#/lib/routes/types'
+import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'	import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'
+import {bskyTitle} from '#/lib/strings/headings'	import {bskyTitle} from '#/lib/strings/headings'
+import {logger} from '#/logger'	import {logger} from '#/logger'
+import {isNative, isWeb} from '#/platform/detection'	import {isNative, isWeb} from '#/platform/detection'
+import {useUnreadNotifications} from '#/state/queries/notifications/unread'	import {useUnreadNotifications} from '#/state/queries/notifications/unread'
+import {useSession} from '#/state/session'	import {useSession} from '#/state/session'
+import {	import {
+  shouldRequestEmailConfirmation,	  shouldRequestEmailConfirmation,
+  snoozeEmailConfirmationPrompt,	  snoozeEmailConfirmationPrompt,
+} from '#/state/shell/reminders'	} from '#/state/shell/reminders'
+import {CommunityGuidelinesScreen} from '#/view/screens/CommunityGuidelines'	import {CommunityGuidelinesScreen} from '#/view/screens/CommunityGuidelines'
+import {CopyrightPolicyScreen} from '#/view/screens/CopyrightPolicy'	import {CopyrightPolicyScreen} from '#/view/screens/CopyrightPolicy'
+import {DebugModScreen} from '#/view/screens/DebugMod'	import {DebugModScreen} from '#/view/screens/DebugMod'
+import {FeedsScreen} from '#/view/screens/Feeds'	import {FeedsScreen} from '#/view/screens/Feeds'
+import {HomeScreen} from '#/view/screens/Home'	import {HomeScreen} from '#/view/screens/Home'
+import {ListsScreen} from '#/view/screens/Lists'	import {ListsScreen} from '#/view/screens/Lists'
+import {LogScreen} from '#/view/screens/Log'	import {LogScreen} from '#/view/screens/Log'
+import {ModerationBlockedAccounts} from '#/view/screens/ModerationBlockedAccounts'	import {ModerationBlockedAccounts} from '#/view/screens/ModerationBlockedAccounts'
+import {ModerationModlistsScreen} from '#/view/screens/ModerationModlists'	import {ModerationModlistsScreen} from '#/view/screens/ModerationModlists'
+import {ModerationMutedAccounts} from '#/view/screens/ModerationMutedAccounts'	import {ModerationMutedAccounts} from '#/view/screens/ModerationMutedAccounts'
+import {NotFoundScreen} from '#/view/screens/NotFound'	import {NotFoundScreen} from '#/view/screens/NotFound'
+import {NotificationsScreen} from '#/view/screens/Notifications'	import {NotificationsScreen} from '#/view/screens/Notifications'
+import {PostThreadScreen} from '#/view/screens/PostThread'	import {PostThreadScreen} from '#/view/screens/PostThread'
+import {PrivacyPolicyScreen} from '#/view/screens/PrivacyPolicy'	import {PrivacyPolicyScreen} from '#/view/screens/PrivacyPolicy'
+import {ProfileScreen} from '#/view/screens/Profile'	import {ProfileScreen} from '#/view/screens/Profile'
+import {ProfileFeedLikedByScreen} from '#/view/screens/ProfileFeedLikedBy'	import {ProfileFeedLikedByScreen} from '#/view/screens/ProfileFeedLikedBy'
+import {ProfileListScreen} from '#/view/screens/ProfileList'	import {ProfileListScreen} from '#/view/screens/ProfileList'
+import {SavedFeeds} from '#/view/screens/SavedFeeds'	import {SavedFeeds} from '#/view/screens/SavedFeeds'
+import {Storybook} from '#/view/screens/Storybook'	import {Storybook} from '#/view/screens/Storybook'
+import {SupportScreen} from '#/view/screens/Support'	import {SupportScreen} from '#/view/screens/Support'
+import {TermsOfServiceScreen} from '#/view/screens/TermsOfService'	import {TermsOfServiceScreen} from '#/view/screens/TermsOfService'
+import {BottomBar} from '#/view/shell/bottom-bar/BottomBar'	import {BottomBar} from '#/view/shell/bottom-bar/BottomBar'
+import {createNativeStackNavigatorWithAuth} from '#/view/shell/createNativeStackNavigatorWithAuth'	import {createNativeStackNavigatorWithAuth} from '#/view/shell/createNativeStackNavigatorWithAuth'
+import {SharedPreferencesTesterScreen} from '#/screens/E2E/SharedPreferencesTesterScreen'	import {SharedPreferencesTesterScreen} from '#/screens/E2E/SharedPreferencesTesterScreen'
+import HashtagScreen from '#/screens/Hashtag'	import HashtagScreen from '#/screens/Hashtag'
+import {MessagesScreen} from '#/screens/Messages/ChatList'	import {MessagesScreen} from '#/screens/Messages/ChatList'
+import {MessagesConversationScreen} from '#/screens/Messages/Conversation'	import {MessagesConversationScreen} from '#/screens/Messages/Conversation'
+import {MessagesInboxScreen} from '#/screens/Messages/Inbox'	import {MessagesInboxScreen} from '#/screens/Messages/Inbox'
+import {MessagesSettingsScreen} from '#/screens/Messages/Settings'	import {MessagesSettingsScreen} from '#/screens/Messages/Settings'
+import {ModerationScreen} from '#/screens/Moderation'	import {ModerationScreen} from '#/screens/Moderation'
+import {Screen as ModerationVerificationSettings} from '#/screens/Moderation/VerificationSettings'	import {Screen as ModerationVerificationSettings} from '#/screens/Moderation/VerificationSettings'
+import {Screen as ModerationInteractionSettings} from '#/screens/ModerationInteractionSettings'	import {Screen as ModerationInteractionSettings} from '#/screens/ModerationInteractionSettings'
+import {PostLikedByScreen} from '#/screens/Post/PostLikedBy'	import {PostLikedByScreen} from '#/screens/Post/PostLikedBy'
+import {PostQuotesScreen} from '#/screens/Post/PostQuotes'	import {PostQuotesScreen} from '#/screens/Post/PostQuotes'
+import {PostRepostedByScreen} from '#/screens/Post/PostRepostedBy'	import {PostRepostedByScreen} from '#/screens/Post/PostRepostedBy'
+import {ProfileKnownFollowersScreen} from '#/screens/Profile/KnownFollowers'	import {ProfileKnownFollowersScreen} from '#/screens/Profile/KnownFollowers'
+import {ProfileFeedScreen} from '#/screens/Profile/ProfileFeed'	import {ProfileFeedScreen} from '#/screens/Profile/ProfileFeed'
+import {ProfileFollowersScreen} from '#/screens/Profile/ProfileFollowers'	import {ProfileFollowersScreen} from '#/screens/Profile/ProfileFollowers'
+import {ProfileFollowsScreen} from '#/screens/Profile/ProfileFollows'	import {ProfileFollowsScreen} from '#/screens/Profile/ProfileFollows'
+import {ProfileLabelerLikedByScreen} from '#/screens/Profile/ProfileLabelerLikedBy'	import {ProfileLabelerLikedByScreen} from '#/screens/Profile/ProfileLabelerLikedBy'
+import {ProfileSearchScreen} from '#/screens/Profile/ProfileSearch'	
+import {SearchScreen} from '#/screens/Search'	import {SearchScreen} from '#/screens/Search'
+import {AboutSettingsScreen} from '#/screens/Settings/AboutSettings'	
+import {AccessibilitySettingsScreen} from '#/screens/Settings/AccessibilitySettings'	
+import {AccountSettingsScreen} from '#/screens/Settings/AccountSettings'	
+import {AppearanceSettingsScreen} from '#/screens/Settings/AppearanceSettings'	import {AppearanceSettingsScreen} from '#/screens/Settings/AppearanceSettings'
+import {AppIconSettingsScreen} from '#/screens/Settings/AppIconSettings'	import {AppIconSettingsScreen} from '#/screens/Settings/AppIconSettings'
+import {AppPasswordsScreen} from '#/screens/Settings/AppPasswords'	
+import {ContentAndMediaSettingsScreen} from '#/screens/Settings/ContentAndMediaSettings'	
+import {ExternalMediaPreferencesScreen} from '#/screens/Settings/ExternalMediaPreferences'	
+import {FollowingFeedPreferencesScreen} from '#/screens/Settings/FollowingFeedPreferences'	
+import {LanguageSettingsScreen} from '#/screens/Settings/LanguageSettings'	
+import {NotificationSettingsScreen} from '#/screens/Settings/NotificationSettings'	import {NotificationSettingsScreen} from '#/screens/Settings/NotificationSettings'
+import {PrivacyAndSecuritySettingsScreen} from '#/screens/Settings/PrivacyAndSecuritySettings'	
+import {SettingsScreen} from '#/screens/Settings/Settings'	
+import {SettingsInterests} from '#/screens/Settings/SettingsInterests'	import {SettingsInterests} from '#/screens/Settings/SettingsInterests'
+import {ThreadPreferencesScreen} from '#/screens/Settings/ThreadPreferences'	
+import {	import {
+  StarterPackScreen,	  StarterPackScreen,
+  StarterPackScreenShort,	  StarterPackScreenShort,
+} from '#/screens/StarterPack/StarterPackScreen'	} from '#/screens/StarterPack/StarterPackScreen'
+import {Wizard} from '#/screens/StarterPack/Wizard'	import {Wizard} from '#/screens/StarterPack/Wizard'
+import TopicScreen from '#/screens/Topic'	
+import {VideoFeed} from '#/screens/VideoFeed'	import {VideoFeed} from '#/screens/VideoFeed'
+import {type Theme, useTheme} from '#/alf'	import {type Theme, useTheme} from '#/alf'
+import {	import {
+  EmailDialogScreenID,	  EmailDialogScreenID,
+  useEmailDialogControl,	  useEmailDialogControl,
+} from '#/components/dialogs/EmailDialog'	} from '#/components/dialogs/EmailDialog'
+import {router} from '#/routes'	import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
-import {ProfileSearchScreen} from './screens/Profile/ProfileSearch'
-import {AboutSettingsScreen} from './screens/Settings/AboutSettings'
-import {AccessibilitySettingsScreen} from './screens/Settings/AccessibilitySettings'
-import {AccountSettingsScreen} from './screens/Settings/AccountSettings'
-import {AppPasswordsScreen} from './screens/Settings/AppPasswords'
-import {ContentAndMediaSettingsScreen} from './screens/Settings/ContentAndMediaSettings'
-import {ExternalMediaPreferencesScreen} from './screens/Settings/ExternalMediaPreferences'
-import {FollowingFeedPreferencesScreen} from './screens/Settings/FollowingFeedPreferences'
-import {LanguageSettingsScreen} from './screens/Settings/LanguageSettings'
-import {PersonalitySettingsScreen} from './screens/Settings/PersonalitySettingsScreen'
-import {PrivacyAndSecuritySettingsScreen} from './screens/Settings/PrivacyAndSecuritySettings'
-import {SettingsScreen} from './screens/Settings/Settings'
-import {ThreadPreferencesScreen} from './screens/Settings/ThreadPreferences'
-import TopicScreen from './screens/Topic'
 
 const navigationRef = createNavigationContainerRef<AllNavigatorParams>()
 
