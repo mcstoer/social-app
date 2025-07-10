@@ -1,5 +1,5 @@
 import {
-  type $Typed,
+  $Typed,
   AppBskyEmbedExternal,
   AppBskyEmbedImages,
   AppBskyEmbedRecord,
