@@ -1,9 +1,9 @@
 import {
-  type $Typed,
+  $Typed,
   AppBskyEmbedRecord,
   AppBskyEmbedRecordWithMedia,
-  type AppBskyFeedDefs,
-  type AppBskyFeedPostgate,
+  AppBskyFeedDefs,
+  AppBskyFeedPostgate,
   AtUri,
 } from '@atproto/api'
 
