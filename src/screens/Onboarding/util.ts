@@ -1,9 +1,9 @@
 import {
-  type $Typed,
-  type AppBskyGraphFollow,
-  type AppBskyGraphGetFollows,
-  type BskyAgent,
-  type ComAtprotoRepoApplyWrites,
+  $Typed,
+  AppBskyGraphFollow,
+  AppBskyGraphGetFollows,
+  BskyAgent,
+  ComAtprotoRepoApplyWrites,
 } from '@atproto/api'
 import {TID} from '@atproto/common-web'
 import chunk from 'lodash.chunk'
