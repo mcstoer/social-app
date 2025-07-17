@@ -6,16 +6,9 @@ import {useLingui} from '@lingui/react'
 import {
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
-  DATA_TYPE_VDXFDATA,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   IDENTITY_CREDENTIALS,
-  IdentityID,
   IdentityUpdateRequestDetails,
-  PartialIdentity,
-  PartialSignData,
-  type PartialSignDataInitData,
-  VDXF_UNI_VALUE_VERSION_CURRENT,
-  VdxfUniValue,
 } from 'verus-typescript-primitives'
 
 import {
@@ -171,27 +164,6 @@ export function Component({password: initialPassword}: {password?: string}) {
     setError('')
     setIsProcessing(true)
 
-    // Set the scope in the signing server for now.
-    // TODO: Change scope setting for mobile.
-    const cred = new Credential({
-      version: Credential.VERSION_CURRENT,
-      credentialKey: IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid,
-      credential: [email, password],
-      scopes: ['App1@'], // TODO: Make this updated in the signing server?
-    })
-    const values = [{[DATA_TYPE_OBJECT_CREDENTIAL.vdxfid]: cred}]
-
-    const signdataMap = new Map<string, PartialSignData>()
-    const data: PartialSignDataInitData = {
-      address: IdentityID.fromAddress(currentAccount.id),
-      datatype: DATA_TYPE_VDXFDATA,
-      data: new VdxfUniValue({
-        values: values,
-        version: VDXF_UNI_VALUE_VERSION_CURRENT,
-      }),
-    }
-    signdataMap.set(IDENTITY_CREDENTIALS.vdxfid, new PartialSignData(data))
-
     try {
       /*
       // Get the updated identity for the account.
@@ -202,14 +174,27 @@ export function Component({password: initialPassword}: {password?: string}) {
       }
         */
 
-      const accountPartialIdentity = new PartialIdentity({
+      // TODO: Make the scopes replaced either by environment variable or
+      // the signing server.
+      const identityUpdateDetailCLIJson = {
         name: currentAccount.name + '@',
-      })
+        contentmultimap: {
+          [IDENTITY_CREDENTIALS.vdxfid]: [
+            {
+              [DATA_TYPE_OBJECT_CREDENTIAL.vdxfid]: {
+                version: Credential.VERSION_CURRENT.toNumber(),
+                credentialkey: IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid,
+                credential: [email, password],
+                scopes: ['App1@'],
+              },
+            },
+          ],
+        },
+      }
 
-      const details = new IdentityUpdateRequestDetails({
-        identity: accountPartialIdentity,
-        signdatamap: signdataMap, // Don't do this for partialsigndata.
-      })
+      const details = IdentityUpdateRequestDetails.fromCLIJson(
+        identityUpdateDetailCLIJson,
+      )
 
       // Here we'll implement the logic to send the update request
       // This will differ between web and mobile implementations

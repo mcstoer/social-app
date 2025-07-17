@@ -217,9 +217,9 @@
     "tippy.js": "^6.3.7",
     "tlds": "^1.234.0",
     "tldts": "^6.1.46",
-    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#credentials-identity-update-request",
-    "verusd-rpc-ts-client": "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credentials-identity-update-request",
-    "verusid-ts-client": "git+https://github.com/mcstoer/verusid-ts-client.git#credentials-identity-update-request",
+    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class-iur",
+    "verusd-rpc-ts-client": "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credential-class-iur",
+    "verusid-ts-client": "git+https://github.com/mcstoer/verusid-ts-client.git#credential-class-iur",
     "zeego": "^1.6.2",
     "zod": "^3.20.2"
   },
