@@ -25,7 +25,7 @@ import {VerusIdInterface} from 'verusid-ts-client'
 
 import {callRPCDaemon, type rpcResult} from './callRPCDaemon'
 
-const iaddress = process.env.IADDRESS as string
+const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
 const raddress = process.env.RADDRESS as string
 const wif = process.env.WIF as string
 const BASE_URL = (process.env.BASE_URL as string) || 'http://localhost:25000'
