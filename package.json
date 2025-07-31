@@ -67,7 +67,9 @@
     "make-deploy-bundle": "bash scripts/bundleUpdate.sh",
     "generate-webpack-stats-file": "EXPO_PUBLIC_GENERATE_STATS=1 yarn build-web",
     "open-analyzer": "EXPO_PUBLIC_OPEN_ANALYZER=1 yarn build-web",
-    "icons:optimize": "svgo -f ./assets/icons"
+    "icons:optimize": "svgo -f ./assets/icons",
+    "dev:setup": "yarn && cd vskylogin && yarn && cd .. && cd vskysigningserver && yarn && cd ..",
+    "dev:run": "yarn concurrently \"yarn web\" \"cd vskylogin && yarn dev\" \"cd vskysigningserver && yarn dev\" --names \"web,login,signing\" --prefix-colors \"blue,green,yellow\""
   },
   "dependencies": {
     "@atproto/api": "^0.15.26",

@@ -1,7 +1,7 @@
 import {callRPCDaemon} from './callRPCDaemon'
 
 export const fetchWIF = async (iaddress: string): Promise<string> => {
-  const rpcUrl = process.env.JSON_RPC_SERVER!
+  const rpcUrl = process.env.VERUS_RPC_SERVER!
   const username = process.env.VERUS_RPC_USERNAME!
   const password = process.env.VERUS_RPC_PASSWORD!
 

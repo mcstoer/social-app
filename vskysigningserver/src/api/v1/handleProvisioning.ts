@@ -34,7 +34,7 @@ const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
 const DEFAULT_URL = process.env.DEFAULT_URL as string
 const RPC_USERNAME = process.env.RPC_USERNAME as string
 const RPC_PASSWORD = process.env.RPC_PASSWORD as string
-const JSON_RPC_SERVER = process.env.JSON_RPC_SERVER as string
+const VERUS_RPC_SERVER = process.env.VERUS_RPC_SERVER as string
 
 // const transferid = process.env.TRANSFERID as string;
 const transferfqn = process.env.TRANSFERFQN as string
@@ -64,7 +64,7 @@ export const callDaemon = async (
   parameters?: (string | object)[],
 ): Promise<rpcResult> => {
   return await callRPCDaemon(
-    JSON_RPC_SERVER,
+    VERUS_RPC_SERVER,
     RPC_USERNAME,
     RPC_PASSWORD,
     command,

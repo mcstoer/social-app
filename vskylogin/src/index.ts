@@ -53,7 +53,7 @@ app.get('/get-credential-update', async (req, res) => {
 // Act as middleware between the app and the daemon to allow for CORS.
 app.post('/call-daemon', async (req, res) => {
   const {command, parameters} = req.body
-  const url = process.env.JSON_RPC_SERVER
+  const url = process.env.VERUS_RPC_SERVER
   const username = process.env.RPC_USERNAME
   const password = process.env.RPC_PASSWORD
 
