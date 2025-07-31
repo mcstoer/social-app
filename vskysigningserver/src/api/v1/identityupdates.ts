@@ -19,11 +19,7 @@ identityUpdatesRouter.post(
   bodyParser.json(),
   async (req, res) => {
     try {
-      console.log(req.body)
       const details = IdentityUpdateRequestDetails.fromJson(req.body)
-      console.log(details)
-      console.log(typeof details.getByteLength === 'function')
-      console.log(details.getByteLength)
       const result = await generateIdentityUpdateRequest(details)
 
       if (result.error) {

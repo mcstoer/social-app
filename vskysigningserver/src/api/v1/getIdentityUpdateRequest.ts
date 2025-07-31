@@ -1,16 +1,17 @@
 // @ts-ignore: No type definitions for crypto-browserify
 import * as crypto from 'crypto-browserify'
-import * as dotenv from 'dotenv'
 import {
-  type IdentityUpdateRequest,
+  BigNumber,
   type IdentityUpdateRequestDetails,
-  toBase58Check,
+  type IdentityUpdateResponse,
+  ResponseUri,
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
-dotenv.config()
 
 const iaddress = process.env.IADDRESS as string
 const wif = process.env.WIF as string
+const BASE_WEBHOOK_URL =
+  (process.env.BASE_WEBHOOK_URL as string) || 'http://localhost:21001'
 
 const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
 const DEFAULT_URL = process.env.DEFAULT_URL as string
@@ -25,9 +26,25 @@ export const generateIdentityUpdateRequest = async (
     new Date().toLocaleTimeString(),
   )
   const randID = Buffer.from(crypto.randomBytes(20))
-  const requestId = toBase58Check(randID, 102)
+  const requestId = new BigNumber(randID)
+  // Generate the timestamp in seconds, since that's what block times are in.
+  const createdAt = new BigNumber((Date.now() / 1000).toFixed(0))
 
-  // TODO: Add the scope
+  // Add the response URIs.
+  details.responseuris = [
+    ResponseUri.fromUriString(
+      `${BASE_WEBHOOK_URL}/confirm-credential-update`,
+      ResponseUri.TYPE_POST,
+    ),
+  ]
+
+  // IMPORTANT: Set the flag to indicate that response URIs are present
+  if (!details.containsResponseUris()) {
+    details.toggleContainsResponseUris()
+  }
+
+  details.requestid = requestId
+  details.createdat = createdAt
 
   try {
     const req = await idInterface.createIdentityUpdateRequest(
@@ -36,8 +53,11 @@ export const generateIdentityUpdateRequest = async (
       wif,
     )
 
+    // Convert the requestId into a string since the request will convert it to one with toJson().
+    const requestIdString = requestId.toString(10)
     const uri = req.toWalletDeeplinkUri()
-    return {uri, requestId} // Return an object containing the URI and requestId
+
+    return {uri, requestId: requestIdString} // Return an object containing the URI and requestId
   } catch (error) {
     console.error('Failed to generate identity update request:', error)
     return {error: 'Failed to generate identity update request'} // Return an object containing the error
@@ -45,7 +65,7 @@ export const generateIdentityUpdateRequest = async (
 }
 
 export const verifyIdentityUpdateResponse = async (
-  response: IdentityUpdateRequest,
+  response: IdentityUpdateResponse,
 ) => {
   const isValid = await idInterface.verifyIdentityUpdateResponse(response)
   return isValid

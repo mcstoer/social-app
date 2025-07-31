@@ -1,6 +1,7 @@
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
+import {type IdentityUpdateEnvelopeJson} from 'verus-typescript-primitives'
 
 import {callRPCDaemon} from './callRPCDaemon'
 
@@ -13,7 +14,7 @@ dotenv.config()
 const port = process.env.PORT || 21001
 
 let lastLogin: any
-let lastCredentialUpdate: any
+let lastCredentialUpdate: IdentityUpdateEnvelopeJson | null
 
 app.post('/confirm-login', async req => {
   lastLogin = req.body
@@ -38,7 +39,9 @@ app.post('/confirm-credential-update', async req => {
 app.get('/get-credential-update', async (req, res) => {
   const {requestId} = req.query
 
-  if (!lastCredentialUpdate || lastCredentialUpdate.requestId !== requestId) {
+  const lastRequestId = lastCredentialUpdate?.details?.requestid
+
+  if (!lastCredentialUpdate || !lastRequestId || lastRequestId !== requestId) {
     res.status(204).send('No credential update response received.')
   } else {
     res.status(200).json(lastCredentialUpdate)

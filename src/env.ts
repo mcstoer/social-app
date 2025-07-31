@@ -4,3 +4,4 @@ export const LOG_LEVEL = (process.env.EXPO_PUBLIC_LOG_LEVEL || 'info') as
   | 'info'
   | 'warn'
   | 'error'
+export const IADDRESS = process.env.EXPO_PUBLIC_IADDRESS || ''

@@ -9,6 +9,7 @@ import {
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   IDENTITY_CREDENTIALS,
   IdentityUpdateRequestDetails,
+  IdentityUpdateResponse,
 } from 'verus-typescript-primitives'
 
 import {
@@ -22,7 +23,8 @@ import {colors, s} from '#/lib/styles'
 import {logger} from '#/logger'
 import {isAndroid, isNative, isWeb} from '#/platform/detection'
 import {useModalControls} from '#/state/modals'
-import {useSession} from '#/state/session'
+import {useSession, useSessionVskyApi} from '#/state/session'
+import {IADDRESS} from '#/env'
 import {ErrorMessage} from '../util/error/ErrorMessage'
 import {Button} from '../util/forms/Button'
 import {Text} from '../util/text/Text'
@@ -43,6 +45,7 @@ export function Component({password: initialPassword}: {password?: string}) {
   const {_} = useLingui()
   const {closeModal} = useModalControls()
   const {isMobile} = useWebMediaQueries()
+  const {idInterface} = useSessionVskyApi()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const [stage, setStage] = useState<Stages>(Stages.UpdateCredentials)
@@ -50,6 +53,8 @@ export function Component({password: initialPassword}: {password?: string}) {
   const [email, setEmail] = useState<string>(currentAccount?.email || '')
   const [password, setPassword] = useState<string>(initialPassword || '')
   const [error, setError] = useState<string>('')
+
+  // Use a string to track the request ID, since the request converts it to one with toJson().
   const [updateRequestId, setUpdateRequestId] = useState<string>('')
 
   // Cleanup interval on unmount
@@ -69,12 +74,13 @@ export function Component({password: initialPassword}: {password?: string}) {
     })
   }, [email, password])
 
-  // Function to poll for update response
-  const checkForUpdateResponse = async () => {
+  // Pass in the requestId to avoid timing issues with state updates.
+  const checkForUpdateResponse = async (requestId?: string) => {
     const pollInterval = 1000
+    const actualRequestId = requestId || updateRequestId
 
     const getUpdateResponse = async () => {
-      if (!updateRequestId) {
+      if (!actualRequestId) {
         return
       }
 
@@ -82,7 +88,7 @@ export function Component({password: initialPassword}: {password?: string}) {
         // Endpoint will be similar to the get-login endpoint in vskylogin
         // Pass the details to the server to generate the request.
         const response = await fetch(
-          `${LOCAL_DEV_VSKY_LOGIN_SERVER}/get-credential-update?requestId=${updateRequestId}`,
+          `${LOCAL_DEV_VSKY_LOGIN_SERVER}/get-credential-update?requestId=${actualRequestId}`,
         )
 
         // No response yet
@@ -105,11 +111,22 @@ export function Component({password: initialPassword}: {password?: string}) {
         }
 
         const data = await response.json()
-        if (data.success) {
+        const identityUpdateResponse = IdentityUpdateResponse.fromJson(data)
+
+        // Verify the identity update response using verusid-ts-client
+        const isVerified = await idInterface.verifyIdentityUpdateResponse(
+          identityUpdateResponse,
+        )
+
+        if (isVerified && identityUpdateResponse.details.containsTxid()) {
           setStage(Stages.Done)
           logger.debug('Successfully updated VeruSky credentials')
         } else {
-          setError(data.error || _(msg`Failed to update credentials`))
+          if (!isVerified) {
+            setError(_(msg`Failed to verify credential update response`))
+          } else {
+            setError(data.error || _(msg`Failed to update credentials`))
+          }
           setStage(Stages.UpdateCredentials)
         }
 
@@ -139,7 +156,6 @@ export function Component({password: initialPassword}: {password?: string}) {
       }
     }
 
-    // Start polling for response
     intervalRef.current = setInterval(() => {
       getUpdateResponse()
     }, pollInterval)
@@ -165,17 +181,6 @@ export function Component({password: initialPassword}: {password?: string}) {
     setIsProcessing(true)
 
     try {
-      /*
-      // Get the updated identity for the account.
-      const identity = (await rpcInterface.getIdentity(currentAccount.id)).result?.identity
-
-      if (!identity) {
-        throw new Error("Unable to get the updated identity for the account.")
-      }
-        */
-
-      // TODO: Make the scopes replaced either by environment variable or
-      // the signing server.
       const identityUpdateDetailCLIJson = {
         name: currentAccount.name + '@',
         contentmultimap: {
@@ -185,7 +190,7 @@ export function Component({password: initialPassword}: {password?: string}) {
                 version: Credential.VERSION_CURRENT.toNumber(),
                 credentialkey: IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid,
                 credential: [email, password],
-                scopes: ['App1@'],
+                scopes: [IADDRESS],
               },
             },
           ],
@@ -196,8 +201,7 @@ export function Component({password: initialPassword}: {password?: string}) {
         identityUpdateDetailCLIJson,
       )
 
-      // Here we'll implement the logic to send the update request
-      // This will differ between web and mobile implementations
+      // Send the update request.
       if (isWeb) {
         // Web implementation using signing server
         const response = await fetch(
@@ -217,10 +221,11 @@ export function Component({password: initialPassword}: {password?: string}) {
             statusText: response.statusText,
           })
           setError(_(msg`Failed to update credentials`))
+          setIsProcessing(false)
+          return
         }
 
         const res = await response.json()
-
         if (res.error) {
           logger.warn('Failed to get credential update URI', {error: res.error})
           setError('Failed to initiate credential update')
@@ -233,13 +238,14 @@ export function Component({password: initialPassword}: {password?: string}) {
           setStage(Stages.AwaitingResponse)
           // Open deeplink in same window
           window.location.href = res.uri
-          // Start polling for response
-          checkForUpdateResponse()
+          // Start polling for response and pass the requestId directly to avoid state timing issues
+          checkForUpdateResponse(res.requestId)
         } else {
           logger.warn('Failed to get credential update URI', {
             error: 'No URI or requestId returned',
           })
           setError('Failed to initiate credential update')
+          setIsProcessing(false)
         }
       } else if (isNative) {
         // Mobile implementation will be different
@@ -273,7 +279,7 @@ export function Component({password: initialPassword}: {password?: string}) {
           <View style={styles.titleSection}>
             <Text type="title-lg" style={[pal.text, styles.title]}>
               {stage === Stages.Done
-                ? _(msg`Credentials Updated`)
+                ? _(msg`Credentials Update Confirmed`)
                 : _(msg`Update BlueSky Credentials`)}
             </Text>
           </View>
@@ -281,12 +287,17 @@ export function Component({password: initialPassword}: {password?: string}) {
           <Text type="lg" style={[pal.textLight, {marginBottom: 10}]}>
             {stage === Stages.UpdateCredentials ? (
               <Trans>
-                Update your BlueSky credentials stored in your VeruSky login.
+                Update your BlueSky credentials stored in your VerusSky login.
               </Trans>
             ) : stage === Stages.AwaitingResponse ? (
-              <Trans>Please confirm the update in your VeruSky wallet...</Trans>
+              <Trans>Please confirm the update in your Verus wallet...</Trans>
             ) : (
-              <Trans>Your credentials have been updated successfully!</Trans>
+              <>
+                <Trans>
+                  Your credentials update is confirmed and will be completed
+                  soon.
+                </Trans>
+              </>
             )}
           </Text>
 

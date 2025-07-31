@@ -336,15 +336,8 @@ export const LoginForm = ({
               Array.isArray(plainLogin) &&
               plainLogin.length >= 2
             ) {
-              // JSON.stringify avoids misinterpreting parts of the username or password as control characters.
-              identifierValueRef.current = JSON.stringify(plainLogin[0]).slice(
-                1,
-                -1,
-              )
-              passwordValueRef.current = JSON.stringify(plainLogin[1]).slice(
-                1,
-                -1,
-              )
+              identifierValueRef.current = plainLogin[0]
+              passwordValueRef.current = plainLogin[1]
               onPressNext()
             } else {
               // If the credentials don't exist, then the user needs to manually input them.

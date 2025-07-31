@@ -1,6 +1,5 @@
 // @ts-ignore: No type definitions for crypto-browserify
 import * as crypto from 'crypto-browserify'
-import * as dotenv from 'dotenv'
 import {
   IDENTITY_NAME_COMMITMENT_TXID,
   IDENTITY_REGISTRATION_TXID,
@@ -26,11 +25,10 @@ import {VerusIdInterface} from 'verusid-ts-client'
 
 import {callRPCDaemon, type rpcResult} from './callRPCDaemon'
 
-dotenv.config()
-
 const iaddress = process.env.IADDRESS as string
 const raddress = process.env.RADDRESS as string
 const wif = process.env.WIF as string
+const BASE_URL = (process.env.BASE_URL as string) || 'http://localhost:25000'
 
 const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
 const DEFAULT_URL = process.env.DEFAULT_URL as string
@@ -188,7 +186,7 @@ export const registerNameCommitment = async (
     system_id: commitmentRes.namereservation.system,
     fully_qualified_name: fullyQualifiedName,
     parent: commitmentRes.namereservation.parent,
-    info_uri: `${process.env.BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
     provisioning_txids: [
       new ProvisioningTxid(
         commitmentRes.txid,
@@ -441,7 +439,7 @@ export const transferIdentity = async (
     error_desc: undefined,
     identity_address: identityAddress,
     fully_qualified_name: fqn,
-    info_uri: `${process.env.BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
   })
   provisioningReponse.decision = provisioningDecision
 

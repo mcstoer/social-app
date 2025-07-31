@@ -1,6 +1,5 @@
 // @ts-ignore: No type definitions for crypto-browserify
 import * as crypto from 'crypto-browserify'
-import * as dotenv from 'dotenv'
 import {
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   IDENTITY_VIEW,
@@ -12,10 +11,11 @@ import {
   toBase58Check,
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
-dotenv.config()
 
 const iaddress = process.env.IADDRESS as string
 const wif = process.env.WIF as string
+const BASE_WEBHOOK_URL =
+  (process.env.BASE_WEBHOOK_URL as string) || 'http://localhost:21001'
 
 const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
 const DEFAULT_URL = process.env.DEFAULT_URL as string
@@ -35,7 +35,7 @@ export const generateLoginRequest = async () => {
     ],
     redirect_uris: [
       new RedirectUri(
-        `${process.env.BASE_WEBHOOK_URL}/confirm-login`,
+        `${BASE_WEBHOOK_URL}/confirm-login`,
         LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
       ),
     ],
@@ -50,9 +50,9 @@ export const generateLoginRequest = async () => {
     )
 
     const uri = req.toWalletDeeplinkUri()
-    return {uri} // Return an object containing the URI
-  } catch {
-    return {error: 'Failed to generate login request'} // Return an object containing the error
+    return {uri}
+  } catch (e) {
+    return {error: 'Failed to generate login request - ' + e}
   }
 }
 

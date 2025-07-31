@@ -1,5 +1,4 @@
 import * as bodyParser from 'body-parser'
-import * as dotenv from 'dotenv'
 import * as express from 'express'
 import {ProvisioningRequest} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningRequest'
 
@@ -10,8 +9,6 @@ import {
   signProvisioningResponse,
   transferIdentity,
 } from './handleProvisioning'
-
-dotenv.config()
 
 const parent = process.env.PARENT === 'true'
 const idtransfer = process.env.IDTRANSFER === 'true'
