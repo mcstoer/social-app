@@ -75,10 +75,10 @@ For opening deeplinks from a browser on Linux, you need to have a desktop integr
     - `VERUS_RPC_USERNAME`: The username for accessing the Verus JSON rpc server.
     - `VERUS_RPC_PASSWORD`: The password for accessing the Verus JSON rpc server.
 
-    > The `VERUS_RPC_USERNAME` and `VERUS_RPC_PASSWORD` can be found in the Verus wallet configuration file:
-    > - **Linux:** `~/.komodo/vrsctest/vrsctest.conf`
-    > - **macOS:** To be added.
-    > - **Windows:** `%APPDATA%\Komodo\vrsctest\vrsctest.conf`
+    The `VERUS_RPC_USERNAME` and `VERUS_RPC_PASSWORD` can be found in the Verus wallet configuration file:
+    - **Linux:** `~/.komodo/vrsctest/vrsctest.conf`
+    - **macOS:** To be added.
+    - **Windows:** `%APPDATA%\Komodo\vrsctest\vrsctest.conf`
 
 ## Running VerusSky Web App
 
