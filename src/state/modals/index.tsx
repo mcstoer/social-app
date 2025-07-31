@@ -43,10 +43,16 @@ export interface ChangePasswordModal {
   name: 'change-password'
 }
 
+export interface UpdateVeruSkyCredentialsModal {
+  name: 'update-verusky-credentials'
+  password?: string
+}
+
 export type Modal =
   // Account
   | DeleteAccountModal
   | ChangePasswordModal
+  | UpdateVeruSkyCredentialsModal
 
   // Curation
   | ContentLanguagesSettingsModal

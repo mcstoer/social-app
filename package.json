@@ -67,7 +67,9 @@
     "make-deploy-bundle": "bash scripts/bundleUpdate.sh",
     "generate-webpack-stats-file": "EXPO_PUBLIC_GENERATE_STATS=1 yarn build-web",
     "open-analyzer": "EXPO_PUBLIC_OPEN_ANALYZER=1 yarn build-web",
-    "icons:optimize": "svgo -f ./assets/icons"
+    "icons:optimize": "svgo -f ./assets/icons",
+    "dev:setup": "yarn && cd vskylogin && yarn && cd .. && cd vskysigningserver && yarn && cd ..",
+    "dev:run": "yarn concurrently \"yarn web\" \"cd vskylogin && yarn dev\" \"cd vskysigningserver && yarn dev\" --names \"web,login,signing\" --prefix-colors \"blue,green,yellow\""
   },
   "dependencies": {
     "@atproto/api": "^0.15.26",
@@ -217,6 +219,7 @@
     "tippy.js": "^6.3.7",
     "tlds": "^1.234.0",
     "tldts": "^6.1.46",
+    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-class-iur",
     "verusd-rpc-ts-client": "git+https://github.com/mcstoer/verusd-rpc-ts-client.git#credential-class-iur",
     "verusid-ts-client": "git+https://github.com/mcstoer/verusid-ts-client.git#credential-class-iur",
     "zeego": "^1.6.2",
@@ -253,6 +256,7 @@
     "babel-plugin-module-resolver": "^5.0.2",
     "babel-plugin-react-compiler": "^19.1.0-rc.1",
     "babel-preset-expo": "~13.1.11",
+    "concurrently": "^9.2.0",
     "eslint": "^8.19.0",
     "eslint-plugin-bsky-internal": "link:./eslint",
     "eslint-plugin-ft-flow": "^2.0.3",

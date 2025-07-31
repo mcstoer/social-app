@@ -1,4 +1,4 @@
-# Build instructions
+# Bluesky Build instructions
 
 ## Running Web App
 
@@ -6,29 +6,6 @@
 - `yarn web`
 
 You're all set!
-
-## Running the VerusSky Web App
-
-To get the companion desktop wallet running for login, read the [Development Environment Setup](vsky/dev-setup.md) guide.
-
-Set up the [signing server environment variables](../vskysigningserver/README.md#environment-variables).
-
-### For Linux and MacOS
-- `./scripts/setup-dev.sh`
-- `./scripts/run-dev.sh`
-
-### For Windows
-- Web App
-  - `yarn`
-  - `yarn web`
-- Login Server (vskylogin)
-  - Go to the vskylogin directory.
-  - `yarn`
-  - `yarn dev`
-- Signing Server (vskysigningserver)
-  - Go to the vskysigningserver directory.
-  - `yarn`
-  - `yarn dev`
 
 ## iOS/Android Build
 

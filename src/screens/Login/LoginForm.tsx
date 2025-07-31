@@ -24,6 +24,7 @@ import {isNetworkError} from '#/lib/strings/errors'
 import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
+import {useModalControls} from '#/state/modals'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
@@ -86,6 +87,7 @@ export const LoginForm = ({
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {rpcInterface, idInterface} = useSessionVskyApi()
   const isVskyService = serviceUrl === VSKY_SERVICE
+  const {openModal} = useModalControls()
 
   const [loginUri, setLoginUri] = useState<string>('')
 
@@ -196,17 +198,26 @@ export const LoginForm = ({
 
       const isManualLoginAfterVskyFailed = isVskyService && needsManualLogin
 
-      // TODO: In the future, ask the user if they want to store credentials
+      onAttemptSuccess()
+      setHasCheckedForStarterPack(true)
+      requestNotificationsPermission('Login')
+
+      await setShowLoggedOut(false)
+
+      // Wait until the login screen is gone before showing the modal.
       if (isManualLoginAfterVskyFailed) {
         logger.debug(
           'Successfully logged in manually after VeruSky login failed',
         )
-      }
 
-      onAttemptSuccess()
-      setShowLoggedOut(false)
-      setHasCheckedForStarterPack(true)
-      requestNotificationsPermission('Login')
+        // Delay opening the modal in order to allow for transitioning away from the login screen.
+        setTimeout(() => {
+          openModal({
+            name: 'update-verusky-credentials',
+            password: password,
+          })
+        }, 500)
+      }
     } catch (e: any) {
       const errMsg = e.toString()
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -293,7 +304,11 @@ export const LoginForm = ({
         if (isValid) {
           const identity = await rpcInterface.getIdentity(loginRes.signing_id)
           if (identity.result) {
-            vskySessionValueRef.current.name = identity.result.identity.name
+            vskySessionValueRef.current = {
+              auth: '',
+              id: identity.result.identity.identityaddress || '',
+              name: identity.result.identity.name,
+            }
 
             // Get the Bluesky credentials from the credentials in the login request.
             const context = loginRes.decision.context
@@ -321,15 +336,8 @@ export const LoginForm = ({
               Array.isArray(plainLogin) &&
               plainLogin.length >= 2
             ) {
-              // JSON.stringify avoids misinterpreting parts of the username or password as control characters.
-              identifierValueRef.current = JSON.stringify(plainLogin[0]).slice(
-                1,
-                -1,
-              )
-              passwordValueRef.current = JSON.stringify(plainLogin[1]).slice(
-                1,
-                -1,
-              )
+              identifierValueRef.current = plainLogin[0]
+              passwordValueRef.current = plainLogin[1]
               onPressNext()
             } else {
               // If the credentials don't exist, then the user needs to manually input them.

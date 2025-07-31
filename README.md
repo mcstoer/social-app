@@ -1,74 +1,95 @@
-# Bluesky Social App
+# VerusSky Social App
 
-Welcome friends! This is the codebase for the Bluesky Social app.
+## Development Setup
 
-Get the app itself:
+### Prerequisites
 
-- **Web: [bsky.app](https://bsky.app)**
-- **iOS: [App Store](https://apps.apple.com/us/app/bluesky-social/id6444370199)**
-- **Android: [Play Store](https://play.google.com/store/apps/details?id=xyz.blueskyweb.app)**
+Before you begin, make sure you have the following installed:
 
-## Development Resources
+- [Node.js 20 or higher](https://nodejs.org/en/download/)
+    - For Windows users: [Node.js 20.9.0 release notes](https://nodejs.org/en/blog/release/v20.9.0)
+- [Yarn package manager](https://yarnpkg.com/getting-started/install)
+- The following Verus desktop wallet development environment branches (required for local development):
+    - [Verus Desktop (password-manager)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager)
+    - [Verus Login Consent Client (password-manager)](https://github.com/mcstoer/verus-login-consent-client/tree/password-manager)
 
-This is a [React Native](https://reactnative.dev/) application, written in the TypeScript programming language. It builds on the `atproto` TypeScript packages (like [`@atproto/api`](https://www.npmjs.com/package/@atproto/api)), code for which is also open source, but in [a different git repository](https://github.com/bluesky-social/atproto).
+Follow their respective instructions to get the Desktop Wallet running.
 
-There is a small amount of Go language source code (in `./bskyweb/`), for a web service that returns the React Native Web application.
+### Setting up Deeplinks with the Desktop Wallet
 
-The [Build Instructions](./docs/build.md) are a good place to get started with the app itself.
+> These steps apply only if you have set up the required Verus desktop wallet development environment branches (see Prerequisites above).
 
-The Authenticated Transfer Protocol ("AT Protocol" or "atproto") is a decentralized social media protocol. You don't *need* to understand AT Protocol to work with this application, but it can help. Learn more at:
+#### MacOS and Windows
 
-- [Overview and Guides](https://atproto.com/guides/overview)
-- [Github Discussions](https://github.com/bluesky-social/atproto/discussions) 👈 Great place to ask questions
-- [Protocol Specifications](https://atproto.com/specs/atp)
-- [Blogpost on self-authenticating data structures](https://bsky.social/about/blog/3-6-2022-a-self-authenticating-social-protocol)
+Deeplinks should work out of the box when you install the Desktop Wallet on MacOS and Windows.
 
-The Bluesky Social application encompasses a set of schemas and APIs built in the overall AT Protocol framework. The namespace for these "Lexicons" is `app.bsky.*`.
+#### Linux
 
-## Contributions
+For deeplinks to work on Linux, the operating system needs to be able to associate the desktop wallet with the deeplinks. This is now supported by including the mimetype of the wallet in the desktop file when building the application.
 
-> While we do accept contributions, we prioritize high quality issues and pull requests. Adhering to the below guidelines will ensure a more timely review.
+For opening deeplinks from a browser on Linux, you need to have a desktop integration for the wallet. There are two main ways to do this:
 
-**Rules:**
+1. Automatically creating the desktop integration using a tool like [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher).
 
-- We may not respond to your issue or PR.
-- We may close an issue or PR without much feedback.
-- We may lock discussions or contributions if our attention is getting DDOSed.
-- We're not going to provide support for build issues.
+2. Manually creating the desktop integration:
 
-**Guidelines:**
+    - Starting at the folder with the AppImage, extract the desktop file from the AppImage. For example, with the Verus-Desktop-v1.2.5-x86_64 AppImage, open a terminal in the folder with the AppImage and run:
+      ```bash
+      ./"Verus-Desktop-v1.2.5-x86_64.AppImage" --appimage-extract
+      ```
+    - In the `squashfs-root` folder that was created, copy the `verus-desktop.desktop` desktop file to the `~/.local/share/applications/` folder.
+    - Using a text editor, replace `AppRun` in the `Exec: AppRun --no-sandbox %U` line in the desktop file with the location of the AppImage. For example, with the Verus-Desktop-v1.2.5-x86_64 AppImage in the `/home/person/Applications/` folder, the line should be:
+      ```
+      Exec: /home/person/Applications/Verus-Desktop-v1.2.5-x86_64.AppImage --no-sandbox %U
+      ```
+    - Using the MIME type in the desktop file, register the application with the MIME type by running:
+      ```bash
+      xdg-mime default verus-desktop.desktop x-scheme-handler/i5jtwbp6zymeay9llnraglgjqgdrffsau4
+      ```
+    - Update the desktop database to recognize the desktop file by running:
+      ```bash
+      update-desktop-database ~/.local/share/applications/
+      ```
+    - There should now be a new line of `x-scheme-handler/i5jtwbp6zymeay9llnraglgjqgdrffsau4=verus-desktop.desktop;` in the `~/.local/share/applications/mimeinfo.cache` file.
 
-- Check for existing issues before filing a new one please.
-- Open an issue and give some time for discussion before submitting a PR.
-- Stay away from PRs like...
-  - Changing "Post" to "Skeet."
-  - Refactoring the codebase, e.g., to replace React Query with Redux Toolkit or something.
-  - Adding entirely new features without prior discussion. 
+### Environment Variables
 
-Remember, we serve a wide community of users. Our day-to-day involves us constantly asking "which top priority is our top priority." If you submit well-written PRs that solve problems concisely, that's an awesome contribution. Otherwise, as much as we'd love to accept your ideas and contributions, we really don't have the bandwidth. That's what forking is for!
+1. Create a `.env` file using `.env.example` as a template.
 
-## Forking guidelines
+2. Variables you can leave as-is:
+    ```
+    BITDRIFT_API_KEY
+    SENTRY_AUTH_TOKEN
+    EXPO_PUBLIC_LOG_LEVEL
+    EXPO_PUBLIC_LOG_DEBUG
+    EXPO_PUBLIC_BUNDLE_IDENTIFIER
+    EXPO_PUBLIC_BUNDLE_DATE
 
-You have our blessing 🪄✨ to fork this application! However, it's very important to be clear to users when you're giving them a fork.
+    DEFAULT_CHAIN
+    DEFAULT_URL
+    VERUS_RPC_SERVER
+    ```
 
-Please be sure to:
+3. Variables you **must** set:
+    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses.
+    - `VERUS_RPC_USERNAME`: The username for accessing the Verus JSON rpc server.
+    - `VERUS_RPC_PASSWORD`: The password for accessing the Verus JSON rpc server.
 
-- Change all branding in the repository and UI to clearly differentiate from Bluesky.
-- Change any support links (feedback, email, terms of service, etc) to your own systems.
-- Replace any analytics or error-collection systems with your own so we don't get super confused.
+    The `VERUS_RPC_USERNAME` and `VERUS_RPC_PASSWORD` can be found in the Verus wallet configuration file:
+    - **Linux:** `~/.komodo/vrsctest/vrsctest.conf`
+    - **macOS:** To be added.
+    - **Windows:** `%APPDATA%\Komodo\vrsctest\vrsctest.conf`
 
-## Security disclosures
+## Running VerusSky Web App
 
-If you discover any security issues, please send an email to security@bsky.app. The email is automatically CCed to the entire team and we'll respond promptly.
+To install all required dependencies, run:
+```bash
+yarn dev:setup
+```
 
-## Are you a developer interested in building on atproto?
+To start the development servers, run:
+```bash
+yarn dev:run
+```
 
-Bluesky is an open social network built on the AT Protocol, a flexible technology that will never lock developers out of the ecosystems that they help build. With atproto, third-party integration can be as seamless as first-party through custom feeds, federated services, clients, and more.
-
-## License (MIT)
-
-See [./LICENSE](./LICENSE) for the full license.
-
-## P.S.
-
-We ❤️ you and all of the ways you support us. Thank you for making Bluesky a great place!
+Once the servers are running, you can access the web app at `http://localhost:19006`.
