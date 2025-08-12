@@ -290,7 +290,8 @@ module.exports = function (_config) {
             },
           },
         ],
-        [
+        // Only include expo-dynamic-app-icon plugin on native platforms
+        (PLATFORM === 'ios' || PLATFORM === 'android') && [
           '@mozzius/expo-dynamic-app-icon',
           {
             /**
