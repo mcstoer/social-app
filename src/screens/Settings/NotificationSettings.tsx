@@ -2,9 +2,9 @@ import {Text} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {AllNavigatorParams, NativeStackScreenProps} from '#/lib/routes/types'
+import {type AllNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
 import {useNotificationFeedQuery} from '#/state/queries/notifications/feed'
-import {useNotificationSettingsMutation} from '#/state/queries/notifications/settings'
+import {useNotificationSettingsUpdateMutation} from '#/state/queries/notifications/settings'
 import {atoms as a} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Error} from '#/components/Error'
@@ -31,7 +31,7 @@ export function NotificationSettingsScreen({}: Props) {
     mutate: onChangePriority,
     isPending: isMutationPending,
     variables,
-  } = useNotificationSettingsMutation()
+  } = useNotificationSettingsUpdateMutation()
 
   const priority = isMutationPending
     ? variables[0] === 'enabled'

@@ -27,6 +27,7 @@ module.exports = async function (env, argv) {
     stream: 'stream-browserify',
     buffer: 'buffer',
     crypto: 'crypto-browserify',
+    vm: 'empty', // vm module is Node.js specific and not needed in browser
     // Fix for @mozzius/expo-dynamic-app-icon web support
     '@mozzius/expo-dynamic-app-icon$':
       '@mozzius/expo-dynamic-app-icon/build/index.web.js',
