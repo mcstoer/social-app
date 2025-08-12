@@ -27,6 +27,9 @@ module.exports = async function (env, argv) {
     stream: 'stream-browserify',
     buffer: 'buffer',
     crypto: 'crypto-browserify',
+    // Fix for @mozzius/expo-dynamic-app-icon web support
+    '@mozzius/expo-dynamic-app-icon$':
+      '@mozzius/expo-dynamic-app-icon/build/index.web.js',
   })
   config.module.rules = [
     ...(config.module.rules || []),

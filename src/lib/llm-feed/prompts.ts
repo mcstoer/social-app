@@ -1,7 +1,10 @@
-import  { type ChatCompletionMessageParam } from 'openai/src/resources/chat/completions'
+import {type ChatCompletionMessageParam} from 'openai/resources'
 
 export const FEED_PROMPTS = {
-    FEED_SELECTION: [{role: 'system', content: `You are an advanced recommendation AI. Given a user's interests and preferences, help select the most relevant feed sources to provide a relevant content to them. Select each relevant source by index, with each source on a new line.
+  FEED_SELECTION: [
+    {
+      role: 'system',
+      content: `You are an advanced recommendation AI. Given a user's interests and preferences, help select the most relevant feed sources to provide a relevant content to them. Select each relevant source by index, with each source on a new line.
 
 List in order of relevance, with the most relevant sources first.
 
@@ -23,10 +26,11 @@ You want to be really selective and select the most relevant, tight group, since
 
 If there are no relevant items, write no numbers.
 
-If you are unsure, write no numbers.`},
-{
-  role: 'user',
-  content: `User personality: 
+If you are unsure, write no numbers.`,
+    },
+    {
+      role: 'user',
+      content: `User personality: 
 """
 * Is an established writer of young adult novels, currently working on three books and has published 7 others.
 * Favors fantasy, action, and romance.
@@ -120,16 +124,17 @@ Feed source index: 16
 Feed source name: News from Humantiarian events Worldwide
 
 ----
-NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.`},
-{
-  role: 'assistant',
-  content: `4
+NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.`,
+    },
+    {
+      role: 'assistant',
+      content: `4
 16
-15`
-},
-{
-  role: 'user',
-  content: `User personality: 
+15`,
+    },
+    {
+      role: 'user',
+      content: `User personality: 
 """
 * Has a strong preference for anime and anime-related content.
 * Particularly engaged with NEET culture.
@@ -213,21 +218,20 @@ Feed source index: 14
 Feed source name: Product Development
 
 ----
-NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.`
-},
-{
-  role: 'assistant',
-  content: `3
+NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.`,
+    },
+    {
+      role: 'assistant',
+      content: `3
 4
 7
-13`
-}
-
-],
-    POST_CURATION: [
-      {
-        role: "system",
-        content: `You are an expert feed creation AI. Use the provided information about a user's tastes and recent behavior to produce an accurate feed for them.
+13`,
+    },
+  ],
+  POST_CURATION: [
+    {
+      role: 'system',
+      content: `You are an expert feed creation AI. Use the provided information about a user's tastes and recent behavior to produce an accurate feed for them.
 
 Output format:
 You should indicate what posts to include, and in what order, by writing the post index of each post on a new line. So a feed you write might look like:
@@ -241,11 +245,11 @@ Curated feed using the raw materials:
 8
 10
 13
-"""`
-      },
-      {
-        role: "user",
-        content: `User personality: 
+"""`,
+    },
+    {
+      role: 'user',
+      content: `User personality: 
 """
 * Is an established writer of young adult novels, currently working on three books and has published 7 others.
 * Favors fantasy, action, and romance.
@@ -331,11 +335,11 @@ Post author: WFPYemen@
 """
 
 NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.
-Prioritize putting more important posts first. But ensure variety.`
-      },
-      {
-        role: "assistant",
-        content: `There seem to be a mix of subjects in these posts, including news, personal stories, and quotes. I will focus on posts that are related to the user's interests, such as those about the Yemen crisis and writing.
+Prioritize putting more important posts first. But ensure variety.`,
+    },
+    {
+      role: 'assistant',
+      content: `There seem to be a mix of subjects in these posts, including news, personal stories, and quotes. I will focus on posts that are related to the user's interests, such as those about the Yemen crisis and writing.
 
 Curated feed using the raw materials:
 1
@@ -343,11 +347,11 @@ Curated feed using the raw materials:
 5
 7
 8
-9`
-      },
-      {
-        role: "user",
-        content: `User personality: 
+9`,
+    },
+    {
+      role: 'user',
+      content: `User personality: 
 """
 * Has a strong preference for anime and anime-related content.
 * Particularly engaged with NEET culture.
@@ -484,11 +488,11 @@ Post author: ホシイ@
 """
 
 NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.
-Prioritize putting more important posts first. But ensure variety.`
-      },
-      {
-        role: 'assistant',
-        content: `Many of the posts are very related to the user's interests. I will prioritize things directly related to this user's interests (such as Anime culture) over things that are not (such as the liberal party and eviction notices).
+Prioritize putting more important posts first. But ensure variety.`,
+    },
+    {
+      role: 'assistant',
+      content: `Many of the posts are very related to the user's interests. I will prioritize things directly related to this user's interests (such as Anime culture) over things that are not (such as the liberal party and eviction notices).
         
 Curated feed using the raw materials:
 10
@@ -500,11 +504,11 @@ Curated feed using the raw materials:
 5
 4
 7
-15`
-      },
-      {
-        role: "user",
-        content: `User personality: 
+15`,
+    },
+    {
+      role: 'user',
+      content: `User personality: 
 """
 * Is a founder of a deeptech AI startup.
 * Only interested in heavy technical stuff.
@@ -707,37 +711,38 @@ English
 \"\"\"
 
 NO USER THAT YOU SELECT SOURCES FOR IS RELATED TO ANY OTHER USER. EVERY INPUT/OUTPUT PAIR IS SEPARATE.
-Prioritize putting more important posts first. But ensure variety."`
-      },
-      {
-        role: 'assistant',
-        content: `Posts related to the user's interests in deep tech are scarce, so I will be creative and include only a small group of posts around related subjects like technology and AI, while avoiding posts that are not related to the user's interests, such as politics and Anime art. Further, I will avoid the posts that are not in the preferred language of English.
+Prioritize putting more important posts first. But ensure variety."`,
+    },
+    {
+      role: 'assistant',
+      content: `Posts related to the user's interests in deep tech are scarce, so I will be creative and include only a small group of posts around related subjects like technology and AI, while avoiding posts that are not related to the user's interests, such as politics and Anime art. Further, I will avoid the posts that are not in the preferred language of English.
 
 Curated feed using the raw materials:
 15
-26`
-      }
-]
-    // Add more prompts as needed
-} as const; 
+26`,
+    },
+  ],
+  // Add more prompts as needed
+} as const
 
 // a note on previous personality structure
 // What is optimal for the personality overseer to store and know, do you think?
 // recommended format for user to write should be same as format that the AI updates into
 // what makes a good format?
 // Clearly, likes and interests need to be in there
-// 
+//
 
 export const PERSONALITY_PROMPTS: {
-  personality_update_prompt: ChatCompletionMessageParam[],
-  blocks_prompt: ChatCompletionMessageParam[],
-  clickthroughs_prompt: ChatCompletionMessageParam[],
-  posts_prompt: ChatCompletionMessageParam[],
-  revisited_posts_prompt: ChatCompletionMessageParam[],
-  replies_prompt: ChatCompletionMessageParam[],
-  shares_prompt: ChatCompletionMessageParam[],
+  personality_update_prompt: ChatCompletionMessageParam[]
+  blocks_prompt: ChatCompletionMessageParam[]
+  clickthroughs_prompt: ChatCompletionMessageParam[]
+  posts_prompt: ChatCompletionMessageParam[]
+  revisited_posts_prompt: ChatCompletionMessageParam[]
+  replies_prompt: ChatCompletionMessageParam[]
+  shares_prompt: ChatCompletionMessageParam[]
 } = {
-    personality_update_prompt: [{
+  personality_update_prompt: [
+    {
       role: 'system',
       content: `You are an expert social media AI. Update the personality of the described user based on some information about them, their posts, their follows, etc.
 
@@ -753,7 +758,7 @@ Enclose your new personality in <Personality></Personality> XML tags; put any re
 
 If the personality has been updated by an AI at least once, it will be a bulleted list -- if that is the case (if it is a bulleted list) you should focus on adding things and rarely remove or change details.
 
-However, if the personality is not a bulleted list, it is likely an undetailed personality left by a human writer, and you should format the information into a bulleted list yourself.`
+However, if the personality is not a bulleted list, it is likely an undetailed personality left by a human writer, and you should format the information into a bulleted list yourself.`,
     },
     {
       role: 'user',
@@ -813,7 +818,7 @@ I like anime and stuff
 """
 ----
 
-Your goal is to write a new personality based on this information about the user, tanosh11_. Only write @the new personality.`
+Your goal is to write a new personality based on this information about the user, tanosh11_. Only write @the new personality.`,
     },
     {
       role: 'assistant',
@@ -829,7 +834,7 @@ I will expand this user's personality with further information about their taste
 * Engages with humorous content from meme and humor-focused accounts.
 * May be interested in art and artistic posts
 * May be interested in commissioning art from artists
-</Personality>`
+</Personality>`,
     },
     {
       role: 'user',
@@ -865,7 +870,7 @@ Current User personality:
 * Follows other authors from a variety of genres.
 * Frequently shares striking quotes from people or books.
 * Interested in international organizations humanitarian causes
-"""`
+"""`,
     },
     {
       role: 'assistant',
@@ -879,51 +884,64 @@ Current User personality:
 * Interested in international organizations humanitarian causes
 * Interested, specifically, in the Yemen crisis (and news about it shared by humanitarian organizations)
 * Shares and enjoys inspirational quotes, specifically.
-</Personality>`
-    }],
-    /////////////////////////////////////////////END PERSONALITY UPDATE PROMPT///////////////////////////////////////////
-    clickthroughs_prompt: [{
+</Personality>`,
+    },
+  ],
+  /////////////////////////////////////////////END PERSONALITY UPDATE PROMPT///////////////////////////////////////////
+  clickthroughs_prompt: [
+    {
       role: 'system',
-      content: `For each list of clickthroughs, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user doing the clickthroughs based on their behavior.`
+      content: `For each list of clickthroughs, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user doing the clickthroughs based on their behavior.`,
     },
     {
       role: 'user',
       content: `Clickthroughs:
-      TODO`
+      TODO`,
     },
     {
       role: 'assistant',
       content: `Summary of clickthroughs:
-      TODO`
+      TODO`,
     },
     {
       role: 'user',
       content: `Clickthroughs:
-      TODO`
+      TODO`,
     },
     {
       role: 'assistant',
       content: `Summary of clickthroughs:
-      TODO`
-    }],
-    posts_prompt: [{
+      TODO`,
+    },
+  ],
+  posts_prompt: [
+    {
       role: 'system',
-      content: `For each list of posts, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their posts.`
-    }],
-    revisited_posts_prompt: [{
+      content: `For each list of posts, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their posts.`,
+    },
+  ],
+  revisited_posts_prompt: [
+    {
       role: 'system',
-      content: `For each list of revisited posts, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their revisited posts.`
-    }],
-    replies_prompt: [{
+      content: `For each list of revisited posts, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their revisited posts.`,
+    },
+  ],
+  replies_prompt: [
+    {
       role: 'system',
-      content: `For each list of replies, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their replies.`
-    }],
-    shares_prompt: [{
+      content: `For each list of replies, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their replies.`,
+    },
+  ],
+  shares_prompt: [
+    {
       role: 'system',
-      content: `For each list of shares, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their shares.`
-    }],
-    blocks_prompt: [{
+      content: `For each list of shares, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their shares.`,
+    },
+  ],
+  blocks_prompt: [
+    {
       role: 'system',
-      content: `For each list of blocks, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their blocks.`
-    }],
-} as const;
+      content: `For each list of blocks, summarize the overall trends, key examples, and any other relevant information that can help gain an understanding of the user based on their blocks.`,
+    },
+  ],
+} as const

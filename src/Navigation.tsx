@@ -110,6 +110,7 @@ import {
 } from '#/components/dialogs/EmailDialog'
 import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
+import {PersonalitySettingsScreen} from './screens/Settings/PersonalitySettings'
 
 const navigationRef = createNavigationContainerRef<AllNavigatorParams>()
 

@@ -1,5 +1,11 @@
-import React, {useCallback,useEffect, useState} from 'react'
-import {ActivityIndicator,Switch, TextInput, TouchableOpacity, View} from 'react-native'
+import {useCallback, useState} from 'react'
+import {
+  ActivityIndicator,
+  Switch,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -10,7 +16,10 @@ import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {LLM_API_KEY, LLM_BASE_URL} from '#/lib/llm-feed/env'
 import {AIFeedAPIRuntimeCreator} from '#/lib/llm-feed/feed-api-runtime-creators/AIFeedAPIRuntimeCreator'
 import {PersonalityUpdater} from '#/lib/llm-feed/personality-updater'
-import {type CommonNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
+import {
+  type CommonNavigatorParams,
+  type NativeStackScreenProps,
+} from '#/lib/routes/types'
 import {logger} from '#/logger'
 import {useAgent} from '#/state/session'
 import {Button} from '#/view/com/util/forms/Button'
@@ -18,7 +27,7 @@ import {Text} from '#/view/com/util/text/Text'
 import * as Toast from '#/view/com/util/Toast'
 import {ViewHeader} from '#/view/com/util/ViewHeader'
 import {ScrollView} from '#/view/com/util/Views'
-import {atoms as a, tokens,useTheme} from '#/alf'
+import {atoms as a, useTheme} from '#/alf'
 
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
 const AUTOUPDATE_ENABLED_KEY = 'llm_personality_autoupdate_enabled'
@@ -29,7 +38,10 @@ const DEFAULT_PERSONALITY =
   'Interested in a variety of topics including technology, science, art, and culture.'
 const DEFAULT_MODEL_NAME = 'mistralai/Mistral-Small-24B-Instruct-2501'
 
-type Props = NativeStackScreenProps<CommonNavigatorParams, 'PersonalitySettings'>
+type Props = NativeStackScreenProps<
+  CommonNavigatorParams,
+  'PersonalitySettings'
+>
 export function PersonalitySettingsScreen({}: Props) {
   const pal = usePalette('default')
   const {_} = useLingui()
@@ -52,7 +64,9 @@ export function PersonalitySettingsScreen({}: Props) {
       const storedPersonality = await AsyncStorage.getItem(ASYNC_STORAGE_KEY)
       setPersonality(storedPersonality || DEFAULT_PERSONALITY)
 
-      const storedAutoUpdate = await AsyncStorage.getItem(AUTOUPDATE_ENABLED_KEY)
+      const storedAutoUpdate = await AsyncStorage.getItem(
+        AUTOUPDATE_ENABLED_KEY,
+      )
       setIsAutoUpdateEnabled(storedAutoUpdate !== 'false')
 
       const storedApiKey = await AsyncStorage.getItem(LLM_API_KEY_STORAGE_KEY)
@@ -61,7 +75,9 @@ export function PersonalitySettingsScreen({}: Props) {
       const storedBaseUrl = await AsyncStorage.getItem(LLM_BASE_URL_STORAGE_KEY)
       setLlmBaseUrl(storedBaseUrl || LLM_BASE_URL || '')
 
-      const storedModelName = await AsyncStorage.getItem(LLM_MODEL_NAME_STORAGE_KEY)
+      const storedModelName = await AsyncStorage.getItem(
+        LLM_MODEL_NAME_STORAGE_KEY,
+      )
       setLlmModelName(storedModelName || DEFAULT_MODEL_NAME)
     } catch (e) {
       logger.error('Failed to load personality settings', {message: e})
@@ -83,10 +99,10 @@ export function PersonalitySettingsScreen({}: Props) {
       await AsyncStorage.setItem(LLM_API_KEY_STORAGE_KEY, llmApiKey)
       await AsyncStorage.setItem(LLM_BASE_URL_STORAGE_KEY, llmBaseUrl)
       await AsyncStorage.setItem(LLM_MODEL_NAME_STORAGE_KEY, llmModelName)
-      
+
       // Clear the AI feed cache to force reload with new settings
       AIFeedAPIRuntimeCreator.getInstance().clearCache()
-      
+
       Toast.show(_(msg`Settings saved`))
     } catch (e) {
       logger.error('Failed to save settings', {message: e})
@@ -98,11 +114,15 @@ export function PersonalitySettingsScreen({}: Props) {
 
   const handleManualUpdate = useCallback(async () => {
     if (!agent?.session) {
-      Toast.show(_(msg`You must be logged in to update personality automatically.`))
+      Toast.show(
+        _(msg`You must be logged in to update personality automatically.`),
+      )
       return
     }
     if (!llmApiKey || !llmBaseUrl) {
-      logger.error('Manual Personality Update: LLM API Key or Base URL missing.')
+      logger.error(
+        'Manual Personality Update: LLM API Key or Base URL missing.',
+      )
       Toast.show(_(msg`Please configure LLM API settings first.`))
       return
     }
@@ -122,17 +142,20 @@ export function PersonalitySettingsScreen({}: Props) {
     }
   }, [agent, _, loadSettings, llmApiKey, llmBaseUrl])
 
-  const handleToggleAutoUpdate = useCallback(async (newValue: boolean) => {
-    setIsAutoUpdateEnabled(newValue)
-    try {
-      await AsyncStorage.setItem(AUTOUPDATE_ENABLED_KEY, String(newValue))
-      Toast.show(_(msg`Automatic update preference saved.`))
-    } catch (e) {
-      logger.error('Failed to save auto-update preference', {message: e})
-      Toast.show(_(msg`Failed to save your preference.`), 'xmark')
-      setIsAutoUpdateEnabled(!newValue)
-    }
-  }, [_])
+  const handleToggleAutoUpdate = useCallback(
+    async (newValue: boolean) => {
+      setIsAutoUpdateEnabled(newValue)
+      try {
+        await AsyncStorage.setItem(AUTOUPDATE_ENABLED_KEY, String(newValue))
+        Toast.show(_(msg`Automatic update preference saved.`))
+      } catch (e) {
+        logger.error('Failed to save auto-update preference', {message: e})
+        Toast.show(_(msg`Failed to save your preference.`), 'xmark')
+        setIsAutoUpdateEnabled(!newValue)
+      }
+    },
+    [_],
+  )
 
   useFocusEffect(
     useCallback(() => {
@@ -148,11 +171,7 @@ export function PersonalitySettingsScreen({}: Props) {
         contentContainerStyle={[!isMobile && a.align_center]}
         scrollIndicatorInsets={{right: 1}}>
         <View
-          style={[
-            a.gap_lg,
-            a.py_lg,
-            !isMobile && [a.w_full, {maxWidth: 600}],
-          ]}>
+          style={[a.gap_lg, a.py_lg, !isMobile && [a.w_full, {maxWidth: 600}]]}>
           <Text style={[t.atoms.text_contrast_medium]}>
             <Trans>
               Configure the default personality description used when generating
@@ -181,11 +200,19 @@ export function PersonalitySettingsScreen({}: Props) {
               editable={!isLoading && !isSaving && !isManualUpdating}
               multiline={true}
               numberOfLines={6}
-              accessibilityLabel={_(msg`Describe your interests and personality`)}
+              accessibilityLabel={_(
+                msg`Describe your interests and personality`,
+              )}
               accessibilityHint={_(msg`Input field for LLM personality`)}
             />
           </View>
-          <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
+          <View
+            style={[
+              a.gap_md,
+              a.border_t,
+              a.pt_lg,
+              t.atoms.border_contrast_low,
+            ]}>
             <Text style={[a.font_bold, a.text_lg, t.atoms.text]}>
               <Trans>Automatic Updates</Trans>
             </Text>
@@ -195,7 +222,9 @@ export function PersonalitySettingsScreen({}: Props) {
                   <Trans>Enable automatic updates</Trans>
                 </Text>
                 <Text style={[t.atoms.text_contrast_medium]}>
-                  <Trans>Periodically update personality based on your activity.</Trans>
+                  <Trans>
+                    Periodically update personality based on your activity.
+                  </Trans>
                 </Text>
               </View>
               <Switch
@@ -203,20 +232,32 @@ export function PersonalitySettingsScreen({}: Props) {
                 onValueChange={handleToggleAutoUpdate}
                 disabled={isLoading}
                 thumbColor={t.palette.primary_50}
-                trackColor={{false: t.palette.contrast_200, true: t.palette.primary_500}}
+                trackColor={{
+                  false: t.palette.contrast_200,
+                  true: t.palette.primary_500,
+                }}
               />
             </View>
-            <View style={[a.flex_row, a.justify_start, a.gap_md, a.align_center]}>
+            <View
+              style={[a.flex_row, a.justify_start, a.gap_md, a.align_center]}>
               <Button
                 type="default"
                 label={_(msg`Update Now`)}
                 onPress={handleManualUpdate}
                 disabled={isManualUpdating || isLoading}
               />
-              {isManualUpdating && <ActivityIndicator color={t.palette.primary_500} />}
+              {isManualUpdating && (
+                <ActivityIndicator color={t.palette.primary_500} />
+              )}
             </View>
           </View>
-          <View style={[a.gap_md, a.border_t, a.pt_lg, t.atoms.border_contrast_low]}>
+          <View
+            style={[
+              a.gap_md,
+              a.border_t,
+              a.pt_lg,
+              t.atoms.border_contrast_low,
+            ]}>
             <Text style={[a.font_bold, a.text_lg, t.atoms.text]}>
               <Trans>LLM Configuration</Trans>
             </Text>
@@ -246,8 +287,16 @@ export function PersonalitySettingsScreen({}: Props) {
               <TouchableOpacity
                 onPress={() => setIsApiKeyRevealed(!isApiKeyRevealed)}
                 style={[a.flex_row, a.justify_end, a.gap_sm]}
-                accessibilityLabel={isApiKeyRevealed ? _(msg`Hide API key`) : _(msg`Reveal API key`)}
-                accessibilityHint={isApiKeyRevealed ? _(msg`Press to hide the API key`) : _(msg`Press to reveal the API key`)}>
+                accessibilityLabel={
+                  isApiKeyRevealed
+                    ? _(msg`Hide API key`)
+                    : _(msg`Reveal API key`)
+                }
+                accessibilityHint={
+                  isApiKeyRevealed
+                    ? _(msg`Press to hide the API key`)
+                    : _(msg`Press to reveal the API key`)
+                }>
                 <Text style={[t.atoms.text_contrast_medium]}>
                   {isApiKeyRevealed ? _(msg`Hide`) : _(msg`Reveal`)}
                 </Text>

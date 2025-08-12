@@ -1,13 +1,14 @@
-import React, {useEffect, useRef} from 'react'
+import {useEffect, useRef} from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-// import { LLM_API_KEY, LLM_BASE_URL } from './env'; // Removed import
 import {logger} from '#/logger'
 import {useAgent, useSession} from '#/state/session'
+import {LLM_API_KEY, LLM_BASE_URL} from './env'
 import {PersonalityUpdater} from './personality-updater'
 
-// Hardcoded values
-const HARDCODED_LLM_API_KEY = 'JKNzduptcUlwUvi6gdcSlqBllOgXYyZr'
-const HARDCODED_LLM_BASE_URL = 'https://api.deepinfra.com/v1/openai'
+// AsyncStorage keys (consistent with PersonalitySettings.tsx and ShellAIFeedAPI.ts)
+const LLM_API_KEY_STORAGE_KEY = 'llm_api_key'
+const LLM_BASE_URL_STORAGE_KEY = 'llm_base_url'
 
 const UPDATE_INTERVAL_MS = 10 * 60 * 1000 // 10 minutes
 
@@ -19,7 +20,7 @@ export function usePeriodicPersonalityUpdate() {
 
   useEffect(() => {
     // Function to start the periodic updates
-    const startUpdater = () => {
+    const startUpdater = async () => {
       if (intervalIdRef.current) {
         logger.debug('PeriodicPersonalityUpdate: Already running.')
         return // Already running
@@ -31,22 +32,51 @@ export function usePeriodicPersonalityUpdate() {
         return // No session, don't start
       }
 
-      // Use hardcoded values
+      // Load configuration with proper priority: AsyncStorage → env.ts → abort
+      let apiKey = LLM_API_KEY
+      let baseUrl = LLM_BASE_URL
+
+      try {
+        const storedApiKey = await AsyncStorage.getItem(LLM_API_KEY_STORAGE_KEY)
+        const storedBaseUrl = await AsyncStorage.getItem(
+          LLM_BASE_URL_STORAGE_KEY,
+        )
+
+        if (storedApiKey) {
+          apiKey = storedApiKey
+        }
+
+        if (storedBaseUrl) {
+          baseUrl = storedBaseUrl
+        }
+
+        logger.debug('PeriodicPersonalityUpdate: Using API key from:', {
+          source: storedApiKey ? 'AsyncStorage' : 'env.ts',
+        })
+        logger.debug('PeriodicPersonalityUpdate: Using base URL:', {baseUrl})
+      } catch (error) {
+        logger.warn(
+          'PeriodicPersonalityUpdate: Failed to load settings from AsyncStorage, using env.ts defaults',
+          {error},
+        )
+      }
+
+      if (!apiKey || !baseUrl) {
+        logger.error(
+          'PeriodicPersonalityUpdate: LLM API Key or Base URL missing, cannot start updater.',
+        )
+        return
+      }
+
       logger.info('PeriodicPersonalityUpdate: Starting periodic updates...')
-      updaterRef.current = new PersonalityUpdater(
-        HARDCODED_LLM_API_KEY,
-        HARDCODED_LLM_BASE_URL,
-        agent,
-      )
+      updaterRef.current = new PersonalityUpdater(apiKey, baseUrl, agent)
 
       // Run immediately first time
-      updaterRef.current
-        .updatePersonality()
-        .catch(e =>
-          logger.error('PeriodicPersonalityUpdate: Initial update failed', {
-            error: e,
-          }),
-        )
+      updaterRef.current.updatePersonality().catch(e =>
+        logger.error('PeriodicPersonalityUpdate: Initial update failed', {
+          error: e,
+        }),
+      )
 
       // Then set interval
       intervalIdRef.current = setInterval(() => {
