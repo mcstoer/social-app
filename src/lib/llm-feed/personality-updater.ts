@@ -1,9 +1,24 @@
-import {type AppBskyActorDefs,type BskyAgent} from '@atproto/api'
+import {type AppBskyActorDefs, type BskyAgent} from '@atproto/api'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import OpenAI from 'openai'
-import  {type ChatCompletionMessageParam} from 'openai/resources/chat/completions'
+import {type ChatCompletionMessageParam} from 'openai/resources/chat/completions'
 
 import {logger} from '#/logger'
+
+// Global status tracking instance - imported from feed-curator
+let globalStatusUpdate: {
+  markInProgress: () => void
+  markWorking: () => void
+  markFailing: () => void
+} | null = null
+
+export function setPersonalityUpdaterStatusUpdater(updater: {
+  markInProgress: () => void
+  markWorking: () => void
+  markFailing: () => void
+}) {
+  globalStatusUpdate = updater
+}
 
 // --- Constants ---
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
@@ -386,13 +401,20 @@ export class PersonalityUpdater {
 
   public async updatePersonality(): Promise<void> {
     try {
-      const autoUpdateEnabled = await AsyncStorage.getItem(AUTOUPDATE_ENABLED_KEY);
+      const autoUpdateEnabled = await AsyncStorage.getItem(
+        AUTOUPDATE_ENABLED_KEY,
+      )
       if (autoUpdateEnabled === 'false') {
-        logger.info("PersonalityUpdater: Automatic updates disabled by user setting. Aborting update.");
-        return;
+        logger.info(
+          'PersonalityUpdater: Automatic updates disabled by user setting. Aborting update.',
+        )
+        return
       }
     } catch (e) {
-      logger.error('PersonalityUpdater: Failed to read auto-update setting, proceeding with update.', { message: e });
+      logger.error(
+        'PersonalityUpdater: Failed to read auto-update setting, proceeding with update.',
+        {message: e},
+      )
     }
 
     logger.info('PersonalityUpdater: Starting personality update process...')
@@ -443,16 +465,24 @@ export class PersonalityUpdater {
       logger.debug('PersonalityUpdater: Sending request to LLM...')
       // // console.log("PROMPT MESSAGES:", JSON.stringify(messages, null, 2)); // DEBUG: Log full prompt
 
+      // Mark as in progress when starting OpenAI request
+      globalStatusUpdate?.markInProgress()
+
       // 5. Call LLM
       // Load model name from AsyncStorage
       let modelName = DEFAULT_LLM_MODEL_NAME
       try {
-        const storedModelName = await AsyncStorage.getItem(LLM_MODEL_NAME_STORAGE_KEY)
+        const storedModelName = await AsyncStorage.getItem(
+          LLM_MODEL_NAME_STORAGE_KEY,
+        )
         if (storedModelName) {
           modelName = storedModelName
         }
       } catch (e) {
-        logger.warn('PersonalityUpdater: Could not load model name from storage, using default.', { message: e })
+        logger.warn(
+          'PersonalityUpdater: Could not load model name from storage, using default.',
+          {message: e},
+        )
       }
 
       const chatCompletion = await this.openai.chat.completions.create({
@@ -466,6 +496,9 @@ export class PersonalityUpdater {
         logger.error('PersonalityUpdater: No content returned from LLM.')
         throw new Error('No content returned from chat completion')
       }
+
+      // Mark as working after successful OpenAI request
+      globalStatusUpdate?.markWorking()
 
       logger.debug('PersonalityUpdater: Received response from LLM.')
       // // console.log("LLM RAW RESPONSE:", content); // DEBUG: Log raw response
@@ -501,6 +534,9 @@ export class PersonalityUpdater {
         )
       }
     } catch (error: any) {
+      // Mark as failing when OpenAI request errors
+      globalStatusUpdate?.markFailing()
+
       logger.error('PersonalityUpdater: Failed during personality update', {
         message: error?.message,
         stack: error?.stack,
