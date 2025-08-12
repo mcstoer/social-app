@@ -3,21 +3,6 @@ import OpenAI from 'openai'
 import {logger} from '#/logger'
 import {FEED_PROMPTS} from './prompts'
 
-// Global status tracking instance - we need this accessible outside React context
-let globalStatusUpdate: {
-  markInProgress: () => void
-  markWorking: () => void
-  markFailing: () => void
-} | null = null
-
-export function setGlobalAIFeedStatusUpdater(updater: {
-  markInProgress: () => void
-  markWorking: () => void
-  markFailing: () => void
-}) {
-  globalStatusUpdate = updater
-}
-
 // Notably, this code is separate from bluesky's normal code/flow, it can be customized at will so long as it still returns the needed information
 
 /**
@@ -74,9 +59,6 @@ export class FeedCurator {
     languages?: string,
   ): Promise<number[]> {
     try {
-      // Mark as in progress when starting OpenAI request
-      globalStatusUpdate?.markInProgress()
-
       // Log inputs
       // console.log('==== LLM FEED CURATION STARTED ====');
       // console.log('INPUT - Personality:', personality);
@@ -148,9 +130,6 @@ Prioritize putting more important posts first. But ensure variety.`,
         max_completion_tokens: 500,
       })
 
-      // Mark as working after successful OpenAI request
-      globalStatusUpdate?.markWorking()
-
       // console.log('SIMULATED PROMPT:\n', promptMessages);
       const selectedIndices = [
         ...new Set(
@@ -169,9 +148,6 @@ Prioritize putting more important posts first. But ensure variety.`,
       // Return selected post IDs in the order specified by the deduplicated indices
       return selectedIndices
     } catch (error) {
-      // Mark as failing when OpenAI request errors
-      globalStatusUpdate?.markFailing()
-
       // Reduce console logging and rely on visual indicator instead
       logger.error('Error in curate feed:', {
         error: String(error),

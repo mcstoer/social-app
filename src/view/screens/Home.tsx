@@ -6,13 +6,8 @@ import {PROD_DEFAULT_FEED} from '#/lib/constants'
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {useOTAUpdates} from '#/lib/hooks/useOTAUpdates'
 import {useSetTitle} from '#/lib/hooks/useSetTitle'
-import {
-  AIFeedStatusProvider,
-  useAIFeedStatus,
-} from '#/lib/llm-feed/ai-feed-status'
-import {setGlobalAIFeedStatusUpdater} from '#/lib/llm-feed/feed-curator'
+import {AIFeedStatusProvider} from '#/lib/llm-feed/ai-feed-status'
 import {aiModeFeedInfo} from '#/lib/llm-feed/feed-infos.ts'
-import {setPersonalityUpdaterStatusUpdater} from '#/lib/llm-feed/personality-updater'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {
   type HomeTabNavigatorParams,
@@ -55,19 +50,6 @@ export function HomeScreen(props: Props) {
       <HomeScreenWithStatus {...props} />
     </AIFeedStatusProvider>
   )
-}
-
-// Status updater component
-function HomeScreenWithStatusUpdater({children}: {children: React.ReactNode}) {
-  const {updateStatus} = useAIFeedStatus()
-
-  React.useEffect(() => {
-    // Set up global status updaters for both feed curator and personality updater
-    setGlobalAIFeedStatusUpdater(updateStatus)
-    setPersonalityUpdaterStatusUpdater(updateStatus)
-  }, [updateStatus])
-
-  return <>{children}</>
 }
 
 function HomeScreenWithStatus(props: Props) {
@@ -113,25 +95,21 @@ function HomeScreenWithStatus(props: Props) {
     const feedInfosWithAI = [...pinnedFeedInfos]
     feedInfosWithAI.splice(1, 0, aiModeFeedInfo)
     return (
-      <HomeScreenWithStatusUpdater>
-        <Layout.Screen testID="HomeScreen">
-          <HomeScreenReady
-            {...props}
-            preferences={preferences}
-            pinnedFeedInfos={feedInfosWithAI}
-          />
-        </Layout.Screen>
-      </HomeScreenWithStatusUpdater>
+      <Layout.Screen testID="HomeScreen">
+        <HomeScreenReady
+          {...props}
+          preferences={preferences}
+          pinnedFeedInfos={feedInfosWithAI}
+        />
+      </Layout.Screen>
     )
   } else {
     return (
-      <HomeScreenWithStatusUpdater>
-        <Layout.Screen>
-          <Layout.Center style={styles.loading}>
-            <ActivityIndicator size="large" />
-          </Layout.Center>
-        </Layout.Screen>
-      </HomeScreenWithStatusUpdater>
+      <Layout.Screen>
+        <Layout.Center style={styles.loading}>
+          <ActivityIndicator size="large" />
+        </Layout.Center>
+      </Layout.Screen>
     )
   }
 }

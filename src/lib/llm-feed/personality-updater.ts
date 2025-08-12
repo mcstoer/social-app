@@ -5,21 +5,6 @@ import {type ChatCompletionMessageParam} from 'openai/resources/chat/completions
 
 import {logger} from '#/logger'
 
-// Global status tracking instance - imported from feed-curator
-let globalStatusUpdate: {
-  markInProgress: () => void
-  markWorking: () => void
-  markFailing: () => void
-} | null = null
-
-export function setPersonalityUpdaterStatusUpdater(updater: {
-  markInProgress: () => void
-  markWorking: () => void
-  markFailing: () => void
-}) {
-  globalStatusUpdate = updater
-}
-
 // --- Constants ---
 const ASYNC_STORAGE_KEY = 'llm_personality_preference'
 const AUTOUPDATE_ENABLED_KEY = 'llm_personality_autoupdate_enabled'
@@ -465,9 +450,6 @@ export class PersonalityUpdater {
       logger.debug('PersonalityUpdater: Sending request to LLM...')
       // // console.log("PROMPT MESSAGES:", JSON.stringify(messages, null, 2)); // DEBUG: Log full prompt
 
-      // Mark as in progress when starting OpenAI request
-      globalStatusUpdate?.markInProgress()
-
       // 5. Call LLM
       // Load model name from AsyncStorage
       let modelName = DEFAULT_LLM_MODEL_NAME
@@ -496,9 +478,6 @@ export class PersonalityUpdater {
         logger.error('PersonalityUpdater: No content returned from LLM.')
         throw new Error('No content returned from chat completion')
       }
-
-      // Mark as working after successful OpenAI request
-      globalStatusUpdate?.markWorking()
 
       logger.debug('PersonalityUpdater: Received response from LLM.')
       // // console.log("LLM RAW RESPONSE:", content); // DEBUG: Log raw response
@@ -534,9 +513,6 @@ export class PersonalityUpdater {
         )
       }
     } catch (error: any) {
-      // Mark as failing when OpenAI request errors
-      globalStatusUpdate?.markFailing()
-
       logger.error('PersonalityUpdater: Failed during personality update', {
         message: error?.message,
         stack: error?.stack,
