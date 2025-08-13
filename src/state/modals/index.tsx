@@ -48,6 +48,9 @@ export interface UpdateVeruSkyCredentialsModal {
   password?: string
 }
 
+/**
+ * @deprecated DO NOT ADD NEW MODALS
+ */
 export type Modal =
   // Account
   | DeleteAccountModal
@@ -73,6 +76,7 @@ const ModalContext = React.createContext<{
   isModalActive: false,
   activeModals: [],
 })
+ModalContext.displayName = 'ModalContext'
 
 const ModalControlContext = React.createContext<{
   openModal: (modal: Modal) => void
@@ -83,6 +87,7 @@ const ModalControlContext = React.createContext<{
   closeModal: () => false,
   closeAllModals: () => false,
 })
+ModalControlContext.displayName = 'ModalControlContext'
 
 export function Provider({children}: React.PropsWithChildren<{}>) {
   const [activeModals, setActiveModals] = React.useState<Modal[]>([])
@@ -131,10 +136,16 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   )
 }
 
+/**
+ * @deprecated use the dialog system from `#/components/Dialog.tsx`
+ */
 export function useModals() {
   return React.useContext(ModalContext)
 }
 
+/**
+ * @deprecated use the dialog system from `#/components/Dialog.tsx`
+ */
 export function useModalControls() {
   return React.useContext(ModalControlContext)
 }

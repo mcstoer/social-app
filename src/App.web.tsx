@@ -18,6 +18,7 @@ import {Provider as A11yProvider} from '#/state/a11y'
 import {Provider as AgeAssuranceProvider} from '#/state/ageAssurance'
 import {Provider as MutedThreadsProvider} from '#/state/cache/thread-mutes'
 import {Provider as DialogStateProvider} from '#/state/dialogs'
+import {Provider as EmailVerificationProvider} from '#/state/email-verification'
 import {listenSessionDropped} from '#/state/events'
 import {
   beginResolveGeolocation,
@@ -51,7 +52,6 @@ import {Provider as SelectedFeedProvider} from '#/state/shell/selected-feed'
 import {Provider as StarterPackProvider} from '#/state/shell/starter-pack'
 import {Provider as HiddenRepliesProvider} from '#/state/threadgate-hidden-replies'
 import * as Toast from '#/view/com/util/Toast'
-import {ToastContainer} from '#/view/com/util/Toast.web'
 import {Shell} from '#/view/shell/index'
 import {ThemeProvider as Alf} from '#/alf'
 import {useColorModeTheme} from '#/alf/util/useColorModeTheme'
@@ -59,9 +59,11 @@ import {Provider as ContextMenuProvider} from '#/components/ContextMenu'
 import {NuxDialogs} from '#/components/dialogs/nuxs'
 import {useStarterPackEntry} from '#/components/hooks/useStarterPackEntry'
 import {Provider as IntentDialogProvider} from '#/components/intents/IntentDialogs'
+import {Provider as PolicyUpdateOverlayProvider} from '#/components/PolicyUpdateOverlay'
 import {Provider as PortalProvider} from '#/components/Portal'
 import {Provider as ActiveVideoProvider} from '#/components/Post/Embed/VideoEmbed/ActiveVideoWebContext'
 import {Provider as VideoVolumeProvider} from '#/components/Post/Embed/VideoEmbed/VideoVolumeContext'
+import {ToastContainer} from '#/components/Toast'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
 import {LOCAL_DEV_VSKY_LOGIN_SERVER} from './lib/constants'
 import {Provider as HideBottomBarBorderProvider} from './lib/hooks/useHideBottomBarBorder'
@@ -119,50 +121,54 @@ function InnerApp() {
                   // Resets the entire tree below when it changes:
                   key={currentAccount?.did}>
                   <QueryProvider currentDid={currentAccount?.did}>
-                    <StatsigProvider>
-                      <AgeAssuranceProvider>
-                        <ComposerProvider>
-                          <MessagesProvider>
-                            {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
-                            <LabelDefsProvider>
-                              <ModerationOptsProvider>
-                                <LoggedOutViewProvider>
-                                  <SelectedFeedProvider>
-                                    <HiddenRepliesProvider>
-                                      <HomeBadgeProvider>
-                                        <UnreadNotifsProvider>
-                                          <BackgroundNotificationPreferencesProvider>
-                                            <MutedThreadsProvider>
-                                              <SafeAreaProvider>
-                                                <ProgressGuideProvider>
-                                                  <ServiceConfigProvider>
-                                                    <HideBottomBarBorderProvider>
-                                                      <IntentDialogProvider>
-                                                        <VerusDaemonProvider
-                                                          url={
-                                                            LOCAL_DEV_VSKY_LOGIN_SERVER
-                                                          }>
-                                                          <Shell />
-                                                          <NuxDialogs />
-                                                        </VerusDaemonProvider>
-                                                      </IntentDialogProvider>
-                                                    </HideBottomBarBorderProvider>
-                                                  </ServiceConfigProvider>
-                                                </ProgressGuideProvider>
-                                              </SafeAreaProvider>
-                                            </MutedThreadsProvider>
-                                          </BackgroundNotificationPreferencesProvider>
-                                        </UnreadNotifsProvider>
-                                      </HomeBadgeProvider>
-                                    </HiddenRepliesProvider>
-                                  </SelectedFeedProvider>
-                                </LoggedOutViewProvider>
-                              </ModerationOptsProvider>
-                            </LabelDefsProvider>
-                          </MessagesProvider>
-                        </ComposerProvider>
-                      </AgeAssuranceProvider>
-                    </StatsigProvider>
+                    <PolicyUpdateOverlayProvider>
+                      <StatsigProvider>
+                        <AgeAssuranceProvider>
+                          <ComposerProvider>
+                            <MessagesProvider>
+                              {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
+                              <LabelDefsProvider>
+                                <ModerationOptsProvider>
+                                  <LoggedOutViewProvider>
+                                    <SelectedFeedProvider>
+                                      <HiddenRepliesProvider>
+                                        <HomeBadgeProvider>
+                                          <UnreadNotifsProvider>
+                                            <BackgroundNotificationPreferencesProvider>
+                                              <MutedThreadsProvider>
+                                                <SafeAreaProvider>
+                                                  <ProgressGuideProvider>
+                                                    <ServiceConfigProvider>
+                                                      <EmailVerificationProvider>
+                                                        <HideBottomBarBorderProvider>
+                                                          <IntentDialogProvider>
+                                                            <VerusDaemonProvider
+                                                              url={
+                                                                LOCAL_DEV_VSKY_LOGIN_SERVER
+                                                              }>
+                                                              <Shell />
+                                                              <NuxDialogs />
+                                                            </VerusDaemonProvider>
+                                                          </IntentDialogProvider>
+                                                        </HideBottomBarBorderProvider>
+                                                      </EmailVerificationProvider>
+                                                    </ServiceConfigProvider>
+                                                  </ProgressGuideProvider>
+                                                </SafeAreaProvider>
+                                              </MutedThreadsProvider>
+                                            </BackgroundNotificationPreferencesProvider>
+                                          </UnreadNotifsProvider>
+                                        </HomeBadgeProvider>
+                                      </HiddenRepliesProvider>
+                                    </SelectedFeedProvider>
+                                  </LoggedOutViewProvider>
+                                </ModerationOptsProvider>
+                              </LabelDefsProvider>
+                            </MessagesProvider>
+                          </ComposerProvider>
+                        </AgeAssuranceProvider>
+                      </StatsigProvider>
+                    </PolicyUpdateOverlayProvider>
                   </QueryProvider>
                   <ToastContainer />
                 </React.Fragment>
