@@ -10,6 +10,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {useFocusEffect} from '@react-navigation/native'
+import {useQueryClient} from '@tanstack/react-query'
 
 import {usePalette} from '#/lib/hooks/usePalette'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
@@ -21,6 +22,7 @@ import {
   type NativeStackScreenProps,
 } from '#/lib/routes/types'
 import {logger} from '#/logger'
+import {resetPostsFeedQueries} from '#/state/queries/post-feed'
 import {useAgent} from '#/state/session'
 import {Button} from '#/view/com/util/forms/Button'
 import {Text} from '#/view/com/util/text/Text'
@@ -47,6 +49,7 @@ export function PersonalitySettingsScreen({}: Props) {
   const {_} = useLingui()
   const t = useTheme()
   const agent = useAgent()
+  const queryClient = useQueryClient()
   const {isMobile} = useWebMediaQueries()
   const [personality, setPersonality] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
@@ -103,6 +106,9 @@ export function PersonalitySettingsScreen({}: Props) {
       // Clear the AI feed cache to force reload with new settings
       AIFeedAPIRuntimeCreator.getInstance().clearCache()
 
+      // Reset feed queries so new API instance and updated key are used immediately
+      resetPostsFeedQueries(queryClient)
+
       Toast.show(_(msg`Settings saved`))
     } catch (e) {
       logger.error('Failed to save settings', {message: e})
@@ -110,7 +116,7 @@ export function PersonalitySettingsScreen({}: Props) {
     } finally {
       setIsSaving(false)
     }
-  }, [_, personality, llmApiKey, llmBaseUrl, llmModelName])
+  }, [_, personality, llmApiKey, llmBaseUrl, llmModelName, queryClient])
 
   const handleManualUpdate = useCallback(async () => {
     if (!agent?.session) {

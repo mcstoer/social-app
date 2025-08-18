@@ -2,7 +2,6 @@ import OpenAI from 'openai'
 
 import {
   markAIFeedFailing,
-  markAIFeedInProgress,
   markAIFeedWorking,
 } from '#/lib/llm-feed/ai-feed-status'
 import {logger} from '#/logger'
@@ -66,8 +65,7 @@ export class FeedCurator {
     languages?: string,
   ): Promise<number[]> {
     try {
-      // Indicate a new inference attempt is in progress
-      markAIFeedInProgress()
+      // Do not force yellow on every retry; let external logic manage in-progress
       // Log inputs
       // console.log('==== LLM FEED CURATION STARTED ====');
       // console.log('INPUT - Personality:', personality);
