@@ -37,6 +37,21 @@ module.exports = async function (env, argv) {
     reactNativeWebWebviewConfiguration,
   ]
 
+  // Workaround: @react-navigation/elements ships an ESM file that uses `require`,
+  // which isn't defined in browser ESM scope. Force-transform that file to CJS
+  // so webpack provides a `require` implementation at runtime.
+  const frameSizeWorkaroundRule = {
+    test: /@react-navigation\/elements\/lib\/module\/(useFrameSize|MaskedViewNative)\.js$/,
+    type: 'javascript/auto',
+    use: {
+      loader: 'babel-loader',
+      options: {
+        plugins: ['@babel/plugin-transform-modules-commonjs'],
+      },
+    },
+  }
+  config.module.rules = [frameSizeWorkaroundRule, ...config.module.rules]
+
   // Add support for .cjs files
   config.module.rules.push({
     test: /\.cjs$/,
