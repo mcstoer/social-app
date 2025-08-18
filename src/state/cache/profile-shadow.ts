@@ -1,9 +1,10 @@
 import {useEffect, useMemo, useState} from 'react'
-import {type AppBskyActorDefs} from '@atproto/api'
+import {type AppBskyActorDefs, type AppBskyNotificationDefs} from '@atproto/api'
 import {type QueryClient} from '@tanstack/react-query'
 import EventEmitter from 'eventemitter3'
 
 import {batchedUpdates} from '#/lib/batchedUpdates'
+import {findAllProfilesInQueryData as findAllProfilesInActivitySubscriptionsQueryData} from '#/state/queries/activity-subscriptions'
 import {findAllProfilesInQueryData as findAllProfilesInActorSearchQueryData} from '#/state/queries/actor-search'
 import {findAllProfilesInQueryData as findAllProfilesInExploreFeedPreviewsQueryData} from '#/state/queries/explore-feed-previews'
 import {findAllProfilesInQueryData as findAllProfilesInKnownFollowersQueryData} from '#/state/queries/known-followers'
@@ -21,6 +22,7 @@ import {findAllProfilesInQueryData as findAllProfilesInProfileFollowersQueryData
 import {findAllProfilesInQueryData as findAllProfilesInProfileFollowsQueryData} from '#/state/queries/profile-follows'
 import {findAllProfilesInQueryData as findAllProfilesInSuggestedFollowsQueryData} from '#/state/queries/suggested-follows'
 import {findAllProfilesInQueryData as findAllProfilesInSuggestedUsersQueryData} from '#/state/queries/trending/useGetSuggestedUsersQuery'
+import {findAllProfilesInQueryData as findAllProfilesInPostThreadV2QueryData} from '#/state/queries/usePostThread/queryCache'
 import type * as bsky from '#/types/bsky'
 import {castAsShadow, type Shadow} from './types'
 
@@ -32,6 +34,7 @@ export interface ProfileShadow {
   blockingUri: string | undefined
   verification: AppBskyActorDefs.VerificationState
   status: AppBskyActorDefs.StatusView | undefined
+  activitySubscription: AppBskyNotificationDefs.ActivitySubscription | undefined
 }
 
 const shadows: WeakMap<
@@ -113,8 +116,8 @@ export function updateProfileShadow(
   value: Partial<ProfileShadow>,
 ) {
   const cachedProfiles = findProfilesInCache(queryClient, did)
-  for (let post of cachedProfiles) {
-    shadows.set(post, {...shadows.get(post), ...value})
+  for (let profile of cachedProfiles) {
+    shadows.set(profile, {...shadows.get(profile), ...value})
   }
   batchedUpdates(() => {
     emitter.emit(did, value)
@@ -136,6 +139,10 @@ function mergeShadow<TProfileView extends bsky.profile.AnyProfileView>(
       muted: 'muted' in shadow ? shadow.muted : profile.viewer?.muted,
       blocking:
         'blockingUri' in shadow ? shadow.blockingUri : profile.viewer?.blocking,
+      activitySubscription:
+        'activitySubscription' in shadow
+          ? shadow.activitySubscription
+          : profile.viewer?.activitySubscription,
     },
     verification:
       'verification' in shadow ? shadow.verification : profile.verification,
@@ -167,6 +174,8 @@ function* findProfilesInCache(
   yield* findAllProfilesInListConvosQueryData(queryClient, did)
   yield* findAllProfilesInFeedsQueryData(queryClient, did)
   yield* findAllProfilesInPostThreadQueryData(queryClient, did)
+  yield* findAllProfilesInPostThreadV2QueryData(queryClient, did)
   yield* findAllProfilesInKnownFollowersQueryData(queryClient, did)
   yield* findAllProfilesInExploreFeedPreviewsQueryData(queryClient, did)
+  yield* findAllProfilesInActivitySubscriptionsQueryData(queryClient, did)
 }

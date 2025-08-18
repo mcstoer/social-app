@@ -7,6 +7,8 @@ import {type NavigationProp} from '#/lib/routes/types'
 export type DebouncedNavigationProp = Pick<
   NavigationProp,
   | 'popToTop'
+  | 'popTo'
+  | 'pop'
   | 'push'
   | 'navigate'
   | 'canGoBack'
@@ -14,6 +16,7 @@ export type DebouncedNavigationProp = Pick<
   | 'dispatch'
   | 'goBack'
   | 'getState'
+  | 'getParent'
 >
 
 export function useNavigationDeduped() {
@@ -37,6 +40,12 @@ export function useNavigationDeduped() {
       popToTop: () => {
         dedupe(() => navigation.popToTop())
       },
+      popTo: (...args: Parameters<typeof navigation.popTo>) => {
+        dedupe(() => navigation.popTo(...args))
+      },
+      pop: (...args: Parameters<typeof navigation.pop>) => {
+        dedupe(() => navigation.pop(...args))
+      },
       goBack: () => {
         dedupe(() => navigation.goBack())
       },
@@ -45,6 +54,9 @@ export function useNavigationDeduped() {
       },
       getState: () => {
         return navigation.getState()
+      },
+      getParent: (...args: Parameters<typeof navigation.getParent>) => {
+        return navigation.getParent(...args)
       },
     }),
     [dedupe, navigation],

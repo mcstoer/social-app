@@ -301,19 +301,19 @@ export function Explore({
   const onPTR = useCallback(async () => {
     setIsPTR(true)
     await Promise.all([
-      await qc.resetQueries({
+      qc.resetQueries({
         queryKey: createGetTrendsQueryKey(),
       }),
-      await qc.resetQueries({
+      qc.resetQueries({
         queryKey: createSuggestedStarterPacksQueryKey(),
       }),
-      await qc.resetQueries({
+      qc.resetQueries({
         queryKey: [getSuggestedUsersQueryKeyRoot],
       }),
-      await qc.resetQueries({
+      qc.resetQueries({
         queryKey: [useActorSearchPaginatedQueryKeyRoot],
       }),
-      await qc.resetQueries({
+      qc.resetQueries({
         queryKey: createGetSuggestedFeedsQueryKey(),
       }),
     ])
@@ -917,11 +917,7 @@ export function Explore({
         case 'preview:header': {
           return (
             <ModuleHeader.Container
-              style={[
-                a.pt_xs,
-                t.atoms.border_contrast_low,
-                native(a.border_b),
-              ]}>
+              style={[a.pt_xs, t.atoms.border_contrast_low, a.border_b]}>
               {/* Very non-scientific way to avoid small gap on scroll */}
               <View style={[a.absolute, a.inset_0, t.atoms.bg, {top: -2}]} />
               <ModuleHeader.FeedLink feed={item.feed}>

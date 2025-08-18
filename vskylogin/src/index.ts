@@ -1,6 +1,7 @@
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import express from 'express'
+import {type IdentityUpdateEnvelopeJson} from 'verus-typescript-primitives'
 
 import {callRPCDaemon} from './callRPCDaemon'
 
@@ -13,6 +14,7 @@ dotenv.config()
 const port = process.env.PORT || 21001
 
 let lastLogin: any
+let lastCredentialUpdate: IdentityUpdateEnvelopeJson | null
 
 app.post('/confirm-login', async req => {
   lastLogin = req.body
@@ -28,10 +30,30 @@ app.get('/get-login', async (_, res) => {
   }
 })
 
+// New endpoint to store credential update response
+app.post('/confirm-credential-update', async req => {
+  lastCredentialUpdate = req.body
+})
+
+// New endpoint to retrieve credential update response
+app.get('/get-credential-update', async (req, res) => {
+  const {requestId} = req.query
+
+  const lastRequestId = lastCredentialUpdate?.details?.requestid
+
+  if (!lastCredentialUpdate || !lastRequestId || lastRequestId !== requestId) {
+    res.status(204).send('No credential update response received.')
+  } else {
+    res.status(200).json(lastCredentialUpdate)
+    // Clean up after relaying
+    lastCredentialUpdate = null
+  }
+})
+
 // Act as middleware between the app and the daemon to allow for CORS.
 app.post('/call-daemon', async (req, res) => {
   const {command, parameters} = req.body
-  const url = process.env.JSON_RPC_SERVER
+  const url = process.env.VERUS_RPC_SERVER
   const username = process.env.RPC_USERNAME
   const password = process.env.RPC_PASSWORD
 

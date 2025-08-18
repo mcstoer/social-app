@@ -1,7 +1,7 @@
 import {useCallback, useEffect, useState} from 'react'
 import {MMKV} from 'react-native-mmkv'
 
-import {Account, Device} from '#/storage/schema'
+import {type Account, type Device} from '#/storage/schema'
 
 export * from '#/storage/schema'
 
@@ -64,6 +64,13 @@ export class Storage<Scopes extends unknown[], Schema> {
    */
   removeMany<Key extends keyof Schema>(scopes: [...Scopes], keys: Key[]) {
     keys.forEach(key => this.remove([...scopes, key]))
+  }
+
+  /**
+   * For debugging purposes
+   */
+  removeAll() {
+    this.store.clearAll()
   }
 
   /**

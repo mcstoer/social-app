@@ -40,6 +40,17 @@ let RepostButton = ({
   const requireAuth = useRequireAuth()
   const dialogControl = Dialog.useDialogControl()
 
+  const onPress = () => requireAuth(() => dialogControl.open())
+
+  const onLongPress = () =>
+    requireAuth(() => {
+      if (embeddingDisabled) {
+        dialogControl.open()
+      } else {
+        onQuote()
+      }
+    })
+
   return (
     <>
       <PostControlButton
@@ -47,8 +58,8 @@ let RepostButton = ({
         active={isReposted}
         activeColor={t.palette.positive_600}
         big={big}
-        onPress={() => requireAuth(() => dialogControl.open())}
-        onLongPress={() => requireAuth(() => onQuote())}
+        onPress={onPress}
+        onLongPress={onLongPress}
         label={
           isReposted
             ? _(
@@ -134,7 +145,7 @@ let RepostButtonDialogInner = ({
       <View style={a.gap_xl}>
         <View style={a.gap_xs}>
           <Button
-            style={[a.justify_start, a.px_md]}
+            style={[a.justify_start, a.px_md, a.gap_sm]}
             label={
               isReposted
                 ? _(msg`Remove repost`)
@@ -156,7 +167,7 @@ let RepostButtonDialogInner = ({
           <Button
             disabled={embeddingDisabled}
             testID="quoteBtn"
-            style={[a.justify_start, a.px_md]}
+            style={[a.justify_start, a.px_md, a.gap_sm]}
             label={
               embeddingDisabled
                 ? _(msg`Quote posts disabled`)

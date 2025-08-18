@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  ImageStyle,
+  type ImageStyle,
   Keyboard,
-  LayoutChangeEvent,
+  type LayoutChangeEvent,
   StyleSheet,
   TouchableOpacity,
   View,
-  ViewStyle,
+  type ViewStyle,
 } from 'react-native'
 import {Image} from 'expo-image'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
@@ -14,14 +14,15 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
-import {Dimensions} from '#/lib/media/types'
+import {type Dimensions} from '#/lib/media/types'
 import {colors, s} from '#/lib/styles'
 import {isNative} from '#/platform/detection'
-import {ComposerImage, cropImage} from '#/state/gallery'
+import {type ComposerImage, cropImage} from '#/state/gallery'
 import {Text} from '#/view/com/util/text/Text'
 import {useTheme} from '#/alf'
 import * as Dialog from '#/components/Dialog'
-import {PostAction} from '../state/composer'
+import {MediaInsetBorder} from '#/components/MediaInsetBorder'
+import {type PostAction} from '../state/composer'
 import {EditImageDialog} from './EditImageDialog'
 import {ImageAltTextDialog} from './ImageAltTextDialog'
 
@@ -227,7 +228,11 @@ const GalleryItem = ({
         }}
         accessible={true}
         accessibilityIgnoresInvertColors
+        cachePolicy="none"
+        autoplay={false}
       />
+
+      <MediaInsetBorder />
 
       <ImageAltTextDialog
         control={altTextControl}

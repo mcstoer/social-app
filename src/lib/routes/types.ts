@@ -51,8 +51,20 @@ export type CommonNavigatorParams = {
   AppearanceSettings: undefined
   AccountSettings: undefined
   PrivacyAndSecuritySettings: undefined
+  ActivityPrivacySettings: undefined
   ContentAndMediaSettings: undefined
-  SettingsInterests: undefined
+  NotificationSettings: undefined
+  ReplyNotificationSettings: undefined
+  MentionNotificationSettings: undefined
+  QuoteNotificationSettings: undefined
+  LikeNotificationSettings: undefined
+  RepostNotificationSettings: undefined
+  NewFollowerNotificationSettings: undefined
+  LikesOnRepostsNotificationSettings: undefined
+  RepostsOnRepostsNotificationSettings: undefined
+  ActivityNotificationSettings: undefined
+  MiscellaneousNotificationSettings: undefined
+  InterestsSettings: undefined
   AboutSettings: undefined
   AppIconSettings: undefined
   Search: {q?: string}
@@ -62,7 +74,8 @@ export type CommonNavigatorParams = {
   MessagesConversation: {conversation: string; embed?: string}
   MessagesSettings: undefined
   MessagesInbox: undefined
-  NotificationSettings: undefined
+  NotificationsActivityList: {posts: string}
+  LegacyNotificationSettings: undefined
   Feeds: undefined
   Start: {name: string; rkey: string}
   StarterPack: {name: string; rkey: string; new?: boolean}
@@ -105,8 +118,6 @@ export type FlatNavigatorParams = CommonNavigatorParams & {
   Search: {q?: string}
   Feeds: undefined
   Notifications: undefined
-  Hashtag: {tag: string; author?: string}
-  Topic: {topic: string}
   Messages: {pushToConversation?: string; animation?: 'push' | 'pop'}
 }
 
@@ -119,15 +130,8 @@ export type AllNavigatorParams = CommonNavigatorParams & {
   NotificationsTab: undefined
   Notifications: undefined
   MyProfileTab: undefined
-  Hashtag: {tag: string; author?: string}
-  Topic: {topic: string}
   MessagesTab: undefined
   Messages: {animation?: 'push' | 'pop'}
-  Start: {name: string; rkey: string}
-  StarterPack: {name: string; rkey: string; new?: boolean}
-  StarterPackShort: {code: string}
-  StarterPackWizard: undefined
-  StarterPackEdit: {rkey?: string}
 }
 
 // NOTE
@@ -144,5 +148,5 @@ export type RouteParams = Record<string, string>
 export type MatchResult = {params: RouteParams}
 export type Route = {
   match: (path: string) => MatchResult | undefined
-  build: (params: RouteParams) => string
+  build: (params?: Record<string, any>) => string
 }

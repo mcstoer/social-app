@@ -37,8 +37,10 @@ const StateContext = React.createContext<SessionStateContext>({
   currentAccount: undefined,
   hasSession: false,
 })
+StateContext.displayName = 'SessionStateContext'
 
 const AgentContext = React.createContext<BskyAgent | null>(null)
+AgentContext.displayName = 'SessionAgentContext'
 
 const ApiContext = React.createContext<SessionApiContext>({
   createAccount: async () => {},
@@ -47,7 +49,9 @@ const ApiContext = React.createContext<SessionApiContext>({
   logoutEveryAccount: async () => {},
   resumeSession: async () => {},
   removeAccount: () => {},
+  partialRefreshSession: async () => {},
 })
+ApiContext.displayName = 'SessionApiContext'
 
 const VskyApiContext = React.createContext<SessionVskyApiContext>({
   rpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
@@ -142,7 +146,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   )
 
   const logoutCurrentAccount = React.useCallback<
-    SessionApiContext['logoutEveryAccount']
+    SessionApiContext['logoutCurrentAccount']
   >(
     logContext => {
       addSessionDebugLog({type: 'method:start', method: 'logout'})
@@ -204,6 +208,23 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     },
     [onAgentSessionChange, cancelPendingTask],
   )
+
+  const partialRefreshSession = React.useCallback<
+    SessionApiContext['partialRefreshSession']
+  >(async () => {
+    const agent = state.currentAgentState.agent as BskyAppAgent
+    const signal = cancelPendingTask()
+    const {data} = await agent.com.atproto.server.getSession()
+    if (signal.aborted) return
+    dispatch({
+      type: 'partial-refresh-session',
+      accountDid: agent.session!.did,
+      patch: {
+        emailConfirmed: data.emailConfirmed,
+        emailAuthFactor: data.emailAuthFactor,
+      },
+    })
+  }, [state, cancelPendingTask])
 
   const removeAccount = React.useCallback<SessionApiContext['removeAccount']>(
     account => {
@@ -285,6 +306,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       logoutEveryAccount,
       resumeSession,
       removeAccount,
+      partialRefreshSession,
     }),
     [
       createAccount,
@@ -293,6 +315,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       logoutEveryAccount,
       resumeSession,
       removeAccount,
+      partialRefreshSession,
     ],
   )
 

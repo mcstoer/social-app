@@ -1,7 +1,5 @@
- 
 // @ts-ignore: No type definitions for crypto-browserify
 import * as crypto from 'crypto-browserify'
-import * as dotenv from 'dotenv'
 import {
   IDENTITY_NAME_COMMITMENT_TXID,
   IDENTITY_REGISTRATION_TXID,
@@ -15,29 +13,28 @@ import {
   LoginConsentProvisioningChallenge,
   LoginConsentProvisioningDecision,
   LoginConsentProvisioningRequest,
-  LoginConsentProvisioningResponse,
+  type LoginConsentProvisioningResponse,
   LoginConsentProvisioningResult,
   ProvisioningTxid,
   toBase58Check,
 } from 'verus-typescript-primitives'
 import {ProvisioningRequest} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningRequest'
-import {ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningResponse'
+import {type ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningResponse'
 import VerusdRpcInterface from 'verusd-rpc-ts-client/src/VerusdRpcInterface'
 import {VerusIdInterface} from 'verusid-ts-client'
 
-import {callRPCDaemon, rpcResult} from './callRPCDaemon'
+import {callRPCDaemon, type rpcResult} from '../../utils/callRPCDaemon'
+import {fetchWIF} from '../../utils/signing'
 
-dotenv.config()
-
-const iaddress = process.env.IADDRESS as string
+const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
 const raddress = process.env.RADDRESS as string
-const wif = process.env.WIF as string
+const BASE_URL = (process.env.BASE_URL as string) || 'http://localhost:25000'
 
 const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
 const DEFAULT_URL = process.env.DEFAULT_URL as string
 const RPC_USERNAME = process.env.RPC_USERNAME as string
 const RPC_PASSWORD = process.env.RPC_PASSWORD as string
-const JSON_RPC_SERVER = process.env.JSON_RPC_SERVER as string
+const VERUS_RPC_SERVER = process.env.VERUS_RPC_SERVER as string
 
 // const transferid = process.env.TRANSFERID as string;
 const transferfqn = process.env.TRANSFERFQN as string
@@ -67,7 +64,7 @@ export const callDaemon = async (
   parameters?: (string | object)[],
 ): Promise<rpcResult> => {
   return await callRPCDaemon(
-    JSON_RPC_SERVER,
+    VERUS_RPC_SERVER,
     RPC_USERNAME,
     RPC_PASSWORD,
     command,
@@ -175,7 +172,7 @@ export const registerNameCommitment = async (
   ).result
 
   // The identity object must have the fully qualified name.
-   
+
   // @ts-ignore
   const parentFqn = parentId.fullyqualifiedname
 
@@ -189,7 +186,7 @@ export const registerNameCommitment = async (
     system_id: commitmentRes.namereservation.system,
     fully_qualified_name: fullyQualifiedName,
     parent: commitmentRes.namereservation.parent,
-    info_uri: `${process.env.BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
     provisioning_txids: [
       new ProvisioningTxid(
         commitmentRes.txid,
@@ -212,6 +209,7 @@ export const registerNameCommitment = async (
 export const signProvisioningResponse = async (
   response: ProvisioningResponse,
 ): Promise<ProvisioningResponse> => {
+  const wif = await fetchWIF(iaddress)
   return await idInterface.signVerusIdProvisioningResponse(response, wif)
 }
 
@@ -334,14 +332,15 @@ const waitForBlocks = async (
   rpcInterface: VerusdRpcInterface,
   blocks: number,
 ) => {
-  let currentHeight: number = (await rpcInterface.getBlockCount()).result
+  // TODO: Fix when getBlockCount gets added into the rpcInterface again.
+  let currentHeight: number = 0 //(await rpcInterface.getBlockCount()).result
   const targetHeight: number = currentHeight + blocks
 
   // Poll for blocks being added.
   while (currentHeight < targetHeight) {
     // Sleep for 5 seconds.
     await new Promise(r => setTimeout(r, 5000))
-    currentHeight = (await rpcInterface.getBlockCount()).result
+    currentHeight = 0 //(await rpcInterface.getBlockCount()).result
   }
 }
 
@@ -428,10 +427,10 @@ export const transferIdentity = async (
   ).result
 
   // The identity object must have the fully qualified name.
-   
+
   // @ts-ignore
   const fqn = transferIdentityObject.fullyqualifiedname
-   
+
   // @ts-ignore
   const identityAddress = transferIdentityObject.identity.identityaddress
 
@@ -441,7 +440,7 @@ export const transferIdentity = async (
     error_desc: undefined,
     identity_address: identityAddress,
     fully_qualified_name: fqn,
-    info_uri: `${process.env.BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
   })
   provisioningReponse.decision = provisioningDecision
 

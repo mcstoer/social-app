@@ -30,6 +30,7 @@ import {emitSoftReset} from '#/state/events'
 import {useModalControls} from '#/state/modals'
 import {WebAuxClickWrapper} from '#/view/com/util/WebAuxClickWrapper'
 import {useTheme} from '#/alf'
+import {useGlobalDialogsControlContext} from '#/components/dialogs/Context'
 import {router} from '../../../routes'
 import {PressableWithHover} from './PressableWithHover'
 import {Text} from './text/Text'
@@ -55,6 +56,9 @@ interface Props extends React.ComponentProps<typeof TouchableOpacity> {
   onBeforePress?: () => void
 }
 
+/**
+ * @deprecated use Link from `#/components/Link.tsx` instead
+ */
 export const Link = memo(function Link({
   testID,
   style,
@@ -100,13 +104,9 @@ export const Link = memo(function Link({
     {name: 'activate', label: title},
   ]
 
-  const dataSet = useMemo(() => {
-    const ds = {...dataSetProp}
-    if (anchorNoUnderline) {
-      ds.noUnderline = 1
-    }
-    return ds
-  }, [dataSetProp, anchorNoUnderline])
+  const dataSet = anchorNoUnderline
+    ? {...dataSetProp, noUnderline: 1}
+    : dataSetProp
 
   if (noFeedback) {
     return (
@@ -124,6 +124,8 @@ export const Link = memo(function Link({
               onAccessibilityAction?.(e)
             }
           }}
+          // @ts-ignore web only -sfn
+          dataSet={dataSet}
           {...props}
           android_ripple={{
             color: t.atoms.bg_contrast_25.backgroundColor,
@@ -157,6 +159,9 @@ export const Link = memo(function Link({
   )
 })
 
+/**
+ * @deprecated use InlineLinkText from `#/components/Link.tsx` instead
+ */
 export const TextLink = memo(function TextLink({
   testID,
   type = 'md',
@@ -189,20 +194,17 @@ export const TextLink = memo(function TextLink({
   onBeforePress?: () => void
 } & TextProps) {
   const navigation = useNavigationDeduped()
-  const {openModal, closeModal} = useModalControls()
+  const {closeModal} = useModalControls()
+  const {linkWarningDialogControl} = useGlobalDialogsControlContext()
   const openLink = useOpenLink()
 
   if (!disableMismatchWarning && typeof text !== 'string') {
     console.error('Unable to detect mismatching label')
   }
 
-  const dataSet = useMemo(() => {
-    const ds = {...dataSetProp}
-    if (anchorNoUnderline) {
-      ds.noUnderline = 1
-    }
-    return ds
-  }, [dataSetProp, anchorNoUnderline])
+  const dataSet = anchorNoUnderline
+    ? {...dataSetProp, noUnderline: 1}
+    : dataSetProp
 
   const onPress = useCallback(
     (e?: Event) => {
@@ -211,9 +213,8 @@ export const TextLink = memo(function TextLink({
         linkRequiresWarning(href, typeof text === 'string' ? text : '')
       if (requiresWarning) {
         e?.preventDefault?.()
-        openModal({
-          name: 'link-warning',
-          text: typeof text === 'string' ? text : '',
+        linkWarningDialogControl.open({
+          displayText: typeof text === 'string' ? text : '',
           href,
         })
       }
@@ -245,13 +246,13 @@ export const TextLink = memo(function TextLink({
       onBeforePress,
       onPressProp,
       closeModal,
-      openModal,
       navigation,
       href,
       text,
       disableMismatchWarning,
       navigationAction,
       openLink,
+      linkWarningDialogControl,
     ],
   )
   const hrefAttrs = useMemo(() => {
@@ -306,6 +307,9 @@ interface TextLinkOnWebOnlyProps extends TextProps {
   onPointerEnter?: () => void
   anchorNoUnderline?: boolean
 }
+/**
+ * @deprecated use WebOnlyInlineLinkText from `#/components/Link.tsx` instead
+ */
 export const TextLinkOnWebOnly = memo(function DesktopWebTextLink({
   testID,
   type = 'md',
@@ -420,8 +424,10 @@ function onPressInner(
         if (tabState === TabState.InsideAtRoot) {
           emitSoftReset()
         } else {
+          // note: 'navigate' actually acts the same as 'push' nowadays
+          // therefore we need to add 'pop' -sfn
           // @ts-ignore we're not able to type check on this one -prf
-          navigation.navigate(routeName, params)
+          navigation.navigate(routeName, params, {pop: true})
         }
       } else {
         throw Error('Unsupported navigator action.')

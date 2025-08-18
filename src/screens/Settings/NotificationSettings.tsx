@@ -2,7 +2,10 @@ import {Text} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {type AllNavigatorParams, type NativeStackScreenProps} from '#/lib/routes/types'
+import {
+  type AllNavigatorParams,
+  type NativeStackScreenProps,
+} from '#/lib/routes/types'
 import {useNotificationFeedQuery} from '#/state/queries/notifications/feed'
 import {useNotificationSettingsUpdateMutation} from '#/state/queries/notifications/settings'
 import {atoms as a} from '#/alf'

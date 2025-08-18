@@ -7,6 +7,7 @@ import {useModalControls} from '#/state/modals'
 import {useSession} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
+import {AgeAssuranceAccountCard} from '#/components/ageAssurance/AgeAssuranceAccountCard'
 import {useDialogControl} from '#/components/Dialog'
 import {BirthDateSettingsDialog} from '#/components/dialogs/BirthDateSettings'
 import {
@@ -141,16 +142,6 @@ export function AccountSettingsScreen({}: Props) {
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
           <SettingsList.Divider />
-          <SettingsList.Item>
-            <SettingsList.ItemIcon icon={BirthdayCakeIcon} />
-            <SettingsList.ItemText>
-              <Trans>Birthday</Trans>
-            </SettingsList.ItemText>
-            <SettingsList.BadgeButton
-              label={_(msg`Edit`)}
-              onPress={() => birthdayControl.open()}
-            />
-          </SettingsList.Item>
           <SettingsList.PressableItem
             label={_(msg`Password`)}
             onPress={() => openModal({name: 'change-password'})}>
@@ -160,6 +151,17 @@ export function AccountSettingsScreen({}: Props) {
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
+          {currentAccount?.type === 'vsky' && (
+            <SettingsList.PressableItem
+              label={_(msg`Update VeruSky Credentials`)}
+              onPress={() => openModal({name: 'update-verusky-credentials'})}>
+              <SettingsList.ItemIcon icon={LockIcon} />
+              <SettingsList.ItemText>
+                <Trans>Update VeruSky Credentials</Trans>
+              </SettingsList.ItemText>
+              <SettingsList.Chevron />
+            </SettingsList.PressableItem>
+          )}
           <SettingsList.PressableItem
             label={_(msg`Handle`)}
             accessibilityHint={_(msg`Opens change handle dialog`)}
@@ -170,6 +172,17 @@ export function AccountSettingsScreen({}: Props) {
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
+          <SettingsList.Item>
+            <SettingsList.ItemIcon icon={BirthdayCakeIcon} />
+            <SettingsList.ItemText>
+              <Trans>Birthday</Trans>
+            </SettingsList.ItemText>
+            <SettingsList.BadgeButton
+              label={_(msg`Edit`)}
+              onPress={() => birthdayControl.open()}
+            />
+          </SettingsList.Item>
+          <AgeAssuranceAccountCard style={[a.px_xl, a.pt_xs, a.pb_md]} />
           <SettingsList.Divider />
           <SettingsList.PressableItem
             label={_(msg`Export my data`)}

@@ -258,6 +258,7 @@ func serve(cctx *cli.Context) error {
 	e.GET("/feeds", server.WebGeneric)
 	e.GET("/notifications", server.WebGeneric)
 	e.GET("/notifications/settings", server.WebGeneric)
+	e.GET("/notifications/activity", server.WebGeneric)
 	e.GET("/lists", server.WebGeneric)
 	e.GET("/moderation", server.WebGeneric)
 	e.GET("/moderation/modlists", server.WebGeneric)
@@ -275,9 +276,21 @@ func serve(cctx *cli.Context) error {
 	e.GET("/settings/appearance", server.WebGeneric)
 	e.GET("/settings/account", server.WebGeneric)
 	e.GET("/settings/privacy-and-security", server.WebGeneric)
+	e.GET("/settings/privacy-and-security/activity", server.WebGeneric)
 	e.GET("/settings/content-and-media", server.WebGeneric)
 	e.GET("/settings/interests", server.WebGeneric)
 	e.GET("/settings/about", server.WebGeneric)
+	e.GET("/settings/notifications", server.WebGeneric)
+	e.GET("/settings/notifications/replies", server.WebGeneric)
+	e.GET("/settings/notifications/mentions", server.WebGeneric)
+	e.GET("/settings/notifications/quotes", server.WebGeneric)
+	e.GET("/settings/notifications/likes", server.WebGeneric)
+	e.GET("/settings/notifications/reposts", server.WebGeneric)
+	e.GET("/settings/notifications/new-followers", server.WebGeneric)
+	e.GET("/settings/notifications/likes-on-reposts", server.WebGeneric)
+	e.GET("/settings/notifications/reposts-on-reposts", server.WebGeneric)
+	e.GET("/settings/notifications/activity", server.WebGeneric)
+	e.GET("/settings/notifications/miscellaneous", server.WebGeneric)
 	e.GET("/settings/app-icon", server.WebGeneric)
 	e.GET("/sys/debug", server.WebGeneric)
 	e.GET("/sys/debug-mod", server.WebGeneric)
@@ -289,6 +302,7 @@ func serve(cctx *cli.Context) error {
 	e.GET("/support/copyright", server.WebGeneric)
 	e.GET("/intent/compose", server.WebGeneric)
 	e.GET("/intent/verify-email", server.WebGeneric)
+	e.GET("/intent/age-assurance", server.WebGeneric)
 	e.GET("/messages", server.WebGeneric)
 	e.GET("/messages/:conversation", server.WebGeneric)
 
@@ -590,9 +604,12 @@ type IPCCRequest struct {
 	IP string `json:"ip"`
 }
 type IPCCResponse struct {
-	CC string `json:"countryCode"`
+	CC               string `json:"countryCode"`
+	AgeRestrictedGeo bool   `json:"isAgeRestrictedGeo,omitempty"`
 }
 
+// IP address data is powered by IPinfo
+// https://ipinfo.io
 func (srv *Server) WebIpCC(c echo.Context) error {
 	realIP := c.RealIP()
 	addr, err := netip.ParseAddr(realIP)

@@ -34,8 +34,6 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsdoc": "^4.0.4",
-    "verusd-rpc-ts-client": "https://github.com/mcstoer/verusd-rpc-ts-client.git#getblockcount",
-    "verusid-ts-client": "git+https://github.com/mcstoer/verusid-ts-client.git#credential-class",
     "zod": "^3.23.8"
   }
 }
