@@ -50,22 +50,25 @@ export function useAIFeedStatusTracker(
   hasData: boolean,
   isEmpty: boolean,
 ) {
-  const {updateStatus} = useAIFeedStatus()
+  // Access context directly so this hook becomes a no-op if the provider is not mounted
+  const ctx = React.useContext(AIFeedStatusContext)
 
   React.useEffect(() => {
     // Only track status for AI mode feed
     if (feed !== 'ai-mode-feed') return
+    // If provider isn't present, quietly skip
+    if (!ctx) return
 
     if (isError) {
-      updateStatus.markFailing()
+      ctx.updateStatus.markFailing()
     } else if (hasData && !isEmpty) {
       // Posts are visible - all is well from user perspective
-      updateStatus.markWorking()
+      ctx.updateStatus.markWorking()
     } else if (isFetching || !hasData) {
       // Still loading initial posts or no data yet
-      updateStatus.markInProgress()
+      ctx.updateStatus.markInProgress()
     }
-  }, [feed, isFetching, isError, hasData, isEmpty, updateStatus])
+  }, [feed, isFetching, isError, hasData, isEmpty, ctx])
 }
 
 // Utility function to get status color
