@@ -75,8 +75,8 @@ const GalleryInner = ({images, containerInfo, dispatch}: GalleryInnerProps) => {
         altTextControlStyle: isOverflow
           ? {left: 4, bottom: 4}
           : !isMobile && images.length < 3
-            ? {left: 8, top: 8}
-            : {left: 4, top: 4},
+          ? {left: 8, top: 8}
+          : {left: 4, top: 4},
         imageControlsStyle: {
           display: 'flex' as const,
           flexDirection: 'row' as const,
@@ -84,8 +84,8 @@ const GalleryInner = ({images, containerInfo, dispatch}: GalleryInnerProps) => {
           ...(isOverflow
             ? {top: 4, right: 4, gap: 4}
             : !isMobile && images.length < 3
-              ? {top: 8, right: 8, gap: 8}
-              : {top: 4, right: 4, gap: 4}),
+            ? {top: 8, right: 8, gap: 8}
+            : {top: 4, right: 4, gap: 4}),
           zIndex: 1,
         },
         imageStyle: {

@@ -1,10 +1,12 @@
 import React from 'react'
 import {useNavigation} from '@react-navigation/native'
 
-import {NavigationProp} from '#/lib/routes/types'
-import {FeedSourceInfo} from '#/state/queries/feed'
+import {aiModeFeedDescriptor} from '#/lib/llm-feed/types'
+import {type NavigationProp} from '#/lib/routes/types'
+import {type FeedSourceInfo} from '#/state/queries/feed'
 import {useSession} from '#/state/session'
-import {RenderTabBarFnProps} from '#/view/com/pager/Pager'
+import {type RenderTabBarFnProps} from '#/view/com/pager/Pager'
+import {useAIFeedDisplayName} from '#/components/ai-feed/AIFeedStatusIndicator'
 import {TabBar} from '../pager/TabBar'
 import {HomeHeaderLayout} from './HomeHeaderLayout'
 
@@ -27,13 +29,21 @@ export function HomeHeader(
     })
   }, [feeds, hasSession])
 
+  const aiDisplayName = useAIFeedDisplayName()
+
   const items = React.useMemo(() => {
-    const pinnedNames = feeds.map(f => f.displayName)
+    const pinnedNames = feeds.map(f => {
+      // Use status-aware display name for AI Mode feed
+      if (f.feedDescriptor === aiModeFeedDescriptor) {
+        return aiDisplayName
+      }
+      return f.displayName
+    })
     if (!hasPinnedCustom) {
       return pinnedNames.concat('Feeds ✨')
     }
     return pinnedNames
-  }, [hasPinnedCustom, feeds])
+  }, [hasPinnedCustom, feeds, aiDisplayName])
 
   const onPressFeedsLink = React.useCallback(() => {
     navigation.navigate('Feeds')

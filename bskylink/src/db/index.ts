@@ -21,10 +21,7 @@ export class Database {
   migrator: Migrator
   destroyed = false
 
-  constructor(
-    public db: Kysely<DbSchema>,
-    public cfg: PgConfig,
-  ) {
+  constructor(public db: Kysely<DbSchema>, public cfg: PgConfig) {
     this.migrator = new Migrator({
       db,
       migrationTableSchema: cfg.schema,

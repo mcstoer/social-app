@@ -151,8 +151,8 @@ function ContentHiderActive({
           modui.noOverride
             ? _(msg`Learn more about the moderation applied to this content`)
             : override
-              ? _(msg`Hides the content`)
-              : _(msg`Shows the content`)
+            ? _(msg`Hides the content`)
+            : _(msg`Shows the content`)
         }>
         {state => (
           <View

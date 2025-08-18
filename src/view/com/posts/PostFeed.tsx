@@ -23,6 +23,7 @@ import {isStatusStillActive, validateStatus} from '#/lib/actor-status'
 import {DISCOVER_FEED_URI, KNOWN_SHUTDOWN_FEEDS} from '#/lib/constants'
 import {useInitialNumToRender} from '#/lib/hooks/useInitialNumToRender'
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
+import {useAIFeedStatusTracker} from '#/lib/llm-feed/ai-feed-status'
 import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
 import {isIOS, isNative, isWeb} from '#/platform/detection'
@@ -262,6 +263,10 @@ let PostFeed = ({
     () => !isFetching && !data?.pages?.some(page => page.slices.length),
     [isFetching, data],
   )
+
+  // Track AI feed status based on user-visible feed state
+  const hasData = Boolean(data?.pages?.length)
+  useAIFeedStatusTracker(feed, isFetching, isError, hasData, isEmpty)
 
   const checkForNew = useNonReactiveCallback(async () => {
     if (!data?.pages[0] || isFetching || !onHasNew || !enabled || disablePoll) {

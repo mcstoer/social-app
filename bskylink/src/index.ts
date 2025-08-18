@@ -17,10 +17,7 @@ export class LinkService {
   public server?: http.Server
   private terminator?: HttpTerminator
 
-  constructor(
-    public app: express.Application,
-    public ctx: AppContext,
-  ) {}
+  constructor(public app: express.Application, public ctx: AppContext) {}
 
   static async create(cfg: Config): Promise<LinkService> {
     let app = express()

@@ -153,8 +153,8 @@ export function useModerationCauseDescription(
           def.identifier === '!no-unauthenticated'
             ? EyeSlash
             : def.severity === 'alert'
-              ? Warning
-              : CircleInfo,
+            ? Warning
+            : CircleInfo,
         name: strings.name,
         description: strings.description,
         source,

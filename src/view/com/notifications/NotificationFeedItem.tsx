@@ -134,7 +134,9 @@ let NotificationFeedItem = ({
         for (const post of [item.notification, ...(item.additional ?? [])]) {
           posts.push(post.uri)
         }
-        return `/notifications/activity?posts=${encodeURIComponent(posts.slice(0, 25).join(','))}`
+        return `/notifications/activity?posts=${encodeURIComponent(
+          posts.slice(0, 25).join(','),
+        )}`
       }
     }
 

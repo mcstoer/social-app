@@ -231,6 +231,14 @@ export function SettingsScreen({}: Props) {
               <Trans>Languages</Trans>
             </SettingsList.ItemText>
           </SettingsList.LinkItem>
+          <SettingsList.LinkItem
+            to="/settings/personality"
+            label={_(msg`LLM Personality`)}>
+            <SettingsList.ItemIcon icon={PersonIcon} />
+            <SettingsList.ItemText>
+              <Trans>LLM Personality</Trans>
+            </SettingsList.ItemText>
+          </SettingsList.LinkItem>
           <SettingsList.PressableItem
             onPress={() => Linking.openURL(HELP_DESK_URL)}
             label={_(msg`Help`)}

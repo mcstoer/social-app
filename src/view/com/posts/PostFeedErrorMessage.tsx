@@ -123,7 +123,7 @@ function FeedgenErrorMessage({
         [KnownError.FeedTooManyRequests]: _l(
           msgLingui`This feed is currently receiving high traffic and is temporarily unavailable. Please try again later.`,
         ),
-      })[knownError],
+      }[knownError]),
     [_l, knownError],
   )
   const [_, uri] = feedDesc.split('|')

@@ -210,7 +210,7 @@ function ListImpl<ItemT>(
             behavior: animated ? 'smooth' : 'instant',
           })
         },
-      }) as any, // TODO: Better types.
+      } as any), // TODO: Better types.
     [getScrollableNode],
   )
 

@@ -136,7 +136,10 @@ function DialogInner({
           logger.metric('activitySubscription:disable', {})
           Toast.show(
             _(
-              msg`You will no longer receive notifications for ${sanitizeHandle(profile.handle, '@')}`,
+              msg`You will no longer receive notifications for ${sanitizeHandle(
+                profile.handle,
+                '@',
+              )}`,
             ),
             'check',
           )
@@ -166,7 +169,10 @@ function DialogInner({
           if (!initialState.post && !initialState.reply) {
             Toast.show(
               _(
-                msg`You'll start receiving notifications for ${sanitizeHandle(profile.handle, '@')}!`,
+                msg`You'll start receiving notifications for ${sanitizeHandle(
+                  profile.handle,
+                  '@',
+                )}!`,
               ),
               'check',
             )

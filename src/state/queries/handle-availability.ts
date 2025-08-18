@@ -104,7 +104,9 @@ export async function checkHandleAvailability(
       } as const
     } else {
       throw new Error(
-        `Unexpected result of \`checkHandleAvailability\`: ${JSON.stringify(data.result)}`,
+        `Unexpected result of \`checkHandleAvailability\`: ${JSON.stringify(
+          data.result,
+        )}`,
       )
     }
   } else {

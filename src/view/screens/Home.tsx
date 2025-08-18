@@ -6,6 +6,8 @@ import {PROD_DEFAULT_FEED} from '#/lib/constants'
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {useOTAUpdates} from '#/lib/hooks/useOTAUpdates'
 import {useSetTitle} from '#/lib/hooks/useSetTitle'
+import {AIFeedStatusProvider} from '#/lib/llm-feed/ai-feed-status'
+import {aiModeFeedInfo} from '#/lib/llm-feed/feed-infos.ts'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {
   type HomeTabNavigatorParams,
@@ -40,7 +42,17 @@ import * as Layout from '#/components/Layout'
 import {useDemoMode} from '#/storage/hooks/demo-mode'
 
 type Props = NativeStackScreenProps<HomeTabNavigatorParams, 'Home' | 'Start'>
+
+// Wrapper component to provide AI feed status
 export function HomeScreen(props: Props) {
+  return (
+    <AIFeedStatusProvider>
+      <HomeScreenWithStatus {...props} />
+    </AIFeedStatusProvider>
+  )
+}
+
+function HomeScreenWithStatus(props: Props) {
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const {data: preferences} = usePreferencesQuery()
   const {currentAccount} = useSession()
@@ -78,12 +90,16 @@ export function HomeScreen(props: Props) {
   ])
 
   if (preferences && pinnedFeedInfos && !isPinnedFeedsLoading) {
+    // Add AI feed into 2nd position
+    // Create a new array instead of mutating the one from the hook
+    const feedInfosWithAI = [...pinnedFeedInfos]
+    feedInfosWithAI.splice(1, 0, aiModeFeedInfo)
     return (
       <Layout.Screen testID="HomeScreen">
         <HomeScreenReady
           {...props}
           preferences={preferences}
-          pinnedFeedInfos={pinnedFeedInfos}
+          pinnedFeedInfos={feedInfosWithAI}
         />
       </Layout.Screen>
     )

@@ -626,8 +626,8 @@ let PostThreadItemLoaded = ({
                   showChildReplyLine && !isThreadedChild
                     ? 0
                     : isThreadedChildAdjacentBot
-                      ? 4
-                      : 8,
+                    ? 4
+                    : 8,
               },
             ]}>
             {/* If we are in threaded mode, the avatar is rendered in PostMeta */}

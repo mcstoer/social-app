@@ -76,8 +76,8 @@ export function WhoCanReply({post, isThreadAuthor, style}: WhoCanReplyProps) {
   const description = anyoneCanReply
     ? _(msg`Everybody can reply`)
     : noOneCanReply
-      ? _(msg`Replies disabled`)
-      : _(msg`Some people can reply`)
+    ? _(msg`Replies disabled`)
+    : _(msg`Some people can reply`)
 
   const onPressOpen = () => {
     if (isNative && Keyboard.isVisible()) {

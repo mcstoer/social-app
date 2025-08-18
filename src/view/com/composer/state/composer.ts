@@ -519,12 +519,12 @@ export function createComposerState({
     text: initText
       ? initText
       : initMention
-        ? insertMentionAt(
-            `@${initMention}`,
-            initMention.length + 1,
-            `${initMention}`,
-          )
-        : '',
+      ? insertMentionAt(
+          `@${initMention}`,
+          initMention.length + 1,
+          `${initMention}`,
+        )
+      : '',
   })
 
   let link: Link | undefined

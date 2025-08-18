@@ -51,8 +51,8 @@ function createStatsigOptions(prefetchUsers: StatsigUser[]) {
       tier: env.IS_DEV
         ? 'development'
         : env.IS_TESTFLIGHT
-          ? 'staging'
-          : 'production',
+        ? 'staging'
+        : 'production',
     },
     // Don't block on waiting for network. The fetched config will kick in on next load.
     // This ensures the UI is always consistent and doesn't update mid-session.

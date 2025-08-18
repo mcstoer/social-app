@@ -121,8 +121,8 @@ function LightboxInner({
                     img.type === 'circle-avi'
                       ? '50%'
                       : img.type === 'rect-avi'
-                        ? '10%'
-                        : 0,
+                      ? '10%'
+                      : 0,
                 } as ImageStyle
               }
               alt={img.alt}

@@ -135,6 +135,7 @@ import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
 import {useAccountSwitcher} from './lib/hooks/useAccountSwitcher'
 import {useNonReactiveCallback} from './lib/hooks/useNonReactiveCallback'
+import {PersonalitySettingsScreen} from './screens/Settings/PersonalitySettings'
 import {useLoggedOutViewControls} from './state/shell/logged-out'
 import {useCloseAllActiveElements} from './state/util'
 
@@ -529,6 +530,14 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         getComponent={() => AppIconSettingsScreen}
         options={{
           title: title(msg`App Icon`),
+          requireAuth: true,
+        }}
+      />
+      <Stack.Screen
+        name="PersonalitySettings"
+        getComponent={() => PersonalitySettingsScreen}
+        options={{
+          title: title(msg`LLM Personality`),
           requireAuth: true,
         }}
       />

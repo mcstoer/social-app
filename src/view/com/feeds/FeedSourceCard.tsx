@@ -184,8 +184,14 @@ export function FeedSourceCardLoaded({
         testID={`feed-${feed.displayName}`}
         label={_(
           feed.type === 'feed'
-            ? msg`${feed.displayName}, a feed by ${sanitizeHandle(feed.creatorHandle, '@')}, liked by ${feed.likeCount || 0}`
-            : msg`${feed.displayName}, a list by ${sanitizeHandle(feed.creatorHandle, '@')}`,
+            ? msg`${feed.displayName}, a feed by ${sanitizeHandle(
+                feed.creatorHandle,
+                '@',
+              )}, liked by ${feed.likeCount || 0}`
+            : msg`${feed.displayName}, a list by ${sanitizeHandle(
+                feed.creatorHandle,
+                '@',
+              )}`,
         )}
         to={{
           screen: feed.type === 'feed' ? 'ProfileFeed' : 'ProfileList',

@@ -34,8 +34,8 @@ export function sanitizeHandle(
   return isInvalidHandle(handle)
     ? '⚠Invalid Handle'
     : forceLeftToRight
-      ? forceLTR(lowercasedWithPrefix)
-      : lowercasedWithPrefix
+    ? forceLTR(lowercasedWithPrefix)
+    : lowercasedWithPrefix
 }
 
 export interface IsValidHandle {

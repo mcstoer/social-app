@@ -29,8 +29,8 @@ export function getModerationCauseKey(
     cause.source.type === 'labeler'
       ? cause.source.did
       : cause.source.type === 'list'
-        ? cause.source.list.uri
-        : 'user'
+      ? cause.source.list.uri
+      : 'user'
   if (cause.type === 'label') {
     return `label:${cause.label.val}:${source}`
   }

@@ -177,7 +177,7 @@ export function MessagesScreenInner({navigation, route}: Props) {
             ]
           : []),
         ...conversations.map(
-          convo => ({type: 'CONVERSATION', conversation: convo}) as const,
+          convo => ({type: 'CONVERSATION', conversation: convo} as const),
         ),
       ] satisfies ListItem[]
     }
