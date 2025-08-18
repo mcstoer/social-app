@@ -2,13 +2,13 @@ import React from 'react'
 import {Dimensions, StyleSheet, View} from 'react-native'
 import {
   FontAwesomeIcon,
-  FontAwesomeIconStyle,
+  type FontAwesomeIconStyle,
 } from '@fortawesome/react-native-fontawesome'
 import {Trans} from '@lingui/macro'
 import {useNavigation} from '@react-navigation/native'
 
 import {usePalette} from '#/lib/hooks/usePalette'
-import {NavigationProp} from '#/lib/routes/types'
+import {type NavigationProp} from '#/lib/routes/types'
 import {s} from '#/lib/styles'
 import {isWeb} from '#/platform/detection'
 import {Button} from '../util/forms/Button'
@@ -44,6 +44,12 @@ export function FollowingEndOfFeed() {
           <Trans>
             You've reached the end of your feed! Find some more accounts to
             follow.
+          </Trans>
+        </Text>
+        <Text type="md" style={[s.textCenter, pal.text, s.mt10]}>
+          <Trans>
+            If you're using AI Mode and the status dot is red, set your AI key
+            and refresh the page.
           </Trans>
         </Text>
         <Button

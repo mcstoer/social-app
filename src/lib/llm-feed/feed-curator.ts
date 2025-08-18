@@ -1,5 +1,10 @@
 import OpenAI from 'openai'
 
+import {
+  markAIFeedFailing,
+  markAIFeedInProgress,
+  markAIFeedWorking,
+} from '#/lib/llm-feed/ai-feed-status'
 import {logger} from '#/logger'
 import {FEED_PROMPTS} from './prompts'
 
@@ -44,7 +49,9 @@ export class FeedCurator {
   private stringifyPosts(posts: string[]): string {
     let stringified_posts = ''
     for (let idx = 0; idx < posts.length; idx++) {
-      stringified_posts += `POST INDEX: ${idx + 1}\nPost content:\n${posts[idx]}\n--end content--\n\n`
+      stringified_posts += `POST INDEX: ${idx + 1}\nPost content:\n${
+        posts[idx]
+      }\n--end content--\n\n`
     }
     return stringified_posts
   }
@@ -59,6 +66,8 @@ export class FeedCurator {
     languages?: string,
   ): Promise<number[]> {
     try {
+      // Indicate a new inference attempt is in progress
+      markAIFeedInProgress()
       // Log inputs
       // console.log('==== LLM FEED CURATION STARTED ====');
       // console.log('INPUT - Personality:', personality);
@@ -135,7 +144,7 @@ Prioritize putting more important posts first. But ensure variety.`,
         ...new Set(
           chatCompletion.choices[0].message.content
             ?.split('\n')
-            .map(line => parseInt(line.trim()))
+            .map(line => parseInt(line.trim(), 10))
             .filter(num => !isNaN(num)) // Only keep valid numbers
             .map(num => num - 1) // Convert to 0-based indices
             .filter(idx => idx >= 0 && idx < posts.length), // Ensure index is valid
@@ -146,6 +155,9 @@ Prioritize putting more important posts first. But ensure variety.`,
       // console.log('POSTS:', posts);
 
       // Return selected post IDs in the order specified by the deduplicated indices
+      if (selectedIndices.length > 0) {
+        markAIFeedWorking()
+      }
       return selectedIndices
     } catch (error) {
       // Reduce console logging and rely on visual indicator instead
@@ -157,6 +169,8 @@ Prioritize putting more important posts first. But ensure variety.`,
         postsCount: posts.length,
         subscriptionsCount: subscriptions.length,
       })
+      // Signal failure so the status indicator turns red
+      markAIFeedFailing()
       return []
     }
   }

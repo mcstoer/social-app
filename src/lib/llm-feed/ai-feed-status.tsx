@@ -25,12 +25,53 @@ export function AIFeedStatusProvider({children}: {children: ReactNode}) {
     markFailing: () => setStatus('failing'),
   }
 
+  // Keep external setter reference in sync for non-React callers
+  React.useEffect(() => {
+    latestSetStatusRef = setStatus
+    return () => {
+      if (latestSetStatusRef === setStatus) {
+        latestSetStatusRef = null
+      }
+    }
+  }, [setStatus])
+
   return (
     <AIFeedStatusContext.Provider value={{status, setStatus, updateStatus}}>
       {children}
     </AIFeedStatusContext.Provider>
   )
 }
+
+// --- External control API ---------------------------------------------------
+// Allows non-React codepaths (e.g., background fetchers/curators) to update
+// the status indicator when they observe hard failures like 401s.
+
+let latestSetStatusRef: ((status: AIFeedStatus) => void) | null = null
+
+// Capture the latest setStatus from the mounted provider
+export function registerAIFeedStatusSetter(
+  setter: (status: AIFeedStatus) => void,
+) {
+  latestSetStatusRef = setter
+}
+
+// Utility fns for external callers
+export function markAIFeedFailing() {
+  latestSetStatusRef?.('failing')
+}
+
+export function markAIFeedInProgress() {
+  latestSetStatusRef?.('in_progress')
+}
+
+export function markAIFeedWorking() {
+  latestSetStatusRef?.('working')
+}
+
+// Keep latest setter in sync with the mounted provider
+// Note: using a separate function to avoid changing the provider signature
+// Deprecated: prefer provider-managed registration above
+export function useSyncAIFeedStatusSetter() {}
 
 export function useAIFeedStatus() {
   const context = useContext(AIFeedStatusContext)
@@ -61,12 +102,20 @@ export function useAIFeedStatusTracker(
 
     if (isError) {
       ctx.updateStatus.markFailing()
-    } else if (hasData && !isEmpty) {
+      return
+    }
+
+    if (hasData && !isEmpty) {
       // Posts are visible - all is well from user perspective
       ctx.updateStatus.markWorking()
-    } else if (isFetching || !hasData) {
+      return
+    }
+
+    if (isFetching || !hasData) {
       // Still loading initial posts or no data yet
-      ctx.updateStatus.markInProgress()
+      if (ctx.status !== 'failing') {
+        ctx.updateStatus.markInProgress()
+      }
     }
   }, [feed, isFetching, isError, hasData, isEmpty, ctx])
 }
