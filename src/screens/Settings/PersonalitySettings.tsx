@@ -22,6 +22,8 @@ import {
   type NativeStackScreenProps,
 } from '#/lib/routes/types'
 import {logger} from '#/logger'
+import {isWeb} from '#/platform/detection'
+import {emitSoftReset} from '#/state/events'
 import {resetPostsFeedQueries} from '#/state/queries/post-feed'
 import {useAgent} from '#/state/session'
 import {Button} from '#/view/com/util/forms/Button'
@@ -108,6 +110,16 @@ export function PersonalitySettingsScreen({}: Props) {
 
       // Reset feed queries so new API instance and updated key are used immediately
       resetPostsFeedQueries(queryClient)
+
+      // Least-obvious refresh: on web, reload the page; otherwise, emit a soft reset
+      if (isWeb) {
+        setTimeout(() => {
+          // Reload the app to guarantee old background tasks are gone
+          window.location.reload()
+        }, 50)
+      } else {
+        emitSoftReset()
+      }
 
       Toast.show(_(msg`Settings saved`))
     } catch (e) {
