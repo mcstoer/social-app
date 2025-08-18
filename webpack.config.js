@@ -1,4 +1,5 @@
 const createExpoWebpackConfigAsync = require('@expo/webpack-config')
+const path = require('path')
 const {withAlias} = require('@expo/webpack-config/addons')
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
@@ -31,6 +32,16 @@ module.exports = async function (env, argv) {
     // Fix for @mozzius/expo-dynamic-app-icon web support
     '@mozzius/expo-dynamic-app-icon$':
       '@mozzius/expo-dynamic-app-icon/build/index.web.js',
+    // Web shim for expo-intent-launcher (Android-only API)
+    'expo-intent-launcher$': path.resolve(
+      __dirname,
+      'src/shims/expo-intent-launcher.web.ts',
+    ),
+    // Web shim for react-native-device-attest (native-only API)
+    'react-native-device-attest$': path.resolve(
+      __dirname,
+      'src/shims/react-native-device-attest.web.ts',
+    ),
   })
   config.module.rules = [
     ...(config.module.rules || []),
