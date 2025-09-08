@@ -26,6 +26,7 @@ import {Trash_Stroke2_Corner2_Rounded} from '#/components/icons/Trash'
 import {Verified_Stroke2_Corner2_Rounded} from '#/components/icons/Verified'
 import * as Layout from '#/components/Layout'
 import {ChangeHandleDialog} from './components/ChangeHandleDialog'
+import {ChangePasswordDialog} from './components/ChangePasswordDialog'
 import {DeactivateAccountDialog} from './components/DeactivateAccountDialog'
 import {ExportCarDialog} from './components/ExportCarDialog'
 
@@ -38,6 +39,7 @@ export function AccountSettingsScreen({}: Props) {
   const emailDialogControl = useEmailDialogControl()
   const birthdayControl = useDialogControl()
   const changeHandleControl = useDialogControl()
+  const changePasswordControl = useDialogControl()
   const exportCarControl = useDialogControl()
   const deactivateAccountControl = useDialogControl()
 
@@ -144,7 +146,7 @@ export function AccountSettingsScreen({}: Props) {
           <SettingsList.Divider />
           <SettingsList.PressableItem
             label={_(msg`Password`)}
-            onPress={() => openModal({name: 'change-password'})}>
+            onPress={() => changePasswordControl.open()}>
             <SettingsList.ItemIcon icon={LockIcon} />
             <SettingsList.ItemText>
               <Trans>Password</Trans>
@@ -218,6 +220,7 @@ export function AccountSettingsScreen({}: Props) {
 
       <BirthDateSettingsDialog control={birthdayControl} />
       <ChangeHandleDialog control={changeHandleControl} />
+      <ChangePasswordDialog control={changePasswordControl} />
       <ExportCarDialog control={exportCarControl} />
       <DeactivateAccountDialog control={deactivateAccountControl} />
     </Layout.Screen>

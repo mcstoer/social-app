@@ -21,8 +21,8 @@ import {Provider as DialogStateProvider} from '#/state/dialogs'
 import {Provider as EmailVerificationProvider} from '#/state/email-verification'
 import {listenSessionDropped} from '#/state/events'
 import {
-  beginResolveGeolocation,
-  ensureGeolocationResolved,
+  beginResolveGeolocationConfig,
+  ensureGeolocationConfigIsResolved,
   Provider as GeolocationProvider,
 } from '#/state/geolocation'
 import {Provider as HomeBadgeProvider} from '#/state/home-badge'
@@ -63,7 +63,7 @@ import {Provider as PolicyUpdateOverlayProvider} from '#/components/PolicyUpdate
 import {Provider as PortalProvider} from '#/components/Portal'
 import {Provider as ActiveVideoProvider} from '#/components/Post/Embed/VideoEmbed/ActiveVideoWebContext'
 import {Provider as VideoVolumeProvider} from '#/components/Post/Embed/VideoEmbed/VideoVolumeContext'
-import {ToastContainer} from '#/components/Toast'
+import {ToastOutlet} from '#/components/Toast'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
 import {LOCAL_DEV_VSKY_LOGIN_SERVER} from './lib/constants'
 import {Provider as HideBottomBarBorderProvider} from './lib/hooks/useHideBottomBarBorder'
@@ -71,7 +71,7 @@ import {Provider as HideBottomBarBorderProvider} from './lib/hooks/useHideBottom
 /**
  * Begin geolocation ASAP
  */
-beginResolveGeolocation()
+beginResolveGeolocationConfig()
 
 function InnerApp() {
   const [isReady, setIsReady] = React.useState(false)
@@ -148,6 +148,7 @@ function InnerApp() {
                                                               }>
                                                               <Shell />
                                                               <NuxDialogs />
+                                                              <ToastOutlet />
                                                             </VerusDaemonProvider>
                                                           </IntentDialogProvider>
                                                         </HideBottomBarBorderProvider>
@@ -170,7 +171,6 @@ function InnerApp() {
                       </StatsigProvider>
                     </PolicyUpdateOverlayProvider>
                   </QueryProvider>
-                  <ToastContainer />
                 </React.Fragment>
               </ActiveVideoProvider>
             </VideoVolumeProvider>
@@ -185,9 +185,10 @@ function App() {
   const [isReady, setReady] = useState(false)
 
   React.useEffect(() => {
-    Promise.all([initPersistedState(), ensureGeolocationResolved()]).then(() =>
-      setReady(true),
-    )
+    Promise.all([
+      initPersistedState(),
+      ensureGeolocationConfigIsResolved(),
+    ]).then(() => setReady(true))
   }, [])
 
   if (!isReady) {

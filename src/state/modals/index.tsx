@@ -35,14 +35,6 @@ export interface ContentLanguagesSettingsModal {
   name: 'content-languages-settings'
 }
 
-export interface PostLanguagesSettingsModal {
-  name: 'post-languages-settings'
-}
-
-export interface ChangePasswordModal {
-  name: 'change-password'
-}
-
 export interface UpdateVeruSkyCredentialsModal {
   name: 'update-verusky-credentials'
   password?: string
@@ -54,12 +46,10 @@ export interface UpdateVeruSkyCredentialsModal {
 export type Modal =
   // Account
   | DeleteAccountModal
-  | ChangePasswordModal
   | UpdateVeruSkyCredentialsModal
 
   // Curation
   | ContentLanguagesSettingsModal
-  | PostLanguagesSettingsModal
 
   // Lists
   | CreateOrEditListModal

@@ -55,7 +55,6 @@ import {DebugModScreen} from '#/view/screens/DebugMod'
 import {FeedsScreen} from '#/view/screens/Feeds'
 import {HomeScreen} from '#/view/screens/Home'
 import {ListsScreen} from '#/view/screens/Lists'
-import {LogScreen} from '#/view/screens/Log'
 import {ModerationBlockedAccounts} from '#/view/screens/ModerationBlockedAccounts'
 import {ModerationModlistsScreen} from '#/view/screens/ModerationModlists'
 import {ModerationMutedAccounts} from '#/view/screens/ModerationMutedAccounts'
@@ -72,8 +71,10 @@ import {SupportScreen} from '#/view/screens/Support'
 import {TermsOfServiceScreen} from '#/view/screens/TermsOfService'
 import {BottomBar} from '#/view/shell/bottom-bar/BottomBar'
 import {createNativeStackNavigatorWithAuth} from '#/view/shell/createNativeStackNavigatorWithAuth'
+import {BookmarksScreen} from '#/screens/Bookmarks'
 import {SharedPreferencesTesterScreen} from '#/screens/E2E/SharedPreferencesTesterScreen'
 import HashtagScreen from '#/screens/Hashtag'
+import {LogScreen} from '#/screens/Log'
 import {MessagesScreen} from '#/screens/Messages/ChatList'
 import {MessagesConversationScreen} from '#/screens/Messages/Conversation'
 import {MessagesInboxScreen} from '#/screens/Messages/Inbox'
@@ -597,6 +598,14 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         getComponent={() => VideoFeed}
         options={{
           title: title(msg`Video Feed`),
+          requireAuth: true,
+        }}
+      />
+      <Stack.Screen
+        name="Bookmarks"
+        getComponent={() => BookmarksScreen}
+        options={{
+          title: title(msg`Saved Posts`),
           requireAuth: true,
         }}
       />
