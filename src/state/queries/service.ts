@@ -9,7 +9,7 @@ export const RQKEY = (serviceUrl: string) => [RQKEY_ROOT, serviceUrl]
 export function useServiceQuery(serviceUrl: string) {
   let url = serviceUrl
 
-  // Redirect the VeruSky service to the Bluesky service that is uses.
+  // Redirect the VerusSky service to the Bluesky service that is uses.
   if (serviceUrl === VSKY_SERVICE) {
     url = BSKY_SERVICE
   }

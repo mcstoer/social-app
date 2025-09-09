@@ -155,11 +155,11 @@ export function AccountSettingsScreen({}: Props) {
           </SettingsList.PressableItem>
           {currentAccount?.type === 'vsky' && (
             <SettingsList.PressableItem
-              label={_(msg`Update VeruSky Credentials`)}
-              onPress={() => openModal({name: 'update-verusky-credentials'})}>
+              label={_(msg`Update VerusSky Credentials`)}
+              onPress={() => openModal({name: 'update-verussky-credentials'})}>
               <SettingsList.ItemIcon icon={LockIcon} />
               <SettingsList.ItemText>
-                <Trans>Update VeruSky Credentials</Trans>
+                <Trans>Update VerusSky Credentials</Trans>
               </SettingsList.ItemText>
               <SettingsList.Chevron />
             </SettingsList.PressableItem>

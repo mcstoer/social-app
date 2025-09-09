@@ -11,7 +11,7 @@ app.use('/api/v1', v1Router)
 
 app.all('*', (req, res) => {
   res.status(404)
-  res.send('VeruSky Signing Server')
+  res.send('VerusSky Signing Server')
 })
 
 export {app}

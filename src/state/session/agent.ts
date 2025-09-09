@@ -55,7 +55,7 @@ export async function createAgentAndResume(
   // Restore either the standard BskyAppAgent or the VskyAppAgent.
   if (storedAccount.type === 'vsky') {
     const vskyAppAgent = new VskyAppAgent({service: storedAccount.service})
-    // Restore the VeruSky session separately from standard session.
+    // Restore the VerusSky session separately from standard session.
     vskyAppAgent.vskySession = {
       auth: storedAccount.auth,
       id: storedAccount.id,

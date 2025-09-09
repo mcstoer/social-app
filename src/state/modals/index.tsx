@@ -35,8 +35,8 @@ export interface ContentLanguagesSettingsModal {
   name: 'content-languages-settings'
 }
 
-export interface UpdateVeruSkyCredentialsModal {
-  name: 'update-verusky-credentials'
+export interface UpdateVerusSkyCredentialsModal {
+  name: 'update-verussky-credentials'
   password?: string
 }
 
@@ -46,7 +46,7 @@ export interface UpdateVeruSkyCredentialsModal {
 export type Modal =
   // Account
   | DeleteAccountModal
-  | UpdateVeruSkyCredentialsModal
+  | UpdateVerusSkyCredentialsModal
 
   // Curation
   | ContentLanguagesSettingsModal

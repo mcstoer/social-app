@@ -103,9 +103,9 @@ With the data descriptors, the command should look similar to the following.
 
 1. Visit [http://localhost:19006](http://localhost:19006), the web app's URL.
 2. Click the "Sign in" button.
-3. With the account provider as "VeruSky", click the "Next" button. You may have to wait briefly for the "Next" button to load.
+3. With the account provider as "VerusSky", click the "Next" button. You may have to wait briefly for the "Next" button to load.
 4. This should automatically open the Desktop Wallet if deeplinks are properly configured.
     - If this does not open on Linux, check [Setting up Deeplinks with the Desktop Wallet](#setting-up-deeplinks-with-the-desktop-wallet)
-6. Review the login prompts and select the identity containing the credentials (`VeruSky@`).
+6. Review the login prompts and select the identity containing the credentials (`VerusSky@`).
 7. Click "Done" and return back to the web app. The login should then complete after a brief moment.
 8. Going into "Settings" and then "Account" will show you the identity's name at the top, above the email address.

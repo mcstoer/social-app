@@ -11,7 +11,7 @@ import * as CreateOrEditListModal from './CreateOrEditList'
 import * as DeleteAccountModal from './DeleteAccount'
 import * as InviteCodesModal from './InviteCodes'
 import * as ContentLanguagesSettingsModal from './lang-settings/ContentLanguagesSettings'
-import * as UpdateVeruSkyCredentialsModal from './UpdateVeruSkyCredentials'
+import * as UpdateVerusSkyCredentialsModal from './UpdateVerusSkyCredentials'
 import * as UserAddRemoveListsModal from './UserAddRemoveLists'
 
 const DEFAULT_SNAPPOINTS = ['90%']
@@ -60,9 +60,9 @@ export function ModalsContainer() {
   } else if (activeModal?.name === 'content-languages-settings') {
     snapPoints = ContentLanguagesSettingsModal.snapPoints
     element = <ContentLanguagesSettingsModal.Component />
-  } else if (activeModal?.name === 'update-verusky-credentials') {
-    snapPoints = UpdateVeruSkyCredentialsModal.snapPoints
-    element = <UpdateVeruSkyCredentialsModal.Component {...activeModal} />
+  } else if (activeModal?.name === 'update-verussky-credentials') {
+    snapPoints = UpdateVerusSkyCredentialsModal.snapPoints
+    element = <UpdateVerusSkyCredentialsModal.Component {...activeModal} />
   } else {
     return null
   }

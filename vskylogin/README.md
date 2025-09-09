@@ -1,4 +1,4 @@
-# VeruSky Login Server
+# VerusSky Login Server
 
 This is for generating login requests and handling calls to the Verus daemon.
 

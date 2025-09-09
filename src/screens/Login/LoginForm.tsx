@@ -207,13 +207,13 @@ export const LoginForm = ({
       // Wait until the login screen is gone before showing the modal.
       if (isManualLoginAfterVskyFailed) {
         logger.debug(
-          'Successfully logged in manually after VeruSky login failed',
+          'Successfully logged in manually after VerusSky login failed',
         )
 
         // Delay opening the modal in order to allow for transitioning away from the login screen.
         setTimeout(() => {
           openModal({
-            name: 'update-verusky-credentials',
+            name: 'update-verussky-credentials',
             password: password,
           })
         }, 500)
@@ -241,7 +241,7 @@ export const LoginForm = ({
             error: errMsg,
           })
 
-          // Fallback to standard login if the VeruSky login has invalid credentials.
+          // Fallback to standard login if the VerusSky login has invalid credentials.
           if (isVskyService && !needsManualLogin) {
             setNeedsManualLogin(true)
             setError(
@@ -317,11 +317,11 @@ export const LoginForm = ({
               context?.kv[primitives.IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]
 
             if (!credentialHex) {
-              logger.warn('Failed to find credentials in VeruSky login.')
+              logger.warn('Failed to find credentials in VerusSky login.')
               setNeedsManualLogin(true)
               setError(
                 _(
-                  msg`Missing login credentials from VeruSky. Please log in manually.`,
+                  msg`Missing login credentials from VerusSky. Please log in manually.`,
                 ),
               )
               setIsProcessing(false)
@@ -343,32 +343,32 @@ export const LoginForm = ({
               // If the credentials don't exist, then the user needs to manually input them.
               if (!plainLogin || !Array.isArray(plainLogin)) {
                 logger.warn(
-                  'Failed to find the username and password from the VeruSky login.',
+                  'Failed to find the username and password from the VerusSky login.',
                 )
                 setNeedsManualLogin(true)
                 setError(
                   _(
-                    msg`Missing username and password from VeruSky login. Please log in manually.`,
+                    msg`Missing username and password from VerusSky login. Please log in manually.`,
                   ),
                 )
               } else if (!plainLogin[0]) {
                 logger.warn(
-                  'Failed to find the username from the VeruSky login.',
+                  'Failed to find the username from the VerusSky login.',
                 )
                 setNeedsManualLogin(true)
                 setError(
                   _(
-                    msg`Missing username from VeruSky login. Please log in manually.`,
+                    msg`Missing username from VerusSky login. Please log in manually.`,
                   ),
                 )
               } else if (!plainLogin[1]) {
                 logger.warn(
-                  'Failed to find the password from the VeruSky login.',
+                  'Failed to find the password from the VerusSky login.',
                 )
                 setNeedsManualLogin(true)
                 setError(
                   _(
-                    msg`Missing password from VeruSky login. Please log in manually.`,
+                    msg`Missing password from VerusSky login. Please log in manually.`,
                   ),
                 )
               }
@@ -376,17 +376,17 @@ export const LoginForm = ({
             }
           } else {
             logger.warn('Failed to login due to invalid login response')
-            setError(_(msg`Unable to validate the VeruSky login.`))
+            setError(_(msg`Unable to validate the VerusSky login.`))
           }
         } else {
           logger.warn(
             'Failed to login due to unknown signing ID in login response',
           )
-          setError(_(msg`Unable to lookup VeruSky login ID.`))
+          setError(_(msg`Unable to lookup VerusSky login ID.`))
         }
       } catch (e: any) {
         const errMsg = e.toString()
-        logger.warn('Failed to verify VeruSky login response', {error: errMsg})
+        logger.warn('Failed to verify VerusSky login response', {error: errMsg})
         setError(cleanError(errMsg))
       }
     }
@@ -571,7 +571,7 @@ export const LoginForm = ({
               <Button
                 testID="vskyRetryButton"
                 label={_(msg`Retry`)}
-                accessibilityHint={_(msg`Retries VeruSky login`)}
+                accessibilityHint={_(msg`Retries VerusSky login`)}
                 variant="solid"
                 color="secondary"
                 size="large"

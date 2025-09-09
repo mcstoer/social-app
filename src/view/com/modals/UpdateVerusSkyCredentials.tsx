@@ -68,7 +68,7 @@ export function Component({password: initialPassword}: {password?: string}) {
 
   // Log when the state is initialized
   useEffect(() => {
-    logger.debug('UpdateVeruSkyCredentials state initialized', {
+    logger.debug('UpdateVerusSkyCredentials state initialized', {
       email: email ? 'Set' : 'Empty',
       password: password ? 'Set' : 'Empty',
     })
@@ -120,7 +120,7 @@ export function Component({password: initialPassword}: {password?: string}) {
 
         if (isVerified && identityUpdateResponse.details.containsTxid()) {
           setStage(Stages.Done)
-          logger.debug('Successfully updated VeruSky credentials')
+          logger.debug('Successfully updated VerusSky credentials')
         } else {
           if (!isVerified) {
             setError(_(msg`Failed to verify credential update response`))
@@ -173,7 +173,7 @@ export function Component({password: initialPassword}: {password?: string}) {
     }
 
     if (currentAccount?.type !== 'vsky') {
-      setError(_(msg`Unable to update credentials for non-VeruSky accounts`))
+      setError(_(msg`Unable to update credentials for non-VerusSky accounts`))
       return
     }
 
