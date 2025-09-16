@@ -74,7 +74,14 @@ export const LoginForm = ({
     useState<boolean>(false)
   const [isAuthFactorTokenValueEmpty, setIsAuthFactorTokenValueEmpty] =
     useState<boolean>(true)
-  const [needsManualLogin, setNeedsManualLogin] = useState<boolean>(false)
+  const needsManualLoginRef = useRef<boolean>(false)
+
+  // Helper functions to update the ref and trigger re-render
+  const setNeedsManualLogin = (value: boolean) => {
+    needsManualLoginRef.current = value
+  }
+  const needsManualLogin = needsManualLoginRef.current
+
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
   const authFactorTokenValueRef = useRef<string>('')
@@ -196,7 +203,8 @@ export const LoginForm = ({
         'LoginForm',
       )
 
-      const isManualLoginAfterVskyFailed = isVskyService && needsManualLogin
+      const isManualLoginAfterVskyFailed =
+        isVskyService && needsManualLoginRef.current
 
       onAttemptSuccess()
       setHasCheckedForStarterPack(true)
@@ -242,7 +250,7 @@ export const LoginForm = ({
           })
 
           // Fallback to standard login if the VerusSky login has invalid credentials.
-          if (isVskyService && !needsManualLogin) {
+          if (isVskyService && !needsManualLoginRef.current) {
             setNeedsManualLogin(true)
             setError(
               _(
@@ -279,6 +287,9 @@ export const LoginForm = ({
 
   // checkForVskyLogin polls the login server for the login and passes the details to onPressNext.
   const checkForVskyLogin = async () => {
+    // Reset the manual login state when we start checking for a new login via Verus.
+    setNeedsManualLogin(false)
+
     const pollInterval = 1000
 
     const getLogin = async () => {
@@ -577,8 +588,8 @@ export const LoginForm = ({
                 size="large"
                 onPress={() => {
                   setNeedsManualLogin(false)
-                  startVskyLogin()
                   setError('')
+                  startVskyLogin()
                 }}
                 style={[a.mr_sm]}>
                 <ButtonText>
