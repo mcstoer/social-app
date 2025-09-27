@@ -124,7 +124,7 @@ export function AccountSettingsScreen({}: Props) {
                 color={t.palette.primary_500}
               />
               <SettingsList.ItemText
-                style={[{color: t.palette.primary_500}, a.font_bold]}>
+                style={[{color: t.palette.primary_500}, a.font_semi_bold]}>
                 <Trans>Verify your email</Trans>
               </SettingsList.ItemText>
               <SettingsList.Chevron color={t.palette.primary_500} />
