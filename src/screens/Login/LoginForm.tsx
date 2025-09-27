@@ -76,7 +76,6 @@ export const LoginForm = ({
     useState<boolean>(true)
   const needsManualLoginRef = useRef<boolean>(false)
 
-  // Helper functions to update the ref and trigger re-render
   const setNeedsManualLogin = (value: boolean) => {
     needsManualLoginRef.current = value
   }
