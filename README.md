@@ -6,8 +6,9 @@
 
 Before you begin, make sure you have the following installed:
 
-- [Node.js 20 or higher](https://nodejs.org/en/download/)
-    - For Windows users: [Node.js 20.9.0 release notes](https://nodejs.org/en/blog/release/v20.9.0)
+- [Node.js 20.19.4 or higher](https://nodejs.org/en/download/)
+    - Node.js 20.19.5 (LTS) is recommended
+    - For Windows users: [Node.js 20.19.5 download](https://nodejs.org/en/download/archive/v20.19.5)
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
 - The following Verus Desktop Wallet development environment branches (required for local development):
     - [Verus Desktop (password-manager)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager)
