@@ -287,7 +287,7 @@ export function Component({password: initialPassword}: {password?: string}) {
           <Text type="lg" style={[pal.textLight, {marginBottom: 10}]}>
             {stage === Stages.UpdateCredentials ? (
               <Trans>
-                Update your BlueSky credentials stored in your VerusSky login.
+                Update your BlueSky credentials stored in your VerusSky VerusID.
               </Trans>
             ) : stage === Stages.AwaitingResponse ? (
               <Trans>Please confirm the update in your Verus wallet...</Trans>

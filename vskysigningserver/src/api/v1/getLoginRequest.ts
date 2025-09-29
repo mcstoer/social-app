@@ -12,9 +12,9 @@ import {
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
 
+import {signingAddress} from '../../config'
 import {fetchWIF} from '../../utils/signing'
 
-const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
 const BASE_WEBHOOK_URL =
   (process.env.BASE_WEBHOOK_URL as string) || 'http://localhost:21001'
 
@@ -45,9 +45,9 @@ export const generateLoginRequest = async () => {
 
   try {
     const req = await idInterface.createLoginConsentRequest(
-      iaddress,
+      signingAddress,
       challenge,
-      await fetchWIF(iaddress),
+      await fetchWIF(signingAddress),
     )
 
     const uri = req.toWalletDeeplinkUri()

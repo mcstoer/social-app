@@ -8,9 +8,9 @@ import {
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
 
+import {signingAddress} from '../../config'
 import {fetchWIF} from '../../utils/signing'
 
-const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
 const BASE_WEBHOOK_URL =
   (process.env.BASE_WEBHOOK_URL as string) || 'http://localhost:21001'
 
@@ -49,9 +49,9 @@ export const generateIdentityUpdateRequest = async (
 
   try {
     const req = await idInterface.createIdentityUpdateRequest(
-      iaddress,
+      signingAddress,
       details,
-      await fetchWIF(iaddress),
+      await fetchWIF(signingAddress),
     )
 
     // Convert the requestId into a string since the request will convert it to one with toJson().
