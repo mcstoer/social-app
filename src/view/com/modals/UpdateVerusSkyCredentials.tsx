@@ -6,8 +6,8 @@ import {useLingui} from '@lingui/react'
 import {
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
+  IDENTITY_CREDENTIAL,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
-  IDENTITY_CREDENTIALS,
   IdentityUpdateRequestDetails,
   IdentityUpdateResponse,
 } from 'verus-typescript-primitives'
@@ -184,7 +184,7 @@ export function Component({password: initialPassword}: {password?: string}) {
       const identityUpdateDetailCLIJson = {
         name: currentAccount.name + '@',
         contentmultimap: {
-          [IDENTITY_CREDENTIALS.vdxfid]: [
+          [IDENTITY_CREDENTIAL.vdxfid]: [
             {
               [DATA_TYPE_OBJECT_CREDENTIAL.vdxfid]: {
                 version: Credential.VERSION_CURRENT.toNumber(),

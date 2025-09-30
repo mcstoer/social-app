@@ -20369,20 +20369,9 @@ vary@^1, vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==
 
-"verus-typescript-primitives@git+https://github.com/VerusCoin/verus-typescript-primitives.git":
+"verus-typescript-primitives@git+https://github.com/VerusCoin/verus-typescript-primitives.git", "verus-typescript-primitives@git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-key-update", "verus-typescript-primitives@git+https://github.com/michaeltout/verus-typescript-primitives.git#identity-update-request":
   version "1.0.0"
-  resolved "git+https://github.com/VerusCoin/verus-typescript-primitives.git#93a1fdea07e81c7d570ad0803685336d4d7ea838"
-  dependencies:
-    base64url "3.0.1"
-    bech32 "2.0.0"
-    blake2b "https://github.com/VerusCoin/blake2b"
-    bn.js "5.2.1"
-    bs58check "2.0.0"
-    create-hash "1.2.0"
-
-"verus-typescript-primitives@git+https://github.com/michaeltout/verus-typescript-primitives.git#identity-update-request":
-  version "1.0.0"
-  resolved "git+https://github.com/michaeltout/verus-typescript-primitives.git#98106abde48d107b0b3edeedb5cb3482236e1aab"
+  resolved "git+https://github.com/mcstoer/verus-typescript-primitives.git#57f107a0c7a81b27b6ddcdb3cad95cb8cd6279f8"
   dependencies:
     base64url "3.0.1"
     bech32 "2.0.0"
