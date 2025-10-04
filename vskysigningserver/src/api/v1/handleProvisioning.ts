@@ -23,24 +23,20 @@ import {type ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/c
 import VerusdRpcInterface from 'verusd-rpc-ts-client/src/VerusdRpcInterface'
 import {VerusIdInterface} from 'verusid-ts-client'
 
+import {
+  CHAIN,
+  RADDRESS,
+  REMOTE_RPC_URL,
+  SERVER_URL,
+  signingAddress,
+  TRANSFERFQN,
+  verusDaemonConfig,
+} from '../../config'
 import {callRPCDaemon, type rpcResult} from '../../utils/callRPCDaemon'
 import {fetchWIF} from '../../utils/signing'
 
-const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
-const raddress = process.env.RADDRESS as string
-const BASE_URL = (process.env.BASE_URL as string) || 'http://localhost:25000'
-
-const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
-const DEFAULT_URL = process.env.DEFAULT_URL as string
-const RPC_USERNAME = process.env.RPC_USERNAME as string
-const RPC_PASSWORD = process.env.RPC_PASSWORD as string
-const VERUS_RPC_SERVER = process.env.VERUS_RPC_SERVER as string
-
-// const transferid = process.env.TRANSFERID as string;
-const transferfqn = process.env.TRANSFERFQN as string
-
-const idInterface = new VerusIdInterface(DEFAULT_CHAIN, DEFAULT_URL)
-const rpcInterface = new VerusdRpcInterface(DEFAULT_CHAIN, DEFAULT_URL)
+const idInterface = new VerusIdInterface(CHAIN, REMOTE_RPC_URL)
+const rpcInterface = new VerusdRpcInterface(CHAIN, REMOTE_RPC_URL)
 
 export interface NameCommitment {
   txid: string
@@ -63,13 +59,7 @@ export const callDaemon = async (
   command: string,
   parameters?: (string | object)[],
 ): Promise<rpcResult> => {
-  return await callRPCDaemon(
-    VERUS_RPC_SERVER,
-    RPC_USERNAME,
-    RPC_PASSWORD,
-    command,
-    parameters,
-  )
+  return await callRPCDaemon(verusDaemonConfig, command, parameters)
 }
 
 export const registerNameCommitment = async (
@@ -98,7 +88,7 @@ export const registerNameCommitment = async (
   // Leave out the WIF to avoid signing.
   const provisioningReponse =
     await idInterface.createVerusIdProvisioningResponse(
-      iaddress,
+      signingAddress,
       provisioningDecision,
     )
 
@@ -144,9 +134,9 @@ export const registerNameCommitment = async (
   // TODO: Only accepts one system based on env.
   const registerNameCommitmentParams = [
     name,
-    raddress, // R-address to hold the commitment.
+    RADDRESS, // R-address to hold the commitment.
     '', // Skip the referral address for now.
-    parent ? iaddress : DEFAULT_CHAIN,
+    parent ? signingAddress : CHAIN,
   ]
 
   let commitmentRes: NameCommitment
@@ -186,7 +176,7 @@ export const registerNameCommitment = async (
     system_id: commitmentRes.namereservation.system,
     fully_qualified_name: fullyQualifiedName,
     parent: commitmentRes.namereservation.parent,
-    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${SERVER_URL}/api/v1/provisioning/${decisionId}`,
     provisioning_txids: [
       new ProvisioningTxid(
         commitmentRes.txid,
@@ -209,7 +199,7 @@ export const registerNameCommitment = async (
 export const signProvisioningResponse = async (
   response: ProvisioningResponse,
 ): Promise<ProvisioningResponse> => {
-  const wif = await fetchWIF(iaddress)
+  const wif = await fetchWIF(signingAddress)
   return await idInterface.signVerusIdProvisioningResponse(response, wif)
 }
 
@@ -255,11 +245,11 @@ export const provisionIdentity = async (
     namereservation: nameCommitment.namereservation,
     identity: {
       name: nameCommitment.namereservation.name,
-      parent: hasParent ? iaddress : undefined,
+      parent: hasParent ? signingAddress : undefined,
       primaryaddresses: [request.signing_address],
       minimumsignatures: 1,
-      revocationauthority: iaddress,
-      recoveryauthority: iaddress,
+      revocationauthority: signingAddress,
+      recoveryauthority: signingAddress,
     },
   }
 
@@ -328,12 +318,9 @@ export const provisionIdentity = async (
   responses.set(decisionId, decision)
 }
 
-const waitForBlocks = async (
-  rpcInterface: VerusdRpcInterface,
-  blocks: number,
-) => {
+const waitForBlocks = async (rpc: VerusdRpcInterface, blocks: number) => {
   // TODO: Fix when getBlockCount gets added into the rpcInterface again.
-  let currentHeight: number = 0 //(await rpcInterface.getBlockCount()).result
+  let currentHeight: number = 0 //(await rpc.getBlockCount()).result
   const targetHeight: number = currentHeight + blocks
 
   // Poll for blocks being added.
@@ -355,19 +342,19 @@ export const checkProvisioningStatus = async (
   } else {
     // Create a new decision if the id was not found.
     const randID = Buffer.from(crypto.randomBytes(20))
-    const decisionId = toBase58Check(randID, 102)
+    const newDecisionId = toBase58Check(randID, 102)
     // Need to create a request too since it's included in the decision.
     const challenge = new LoginConsentProvisioningChallenge({
-      challenge_id: decisionId,
+      challenge_id: newDecisionId,
       created_at: Number((Date.now() / 1000).toFixed(0)),
       name: '',
     })
     const request = new LoginConsentProvisioningRequest({
-      signing_address: iaddress,
+      signing_address: signingAddress,
       challenge: challenge,
     })
     provisioningDecision = new LoginConsentProvisioningDecision({
-      decision_id: decisionId,
+      decision_id: newDecisionId,
       created_at: Number((Date.now() / 1000).toFixed(0)),
       result: new LoginConsentProvisioningResult({
         state: LOGIN_CONSENT_PROVISIONING_RESULT_STATE_FAILED.vdxfid,
@@ -380,7 +367,7 @@ export const checkProvisioningStatus = async (
 
   const provisioningReponse =
     await idInterface.createVerusIdProvisioningResponse(
-      iaddress,
+      signingAddress,
       provisioningDecision,
     )
 
@@ -416,14 +403,14 @@ export const transferIdentity = async (
   // Leave out the WIF to avoid signing.
   const provisioningReponse =
     await idInterface.createVerusIdProvisioningResponse(
-      iaddress,
+      signingAddress,
       provisioningDecision,
     )
 
   // Use daemon since the RPC client doesn't give the fully qualified name.
   //const transferIdentityObject = (await callDaemon('getidentity', [transferid]))
   const transferIdentityObject = (
-    await callDaemon('getidentity', [transferfqn])
+    await callDaemon('getidentity', [TRANSFERFQN])
   ).result
 
   // The identity object must have the fully qualified name.
@@ -440,7 +427,7 @@ export const transferIdentity = async (
     error_desc: undefined,
     identity_address: identityAddress,
     fully_qualified_name: fqn,
-    info_uri: `${BASE_URL}/api/v1/provisioning/${decisionId}`,
+    info_uri: `${SERVER_URL}/api/v1/provisioning/${decisionId}`,
   })
   provisioningReponse.decision = provisioningDecision
 

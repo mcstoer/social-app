@@ -12,16 +12,10 @@ import {
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
 
-import {signingAddress} from '../../config'
+import {CHAIN, REMOTE_RPC_URL, signingAddress, WEBHOOK_URL} from '../../config'
 import {fetchWIF} from '../../utils/signing'
 
-const BASE_WEBHOOK_URL =
-  (process.env.BASE_WEBHOOK_URL as string) || 'http://localhost:21001'
-
-const DEFAULT_CHAIN = process.env.DEFAULT_CHAIN as string
-const DEFAULT_URL = process.env.DEFAULT_URL as string
-
-const idInterface = new VerusIdInterface(DEFAULT_CHAIN, DEFAULT_URL)
+const idInterface = new VerusIdInterface(CHAIN, REMOTE_RPC_URL)
 
 export const generateLoginRequest = async () => {
   console.log('Generating login request at', new Date().toLocaleTimeString())
@@ -36,7 +30,7 @@ export const generateLoginRequest = async () => {
     ],
     redirect_uris: [
       new RedirectUri(
-        `${BASE_WEBHOOK_URL}/confirm-login`,
+        `${WEBHOOK_URL}/confirm-login`,
         LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
       ),
     ],

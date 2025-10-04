@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import {type VerusDaemonConfig} from './daemonCredentials'
+
 export interface error {
   code: number
   message: string
@@ -14,12 +16,15 @@ export interface rpcResult {
 // callRPCDaemon sends a post request to the json rpc server at `url`
 // with the `command` and `parameters`
 export const callRPCDaemon = async (
-  url: string,
-  username: string,
-  password: string,
+  verusDaemonConfig: VerusDaemonConfig,
   command: string,
   parameters?: (string | object)[],
 ): Promise<rpcResult> => {
+  const url =
+    'http://' + verusDaemonConfig.rpchost + ':' + verusDaemonConfig.rpcport
+  const username = verusDaemonConfig.rpcuser
+  const password = verusDaemonConfig.rpcpassword
+
   // TODO: Figure out what to set the ids to.
   const id = '1'
 
