@@ -37,18 +37,10 @@ Deeplinks should work out of the box when you install the Verus Desktop Wallet o
 
     DEFAULT_CHAIN
     DEFAULT_URL
-    VERUS_RPC_SERVER
     ```
 
 3. Variables you **must** set:
-    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses.
-    - `VERUS_RPC_USERNAME`: The username for accessing the Verus JSON rpc server.
-    - `VERUS_RPC_PASSWORD`: The password for accessing the Verus JSON rpc server.
-
-    The `VERUS_RPC_USERNAME` and `VERUS_RPC_PASSWORD` can be found in the Verus wallet configuration file:
-    - **Linux:** `~/.komodo/vrsctest/vrsctest.conf`
-    - **macOS:** To be added.
-    - **Windows:** `%APPDATA%\Komodo\vrsctest\vrsctest.conf`
+    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
 
 ## Running VerusSky Web App
 
