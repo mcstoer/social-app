@@ -28,7 +28,7 @@ export const generateIdentityUpdateRequest = async (
   // Add the response URIs.
   details.responseuris = [
     ResponseUri.fromUriString(
-      `${WEBHOOK_URL}/confirm-credential-update`,
+      `${WEBHOOK_URL}/api/v1/identityupdates/confirm-credential-update`,
       ResponseUri.TYPE_POST,
     ),
   ]

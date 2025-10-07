@@ -1,18 +1,16 @@
-import base64url from 'base64url'
 import * as bodyParser from 'body-parser'
 import * as express from 'express'
 import {
-  IDENTITY_UPDATE_REQUEST_VDXF_KEY,
-  IdentityUpdateRequest,
+  type IdentityUpdateEnvelopeJson,
   IdentityUpdateRequestDetails,
 } from 'verus-typescript-primitives'
 
-import {
-  generateIdentityUpdateRequest,
-  verifyIdentityUpdateResponse,
-} from './getIdentityUpdateRequest'
+import {generateIdentityUpdateRequest} from './getIdentityUpdateRequest'
 
 const identityUpdatesRouter = express.Router()
+
+// Needed to process the JSON in the identity update response.
+identityUpdatesRouter.use(express.json())
 
 identityUpdatesRouter.post(
   '/update-credentials',
@@ -35,37 +33,33 @@ identityUpdatesRouter.post(
   },
 )
 
-identityUpdatesRouter.get('/get-credential-update', async (req, res) => {
-  try {
-    const requestId = req.query.requestId as string
-    if (!requestId) {
-      res.status(400).json({error: 'Request ID is required'})
-      return
-    }
+let lastCredentialUpdate: IdentityUpdateEnvelopeJson | null
 
-    // Return no content if no response yet
-    res.status(204).send()
-  } catch (error) {
-    console.error('Error checking credential update status:', error)
-    res.status(500).json({error: 'Internal Server Error'})
-  }
+// New endpoint to store credential update response
+identityUpdatesRouter.post('/confirm-credential-update', async req => {
+  lastCredentialUpdate = req.body
 })
 
-identityUpdatesRouter.get('/confirm-update', async (req, res) => {
-  if (req.query[IDENTITY_UPDATE_REQUEST_VDXF_KEY.vdxfid]) {
-    const resp = req.query[IDENTITY_UPDATE_REQUEST_VDXF_KEY.vdxfid] as string
-    const response = new IdentityUpdateRequest()
-    response.fromBuffer(base64url.toBuffer(resp))
-    const valid = await verifyIdentityUpdateResponse(response)
-    if (valid) {
-      res.status(200).json({success: true})
-      console.log('Update confirmed')
-      return
-    }
-  }
+// New endpoint to retrieve credential update response
+identityUpdatesRouter.get(
+  '/get-credential-update-response',
+  async (req, res) => {
+    const {requestId} = req.query
 
-  console.log('Unable to verify update response')
-  res.status(500).json({error: 'Unable to verify update response'})
-})
+    const lastRequestId = lastCredentialUpdate?.details?.requestid
+
+    if (
+      !lastCredentialUpdate ||
+      !lastRequestId ||
+      lastRequestId !== requestId
+    ) {
+      res.status(204).send('No credential update response received.')
+    } else {
+      res.status(200).json(lastCredentialUpdate)
+      // Clean up after relaying
+      lastCredentialUpdate = null
+    }
+  },
+)
 
 export {identityUpdatesRouter}

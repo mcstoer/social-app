@@ -63,7 +63,7 @@ import {Provider as ActiveVideoProvider} from '#/components/Post/Embed/VideoEmbe
 import {Provider as VideoVolumeProvider} from '#/components/Post/Embed/VideoEmbed/VideoVolumeContext'
 import {ToastOutlet} from '#/components/Toast'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
-import {LOCAL_DEV_VSKY_LOGIN_SERVER} from './lib/constants'
+import {LOCAL_DEV_VSKY_SERVER} from './lib/constants'
 import {Provider as HideBottomBarBorderProvider} from './lib/hooks/useHideBottomBarBorder'
 
 /**
@@ -141,7 +141,7 @@ function InnerApp() {
                                                         <IntentDialogProvider>
                                                           <VerusDaemonProvider
                                                             url={
-                                                              LOCAL_DEV_VSKY_LOGIN_SERVER
+                                                              LOCAL_DEV_VSKY_SERVER
                                                             }>
                                                             <Shell />
                                                             <NuxDialogs />

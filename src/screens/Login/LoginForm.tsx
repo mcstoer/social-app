@@ -14,11 +14,7 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {primitives} from 'verusid-ts-client'
 
-import {
-  LOCAL_DEV_VSKY_LOGIN_SERVER,
-  LOCAL_DEV_VSKY_SIGNING_SERVER,
-  VSKY_SERVICE,
-} from '#/lib/constants'
+import {LOCAL_DEV_VSKY_SERVER, VSKY_SERVICE} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {isNetworkError} from '#/lib/strings/errors'
 import {cleanError} from '#/lib/strings/errors'
@@ -104,7 +100,7 @@ export const LoginForm = ({
         setIsProcessing(true)
         try {
           const response = await fetch(
-            `${LOCAL_DEV_VSKY_SIGNING_SERVER}/api/v1/login/get-login-request`,
+            `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-request`,
           )
 
           if (!response.ok) {
@@ -292,7 +288,9 @@ export const LoginForm = ({
     const pollInterval = 1000
 
     const getLogin = async () => {
-      const response = await fetch(`${LOCAL_DEV_VSKY_LOGIN_SERVER}/get-login`)
+      const response = await fetch(
+        `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-response`,
+      )
 
       // Occurs when the login server hasn't received a recent login.
       if (response.status === 204) {

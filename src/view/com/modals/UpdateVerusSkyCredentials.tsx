@@ -12,10 +12,7 @@ import {
   IdentityUpdateResponse,
 } from 'verus-typescript-primitives'
 
-import {
-  LOCAL_DEV_VSKY_LOGIN_SERVER,
-  LOCAL_DEV_VSKY_SIGNING_SERVER,
-} from '#/lib/constants'
+import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {usePalette} from '#/lib/hooks/usePalette'
 import {useWebMediaQueries} from '#/lib/hooks/useWebMediaQueries'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
@@ -88,7 +85,7 @@ export function Component({password: initialPassword}: {password?: string}) {
         // Endpoint will be similar to the get-login endpoint in vskylogin
         // Pass the details to the server to generate the request.
         const response = await fetch(
-          `${LOCAL_DEV_VSKY_LOGIN_SERVER}/get-credential-update?requestId=${actualRequestId}`,
+          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/get-credential-update-response?requestId=${actualRequestId}`,
         )
 
         // No response yet
@@ -205,7 +202,7 @@ export function Component({password: initialPassword}: {password?: string}) {
       if (isWeb) {
         // Web implementation using signing server
         const response = await fetch(
-          `${LOCAL_DEV_VSKY_SIGNING_SERVER}/api/v1/identityupdates/update-credentials`,
+          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/update-credentials`,
           {
             method: 'POST',
             headers: {

@@ -1,14 +1,11 @@
-import base64url from 'base64url'
-import * as bodyParser from 'body-parser'
 import * as express from 'express'
-import {
-  LOGIN_CONSENT_RESPONSE_VDXF_KEY,
-  LoginConsentResponse,
-} from 'verus-typescript-primitives'
 
-import {generateLoginRequest, verifyLoginResponse} from './getLoginRequest'
+import {generateLoginRequest} from './getLoginRequest'
 
 const loginRouter = express.Router()
+
+// Needed to process the JSON in the login response.
+loginRouter.use(express.json())
 
 loginRouter.get('/get-login-request', async (req, res) => {
   try {
@@ -26,34 +23,21 @@ loginRouter.get('/get-login-request', async (req, res) => {
   }
 })
 
-loginRouter.post('/confirm-login', bodyParser.json(), async (req, res) => {
-  const valid = await verifyLoginResponse(req.body)
-  if (valid) {
-    const loginResponse = new LoginConsentResponse(req.body)
-    // Need to call getidentity
-    res.status(200).send('Login confirmed' + loginResponse.signing_id)
-    console.log('Login confirmed')
-  } else {
-    console.log('Unable to verify response')
-    res.status(500).json('Unable to verify response')
-  }
+let lastLogin: any
+
+loginRouter.post('/confirm-login', async req => {
+  console.log('Received login response at', new Date().toLocaleTimeString())
+  lastLogin = req.body
 })
 
-loginRouter.get('/confirm-login', bodyParser.json(), async (req, res) => {
-  if (req.query[LOGIN_CONSENT_RESPONSE_VDXF_KEY.vdxfid]) {
-    const resp = req.query[LOGIN_CONSENT_RESPONSE_VDXF_KEY.vdxfid] as string
-    const response = new LoginConsentResponse()
-    response.fromBuffer(base64url.toBuffer(resp))
-    const valid = await verifyLoginResponse(response)
-    if (valid) {
-      res.status(200).send('Login confirmed ' + response.signing_id)
-      console.log('Login confirmed')
-      return
-    }
+loginRouter.get('/get-login-response', async (_, res) => {
+  if (!lastLogin) {
+    res.status(204).send('No login received.')
+  } else {
+    res.status(200).json(lastLogin)
+    // Clean up the last login after relaying it.
+    lastLogin = null
   }
-
-  console.log('Unable to verify response')
-  res.status(500).json('Unable to verify response')
 })
 
 export {loginRouter}

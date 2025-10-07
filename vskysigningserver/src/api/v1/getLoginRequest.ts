@@ -30,7 +30,7 @@ export const generateLoginRequest = async () => {
     ],
     redirect_uris: [
       new RedirectUri(
-        `${WEBHOOK_URL}/confirm-login`,
+        `${WEBHOOK_URL}/api/v1/login/confirm-login`,
         LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
       ),
     ],
