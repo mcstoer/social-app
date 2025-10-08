@@ -2,14 +2,33 @@ import 'array.prototype.findlast/auto'
 
 /// <reference lib="dom" />
 import {Buffer} from 'buffer'
+import crypto from 'crypto-browserify'
 
 // @ts-ignore whatever typescript wants to complain about here, I dont care about -prf
 window.setImmediate = (cb: () => void) => setTimeout(cb, 0)
 
-// Add to fix for Buffer being undefined.
 if (window) {
-  // @ts-ignore Assigning buffer to global window
+  // Add to fix for Buffer being undefined.
   window.Buffer = Buffer
+
+  // TODO: Find a better way to polyfill the node.js crypto methods.
+  const polyfillCrypto = crypto
+  const webCrypto = window.crypto as any
+
+  // Try to add the node.js crypto methods to the web crypto if possible.
+  if (webCrypto) {
+    try {
+      Object.keys(polyfillCrypto).forEach(key => {
+        if (!(key in webCrypto)) {
+          webCrypto[key] = polyfillCrypto[key]
+        }
+      })
+    } catch {
+      window.crypto = polyfillCrypto
+    }
+  } else {
+    window.crypto = polyfillCrypto
+  }
 }
 
 if (process.env.NODE_ENV !== 'production') {

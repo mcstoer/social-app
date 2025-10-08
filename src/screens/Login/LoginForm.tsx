@@ -12,6 +12,16 @@ import {
 } from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import crypto from 'crypto'
+import {
+  IDENTITY_CREDENTIAL_PLAINLOGIN,
+  IDENTITY_VIEW,
+  LOGIN_CONSENT_WEBHOOK_VDXF_KEY,
+  LoginConsentChallenge,
+  RedirectUri,
+  RequestedPermission,
+  toBase58Check,
+} from 'verus-typescript-primitives'
 import {primitives} from 'verusid-ts-client'
 
 import {LOCAL_DEV_VSKY_SERVER, VSKY_SERVICE} from '#/lib/constants'
@@ -92,47 +102,72 @@ export const LoginForm = ({
   const {openModal} = useModalControls()
 
   const [loginUri, setLoginUri] = useState<string>('')
+  const loginIdRef = useRef<string>('')
 
   useEffect(() => {
     if (isVskyService) {
       // Get login URI here for the QR code and deeplink.
-      const fetchLoginUri = async () => {
+      const signLoginRequest = async () => {
         setIsProcessing(true)
         try {
+          const randID = Buffer.from(crypto.randomBytes(20))
+          const challengeId = toBase58Check(randID, 102)
+
+          const details = new LoginConsentChallenge({
+            challenge_id: challengeId,
+            requested_access: [
+              new RequestedPermission(IDENTITY_VIEW.vdxfid),
+              new RequestedPermission(IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid),
+            ],
+            redirect_uris: [
+              new RedirectUri(
+                `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/confirm-login`,
+                LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
+              ),
+            ],
+            created_at: Math.floor(Date.now() / 1000),
+          })
+
+          // Sign the request using a signing server.
           const response = await fetch(
-            `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-request`,
+            `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/sign-login-request`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(details.toJson()),
+            },
           )
 
           if (!response.ok) {
-            logger.warn('Failed to fetch login URI', {
+            logger.warn('Failed to sign the request', {
               error: response.statusText,
             })
-            setError('Failed to fetch login URI from signing server')
+            setError('Failed to sign the request using the signing server')
           }
 
           const res = await response.json()
 
           if (res.error) {
-            logger.warn('Failed to fetch login URI', {error: res.error})
-            setError('Failed to fetch login URI from signing server')
+            logger.warn('Failed to sign the request', {error: res.error})
+            setError('Failed to sign the request using the signing server')
           }
 
-          if (res.uri) {
-            setLoginUri(res.uri)
-            setError('')
-          } else {
-            logger.warn('Failed to fetch login URI', {error: 'No URI returned'})
-            setError('Failed to fetch login URI from signing server')
-          }
+          const signedRequest = new primitives.LoginConsentRequest(res)
+          setLoginUri(signedRequest.toWalletDeeplinkUri())
+          loginIdRef.current = challengeId
+          setError('')
         } catch (e: any) {
           const errMsg = e.toString()
           logger.warn('Failed to login', {error: errMsg})
           setError(cleanError(errMsg))
+          loginIdRef.current = ''
         }
         setIsProcessing(false)
       }
 
-      fetchLoginUri()
+      signLoginRequest()
     }
   }, [isVskyService, setError])
 
@@ -286,10 +321,20 @@ export const LoginForm = ({
     setNeedsManualLogin(false)
 
     const pollInterval = 1000
+    const requestId = loginIdRef.current
+
+    if (!requestId) {
+      logger.warn(
+        'Missing login ID when attempting to poll for VerusSky login response',
+      )
+      return
+    }
 
     const getLogin = async () => {
       const response = await fetch(
-        `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-response`,
+        `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-response?requestId=${encodeURIComponent(
+          requestId,
+        )}`,
       )
 
       // Occurs when the login server hasn't received a recent login.

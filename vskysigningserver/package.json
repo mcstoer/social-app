@@ -6,6 +6,7 @@
   },
   "scripts": {
     "dev": "tsx --watch src/local_server.ts",
+    "start": "NODE_ENV=production tsx --watch src/local_server.ts",
     "build": "tsc",
     "compile": "tsc",
     "pretest": "yarn run compile",
@@ -32,7 +33,7 @@
     "cors": "^2.8.5",
     "crypto-browserify": "^3.12.1",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "5.1.0",
     "jsdoc": "^4.0.4",
     "zod": "^3.23.8"
   }

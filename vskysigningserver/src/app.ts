@@ -9,7 +9,7 @@ app.use(cors())
 
 app.use('/api/v1', v1Router)
 
-app.all('*', (req, res) => {
+app.use((req, res) => {
   res.status(404)
   res.send('VerusSky Signing Server')
 })

@@ -1,41 +1,19 @@
-// @ts-ignore: No type definitions for crypto-browserify
-import * as crypto from 'crypto-browserify'
 import {
-  IDENTITY_CREDENTIAL_PLAINLOGIN,
-  IDENTITY_VIEW,
-  LOGIN_CONSENT_WEBHOOK_VDXF_KEY,
-  LoginConsentChallenge,
+  type LoginConsentChallenge,
+  type LoginConsentRequest,
   LoginConsentResponse,
-  RedirectUri,
-  RequestedPermission,
-  toBase58Check,
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
 
-import {CHAIN, REMOTE_RPC_URL, signingAddress, WEBHOOK_URL} from '../../config'
+import {CHAIN, REMOTE_RPC_URL, signingAddress} from '../../config'
 import {fetchWIF} from '../../utils/signing'
 
 const idInterface = new VerusIdInterface(CHAIN, REMOTE_RPC_URL)
 
-export const generateLoginRequest = async () => {
-  console.log('Generating login request at', new Date().toLocaleTimeString())
-  const randID = Buffer.from(crypto.randomBytes(20))
-  const challengeId = toBase58Check(randID, 102)
-
-  const challenge = new LoginConsentChallenge({
-    challenge_id: challengeId,
-    requested_access: [
-      new RequestedPermission(IDENTITY_VIEW.vdxfid),
-      new RequestedPermission(IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid),
-    ],
-    redirect_uris: [
-      new RedirectUri(
-        `${WEBHOOK_URL}/api/v1/login/confirm-login`,
-        LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
-      ),
-    ],
-    created_at: Number((Date.now() / 1000).toFixed(0)),
-  })
+export const createSignedLoginRequest = async (
+  challenge: LoginConsentChallenge,
+): Promise<LoginConsentRequest> => {
+  console.log('Signing login request at', new Date().toLocaleTimeString())
 
   try {
     const req = await idInterface.createLoginConsentRequest(
@@ -44,10 +22,10 @@ export const generateLoginRequest = async () => {
       await fetchWIF(signingAddress),
     )
 
-    const uri = req.toWalletDeeplinkUri()
-    return {uri}
-  } catch (e) {
-    return {error: 'Failed to generate login request - ' + e}
+    return req
+  } catch (err) {
+    const error = err instanceof Error ? err : new Error(String(err))
+    throw new Error(`Failed to create login request: ${error.message}`)
   }
 }
 

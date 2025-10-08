@@ -1,42 +1,66 @@
 import * as express from 'express'
+import {
+  LoginConsentChallenge,
+  type LoginConsentRequest,
+  LoginConsentResponse,
+} from 'verus-typescript-primitives'
 
-import {generateLoginRequest} from './getLoginRequest'
+import {createSignedLoginRequest} from './getLoginRequest'
 
 const loginRouter = express.Router()
 
 // Needed to process the JSON in the login response.
 loginRouter.use(express.json())
 
-loginRouter.get('/get-login-request', async (req, res) => {
-  try {
-    const result = await generateLoginRequest()
+type LoginId = string
 
-    if (result.error) {
-      console.error(result.error)
-      res.status(500).json(result)
-    } else {
-      res.status(200).json(result)
-    }
-  } catch (error) {
-    console.error('Error processing login request:', error)
-    res.status(500).send('Internal Server Error')
+type Login = {
+  request?: LoginConsentRequest
+  response?: LoginConsentResponse
+}
+
+const logins = new Map<LoginId, Login>()
+
+loginRouter.post('/sign-login-request', async (req, res) => {
+  const challenge = new LoginConsentChallenge(req.body)
+  const id = challenge.challenge_id
+  console.log(
+    `Signing login request with id ${id} at ${new Date().toLocaleTimeString()}`,
+  )
+
+  const signedReq = await createSignedLoginRequest(challenge)
+  logins.set(id, {request: signedReq, response: undefined})
+  res.status(200).json(signedReq.toJson())
+})
+
+loginRouter.post('/confirm-login', async (req, res) => {
+  const response = new LoginConsentResponse(req.body)
+  const id = response.decision.decision_id
+
+  const login = logins.get(id)
+  if (login) {
+    console.log(
+      `Received login response with id ${id} at ${new Date().toLocaleTimeString()}`,
+    )
+    login.response = response
+    logins.set(id, login)
+    res.status(200).send('Login response received.')
+  } else {
+    // Unknown IDs are ones that have no associated challenge we signed.
+    console.log(
+      `Received login response with unknown id ${id} at ${new Date().toLocaleTimeString()}`,
+    )
+    res.status(400).send('Unknown login response ID.')
   }
 })
 
-let lastLogin: any
-
-loginRouter.post('/confirm-login', async req => {
-  console.log('Received login response at', new Date().toLocaleTimeString())
-  lastLogin = req.body
-})
-
-loginRouter.get('/get-login-response', async (_, res) => {
-  if (!lastLogin) {
-    res.status(204).send('No login received.')
+loginRouter.get('/get-login-response', async (req, res) => {
+  const {requestId} = req.query
+  const login = logins.get(requestId as string)
+  if (login && login.response) {
+    res.status(200).json(login.response.toJson())
   } else {
-    res.status(200).json(lastLogin)
-    // Clean up the last login after relaying it.
-    lastLogin = null
+    res.status(204).send('No login received.')
   }
 })
 
