@@ -1,7 +1,7 @@
 import {
   type LoginConsentChallenge,
   type LoginConsentRequest,
-  LoginConsentResponse,
+  type LoginConsentResponse,
 } from 'verus-typescript-primitives'
 import {VerusIdInterface} from 'verusid-ts-client'
 
@@ -29,9 +29,7 @@ export const createSignedLoginRequest = async (
   }
 }
 
-export const verifyLoginResponse = async (response: any) => {
-  const res = new LoginConsentResponse(response)
-  const isValid = await idInterface.verifyLoginConsentResponse(res)
-
+export const verifyLoginResponse = async (response: LoginConsentResponse) => {
+  const isValid = await idInterface.verifyLoginConsentResponse(response)
   return isValid
 }

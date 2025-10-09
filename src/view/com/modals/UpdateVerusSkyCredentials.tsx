@@ -3,13 +3,17 @@ import {ActivityIndicator, SafeAreaView, StyleSheet, View} from 'react-native'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import crypto from 'crypto'
 import {
+  BigNumber,
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
   IDENTITY_CREDENTIAL,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
+  IdentityUpdateRequest,
   IdentityUpdateRequestDetails,
   IdentityUpdateResponse,
+  ResponseUri,
 } from 'verus-typescript-primitives'
 
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
@@ -51,8 +55,8 @@ export function Component({password: initialPassword}: {password?: string}) {
   const [password, setPassword] = useState<string>(initialPassword || '')
   const [error, setError] = useState<string>('')
 
-  // Use a string to track the request ID, since the request converts it to one with toJson().
-  const [updateRequestId, setUpdateRequestId] = useState<string>('')
+  // Use a ref to track the request ID, since the request converts it to one with toJson().
+  const identityUpdateIdRef = useRef<string>('')
 
   // Cleanup interval on unmount
   useEffect(() => {
@@ -72,12 +76,12 @@ export function Component({password: initialPassword}: {password?: string}) {
   }, [email, password])
 
   // Pass in the requestId to avoid timing issues with state updates.
-  const checkForUpdateResponse = async (requestId?: string) => {
+  const checkForUpdateResponse = async () => {
     const pollInterval = 1000
-    const actualRequestId = requestId || updateRequestId
+    const requestId = identityUpdateIdRef.current
 
     const getUpdateResponse = async () => {
-      if (!actualRequestId) {
+      if (!requestId) {
         return
       }
 
@@ -85,7 +89,7 @@ export function Component({password: initialPassword}: {password?: string}) {
         // Endpoint will be similar to the get-login endpoint in vskylogin
         // Pass the details to the server to generate the request.
         const response = await fetch(
-          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/get-credential-update-response?requestId=${actualRequestId}`,
+          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/get-credential-update-response?requestId=${requestId}`,
         )
 
         // No response yet
@@ -178,6 +182,7 @@ export function Component({password: initialPassword}: {password?: string}) {
     setIsProcessing(true)
 
     try {
+      // Create the identity update request details.
       const identityUpdateDetailCLIJson = {
         name: currentAccount.name + '@',
         contentmultimap: {
@@ -194,9 +199,35 @@ export function Component({password: initialPassword}: {password?: string}) {
         },
       }
 
+      const randID = Buffer.from(crypto.randomBytes(20))
+      const requestId = new BigNumber(randID)
+      // Generate the timestamp in seconds, since that's what block times are in.
+      const createdAt = new BigNumber((Date.now() / 1000).toFixed(0))
+
       const details = IdentityUpdateRequestDetails.fromCLIJson(
         identityUpdateDetailCLIJson,
       )
+
+      // Add the response URIs.
+      details.responseuris = [
+        ResponseUri.fromUriString(
+          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/confirm-credential-update`,
+          ResponseUri.TYPE_POST,
+        ),
+      ]
+
+      // IMPORTANT: Set the flag to indicate that response URIs are present
+      if (!details.containsResponseUris()) {
+        details.toggleContainsResponseUris()
+      }
+
+      details.requestid = requestId
+      details.createdat = createdAt
+
+      // Get the ID as a string by converting the details to JSON,
+      // since we need to do that anyways to send the details.
+      const detailsJson = details.toJson()
+      identityUpdateIdRef.current = detailsJson.requestid!
 
       // Send the update request.
       if (isWeb) {
@@ -208,7 +239,7 @@ export function Component({password: initialPassword}: {password?: string}) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify(details.toJson()),
+            body: JSON.stringify(detailsJson),
           },
         )
 
@@ -223,22 +254,26 @@ export function Component({password: initialPassword}: {password?: string}) {
         }
 
         const res = await response.json()
+
         if (res.error) {
-          logger.warn('Failed to get credential update URI', {error: res.error})
+          logger.warn('Failed to get signed identity update request', {
+            error: res.error,
+          })
           setError('Failed to initiate credential update')
           setIsProcessing(false)
           return
         }
 
-        if (res.uri && res.requestId) {
-          setUpdateRequestId(res.requestId)
+        if (res) {
+          const signedRequest = IdentityUpdateRequest.fromJson(res)
+          const deeplinkUri = signedRequest.toWalletDeeplinkUri()
           setStage(Stages.AwaitingResponse)
           // Open deeplink in same window
-          window.location.href = res.uri
+          window.location.href = deeplinkUri
           // Start polling for response and pass the requestId directly to avoid state timing issues
-          checkForUpdateResponse(res.requestId)
+          checkForUpdateResponse()
         } else {
-          logger.warn('Failed to get credential update URI', {
+          logger.warn('Failed to get signed identity update request', {
             error: 'No URI or requestId returned',
           })
           setError('Failed to initiate credential update')

@@ -60,7 +60,7 @@ loginRouter.get('/get-login-response', async (req, res) => {
   if (login && login.response) {
     res.status(200).json(login.response.toJson())
   } else {
-    res.status(204).send('No login received.')
+    res.status(204).send('No login response received.')
   }
 })
 
