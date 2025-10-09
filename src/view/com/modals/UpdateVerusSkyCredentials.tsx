@@ -24,7 +24,7 @@ import {colors, s} from '#/lib/styles'
 import {logger} from '#/logger'
 import {isAndroid, isNative, isWeb} from '#/platform/detection'
 import {useModalControls} from '#/state/modals'
-import {useSession, useSessionVskyApi} from '#/state/session'
+import {useSession} from '#/state/session'
 import {IADDRESS} from '#/env'
 import {ErrorMessage} from '../util/error/ErrorMessage'
 import {Button} from '../util/forms/Button'
@@ -46,7 +46,6 @@ export function Component({password: initialPassword}: {password?: string}) {
   const {_} = useLingui()
   const {closeModal} = useModalControls()
   const {isMobile} = useWebMediaQueries()
-  const {idInterface} = useSessionVskyApi()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const [stage, setStage] = useState<Stages>(Stages.UpdateCredentials)
@@ -114,20 +113,11 @@ export function Component({password: initialPassword}: {password?: string}) {
         const data = await response.json()
         const identityUpdateResponse = IdentityUpdateResponse.fromJson(data)
 
-        // Verify the identity update response using verusid-ts-client
-        const isVerified = await idInterface.verifyIdentityUpdateResponse(
-          identityUpdateResponse,
-        )
-
-        if (isVerified && identityUpdateResponse.details.containsTxid()) {
+        if (identityUpdateResponse.details.containsTxid()) {
           setStage(Stages.Done)
           logger.debug('Successfully updated VerusSky credentials')
         } else {
-          if (!isVerified) {
-            setError(_(msg`Failed to verify credential update response`))
-          } else {
-            setError(data.error || _(msg`Failed to update credentials`))
-          }
+          setError(data.error || _(msg`Failed to update credentials`))
           setStage(Stages.UpdateCredentials)
         }
 

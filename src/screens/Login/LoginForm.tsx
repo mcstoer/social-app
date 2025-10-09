@@ -97,7 +97,7 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {rpcInterface, idInterface} = useSessionVskyApi()
+  const {rpcInterface} = useSessionVskyApi()
   const isVskyService = serviceUrl === VSKY_SERVICE
   const {openModal} = useModalControls()
 
@@ -356,89 +356,81 @@ export const LoginForm = ({
       const loginRes = new primitives.LoginConsentResponse(res)
 
       try {
-        const isValid = await idInterface.verifyLoginConsentResponse(loginRes)
-        if (isValid) {
-          const identity = await rpcInterface.getIdentity(loginRes.signing_id)
-          if (identity.result) {
-            vskySessionValueRef.current = {
-              auth: '',
-              id: identity.result.identity.identityaddress || '',
-              name: identity.result.identity.name,
-            }
+        const identity = await rpcInterface.getIdentity(loginRes.signing_id)
+        if (identity.result) {
+          vskySessionValueRef.current = {
+            auth: '',
+            id: identity.result.identity.identityaddress || '',
+            name: identity.result.identity.name,
+          }
 
-            // Get the Bluesky credentials from the credentials in the login request.
-            const context = loginRes.decision.context
-            const credential = new primitives.Credential()
-            const credentialHex =
-              context?.kv[primitives.IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]
+          // Get the Bluesky credentials from the credentials in the login request.
+          const context = loginRes.decision.context
+          const credential = new primitives.Credential()
+          const credentialHex =
+            context?.kv[primitives.IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]
 
-            if (!credentialHex) {
-              logger.warn('Failed to find credentials in VerusSky login.')
+          if (!credentialHex) {
+            logger.warn('Failed to find credentials in VerusSky login.')
+            setNeedsManualLogin(true)
+            setError(
+              _(
+                msg`Missing login credentials from VerusSky. Please log in manually.`,
+              ),
+            )
+            setIsProcessing(false)
+            return
+          }
+
+          credential.fromBuffer(Buffer.from(credentialHex, 'hex'))
+          const plainLogin = credential.credential
+
+          if (
+            plainLogin &&
+            Array.isArray(plainLogin) &&
+            plainLogin.length >= 2
+          ) {
+            identifierValueRef.current = plainLogin[0]
+            passwordValueRef.current = plainLogin[1]
+            onPressNext()
+          } else {
+            // If the credentials don't exist, then the user needs to manually input them.
+            if (!plainLogin || !Array.isArray(plainLogin)) {
+              logger.warn(
+                'Failed to find the username and password from the VerusSky login.',
+              )
               setNeedsManualLogin(true)
               setError(
                 _(
-                  msg`Missing login credentials from VerusSky. Please log in manually.`,
+                  msg`Missing username and password from VerusSky login. Please log in manually.`,
                 ),
               )
-              setIsProcessing(false)
-              return
+            } else if (!plainLogin[0]) {
+              logger.warn(
+                'Failed to find the username from the VerusSky login.',
+              )
+              setNeedsManualLogin(true)
+              setError(
+                _(
+                  msg`Missing username from VerusSky login. Please log in manually.`,
+                ),
+              )
+            } else if (!plainLogin[1]) {
+              logger.warn(
+                'Failed to find the password from the VerusSky login.',
+              )
+              setNeedsManualLogin(true)
+              setError(
+                _(
+                  msg`Missing password from VerusSky login. Please log in manually.`,
+                ),
+              )
             }
-
-            credential.fromBuffer(Buffer.from(credentialHex, 'hex'))
-            const plainLogin = credential.credential
-
-            if (
-              plainLogin &&
-              Array.isArray(plainLogin) &&
-              plainLogin.length >= 2
-            ) {
-              identifierValueRef.current = plainLogin[0]
-              passwordValueRef.current = plainLogin[1]
-              onPressNext()
-            } else {
-              // If the credentials don't exist, then the user needs to manually input them.
-              if (!plainLogin || !Array.isArray(plainLogin)) {
-                logger.warn(
-                  'Failed to find the username and password from the VerusSky login.',
-                )
-                setNeedsManualLogin(true)
-                setError(
-                  _(
-                    msg`Missing username and password from VerusSky login. Please log in manually.`,
-                  ),
-                )
-              } else if (!plainLogin[0]) {
-                logger.warn(
-                  'Failed to find the username from the VerusSky login.',
-                )
-                setNeedsManualLogin(true)
-                setError(
-                  _(
-                    msg`Missing username from VerusSky login. Please log in manually.`,
-                  ),
-                )
-              } else if (!plainLogin[1]) {
-                logger.warn(
-                  'Failed to find the password from the VerusSky login.',
-                )
-                setNeedsManualLogin(true)
-                setError(
-                  _(
-                    msg`Missing password from VerusSky login. Please log in manually.`,
-                  ),
-                )
-              }
-              setIsProcessing(false)
-            }
-          } else {
-            logger.warn('Failed to login due to invalid login response')
-            setError(_(msg`Unable to validate the VerusSky login.`))
+            setIsProcessing(false)
           }
         } else {
-          logger.warn(
-            'Failed to login due to unknown signing ID in login response',
-          )
-          setError(_(msg`Unable to lookup VerusSky login ID.`))
+          logger.warn('Failed to login due to invalid login response')
+          setError(_(msg`Unable to validate the VerusSky login.`))
         }
       } catch (e: any) {
         const errMsg = e.toString()

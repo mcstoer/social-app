@@ -8,7 +8,10 @@ import {
 } from 'verus-typescript-primitives'
 
 import {RequestResponseStore} from '../../utils/RequestResponseStore'
-import {createSignedIdentityUpdateRequest} from './getIdentityUpdateRequest'
+import {
+  createSignedIdentityUpdateRequest,
+  verifyIdentityUpdateResponse,
+} from './getIdentityUpdateRequest'
 
 const identityUpdatesRouter = express.Router()
 
@@ -40,12 +43,21 @@ identityUpdatesRouter.post('/confirm-credential-update', async (req, res) => {
   const response = IdentityUpdateResponse.fromJson(responseJson)
   const id = responseJson.details.requestid!
 
+  const isValid = await verifyIdentityUpdateResponse(response)
+
+  if (!isValid) {
+    console.log(
+      `Received invalid identity update response with id ${id} at ${new Date().toLocaleTimeString()}`,
+    )
+    res.status(400).send('Invalid identity update response.')
+  }
+
   if (identityUpdates.hasAttempt(id)) {
     console.log(
       `Received identity update response with id ${id} at ${new Date().toLocaleTimeString()}`,
     )
     identityUpdates.setResponse(id, response)
-    res.status(200).send('Login response received.')
+    res.status(200).send('Identity update response received.')
   } else {
     console.log(
       `Received identity update with unknown id ${id} at ${new Date().toLocaleTimeString()}`,

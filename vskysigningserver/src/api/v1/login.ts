@@ -6,7 +6,7 @@ import {
 } from 'verus-typescript-primitives'
 
 import {RequestResponseStore} from '../../utils/RequestResponseStore'
-import {createSignedLoginRequest} from './getLoginRequest'
+import {createSignedLoginRequest, verifyLoginResponse} from './getLoginRequest'
 
 const loginRouter = express.Router()
 
@@ -34,6 +34,15 @@ loginRouter.post('/sign-login-request', async (req, res) => {
 loginRouter.post('/confirm-login', async (req, res) => {
   const response = new LoginConsentResponse(req.body)
   const id = response.decision.decision_id
+
+  const isValid = await verifyLoginResponse(response)
+
+  if (!isValid) {
+    console.log(
+      `Received invalid login response with id ${id} at ${new Date().toLocaleTimeString()}`,
+    )
+    res.status(400).send('Invalid login response.')
+  }
 
   if (logins.hasAttempt(id)) {
     console.log(
