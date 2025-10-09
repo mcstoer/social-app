@@ -5,6 +5,7 @@ import {
   LoginConsentResponse,
 } from 'verus-typescript-primitives'
 
+import {RequestResponseStore} from '../../utils/RequestResponseStore'
 import {createSignedLoginRequest} from './getLoginRequest'
 
 const loginRouter = express.Router()
@@ -12,14 +13,11 @@ const loginRouter = express.Router()
 // Needed to process the JSON in the login response.
 loginRouter.use(express.json())
 
-type LoginId = string
-
-type Login = {
-  request?: LoginConsentRequest
-  response?: LoginConsentResponse
-}
-
-const logins = new Map<LoginId, Login>()
+const logins = new RequestResponseStore<
+  string,
+  LoginConsentRequest,
+  LoginConsentResponse
+>()
 
 loginRouter.post('/sign-login-request', async (req, res) => {
   const challenge = new LoginConsentChallenge(req.body)
@@ -29,7 +27,7 @@ loginRouter.post('/sign-login-request', async (req, res) => {
   )
 
   const signedReq = await createSignedLoginRequest(challenge)
-  logins.set(id, {request: signedReq, response: undefined})
+  logins.setRequest(id, signedReq)
   res.status(200).json(signedReq.toJson())
 })
 
@@ -37,13 +35,11 @@ loginRouter.post('/confirm-login', async (req, res) => {
   const response = new LoginConsentResponse(req.body)
   const id = response.decision.decision_id
 
-  const login = logins.get(id)
-  if (login) {
+  if (logins.hasAttempt(id)) {
     console.log(
       `Received login response with id ${id} at ${new Date().toLocaleTimeString()}`,
     )
-    login.response = response
-    logins.set(id, login)
+    logins.setResponse(id, response)
     res.status(200).send('Login response received.')
   } else {
     // Unknown IDs are ones that have no associated challenge we signed.
@@ -56,11 +52,11 @@ loginRouter.post('/confirm-login', async (req, res) => {
 
 loginRouter.get('/get-login-response', async (req, res) => {
   const {requestId} = req.query
-  const login = logins.get(requestId as string)
+  const login = logins.getAttempt(requestId as string)
   if (login && login.response) {
     res.status(200).json(login.response.toJson())
   } else {
-    res.status(204).send('No login response received.')
+    res.status(204).send('No valid login response received.')
   }
 })
 

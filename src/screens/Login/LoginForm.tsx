@@ -109,6 +109,7 @@ export const LoginForm = ({
       // Get login URI here for the QR code and deeplink.
       const signLoginRequest = async () => {
         setIsProcessing(true)
+        setLoginUri('')
         try {
           const randID = Buffer.from(crypto.randomBytes(20))
           const challengeId = toBase58Check(randID, 102)
@@ -145,6 +146,7 @@ export const LoginForm = ({
               error: response.statusText,
             })
             setError('Failed to sign the request using the signing server')
+            return
           }
 
           const res = await response.json()
@@ -152,6 +154,7 @@ export const LoginForm = ({
           if (res.error) {
             logger.warn('Failed to sign the request', {error: res.error})
             setError('Failed to sign the request using the signing server')
+            return
           }
 
           const signedRequest = new primitives.LoginConsentRequest(res)

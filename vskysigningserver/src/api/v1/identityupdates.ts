@@ -7,6 +7,7 @@ import {
   IdentityUpdateResponse,
 } from 'verus-typescript-primitives'
 
+import {RequestResponseStore} from '../../utils/RequestResponseStore'
 import {createSignedIdentityUpdateRequest} from './getIdentityUpdateRequest'
 
 const identityUpdatesRouter = express.Router()
@@ -14,14 +15,11 @@ const identityUpdatesRouter = express.Router()
 // Needed to process the JSON in the identity update response.
 identityUpdatesRouter.use(express.json())
 
-type IdentityUpdateId = string
-
-type IdentityUpdate = {
-  request?: IdentityUpdateRequest
-  response?: IdentityUpdateResponse
-}
-
-const identityUpdates = new Map<IdentityUpdateId, IdentityUpdate>()
+const identityUpdates = new RequestResponseStore<
+  string,
+  IdentityUpdateRequest,
+  IdentityUpdateResponse
+>()
 
 identityUpdatesRouter.post('/update-credentials', async (req, res) => {
   const detailsJson = req.body as IdentityUpdateRequestDetailsJson
@@ -33,7 +31,7 @@ identityUpdatesRouter.post('/update-credentials', async (req, res) => {
 
   const signedReq = await createSignedIdentityUpdateRequest(details)
   const signedReqJson = signedReq.toJson()
-  identityUpdates.set(id, {request: signedReq, response: undefined})
+  identityUpdates.setRequest(id, signedReq)
   res.status(200).json(signedReqJson)
 })
 
@@ -42,13 +40,11 @@ identityUpdatesRouter.post('/confirm-credential-update', async (req, res) => {
   const response = IdentityUpdateResponse.fromJson(responseJson)
   const id = responseJson.details.requestid!
 
-  const identityUpdate = identityUpdates.get(id)
-  if (identityUpdate) {
+  if (identityUpdates.hasAttempt(id)) {
     console.log(
       `Received identity update response with id ${id} at ${new Date().toLocaleTimeString()}`,
     )
-    identityUpdate.response = response
-    identityUpdates.set(id, identityUpdate)
+    identityUpdates.setResponse(id, response)
     res.status(200).send('Login response received.')
   } else {
     console.log(
@@ -62,11 +58,11 @@ identityUpdatesRouter.get(
   '/get-credential-update-response',
   async (req, res) => {
     const {requestId} = req.query
-    const identityUpdate = identityUpdates.get(requestId as string)
+    const identityUpdate = identityUpdates.getAttempt(requestId as string)
     if (identityUpdate && identityUpdate.response) {
       res.status(200).json(identityUpdate.response.toJson())
     } else {
-      res.status(204).send('No identity update response received.')
+      res.status(204).send('No valid identity update response received.')
     }
   },
 )
