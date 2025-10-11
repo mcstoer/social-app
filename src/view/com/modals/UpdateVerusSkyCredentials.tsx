@@ -24,8 +24,8 @@ import {colors, s} from '#/lib/styles'
 import {logger} from '#/logger'
 import {isAndroid, isNative, isWeb} from '#/platform/detection'
 import {useModalControls} from '#/state/modals'
+import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useSession} from '#/state/session'
-import {IADDRESS} from '#/env'
 import {ErrorMessage} from '../util/error/ErrorMessage'
 import {Button} from '../util/forms/Button'
 import {Text} from '../util/text/Text'
@@ -56,6 +56,8 @@ export function Component({password: initialPassword}: {password?: string}) {
 
   // Use a ref to track the request ID, since the request converts it to one with toJson().
   const identityUpdateIdRef = useRef<string>('')
+
+  const {data: signingServiceInfo} = useSigningAddressQuery()
 
   // Cleanup interval on unmount
   useEffect(() => {
@@ -168,6 +170,11 @@ export function Component({password: initialPassword}: {password?: string}) {
       return
     }
 
+    if (!signingServiceInfo?.signingAddress) {
+      setError(_(msg`Unable to get the signing service identity address`))
+      return
+    }
+
     setError('')
     setIsProcessing(true)
 
@@ -182,7 +189,7 @@ export function Component({password: initialPassword}: {password?: string}) {
                 version: Credential.VERSION_CURRENT.toNumber(),
                 credentialkey: IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid,
                 credential: [email, password],
-                scopes: [IADDRESS],
+                scopes: [signingServiceInfo.signingAddress],
               },
             },
           ],

@@ -106,8 +106,3 @@ export const BAPP_CONFIG_DEV_URL = process.env.BAPP_CONFIG_DEV_URL
  */
 export const BAPP_CONFIG_DEV_BYPASS_SECRET: string =
   process.env.BAPP_CONFIG_DEV_BYPASS_SECRET
-
-/**
- * The iaddress used to sign the requests on behalf of the app.
- */
-export const IADDRESS = process.env.EXPO_PUBLIC_IADDRESS || ''

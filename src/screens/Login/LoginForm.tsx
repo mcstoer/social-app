@@ -146,6 +146,7 @@ export const LoginForm = ({
               error: response.statusText,
             })
             setError('Failed to sign the request using the signing server')
+            setIsProcessing(false)
             return
           }
 
@@ -154,6 +155,7 @@ export const LoginForm = ({
           if (res.error) {
             logger.warn('Failed to sign the request', {error: res.error})
             setError('Failed to sign the request using the signing server')
+            setIsProcessing(false)
             return
           }
 
