@@ -3,6 +3,7 @@ import {type AppBskyActorDefs, BSKY_LABELER_DID} from '@atproto/api'
 
 import {type ProxyHeaderValue} from '#/state/session/agent'
 import {BLUESKY_PROXY_DID, CHAT_PROXY_DID} from '#/env'
+import {VERUSSKY_CONFIG} from '#/env/verussky'
 
 export const LOCAL_DEV_SERVICE =
   Platform.OS === 'android' ? 'http://10.0.2.2:2583' : 'http://localhost:2583'
@@ -10,10 +11,14 @@ export const STAGING_SERVICE = 'https://staging.bsky.dev'
 export const BSKY_SERVICE = 'https://bsky.social'
 export const BSKY_SERVICE_DID = 'did:web:bsky.social'
 export const PUBLIC_BSKY_SERVICE = 'https://public.api.bsky.app'
-export const VSKY_SERVICE = 'https://api.verustest.net'
-export const VSKY_SERVICE_ID = 'VRSCTEST'
+export const VSKY_SERVICE = VERUSSKY_CONFIG.isMainnet
+  ? 'https://api.verus.services'
+  : 'https://api.verustest.net'
+export const VSKY_SERVICE_ID = VERUSSKY_CONFIG.chain
 export const LOCAL_DEV_VSKY_SERVER = 'http://127.0.0.1:25000'
-export const DEFAULT_SERVICE = VSKY_SERVICE
+export const DEFAULT_SERVICE = VERUSSKY_CONFIG.defaultLoginVerusid
+  ? VSKY_SERVICE
+  : BSKY_SERVICE
 const HELP_DESK_LANG = 'en-us'
 export const HELP_DESK_URL = `https://blueskyweb.zendesk.com/hc/${HELP_DESK_LANG}`
 export const EMBED_SERVICE = 'https://embed.bsky.app'
