@@ -19,7 +19,7 @@
     }
   },
   "scripts": {
-    "prepare": "is-ci || husky install",
+    "prepare": "(is-ci || husky install) && node ./scripts/read-config.js",
     "postinstall": "patch-package && yarn intl:compile-if-needed",
     "prebuild": "EXPO_NO_GIT_STATUS=1 expo prebuild --clean",
     "android": "expo run:android",
@@ -165,6 +165,7 @@
     "fast-text-encoding": "^1.0.6",
     "history": "^5.3.0",
     "hls.js": "^1.6.2",
+    "ini": "5.0.0",
     "js-sha256": "^0.9.0",
     "jwt-decode": "^4.0.0",
     "lande": "^1.0.10",

@@ -101,6 +101,9 @@ stats.json
 !vskysigningserver/.env.example
 !vskylogin/.env.example
 
+# VerusSky config
+src/env/verussky.config.json
+
 # Firebase (Android) Google services
 google-services.json
 

@@ -13,3 +13,5 @@ export const APP_VERSION = RELEASE_VERSION
  * The short commit hash and environment of the current bundle.
  */
 export const APP_METADATA = `${BUNDLE_IDENTIFIER.slice(0, 7)} (${__DEV__ ? 'dev' : 'prod'})`
+
+export {VERUSSKY_CONFIG, type VerusSkyConfig} from './verussky'
