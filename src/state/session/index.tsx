@@ -54,8 +54,8 @@ const ApiContext = React.createContext<SessionApiContext>({
 ApiContext.displayName = 'SessionApiContext'
 
 const VskyApiContext = React.createContext<SessionVskyApiContext>({
-  rpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-  idInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
+  verusRpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
+  verusIdInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
 })
 
 class SessionStore {
@@ -153,7 +153,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       // Choose to login using the VerusSky service or an atproto provider based on the service url.
       let agent: BskyAppAgent
       let account: SessionAccount
-      if (params.service === VSKY_SERVICE) {
+      if (params.vskySession) {
         ;({agent, account} = await createVskyAgentAndLogin(
           params,
           onAgentSessionChange,
@@ -344,8 +344,8 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
 
   const vskyApi = React.useMemo(
     () => ({
-      rpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-      idInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
+      verusRpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
+      verusIdInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
     }),
     [],
   )

@@ -55,8 +55,8 @@ export type SessionApiContext = {
 }
 
 export type SessionVskyApiContext = {
-  rpcInterface: VerusdRpcInterface
-  idInterface: VerusIdInterface
+  verusRpcInterface: VerusdRpcInterface
+  verusIdInterface: VerusIdInterface
 }
 
 export type VskySession = {

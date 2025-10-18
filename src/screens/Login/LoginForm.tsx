@@ -18,13 +18,13 @@ import {
   IDENTITY_VIEW,
   LOGIN_CONSENT_WEBHOOK_VDXF_KEY,
   LoginConsentChallenge,
+  LoginConsentRequest,
   RedirectUri,
   RequestedPermission,
   toBase58Check,
 } from 'verus-typescript-primitives'
-import {primitives} from 'verusid-ts-client'
 
-import {LOCAL_DEV_VSKY_SERVER, VSKY_SERVICE} from '#/lib/constants'
+import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {isNetworkError} from '#/lib/strings/errors'
 import {cleanError} from '#/lib/strings/errors'
@@ -32,6 +32,7 @@ import {createFullHandle} from '#/lib/strings/handles'
 import {logger} from '#/logger'
 import {useModalControls} from '#/state/modals'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
+import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
@@ -44,7 +45,9 @@ import {At_Stroke2_Corner0_Rounded as At} from '#/components/icons/At'
 import {Lock_Stroke2_Corner0_Rounded as Lock} from '#/components/icons/Lock'
 import {Ticket_Stroke2_Corner0_Rounded as Ticket} from '#/components/icons/Ticket'
 import {Loader} from '#/components/Loader'
+import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
+import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {FormContainer} from './FormContainer'
 
 type ServiceDescription = ComAtprotoServerDescribeServer.OutputSchema
@@ -80,101 +83,105 @@ export const LoginForm = ({
     useState<boolean>(false)
   const [isAuthFactorTokenValueEmpty, setIsAuthFactorTokenValueEmpty] =
     useState<boolean>(true)
-  const needsManualLoginRef = useRef<boolean>(false)
-
-  const setNeedsManualLogin = (value: boolean) => {
-    needsManualLoginRef.current = value
-  }
-  const needsManualLogin = needsManualLoginRef.current
+  const [isVerusIdLogin, setIsVerusIdLogin] = useState<boolean>(
+    VERUSSKY_CONFIG.defaultLoginVerusid,
+  )
 
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
   const authFactorTokenValueRef = useRef<string>('')
   const vskySessionValueRef = useRef<VskySession>({auth: '', id: '', name: ''})
   const passwordRef = useRef<TextInput>(null)
+  const verusIdLoginFailed = useRef<boolean>(false)
   const {_} = useLingui()
   const {login} = useSessionApi()
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {rpcInterface} = useSessionVskyApi()
-  const isVskyService = serviceUrl === VSKY_SERVICE
+  const {verusRpcInterface} = useSessionVskyApi()
   const {openModal} = useModalControls()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
 
+  const {data: verusIdLoginResult, error: verusIdLoginError} =
+    useVerusIdLoginQuery({
+      requestId: loginIdRef.current,
+      verusRpcInterface,
+      enabled: isVerusIdLogin && loginIdRef.current !== '',
+    })
+
   useEffect(() => {
-    if (isVskyService) {
-      // Get login URI here for the QR code and deeplink.
-      const signLoginRequest = async () => {
-        setIsProcessing(true)
-        setLoginUri('')
-        try {
-          const randID = Buffer.from(crypto.randomBytes(20))
-          const challengeId = toBase58Check(randID, 102)
+    // Get login URI here for the QR code and deeplink.
+    const createAndSignLoginRequest = async () => {
+      setIsProcessing(true)
+      setLoginUri('')
+      try {
+        const randID = Buffer.from(crypto.randomBytes(20))
+        const challengeId = toBase58Check(randID, 102)
 
-          const details = new LoginConsentChallenge({
-            challenge_id: challengeId,
-            requested_access: [
-              new RequestedPermission(IDENTITY_VIEW.vdxfid),
-              new RequestedPermission(IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid),
-            ],
-            redirect_uris: [
-              new RedirectUri(
-                `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/confirm-login`,
-                LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
-              ),
-            ],
-            created_at: Math.floor(Date.now() / 1000),
-          })
+        const details = new LoginConsentChallenge({
+          challenge_id: challengeId,
+          requested_access: [
+            new RequestedPermission(IDENTITY_VIEW.vdxfid),
+            new RequestedPermission(IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid),
+          ],
+          redirect_uris: [
+            new RedirectUri(
+              `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/confirm-login`,
+              LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
+            ),
+          ],
+          created_at: Math.floor(Date.now() / 1000),
+        })
 
-          // Sign the request using a signing server.
-          const response = await fetch(
-            `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/sign-login-request`,
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(details.toJson()),
+        // Sign the request using a signing server.
+        const response = await fetch(
+          `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/sign-login-request`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
             },
-          )
+            body: JSON.stringify(details.toJson()),
+          },
+        )
 
-          if (!response.ok) {
-            logger.warn('Failed to sign the request', {
-              error: response.statusText,
-            })
-            setError('Failed to sign the request using the signing server')
-            setIsProcessing(false)
-            return
-          }
-
-          const res = await response.json()
-
-          if (res.error) {
-            logger.warn('Failed to sign the request', {error: res.error})
-            setError('Failed to sign the request using the signing server')
-            setIsProcessing(false)
-            return
-          }
-
-          const signedRequest = new primitives.LoginConsentRequest(res)
-          setLoginUri(signedRequest.toWalletDeeplinkUri())
-          loginIdRef.current = challengeId
-          setError('')
-        } catch (e: any) {
-          const errMsg = e.toString()
-          logger.warn('Failed to login', {error: errMsg})
-          setError(cleanError(errMsg))
-          loginIdRef.current = ''
+        if (!response.ok) {
+          logger.warn('Failed to sign the request', {
+            error: response.statusText,
+          })
+          setError('Failed to sign the request using the signing server')
+          setIsProcessing(false)
+          return
         }
-        setIsProcessing(false)
-      }
 
-      signLoginRequest()
+        const res = await response.json()
+
+        if (res.error) {
+          logger.warn('Failed to sign the request', {error: res.error})
+          setError('Failed to sign the request using the signing server')
+          setIsProcessing(false)
+          return
+        }
+
+        const signedRequest = new LoginConsentRequest(res)
+        setLoginUri(signedRequest.toWalletDeeplinkUri())
+        loginIdRef.current = challengeId
+        setError('')
+      } catch (e: any) {
+        const errMsg = e.toString()
+        logger.warn('Failed to login', {error: errMsg})
+        setError(cleanError(errMsg))
+        loginIdRef.current = ''
+      }
+      setIsProcessing(false)
     }
-  }, [isVskyService, setError])
+
+    if (isVerusIdLogin) {
+      createAndSignLoginRequest()
+    }
+  }, [isVerusIdLogin, setError])
 
   const onPressSelectService = React.useCallback(() => {
     Keyboard.dismiss()
@@ -226,20 +233,18 @@ export const LoginForm = ({
         }
       }
 
-      // TODO remove double login
       await login(
         {
           service: serviceUrl,
           identifier: fullIdent,
           password,
           authFactorToken: authFactorToken.trim(),
-          vskySession: isVskyService ? vskySession : undefined,
+          vskySession: isVerusIdLogin ? vskySession : undefined,
         },
         'LoginForm',
       )
 
-      const isManualLoginAfterVskyFailed =
-        isVskyService && needsManualLoginRef.current
+      const isManualLoginAfterVskyFailed = verusIdLoginFailed.current
 
       onAttemptSuccess()
       setHasCheckedForStarterPack(true)
@@ -285,8 +290,9 @@ export const LoginForm = ({
           })
 
           // Fallback to standard login if the VerusSky login has invalid credentials.
-          if (isVskyService && !needsManualLoginRef.current) {
-            setNeedsManualLogin(true)
+          if (isVerusIdLogin) {
+            verusIdLoginFailed.current = true
+            setIsVerusIdLogin(false)
             setError(
               _(
                 msg`Unable to verify Bluesky credentials. Please sign in manually.`,
@@ -317,138 +323,74 @@ export const LoginForm = ({
     }
     // Open the deeplink on the same tab so that the current navigation stack is saved.
     window.location.href = loginUri
-    checkForVskyLogin()
   }
 
-  // checkForVskyLogin polls the login server for the login and passes the details to onPressNext.
-  const checkForVskyLogin = async () => {
-    // Reset the manual login state when we start checking for a new login via Verus.
-    setNeedsManualLogin(false)
-
-    const pollInterval = 1000
-    const requestId = loginIdRef.current
-
-    if (!requestId) {
-      logger.warn(
-        'Missing login ID when attempting to poll for VerusSky login response',
-      )
+  // Handle successful login
+  useEffect(() => {
+    if (!verusIdLoginResult) {
       return
     }
 
-    const getLogin = async () => {
-      const response = await fetch(
-        `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/get-login-response?requestId=${encodeURIComponent(
-          requestId,
-        )}`,
-      )
-
-      // Occurs when the login server hasn't received a recent login.
-      if (response.status === 204) {
-        return
-      }
-
-      if (!response.ok) {
-        return
-      }
-
-      // Clear the polling for a response if we get a valid response.
-      clearInterval(intervalRef)
-
-      const res = await response.json()
-      const loginRes = new primitives.LoginConsentResponse(res)
-
-      try {
-        const identity = await rpcInterface.getIdentity(loginRes.signing_id)
-        if (identity.result) {
-          vskySessionValueRef.current = {
-            auth: '',
-            id: identity.result.identity.identityaddress || '',
-            name: identity.result.identity.name,
-          }
-
-          // Get the Bluesky credentials from the credentials in the login request.
-          const context = loginRes.decision.context
-          const credential = new primitives.Credential()
-          const credentialHex =
-            context?.kv[primitives.IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]
-
-          if (!credentialHex) {
-            logger.warn('Failed to find credentials in VerusSky login.')
-            setNeedsManualLogin(true)
-            setError(
-              _(
-                msg`Missing login credentials from VerusSky. Please log in manually.`,
-              ),
-            )
-            setIsProcessing(false)
-            return
-          }
-
-          credential.fromBuffer(Buffer.from(credentialHex, 'hex'))
-          const plainLogin = credential.credential
-
-          if (
-            plainLogin &&
-            Array.isArray(plainLogin) &&
-            plainLogin.length >= 2
-          ) {
-            identifierValueRef.current = plainLogin[0]
-            passwordValueRef.current = plainLogin[1]
-            onPressNext()
-          } else {
-            // If the credentials don't exist, then the user needs to manually input them.
-            if (!plainLogin || !Array.isArray(plainLogin)) {
-              logger.warn(
-                'Failed to find the username and password from the VerusSky login.',
-              )
-              setNeedsManualLogin(true)
-              setError(
-                _(
-                  msg`Missing username and password from VerusSky login. Please log in manually.`,
-                ),
-              )
-            } else if (!plainLogin[0]) {
-              logger.warn(
-                'Failed to find the username from the VerusSky login.',
-              )
-              setNeedsManualLogin(true)
-              setError(
-                _(
-                  msg`Missing username from VerusSky login. Please log in manually.`,
-                ),
-              )
-            } else if (!plainLogin[1]) {
-              logger.warn(
-                'Failed to find the password from the VerusSky login.',
-              )
-              setNeedsManualLogin(true)
-              setError(
-                _(
-                  msg`Missing password from VerusSky login. Please log in manually.`,
-                ),
-              )
-            }
-            setIsProcessing(false)
-          }
-        } else {
-          logger.warn('Failed to login due to invalid login response')
-          setError(_(msg`Unable to validate the VerusSky login.`))
-        }
-      } catch (e: any) {
-        const errMsg = e.toString()
-        logger.warn('Failed to verify VerusSky login response', {error: errMsg})
-        setError(cleanError(errMsg))
-      }
+    vskySessionValueRef.current = {
+      auth: '',
+      id: verusIdLoginResult.identity.identityaddress || '',
+      name: verusIdLoginResult.identity.name,
     }
 
-    const intervalRef = setInterval(() => {
-      getLogin()
-    }, pollInterval)
-  }
+    identifierValueRef.current = verusIdLoginResult.credentials.username
+    passwordValueRef.current = verusIdLoginResult.credentials.password
 
-  const resetManualLoginState = () => {
-    setNeedsManualLogin(false)
-  }
+    onPressNext()
+
+    // onPressNext doesn't change so it is fine to exclude from the dependencies
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [verusIdLoginResult])
+
+  // Handle errors from fetching the VerusID login
+  useEffect(() => {
+    if (!verusIdLoginError) {
+      return
+    }
+
+    const errMsg = verusIdLoginError.message
+    logger.warn('Failed to verify VerusSky login response', {error: errMsg})
+
+    // Set appropriate error messages based on error type
+    if (errMsg.includes('Missing login credentials')) {
+      setError(
+        _(
+          msg`Missing login credentials from VerusSky. Please log in manually.`,
+        ),
+      )
+    } else if (errMsg.includes('Missing username')) {
+      setError(
+        _(msg`Missing username from VerusSky login. Please log in manually.`),
+      )
+    } else if (errMsg.includes('Missing password')) {
+      setError(
+        _(msg`Missing password from VerusSky login. Please log in manually.`),
+      )
+    } else if (
+      errMsg.includes('Invalid credential format') ||
+      errMsg.includes('Invalid credentials')
+    ) {
+      setError(
+        _(
+          msg`Missing username and password from VerusSky login. Please log in manually.`,
+        ),
+      )
+    } else if (errMsg.includes('Invalid login response')) {
+      setError(_(msg`Unable to validate the VerusSky login.`))
+    } else {
+      setError(cleanError(errMsg))
+    }
+
+    verusIdLoginFailed.current = true
+    setIsVerusIdLogin(false)
+
+    setIsProcessing(false)
+  }, [verusIdLoginError, _, setError])
 
   return (
     <FormContainer testID="loginForm" titleText={<Trans>Sign in</Trans>}>
@@ -460,12 +402,12 @@ export const LoginForm = ({
           serviceUrl={serviceUrl}
           onSelectServiceUrl={url => {
             setServiceUrl(url)
-            resetManualLoginState()
+            verusIdLoginFailed.current = false
           }}
           onOpenDialog={onPressSelectService}
         />
       </View>
-      {(!isVskyService || (isVskyService && needsManualLogin)) && (
+      {!isVerusIdLogin ? (
         <View>
           <TextField.LabelText>
             <Trans>Account</Trans>
@@ -482,7 +424,9 @@ export const LoginForm = ({
                 autoComplete="username"
                 returnKeyType="next"
                 textContentType="username"
-                defaultValue={needsManualLogin ? '' : initialHandle || ''}
+                defaultValue={
+                  verusIdLoginFailed.current ? '' : initialHandle || ''
+                }
                 onChangeText={v => {
                   identifierValueRef.current = v
                 }}
@@ -538,6 +482,21 @@ export const LoginForm = ({
               </Button>
             </TextField.Root>
           </View>
+        </View>
+      ) : (
+        <View>
+          <TextField.LabelText>
+            <Trans>VerusID Login</Trans>
+          </TextField.LabelText>
+          <Text
+            style={[a.text_sm, t.atoms.text_contrast_medium, a.mt_xs, a.mb_sm]}>
+            <Trans>Scan the QR code below or press Next to continue</Trans>
+          </Text>
+          {loginUri && (
+            <View style={[a.align_center, a.py_lg]}>
+              <QrCodeInner link={loginUri} />
+            </View>
+          )}
         </View>
       )}
       {isAuthFactorTokenNeeded && (
@@ -617,41 +576,39 @@ export const LoginForm = ({
           </>
         ) : (
           <>
-            {isVskyService && needsManualLogin && (
-              <Button
-                testID="vskyRetryButton"
-                label={_(msg`Retry`)}
-                accessibilityHint={_(msg`Retries VerusSky login`)}
-                variant="solid"
-                color="secondary"
-                size="large"
-                onPress={() => {
-                  setNeedsManualLogin(false)
-                  setError('')
-                  startVskyLogin()
-                }}
-                style={[a.mr_sm]}>
-                <ButtonText>
-                  <Trans>Retry</Trans>
-                </ButtonText>
-              </Button>
-            )}
+            <Button
+              testID="loginMethodSwitchButton"
+              label={_(msg`Switch`)}
+              accessibilityHint={_(msg`Switches login method`)}
+              variant="solid"
+              color="secondary"
+              size="large"
+              onPress={() => {
+                setIsVerusIdLogin(!isVerusIdLogin)
+                setLoginUri('') // Clear the link so that the QR code doesn't appear briefly
+                setError('')
+              }}
+              style={[a.mr_sm]}>
+              <ButtonText>
+                {isVerusIdLogin ? (
+                  <Trans>Use manual login</Trans>
+                ) : (
+                  <Trans>Use VerusID login</Trans>
+                )}
+              </ButtonText>
+            </Button>
             <Button
               testID="loginNextButton"
               label={_(msg`Next`)}
               accessibilityHint={
-                isVskyService && !needsManualLogin
+                isVerusIdLogin
                   ? _(msg`Links to signing in on the same device`)
                   : _(msg`Navigates to the next screen`)
               }
               variant="solid"
               color="primary"
               size="large"
-              onPress={
-                isVskyService && !needsManualLogin
-                  ? startVskyLogin
-                  : onPressNext
-              }>
+              onPress={isVerusIdLogin ? startVskyLogin : onPressNext}>
               <ButtonText>
                 <Trans>Next</Trans>
               </ButtonText>

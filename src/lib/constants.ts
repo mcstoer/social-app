@@ -16,9 +16,7 @@ export const VSKY_SERVICE = VERUSSKY_CONFIG.isMainnet
   : 'https://api.verustest.net'
 export const VSKY_SERVICE_ID = VERUSSKY_CONFIG.chain
 export const LOCAL_DEV_VSKY_SERVER = 'http://127.0.0.1:25000'
-export const DEFAULT_SERVICE = VERUSSKY_CONFIG.defaultLoginVerusid
-  ? VSKY_SERVICE
-  : BSKY_SERVICE
+export const DEFAULT_SERVICE = BSKY_SERVICE
 const HELP_DESK_LANG = 'en-us'
 export const HELP_DESK_URL = `https://blueskyweb.zendesk.com/hc/${HELP_DESK_LANG}`
 export const EMBED_SERVICE = 'https://embed.bsky.app'

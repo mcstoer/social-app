@@ -1,6 +1,6 @@
 import React from 'react'
 
-import type {VerusDaemonApiContext} from '#/state/queries/verus/types'
+import {type VerusDaemonApiContext} from '#/state/queries/verus/types'
 import {callRPCDaemon} from '#/state/queries/verus/util'
 
 const apiContext = React.createContext<VerusDaemonApiContext>({

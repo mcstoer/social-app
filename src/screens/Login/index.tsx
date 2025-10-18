@@ -4,7 +4,7 @@ import Animated, {FadeIn, LayoutAnimationConfig} from 'react-native-reanimated'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
-import {DEFAULT_SERVICE, VSKY_SERVICE} from '#/lib/constants'
+import {DEFAULT_SERVICE} from '#/lib/constants'
 import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
 import {useServiceQuery} from '#/state/queries/service'
@@ -72,11 +72,7 @@ export const Login = ({onPressBack}: {onPressBack: () => void}) => {
 
   const onSelectAccount = (account?: SessionAccount) => {
     if (account?.service) {
-      if (account.type === 'vsky') {
-        setServiceUrl(VSKY_SERVICE)
-      } else {
-        setServiceUrl(account.service)
-      }
+      setServiceUrl(account.service)
     }
     setInitialHandle(account?.handle || '')
     gotoForm(Forms.Login)

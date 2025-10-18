@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import {logger} from '#/logger'
-import {rpcResult} from './types'
+import {type rpcResult} from './types'
 
 export const callRPCDaemon = async (
   url: string,
