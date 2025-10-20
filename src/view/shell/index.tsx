@@ -33,6 +33,7 @@ import {InAppBrowserConsentDialog} from '#/components/dialogs/InAppBrowserConsen
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {SigninDialog} from '#/components/dialogs/Signin'
+import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {
   Outlet as PolicyUpdateOverlayPortalOutlet,
   usePolicyUpdateContext,
@@ -103,6 +104,7 @@ function ShellInner() {
       <MutedWordsDialog />
       <SigninDialog />
       <EmailDialog />
+      <VerusIDCredentialUpdateDialog />
       <AgeAssuranceRedirectDialog />
       <InAppBrowserConsentDialog />
       <LinkWarningDialog />

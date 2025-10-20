@@ -29,8 +29,8 @@ import {useRequestNotificationsPermission} from '#/lib/notifications/notificatio
 import {isNetworkError} from '#/lib/strings/errors'
 import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
+import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
-import {useModalControls} from '#/state/modals'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
@@ -38,9 +38,11 @@ import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
+import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {FormError} from '#/components/forms/FormError'
 import {HostingProvider} from '#/components/forms/HostingProvider'
 import * as TextField from '#/components/forms/TextField'
+import * as Toggle from '#/components/forms/Toggle'
 import {At_Stroke2_Corner0_Rounded as At} from '#/components/icons/At'
 import {Lock_Stroke2_Corner0_Rounded as Lock} from '#/components/icons/Lock'
 import {Ticket_Stroke2_Corner0_Rounded as Ticket} from '#/components/icons/Ticket'
@@ -86,6 +88,8 @@ export const LoginForm = ({
   const [isVerusIdLogin, setIsVerusIdLogin] = useState<boolean>(
     VERUSSKY_CONFIG.defaultLoginVerusid,
   )
+  const [saveLoginWithVerusId, setSaveLoginWithVerusId] =
+    useState<boolean>(false)
 
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
@@ -99,7 +103,8 @@ export const LoginForm = ({
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {verusRpcInterface} = useSessionVskyApi()
-  const {openModal} = useModalControls()
+  const updateVerusCredentialsControl =
+    useVerusIdCredentialUpdateDialogControl()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
@@ -110,6 +115,10 @@ export const LoginForm = ({
       verusRpcInterface,
       enabled: isVerusIdLogin && loginIdRef.current !== '',
     })
+
+  const clearVskySessionValues = () => {
+    vskySessionValueRef.current = {auth: '', id: '', name: ''}
+  }
 
   useEffect(() => {
     // Get login URI here for the QR code and deeplink.
@@ -198,6 +207,8 @@ export const LoginForm = ({
     const authFactorToken = authFactorTokenValueRef.current
     const vskySession = vskySessionValueRef.current
 
+    const validVerusIdLogin = vskySession.id !== '' && vskySession.name !== ''
+
     if (!identifier) {
       setError(_(msg`Please enter your username`))
       return
@@ -239,7 +250,7 @@ export const LoginForm = ({
           identifier: fullIdent,
           password,
           authFactorToken: authFactorToken.trim(),
-          vskySession: isVerusIdLogin ? vskySession : undefined,
+          vskySession: validVerusIdLogin ? vskySession : undefined,
         },
         'LoginForm',
       )
@@ -252,17 +263,18 @@ export const LoginForm = ({
 
       await setShowLoggedOut(false)
 
-      // Wait until the login screen is gone before showing the modal.
       if (isManualLoginAfterVskyFailed) {
         logger.debug(
           'Successfully logged in manually after VerusSky login failed',
         )
+      }
 
-        // Delay opening the modal in order to allow for transitioning away from the login screen.
+      if (saveLoginWithVerusId || isManualLoginAfterVskyFailed) {
+        // Delay opening the dialog in order to allow for transitioning away from the login screen.
+        // Otherwise, the dialog does not appear.
         setTimeout(() => {
-          openModal({
-            name: 'update-verussky-credentials',
-            password: password,
+          updateVerusCredentialsControl.open({
+            password: passwordValueRef.current,
           })
         }, 500)
       }
@@ -325,21 +337,51 @@ export const LoginForm = ({
     window.location.href = loginUri
   }
 
-  // Handle successful login
+  // Handle retrieval of the login response
   useEffect(() => {
     if (!verusIdLoginResult) {
       return
     }
 
-    vskySessionValueRef.current = {
-      auth: '',
-      id: verusIdLoginResult.identity.identityaddress || '',
-      name: verusIdLoginResult.identity.name,
+    try {
+      setIsProcessing(true)
+      vskySessionValueRef.current = {
+        auth: '',
+        id: verusIdLoginResult.identity.identityaddress || '',
+        name: verusIdLoginResult.identity.name,
+      }
+
+      const credentials = parseVerusIdLogin(verusIdLoginResult.loginResponse)
+
+      identifierValueRef.current = credentials.username
+      passwordValueRef.current = credentials.password
+    } catch (e: any) {
+      const errMsg = e.toString()
+      let message = ''
+
+      if (errMsg.includes('Missing username')) {
+        message = `Missing username from VerusID login.`
+      } else if (errMsg.includes('Missing password')) {
+        message = `Missing password from VerusID login.`
+      } else if (
+        errMsg.includes('Invalid credential format') ||
+        errMsg.includes('Invalid credentials') ||
+        errMsg.includes('Missing login credentials')
+      ) {
+        message = `Missing username and password from VerusID login.`
+      }
+
+      message += ` Please log in manually.`
+      setError(_(msg`${message}`))
+
+      verusIdLoginFailed.current = true
+      setIsVerusIdLogin(false)
+
+      setIsProcessing(false)
+      return
     }
 
-    identifierValueRef.current = verusIdLoginResult.credentials.username
-    passwordValueRef.current = verusIdLoginResult.credentials.password
-
+    setIsProcessing(false)
     onPressNext()
 
     // onPressNext doesn't change so it is fine to exclude from the dependencies
@@ -357,30 +399,10 @@ export const LoginForm = ({
     logger.warn('Failed to verify VerusSky login response', {error: errMsg})
 
     // Set appropriate error messages based on error type
-    if (errMsg.includes('Missing login credentials')) {
-      setError(
-        _(
-          msg`Missing login credentials from VerusSky. Please log in manually.`,
-        ),
-      )
-    } else if (errMsg.includes('Missing username')) {
-      setError(
-        _(msg`Missing username from VerusSky login. Please log in manually.`),
-      )
-    } else if (errMsg.includes('Missing password')) {
-      setError(
-        _(msg`Missing password from VerusSky login. Please log in manually.`),
-      )
-    } else if (
-      errMsg.includes('Invalid credential format') ||
-      errMsg.includes('Invalid credentials')
+    if (
+      errMsg.includes('Invalid login response') ||
+      errMsg.includes('Unable to fetch details on the signing identity')
     ) {
-      setError(
-        _(
-          msg`Missing username and password from VerusSky login. Please log in manually.`,
-        ),
-      )
-    } else if (errMsg.includes('Invalid login response')) {
       setError(_(msg`Unable to validate the VerusSky login.`))
     } else {
       setError(cleanError(errMsg))
@@ -403,6 +425,8 @@ export const LoginForm = ({
           onSelectServiceUrl={url => {
             setServiceUrl(url)
             verusIdLoginFailed.current = false
+            // If the service switches, then any existing VerusID login should be cleared.
+            clearVskySessionValues()
           }}
           onOpenDialog={onPressSelectService}
         />
@@ -481,6 +505,19 @@ export const LoginForm = ({
                 </ButtonText>
               </Button>
             </TextField.Root>
+            <Toggle.Item
+              label={_(msg`Save Login with VerusID`)}
+              name="saveLoginWithVerusID"
+              value={saveLoginWithVerusId}
+              onChange={setSaveLoginWithVerusId}
+              style={[a.mt_md]}>
+              <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+                <Toggle.Platform />
+                <Text style={[a.text_md]}>
+                  <Trans>Save my Login with VerusID</Trans>
+                </Text>
+              </View>
+            </Toggle.Item>
           </View>
         </View>
       ) : (

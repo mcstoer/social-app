@@ -24,6 +24,9 @@ type ControlsContext = {
     share?: boolean
   }>
   ageAssuranceRedirectDialogControl: StatefulControl<AgeAssuranceRedirectDialogState>
+  verusIdCredentialUpdateDialogControl: StatefulControl<{
+    password: string
+  }>
 }
 
 const ControlsContext = createContext<ControlsContext | null>(null)
@@ -51,6 +54,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   }>()
   const ageAssuranceRedirectDialogControl =
     useStatefulDialogControl<AgeAssuranceRedirectDialogState>()
+  const verusIdCredentialUpdateDialogControl = useStatefulDialogControl<{
+    password: string
+  }>()
 
   const ctx = useMemo<ControlsContext>(
     () => ({
@@ -60,6 +66,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       emailDialogControl,
       linkWarningDialogControl,
       ageAssuranceRedirectDialogControl,
+      verusIdCredentialUpdateDialogControl,
     }),
     [
       mutedWordsDialogControl,
@@ -68,6 +75,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       emailDialogControl,
       linkWarningDialogControl,
       ageAssuranceRedirectDialogControl,
+      verusIdCredentialUpdateDialogControl,
     ],
   )
 

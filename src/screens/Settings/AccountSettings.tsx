@@ -14,11 +14,13 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
+import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {BirthdayCake_Stroke2_Corner2_Rounded as BirthdayCakeIcon} from '#/components/icons/BirthdayCake'
 import {Car_Stroke2_Corner2_Rounded as CarIcon} from '#/components/icons/Car'
 import {Envelope_Stroke2_Corner2_Rounded as EnvelopeIcon} from '#/components/icons/Envelope'
 import {Freeze_Stroke2_Corner2_Rounded as FreezeIcon} from '#/components/icons/Freeze'
+import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
 import {Lock_Stroke2_Corner2_Rounded as LockIcon} from '#/components/icons/Lock'
 import {PencilLine_Stroke2_Corner2_Rounded as PencilIcon} from '#/components/icons/Pencil'
 import {ShieldCheck_Stroke2_Corner0_Rounded as ShieldIcon} from '#/components/icons/Shield'
@@ -40,6 +42,8 @@ export function AccountSettingsScreen({}: Props) {
   const birthdayControl = useDialogControl()
   const changeHandleControl = useDialogControl()
   const changePasswordControl = useDialogControl()
+  const updateVerusIDCredentialsUpdateControl =
+    useVerusIdCredentialUpdateDialogControl()
   const exportCarControl = useDialogControl()
   const deactivateAccountControl = useDialogControl()
 
@@ -153,17 +157,27 @@ export function AccountSettingsScreen({}: Props) {
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
-          {currentAccount?.type === 'vsky' && (
-            <SettingsList.PressableItem
-              label={_(msg`Update VerusSky Credentials`)}
-              onPress={() => openModal({name: 'update-verussky-credentials'})}>
-              <SettingsList.ItemIcon icon={LockIcon} />
-              <SettingsList.ItemText>
-                <Trans>Update VerusSky Credentials</Trans>
-              </SettingsList.ItemText>
-              <SettingsList.Chevron />
-            </SettingsList.PressableItem>
-          )}
+          <SettingsList.PressableItem
+            label={
+              currentAccount?.type === 'vsky'
+                ? _(msg`Update VerusID Login Credentials`)
+                : _(msg`Save Login Credentials with VerusID`)
+            }
+            onPress={() =>
+              updateVerusIDCredentialsUpdateControl.open({
+                password: '',
+              })
+            }>
+            <SettingsList.ItemIcon icon={KeyIcon} />
+            <SettingsList.ItemText>
+              {currentAccount?.type === 'vsky' ? (
+                <Trans>Update VerusID Login</Trans>
+              ) : (
+                <Trans>Save Login with VerusID</Trans>
+              )}
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
           <SettingsList.PressableItem
             label={_(msg`Handle`)}
             accessibilityHint={_(msg`Opens change handle dialog`)}
