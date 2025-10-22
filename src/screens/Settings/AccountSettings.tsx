@@ -4,7 +4,7 @@ import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useModalControls} from '#/state/modals'
-import {useSession} from '#/state/session'
+import {useSession, useSessionVskyApi} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import {AgeAssuranceAccountCard} from '#/components/ageAssurance/AgeAssuranceAccountCard'
@@ -14,10 +14,12 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
+import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {BirthdayCake_Stroke2_Corner2_Rounded as BirthdayCakeIcon} from '#/components/icons/BirthdayCake'
 import {Car_Stroke2_Corner2_Rounded as CarIcon} from '#/components/icons/Car'
+import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/icons/ChainLink'
 import {Envelope_Stroke2_Corner2_Rounded as EnvelopeIcon} from '#/components/icons/Envelope'
 import {Freeze_Stroke2_Corner2_Rounded as FreezeIcon} from '#/components/icons/Freeze'
 import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
@@ -37,6 +39,7 @@ export function AccountSettingsScreen({}: Props) {
   const t = useTheme()
   const {_} = useLingui()
   const {currentAccount} = useSession()
+  const {verusIdInterface} = useSessionVskyApi()
   const {openModal} = useModalControls()
   const emailDialogControl = useEmailDialogControl()
   const birthdayControl = useDialogControl()
@@ -44,6 +47,7 @@ export function AccountSettingsScreen({}: Props) {
   const changePasswordControl = useDialogControl()
   const updateVerusIDCredentialsUpdateControl =
     useVerusIdCredentialUpdateDialogControl()
+  const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
   const exportCarControl = useDialogControl()
   const deactivateAccountControl = useDialogControl()
 
@@ -175,6 +179,17 @@ export function AccountSettingsScreen({}: Props) {
               ) : (
                 <Trans>Save Login with VerusID</Trans>
               )}
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
+          <SettingsList.PressableItem
+            label={_(msg`Link Account to VerusID`)}
+            onPress={() =>
+              verusIdAccountLinkingControl.open({verusIdInterface})
+            }>
+            <SettingsList.ItemIcon icon={ChainLinkIcon} />
+            <SettingsList.ItemText>
+              <Trans>Link Account to VerusID</Trans>
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>

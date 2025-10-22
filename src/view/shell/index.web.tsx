@@ -22,6 +22,7 @@ import {EmailDialog} from '#/components/dialogs/EmailDialog'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {SigninDialog} from '#/components/dialogs/Signin'
+import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {useWelcomeModal} from '#/components/hooks/useWelcomeModal'
 import {
@@ -81,6 +82,7 @@ function ShellInner() {
       <SigninDialog />
       <EmailDialog />
       <VerusIDCredentialUpdateDialog />
+      <VerusIDAccountLinkingDialog />
       <AgeAssuranceRedirectDialog />
       <LinkWarningDialog />
       <Lightbox />

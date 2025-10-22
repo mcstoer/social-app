@@ -1,4 +1,5 @@
 import {createContext, useContext, useMemo, useState} from 'react'
+import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {type AgeAssuranceRedirectDialogState} from '#/components/ageAssurance/AgeAssuranceRedirectDialog'
 import * as Dialog from '#/components/Dialog'
@@ -26,6 +27,9 @@ type ControlsContext = {
   ageAssuranceRedirectDialogControl: StatefulControl<AgeAssuranceRedirectDialogState>
   verusIdCredentialUpdateDialogControl: StatefulControl<{
     password: string
+  }>
+  verusIdAccountLinkingDialogControl: StatefulControl<{
+    verusIdInterface: VerusIdInterface
   }>
 }
 
@@ -57,6 +61,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   const verusIdCredentialUpdateDialogControl = useStatefulDialogControl<{
     password: string
   }>()
+  const verusIdAccountLinkingDialogControl = useStatefulDialogControl<{
+    verusIdInterface: VerusIdInterface
+  }>()
 
   const ctx = useMemo<ControlsContext>(
     () => ({
@@ -67,6 +74,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       linkWarningDialogControl,
       ageAssuranceRedirectDialogControl,
       verusIdCredentialUpdateDialogControl,
+      verusIdAccountLinkingDialogControl,
     }),
     [
       mutedWordsDialogControl,
@@ -76,6 +84,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       linkWarningDialogControl,
       ageAssuranceRedirectDialogControl,
       verusIdCredentialUpdateDialogControl,
+      verusIdAccountLinkingDialogControl,
     ],
   )
 

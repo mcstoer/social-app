@@ -38,6 +38,7 @@ import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
+import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {FormError} from '#/components/forms/FormError'
 import {HostingProvider} from '#/components/forms/HostingProvider'
@@ -90,6 +91,8 @@ export const LoginForm = ({
   )
   const [saveLoginWithVerusId, setSaveLoginWithVerusId] =
     useState<boolean>(false)
+  const [linkAccountToVerusId, setLinkAccountToVerusId] =
+    useState<boolean>(false)
 
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
@@ -102,9 +105,10 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface} = useSessionVskyApi()
+  const {verusRpcInterface, verusIdInterface} = useSessionVskyApi()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
+  const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
@@ -278,6 +282,13 @@ export const LoginForm = ({
           })
         }, 500)
       }
+
+      if (linkAccountToVerusId) {
+        // Delay the opening less than the credential update in order to appear behind.
+        setTimeout(() => {
+          verusIdAccountLinkingControl.open({verusIdInterface})
+        }, 250)
+      }
     } catch (e: any) {
       const errMsg = e.toString()
       LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
@@ -398,7 +409,6 @@ export const LoginForm = ({
     const errMsg = verusIdLoginError.message
     logger.warn('Failed to verify VerusSky login response', {error: errMsg})
 
-    // Set appropriate error messages based on error type
     if (
       errMsg.includes('Invalid login response') ||
       errMsg.includes('Unable to fetch details on the signing identity')
@@ -432,94 +442,96 @@ export const LoginForm = ({
         />
       </View>
       {!isVerusIdLogin ? (
-        <View>
-          <TextField.LabelText>
-            <Trans>Account</Trans>
-          </TextField.LabelText>
-          <View style={[a.gap_sm]}>
-            <TextField.Root>
-              <TextField.Icon icon={At} />
-              <TextField.Input
-                testID="loginUsernameInput"
-                label={_(msg`Username or email address`)}
-                autoCapitalize="none"
-                autoFocus
-                autoCorrect={false}
-                autoComplete="username"
-                returnKeyType="next"
-                textContentType="username"
-                defaultValue={
-                  verusIdLoginFailed.current ? '' : initialHandle || ''
-                }
-                onChangeText={v => {
-                  identifierValueRef.current = v
-                }}
-                onSubmitEditing={() => {
-                  passwordRef.current?.focus()
-                }}
-                blurOnSubmit={false} // prevents flickering due to onSubmitEditing going to next field
-                editable={!isProcessing}
-                accessibilityHint={_(
-                  msg`Enter the username or email address you used when you created your account`,
-                )}
-              />
-            </TextField.Root>
+        <>
+          <View>
+            <TextField.LabelText>
+              <Trans>Account</Trans>
+            </TextField.LabelText>
+            <View style={[a.gap_sm]}>
+              <TextField.Root>
+                <TextField.Icon icon={At} />
+                <TextField.Input
+                  testID="loginUsernameInput"
+                  label={_(msg`Username or email address`)}
+                  autoCapitalize="none"
+                  autoFocus
+                  autoCorrect={false}
+                  autoComplete="username"
+                  returnKeyType="next"
+                  textContentType="username"
+                  defaultValue={
+                    verusIdLoginFailed.current ? '' : initialHandle || ''
+                  }
+                  onChangeText={v => {
+                    identifierValueRef.current = v
+                  }}
+                  onSubmitEditing={() => {
+                    passwordRef.current?.focus()
+                  }}
+                  blurOnSubmit={false} // prevents flickering due to onSubmitEditing going to next field
+                  editable={!isProcessing}
+                  accessibilityHint={_(
+                    msg`Enter the username or email address you used when you created your account`,
+                  )}
+                />
+              </TextField.Root>
 
-            <TextField.Root>
-              <TextField.Icon icon={Lock} />
-              <TextField.Input
-                testID="loginPasswordInput"
-                inputRef={passwordRef}
-                label={_(msg`Password`)}
-                autoCapitalize="none"
-                autoCorrect={false}
-                autoComplete="password"
-                returnKeyType="done"
-                enablesReturnKeyAutomatically={true}
-                secureTextEntry={true}
-                textContentType="password"
-                clearButtonMode="while-editing"
-                onChangeText={v => {
-                  passwordValueRef.current = v
-                }}
-                onSubmitEditing={onPressNext}
-                blurOnSubmit={false} // HACK: https://github.com/facebook/react-native/issues/21911#issuecomment-558343069 Keyboard blur behavior is now handled in onSubmitEditing
-                editable={!isProcessing}
-                accessibilityHint={_(msg`Enter your password`)}
-              />
-              <Button
-                testID="forgotPasswordButton"
-                onPress={onPressForgotPassword}
-                label={_(msg`Forgot password?`)}
-                accessibilityHint={_(msg`Opens password reset form`)}
-                variant="solid"
-                color="secondary"
-                style={[
-                  a.rounded_sm,
-                  // t.atoms.bg_contrast_100,
-                  {marginLeft: 'auto', left: 6, padding: 6},
-                  a.z_10,
-                ]}>
-                <ButtonText>
-                  <Trans>Forgot?</Trans>
-                </ButtonText>
-              </Button>
-            </TextField.Root>
-            <Toggle.Item
-              label={_(msg`Save Login with VerusID`)}
-              name="saveLoginWithVerusID"
-              value={saveLoginWithVerusId}
-              onChange={setSaveLoginWithVerusId}
-              style={[a.mt_md]}>
-              <View style={[a.flex_row, a.align_center, a.gap_sm]}>
-                <Toggle.Platform />
-                <Text style={[a.text_md]}>
-                  <Trans>Save my Login with VerusID</Trans>
-                </Text>
-              </View>
-            </Toggle.Item>
+              <TextField.Root>
+                <TextField.Icon icon={Lock} />
+                <TextField.Input
+                  testID="loginPasswordInput"
+                  inputRef={passwordRef}
+                  label={_(msg`Password`)}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="password"
+                  returnKeyType="done"
+                  enablesReturnKeyAutomatically={true}
+                  secureTextEntry={true}
+                  textContentType="password"
+                  clearButtonMode="while-editing"
+                  onChangeText={v => {
+                    passwordValueRef.current = v
+                  }}
+                  onSubmitEditing={onPressNext}
+                  blurOnSubmit={false} // HACK: https://github.com/facebook/react-native/issues/21911#issuecomment-558343069 Keyboard blur behavior is now handled in onSubmitEditing
+                  editable={!isProcessing}
+                  accessibilityHint={_(msg`Enter your password`)}
+                />
+                <Button
+                  testID="forgotPasswordButton"
+                  onPress={onPressForgotPassword}
+                  label={_(msg`Forgot password?`)}
+                  accessibilityHint={_(msg`Opens password reset form`)}
+                  variant="solid"
+                  color="secondary"
+                  style={[
+                    a.rounded_sm,
+                    // t.atoms.bg_contrast_100,
+                    {marginLeft: 'auto', left: 6, padding: 6},
+                    a.z_10,
+                  ]}>
+                  <ButtonText>
+                    <Trans>Forgot?</Trans>
+                  </ButtonText>
+                </Button>
+              </TextField.Root>
+            </View>
           </View>
-        </View>
+          <Toggle.Item
+            label={_(msg`Save Login with VerusID`)}
+            name="saveLoginWithVerusID"
+            value={saveLoginWithVerusId}
+            onChange={setSaveLoginWithVerusId}
+            style={[a.mt_md]}>
+            <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+              <Toggle.Platform />
+              <Text style={[a.text_md]}>
+                <Trans>Save my Login with VerusID</Trans>
+              </Text>
+            </View>
+          </Toggle.Item>
+        </>
       ) : (
         <View>
           <TextField.LabelText>
@@ -536,6 +548,19 @@ export const LoginForm = ({
           )}
         </View>
       )}
+      <Toggle.Item
+        label={_(msg`Link Account to VerusID`)}
+        name="linkAccountToVerusID"
+        value={linkAccountToVerusId}
+        onChange={setLinkAccountToVerusId}
+        style={[a.mt_md]}>
+        <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+          <Toggle.Platform />
+          <Text style={[a.text_md]}>
+            <Trans>Link Account to VerusID</Trans>
+          </Text>
+        </View>
+      </Toggle.Item>
       {isAuthFactorTokenNeeded && (
         <View>
           <TextField.LabelText>
