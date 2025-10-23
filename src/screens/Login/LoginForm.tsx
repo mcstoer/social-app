@@ -386,6 +386,10 @@ export const LoginForm = ({
       setError(_(msg`${message}`))
 
       verusIdLoginFailed.current = true
+
+      // Select to save the login as a way to update the failed VerusID login credentials.
+      setSaveLoginWithVerusId(true)
+
       setIsVerusIdLogin(false)
 
       setIsProcessing(false)

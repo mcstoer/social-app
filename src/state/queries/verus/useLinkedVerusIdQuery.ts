@@ -3,20 +3,22 @@ import {useQuery} from '@tanstack/react-query'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {checkIfLinkedVerusID} from '#/lib/verus/accountLinking'
+import {STALE} from '#/state/queries'
+
+const createLinkedVerusIDQueryKey = (did: string) => ['verusid-linked', did]
 
 export function useLinkedVerusIDQuery(
   profile: AppBskyActorDefs.ProfileViewDetailed,
   verusIdInterface: VerusIdInterface | undefined,
 ) {
   return useQuery({
-    queryKey: ['verus-linked-id', profile.did],
+    queryKey: createLinkedVerusIDQueryKey(profile.did),
     queryFn: async () => {
       if (!verusIdInterface) {
         return {isLinked: false}
       }
       return checkIfLinkedVerusID(profile, verusIdInterface)
     },
-    staleTime: 5 * 60 * 1000,
-    gcTime: 10 * 60 * 1000,
+    staleTime: STALE.MINUTES.FIVE,
   })
 }

@@ -30,7 +30,8 @@ import {useLabelerInfoQuery} from '#/state/queries/labeler'
 import {resetProfilePostsQueries} from '#/state/queries/post-feed'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
-import {useAgent, useSession} from '#/state/session'
+import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useAgent, useSession, useSessionVskyApi} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
 import {ProfileFeedgens} from '#/view/com/feeds/ProfileFeedgens'
 import {ProfileLists} from '#/view/com/lists/ProfileLists'
@@ -167,6 +168,7 @@ function ProfileScreenLoaded({
 }) {
   const profile = useProfileShadow(profileUnshadowed)
   const {hasSession, currentAccount} = useSession()
+  const {verusIdInterface} = useSessionVskyApi()
   const setMinimalShellMode = useSetMinimalShellMode()
   const {openComposer} = useOpenComposer()
   const {
@@ -177,6 +179,7 @@ function ProfileScreenLoaded({
     did: profile.did,
     enabled: !!profile.associated?.labeler,
   })
+  const {data: linkedVerusID} = useLinkedVerusIDQuery(profile, verusIdInterface)
   const [currentPage, setCurrentPage] = React.useState(0)
   const {_} = useLingui()
 
@@ -347,6 +350,7 @@ function ProfileScreenLoaded({
         <ProfileHeader
           profile={profile}
           labeler={labelerInfo}
+          linkedVerusID={linkedVerusID}
           descriptionRT={hasDescription ? descriptionRT : null}
           moderationOpts={moderationOpts}
           hideBackButton={hideBackButton}

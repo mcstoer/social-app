@@ -5,6 +5,7 @@ import {useLingui} from '@lingui/react'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {cleanError} from '#/lib/strings/errors'
+import {findVerusIdLink} from '#/lib/verus/accountLinking'
 import {useProfileUpdateMutation} from '#/state/queries/profile'
 import {useAgent, useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
@@ -157,13 +158,30 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         actor: currentAccount.did,
       })
 
+      // Replace the current link in the profile if it exists
+      const existingDescription = profile.description
+      let newDescription: string
+
+      if (!existingDescription) {
+        newDescription = profileLink
+      } else {
+        const linking = findVerusIdLink(profile)
+        if (linking) {
+          newDescription = existingDescription.replace(
+            linking.message,
+            detailsToSign,
+          )
+          newDescription = newDescription.replace(linking.signature, signature)
+        } else {
+          newDescription = `${existingDescription}\n\n${profileLink}`
+        }
+      }
+
       await updateProfileMutation({
         profile,
         updates: existing => ({
           ...existing,
-          description: existing.description
-            ? `${existing.description}\n\n${profileLink}`
-            : `${profileLink}`,
+          description: newDescription,
         }),
       })
       setStage(Stages.Done)

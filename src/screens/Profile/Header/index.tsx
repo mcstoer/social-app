@@ -50,6 +50,7 @@ export {ProfileHeaderLoading}
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
   labeler: AppBskyLabelerDefs.LabelerViewDetailed | undefined
+  linkedVerusID: {isLinked: boolean; name?: string} | undefined
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
   hideBackButton?: boolean

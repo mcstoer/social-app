@@ -9,7 +9,6 @@ import {FullWindowOverlay} from '#/components/FullWindowOverlay'
 import {createCustomBackdrop} from '../util/BottomSheetCustomBackdrop'
 import * as DeleteAccountModal from './DeleteAccount'
 import * as ContentLanguagesSettingsModal from './lang-settings/ContentLanguagesSettings'
-import * as UpdateVerusSkyCredentialsModal from './UpdateVerusSkyCredentials'
 import * as UserAddRemoveListsModal from './UserAddRemoveLists'
 
 const DEFAULT_SNAPPOINTS = ['90%']
@@ -52,9 +51,6 @@ export function ModalsContainer() {
   } else if (activeModal?.name === 'content-languages-settings') {
     snapPoints = ContentLanguagesSettingsModal.snapPoints
     element = <ContentLanguagesSettingsModal.Component />
-  } else if (activeModal?.name === 'update-verussky-credentials') {
-    snapPoints = UpdateVerusSkyCredentialsModal.snapPoints
-    element = <UpdateVerusSkyCredentialsModal.Component {...activeModal} />
   } else {
     return null
   }

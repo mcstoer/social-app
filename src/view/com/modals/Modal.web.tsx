@@ -8,7 +8,6 @@ import {type Modal as ModalIface} from '#/state/modals'
 import {useModalControls, useModals} from '#/state/modals'
 import * as DeleteAccountModal from './DeleteAccount'
 import * as ContentLanguagesSettingsModal from './lang-settings/ContentLanguagesSettings'
-import * as UpdateVerusSkyCredentialsModal from './UpdateVerusSkyCredentials'
 import * as UserAddRemoveLists from './UserAddRemoveLists'
 
 export function ModalsContainer() {
@@ -53,8 +52,6 @@ function Modal({modal}: {modal: ModalIface}) {
     element = <DeleteAccountModal.Component />
   } else if (modal.name === 'content-languages-settings') {
     element = <ContentLanguagesSettingsModal.Component />
-  } else if (modal.name === 'update-verussky-credentials') {
-    element = <UpdateVerusSkyCredentialsModal.Component {...modal} />
   } else {
     return null
   }

@@ -90,6 +90,17 @@ export function AccountSettingsScreen({}: Props) {
               )}
             </SettingsList.Item>
           )}
+          <SettingsList.PressableItem
+            label={_(msg`Link Account to VerusID`)}
+            onPress={() =>
+              verusIdAccountLinkingControl.open({verusIdInterface})
+            }>
+            <SettingsList.ItemIcon icon={ChainLinkIcon} />
+            <SettingsList.ItemText>
+              <Trans>Link Account to VerusID</Trans>
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
           <SettingsList.Item>
             <SettingsList.ItemIcon icon={EnvelopeIcon} />
             {/* Tricky flexbox situation here: we want the email to truncate, but by default it will make the "Email" text wrap instead.
@@ -179,17 +190,6 @@ export function AccountSettingsScreen({}: Props) {
               ) : (
                 <Trans>Save Login with VerusID</Trans>
               )}
-            </SettingsList.ItemText>
-            <SettingsList.Chevron />
-          </SettingsList.PressableItem>
-          <SettingsList.PressableItem
-            label={_(msg`Link Account to VerusID`)}
-            onPress={() =>
-              verusIdAccountLinkingControl.open({verusIdInterface})
-            }>
-            <SettingsList.ItemIcon icon={ChainLinkIcon} />
-            <SettingsList.ItemText>
-              <Trans>Link Account to VerusID</Trans>
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>

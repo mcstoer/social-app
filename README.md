@@ -7,6 +7,7 @@
 Before you begin, make sure you have the following installed:
 
 - [Node.js 20.19.4 or higher](https://nodejs.org/en/download/)
+    - Node.js 22 does **not** work
     - Node.js 20.19.5 (LTS) is recommended
     - For Windows users: [Node.js 20.19.5 download](https://nodejs.org/en/download/archive/v20.19.5)
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
@@ -55,3 +56,18 @@ yarn dev:run
 ```
 
 Once the servers are running, you can access the web app at `http://localhost:19006`.
+
+### Configuration
+
+The VerusSky app uses a configuration file that is stored in the following directory depending on your operating system.
+
+| Operating System | Directory                                 |
+|------------------|-------------------------------------------|
+| Linux            | `~/.verussky/`                            |
+| macOS            | `~/Library/Application Support/VerusSky/` |
+| Windows          | `%APPDATA%\VerusSky\`                     |
+
+Each time ater updating the configuration file, run:
+```bash
+yarn dev:setup
+```

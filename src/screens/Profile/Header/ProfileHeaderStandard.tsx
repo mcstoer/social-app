@@ -20,8 +20,7 @@ import {
   useProfileBlockMutationQueue,
   useProfileFollowMutationQueue,
 } from '#/state/queries/profile'
-import {useLinkedVerusIDQuery} from '#/state/queries/useLinkedVerusIdQuery'
-import {useRequireAuth, useSession, useSessionVskyApi} from '#/state/session'
+import {useRequireAuth, useSession} from '#/state/session'
 import {ProfileMenu} from '#/view/com/profile/ProfileMenu'
 import * as Toast from '#/view/com/util/Toast'
 import {atoms as a, platform, useBreakpoints, useTheme} from '#/alf'
@@ -46,6 +45,7 @@ import {AnimatedProfileHeaderSuggestedFollows} from './SuggestedFollows'
 
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
+  linkedVerusID: {isLinked: boolean; name?: string} | undefined
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
   hideBackButton?: boolean
@@ -54,6 +54,7 @@ interface Props {
 
 let ProfileHeaderStandard = ({
   profile: profileUnshadowed,
+  linkedVerusID,
   descriptionRT,
   moderationOpts,
   hideBackButton = false,
@@ -64,9 +65,7 @@ let ProfileHeaderStandard = ({
   const profile =
     useProfileShadow<AppBskyActorDefs.ProfileViewDetailed>(profileUnshadowed)
   const {currentAccount, hasSession} = useSession()
-  const {verusIdInterface} = useSessionVskyApi()
   const {_} = useLingui()
-  const {data: linkedVerusID} = useLinkedVerusIDQuery(profile, verusIdInterface)
   const moderation = useMemo(
     () => moderateProfile(profile, moderationOpts),
     [profile, moderationOpts],
@@ -293,22 +292,19 @@ let ProfileHeaderStandard = ({
                 </View>
               </Text>
             </View>
-            <ProfileHeaderHandle profile={profile} />
             {linkedVerusID?.isLinked && (
               <View style={[a.flex_row, a.gap_xs, a.align_center]}>
-                <View
+                <Text
                   style={[
-                    t.atoms.bg_contrast_25,
-                    a.rounded_xs,
-                    a.px_sm,
-                    a.py_xs,
+                    t.atoms.text_contrast_high,
+                    a.font_medium,
+                    a.text_md,
                   ]}>
-                  <Text style={[t.atoms.text, a.text_sm]}>
-                    Linked VerusID: {linkedVerusID.name}
-                  </Text>
-                </View>
+                  VerusID: {linkedVerusID.name}
+                </Text>
               </View>
             )}
+            <ProfileHeaderHandle profile={profile} />
           </View>
           {!isPlaceholderProfile && !isBlockedUser && (
             <View style={a.gap_md}>

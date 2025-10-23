@@ -1,6 +1,60 @@
 import {type AppBskyActorDefs} from '@atproto/api'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
+interface VerusIdLink {
+  message: string
+  name: string
+  signature: string
+}
+
+export function findVerusIdLink(
+  profile: AppBskyActorDefs.ProfileViewDetailed,
+): VerusIdLink | null {
+  const description = profile.description
+  const handle = profile.handle
+
+  // The link is in the format of
+  // iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "${name}" controls ${handle}:${signature}
+  const regexSafeHandle = handle.replace(/\./g, '\\.')
+  const verusIdLinkPattern = new RegExp(
+    `^(iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "([^"]+)" controls ${regexSafeHandle}):(\\S+)$`,
+    'm',
+  )
+
+  if (!description) {
+    return null
+  }
+
+  const match = description.match(verusIdLinkPattern)
+
+  if (!match) {
+    return null
+  }
+
+  return {
+    message: match[1],
+    name: match[2],
+    signature: match[3],
+  }
+}
+
+async function verifyVerusIdLink(
+  verusIdInterface: VerusIdInterface,
+  link: VerusIdLink,
+): Promise<boolean> {
+  try {
+    const verified = await verusIdInterface.verifyMessage(
+      link.name,
+      link.signature,
+      link.message,
+    )
+    return verified
+  } catch (error) {
+    console.error('Failed to verify VerusID link:', error)
+    throw error
+  }
+}
+
 export async function checkIfLinkedVerusID(
   profile: AppBskyActorDefs.ProfileViewDetailed,
   verusIdInterface: VerusIdInterface,
@@ -10,34 +64,13 @@ export async function checkIfLinkedVerusID(
   name?: string
   signature?: string
 }> {
-  const description = profile.description
-  const handle = profile.handle
+  const link = findVerusIdLink(profile)
 
-  if (!description || !handle) {
+  if (!link) {
     return {isLinked: false}
   }
 
-  // The link is `iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "${name}" controls ${handle}:${signature}`
-  const verusIdPattern = new RegExp(
-    `^(iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4\\s+1:\\s*controller of VerusID "([^"]+)" controls ${handle.replace(/\./g, '\\.')}):(\\S+)$`,
-    'm',
-  )
-
-  const match = description.match(verusIdPattern)
-
-  if (!match) {
-    return {isLinked: false}
-  }
-
-  const message = match[1]
-  const name = match[2]
-  const signature = match[3]
-
-  const verified = await verusIdInterface.verifyMessage(
-    name,
-    signature,
-    message,
-  )
+  const verified = await verifyVerusIdLink(verusIdInterface, link)
 
   if (!verified) {
     return {isLinked: false}
@@ -45,8 +78,8 @@ export async function checkIfLinkedVerusID(
 
   return {
     isLinked: true,
-    message: match[1],
-    name: match[2],
-    signature: match[3],
+    message: link.message,
+    name: link.name,
+    signature: link.signature,
   }
 }
