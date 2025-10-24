@@ -40,7 +40,7 @@ module.exports = function (_config) {
       runtimeVersion: {
         policy: 'appVersion',
       },
-      icon: './assets/app-icons/ios_icon_default_light.png',
+      icon: './assets/app-icons/ios_icon_default_next.png',
       userInterfaceStyle: 'automatic',
       primaryColor: '#1083fe',
       newArchEnabled: false,
@@ -112,6 +112,34 @@ module.exports = function (_config) {
           'com.apple.security.application-groups': 'group.app.bsky',
         },
         privacyManifests: {
+          NSPrivacyCollectedDataTypes: [
+            {
+              NSPrivacyCollectedDataType: 'NSPrivacyCollectedDataTypeCrashData',
+              NSPrivacyCollectedDataTypeLinked: false,
+              NSPrivacyCollectedDataTypeTracking: false,
+              NSPrivacyCollectedDataTypePurposes: [
+                'NSPrivacyCollectedDataTypePurposeAppFunctionality',
+              ],
+            },
+            {
+              NSPrivacyCollectedDataType:
+                'NSPrivacyCollectedDataTypePerformanceData',
+              NSPrivacyCollectedDataTypeLinked: false,
+              NSPrivacyCollectedDataTypeTracking: false,
+              NSPrivacyCollectedDataTypePurposes: [
+                'NSPrivacyCollectedDataTypePurposeAppFunctionality',
+              ],
+            },
+            {
+              NSPrivacyCollectedDataType:
+                'NSPrivacyCollectedDataTypeOtherDiagnosticData',
+              NSPrivacyCollectedDataTypeLinked: false,
+              NSPrivacyCollectedDataTypeTracking: false,
+              NSPrivacyCollectedDataTypePurposes: [
+                'NSPrivacyCollectedDataTypePurposeAppFunctionality',
+              ],
+            },
+          ],
           NSPrivacyAccessedAPITypes: [
             {
               NSPrivacyAccessedAPIType:
@@ -143,7 +171,7 @@ module.exports = function (_config) {
         barStyle: 'light-content',
       },
       android: {
-        icon: './assets/app-icons/android_icon_default_light.png',
+        icon: './assets/app-icons/android_icon_default_next.png',
         adaptiveIcon: {
           foregroundImage: './assets/icon-android-foreground.png',
           monochromeImage: './assets/icon-android-foreground.png',
@@ -305,8 +333,8 @@ module.exports = function (_config) {
               prerendered: true,
             },
             next: {
-              ios: './assets/app-icons/icon_default_next.png',
-              android: './assets/app-icons/icon_default_next.png',
+              ios: './assets/app-icons/ios_icon_default_next.png',
+              android: './assets/app-icons/android_icon_default_next.png',
               prerendered: true,
             },
 
