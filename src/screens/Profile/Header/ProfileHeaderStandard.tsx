@@ -13,6 +13,7 @@ import {useActorStatus} from '#/lib/actor-status'
 import {useHaptics} from '#/lib/haptics'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {logger} from '#/logger'
 import {isIOS} from '#/platform/detection'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
@@ -45,7 +46,7 @@ import {AnimatedProfileHeaderSuggestedFollows} from './SuggestedFollows'
 
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
-  linkedVerusID: {isLinked: boolean; name?: string} | undefined
+  linkedVerusID: VerusIdLink | undefined
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
   hideBackButton?: boolean
@@ -292,7 +293,7 @@ let ProfileHeaderStandard = ({
                 </View>
               </Text>
             </View>
-            {linkedVerusID?.isLinked && (
+            {linkedVerusID && (
               <View style={[a.flex_row, a.gap_xs, a.align_center]}>
                 <Text
                   style={[

@@ -1,12 +1,17 @@
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 import {View} from 'react-native'
+import {RichText} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import {useQueryClient} from '@tanstack/react-query'
+import {nanoid} from 'nanoid/non-secure'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
-import {cleanError} from '#/lib/strings/errors'
-import {findVerusIdLink} from '#/lib/verus/accountLinking'
-import {useProfileUpdateMutation} from '#/state/queries/profile'
+import * as apilib from '#/lib/api/index'
+import {shortenLinks} from '#/lib/strings/rich-text-manip'
+import {usePostDeleteMutation} from '#/state/queries/post'
+import {createPostgateRecord} from '#/state/queries/postgate/util'
+import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -49,12 +54,13 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
   const {_} = useLingui()
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
-  const {
-    mutateAsync: updateProfileMutation,
-    error: updateProfileError,
-    isError: isUpdateProfileError,
-  } = useProfileUpdateMutation()
+  const {mutateAsync: deletePost} = usePostDeleteMutation()
   const agent = useAgent()
+  const queryClient = useQueryClient()
+
+  const linkIdentifier = 'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4'
+  const {data: linkedVerusID, isLoading: isLoadingLinkedVerusID} =
+    useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did, verusIdInterface)
 
   const [stage, setStage] = useState(Stages.PreparingLinking)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -68,15 +74,15 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
   const uiStrings = {
     PreparingLinking: {
       title: _(msg`Link VerusID to Account`),
-      message: _(
-        msg`Link your VerusID to this account to verify your identity.`,
-      ),
+      message: linkedVerusID
+        ? _(
+            msg`Link your VerusID to this account. The VerusID currently linked to this account is ${linkedVerusID.name}.`,
+          )
+        : _(msg`Link your VerusID to this account to verify your identity.`),
     },
     SigningLinking: {
       title: _(msg`Sign the Linking Details`),
-      message: _(
-        msg`Copy the details below and sign them as a message with your VerusID ${name}, then paste the signature.`,
-      ),
+      message: null, // Use specific formatting instead for this section to allow for bolding
     },
     Done: {
       title: _(msg`Linking Complete`),
@@ -103,7 +109,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
     setIsProcessing(true)
 
     try {
-      const details = `iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "${name}" controls ${handle}`
+      const details = `${linkIdentifier} 1: controller of VerusID "${name}" controls ${handle}`
       setDetailsToSign(details)
       setStage(Stages.SigningLinking)
     } catch (e: any) {
@@ -112,12 +118,6 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
       setIsProcessing(false)
     }
   }
-
-  useEffect(() => {
-    if (isUpdateProfileError) {
-      setError(cleanError(updateProfileError))
-    }
-  }, [isUpdateProfileError, updateProfileError])
 
   const onSubmitSignature = async () => {
     if (!signature.trim()) {
@@ -141,7 +141,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
       )
 
       if (!verified) {
-        setError(_(msg`Invalid signature. Please try again.`))
+        setError(_(msg`Invalid signature`))
         setIsProcessing(false)
         return
       }
@@ -151,45 +151,47 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
     }
 
     try {
-      const profileLink = `${detailsToSign}:${signature}`
+      const accountLink = `${detailsToSign}:${signature}`
 
       if (!currentAccount) throw new Error('Not signed in')
-      const {data: profile} = await agent.getProfile({
-        actor: currentAccount.did,
-      })
 
-      // Replace the current link in the profile if it exists
-      const existingDescription = profile.description
-      let newDescription: string
-
-      if (!existingDescription) {
-        newDescription = profileLink
-      } else {
-        const linking = findVerusIdLink(profile)
-        if (linking) {
-          newDescription = existingDescription.replace(
-            linking.message,
-            detailsToSign,
-          )
-          newDescription = newDescription.replace(linking.signature, signature)
-        } else {
-          newDescription = `${existingDescription}\n\n${profileLink}`
-        }
+      // Delete the existing linking post if it exists
+      if (linkedVerusID) {
+        await deletePost({uri: linkedVerusID.postUri})
       }
 
-      await updateProfileMutation({
-        profile,
-        updates: existing => ({
-          ...existing,
-          description: newDescription,
-        }),
+      const richtext = new RichText({text: accountLink})
+
+      // Create the linking post similar to the Composer
+      await apilib.post(agent, queryClient, {
+        thread: {
+          posts: [
+            {
+              id: nanoid(),
+              richtext,
+              labels: [],
+              embed: {quote: undefined, media: undefined, link: undefined},
+              shortenedGraphemeLength: shortenLinks(richtext).graphemeLength,
+            },
+          ],
+          postgate: createPostgateRecord({post: ''}),
+          threadgate: [],
+        },
       })
       setStage(Stages.Done)
     } catch (e: any) {
-      setError(_(msg`Failed to update user profile`))
+      setError(_(msg`Failed to create a post for linking the VerusID`))
     } finally {
       setIsProcessing(false)
     }
+  }
+
+  if (!linkedVerusID || isLoadingLinkedVerusID) {
+    return (
+      <View style={[a.flex_1, a.py_4xl, a.align_center, a.justify_center]}>
+        <Loader size="xl" />
+      </View>
+    )
   }
 
   return (
@@ -198,7 +200,15 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         <Text style={[a.font_bold, a.text_2xl]}>{uiStrings[stage].title}</Text>
 
         <Text style={[a.text_md, a.leading_snug]}>
-          {uiStrings[stage].message}
+          {stage === Stages.SigningLinking ? (
+            <Trans>
+              Copy the details below and sign them as a
+              <Text style={[a.font_semi_bold]}> message </Text>
+              with your VerusID {name}, then paste the signature.
+            </Trans>
+          ) : (
+            uiStrings[stage].message
+          )}
         </Text>
 
         {error ? <Admonition type="error">{error}</Admonition> : null}

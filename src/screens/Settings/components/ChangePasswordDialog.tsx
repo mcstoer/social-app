@@ -13,6 +13,7 @@ import {ErrorMessage} from '#/view/com/util/error/ErrorMessage'
 import {android, atoms as a, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
+import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import * as TextField from '#/components/forms/TextField'
 import {Loader} from '#/components/Loader'
 import {Text} from '#/components/Typography'
@@ -45,6 +46,8 @@ function Inner() {
   const {currentAccount} = useSession()
   const agent = useAgent()
   const control = Dialog.useDialogContext()
+  const updateVerusIDCredentialsUpdateControl =
+    useVerusIdCredentialUpdateDialogControl()
 
   const [stage, setStage] = useState(Stages.RequestCode)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -286,7 +289,12 @@ function Inner() {
               label={_(msg`Close`)}
               color="primary"
               size="large"
-              onPress={() => control.close()}>
+              onPress={() => {
+                control.close()
+                updateVerusIDCredentialsUpdateControl.open({
+                  password: newPassword,
+                })
+              }}>
               <ButtonText>
                 <Trans>Close</Trans>
               </ButtonText>

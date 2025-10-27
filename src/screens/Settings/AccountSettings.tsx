@@ -175,8 +175,8 @@ export function AccountSettingsScreen({}: Props) {
           <SettingsList.PressableItem
             label={
               currentAccount?.type === 'vsky'
-                ? _(msg`Update VerusID Login Credentials`)
-                : _(msg`Save Login Credentials with VerusID`)
+                ? _(msg`Update VerusID Sign in`)
+                : _(msg`Save Sign in with VerusID`)
             }
             onPress={() =>
               updateVerusIDCredentialsUpdateControl.open({
@@ -186,9 +186,9 @@ export function AccountSettingsScreen({}: Props) {
             <SettingsList.ItemIcon icon={KeyIcon} />
             <SettingsList.ItemText>
               {currentAccount?.type === 'vsky' ? (
-                <Trans>Update VerusID Login</Trans>
+                <Trans>Update VerusID Sign in</Trans>
               ) : (
-                <Trans>Save Login with VerusID</Trans>
+                <Trans>Save Sign in with VerusID</Trans>
               )}
             </SettingsList.ItemText>
             <SettingsList.Chevron />

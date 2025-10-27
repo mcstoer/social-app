@@ -308,7 +308,7 @@ export const LoginForm = ({
           errMsg.includes('Authentication Required') ||
           errMsg.includes('Invalid identifier or password')
         ) {
-          logger.debug('Failed to login due to invalid credentials', {
+          logger.debug('Failed to sign in due to invalid credentials', {
             error: errMsg,
           })
 
@@ -325,14 +325,14 @@ export const LoginForm = ({
             setError(_(msg`Incorrect username or password`))
           }
         } else if (isNetworkError(e)) {
-          logger.warn('Failed to login due to network error', {error: errMsg})
+          logger.warn('Failed to sign in due to network error', {error: errMsg})
           setError(
             _(
               msg`Unable to contact your service. Please check your Internet connection.`,
             ),
           )
         } else {
-          logger.warn('Failed to login', {error: errMsg})
+          logger.warn('Failed to sign in', {error: errMsg})
           setError(cleanError(errMsg))
         }
       }
@@ -371,15 +371,15 @@ export const LoginForm = ({
       let message = ''
 
       if (errMsg.includes('Missing username')) {
-        message = `Missing username from VerusID login.`
+        message = `Missing username from VerusID sign in.`
       } else if (errMsg.includes('Missing password')) {
-        message = `Missing password from VerusID login.`
+        message = `Missing password from VerusID sign in.`
       } else if (
         errMsg.includes('Invalid credential format') ||
         errMsg.includes('Invalid credentials') ||
-        errMsg.includes('Missing login credentials')
+        errMsg.includes('Missing sign in credentials')
       ) {
-        message = `Missing username and password from VerusID login.`
+        message = `Missing username and password from VerusID sign in.`
       }
 
       message += ` Please log in manually.`
@@ -531,7 +531,7 @@ export const LoginForm = ({
             <View style={[a.flex_row, a.align_center, a.gap_sm]}>
               <Toggle.Platform />
               <Text style={[a.text_md]}>
-                <Trans>Save my Login with VerusID</Trans>
+                <Trans>Save my Sign in with VerusID</Trans>
               </Text>
             </View>
           </Toggle.Item>
@@ -539,11 +539,11 @@ export const LoginForm = ({
       ) : (
         <View>
           <TextField.LabelText>
-            <Trans>VerusID Login</Trans>
+            <Trans>VerusID Sign in</Trans>
           </TextField.LabelText>
           <Text
             style={[a.text_sm, t.atoms.text_contrast_medium, a.mt_xs, a.mb_sm]}>
-            <Trans>Scan the QR code below or press Next to continue</Trans>
+            <Trans>Scan the QR code below or press Sign in to continue</Trans>
           </Text>
           {loginUri && (
             <View style={[a.align_center, a.py_lg]}>
@@ -657,9 +657,9 @@ export const LoginForm = ({
               style={[a.mr_sm]}>
               <ButtonText>
                 {isVerusIdLogin ? (
-                  <Trans>Use manual login</Trans>
+                  <Trans>Sign in without VerusID</Trans>
                 ) : (
-                  <Trans>Use VerusID login</Trans>
+                  <Trans>Sign in with VerusID</Trans>
                 )}
               </ButtonText>
             </Button>
@@ -676,7 +676,7 @@ export const LoginForm = ({
               size="large"
               onPress={isVerusIdLogin ? startVskyLogin : onPressNext}>
               <ButtonText>
-                <Trans>Next</Trans>
+                {isVerusIdLogin ? <Trans>Sign in</Trans> : <Trans>Next</Trans>}
               </ButtonText>
               {isProcessing && <ButtonIcon icon={Loader} />}
             </Button>

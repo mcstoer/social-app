@@ -179,7 +179,11 @@ function ProfileScreenLoaded({
     did: profile.did,
     enabled: !!profile.associated?.labeler,
   })
-  const {data: linkedVerusID} = useLinkedVerusIDQuery(profile, verusIdInterface)
+  const {data: linkedVerusID} = useLinkedVerusIDQuery(
+    'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4',
+    profile.did,
+    verusIdInterface,
+  )
   const [currentPage, setCurrentPage] = React.useState(0)
   const {_} = useLingui()
 

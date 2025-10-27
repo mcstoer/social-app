@@ -53,7 +53,7 @@ export function VerusIDCredentialUpdateDialog() {
       <Dialog.Handle />
 
       <Dialog.ScrollableInner
-        label={_(msg`Update VerusID Login Credentials`)}
+        label={_(msg`Update VerusID Sign in Credentials`)}
         style={web({maxWidth: 400})}>
         <Inner initialPassword={control.value?.password} />
         <Dialog.Close />
@@ -93,13 +93,13 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     UpdateCredentials: {
       title:
         currentAccount?.type === 'vsky'
-          ? _(msg`Update VerusID Login Credentials`)
-          : _(msg`Save Login with VerusID`),
+          ? _(msg`Update VerusID Sign in`)
+          : _(msg`Save Sign in with VerusID`),
       message:
         currentAccount?.type === 'vsky'
-          ? _(msg`Update the login credentials stored in your VerusID.`)
+          ? _(msg`Update the sign in credentials stored in your VerusID.`)
           : _(
-              msg`Add your login credentials to your VerusID for seamless logins.`,
+              msg`Add your sign in credentials to your VerusID for seamless logins.`,
             ),
     },
     AwaitingResponse: {
@@ -111,7 +111,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     Done: {
       title: _(msg`Update Confirmed`),
       message: _(
-        msg`Your VerusID login credentials update has been confirmed and will be applied soon.`,
+        msg`Your VerusID sign in credentials update has been confirmed and will be applied soon.`,
       ),
     },
   }

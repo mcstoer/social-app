@@ -15,6 +15,7 @@ import {
 } from '@atproto/api'
 import {useIsFocused} from '@react-navigation/native'
 
+import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {isNative} from '#/platform/detection'
 import {useSetLightStatusBar} from '#/state/shell/light-status-bar'
 import {usePagerHeaderContext} from '#/view/com/pager/PagerHeaderContext'
@@ -50,7 +51,7 @@ export {ProfileHeaderLoading}
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
   labeler: AppBskyLabelerDefs.LabelerViewDetailed | undefined
-  linkedVerusID: {isLinked: boolean; name?: string} | undefined
+  linkedVerusID: VerusIdLink | undefined
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
   hideBackButton?: boolean

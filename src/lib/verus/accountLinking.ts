@@ -1,41 +1,51 @@
-import {type AppBskyActorDefs} from '@atproto/api'
+import {type AppBskyFeedDefs, AppBskyFeedPost} from '@atproto/api'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
-interface VerusIdLink {
+import * as bsky from '#/types/bsky'
+
+export interface VerusIdLink {
   message: string
   name: string
   signature: string
+  postUri: string
 }
 
-export function findVerusIdLink(
-  profile: AppBskyActorDefs.ProfileViewDetailed,
-): VerusIdLink | null {
-  const description = profile.description
-  const handle = profile.handle
-
+function findVerusIdLink(
+  posts: AppBskyFeedDefs.PostView[],
+  linkIdentifier: string,
+  handle: string,
+): VerusIdLink | undefined {
   // The link is in the format of
-  // iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "${name}" controls ${handle}:${signature}
+  // linkId 1: controller of VerusID "${name}" controls ${handle}:${signature}
   const regexSafeHandle = handle.replace(/\./g, '\\.')
   const verusIdLinkPattern = new RegExp(
-    `^(iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4 1: controller of VerusID "([^"]+)" controls ${regexSafeHandle}):(\\S+)$`,
+    `(${linkIdentifier} 1: controller of VerusID "([^"]+)" controls ${regexSafeHandle}):(\\S+)`,
     'm',
   )
 
-  if (!description) {
-    return null
+  for (const post of posts) {
+    const record = bsky.validate(post.record, AppBskyFeedPost.validateRecord)
+      ? post.record
+      : undefined
+
+    if (record) {
+      const text = record.text
+      if (text) {
+        const match = text.match(verusIdLinkPattern)
+
+        if (match) {
+          return {
+            message: match[1],
+            name: match[2],
+            signature: match[3],
+            postUri: post.uri,
+          }
+        }
+      }
+    }
   }
 
-  const match = description.match(verusIdLinkPattern)
-
-  if (!match) {
-    return null
-  }
-
-  return {
-    message: match[1],
-    name: match[2],
-    signature: match[3],
-  }
+  return undefined
 }
 
 async function verifyVerusIdLink(
@@ -56,30 +66,26 @@ async function verifyVerusIdLink(
 }
 
 export async function checkIfLinkedVerusID(
-  profile: AppBskyActorDefs.ProfileViewDetailed,
+  posts: AppBskyFeedDefs.PostView[],
+  linkIdentifier: string,
   verusIdInterface: VerusIdInterface,
-): Promise<{
-  isLinked: boolean
-  message?: string
-  name?: string
-  signature?: string
-}> {
-  const link = findVerusIdLink(profile)
+  handle?: string,
+): Promise<VerusIdLink | undefined> {
+  if (!handle) {
+    return undefined
+  }
+
+  const link = findVerusIdLink(posts, linkIdentifier, handle)
 
   if (!link) {
-    return {isLinked: false}
+    return undefined
   }
 
   const verified = await verifyVerusIdLink(verusIdInterface, link)
 
   if (!verified) {
-    return {isLinked: false}
+    return undefined
   }
 
-  return {
-    isLinked: true,
-    message: link.message,
-    name: link.name,
-    signature: link.signature,
-  }
+  return link
 }
