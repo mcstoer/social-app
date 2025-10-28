@@ -204,11 +204,17 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
 
         <Text style={[a.text_md, a.leading_snug]}>
           {stage === Stages.SigningLinking ? (
-            <Trans>
-              Copy the details below and sign them as a
-              <Text style={[a.font_semi_bold]}> message </Text>
-              with your VerusID {name}, then paste the signature.
-            </Trans>
+            <>
+              <Trans>
+                Copy the details below and sign them as a
+                <Text style={[a.font_semi_bold]}> message </Text>
+                with your VerusID {name}, then paste the signature.
+              </Trans>
+              {'\n'}
+              <Trans>
+                This will create a post linking your VerusID to this account.
+              </Trans>
+            </>
           ) : (
             uiStrings[stage].message
           )}
@@ -289,13 +295,13 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         ) : stage === Stages.SigningLinking ? (
           <>
             <Button
-              label={_(msg`Submit signature`)}
+              label={_(msg`Submit Signature and Create Post`)}
               color="primary"
               size="large"
               disabled={isProcessing}
               onPress={onSubmitSignature}>
               <ButtonText>
-                <Trans>Submit Signature</Trans>
+                <Trans>Submit Signature and Create Post</Trans>
               </ButtonText>
               {isProcessing && <ButtonIcon icon={Loader} />}
             </Button>
