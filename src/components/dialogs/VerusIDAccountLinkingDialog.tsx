@@ -174,8 +174,11 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
               shortenedGraphemeLength: shortenLinks(richtext).graphemeLength,
             },
           ],
-          postgate: createPostgateRecord({post: ''}),
-          threadgate: [],
+          postgate: createPostgateRecord({
+            post: '',
+            embeddingRules: [{$type: 'app.bsky.feed.postgate#disableRule'}],
+          }),
+          threadgate: [{type: 'nobody'}],
         },
       })
       setStage(Stages.Done)
