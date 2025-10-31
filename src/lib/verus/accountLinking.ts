@@ -14,7 +14,7 @@ function findVerusIdLink(
   posts: AppBskyFeedDefs.PostView[],
   linkIdentifier: string,
   handle: string,
-): VerusIdLink | undefined {
+): VerusIdLink | null {
   // The link is in the format of
   // linkId 1: controller of VerusID "${name}" controls ${handle}:${signature}
   const regexSafeHandle = handle.replace(/\./g, '\\.')
@@ -45,7 +45,7 @@ function findVerusIdLink(
     }
   }
 
-  return undefined
+  return null
 }
 
 async function verifyVerusIdLink(
@@ -70,21 +70,21 @@ export async function checkIfLinkedVerusID(
   linkIdentifier: string,
   verusIdInterface: VerusIdInterface,
   handle?: string,
-): Promise<VerusIdLink | undefined> {
+): Promise<VerusIdLink | null> {
   if (!handle) {
-    return undefined
+    return null
   }
 
   const link = findVerusIdLink(posts, linkIdentifier, handle)
 
   if (!link) {
-    return undefined
+    return null
   }
 
   const verified = await verifyVerusIdLink(verusIdInterface, link)
 
   if (!verified) {
-    return undefined
+    return null
   }
 
   return link

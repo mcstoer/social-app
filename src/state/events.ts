@@ -45,3 +45,11 @@ export function listenPostCreated(fn: () => void): UnlistenFn {
   emitter.on('post-created', fn)
   return () => emitter.off('post-created', fn)
 }
+
+export function emitVerusIDLoginCompleted() {
+  emitter.emit('verusid-login-completed')
+}
+export function listenVerusIDLoginCompleted(fn: () => void): UnlistenFn {
+  emitter.on('verusid-login-completed', fn)
+  return () => emitter.off('verusid-login-completed', fn)
+}

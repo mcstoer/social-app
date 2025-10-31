@@ -46,7 +46,7 @@ import {AnimatedProfileHeaderSuggestedFollows} from './SuggestedFollows'
 
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
-  linkedVerusID: VerusIdLink | undefined
+  linkedVerusID: VerusIdLink | undefined | null
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
   hideBackButton?: boolean

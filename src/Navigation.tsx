@@ -36,15 +36,17 @@ import {
   type MessagesTabNavigatorParams,
   type MyProfileTabNavigatorParams,
   type NotificationsTabNavigatorParams,
+  type RouteParams,
   type SearchTabNavigatorParams,
+  type State,
 } from '#/lib/routes/types'
-import {type RouteParams, type State} from '#/lib/routes/types'
 import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'
 import {bskyTitle} from '#/lib/strings/headings'
 import {logger} from '#/logger'
 import {isNative, isWeb} from '#/platform/detection'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
-import {useSession} from '#/state/session'
+import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useSession, useSessionVskyApi} from '#/state/session'
 import {
   shouldRequestEmailConfirmation,
   snoozeEmailConfirmationPrompt,
@@ -132,10 +134,12 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
+import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
 import {useAccountSwitcher} from './lib/hooks/useAccountSwitcher'
 import {useNonReactiveCallback} from './lib/hooks/useNonReactiveCallback'
+import {listenVerusIDLoginCompleted} from './state/events'
 import {useLoggedOutViewControls} from './state/shell/logged-out'
 import {useCloseAllActiveElements} from './state/util'
 
@@ -857,6 +861,10 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const prevLoggedRouteName = useRef<string | undefined>(undefined)
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
+  const {verusIdInterface} = useSessionVskyApi()
+  const verusIdAccountLinkingDialogControl =
+    useVerusIdAccountLinkingDialogControl()
+  const getLinkedVerusId = useGetLinkedVerusID()
 
   /**
    * Handle navigation to a conversation, or prepares for account switch.
@@ -951,6 +959,29 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
         id: EmailDialogScreenID.VerificationReminder,
       })
       snoozeEmailConfirmationPrompt()
+    }
+    if (currentAccount && currentAccount.type === 'vsky') {
+      // Attach the event listener when it can be ready to be used.
+      listenVerusIDLoginCompleted(() => {
+        getLinkedVerusId(
+          'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4',
+          currentAccount.did,
+          verusIdInterface,
+        )
+          .then(linkedVerusID => {
+            if (
+              (!linkedVerusID || linkedVerusID.name !== currentAccount.name) &&
+              verusIdInterface
+            ) {
+              verusIdAccountLinkingDialogControl.open({verusIdInterface})
+            }
+          })
+          .catch(error => {
+            logger.warn('Failed to fetch linked VerusID after login', {
+              error,
+            })
+          })
+      })
     }
   }
 

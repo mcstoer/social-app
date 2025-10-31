@@ -13,7 +13,7 @@ export function parseVerusIdLogin(login: LoginConsentResponse): {
   const credentialHex = context?.kv[IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]
 
   if (!credentialHex) {
-    throw new Error('Missing login credentials in VerusSky response')
+    throw new Error('Missing sign in credentials in VerusSky response')
   }
 
   const credential = new Credential()

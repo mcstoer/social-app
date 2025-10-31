@@ -150,7 +150,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       addSessionDebugLog({type: 'method:start', method: 'login'})
       const signal = cancelPendingTask()
 
-      // Choose to login using the VerusSky service or an atproto provider based on the service url.
+      // Choose to login using the VerusSky service or an atproto provider based on the session type.
       let agent: BskyAppAgent
       let account: SessionAccount
       if (params.vskySession) {

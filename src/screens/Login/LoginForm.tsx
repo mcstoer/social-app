@@ -31,6 +31,7 @@ import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
+import {emitVerusIDLoginCompleted} from '#/state/events'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
 import {useSessionApi, useSessionVskyApi} from '#/state/session'
@@ -38,7 +39,6 @@ import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
-import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {FormError} from '#/components/forms/FormError'
 import {HostingProvider} from '#/components/forms/HostingProvider'
@@ -91,8 +91,6 @@ export const LoginForm = ({
   )
   const [saveLoginWithVerusId, setSaveLoginWithVerusId] =
     useState<boolean>(false)
-  const [linkAccountToVerusId, setLinkAccountToVerusId] =
-    useState<boolean>(false)
 
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
@@ -105,10 +103,9 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface, verusIdInterface} = useSessionVskyApi()
+  const {verusRpcInterface} = useSessionVskyApi()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
-  const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
@@ -269,24 +266,25 @@ export const LoginForm = ({
 
       if (isManualLoginAfterVskyFailed) {
         logger.debug(
-          'Successfully logged in manually after VerusSky login failed',
+          'Successfully logged in manually after VerusID login failed',
         )
       }
 
-      if (saveLoginWithVerusId || isManualLoginAfterVskyFailed) {
+      if (saveLoginWithVerusId) {
         // Delay opening the dialog in order to allow for transitioning away from the login screen.
         // Otherwise, the dialog does not appear.
         setTimeout(() => {
           updateVerusCredentialsControl.open({
             password: passwordValueRef.current,
           })
-        }, 500)
+        }, 750)
       }
 
-      if (linkAccountToVerusId) {
-        // Delay the opening less than the credential update in order to appear behind.
+      if (validVerusIdLogin) {
+        // Delay by a small amount to allow for the authenticated agent to be fetched,
+        // as non-authenticated agents can't fetch the linked VerusID via the posts.
         setTimeout(() => {
-          verusIdAccountLinkingControl.open({verusIdInterface})
+          emitVerusIDLoginCompleted()
         }, 250)
       }
     } catch (e: any) {
@@ -315,6 +313,7 @@ export const LoginForm = ({
           // Fallback to standard login if the VerusSky login has invalid credentials.
           if (isVerusIdLogin) {
             verusIdLoginFailed.current = true
+            setSaveLoginWithVerusId(true)
             setIsVerusIdLogin(false)
             setError(
               _(
@@ -382,7 +381,7 @@ export const LoginForm = ({
         message = `Missing username and password from VerusID sign in.`
       }
 
-      message += ` Please log in manually.`
+      message += ` Please sign in manually.`
       setError(_(msg`${message}`))
 
       verusIdLoginFailed.current = true
@@ -423,6 +422,7 @@ export const LoginForm = ({
     }
 
     verusIdLoginFailed.current = true
+    setSaveLoginWithVerusId(true)
     setIsVerusIdLogin(false)
 
     setIsProcessing(false)
@@ -552,19 +552,6 @@ export const LoginForm = ({
           )}
         </View>
       )}
-      <Toggle.Item
-        label={_(msg`Link Account to VerusID`)}
-        name="linkAccountToVerusID"
-        value={linkAccountToVerusId}
-        onChange={setLinkAccountToVerusId}
-        style={[a.mt_md]}>
-        <View style={[a.flex_row, a.align_center, a.gap_sm]}>
-          <Toggle.Platform />
-          <Text style={[a.text_md]}>
-            <Trans>Link Account to VerusID</Trans>
-          </Text>
-        </View>
-      </Toggle.Item>
       {isAuthFactorTokenNeeded && (
         <View>
           <TextField.LabelText>

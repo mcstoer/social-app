@@ -11,7 +11,10 @@ import * as apilib from '#/lib/api/index'
 import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {createPostgateRecord} from '#/state/queries/postgate/util'
-import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {
+  createLinkedVerusIDQueryKey,
+  useLinkedVerusIDQuery,
+} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -73,10 +76,12 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
 
   const uiStrings = {
     PreparingLinking: {
-      title: _(msg`Link VerusID to Account`),
+      title: linkedVerusID
+        ? _(msg`Update Linked VerusID`)
+        : _(msg`Link VerusID to Account`),
       message: linkedVerusID
         ? _(
-            msg`Link your VerusID to this account. The VerusID currently linked to this account is ${linkedVerusID.name}.`,
+            msg`The VerusID currently linked to this account is ${linkedVerusID.name}.`,
           )
         : _(msg`Link your VerusID to this account to verify your identity.`),
     },
@@ -181,6 +186,14 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
           threadgate: [{type: 'nobody'}],
         },
       })
+
+      // Remove cached linked VerusID queries for this did to force a fresh fetch
+      const queryKey = createLinkedVerusIDQueryKey(currentAccount?.did)
+      queryClient.removeQueries({
+        queryKey: queryKey,
+        exact: true,
+      })
+
       setStage(Stages.Done)
     } catch (e: any) {
       setError(_(msg`Failed to create a post for linking the VerusID`))
@@ -189,7 +202,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
     }
   }
 
-  if (!linkedVerusID || isLoadingLinkedVerusID) {
+  if (isLoadingLinkedVerusID) {
     return (
       <View style={[a.flex_1, a.py_4xl, a.align_center, a.justify_center]}>
         <Loader size="xl" />
