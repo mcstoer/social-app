@@ -969,8 +969,10 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
           verusIdInterface,
         )
           .then(linkedVerusID => {
+            // TODO: Handle the difference between ways to represent the name
+            const name = currentAccount.name + '@'
             if (
-              (!linkedVerusID || linkedVerusID.name !== currentAccount.name) &&
+              (!linkedVerusID || linkedVerusID.name !== name) &&
               verusIdInterface
             ) {
               verusIdAccountLinkingDialogControl.open({verusIdInterface})
