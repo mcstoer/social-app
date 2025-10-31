@@ -74,7 +74,7 @@
     "dev:run": "yarn concurrently \"yarn web\" \"cd vskysigningserver && yarn dev\" --names \"web,signing\" --prefix-colors \"blue,yellow\""
   },
   "dependencies": {
-    "@atproto/api": "^0.17.1",
+    "@atproto/api": "^0.17.6",
     "@bitdrift/react-native": "^0.6.8",
     "@braintree/sanitize-url": "^6.0.2",
     "@bsky.app/alf": "^0.1.5",
