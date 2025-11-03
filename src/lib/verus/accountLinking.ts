@@ -5,7 +5,7 @@ import * as bsky from '#/types/bsky'
 
 export interface VerusIdLink {
   message: string
-  name: string
+  identity: string
   signature: string
   postUri: string
 }
@@ -36,7 +36,7 @@ function findVerusIdLink(
         if (match) {
           return {
             message: match[1],
-            name: match[2],
+            identity: match[2],
             signature: match[3],
             postUri: post.uri,
           }
@@ -54,7 +54,7 @@ async function verifyVerusIdLink(
 ): Promise<boolean> {
   try {
     const verified = await verusIdInterface.verifyMessage(
-      link.name,
+      link.identity,
       link.signature,
       link.message,
     )
@@ -72,7 +72,7 @@ export async function checkIfLinkedVerusID(
   handle?: string,
 ): Promise<VerusIdLink | null> {
   if (!handle) {
-    return null
+    throw new Error('No handle provided to check the linked VerusID')
   }
 
   const link = findVerusIdLink(posts, linkIdentifier, handle)

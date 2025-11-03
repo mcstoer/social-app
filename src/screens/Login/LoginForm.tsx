@@ -259,10 +259,9 @@ export const LoginForm = ({
       const isManualLoginAfterVskyFailed = verusIdLoginFailed.current
 
       onAttemptSuccess()
+      setShowLoggedOut(false)
       setHasCheckedForStarterPack(true)
       requestNotificationsPermission('Login')
-
-      await setShowLoggedOut(false)
 
       if (isManualLoginAfterVskyFailed) {
         logger.debug(

@@ -302,7 +302,7 @@ let ProfileHeaderStandard = ({
                     a.font_medium,
                     a.text_md,
                   ]}>
-                  VerusID: {linkedVerusID.name}
+                  VerusID: {linkedVerusID.identity}
                 </Text>
               </View>
             )}

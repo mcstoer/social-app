@@ -88,16 +88,20 @@ export function useLinkedVerusIDQuery(
   const {data: profile} = useProfileQuery({did: resolvedDid})
 
   return useQuery({
-    enabled: !!results && !!profile && !!resolvedDid && !!verusIdInterface,
+    enabled: !!results && !!profile && !!resolvedDid,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
     queryFn: async (): Promise<VerusIdLink | null> => {
+      if (!verusIdInterface) {
+        throw new Error('VerusIdInterface not provided')
+      }
+
       return checkIfLinkedVerusID(
         posts,
         linkIdentifier,
-        verusIdInterface!,
+        verusIdInterface,
         profile?.handle,
       )
     },
-    staleTime: STALE.MINUTES.FIVE,
+    staleTime: STALE.MINUTES.ONE,
   })
 }

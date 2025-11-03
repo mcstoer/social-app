@@ -81,7 +81,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         : _(msg`Link VerusID to Account`),
       message: linkedVerusID
         ? _(
-            msg`The VerusID currently linked to this account is ${linkedVerusID.name}.`,
+            msg`The VerusID currently linked to this account is ${linkedVerusID.identity}.`,
           )
         : _(msg`Link your VerusID to this account to verify your identity.`),
     },
