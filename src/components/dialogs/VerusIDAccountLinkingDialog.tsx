@@ -77,8 +77,8 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
   const uiStrings = {
     PreparingLinking: {
       title: linkedVerusID
-        ? _(msg`Update Linked VerusID`)
-        : _(msg`Link VerusID to Account`),
+        ? _(msg`Update linked VerusID`)
+        : _(msg`Link VerusID to account`),
       message: linkedVerusID
         ? _(
             msg`The VerusID currently linked to this account is ${linkedVerusID.identity}.`,
@@ -86,11 +86,11 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         : _(msg`Link your VerusID to this account to verify your identity.`),
     },
     SigningLinking: {
-      title: _(msg`Sign the Linking Details`),
+      title: _(msg`Sign the linking details`),
       message: null, // Use specific formatting instead for this section to allow for bolding
     },
     Done: {
-      title: _(msg`Linking Complete`),
+      title: _(msg`Linking complete`),
       message: _(
         msg`Your VerusID ${name} has been successfully linked to this account.`,
       ),
@@ -146,7 +146,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
       )
 
       if (!verified) {
-        setError(_(msg`Invalid signature`))
+        setError(_(msg`Invalid signature, please try again`))
         setIsProcessing(false)
         return
       }

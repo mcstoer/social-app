@@ -31,6 +31,9 @@ type ControlsContext = {
   verusIdAccountLinkingDialogControl: StatefulControl<{
     verusIdInterface: VerusIdInterface
   }>
+  removeVerusIdAccountLinkDialogControl: StatefulControl<{
+    verusIdInterface: VerusIdInterface
+  }>
 }
 
 const ControlsContext = createContext<ControlsContext | null>(null)
@@ -64,6 +67,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   const verusIdAccountLinkingDialogControl = useStatefulDialogControl<{
     verusIdInterface: VerusIdInterface
   }>()
+  const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<{
+    verusIdInterface: VerusIdInterface
+  }>()
 
   const ctx = useMemo<ControlsContext>(
     () => ({
@@ -75,6 +81,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       ageAssuranceRedirectDialogControl,
       verusIdCredentialUpdateDialogControl,
       verusIdAccountLinkingDialogControl,
+      removeVerusIdAccountLinkDialogControl,
     }),
     [
       mutedWordsDialogControl,
@@ -85,6 +92,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       ageAssuranceRedirectDialogControl,
       verusIdCredentialUpdateDialogControl,
       verusIdAccountLinkingDialogControl,
+      removeVerusIdAccountLinkDialogControl,
     ],
   )
 

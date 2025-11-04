@@ -93,8 +93,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     UpdateCredentials: {
       title:
         currentAccount?.type === 'vsky'
-          ? _(msg`Update VerusID Sign in`)
-          : _(msg`Save Sign in with VerusID`),
+          ? _(msg`Update VerusID sign in`)
+          : _(msg`Save sign in with VerusID`),
       message:
         currentAccount?.type === 'vsky'
           ? _(msg`Update the sign in credentials stored in your VerusID.`)
@@ -103,13 +103,13 @@ function Inner({initialPassword}: {initialPassword?: string}) {
             ),
     },
     AwaitingResponse: {
-      title: _(msg`Awaiting Confirmation`),
+      title: _(msg`Awaiting confirmation`),
       message: _(
         msg`Scan the QR code below or press Open Verus wallet to confirm the update.`,
       ),
     },
     Done: {
-      title: _(msg`Update Confirmed`),
+      title: _(msg`Update confirmed`),
       message: _(
         msg`Your VerusID sign in credentials update has been confirmed and will be applied soon.`,
       ),

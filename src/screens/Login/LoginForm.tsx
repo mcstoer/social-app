@@ -39,6 +39,7 @@ import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
+import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {FormError} from '#/components/forms/FormError'
 import {HostingProvider} from '#/components/forms/HostingProvider'
@@ -91,6 +92,8 @@ export const LoginForm = ({
   )
   const [saveLoginWithVerusId, setSaveLoginWithVerusId] =
     useState<boolean>(false)
+  const [openRemoveVerusIdLinkDialog, setOpenRemoveVerusIdLinkDialog] =
+    useState<boolean>(false)
 
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
@@ -103,9 +106,11 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface} = useSessionVskyApi()
+  const {verusRpcInterface, verusIdInterface} = useSessionVskyApi()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
+  const removeVerusIdAccountLinkControl =
+    useRemoveVerusIdAccountLinkDialogControl()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
@@ -279,12 +284,19 @@ export const LoginForm = ({
         }, 750)
       }
 
-      if (validVerusIdLogin) {
-        // Delay by a small amount to allow for the authenticated agent to be fetched,
-        // as non-authenticated agents can't fetch the linked VerusID via the posts.
+      // Don't trigger the VerusID check if the user is going to remove their linked VerusID.
+      // Delay by a small amount to allow for the authenticated agent to be fetched,
+      // as non-authenticated agents can't fetch the linked VerusID via the posts.
+      if (openRemoveVerusIdLinkDialog) {
         setTimeout(() => {
-          emitVerusIDLoginCompleted()
+          removeVerusIdAccountLinkControl.open({verusIdInterface})
         }, 250)
+      } else {
+        if (validVerusIdLogin) {
+          setTimeout(() => {
+            emitVerusIDLoginCompleted()
+          }, 250)
+        }
       }
     } catch (e: any) {
       const errMsg = e.toString()
@@ -530,7 +542,20 @@ export const LoginForm = ({
             <View style={[a.flex_row, a.align_center, a.gap_sm]}>
               <Toggle.Platform />
               <Text style={[a.text_md]}>
-                <Trans>Save my Sign in with VerusID</Trans>
+                <Trans>Save my sign in with VerusID</Trans>
+              </Text>
+            </View>
+          </Toggle.Item>
+          <Toggle.Item
+            label={_(msg`Remove linked VerusID`)}
+            name="removeLinkedVerusID"
+            value={openRemoveVerusIdLinkDialog}
+            onChange={setOpenRemoveVerusIdLinkDialog}
+            style={[a.mt_sm]}>
+            <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+              <Toggle.Platform />
+              <Text style={[a.text_md]}>
+                <Trans>Remove linked VerusID</Trans>
               </Text>
             </View>
           </Toggle.Item>

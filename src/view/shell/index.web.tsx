@@ -21,6 +21,7 @@ import {BlockedGeoOverlay} from '#/components/BlockedGeoOverlay'
 import {EmailDialog} from '#/components/dialogs/EmailDialog'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
+import {RemoveVerusIDAccountLinkDialog} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
@@ -83,6 +84,7 @@ function ShellInner() {
       <EmailDialog />
       <VerusIDCredentialUpdateDialog />
       <VerusIDAccountLinkingDialog />
+      <RemoveVerusIDAccountLinkDialog />
       <AgeAssuranceRedirectDialog />
       <LinkWarningDialog />
       <Lightbox />

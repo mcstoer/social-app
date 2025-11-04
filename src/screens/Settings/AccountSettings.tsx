@@ -14,12 +14,14 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
+import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {BirthdayCake_Stroke2_Corner2_Rounded as BirthdayCakeIcon} from '#/components/icons/BirthdayCake'
 import {Car_Stroke2_Corner2_Rounded as CarIcon} from '#/components/icons/Car'
 import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/icons/ChainLink'
+import {CircleX_Stroke2_Corner0_Rounded as CircleXIcon} from '#/components/icons/CircleX'
 import {Envelope_Stroke2_Corner2_Rounded as EnvelopeIcon} from '#/components/icons/Envelope'
 import {Freeze_Stroke2_Corner2_Rounded as FreezeIcon} from '#/components/icons/Freeze'
 import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
@@ -48,6 +50,8 @@ export function AccountSettingsScreen({}: Props) {
   const updateVerusIDCredentialsUpdateControl =
     useVerusIdCredentialUpdateDialogControl()
   const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
+  const removeVerusIdAccountLinkControl =
+    useRemoveVerusIdAccountLinkDialogControl()
   const exportCarControl = useDialogControl()
   const deactivateAccountControl = useDialogControl()
 
@@ -98,6 +102,17 @@ export function AccountSettingsScreen({}: Props) {
             <SettingsList.ItemIcon icon={ChainLinkIcon} />
             <SettingsList.ItemText>
               <Trans>Link Account to VerusID</Trans>
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
+          <SettingsList.PressableItem
+            label={_(msg`Remove VerusID Link`)}
+            onPress={() =>
+              removeVerusIdAccountLinkControl.open({verusIdInterface})
+            }>
+            <SettingsList.ItemIcon icon={CircleXIcon} />
+            <SettingsList.ItemText>
+              <Trans>Remove VerusID Link</Trans>
             </SettingsList.ItemText>
             <SettingsList.Chevron />
           </SettingsList.PressableItem>
