@@ -11,6 +11,7 @@ import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useFocusEffect} from '@react-navigation/native'
 import {useQueryClient} from '@tanstack/react-query'
+import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {useSetTitle} from '#/lib/hooks/useSetTitle'
@@ -179,8 +180,9 @@ function ProfileScreenLoaded({
     did: profile.did,
     enabled: !!profile.associated?.labeler,
   })
+  const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
-    'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4',
+    linkIdentifier,
     profile.did,
     verusIdInterface,
   )

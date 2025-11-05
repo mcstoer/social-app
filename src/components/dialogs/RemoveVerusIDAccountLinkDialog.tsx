@@ -2,14 +2,11 @@ import {useState} from 'react'
 import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
-import {useQueryClient} from '@tanstack/react-query'
+import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {usePostDeleteMutation} from '#/state/queries/post'
-import {
-  createLinkedVerusIDQueryKey,
-  useLinkedVerusIDQuery,
-} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -51,11 +48,13 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
-  const queryClient = useQueryClient()
 
-  const linkIdentifier = 'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4'
-  const {data: linkedVerusID, isFetching: isFetchingLinkedVerusID} =
-    useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did, verusIdInterface)
+  const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
+  const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
+    linkIdentifier,
+    currentAccount?.did,
+    verusIdInterface,
+  )
 
   const [stage, setStage] = useState(Stages.ReviewRemoval)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -89,13 +88,6 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
 
     try {
       await deletePost({uri: linkedVerusID.postUri})
-
-      const queryKey = createLinkedVerusIDQueryKey(currentAccount!.did)
-      queryClient.removeQueries({
-        queryKey: queryKey,
-        exact: true,
-      })
-
       setStage(Stages.Done)
     } catch (e: any) {
       setError(_(msg`Failed to remove the VerusID link, please try again`))
@@ -104,7 +96,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
     }
   }
 
-  if (isFetchingLinkedVerusID) {
+  if (isPending) {
     return (
       <View style={[a.flex_1, a.py_4xl, a.align_center, a.justify_center]}>
         <Loader size="xl" />

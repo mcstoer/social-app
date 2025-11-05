@@ -102,6 +102,5 @@ export function useLinkedVerusIDQuery(
         profile?.handle,
       )
     },
-    staleTime: STALE.MINUTES.ONE,
   })
 }

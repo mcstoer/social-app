@@ -5,16 +5,14 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {useQueryClient} from '@tanstack/react-query'
 import {nanoid} from 'nanoid/non-secure'
+import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
 import * as apilib from '#/lib/api/index'
 import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {createPostgateRecord} from '#/state/queries/postgate/util'
-import {
-  createLinkedVerusIDQueryKey,
-  useLinkedVerusIDQuery,
-} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -61,9 +59,12 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
   const agent = useAgent()
   const queryClient = useQueryClient()
 
-  const linkIdentifier = 'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4'
-  const {data: linkedVerusID, isLoading: isLoadingLinkedVerusID} =
-    useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did, verusIdInterface)
+  const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
+  const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
+    linkIdentifier,
+    currentAccount?.did,
+    verusIdInterface,
+  )
 
   const [stage, setStage] = useState(Stages.PreparingLinking)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -187,13 +188,6 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
         },
       })
 
-      // Remove cached linked VerusID queries for this did to force a fresh fetch
-      const queryKey = createLinkedVerusIDQueryKey(currentAccount?.did)
-      queryClient.removeQueries({
-        queryKey: queryKey,
-        exact: true,
-      })
-
       setStage(Stages.Done)
     } catch (e: any) {
       setError(_(msg`Failed to create a post for linking the VerusID`))
@@ -202,7 +196,7 @@ function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
     }
   }
 
-  if (isLoadingLinkedVerusID) {
+  if (isPending) {
     return (
       <View style={[a.flex_1, a.py_4xl, a.align_center, a.justify_center]}>
         <Loader size="xl" />

@@ -223,7 +223,7 @@
     "tippy.js": "^6.3.7",
     "tlds": "^1.234.0",
     "tldts": "^6.1.46",
-    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-key-update",
+    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#key-updates-and-additions",
     "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git",
     "verusid-ts-client": "git+https://github.com/michaeltout/verusid-ts-client.git",
     "zod": "^3.20.2"
@@ -295,7 +295,7 @@
     "**/expo-device": "7.1.4",
     "**/zod": "3.23.8",
     "**/multiformats": "9.9.0",
-    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#credential-key-update"
+    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#key-updates-and-additions"
   },
   "jest": {
     "preset": "jest-expo/ios",
