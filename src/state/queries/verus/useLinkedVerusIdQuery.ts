@@ -70,6 +70,7 @@ export function useLinkedVerusIDQuery(
   linkIdentifier: string,
   name?: string,
   verusIdInterface?: VerusIdInterface,
+  enabled?: boolean,
 ) {
   const {data: resolvedDid} = useResolveDidQuery(name)
 
@@ -88,7 +89,7 @@ export function useLinkedVerusIDQuery(
   const {data: profile} = useProfileQuery({did: resolvedDid})
 
   return useQuery({
-    enabled: !!results && !!profile && !!resolvedDid,
+    enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
     queryFn: async (): Promise<VerusIdLink | null> => {
       if (!verusIdInterface) {

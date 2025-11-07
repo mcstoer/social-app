@@ -11,6 +11,7 @@ import {
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   IdentityUpdateRequest,
   IdentityUpdateRequestDetails,
+  PROOFS_CONTROLLER_BLUESKY,
   ResponseUri,
 } from 'verus-typescript-primitives'
 
@@ -18,9 +19,10 @@ import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {logger} from '#/logger'
 import {isNative, isWeb} from '#/platform/detection'
+import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdUpdateQuery} from '#/state/queries/verus/useVerusIdUpdateQuery'
-import {useSession} from '#/state/session'
+import {useSession, useSessionVskyApi} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -43,10 +45,52 @@ export function useVerusIdCredentialUpdateDialogControl() {
 
 export function VerusIDCredentialUpdateDialog() {
   const {_} = useLingui()
+  const {currentAccount} = useSession()
+  const {verusIdInterface} = useSessionVskyApi()
   const control = useVerusIdCredentialUpdateDialogControl()
-  const onClose = useCallback(() => {
+  const accountLinkingControl =
+    useGlobalDialogsControlContext().verusIdAccountLinkingDialogControl
+  const removeAccountLinkControl =
+    useGlobalDialogsControlContext().removeVerusIdAccountLinkDialogControl
+  const openRemoveAccountLink = control.value?.openRemoveAccountLinkDialog
+  const checkVerusIDAccountLink =
+    control.value?.checkVerusIDAccountLink ?? false
+  const {data: linkedVerusID} = useLinkedVerusIDQuery(
+    PROOFS_CONTROLLER_BLUESKY.vdxfid,
+    currentAccount?.did,
+    verusIdInterface,
+    checkVerusIDAccountLink,
+  )
+
+  const onClose = useCallback(async () => {
     control.clear()
-  }, [control])
+
+    if (openRemoveAccountLink) {
+      removeAccountLinkControl.open()
+      return
+    }
+
+    if (!currentAccount || currentAccount.type !== 'vsky') {
+      return
+    }
+
+    const identity = currentAccount.name + '@'
+
+    if (
+      checkVerusIDAccountLink &&
+      (!linkedVerusID || linkedVerusID.identity !== identity)
+    ) {
+      accountLinkingControl.open()
+    }
+  }, [
+    control,
+    openRemoveAccountLink,
+    currentAccount,
+    linkedVerusID,
+    removeAccountLinkControl,
+    accountLinkingControl,
+    checkVerusIDAccountLink,
+  ])
 
   return (
     <Dialog.Outer control={control.control} onClose={onClose}>

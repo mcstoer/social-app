@@ -3,11 +3,10 @@ import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
-import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useSession} from '#/state/session'
+import {useSession, useSessionVskyApi} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonText} from '#/components/Button'
@@ -27,7 +26,7 @@ export function useRemoveVerusIdAccountLinkDialogControl() {
 
 export function RemoveVerusIDAccountLinkDialog() {
   const {_} = useLingui()
-  const {control, value} = useRemoveVerusIdAccountLinkDialogControl()
+  const {control} = useRemoveVerusIdAccountLinkDialogControl()
 
   return (
     <Dialog.Outer control={control}>
@@ -36,16 +35,17 @@ export function RemoveVerusIDAccountLinkDialog() {
       <Dialog.ScrollableInner
         label={_(msg`Remove Link to VerusID`)}
         style={web({maxWidth: 400})}>
-        <Inner verusIdInterface={value?.verusIdInterface} />
+        <Inner />
         <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>
   )
 }
 
-function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
+function Inner() {
   const {_} = useLingui()
   const {currentAccount} = useSession()
+  const {verusIdInterface} = useSessionVskyApi()
   const control = Dialog.useDialogContext()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
 

@@ -1,5 +1,4 @@
 import {createContext, useContext, useMemo, useState} from 'react'
-import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {type AgeAssuranceRedirectDialogState} from '#/components/ageAssurance/AgeAssuranceRedirectDialog'
 import * as Dialog from '#/components/Dialog'
@@ -27,13 +26,11 @@ type ControlsContext = {
   ageAssuranceRedirectDialogControl: StatefulControl<AgeAssuranceRedirectDialogState>
   verusIdCredentialUpdateDialogControl: StatefulControl<{
     password: string
+    checkVerusIDAccountLink?: boolean
+    openRemoveAccountLinkDialog?: boolean
   }>
-  verusIdAccountLinkingDialogControl: StatefulControl<{
-    verusIdInterface: VerusIdInterface
-  }>
-  removeVerusIdAccountLinkDialogControl: StatefulControl<{
-    verusIdInterface: VerusIdInterface
-  }>
+  verusIdAccountLinkingDialogControl: StatefulControl<void>
+  removeVerusIdAccountLinkDialogControl: StatefulControl<void>
 }
 
 const ControlsContext = createContext<ControlsContext | null>(null)
@@ -63,13 +60,11 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     useStatefulDialogControl<AgeAssuranceRedirectDialogState>()
   const verusIdCredentialUpdateDialogControl = useStatefulDialogControl<{
     password: string
+    checkVerusIDAccountLink?: boolean
+    openRemoveAccountLinkDialog?: boolean
   }>()
-  const verusIdAccountLinkingDialogControl = useStatefulDialogControl<{
-    verusIdInterface: VerusIdInterface
-  }>()
-  const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<{
-    verusIdInterface: VerusIdInterface
-  }>()
+  const verusIdAccountLinkingDialogControl = useStatefulDialogControl<void>()
+  const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<void>()
 
   const ctx = useMemo<ControlsContext>(
     () => ({

@@ -6,14 +6,13 @@ import {useLingui} from '@lingui/react'
 import {useQueryClient} from '@tanstack/react-query'
 import {nanoid} from 'nanoid/non-secure'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
-import {type VerusIdInterface} from 'verusid-ts-client'
 
 import * as apilib from '#/lib/api/index'
 import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {createPostgateRecord} from '#/state/queries/postgate/util'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useAgent, useSession} from '#/state/session'
+import {useAgent, useSession, useSessionVskyApi} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -35,7 +34,7 @@ export function useVerusIdAccountLinkingDialogControl() {
 
 export function VerusIDAccountLinkingDialog() {
   const {_} = useLingui()
-  const {control, value} = useVerusIdAccountLinkingDialogControl()
+  const {control} = useVerusIdAccountLinkingDialogControl()
 
   return (
     <Dialog.Outer control={control}>
@@ -44,16 +43,17 @@ export function VerusIDAccountLinkingDialog() {
       <Dialog.ScrollableInner
         label={_(msg`Link VerusID to Profile`)}
         style={web({maxWidth: 400})}>
-        <Inner verusIdInterface={value?.verusIdInterface} />
+        <Inner />
         <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>
   )
 }
 
-function Inner({verusIdInterface}: {verusIdInterface?: VerusIdInterface}) {
+function Inner() {
   const {_} = useLingui()
   const {currentAccount} = useSession()
+  const {verusIdInterface} = useSessionVskyApi()
   const control = Dialog.useDialogContext()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
   const agent = useAgent()

@@ -106,7 +106,7 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface, verusIdInterface} = useSessionVskyApi()
+  const {verusRpcInterface} = useSessionVskyApi()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
   const removeVerusIdAccountLinkControl =
@@ -280,23 +280,20 @@ export const LoginForm = ({
         setTimeout(() => {
           updateVerusCredentialsControl.open({
             password: passwordValueRef.current,
+            openRemoveAccountLinkDialog: openRemoveVerusIdLinkDialog,
           })
         }, 750)
-      }
-
-      // Don't trigger the VerusID check if the user is going to remove their linked VerusID.
-      // Delay by a small amount to allow for the authenticated agent to be fetched,
-      // as non-authenticated agents can't fetch the linked VerusID via the posts.
-      if (openRemoveVerusIdLinkDialog) {
+      } else if (openRemoveVerusIdLinkDialog) {
+        // Don't trigger the VerusID check if the user is going to remove their linked VerusID.
+        // Delay by a small amount to allow for the authenticated agent to be fetched,
+        // as non-authenticated agents can't fetch the linked VerusID via the posts.
         setTimeout(() => {
-          removeVerusIdAccountLinkControl.open({verusIdInterface})
+          removeVerusIdAccountLinkControl.open()
         }, 250)
-      } else {
-        if (validVerusIdLogin) {
-          setTimeout(() => {
-            emitVerusIDLoginCompleted()
-          }, 250)
-        }
+      } else if (validVerusIdLogin) {
+        setTimeout(() => {
+          emitVerusIDLoginCompleted()
+        }, 250)
       }
     } catch (e: any) {
       const errMsg = e.toString()

@@ -4,7 +4,7 @@ import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useModalControls} from '#/state/modals'
-import {useSession, useSessionVskyApi} from '#/state/session'
+import {useSession} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import {AgeAssuranceAccountCard} from '#/components/ageAssurance/AgeAssuranceAccountCard'
@@ -41,7 +41,6 @@ export function AccountSettingsScreen({}: Props) {
   const t = useTheme()
   const {_} = useLingui()
   const {currentAccount} = useSession()
-  const {verusIdInterface} = useSessionVskyApi()
   const {openModal} = useModalControls()
   const emailDialogControl = useEmailDialogControl()
   const birthdayControl = useDialogControl()
@@ -96,9 +95,7 @@ export function AccountSettingsScreen({}: Props) {
           )}
           <SettingsList.PressableItem
             label={_(msg`Link Account to VerusID`)}
-            onPress={() =>
-              verusIdAccountLinkingControl.open({verusIdInterface})
-            }>
+            onPress={() => verusIdAccountLinkingControl.open()}>
             <SettingsList.ItemIcon icon={ChainLinkIcon} />
             <SettingsList.ItemText>
               <Trans>Link Account to VerusID</Trans>
@@ -107,9 +104,7 @@ export function AccountSettingsScreen({}: Props) {
           </SettingsList.PressableItem>
           <SettingsList.PressableItem
             label={_(msg`Remove VerusID Link`)}
-            onPress={() =>
-              removeVerusIdAccountLinkControl.open({verusIdInterface})
-            }>
+            onPress={() => removeVerusIdAccountLinkControl.open()}>
             <SettingsList.ItemIcon icon={CircleXIcon} />
             <SettingsList.ItemText>
               <Trans>Remove VerusID Link</Trans>

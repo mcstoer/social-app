@@ -16,6 +16,7 @@ import {
   NavigationContainer,
   StackActions,
 } from '@react-navigation/native'
+import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {timeout} from '#/lib/async/timeout'
 import {useColorSchemeStyle} from '#/lib/hooks/useColorSchemeStyle'
@@ -964,14 +965,14 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
       // Attach the event listener when it can be ready to be used.
       listenVerusIDLoginCompleted(() => {
         getLinkedVerusId(
-          'iBnLtVL69rXXZtjEVndYahV5EgKeWi4GS4',
+          PROOFS_CONTROLLER_BLUESKY.vdxfid,
           currentAccount.did,
           verusIdInterface,
         )
           .then(linkedVerusID => {
             const identity = currentAccount.name + '@'
             if (!linkedVerusID || linkedVerusID.identity !== identity) {
-              verusIdAccountLinkingDialogControl.open({verusIdInterface})
+              verusIdAccountLinkingDialogControl.open()
             }
           })
           .catch(error => {
