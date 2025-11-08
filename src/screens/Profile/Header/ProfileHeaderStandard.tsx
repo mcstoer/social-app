@@ -39,6 +39,7 @@ import * as Prompt from '#/components/Prompt'
 import {RichText} from '#/components/RichText'
 import {Text} from '#/components/Typography'
 import {VerificationCheckButton} from '#/components/verification/VerificationCheckButton'
+import {VerusIDVerificationCheckButton} from '#/components/verification/verusid/VerusIDVerificationCheckButton'
 import {EditProfileDialog} from './EditProfileDialog'
 import {ProfileHeaderHandle} from './Handle'
 import {ProfileHeaderMetrics} from './Metrics'
@@ -291,21 +292,15 @@ let ProfileHeaderStandard = ({
                     },
                   ]}>
                   <VerificationCheckButton profile={profile} size="lg" />
+                  {linkedVerusID && (
+                    <VerusIDVerificationCheckButton
+                      verusIdLink={linkedVerusID}
+                      size="lg"
+                    />
+                  )}
                 </View>
               </Text>
             </View>
-            {linkedVerusID && (
-              <View style={[a.flex_row, a.gap_xs, a.align_center]}>
-                <Text
-                  style={[
-                    t.atoms.text_contrast_high,
-                    a.font_medium,
-                    a.text_md,
-                  ]}>
-                  VerusID: {linkedVerusID.identity}
-                </Text>
-              </View>
-            )}
             <ProfileHeaderHandle profile={profile} />
           </View>
           {!isPlaceholderProfile && !isBlockedUser && (
