@@ -41,6 +41,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
           break
       }
     }
+
+    // Disable Kawaii mode for now since there are no assets for it.
+    setStateWrapped(false)
   }, [setStateWrapped])
 
   return <stateContext.Provider value={state}>{children}</stateContext.Provider>

@@ -6,6 +6,7 @@ import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {atoms as a, useBreakpoints, useTheme} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
+import {VerusIcon} from '#/components/icons/VerusIcon'
 import * as ProfileCard from '#/components/ProfileCard'
 import {Text} from '#/components/Typography'
 
@@ -106,13 +107,9 @@ function VerusIdCard({identity}: {identity: string}) {
             {
               width: 42,
               height: 42,
-              backgroundColor: t.palette.primary_500,
             },
           ]}>
-          {/*Placeholder for the actual VerusID logo, or potentially logo for the identity*/}
-          <Text style={[a.text_xl, a.font_bold, {color: t.palette.white}]}>
-            V
-          </Text>
+          <VerusIcon size="2xl" />
         </View>
         <View style={[a.flex_1]}>
           <Text
