@@ -157,7 +157,7 @@ export async function saveImageToMediaLibrary({uri}: {uri: string}) {
         )
       }
     } else {
-      await MediaLibrary.createAssetAsync(imagePath)
+      await MediaLibrary.saveToLibraryAsync(imagePath)
     }
   } catch (err) {
     logger.error(err instanceof Error ? err : String(err), {
@@ -410,14 +410,21 @@ function createPath(ext: string) {
 
 async function downloadImage(uri: string, path: string, timeout: number) {
   const dlResumable = createDownloadResumable(uri, path, {cache: true})
-
-  const to1 = setTimeout(() => dlResumable.cancelAsync(), timeout)
+  let timedOut = false
+  const to1 = setTimeout(() => {
+    timedOut = true
+    dlResumable.cancelAsync()
+  }, timeout)
 
   const dlRes = await dlResumable.downloadAsync()
   clearTimeout(to1)
 
   if (!dlRes?.uri) {
-    throw new Error('Failed to download image - dlRes is undefined')
+    if (timedOut) {
+      throw new Error('Failed to download image - timed out')
+    } else {
+      throw new Error('Failed to download image - dlRes is undefined')
+    }
   }
 
   return normalizePath(dlRes.uri)

@@ -7,7 +7,6 @@ import {
   Pressable,
   type PressableProps,
   type StyleProp,
-  StyleSheet,
   type TargetedEvent,
   type TextProps,
   type TextStyle,
@@ -436,24 +435,21 @@ export const Button = React.forwardRef<View, ButtonProps>(
 
       if (shape === 'default') {
         if (size === 'large') {
-          baseStyles.push({
+          baseStyles.push(a.rounded_full, {
             paddingVertical: 12,
             paddingHorizontal: 25,
-            borderRadius: 10,
             gap: 3,
           })
         } else if (size === 'small') {
-          baseStyles.push({
+          baseStyles.push(a.rounded_full, {
             paddingVertical: 8,
             paddingHorizontal: 13,
-            borderRadius: 8,
             gap: 3,
           })
         } else if (size === 'tiny') {
-          baseStyles.push({
+          baseStyles.push(a.rounded_full, {
             paddingVertical: 5,
             paddingHorizontal: 9,
-            borderRadius: 6,
             gap: 2,
           })
         }
@@ -512,8 +508,6 @@ export const Button = React.forwardRef<View, ButtonProps>(
       [state, variant, color, size, disabled],
     )
 
-    const flattenedBaseStyles = flatten([baseStyles, style])
-
     return (
       <PressableComponent
         role="button"
@@ -533,9 +527,10 @@ export const Button = React.forwardRef<View, ButtonProps>(
           a.align_center,
           a.justify_center,
           a.curve_continuous,
-          flattenedBaseStyles,
+          baseStyles,
+          style,
           ...(state.hovered || state.pressed
-            ? [hoverStyles, flatten(hoverStyleProp)]
+            ? [hoverStyles, hoverStyleProp]
             : []),
         ]}
         onPressIn={onPressIn}
@@ -726,7 +721,7 @@ export function useSharedButtonTextStyles() {
       baseStyles.push(a.text_xs, a.leading_snug, a.font_semi_bold)
     }
 
-    return StyleSheet.flatten(baseStyles)
+    return flatten(baseStyles)
   }, [t, variant, color, size, disabled])
 }
 
