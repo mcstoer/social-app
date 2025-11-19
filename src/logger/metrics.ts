@@ -203,6 +203,16 @@ export type MetricEvents = {
   'composer:gif:open': {}
   'composer:gif:select': {}
 
+  'composer:threadgate:open': {
+    nudged: boolean
+  }
+  'composer:threadgate:save': {
+    replyOptions: string
+    quotesEnabled: boolean
+    persist: boolean
+    hasChanged: boolean
+  }
+
   // Data events
   'account:create:begin': {}
   'account:create:success': {
@@ -256,9 +266,12 @@ export type MetricEvents = {
   'bookmarks:view': {}
   'bookmarks:post-clicked': {}
   'profile:follow': {
+    contextProfileDid?: string
     didBecomeMutual: boolean | undefined
     followeeClout: number | undefined
+    followeeDid: string
     followerClout: number | undefined
+    position?: number
     logContext:
       | 'RecommendedFollowsItem'
       | 'PostThreadItem'
@@ -275,6 +288,11 @@ export type MetricEvents = {
       | 'ImmersiveVideo'
       | 'ExploreSuggestedAccounts'
       | 'OnboardingSuggestedAccounts'
+  }
+  'profileCard:seen': {
+    contextProfileDid?: string
+    profileDid: string
+    position?: number
   }
   'suggestedUser:follow': {
     logContext:
@@ -373,6 +391,10 @@ export type MetricEvents = {
   }
 
   'feed:interstitial:feedCard:press': {}
+  'desktopFeeds:feed:click': {
+    feedUri: string
+    feedDescriptor: string
+  }
 
   'profile:header:suggestedFollowsCard:press': {}
   'profile:addToStarterPack': {}
@@ -502,6 +524,8 @@ export type MetricEvents = {
     [key: string]: any
   }
   'thread:click:headerMenuOpen': {}
+  'thread:click:editOwnThreadgate': {}
+  'thread:click:viewSomeoneElsesThreadgate': {}
   'activitySubscription:enable': {
     setting: 'posts' | 'posts_and_replies'
   }

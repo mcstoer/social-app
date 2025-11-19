@@ -1,6 +1,6 @@
 {
   "name": "bsky.app",
-  "version": "1.110.0",
+  "version": "1.110.1",
   "private": true,
   "engines": {
     "node": ">=20"
@@ -146,7 +146,7 @@
     "expo-font": "~14.0.9",
     "expo-haptics": "~15.0.7",
     "expo-image": "~3.0.10",
-    "expo-image-crop-tool": "^0.1.8",
+    "expo-image-crop-tool": "^0.4.0",
     "expo-image-manipulator": "~14.0.7",
     "expo-image-picker": "~17.0.8",
     "expo-intent-launcher": "~13.0.7",
