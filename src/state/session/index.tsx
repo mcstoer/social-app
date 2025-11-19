@@ -20,16 +20,12 @@ import {type Action, getInitialState, reducer, type State} from './reducer'
 export {isSignupQueued} from './util'
 import {addSessionDebugLog} from './logging'
 export type {SessionAccount} from '#/state/session/types'
-import {VerusdRpcInterface} from 'verusd-rpc-ts-client'
-import {VerusIdInterface} from 'verusid-ts-client'
 
-import {VSKY_SERVICE, VSKY_SERVICE_ID} from '#/lib/constants'
 import {logger} from '#/logger'
 import {
   type SessionAccount,
   type SessionApiContext,
   type SessionStateContext,
-  type SessionVskyApiContext,
 } from '#/state/session/types'
 
 const StateContext = React.createContext<SessionStateContext>({
@@ -52,11 +48,6 @@ const ApiContext = React.createContext<SessionApiContext>({
   partialRefreshSession: async () => {},
 })
 ApiContext.displayName = 'SessionApiContext'
-
-const VskyApiContext = React.createContext<SessionVskyApiContext>({
-  verusRpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-  verusIdInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-})
 
 class SessionStore {
   private state: State
@@ -342,14 +333,6 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     ],
   )
 
-  const vskyApi = React.useMemo(
-    () => ({
-      verusRpcInterface: new VerusdRpcInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-      verusIdInterface: new VerusIdInterface(VSKY_SERVICE_ID, VSKY_SERVICE),
-    }),
-    [],
-  )
-
   // @ts-expect-error window type is not declared, debug only
   if (__DEV__ && isWeb) window.agent = state.currentAgentState.agent
 
@@ -370,11 +353,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   return (
     <AgentContext.Provider value={agent}>
       <StateContext.Provider value={stateContext}>
-        <ApiContext.Provider value={api}>
-          <VskyApiContext.Provider value={vskyApi}>
-            {children}
-          </VskyApiContext.Provider>
-        </ApiContext.Provider>
+        <ApiContext.Provider value={api}>{children}</ApiContext.Provider>
       </StateContext.Provider>
     </AgentContext.Provider>
   )
@@ -398,10 +377,6 @@ export function useSession() {
 
 export function useSessionApi() {
   return React.useContext(ApiContext)
-}
-
-export function useSessionVskyApi() {
-  return React.useContext(VskyApiContext)
 }
 
 export function useRequireAuth() {

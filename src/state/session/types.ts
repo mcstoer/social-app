@@ -1,6 +1,3 @@
-import {type VerusdRpcInterface} from 'verusd-rpc-ts-client'
-import {type VerusIdInterface} from 'verusid-ts-client'
-
 import {type LogEvents} from '#/lib/statsig/statsig'
 import {type PersistedAccount} from '#/state/persisted'
 
@@ -52,11 +49,6 @@ export type SessionApiContext = {
    * `persistSessionHandler`.
    */
   partialRefreshSession: () => Promise<void>
-}
-
-export type SessionVskyApiContext = {
-  verusRpcInterface: VerusdRpcInterface
-  verusIdInterface: VerusIdInterface
 }
 
 export type VskySession = {

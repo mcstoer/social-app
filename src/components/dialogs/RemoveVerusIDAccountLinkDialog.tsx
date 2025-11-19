@@ -4,9 +4,10 @@ import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
+import {useVerusService} from '#/state/preferences'
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useSession, useSessionVskyApi} from '#/state/session'
+import {useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonText} from '#/components/Button'
@@ -45,7 +46,7 @@ export function RemoveVerusIDAccountLinkDialog() {
 function Inner() {
   const {_} = useLingui()
   const {currentAccount} = useSession()
-  const {verusIdInterface} = useSessionVskyApi()
+  const {verusIdInterface} = useVerusService()
   const control = Dialog.useDialogContext()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
 

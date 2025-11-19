@@ -32,9 +32,10 @@ import {createFullHandle} from '#/lib/strings/handles'
 import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
 import {emitVerusIDLoginCompleted} from '#/state/events'
+import {useVerusService} from '#/state/preferences'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
-import {useSessionApi, useSessionVskyApi} from '#/state/session'
+import {useSessionApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {atoms as a, useTheme} from '#/alf'
@@ -106,7 +107,7 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface} = useSessionVskyApi()
+  const {verusRpcInterface} = useVerusService()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
   const removeVerusIdAccountLinkControl =

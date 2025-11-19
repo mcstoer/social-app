@@ -1,5 +1,6 @@
 import {z} from 'zod'
 
+import {VSKY_SERVICE, VSKY_SERVICE_ID} from '#/lib/constants'
 import {deviceLanguageCodes, deviceLocales} from '#/locale/deviceLocales'
 import {findSupportedAppLanguage} from '#/locale/helpers'
 import {logger} from '#/logger'
@@ -155,6 +156,16 @@ const schema = z.object({
   mutedThreads: z.array(z.string()),
   trendingDisabled: z.boolean().optional(),
   trendingVideoDisabled: z.boolean().optional(),
+  verusServiceInterface: z.object({
+    url: z.string().url(),
+    auth: z
+      .object({
+        username: z.string(),
+        password: z.string(),
+      })
+      .optional(),
+    system: z.string(),
+  }),
 })
 export type Schema = z.infer<typeof schema>
 
@@ -202,6 +213,11 @@ export const defaults: Schema = {
   subtitlesEnabled: true,
   trendingDisabled: false,
   trendingVideoDisabled: false,
+  // The default service is public, so no auth is needed.
+  verusServiceInterface: {
+    url: VSKY_SERVICE,
+    system: VSKY_SERVICE_ID,
+  },
 }
 
 export function tryParse(rawData: string): Schema | undefined {

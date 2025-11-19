@@ -45,9 +45,10 @@ import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'
 import {bskyTitle} from '#/lib/strings/headings'
 import {logger} from '#/logger'
 import {isNative, isWeb} from '#/platform/detection'
+import {useVerusService} from '#/state/preferences'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useSession, useSessionVskyApi} from '#/state/session'
+import {useSession} from '#/state/session'
 import {
   shouldRequestEmailConfirmation,
   snoozeEmailConfirmationPrompt,
@@ -862,7 +863,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const prevLoggedRouteName = useRef<string | undefined>(undefined)
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
-  const {verusIdInterface} = useSessionVskyApi()
+  const {verusIdInterface} = useVerusService()
   const verusIdAccountLinkingDialogControl =
     useVerusIdAccountLinkingDialogControl()
   const getLinkedVerusId = useGetLinkedVerusID()

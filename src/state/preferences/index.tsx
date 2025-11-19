@@ -12,6 +12,7 @@ import {Provider as LargeAltBadgeProvider} from './large-alt-badge'
 import {Provider as SubtitlesProvider} from './subtitles'
 import {Provider as TrendingSettingsProvider} from './trending'
 import {Provider as UsedStarterPacksProvider} from './used-starter-packs'
+import {Provider as VerusServiceProvider} from './verus-service'
 
 export {
   useRequireAltTextEnabled,
@@ -27,6 +28,7 @@ export * from './hidden-posts'
 export {useLabelDefinitions} from './label-defs'
 export {useLanguagePrefs, useLanguagePrefsApi} from './languages'
 export {useSetSubtitlesEnabled, useSubtitlesEnabled} from './subtitles'
+export {useSetVerusServicePreferences, useVerusService} from './verus-service'
 
 export function Provider({children}: React.PropsWithChildren<{}>) {
   return (
@@ -41,7 +43,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
                     <UsedStarterPacksProvider>
                       <SubtitlesProvider>
                         <TrendingSettingsProvider>
-                          <KawaiiProvider>{children}</KawaiiProvider>
+                          <VerusServiceProvider>
+                            <KawaiiProvider>{children}</KawaiiProvider>
+                          </VerusServiceProvider>
                         </TrendingSettingsProvider>
                       </SubtitlesProvider>
                     </UsedStarterPacksProvider>

@@ -26,13 +26,14 @@ import {isInvalidHandle} from '#/lib/strings/handles'
 import {colors, s} from '#/lib/styles'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {listenSoftReset} from '#/state/events'
+import {useVerusService} from '#/state/preferences'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useLabelerInfoQuery} from '#/state/queries/labeler'
 import {resetProfilePostsQueries} from '#/state/queries/post-feed'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useAgent, useSession, useSessionVskyApi} from '#/state/session'
+import {useAgent, useSession} from '#/state/session'
 import {useSetMinimalShellMode} from '#/state/shell'
 import {ProfileFeedgens} from '#/view/com/feeds/ProfileFeedgens'
 import {ProfileLists} from '#/view/com/lists/ProfileLists'
@@ -169,7 +170,7 @@ function ProfileScreenLoaded({
 }) {
   const profile = useProfileShadow(profileUnshadowed)
   const {hasSession, currentAccount} = useSession()
-  const {verusIdInterface} = useSessionVskyApi()
+  const {verusIdInterface} = useVerusService()
   const setMinimalShellMode = useSetMinimalShellMode()
   const {openComposer} = useOpenComposer()
   const {

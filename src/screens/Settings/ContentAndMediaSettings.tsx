@@ -16,9 +16,12 @@ import {
 } from '#/state/preferences/trending'
 import {useTrendingConfig} from '#/state/service-config'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
+import {useDialogControl} from '#/components/Dialog'
+import {VerusServiceDialog} from '#/components/dialogs/VerusServiceDialog'
 import * as Toggle from '#/components/forms/Toggle'
 import {Bubbles_Stroke2_Corner2_Rounded as BubblesIcon} from '#/components/icons/Bubble'
 import {CircleInfo_Stroke2_Corner0_Rounded as CircleInfo} from '#/components/icons/CircleInfo'
+import {Earth_Stroke2_Corner2_Rounded as EarthIcon} from '#/components/icons/Globe'
 import {Hashtag_Stroke2_Corner0_Rounded as HashtagIcon} from '#/components/icons/Hashtag'
 import {Home_Stroke2_Corner2_Rounded as HomeIcon} from '#/components/icons/Home'
 import {Macintosh_Stroke2_Corner2_Rounded as MacintoshIcon} from '#/components/icons/Macintosh'
@@ -37,6 +40,7 @@ export function ContentAndMediaSettingsScreen({}: Props) {
   const setAutoplayDisabledPref = useSetAutoplayDisabled()
   const inAppBrowserPref = useInAppBrowser()
   const setUseInAppBrowser = useSetInAppBrowser()
+  const verusServiceDialogControl = useDialogControl()
   const {enabled: trendingEnabled} = useTrendingConfig()
   const {trendingDisabled, trendingVideoDisabled} = useTrendingSettings()
   const {setTrendingDisabled, setTrendingVideoDisabled} =
@@ -95,6 +99,16 @@ export function ContentAndMediaSettingsScreen({}: Props) {
               <Trans>Your interests</Trans>
             </SettingsList.ItemText>
           </SettingsList.LinkItem>
+          <SettingsList.Divider />
+          <SettingsList.PressableItem
+            label={_(msg`Update Verus Service Instance`)}
+            onPress={() => verusServiceDialogControl.open()}>
+            <SettingsList.ItemIcon icon={EarthIcon} />
+            <SettingsList.ItemText>
+              <Trans>Update Verus Service Instance</Trans>
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
           <SettingsList.Divider />
           {isNative && (
             <Toggle.Item
@@ -173,6 +187,8 @@ export function ContentAndMediaSettingsScreen({}: Props) {
           )}
         </SettingsList.Container>
       </Layout.Content>
+
+      <VerusServiceDialog control={verusServiceDialogControl} />
     </Layout.Screen>
   )
 }
