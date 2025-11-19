@@ -43,19 +43,42 @@ Deeplinks should work out of the box when you install the Verus Desktop Wallet o
 3. Variables you **must** set:
     - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
 
-## Running VerusSky Web App
+## Running the VerusSky Web App 
 
-To install all required dependencies, run:
+First install all required dependencies:
 ```bash
 yarn dev:setup
 ```
 
-To start the development servers, run:
+### Development Mode
+
+Start the development servers:
 ```bash
 yarn dev:run
 ```
 
 Once the servers are running, you can access the web app at `http://localhost:19006`.
+
+### Production Mode
+
+Extract and compile the lingui translations:
+```bash
+yarn intl:build
+```
+
+To build the SPA bundle:
+```bash
+yarn build-web
+```
+
+Follow the instructions in the [bskyweb README](/bskyweb/README.md) to run the golang daemon.
+
+In `vskysigningserver` directory, start the signing server:
+```bash
+yarn dev
+```
+
+Once the servers are running, you can access the web app at `http://localhost:8100`.
 
 ### Configuration
 
@@ -67,7 +90,7 @@ The VerusSky app uses a configuration file that is stored in the following direc
 | macOS            | `~/Library/Application Support/VerusSky/` |
 | Windows          | `%APPDATA%\VerusSky\`                     |
 
-Each time ater updating the configuration file, run:
+Each time ater updating the configuration file you must run:
 ```bash
 yarn dev:setup
 ```
