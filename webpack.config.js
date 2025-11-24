@@ -85,5 +85,47 @@ module.exports = async function (env, argv) {
     }),
   ]
 
+  // Configure Terser to not specific crypto library code
+  config.optimization.minimizer = config.optimization.minimizer.map(
+    minimizer => {
+      // Since terser is only used by the webpack config creator, we can't
+      // import the class. So we instead check the constructor name.
+      if (minimizer.constructor.name === 'TerserPlugin') {
+        // Preserve the existing options as much as possible
+        const existingOptions = minimizer.options || {}
+        const existingTerserOptions = existingOptions.terserOptions || {}
+
+        const newTerserOptions = {
+          ...existingTerserOptions,
+          mangle: {
+            ...(existingTerserOptions.mangle || {}),
+            reserved: [
+              ...(existingTerserOptions.mangle?.reserved || []),
+              // Crypto classes used in @bitgo/utxo-lib
+              'BigInteger', // Needed for ParseCompact
+              'Point', // Needed for recoverFromSignature
+            ],
+          },
+        }
+
+        // Create new TerserPlugin instance with updated options using
+        // the existing constructor, since we can't import it directly
+        const TerserPlugin = minimizer.constructor
+        const newOptions = {
+          test: existingOptions.test,
+          include: existingOptions.include,
+          exclude: existingOptions.exclude,
+          extractComments: existingOptions.extractComments,
+          parallel: existingOptions.parallel,
+          minify: existingOptions.minify,
+          terserOptions: newTerserOptions,
+        }
+
+        return new TerserPlugin(newOptions)
+      }
+      return minimizer
+    },
+  )
+
   return config
 }
