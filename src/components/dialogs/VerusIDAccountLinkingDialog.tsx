@@ -101,14 +101,14 @@ function Inner() {
 
   const onPrepareLink = async () => {
     if (!name.trim()) {
-      setError(_(msg`Please enter your VerusID name`))
+      setError(_(msg`Please enter your VerusID name.`))
       return
     }
 
     const handle = currentAccount?.handle
 
     if (!handle || !handle.trim()) {
-      setError(_(msg`Cannot link account with no handle`))
+      setError(_(msg`Unable to link account with no handle.`))
       return
     }
 
@@ -120,7 +120,7 @@ function Inner() {
       setDetailsToSign(details)
       setStage(Stages.SigningLinking)
     } catch (e: any) {
-      setError(_(msg`Failed to prepare linking details`))
+      setError(_(msg`Failed to prepare linking details.`))
     } finally {
       setIsProcessing(false)
     }
@@ -128,12 +128,12 @@ function Inner() {
 
   const onSubmitSignature = async () => {
     if (!signature.trim()) {
-      setError(_(msg`Please enter the signature`))
+      setError(_(msg`Please enter the signature.`))
       return
     }
 
     if (!verusIdInterface) {
-      setError(_(msg`Unable to verify signature`))
+      setError(_(msg`Unable to verify signature.`))
       return
     }
 
@@ -148,13 +148,14 @@ function Inner() {
       )
 
       if (!verified) {
-        setError(_(msg`Invalid signature, please try again`))
+        setError(_(msg`Invalid signature. Please try again.`))
         setIsProcessing(false)
         return
       }
     } catch (e: any) {
       setIsProcessing(false)
-      setError(_(msg`Failed to verify signature`))
+      setError(_(msg`Failed to verify signature. Please try again.`))
+      return
     }
 
     try {
@@ -191,7 +192,11 @@ function Inner() {
 
       setStage(Stages.Done)
     } catch (e: any) {
-      setError(_(msg`Failed to create a post for linking the VerusID`))
+      setError(
+        _(
+          msg`Failed to create a post for linking the VerusID. Please try again.`,
+        ),
+      )
     } finally {
       setIsProcessing(false)
     }
