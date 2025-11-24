@@ -421,11 +421,14 @@ export const LoginForm = ({
     const errMsg = verusIdLoginError.message
     logger.warn('Failed to verify VerusSky login response', {error: errMsg})
 
-    if (
-      errMsg.includes('Invalid login response') ||
+    if (errMsg.includes('Invalid login response')) {
+      setError(
+        _(msg`Invalid login response. Please try again or sign in manually.`),
+      )
+    } else if (
       errMsg.includes('Unable to fetch details on the signing identity')
     ) {
-      setError(_(msg`Unable to validate the VerusSky login.`))
+      setError(_(msg`Unable to verify the signer of the login.`))
     } else {
       setError(cleanError(errMsg))
     }

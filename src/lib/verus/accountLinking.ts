@@ -16,10 +16,10 @@ function findVerusIdLink(
   handle: string,
 ): VerusIdLink | null {
   // The link is in the format of
-  // linkId 1: controller of VerusID "${name}" controls ${handle}:${signature}
+  // linkId 1: controller of VerusID '${name}' controls ${handle}:${signature}
   const regexSafeHandle = handle.replace(/\./g, '\\.')
   const verusIdLinkPattern = new RegExp(
-    `(${linkIdentifier} 1: controller of VerusID "([^"]+)" controls ${regexSafeHandle}):(\\S+)`,
+    `(${linkIdentifier} 1: controller of VerusID ["']([^"']+)["'] controls ${regexSafeHandle}):(\\S+)`,
     'm',
   )
 

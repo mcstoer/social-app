@@ -116,7 +116,7 @@ function Inner() {
     setIsProcessing(true)
 
     try {
-      const details = `${linkIdentifier} 1: controller of VerusID "${name}" controls ${handle}`
+      const details = `${linkIdentifier} 1: controller of VerusID '${name}' controls ${handle}`
       setDetailsToSign(details)
       setStage(Stages.SigningLinking)
     } catch (e: any) {
