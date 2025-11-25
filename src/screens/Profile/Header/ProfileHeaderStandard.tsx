@@ -155,6 +155,18 @@ let ProfileHeaderStandard = ({
                 </View>
               </Text>
             </View>
+            {linkedVerusID && (
+              <View style={[a.flex_row, a.gap_xs, a.align_center]}>
+                <Text
+                  style={[
+                    t.atoms.text_contrast_high,
+                    a.font_medium,
+                    a.text_md,
+                  ]}>
+                  VerusID: {linkedVerusID.identity}
+                </Text>
+              </View>
+            )}
             <ProfileHeaderHandle profile={profile} />
           </View>
           {!isPlaceholderProfile && !isBlockedUser && (
