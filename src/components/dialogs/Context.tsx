@@ -29,7 +29,9 @@ type ControlsContext = {
     checkVerusIDAccountLink?: boolean
     openRemoveAccountLinkDialog?: boolean
   }>
-  verusIdAccountLinkingDialogControl: StatefulControl<void>
+  verusIdAccountLinkingDialogControl: StatefulControl<{
+    showSettingsMessage?: boolean
+  }>
   removeVerusIdAccountLinkDialogControl: StatefulControl<void>
 }
 
@@ -63,7 +65,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     checkVerusIDAccountLink?: boolean
     openRemoveAccountLinkDialog?: boolean
   }>()
-  const verusIdAccountLinkingDialogControl = useStatefulDialogControl<void>()
+  const verusIdAccountLinkingDialogControl = useStatefulDialogControl<{
+    showSettingsMessage?: boolean
+  }>()
   const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<void>()
 
   const ctx = useMemo<ControlsContext>(

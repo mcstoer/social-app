@@ -95,7 +95,7 @@ export function AccountSettingsScreen({}: Props) {
           )}
           <SettingsList.PressableItem
             label={_(msg`Link Account to VerusID`)}
-            onPress={() => verusIdAccountLinkingControl.open()}>
+            onPress={() => verusIdAccountLinkingControl.open({})}>
             <SettingsList.ItemIcon icon={ChainLinkIcon} />
             <SettingsList.ItemText>
               <Trans>Link Account to VerusID</Trans>

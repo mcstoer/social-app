@@ -81,7 +81,7 @@ export function VerusIDCredentialUpdateDialog() {
       checkVerusIDAccountLink &&
       (!linkedVerusID || linkedVerusID.identity !== identity)
     ) {
-      accountLinkingControl.open()
+      accountLinkingControl.open({showSettingsMessage: true})
     }
   }, [
     control,

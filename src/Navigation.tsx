@@ -973,7 +973,9 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
           .then(linkedVerusID => {
             const identity = currentAccount.name + '@'
             if (!linkedVerusID || linkedVerusID.identity !== identity) {
-              verusIdAccountLinkingDialogControl.open()
+              verusIdAccountLinkingDialogControl.open({
+                showSettingsMessage: true,
+              })
             }
           })
           .catch(error => {

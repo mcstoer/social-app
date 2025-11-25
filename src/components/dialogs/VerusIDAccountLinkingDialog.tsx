@@ -35,23 +35,49 @@ export function useVerusIdAccountLinkingDialogControl() {
 
 export function VerusIDAccountLinkingDialog() {
   const {_} = useLingui()
-  const {control} = useVerusIdAccountLinkingDialogControl()
+  const {control, value} = useVerusIdAccountLinkingDialogControl()
+  const [stage, setStage] = useState(Stages.PreparingLinking)
 
   return (
-    <Dialog.Outer control={control}>
+    <Dialog.Outer
+      control={control}
+      nativeOptions={{
+        preventDismiss: stage === Stages.SigningLinking,
+      }}
+      webOptions={{
+        onBackgroundPress: () => {
+          // Don't allow closing by background press as the user will navigate
+          // back by clicking the background.
+          if (stage !== Stages.SigningLinking) {
+            control.close()
+          }
+        },
+      }}>
       <Dialog.Handle />
 
       <Dialog.ScrollableInner
         label={_(msg`Link VerusID to Profile`)}
         style={web({maxWidth: 400})}>
-        <Inner />
+        <Inner
+          stage={stage}
+          setStage={setStage}
+          showSettingsMessage={value?.showSettingsMessage}
+        />
         <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>
   )
 }
 
-function Inner() {
+function Inner({
+  stage,
+  setStage,
+  showSettingsMessage,
+}: {
+  stage: Stages
+  setStage: (stage: Stages) => void
+  showSettingsMessage?: boolean
+}) {
   const {_} = useLingui()
   const {currentAccount} = useSession()
   const {verusIdInterface} = useVerusService()
@@ -66,8 +92,6 @@ function Inner() {
     currentAccount?.did,
     verusIdInterface,
   )
-
-  const [stage, setStage] = useState(Stages.PreparingLinking)
   const [isProcessing, setIsProcessing] = useState(false)
   const [name, setName] = useState(
     currentAccount?.type === 'vsky' ? currentAccount.name + '@' : '',
@@ -232,6 +256,12 @@ function Inner() {
             uiStrings[stage].message
           )}
         </Text>
+
+        {showSettingsMessage && stage === Stages.PreparingLinking && (
+          <Text style={[a.text_md, a.leading_snug]}>
+            <Trans>You can do this later in Settings → Account.</Trans>
+          </Text>
+        )}
 
         {error ? <Admonition type="error">{error}</Admonition> : null}
       </View>
