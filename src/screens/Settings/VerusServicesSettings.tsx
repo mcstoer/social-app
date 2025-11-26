@@ -6,18 +6,23 @@ import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useVerusService} from '#/state/preferences'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useSession} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import {useDialogControl} from '#/components/Dialog'
 import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
+import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {VerusServiceDialog} from '#/components/dialogs/VerusServiceDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/icons/ChainLink'
 import {CircleX_Stroke2_Corner0_Rounded as CircleXIcon} from '#/components/icons/CircleX'
 import {Earth_Stroke2_Corner2_Rounded as EarthIcon} from '#/components/icons/Globe'
+import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
 import {Verified_Stroke2_Corner2_Rounded} from '#/components/icons/Verified'
+import {Warning_Stroke2_Corner0_Rounded as WarningIcon} from '#/components/icons/Warning'
+import {Zap_Stroke2_Corner0_Rounded as ZapIcon} from '#/components/icons/Zap'
 import * as Layout from '#/components/Layout'
 
 type Props = NativeStackScreenProps<
@@ -32,6 +37,8 @@ export function VerusServicesSettingsScreen({}: Props) {
   const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
   const removeVerusIdAccountLinkControl =
     useRemoveVerusIdAccountLinkDialogControl()
+  const updateVerusIDCredentialsUpdateControl =
+    useVerusIdCredentialUpdateDialogControl()
   const verusServiceDialogControl = useDialogControl()
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
@@ -40,6 +47,8 @@ export function VerusServicesSettingsScreen({}: Props) {
     currentAccount?.did,
     verusIdInterface,
   )
+
+  const {data: serviceStatus} = useVerusServiceStatusQuery()
 
   return (
     <Layout.Screen>
@@ -61,10 +70,14 @@ export function VerusServicesSettingsScreen({}: Props) {
               <Trans>Linked VerusID</Trans>
             </SettingsList.ItemText>
             <SettingsList.BadgeText style={[a.flex_1]}>
-              {linkedVerusID ? (
-                linkedVerusID.identity
+              {serviceStatus?.connected ? (
+                linkedVerusID ? (
+                  linkedVerusID.identity
+                ) : (
+                  <Trans>(no identity)</Trans>
+                )
               ) : (
-                <Trans>(no identity)</Trans>
+                <Trans>(unknown)</Trans>
               )}
             </SettingsList.BadgeText>
             {linkedVerusID &&
@@ -103,6 +116,44 @@ export function VerusServicesSettingsScreen({}: Props) {
             </SettingsList.PressableItem>
           )}
           <SettingsList.Divider />
+          <SettingsList.PressableItem
+            label={
+              currentAccount?.type === 'vsky'
+                ? _(msg`Update VerusID Sign in`)
+                : _(msg`Save Sign in with VerusID`)
+            }
+            onPress={() =>
+              updateVerusIDCredentialsUpdateControl.open({
+                password: '',
+              })
+            }>
+            <SettingsList.ItemIcon icon={KeyIcon} />
+            <SettingsList.ItemText>
+              {currentAccount?.type === 'vsky' ? (
+                <Trans>Update VerusID Sign in</Trans>
+              ) : (
+                <Trans>Save Sign in with VerusID</Trans>
+              )}
+            </SettingsList.ItemText>
+            <SettingsList.Chevron />
+          </SettingsList.PressableItem>
+          <SettingsList.Divider />
+          <SettingsList.Item>
+            <SettingsList.ItemIcon icon={ZapIcon} />
+            <SettingsList.ItemText>
+              <Trans>Verus Services Endpoint Status</Trans>
+            </SettingsList.ItemText>
+            <SettingsList.BadgeText>
+              {serviceStatus?.connected ? (
+                <Trans>Connected</Trans>
+              ) : (
+                <Trans>Disconnected</Trans>
+              )}
+            </SettingsList.BadgeText>
+            {!serviceStatus?.connected && (
+              <WarningIcon fill={t.palette.negative_500} size="md" />
+            )}
+          </SettingsList.Item>
           <SettingsList.PressableItem
             label={_(msg`Verus Services Endpoint (Advanced)`)}
             onPress={() => verusServiceDialogControl.open()}>
