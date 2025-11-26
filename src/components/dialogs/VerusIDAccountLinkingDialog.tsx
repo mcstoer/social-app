@@ -164,10 +164,14 @@ function Inner({
     setError('')
     setIsProcessing(true)
 
+    // Strip any surrounding quotes from the signature
+    // The regex matches quotes at the start and end of the string
+    const cleanedSignature = signature.trim().replace(/^["']|["']$/g, '')
+
     try {
       const verified = await verusIdInterface.verifyMessage(
         name,
-        signature,
+        cleanedSignature,
         detailsToSign,
       )
 
@@ -183,7 +187,7 @@ function Inner({
     }
 
     try {
-      const accountLink = `${detailsToSign}:${signature}`
+      const accountLink = `${detailsToSign}:${cleanedSignature}`
 
       if (!currentAccount) throw new Error('Not signed in')
 
