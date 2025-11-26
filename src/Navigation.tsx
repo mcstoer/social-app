@@ -124,6 +124,7 @@ import {RepostsOnRepostsNotificationSettingsScreen} from '#/screens/Settings/Not
 import {PrivacyAndSecuritySettingsScreen} from '#/screens/Settings/PrivacyAndSecuritySettings'
 import {SettingsScreen} from '#/screens/Settings/Settings'
 import {ThreadPreferencesScreen} from '#/screens/Settings/ThreadPreferences'
+import {VerusServicesSettingsScreen} from '#/screens/Settings/VerusServicesSettings'
 import {
   StarterPackScreen,
   StarterPackScreenShort,
@@ -403,6 +404,14 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         getComponent={() => AccountSettingsScreen}
         options={{
           title: title(msg`Account`),
+          requireAuth: true,
+        }}
+      />
+      <Stack.Screen
+        name="VerusServicesSettings"
+        getComponent={() => VerusServicesSettingsScreen}
+        options={{
+          title: title(msg`Verus Services`),
           requireAuth: true,
         }}
       />

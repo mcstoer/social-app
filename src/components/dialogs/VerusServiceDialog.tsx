@@ -148,11 +148,11 @@ function VerusServiceInner() {
             a.pb_sm,
             t.atoms.text_contrast_high,
           ]}>
-          <Trans>Update Verus Service Instance</Trans>
+          <Trans>Update Verus Service Endpoint</Trans>
         </Text>
         <Text style={[a.pb_lg, a.leading_snug, t.atoms.text_contrast_medium]}>
           <Trans>
-            Set the Verus service instance to use for VerusID and media.
+            Set the Verus service endpoint to use for VerusID and media.
           </Trans>
         </Text>
 

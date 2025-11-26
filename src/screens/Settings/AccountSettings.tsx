@@ -14,14 +14,10 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
-import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
-import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {BirthdayCake_Stroke2_Corner2_Rounded as BirthdayCakeIcon} from '#/components/icons/BirthdayCake'
 import {Car_Stroke2_Corner2_Rounded as CarIcon} from '#/components/icons/Car'
-import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/icons/ChainLink'
-import {CircleX_Stroke2_Corner0_Rounded as CircleXIcon} from '#/components/icons/CircleX'
 import {Envelope_Stroke2_Corner2_Rounded as EnvelopeIcon} from '#/components/icons/Envelope'
 import {Freeze_Stroke2_Corner2_Rounded as FreezeIcon} from '#/components/icons/Freeze'
 import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
@@ -29,7 +25,6 @@ import {Lock_Stroke2_Corner2_Rounded as LockIcon} from '#/components/icons/Lock'
 import {PencilLine_Stroke2_Corner2_Rounded as PencilIcon} from '#/components/icons/Pencil'
 import {ShieldCheck_Stroke2_Corner0_Rounded as ShieldIcon} from '#/components/icons/Shield'
 import {Trash_Stroke2_Corner2_Rounded} from '#/components/icons/Trash'
-import {Verified_Stroke2_Corner2_Rounded} from '#/components/icons/Verified'
 import * as Layout from '#/components/Layout'
 import {ChangeHandleDialog} from './components/ChangeHandleDialog'
 import {ChangePasswordDialog} from './components/ChangePasswordDialog'
@@ -48,9 +43,6 @@ export function AccountSettingsScreen({}: Props) {
   const changePasswordControl = useDialogControl()
   const updateVerusIDCredentialsUpdateControl =
     useVerusIdCredentialUpdateDialogControl()
-  const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
-  const removeVerusIdAccountLinkControl =
-    useRemoveVerusIdAccountLinkDialogControl()
   const exportCarControl = useDialogControl()
   const deactivateAccountControl = useDialogControl()
 
@@ -67,50 +59,6 @@ export function AccountSettingsScreen({}: Props) {
       </Layout.Header.Outer>
       <Layout.Content>
         <SettingsList.Container>
-          {currentAccount?.type === 'vsky' && (
-            <SettingsList.Item>
-              <SettingsList.ItemIcon icon={AtIcon} />
-              {/* Uses the same flexbox solution as below. TODO: Update when the solution is found for it.*/}
-              <SettingsList.ItemText style={[a.flex_0]}>
-                <Trans>Identity</Trans>
-              </SettingsList.ItemText>
-              {currentAccount && (
-                <>
-                  <SettingsList.BadgeText style={[a.flex_1]}>
-                    {currentAccount.name ? (
-                      currentAccount.name + '@'
-                    ) : (
-                      <Trans>(no identity)</Trans>
-                    )}
-                  </SettingsList.BadgeText>
-                  {currentAccount.name && (
-                    <Verified_Stroke2_Corner2_Rounded
-                      fill={t.palette.primary_500}
-                      size="md"
-                    />
-                  )}
-                </>
-              )}
-            </SettingsList.Item>
-          )}
-          <SettingsList.PressableItem
-            label={_(msg`Link Account to VerusID`)}
-            onPress={() => verusIdAccountLinkingControl.open({})}>
-            <SettingsList.ItemIcon icon={ChainLinkIcon} />
-            <SettingsList.ItemText>
-              <Trans>Link Account to VerusID</Trans>
-            </SettingsList.ItemText>
-            <SettingsList.Chevron />
-          </SettingsList.PressableItem>
-          <SettingsList.PressableItem
-            label={_(msg`Remove VerusID Link`)}
-            onPress={() => removeVerusIdAccountLinkControl.open()}>
-            <SettingsList.ItemIcon icon={CircleXIcon} />
-            <SettingsList.ItemText>
-              <Trans>Remove VerusID Link</Trans>
-            </SettingsList.ItemText>
-            <SettingsList.Chevron />
-          </SettingsList.PressableItem>
           <SettingsList.Item>
             <SettingsList.ItemIcon icon={EnvelopeIcon} />
             {/* Tricky flexbox situation here: we want the email to truncate, but by default it will make the "Email" text wrap instead.

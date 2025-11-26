@@ -50,6 +50,7 @@ export const router = new Router<AllNavigatableRoutes>({
   AppearanceSettings: '/settings/appearance',
   SavedFeeds: '/settings/saved-feeds',
   AccountSettings: '/settings/account',
+  VerusServicesSettings: '/settings/verus-services',
   PrivacyAndSecuritySettings: '/settings/privacy-and-security',
   ActivityPrivacySettings: '/settings/privacy-and-security/activity',
   ContentAndMediaSettings: '/settings/content-and-media',

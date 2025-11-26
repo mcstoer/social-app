@@ -50,6 +50,7 @@ export type CommonNavigatorParams = {
   AccessibilitySettings: undefined
   AppearanceSettings: undefined
   AccountSettings: undefined
+  VerusServicesSettings: undefined
   PrivacyAndSecuritySettings: undefined
   ActivityPrivacySettings: undefined
   ContentAndMediaSettings: undefined

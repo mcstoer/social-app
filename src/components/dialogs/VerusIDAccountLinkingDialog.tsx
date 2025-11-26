@@ -259,7 +259,7 @@ function Inner({
 
         {showSettingsMessage && stage === Stages.PreparingLinking && (
           <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>You can do this later in Settings → Account.</Trans>
+            <Trans>You can do this later in Settings → Verus Services.</Trans>
           </Text>
         )}
 
