@@ -45,7 +45,6 @@ import {attachRouteToLogEvents, logEvent} from '#/lib/statsig/statsig'
 import {bskyTitle} from '#/lib/strings/headings'
 import {logger} from '#/logger'
 import {isNative, isWeb} from '#/platform/detection'
-import {useVerusService} from '#/state/preferences'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSession} from '#/state/session'
@@ -872,7 +871,6 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const prevLoggedRouteName = useRef<string | undefined>(undefined)
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
-  const {verusIdInterface} = useVerusService()
   const verusIdAccountLinkingDialogControl =
     useVerusIdAccountLinkingDialogControl()
   const getLinkedVerusId = useGetLinkedVerusID()
@@ -974,11 +972,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
     if (currentAccount && currentAccount.type === 'vsky') {
       // Attach the event listener when it can be ready to be used.
       listenVerusIDLoginCompleted(() => {
-        getLinkedVerusId(
-          PROOFS_CONTROLLER_BLUESKY.vdxfid,
-          currentAccount.did,
-          verusIdInterface,
-        )
+        getLinkedVerusId(PROOFS_CONTROLLER_BLUESKY.vdxfid, currentAccount.did)
           .then(linkedVerusID => {
             const identity = currentAccount.name + '@'
             if (!linkedVerusID || linkedVerusID.identity !== identity) {

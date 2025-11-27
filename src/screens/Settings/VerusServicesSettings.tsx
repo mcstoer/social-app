@@ -4,7 +4,6 @@ import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
-import {useVerusService} from '#/state/preferences'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useSession} from '#/state/session'
@@ -33,7 +32,6 @@ export function VerusServicesSettingsScreen({}: Props) {
   const t = useTheme()
   const {_} = useLingui()
   const {currentAccount} = useSession()
-  const {verusIdInterface} = useVerusService()
   const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
   const removeVerusIdAccountLinkControl =
     useRemoveVerusIdAccountLinkDialogControl()
@@ -45,7 +43,6 @@ export function VerusServicesSettingsScreen({}: Props) {
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
     linkIdentifier,
     currentAccount?.did,
-    verusIdInterface,
   )
 
   const {data: serviceStatus} = useVerusServiceStatusQuery()

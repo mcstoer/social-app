@@ -1,6 +1,6 @@
 import {useQuery} from '@tanstack/react-query'
-import {type VerusdRpcInterface} from 'verusd-rpc-ts-client'
 
+import {useVerusService} from '#/state/preferences'
 import {STALE} from '#/state/queries'
 
 export const createVerusGetIdentityQueryKey = (identity: string) => [
@@ -8,18 +8,14 @@ export const createVerusGetIdentityQueryKey = (identity: string) => [
   identity,
 ]
 
-export function useVerusGetIdentityQuery({
-  identity,
-  rpcInferface,
-}: {
-  identity: string
-  rpcInferface: VerusdRpcInterface
-}) {
+export function useVerusGetIdentityQuery({identity}: {identity: string}) {
+  const {verusRpcInterface} = useVerusService()
+
   return useQuery({
     staleTime: STALE.MINUTES.ONE,
     queryKey: createVerusGetIdentityQueryKey(identity),
     queryFn: async () => {
-      const data = await rpcInferface.getIdentity(identity)
+      const data = await verusRpcInterface.getIdentity(identity)
       return data
     },
   })

@@ -6,6 +6,7 @@ import {
 import {type VerusdRpcInterface} from 'verusd-rpc-ts-client'
 
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
+import {useVerusService} from '#/state/preferences'
 
 export interface VerusIdLoginResult {
   loginResponse: LoginConsentResponse
@@ -60,13 +61,13 @@ export const createVerusIdLoginQueryKey = (requestId: string) => [
 
 export function useVerusIdLoginQuery({
   requestId,
-  verusRpcInterface,
   enabled = true,
 }: {
   requestId: string
-  verusRpcInterface: VerusdRpcInterface
   enabled?: boolean
 }) {
+  const {verusRpcInterface} = useVerusService()
+
   return useQuery({
     enabled: !!requestId && enabled !== false,
     queryKey: createVerusIdLoginQueryKey(requestId),

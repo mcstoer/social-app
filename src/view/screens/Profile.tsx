@@ -26,7 +26,6 @@ import {isInvalidHandle} from '#/lib/strings/handles'
 import {colors, s} from '#/lib/styles'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {listenSoftReset} from '#/state/events'
-import {useVerusService} from '#/state/preferences'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useLabelerInfoQuery} from '#/state/queries/labeler'
 import {resetProfilePostsQueries} from '#/state/queries/post-feed'
@@ -170,7 +169,6 @@ function ProfileScreenLoaded({
 }) {
   const profile = useProfileShadow(profileUnshadowed)
   const {hasSession, currentAccount} = useSession()
-  const {verusIdInterface} = useVerusService()
   const setMinimalShellMode = useSetMinimalShellMode()
   const {openComposer} = useOpenComposer()
   const {
@@ -185,7 +183,6 @@ function ProfileScreenLoaded({
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
     linkIdentifier,
     profile.did,
-    verusIdInterface,
   )
   const [currentPage, setCurrentPage] = React.useState(0)
   const {_} = useLingui()

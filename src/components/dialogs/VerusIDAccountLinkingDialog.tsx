@@ -90,7 +90,6 @@ function Inner({
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
     linkIdentifier,
     currentAccount?.did,
-    verusIdInterface,
   )
   const [isProcessing, setIsProcessing] = useState(false)
   const [name, setName] = useState(

@@ -1,12 +1,12 @@
 import {useCallback, useMemo} from 'react'
 import {useQuery, useQueryClient} from '@tanstack/react-query'
-import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {augmentSearchQuery} from '#/lib/strings/helpers'
 import {
   checkIfLinkedVerusID,
   type VerusIdLink,
 } from '#/lib/verus/accountLinking'
+import {useVerusService} from '#/state/preferences'
 import {STALE} from '#/state/queries'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
@@ -21,13 +21,10 @@ export const createLinkedVerusIDQueryKey = (did: string) => [
 export function useGetLinkedVerusID() {
   const queryClient = useQueryClient()
   const agent = useAgent()
+  const {verusIdInterface} = useVerusService()
 
   return useCallback(
-    async (
-      linkIdentifier: string,
-      did: string,
-      verusIdInterface?: VerusIdInterface,
-    ) => {
+    async (linkIdentifier: string, did: string) => {
       const queryKey = createLinkedVerusIDQueryKey(did)
 
       return queryClient.fetchQuery({
@@ -37,7 +34,7 @@ export function useGetLinkedVerusID() {
           const profileRes = await agent.getProfile({actor: did})
           const handle = profileRes.data.handle
 
-          if (!handle || !verusIdInterface) {
+          if (!handle) {
             return null
           }
 
@@ -62,16 +59,16 @@ export function useGetLinkedVerusID() {
         },
       })
     },
-    [agent, queryClient],
+    [agent, queryClient, verusIdInterface],
   )
 }
 
 export function useLinkedVerusIDQuery(
   linkIdentifier: string,
   name?: string,
-  verusIdInterface?: VerusIdInterface,
   enabled?: boolean,
 ) {
+  const {verusIdInterface} = useVerusService()
   const {data: resolvedDid} = useResolveDidQuery(name)
 
   const sort = 'latest'
@@ -92,10 +89,6 @@ export function useLinkedVerusIDQuery(
     enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
     queryFn: async (): Promise<VerusIdLink | null> => {
-      if (!verusIdInterface) {
-        throw new Error('VerusIdInterface not provided')
-      }
-
       return checkIfLinkedVerusID(
         posts,
         linkIdentifier,

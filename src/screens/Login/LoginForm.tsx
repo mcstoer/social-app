@@ -33,7 +33,6 @@ import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
 import {isIOS} from '#/platform/detection'
 import {emitVerusIDLoginCompleted} from '#/state/events'
-import {useVerusService} from '#/state/preferences'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
 import {useSessionApi} from '#/state/session'
@@ -108,7 +107,6 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const {verusRpcInterface} = useVerusService()
   const updateVerusCredentialsControl =
     useVerusIdCredentialUpdateDialogControl()
   const removeVerusIdAccountLinkControl =
@@ -120,7 +118,6 @@ export const LoginForm = ({
   const {data: verusIdLoginResult, error: verusIdLoginError} =
     useVerusIdLoginQuery({
       requestId: loginIdRef.current,
-      verusRpcInterface,
       enabled: isVerusIdLogin && loginIdRef.current !== '',
     })
 

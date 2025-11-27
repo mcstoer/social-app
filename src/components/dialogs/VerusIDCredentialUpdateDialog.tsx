@@ -19,7 +19,6 @@ import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {logger} from '#/logger'
 import {isNative, isWeb} from '#/platform/detection'
-import {useVerusService} from '#/state/preferences'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdUpdateQuery} from '#/state/queries/verus/useVerusIdUpdateQuery'
@@ -47,7 +46,6 @@ export function useVerusIdCredentialUpdateDialogControl() {
 export function VerusIDCredentialUpdateDialog() {
   const {_} = useLingui()
   const {currentAccount} = useSession()
-  const {verusIdInterface} = useVerusService()
   const control = useVerusIdCredentialUpdateDialogControl()
   const accountLinkingControl =
     useGlobalDialogsControlContext().verusIdAccountLinkingDialogControl
@@ -59,7 +57,6 @@ export function VerusIDCredentialUpdateDialog() {
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
     PROOFS_CONTROLLER_BLUESKY.vdxfid,
     currentAccount?.did,
-    verusIdInterface,
     checkVerusIDAccountLink,
   )
 
