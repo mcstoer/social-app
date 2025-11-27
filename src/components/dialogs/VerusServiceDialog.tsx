@@ -118,20 +118,21 @@ function VerusServiceInner() {
 
         setError(
           _(
-            msg`Unable to connect to Verus Service. Please verify your input details are correct and try again`,
+            msg`Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again`,
           ),
         )
         return
       }
 
       setVerusServicePreferences(newSettings)
+
       control.close()
     } catch (e: any) {
-      logger.error(`Failed to update the Verus Service instance`, {
+      logger.error(`Failed to update the Verus Service endpoint`, {
         safeMessage: e.message,
       })
       setError(
-        _(msg`Failed to update the Verus Service instance. Please try again`),
+        _(msg`Failed to update the Verus Service endpoint. Please try again`),
       )
     } finally {
       setIsUpdating(false)
