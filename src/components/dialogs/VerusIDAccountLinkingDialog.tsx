@@ -12,7 +12,10 @@ import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {useVerusService} from '#/state/preferences'
 import {usePostDeleteMutation} from '#/state/queries/post'
 import {createPostgateRecord} from '#/state/queries/postgate/util'
-import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {
+  createLinkedVerusIDQueryKey,
+  useLinkedVerusIDQuery,
+} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -198,7 +201,7 @@ function Inner({
       const richtext = new RichText({text: accountLink})
 
       // Create the linking post similar to the Composer
-      await apilib.post(agent, queryClient, {
+      const postResult = await apilib.post(agent, queryClient, {
         thread: {
           posts: [
             {
@@ -215,6 +218,22 @@ function Inner({
           }),
           threadgate: [{type: 'nobody'}],
         },
+      })
+
+      // Optimistically set the linked VerusID query data to the new link
+      await queryClient.setQueryData(
+        createLinkedVerusIDQueryKey(currentAccount.did),
+        {
+          message: detailsToSign,
+          identity: name,
+          signature: cleanedSignature,
+          postUri: postResult.uris[0],
+        },
+      )
+
+      // Also invalidate the search posts query used for the linked VerusID query
+      await queryClient.invalidateQueries({
+        queryKey: ['search-posts'],
       })
 
       setStage(Stages.Done)

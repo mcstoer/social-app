@@ -2,10 +2,14 @@ import {useState} from 'react'
 import {View} from 'react-native'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
+import {useQueryClient} from '@tanstack/react-query'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {usePostDeleteMutation} from '#/state/queries/post'
-import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {
+  createLinkedVerusIDQueryKey,
+  useLinkedVerusIDQuery,
+} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -46,6 +50,7 @@ function Inner() {
   const {_} = useLingui()
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
+  const queryClient = useQueryClient()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
@@ -81,11 +86,25 @@ function Inner() {
       return
     }
 
+    if (!currentAccount) throw new Error('Not signed in')
+
     setError('')
     setIsProcessing(true)
 
     try {
       await deletePost({uri: linkedVerusID.postUri})
+
+      // Optimistically remove the old linked VerusID query data
+      queryClient.setQueryData(
+        createLinkedVerusIDQueryKey(currentAccount?.did),
+        null,
+      )
+
+      // Also invalidate the search posts query used for the linked VerusID query
+      await queryClient.invalidateQueries({
+        queryKey: ['search-posts'],
+      })
+
       setStage(Stages.Done)
     } catch (e: any) {
       setError(_(msg`Failed to remove the VerusID link, please try again`))

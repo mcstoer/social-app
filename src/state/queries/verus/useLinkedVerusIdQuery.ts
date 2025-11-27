@@ -87,6 +87,7 @@ export function useLinkedVerusIDQuery(
 
   return useQuery({
     enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
+    staleTime: STALE.MINUTES.FIVE,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
     queryFn: async (): Promise<VerusIdLink | null> => {
       return checkIfLinkedVerusID(
