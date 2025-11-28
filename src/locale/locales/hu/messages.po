@@ -714,8 +714,8 @@ msgstr "Tartalomfigyelmeztetés felvétele"
 msgid "Add a temporary live status to your profile. When someone clicks on your avatar, they’ll see information about your live event."
 msgstr "Lehetőséged van egy ideiglenes állapot beállítására. Így, ha valaki rákattint a profilképedre, akkor megtekintheti az élő adásod részleteit."
 
-#: src/screens/ProfileList/AboutSection.tsx:62
-#: src/screens/ProfileList/AboutSection.tsx:80
+#: src/screens/ProfileList/AboutSection.tsx:63
+#: src/screens/ProfileList/AboutSection.tsx:81
 msgid "Add a user to this list"
 msgstr "Felhasználó felvétele a listára"
 
@@ -757,8 +757,8 @@ msgstr "Válaszlánc bővítése"
 msgid "Add app password"
 msgstr "Alkalmazásjelszó létrehozása"
 
-#: src/screens/Settings/AppPasswords.tsx:73
-#: src/screens/Settings/AppPasswords.tsx:81
+#: src/screens/Settings/AppPasswords.tsx:74
+#: src/screens/Settings/AppPasswords.tsx:82
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:111
 msgid "Add App Password"
 msgstr "Alkalmazásjelszó létrehozása"
@@ -785,8 +785,8 @@ msgstr "Szó elnémítása a megadott beállításokkal"
 msgid "Add muted words and tags"
 msgstr "Elnémított szavak és címkék felvétele"
 
-#: src/screens/ProfileList/AboutSection.tsx:70
-#: src/screens/ProfileList/AboutSection.tsx:88
+#: src/screens/ProfileList/AboutSection.tsx:71
+#: src/screens/ProfileList/AboutSection.tsx:89
 msgid "Add people"
 msgstr "Személyek felvétele"
 
@@ -911,7 +911,7 @@ msgstr "Az életkor-igazolási kérelem küldése sikeresen megtörtént"
 msgid "Age assurance only takes a few minutes"
 msgstr "Az életkor-igazolás általában csupán néhány percet vesz igénybe"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:281
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
 msgid "Alice@"
 msgstr ""
@@ -987,7 +987,7 @@ msgstr "A(z) {0} listáról bárki válaszolhat"
 msgid "Allow your followers to reply"
 msgstr "A követőid közül bárki válaszolhat"
 
-#: src/screens/Settings/AppPasswords.tsx:199
+#: src/screens/Settings/AppPasswords.tsx:200
 msgid "Allows access to direct messages"
 msgstr "Megengedi a személyes üzenetekhez való hozzáférést"
 
@@ -1025,7 +1025,7 @@ msgstr "Helyettesítő szöveg"
 msgid "Alt Text"
 msgstr "Helyettesítő szöveg"
 
-#: src/view/com/composer/photos/Gallery.tsx:260
+#: src/view/com/composer/photos/Gallery.tsx:261
 msgid "Alt text describes images for blind and low-vision users, and helps give context to everyone."
 msgstr "A helyettesítő szöveg segít leírni egy képet vak vagy gyengén látó felhasználók számára, és mindenki számára további információval szolgál."
 
@@ -1060,7 +1060,7 @@ msgstr "Hiba történt a javasolt fiókok lekérése közben."
 msgid "An error occurred while fetching the feed."
 msgstr "A hírfolyam lekérdezése meghiúsult."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:339
+#: src/components/StarterPack/ProfileStarterPacks.tsx:371
 msgid "An error occurred while generating your starter pack. Want to try again?"
 msgstr "A kezdőcsomag létrehozása meghiúsult. Szeretnéd újra megpróbálni?"
 
@@ -1189,7 +1189,7 @@ msgstr "Alkalmazás nyelve"
 msgid "App Password"
 msgstr "Alkalmazásjelszó"
 
-#: src/screens/Settings/AppPasswords.tsx:145
+#: src/screens/Settings/AppPasswords.tsx:146
 msgctxt "toast"
 msgid "App password deleted"
 msgstr "Alkalmazásjelszó törölve"
@@ -1212,7 +1212,7 @@ msgid "App passwords"
 msgstr "Alkalmazásjelszók"
 
 #: src/Navigation.tsx:357
-#: src/screens/Settings/AppPasswords.tsx:49
+#: src/screens/Settings/AppPasswords.tsx:50
 msgid "App Passwords"
 msgstr "Alkalmazásjelszók"
 
@@ -1273,7 +1273,7 @@ msgstr "Archiválás dátuma: {0}"
 msgid "Archived post"
 msgstr "Archivált bejegyzés"
 
-#: src/screens/Settings/AppPasswords.tsx:208
+#: src/screens/Settings/AppPasswords.tsx:209
 msgid "Are you sure you want to delete the app password \"{0}\"?"
 msgstr "Biztosan törölni akarod a(z) „{0}” nevű alkalmazásjelszót?"
 
@@ -1346,7 +1346,7 @@ msgctxt "Name of app icon variant"
 msgid "Aurora"
 msgstr "Sarki Fény"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:200
+#: src/components/dialogs/VerusServiceDialog.tsx:201
 msgid "Authentication (Optional)"
 msgstr ""
 
@@ -1368,8 +1368,8 @@ msgstr "Elérhető"
 msgid "Awaiting confirmation"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:364
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
 #: src/components/moderation/LabelsOnMeDialog.tsx:333
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/screens/Login/ChooseAccountForm.tsx:91
@@ -1412,8 +1412,9 @@ msgid "Before creating a post or replying, you must first verify your email."
 msgstr "A bejegyzés- vagy válaszírás előtt ellenőriznünk kell az e-mail-címedet."
 
 #: src/components/dialogs/StarterPackDialog.tsx:71
-#: src/components/StarterPack/ProfileStarterPacks.tsx:231
-#: src/components/StarterPack/ProfileStarterPacks.tsx:241
+#: src/components/StarterPack/ProfileStarterPacks.tsx:263
+#: src/components/StarterPack/ProfileStarterPacks.tsx:273
+#: src/view/screens/Profile.tsx:358
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr "A kezdőcsomag létrehozása előtt ellenőriznünk kell az e-mail-címedet."
 
@@ -1574,7 +1575,7 @@ msgstr "A Bluesky ismerősökkel még jobb!"
 msgid "Bluesky Social Terms of Service"
 msgstr "A Bluesky felhasználási feltételei"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:306
+#: src/components/StarterPack/ProfileStarterPacks.tsx:338
 msgid "Bluesky will choose a set of recommended accounts from people in your network."
 msgstr "A Bluesky egy javasolt felhasználócsoportot fog kijelölni a hálózatodon."
 
@@ -1610,6 +1611,11 @@ msgstr "Könyvek"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:215
 msgid "Breaking site rules"
 msgstr "A Bluesky szabályzatának megszegése"
+
+#: src/view/com/feeds/ProfileFeedgens.tsx:158
+#: src/view/com/feeds/ProfileFeedgens.tsx:159
+msgid "Browse custom feeds"
+msgstr ""
 
 #: src/components/FeedInterstitials.tsx:436
 msgid "Browse more accounts on the Explore page"
@@ -1656,6 +1662,10 @@ msgstr "A(z) „{displayName}” témakör böngészése"
 #: src/view/com/auth/SplashScreen.web.tsx:174
 msgid "Business"
 msgstr "Honlap"
+
+#: src/screens/Bookmarks/index.tsx:277
+msgid "Button to go back to the home timeline"
+msgstr ""
 
 #: src/components/LabelingServiceCard/index.tsx:62
 #: src/components/moderation/ReportDialog/index.tsx:834
@@ -1926,7 +1936,7 @@ msgstr "Tartományhitelesítési módszer"
 msgid "Choose Feeds"
 msgstr "Hírfolyamok böngészése"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:314
+#: src/components/StarterPack/ProfileStarterPacks.tsx:346
 msgid "Choose for me"
 msgstr "Létrehozás automatikusan"
 
@@ -2023,12 +2033,12 @@ msgstr "Kipp 🐴 kopp 🐴"
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:171
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:178
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:187
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:136
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
 #: src/components/dialogs/SearchablePeopleList.tsx:295
 #: src/components/dialogs/StarterPackDialog.tsx:179
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:370
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:375
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
 #: src/components/dms/AfterReportDialog.tsx:93
@@ -2327,7 +2337,7 @@ msgstr "Tartalomfigyelmeztetések"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "A környezetérzékeny menü háttere. Kattints ide a menü bezárásához."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:336
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:162
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:170
 #: src/screens/Onboarding/StepInterests/index.tsx:94
@@ -2479,7 +2489,7 @@ msgstr "Bejegyzés szövegének másolása"
 msgid "Copy QR code"
 msgstr "QR-kód másolása"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:248
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
 msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
 msgstr ""
 
@@ -2511,7 +2521,7 @@ msgstr "Ez a profil nem található"
 msgid "Could not leave chat"
 msgstr "A csevegés elhagyása meghiúsult"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:83
+#: src/screens/Profile/ProfileFeed/index.tsx:84
 msgid "Could not load feed"
 msgstr "A hírfolyam betöltése meghiúsult"
 
@@ -2541,21 +2551,31 @@ msgstr "Az értesítési beállítások frissítése meghiúsult"
 #. Text on button to create a new starter pack
 #: src/components/dialogs/StarterPackDialog.tsx:112
 #: src/components/dialogs/StarterPackDialog.tsx:201
-#: src/components/StarterPack/ProfileStarterPacks.tsx:296
+#: src/components/StarterPack/ProfileStarterPacks.tsx:328
 msgid "Create"
 msgstr "Létrehozás"
+
+#: src/view/com/lists/ProfileLists.tsx:159
+#: src/view/com/lists/ProfileLists.tsx:160
+msgid "Create a list"
+msgstr ""
 
 #: src/components/StarterPack/QrCodeDialog.tsx:163
 msgid "Create a QR code for a starter pack"
 msgstr "QR-kód létrehozása egy kezdőcsomaghoz"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:174
-#: src/components/StarterPack/ProfileStarterPacks.tsx:283
+#: src/components/StarterPack/ProfileStarterPacks.tsx:206
+#: src/components/StarterPack/ProfileStarterPacks.tsx:315
 #: src/Navigation.tsx:603
 msgid "Create a starter pack"
 msgstr "Kezdőcsomag létrehozása"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:270
+#: src/view/screens/Profile.tsx:550
+#: src/view/screens/Profile.tsx:551
+msgid "Create a Starter Pack"
+msgstr ""
+
+#: src/components/StarterPack/ProfileStarterPacks.tsx:302
 msgid "Create a starter pack for me"
 msgstr "Automatikus létrehozás"
 
@@ -2592,7 +2612,7 @@ msgstr "Fiók létrehozása a kezdőcsomag igénybevétele nélkül"
 msgid "Create an avatar instead"
 msgstr "Profilkép létrehozása"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:181
+#: src/components/StarterPack/ProfileStarterPacks.tsx:213
 msgid "Create another"
 msgstr "Másik létrehozása"
 
@@ -2620,7 +2640,7 @@ msgstr "Kezdőcsomag létrehozása"
 msgid "Create user list"
 msgstr "Felhasználólista létrehozása"
 
-#: src/screens/Settings/AppPasswords.tsx:172
+#: src/screens/Settings/AppPasswords.tsx:173
 msgid "Created {0}"
 msgstr "Létrehozás dátuma: {0}"
 
@@ -2666,7 +2686,7 @@ msgctxt "Name of app icon variant"
 msgid "Dark"
 msgstr "Lekapcsolt"
 
-#: src/view/screens/Debug.tsx:68
+#: src/view/screens/Debug.tsx:69
 msgid "Dark mode"
 msgstr "Sötét mód"
 
@@ -2688,7 +2708,7 @@ msgstr "Fiók deaktiválása"
 msgid "Debug Moderation"
 msgstr "Moderálási hibakeresés"
 
-#: src/view/screens/Debug.tsx:88
+#: src/view/screens/Debug.tsx:89
 msgid "Debug panel"
 msgstr "Hibakeresési panel"
 
@@ -2708,7 +2728,7 @@ msgstr "Alapértelmezett ikonok"
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:736
 #: src/screens/Messages/components/ChatStatusInfo.tsx:55
 #: src/screens/ProfileList/components/MoreOptionsMenu.tsx:280
-#: src/screens/Settings/AppPasswords.tsx:211
+#: src/screens/Settings/AppPasswords.tsx:212
 #: src/screens/StarterPack/StarterPackScreen.tsx:601
 #: src/screens/StarterPack/StarterPackScreen.tsx:690
 #: src/screens/StarterPack/StarterPackScreen.tsx:762
@@ -2724,11 +2744,11 @@ msgstr "Fiók törlése"
 msgid "Delete Account <0>\"</0><1>{0}</1><2>\"</2>"
 msgstr "<0>\"</0><1>{0}</1><2>\"</2> fiókjának törlése"
 
-#: src/screens/Settings/AppPasswords.tsx:185
+#: src/screens/Settings/AppPasswords.tsx:186
 msgid "Delete app password"
 msgstr "Alkalmazásjelszó törlése"
 
-#: src/screens/Settings/AppPasswords.tsx:206
+#: src/screens/Settings/AppPasswords.tsx:207
 msgid "Delete app password?"
 msgstr "Alkalmazásjelszó törlése"
 
@@ -2779,7 +2799,7 @@ msgstr "Fiók törlése"
 msgid "Delete post"
 msgstr "Bejegyzés törlése"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:123
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
 msgid "Delete Post and Remove Link"
 msgstr ""
 
@@ -2836,8 +2856,8 @@ msgstr "Idézet leválasztása"
 msgid "Detach quote post?"
 msgstr "Idézet leválasztása"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:294
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:298
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
 msgid "Details to Sign"
 msgstr ""
 
@@ -3012,8 +3032,8 @@ msgstr "Ne aggódj! A korábbi üzeneteid és beállításaid nem vesztek el és
 
 #: src/components/dialogs/BirthDateSettings.tsx:149
 #: src/components/dialogs/BirthDateSettings.tsx:156
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
 #: src/components/dialogs/ServerInput.tsx:240
 #: src/components/dialogs/ServerInput.tsx:242
 #: src/components/dms/AfterReportDialog.tsx:142
@@ -3341,7 +3361,7 @@ msgstr "Felkapott videók megjelenítése a Követett hírfolyamon"
 msgid "Enabled"
 msgstr "Engedélyezve"
 
-#: src/screens/Profile/Sections/Feed.tsx:109
+#: src/screens/Profile/Sections/Feed.tsx:131
 msgid "End of feed"
 msgstr "A hírfolyam véget ért"
 
@@ -3587,7 +3607,7 @@ msgstr "A kezdőcsomag bővítése meghiúsult"
 msgid "Failed to change handle. Please try again."
 msgstr "A felhasználónév megváltoztatása meghiúsult. Próbáld újra."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:224
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
 msgid "Failed to create a post for linking the VerusID. Please try again."
 msgstr ""
 
@@ -3689,7 +3709,7 @@ msgstr "A kérelmek megjelölése olvasottként meghiúsult"
 msgid "Failed to pin post"
 msgstr "A bejegyzés kitűzése meghiúsult"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:146
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
 msgid "Failed to prepare linking details."
 msgstr ""
 
@@ -3702,7 +3722,7 @@ msgstr "Az emoji-reakció eltávolítása meghiúsult"
 msgid "Failed to remove from starter pack"
 msgstr "A kezdőcsomagról levétel meghiúsult"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:91
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
 msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
@@ -3776,8 +3796,8 @@ msgstr "Az értesítési beállítások frissítése meghiúsult"
 msgid "Failed to update settings"
 msgstr "A beállítások mentése meghiúsult"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:134
-msgid "Failed to update the Verus Service instance. Please try again"
+#: src/components/dialogs/VerusServiceDialog.tsx:135
+msgid "Failed to update the Verus Service endpoint. Please try again"
 msgstr ""
 
 #: src/lib/media/video/upload.ts:72
@@ -3795,7 +3815,7 @@ msgstr "Az e-mail-cím hitelesítése meghiúsult. Próbáld újra."
 msgid "Failed to verify handle. Please try again."
 msgstr "A felhasználónév hitelesítése meghiúsult. Próbáld újra."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:184
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
 msgid "Failed to verify signature. Please try again."
 msgstr ""
 
@@ -3853,7 +3873,7 @@ msgstr "Elküldtük a visszajelzést az üzemeltetőnek"
 #: src/screens/Search/SearchResults.tsx:77
 #: src/screens/StarterPack/StarterPackScreen.tsx:190
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:237
+#: src/view/screens/Profile.tsx:246
 #: src/view/shell/desktop/LeftNav.tsx:728
 #: src/view/shell/Drawer.tsx:530
 msgid "Feeds"
@@ -4163,7 +4183,7 @@ msgctxt "from-feed"
 msgid "From <0/>"
 msgstr "A(z) <0/> hírfolyamból"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:303
+#: src/components/StarterPack/ProfileStarterPacks.tsx:335
 msgid "Generate a starter pack"
 msgstr "Kezdőcsomag létrehozása"
 
@@ -4254,13 +4274,15 @@ msgstr "Az erőszak népszerűsítése"
 #: src/components/moderation/ScreenHider.tsx:160
 #: src/components/moderation/ScreenHider.tsx:169
 #: src/screens/Messages/Inbox.tsx:251
-#: src/screens/Profile/ProfileFeed/index.tsx:92
+#: src/screens/Profile/ProfileFeed/index.tsx:93
 #: src/screens/ProfileList/components/ErrorScreen.tsx:34
 #: src/screens/ProfileList/components/ErrorScreen.tsx:40
 #: src/screens/VideoFeed/components/Header.tsx:163
 #: src/screens/VideoFeed/index.tsx:1162
 #: src/screens/VideoFeed/index.tsx:1166
 #: src/view/com/auth/LoggedOut.tsx:72
+#: src/view/com/profile/ProfileFollowers.tsx:144
+#: src/view/com/profile/ProfileFollowers.tsx:145
 #: src/view/screens/NotFound.tsx:57
 msgid "Go back"
 msgstr "Vissza"
@@ -4269,7 +4291,7 @@ msgstr "Vissza"
 #: src/screens/List/ListHiddenScreen.tsx:224
 #: src/screens/Profile/ErrorState.tsx:62
 #: src/screens/Profile/ErrorState.tsx:66
-#: src/screens/Profile/ProfileFeed/index.tsx:97
+#: src/screens/Profile/ProfileFeed/index.tsx:98
 #: src/screens/StarterPack/StarterPackScreen.tsx:775
 #: src/view/screens/NotFound.tsx:56
 msgid "Go Back"
@@ -4287,6 +4309,7 @@ msgctxt "Button to go back to the home timeline"
 msgid "Go home"
 msgstr "Ugrás a kezdőoldalra"
 
+#: src/screens/Bookmarks/index.tsx:278
 #: src/view/screens/NotFound.tsx:57
 msgid "Go home"
 msgstr "Ugrás a kezdőoldalra"
@@ -4540,23 +4563,23 @@ msgstr "Hitelesítési jelvények elrejtése"
 msgid "Hides the content"
 msgstr "Tartalom elrejtése"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:121
+#: src/view/com/posts/PostFeedErrorMessage.tsx:124
 msgid "Hmm, some kind of issue occurred when contacting the feed server. Please let the feed owner know about this issue."
 msgstr "Hmm… Hiba történt a hírfolyamkiszolgálóval történő kapcsolatfelvétel közben. Kérjük, értesítsd erről a hírfolyam tulajdonosát!"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:109
+#: src/view/com/posts/PostFeedErrorMessage.tsx:112
 msgid "Hmm, the feed server appears to be misconfigured. Please let the feed owner know about this issue."
 msgstr "Hmm… Úgy tűnik, hogy a hírfolyamkiszolgáló nincs helyesen beállítva. Kérjük, értesítsd erről a hírfolyam tulajdonosát!"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:115
+#: src/view/com/posts/PostFeedErrorMessage.tsx:118
 msgid "Hmm, the feed server appears to be offline. Please let the feed owner know about this issue."
 msgstr "Hmm… Úgy tűnik, hogy a hírfolyamkiszolgáló nem elérhető. Kérjük, értesítsd erről a hírfolyam tulajdonosát!"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:112
+#: src/view/com/posts/PostFeedErrorMessage.tsx:115
 msgid "Hmm, the feed server gave a bad response. Please let the feed owner know about this issue."
 msgstr "Hmm… Úgy tűnik, hogy a hírfolyamkiszolgáló helytelen választ adott. Kérjük, értesítsd erről a hírfolyam tulajdonosát!"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:106
+#: src/view/com/posts/PostFeedErrorMessage.tsx:109
 msgid "Hmm, we're having trouble finding this feed. It may have been deleted."
 msgstr "Hmm… A hírfolyam felkeresése meghiúsult. Lehetséges, hogy már nem létezik."
 
@@ -4620,7 +4643,7 @@ msgstr ""
 msgid "If alt text is long, toggles alt text expanded state"
 msgstr "Hosszabb helyettesítő szövegek megjelenítése/levágása"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:203
+#: src/components/dialogs/VerusServiceDialog.tsx:204
 msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
 msgstr ""
 
@@ -4786,7 +4809,7 @@ msgstr ""
 msgid "Invalid report subject"
 msgstr "Érvénytelen jelentési ok"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:178
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
 msgid "Invalid signature. Please try again."
 msgstr ""
 
@@ -4881,7 +4904,7 @@ msgid "Labeled by the author."
 msgstr "Feljegyezte a szerző."
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:69
-#: src/view/screens/Profile.tsx:230
+#: src/view/screens/Profile.tsx:239
 msgid "Labels"
 msgstr "Feljegyzések"
 
@@ -5023,7 +5046,7 @@ msgstr "A Bluesky elhagyása"
 msgid "left to go."
 msgstr "maradt."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:319
+#: src/components/StarterPack/ProfileStarterPacks.tsx:351
 msgid "Let me choose"
 msgstr "Fiókok választása kézileg"
 
@@ -5104,7 +5127,7 @@ msgstr "{likeCount, plural, one {#} other {#}} felhasználó kedveli"
 #: src/lib/hooks/useNotificationHandler.ts:126
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:236
+#: src/view/screens/Profile.tsx:245
 msgid "Likes"
 msgstr "Kedvelések"
 
@@ -5132,19 +5155,19 @@ msgstr "Egyszerű"
 msgid "Link Account to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
 msgid "Link Removed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:106
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
 msgid "Link VerusID to account"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:59
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
 msgid "Link VerusID to Profile"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:111
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
 msgid "Link your VerusID to this account to verify your identity."
 msgstr ""
 
@@ -5152,7 +5175,7 @@ msgstr ""
 msgid "Linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:118
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
 msgid "Linking complete"
 msgstr ""
 
@@ -5242,12 +5265,17 @@ msgstr "Feloldottad a listán szereplő személyek némítását"
 
 #: src/Navigation.tsx:178
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:231
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:248
 #: src/view/shell/desktop/LeftNav.tsx:746
 #: src/view/shell/Drawer.tsx:545
 msgid "Lists"
 msgstr "Listák"
+
+#: src/view/com/lists/MyLists.tsx:72
+#: src/view/com/lists/ProfileLists.tsx:155
+msgid "Lists allow you to see content from your favorite people."
+msgstr ""
 
 #: src/components/dms/BlockedByListDialog.tsx:39
 msgid "Lists blocking this user:"
@@ -5282,9 +5310,9 @@ msgstr "További javasolt hírfolyamok"
 msgid "Load new notifications"
 msgstr "Új értesítések betöltése"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:224
-#: src/screens/Profile/Sections/Feed.tsx:94
-#: src/screens/ProfileList/FeedSection.tsx:105
+#: src/screens/Profile/ProfileFeed/index.tsx:231
+#: src/screens/Profile/Sections/Feed.tsx:116
+#: src/screens/ProfileList/FeedSection.tsx:112
 #: src/view/com/feeds/FeedPage.tsx:169
 msgid "Load new posts"
 msgstr "Új bejegyzések betöltése"
@@ -5346,7 +5374,7 @@ msgstr "Úgy tűnik, hogy hiányzik a Követett hírfolyamod. <0>Kattints ide, h
 msgid "Make adjustments to email settings for your account"
 msgstr "A fiók e-mail-beállításainak testreszabása"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:278
+#: src/components/StarterPack/ProfileStarterPacks.tsx:310
 msgid "Make one for me"
 msgstr "Automatikus létrehozás"
 
@@ -5388,7 +5416,7 @@ msgstr "Összes üzenet megjelölve olvasottként"
 msgid "Maybe later"
 msgstr "Talán később"
 
-#: src/view/screens/Profile.tsx:234
+#: src/view/screens/Profile.tsx:243
 msgid "Media"
 msgstr "Média"
 
@@ -5432,7 +5460,7 @@ msgstr "Törölt üzenet"
 msgid "Message from @{0}: {1}"
 msgstr "@{0} üzenete: {1}"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:205
+#: src/view/com/posts/PostFeedErrorMessage.tsx:208
 msgid "Message from server: {0}"
 msgstr "A kiszolgáló üzenete: {0}"
 
@@ -5780,12 +5808,12 @@ msgstr "Új üzenetek"
 msgid "New password"
 msgstr "Új jelszó"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:241
+#: src/screens/Profile/ProfileFeed/index.tsx:248
 #: src/screens/ProfileList/index.tsx:246
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:167
-#: src/view/screens/Profile.tsx:518
+#: src/view/screens/Profile.tsx:579
 msgid "New post"
 msgstr "Új bejegyzés"
 
@@ -5854,7 +5882,7 @@ msgstr "Következő kép"
 msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
 msgstr "Ilyen egy közösségi oldal hirdetések, magánéletsértő nyomonkövetés és visszarángatás nélkül. A Bluesky tiszteletben tartja az idődet és a figyelmedet."
 
-#: src/screens/Settings/AppPasswords.tsx:106
+#: src/screens/Settings/AppPasswords.tsx:107
 msgid "No app passwords yet"
 msgstr "Még nem hoztál létre alkalmazásjelszót"
 
@@ -5875,12 +5903,17 @@ msgstr "A kiemelt GIF-ek lekérése meghiúsult. Lehetséges, hogy ez a Tenor hi
 msgid "No feeds found. Try searching for something else."
 msgstr "Nincs találat. Próbálj megadni egy másik keresési kifejezést."
 
+#: src/view/com/profile/ProfileFollowers.tsx:135
+msgid "No followers yet"
+msgstr ""
+
 #: src/components/live/LinkPreview.tsx:63
 msgid "No image"
 msgstr "Nincs előnézet"
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
+#: src/view/screens/Profile.tsx:519
 msgid "No likes yet"
 msgstr "Még nincsenek kedvelések"
 
@@ -5890,6 +5923,10 @@ msgstr "Még nincsenek kedvelések"
 msgid "No longer following {0}"
 msgstr "Abbahagytad {0} követését"
 
+#: src/view/screens/Profile.tsx:475
+msgid "No media yet"
+msgstr ""
+
 #: src/screens/Messages/components/ChatListItem.tsx:142
 msgid "No messages yet"
 msgstr "Még nincsenek üzenetek"
@@ -5898,7 +5935,7 @@ msgstr "Még nincsenek üzenetek"
 msgid "No more doomscrolling junk-filled algorithms. Find feeds that work for you, not against you."
 msgstr "Vess véget a szeméttel teli hírfolyamok örökös görgetésének! Inkább találj olyan tartalmakat, amelyek érted és nem ellened dolgoznak!"
 
-#: src/view/com/notifications/NotificationFeed.tsx:122
+#: src/view/com/notifications/NotificationFeed.tsx:123
 msgid "No notifications yet!"
 msgstr "Még nincsenek értesítéseid."
 
@@ -5914,17 +5951,22 @@ msgstr "Senkitől"
 msgid "No one but the author can quote this post."
 msgstr "Ezt a bejegyzést csak a szerző idézheti."
 
-#: src/screens/Notifications/ActivityList.tsx:38
+#: src/screens/Notifications/ActivityList.tsx:42
 msgid "No posts here"
 msgstr "Még nincsenek bejegyzések"
 
-#: src/screens/Profile/Sections/Feed.tsx:62
-msgid "No posts yet."
-msgstr "Még nincsenek bejegyzések."
+#: src/screens/Profile/Sections/Feed.tsx:80
+#: src/view/screens/Profile.tsx:439
+msgid "No posts yet"
+msgstr ""
 
 #: src/view/com/post-thread/PostQuotes.tsx:105
 msgid "No quotes yet"
 msgstr "Még nincsenek idézések"
+
+#: src/view/screens/Profile.tsx:460
+msgid "No replies yet"
+msgstr ""
 
 #: src/view/com/post-thread/PostRepostedBy.tsx:90
 msgid "No reposts yet"
@@ -5944,7 +5986,8 @@ msgstr "Nincs találat"
 msgid "No results for \"{0}\"."
 msgstr "A(z) „{0}” kifejezésre nincs találat."
 
-#: src/components/Lists.tsx:189
+#: src/components/Lists.tsx:201
+#: src/components/Lists.tsx:216
 msgid "No results found"
 msgstr "Nincs találat"
 
@@ -5969,8 +6012,12 @@ msgstr "A(z) „{search}” kifejezésre nincs találat."
 msgid "No thanks"
 msgstr "Köszönöm, nem"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:80
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
 msgid "No VerusID link found to remove"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:497
+msgid "No video posts yet"
 msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:465
@@ -6011,7 +6058,7 @@ msgid "Not followed by anyone you're following"
 msgstr "Nincsenek ismert követők"
 
 #: src/Navigation.tsx:173
-#: src/view/screens/Profile.tsx:127
+#: src/view/screens/Profile.tsx:134
 msgid "Not Found"
 msgstr "Ez a tartalom nem található"
 
@@ -6036,6 +6083,7 @@ msgid "Nothing here"
 msgstr "Nincs itt semmi"
 
 #: src/screens/Bookmarks/components/EmptyState.tsx:35
+#: src/screens/Bookmarks/index.tsx:274
 msgid "Nothing saved yet"
 msgstr "Még nincsenek mentett bejegyzések"
 
@@ -6055,7 +6103,7 @@ msgstr "Értesítési hangok"
 
 #: src/Navigation.tsx:578
 #: src/Navigation.tsx:778
-#: src/screens/Notifications/ActivityList.tsx:29
+#: src/screens/Notifications/ActivityList.tsx:30
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:90
 #: src/screens/Settings/NotificationSettings/index.tsx:92
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:30
@@ -6174,16 +6222,16 @@ msgstr "Csak a képfájlok támogatottak"
 msgid "Only WebVTT (.vtt) files are supported"
 msgstr "Csak a WebVTT (.vtt) formátum támogatott"
 
-#: src/components/Lists.tsx:94
+#: src/components/Lists.tsx:98
 msgid "Oops, something went wrong!"
 msgstr "Hoppá! Valami balul sült el!"
 
-#: src/components/Lists.tsx:173
-#: src/components/StarterPack/ProfileStarterPacks.tsx:328
-#: src/components/StarterPack/ProfileStarterPacks.tsx:337
-#: src/screens/Settings/AppPasswords.tsx:57
+#: src/components/Lists.tsx:183
+#: src/components/StarterPack/ProfileStarterPacks.tsx:360
+#: src/components/StarterPack/ProfileStarterPacks.tsx:369
+#: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:127
+#: src/view/screens/Profile.tsx:134
 msgid "Oops!"
 msgstr "Hoppá!"
 
@@ -6435,7 +6483,8 @@ msgstr "Megkaptuk a jelentésedet."
 msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
 msgstr "A fiókod ellen jelentések érkeztek, és miután a moderátoraink felülvizsgálták őket, úgy döntöttek, hogy megfosztanak a csevegési jogosultságoktól a Blueskyon."
 
-#: src/components/Lists.tsx:190
+#: src/components/Lists.tsx:202
+#: src/components/Lists.tsx:217
 #: src/view/screens/NotFound.tsx:47
 msgid "Page not found"
 msgstr "Az oldal nem található"
@@ -6446,8 +6495,8 @@ msgstr "Az oldal nem található"
 
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
-#: src/components/dialogs/VerusServiceDialog.tsx:228
-#: src/components/dialogs/VerusServiceDialog.tsx:232
+#: src/components/dialogs/VerusServiceDialog.tsx:229
+#: src/components/dialogs/VerusServiceDialog.tsx:233
 #: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:121
 #: src/screens/Settings/AccountSettings.tsx:125
@@ -6473,7 +6522,7 @@ msgstr "Megváltoztattad a jelszavad"
 msgid "Password updated!"
 msgstr "Megváltoztattad a jelszavad!"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
 msgid "Paste your signature here"
 msgstr ""
 
@@ -6700,7 +6749,7 @@ msgstr "Add meg a megerősítőkódot és az új jelszót."
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "Add meg a korábbi e-mail-címedre küldött kódot."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:154
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
 msgid "Please enter the signature."
 msgstr ""
 
@@ -6738,7 +6787,7 @@ msgstr "Add meg a felhasználónevedet"
 msgid "Please enter your VerusID name"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:127
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
 msgid "Please enter your VerusID name."
 msgstr ""
 
@@ -6803,6 +6852,16 @@ msgstr "Bejegyzés"
 msgctxt "action"
 msgid "Post"
 msgstr "Közzététel"
+
+#: src/view/screens/Profile.tsx:477
+#: src/view/screens/Profile.tsx:478
+msgid "Post a photo"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:499
+#: src/view/screens/Profile.tsx:500
+msgid "Post a video"
+msgstr ""
 
 #: src/view/com/composer/Composer.tsx:1117
 msgctxt "action"
@@ -6884,7 +6943,7 @@ msgstr "Bejegyzés kitűzése felolva"
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:191
-#: src/view/screens/Profile.tsx:232
+#: src/view/screens/Profile.tsx:241
 msgid "Posts"
 msgstr "Bejegyzések"
 
@@ -6892,7 +6951,7 @@ msgstr "Bejegyzések"
 msgid "Posts can be muted based on their text, their tags, or both. We recommend avoiding common words that appear in many posts, since it can result in no posts being shown."
 msgstr "A különböző bejegyzéseket a szövegük, címkéik vagy mindkettő által is elnémíthatod. Javasoljuk a gyakori szavak kerülését, mivel ez bizonyos esetekben az összes bejegyzés elrejtését is eredményezheti."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:72
+#: src/view/com/posts/PostFeedErrorMessage.tsx:75
 msgid "Posts hidden"
 msgstr "Elrejtetted a bejegyzéseket"
 
@@ -6908,7 +6967,7 @@ msgstr "Potenciálisan félrevezető hivatkozás"
 msgid "Potentially misleading link warning"
 msgstr "„Potenciálisan félrevezető hivatkozás” figyelmeztetés"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:330
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
 msgid "Prepare linking"
 msgstr ""
 
@@ -6917,7 +6976,7 @@ msgid "Press to attempt reconnection"
 msgstr "Az újracsatlakozáshoz kattints ide."
 
 #: src/components/Error.tsx:60
-#: src/components/Lists.tsx:99
+#: src/components/Lists.tsx:103
 #: src/screens/Messages/components/MessageListError.tsx:24
 #: src/screens/Signup/BackNextButtons.tsx:47
 msgid "Press to retry"
@@ -6982,7 +7041,7 @@ msgid "Processing..."
 msgstr "Feldolgozás folyamatban…"
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:372
+#: src/view/screens/Profile.tsx:392
 msgid "profile"
 msgstr "profil"
 
@@ -7013,10 +7072,6 @@ msgstr "Nyilvános"
 #: src/view/com/lists/MyLists.tsx:77
 msgid "Public, sharable lists of users to mute or block in bulk."
 msgstr "Nyilvános, megosztható fióklisták a tömeges elnémításhoz vagy letiltáshoz."
-
-#: src/view/com/lists/MyLists.tsx:72
-msgid "Public, sharable lists which can be used to drive feeds."
-msgstr "Nyilvános, megosztható listák, amelyek hírfolyamként üzemelhetnek."
 
 #. Accessibility label for button to publish a single post
 #: src/view/com/composer/Composer.tsx:1099
@@ -7223,10 +7278,10 @@ msgstr "Beszélgetések újratöltése"
 #: src/components/FeedCard.tsx:343
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:105
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:112
-#: src/screens/Bookmarks/index.tsx:255
+#: src/screens/Bookmarks/index.tsx:259
 #: src/screens/Settings/Settings.tsx:673
 #: src/view/com/modals/UserAddRemoveLists.tsx:235
-#: src/view/com/posts/PostFeedErrorMessage.tsx:217
+#: src/view/com/posts/PostFeedErrorMessage.tsx:220
 msgid "Remove"
 msgstr "Eltávolítás"
 
@@ -7263,11 +7318,11 @@ msgstr "Beágyazott tartalom eltávolítása"
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:116
 #: src/view/com/posts/FeedShutdownMsg.tsx:120
-#: src/view/com/posts/PostFeedErrorMessage.tsx:173
+#: src/view/com/posts/PostFeedErrorMessage.tsx:176
 msgid "Remove feed"
 msgstr "Hírfolyam eltávolítása"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:214
+#: src/view/com/posts/PostFeedErrorMessage.tsx:217
 msgid "Remove feed?"
 msgstr "Hírfolyam eltávolítása"
 
@@ -7289,7 +7344,7 @@ msgid "Remove from saved feeds"
 msgstr "Eltávolítás a mentett hírfolyamok közül"
 
 #: src/components/PostControls/BookmarkButton.tsx:128
-#: src/screens/Bookmarks/index.tsx:249
+#: src/screens/Bookmarks/index.tsx:253
 msgid "Remove from saved posts"
 msgstr "Eltávolítás a mentett bejegyzések közül"
 
@@ -7301,15 +7356,15 @@ msgstr "Eltávolítás a hírfolyamgyűjteményből"
 msgid "Remove image"
 msgstr "Kép eltávolítása"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:130
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
 msgid "Remove Link"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:63
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
 msgid "Remove link to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:36
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
 msgid "Remove Link to VerusID"
 msgstr ""
 
@@ -7340,7 +7395,7 @@ msgstr "Megosztott bejegyzés eltávolítása"
 msgid "Remove subtitle file"
 msgstr "Feliratfájl eltávolítása"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:215
+#: src/view/com/posts/PostFeedErrorMessage.tsx:218
 msgid "Remove this feed from your saved feeds"
 msgstr "Eltávolítás a mentett hírfolyamok közül"
 
@@ -7382,7 +7437,7 @@ msgid "Removed from saved feeds"
 msgstr "Eltávolítva a mentett hírfolyamok közül"
 
 #: src/components/PostControls/BookmarkButton.tsx:94
-#: src/screens/Bookmarks/index.tsx:207
+#: src/screens/Bookmarks/index.tsx:211
 msgid "Removed from saved posts"
 msgstr "Eltávolítva a mentett bejegyzések közül"
 
@@ -7431,7 +7486,7 @@ msgstr "Válasz a bejegyzésedre"
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:233
+#: src/view/screens/Profile.tsx:242
 msgid "Replies"
 msgstr "Válaszok"
 
@@ -7694,11 +7749,11 @@ msgstr "A legutóbb meghiúsult folyamat újrapróbálása"
 
 #: src/components/dms/MessageItem.tsx:322
 #: src/components/Error.tsx:65
-#: src/components/Lists.tsx:110
+#: src/components/Lists.tsx:114
 #: src/components/moderation/ReportDialog/index.tsx:274
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:55
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:58
-#: src/components/StarterPack/ProfileStarterPacks.tsx:342
+#: src/components/StarterPack/ProfileStarterPacks.tsx:374
 #: src/screens/Login/LoginForm.tsx:638
 #: src/screens/Login/LoginForm.tsx:645
 #: src/screens/Messages/ChatList.tsx:292
@@ -7732,7 +7787,7 @@ msgstr "Vissza az előző oldalra"
 msgid "Returns to home page"
 msgstr "Vissza a kezdőoldalra"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:93
+#: src/screens/Profile/ProfileFeed/index.tsx:94
 #: src/screens/ProfileList/components/ErrorScreen.tsx:35
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:575
 #: src/screens/VideoFeed/index.tsx:1163
@@ -7833,7 +7888,7 @@ msgstr "Mentett hírfolyamok"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:143
 #: src/Navigation.tsx:622
-#: src/screens/Bookmarks/index.tsx:55
+#: src/screens/Bookmarks/index.tsx:59
 msgid "Saved Posts"
 msgstr "Mentett bejegyzések"
 
@@ -7874,7 +7929,7 @@ msgstr "Görgetés balra"
 msgid "Scroll right"
 msgstr "Görgetés jobbra"
 
-#: src/screens/ProfileList/AboutSection.tsx:130
+#: src/screens/ProfileList/AboutSection.tsx:131
 msgid "Scroll to top"
 msgstr "Vissza a tetejére"
 
@@ -8007,6 +8062,11 @@ msgstr "Továbbiak"
 #: src/components/FeedInterstitials.tsx:392
 msgid "See more suggested profiles on the Explore page"
 msgstr "A Felfedezés oldalon további javasolt fiókok tekinthetőek meg"
+
+#: src/view/com/profile/ProfileFollows.tsx:155
+#: src/view/com/profile/ProfileFollows.tsx:156
+msgid "See suggested accounts"
+msgstr ""
 
 #: src/screens/SavedFeeds.tsx:220
 msgid "See this guide"
@@ -8228,8 +8288,8 @@ msgstr "Visszaigazoló e-mail küldése a fiók törlése szempontjából"
 msgid "Server address"
 msgstr "Kiszolgáló címe"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:162
-#: src/components/dialogs/VerusServiceDialog.tsx:166
+#: src/components/dialogs/VerusServiceDialog.tsx:163
+#: src/components/dialogs/VerusServiceDialog.tsx:167
 msgid "Service URL"
 msgstr ""
 
@@ -8249,7 +8309,7 @@ msgstr "Új jelszó beállítása"
 msgid "Set precisely which groups of people can reply to your post"
 msgstr "A megengedett személyek csoportjainak pontos megszabása"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:154
+#: src/components/dialogs/VerusServiceDialog.tsx:155
 msgid "Set the Verus service endpoint to use for VerusID and media."
 msgstr ""
 
@@ -8603,7 +8663,7 @@ msgstr "Kijelentkezés"
 msgid "Sign out?"
 msgstr "Kijelentkezés"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
 msgid "Sign the linking details"
 msgstr ""
 
@@ -8612,8 +8672,8 @@ msgstr ""
 msgid "Sign-in Required"
 msgstr "Bejelentkezés szükséges"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:308
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:312
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
 msgid "Signature"
 msgstr ""
 
@@ -8702,7 +8762,7 @@ msgstr "Valami balul sült el. Próbáld újra"
 msgid "Something went wrong, please try again."
 msgstr "Valami balul sült el. Próbáld újra."
 
-#: src/components/Lists.tsx:174
+#: src/components/Lists.tsx:184
 msgid "Something went wrong!"
 msgstr "Valami balul sült el!"
 
@@ -8766,13 +8826,13 @@ msgstr "A megkezdett beszélgetések itt fognak megjelenni."
 msgid "Start a new chat"
 msgstr "Új csevegés indítása"
 
-#: src/screens/ProfileList/AboutSection.tsx:102
-#: src/screens/ProfileList/FeedSection.tsx:74
+#: src/screens/ProfileList/AboutSection.tsx:103
+#: src/screens/ProfileList/FeedSection.tsx:81
 msgid "Start adding people"
 msgstr "Személyek felvétele"
 
-#: src/screens/ProfileList/AboutSection.tsx:108
-#: src/screens/ProfileList/FeedSection.tsx:80
+#: src/screens/ProfileList/AboutSection.tsx:109
+#: src/screens/ProfileList/FeedSection.tsx:87
 msgid "Start adding people!"
 msgstr "Vegyél fel személyeket!"
 
@@ -8804,13 +8864,17 @@ msgid "Starter pack is invalid"
 msgstr "Ez a kezdőcsomag érvénytelen"
 
 #: src/screens/Search/Explore.tsx:625
-#: src/view/screens/Profile.tsx:238
+#: src/view/screens/Profile.tsx:247
 msgid "Starter Packs"
 msgstr "Kezdőcsomagok"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:262
+#: src/components/StarterPack/ProfileStarterPacks.tsx:294
 msgid "Starter packs let you easily share your favorite feeds and people with your friends."
 msgstr "A kezdőcsomagokkal könnyen megoszthatod a kedvenc hírfolyamaidat és személyeidet."
+
+#: src/view/screens/Profile.tsx:547
+msgid "Starter packs let you share your favorite feeds and people with your friends."
+msgstr ""
 
 #: src/screens/Settings/AboutSettings.tsx:100
 #: src/screens/Settings/AboutSettings.tsx:103
@@ -8853,8 +8917,8 @@ msgstr "Fellebbezés beküldése"
 msgid "Submit report"
 msgstr "Jelentés küldése"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:344
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:350
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
 msgid "Submit Signature and Create Post"
 msgstr ""
 
@@ -8963,8 +9027,8 @@ msgstr ""
 msgid "System"
 msgstr "Rendszer"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:179
-#: src/components/dialogs/VerusServiceDialog.tsx:183
+#: src/components/dialogs/VerusServiceDialog.tsx:180
+#: src/components/dialogs/VerusServiceDialog.tsx:184
 msgid "System ID"
 msgstr ""
 
@@ -9172,7 +9236,7 @@ msgstr "A tartózkodási helyeden érvényes törvények szerint igazolnod kell 
 msgid "The laws in your location require you to verify you're an adult to access certain features. Tap to learn more."
 msgstr "A tartózkodási helyeden érvényes törvények szerint bizonyos funkciók használatához igazolnod kell a felnőttlétedet. További információért koppints ide."
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
 msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
@@ -9214,11 +9278,11 @@ msgstr "A felhasználási feltételek elköltöztek:"
 msgid "The verification code you have provided is invalid. Please make sure that you have used the correct verification link or request a new one."
 msgstr "A megadott ellenőrzőkód érvénytelen. Nézd meg, hogy helyes kódot adtál-e meg vagy kérj újat."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
 msgid "The VerusID currently linked to this account is {0}."
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:66
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
 msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
 msgstr ""
 
@@ -9226,7 +9290,7 @@ msgstr ""
 msgid "Theme"
 msgstr "Téma"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
 msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
@@ -9250,7 +9314,7 @@ msgstr "Megszakadt a kapcsolat a kiszolgálóval"
 msgid "There was an issue contacting the server, please check your internet connection and try again."
 msgstr "Megszakadt a kapcsolat a kiszolgálóval. Ellenőrizd az internetkapcsolatot, majd próbáld újra."
 
-#: src/view/com/notifications/NotificationFeed.tsx:130
+#: src/view/com/notifications/NotificationFeed.tsx:131
 msgid "There was an issue fetching notifications. Tap here to try again."
 msgstr "Az értesítések frissítése meghiúsult. Koppints ide az újrapróbálkozáshoz."
 
@@ -9263,12 +9327,12 @@ msgstr "A bejegyzések lekérése meghiúsult. Koppints ide az újrapróbálkoz�
 msgid "There was an issue fetching the list. Tap here to try again."
 msgstr "A lista lekérése meghiúsult. Koppints ide az újrapróbálkozáshoz."
 
-#: src/screens/Settings/AppPasswords.tsx:58
+#: src/screens/Settings/AppPasswords.tsx:59
 msgid "There was an issue fetching your app passwords"
 msgstr "Hiba történt az alkalmazásjelszavak lekérése közben"
 
-#: src/view/com/feeds/ProfileFeedgens.tsx:163
-#: src/view/com/lists/ProfileLists.tsx:161
+#: src/view/com/feeds/ProfileFeedgens.tsx:174
+#: src/view/com/lists/ProfileLists.tsx:175
 msgid "There was an issue fetching your lists. Tap here to try again."
 msgstr "A listák lekérése meghiúsult. Koppints ide az újrapróbálkozáshoz."
 
@@ -9276,7 +9340,7 @@ msgstr "A listák lekérése meghiúsult. Koppints ide az újrapróbálkozáshoz
 msgid "There was an issue fetching your service info"
 msgstr "A kiszolgálód adatainak lekérése meghiúsult"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:149
+#: src/view/com/posts/PostFeedErrorMessage.tsx:152
 msgid "There was an issue removing this feed. Please check your internet connection and try again."
 msgstr "A hírfolyam eltávolítása meghiúsult. Ellenőrizd az internetkapcsolatot, majd próbáld újra."
 
@@ -9396,7 +9460,7 @@ msgstr "Ezt a tartalmat a(z) {0} üzemelteti. Szeretnéd engedélyezni a külső
 msgid "This content is not available because one of the users involved has blocked the other."
 msgstr "Ez a tartalom jelenleg nem elérhető, mert az egyik kapcsolódó felhasználó letiltotta a másikat."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:118
+#: src/view/com/posts/PostFeedErrorMessage.tsx:121
 msgid "This content is not viewable without a Bluesky account."
 msgstr "Ezt a tartalmat bejelentkezés nélkül nem tekintheted meg."
 
@@ -9424,7 +9488,7 @@ msgstr "Jelenleg egy alkalmazásjelszóval vagy bejelentkezve. A funkció haszn�
 msgid "This feature is not available while using an App Password. Please sign in with your main password."
 msgstr "Jelenleg egy alkalmazásjelszóval vagy bejelentkezve. A funkció használatához a valódi jelszavaddal kell bejelentkezned."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:124
+#: src/view/com/posts/PostFeedErrorMessage.tsx:127
 msgid "This feed is currently receiving high traffic and is temporarily unavailable. Please try again later."
 msgstr "Ez a hírfolyam jelenleg rengeteg bejövő forgalmat tapasztal, ezért átmenetileg nem elérhető. Próbáld újra később."
 
@@ -9432,9 +9496,9 @@ msgstr "Ez a hírfolyam jelenleg rengeteg bejövő forgalmat tapasztal, ezért �
 msgid "This feed is empty! You may need to follow more users or tune your language settings."
 msgstr "Ez a hírfolyam üres. Lehetséges, hogy nem követsz elég felhasználót vagy rosszul van beállítva a hírfolyam."
 
-#: src/components/StarterPack/Main/PostsList.tsx:36
-#: src/screens/Profile/ProfileFeed/index.tsx:192
-#: src/screens/ProfileList/FeedSection.tsx:71
+#: src/components/StarterPack/Main/PostsList.tsx:41
+#: src/screens/Profile/ProfileFeed/index.tsx:197
+#: src/screens/ProfileList/FeedSection.tsx:77
 msgid "This feed is empty."
 msgstr "Ez a hírfolyam üres."
 
@@ -9449,6 +9513,10 @@ msgstr "Ez a felhasználónév le van foglalva. Adj meg egy másikat."
 #: src/components/dialogs/BirthDateSettings.tsx:45
 msgid "This information is private and not shared with other users."
 msgstr "Ez az információ privát és nem osztjuk meg más felhasználókkal."
+
+#: src/view/screens/Debug.tsx:343
+msgid "This is an empty state"
+msgstr ""
 
 #: src/components/live/EditLiveDialog.tsx:189
 #: src/components/live/GoLiveDialog.tsx:157
@@ -9479,7 +9547,7 @@ msgstr "Ennek a(z) <0>{0}</0> által létrehozott listának a címe vagy leírá
 msgid "This list – created by you – contains possible violations of Bluesky's community guidelines in its name or description."
 msgstr "Ennek az Általad létrehozott listának a címe vagy leírása lehetséges, hogy megsérti a Bluesky közösségi irányelveit."
 
-#: src/screens/ProfileList/AboutSection.tsx:98
+#: src/screens/ProfileList/AboutSection.tsx:99
 msgid "This list is empty."
 msgstr "Ez a lista üres."
 
@@ -9499,7 +9567,7 @@ msgstr "Ez a bejegyzés egy ismeretlen válaszkapu-típussal rendelkezik. Lehets
 msgid "This post is only visible to logged-in users."
 msgstr "Ez a bejegyzés csak a bejelentkezett felhasználók számára látható."
 
-#: src/screens/Bookmarks/index.tsx:245
+#: src/screens/Bookmarks/index.tsx:249
 msgid "This post was deleted by its author"
 msgstr "Ezt a bejegyzést törölte a szerző"
 
@@ -9535,7 +9603,7 @@ msgstr "Ez a folyamat csupán néhány percet vesz igénybe."
 msgid "This user does not have a display name, and therefore cannot be verified."
 msgstr "Ez a felhasználó nem rendelkezik megjelenítendő névvel, ezért nem hitelesíthető."
 
-#: src/view/com/profile/ProfileFollowers.tsx:133
+#: src/view/com/profile/ProfileFollowers.tsx:136
 msgid "This user doesn't have any followers."
 msgstr "Ezt a felhasználót még senki sem követi."
 
@@ -9564,11 +9632,11 @@ msgstr "Ez a felhasználó szerepel a(z) <0>{0}</0> c. listán, amit elnémítot
 msgid "This user is new here. Press for more info about when they joined."
 msgstr "Ez a felhasználó nemrég regisztrált. További információért koppints ide."
 
-#: src/view/com/profile/ProfileFollows.tsx:133
+#: src/view/com/profile/ProfileFollows.tsx:147
 msgid "This user isn't following anyone."
 msgstr "Ez a felhasználó még senkit sem követ."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:254
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
 msgid "This will create a post linking your VerusID to this account."
 msgstr ""
 
@@ -9718,7 +9786,7 @@ msgid "Unable to access location. You'll need to visit your system settings to e
 msgstr "Nincs hozzáférésünk a tartózkodási helyedhez. Engedélyezned kell a Bluesky helyelérését a rendszerbeállításokban."
 
 #: src/components/dialogs/VerusServiceDialog.tsx:121
-msgid "Unable to connect to Verus Service. Please verify your input details are correct and try again"
+msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again"
 msgstr ""
 
 #: src/lib/hooks/useCleanError.ts:27
@@ -9752,7 +9820,7 @@ msgstr "A törlés meghiúsult"
 msgid "Unable to get the signing service identity address"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:134
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
 msgid "Unable to link account with no handle."
 msgstr ""
 
@@ -9760,7 +9828,7 @@ msgstr ""
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:159
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
 msgid "Unable to verify signature."
 msgstr ""
 
@@ -9986,8 +10054,8 @@ msgstr "Leiratkoztál a listáról"
 msgid "Unsupported video type: {mimeType}"
 msgstr "Nem támogatott videóformátum: {mimeType}"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:249
-#: src/components/dialogs/VerusServiceDialog.tsx:253
+#: src/components/dialogs/VerusServiceDialog.tsx:250
+#: src/components/dialogs/VerusServiceDialog.tsx:254
 #: src/screens/Settings/components/OTAInfo.tsx:58
 #: src/screens/Settings/components/OTAInfo.tsx:74
 msgid "Update"
@@ -10013,7 +10081,7 @@ msgstr ""
 msgid "Update email"
 msgstr "E-mail-cím frissítése"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:105
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
 msgid "Update linked VerusID"
 msgstr ""
 
@@ -10026,11 +10094,11 @@ msgstr ""
 msgid "Update to {domain}"
 msgstr "Frissítés erre: {domain}"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:151
+#: src/components/dialogs/VerusServiceDialog.tsx:152
 msgid "Update Verus Service Endpoint"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:142
+#: src/components/dialogs/VerusServiceDialog.tsx:143
 msgid "Update Verus Service Instance"
 msgstr ""
 
@@ -10109,7 +10177,7 @@ msgstr "Hivatkozás indexképének feltöltése folyamatban…"
 msgid "Uploading video..."
 msgstr "Videó feltöltése folyamatban…"
 
-#: src/screens/Settings/AppPasswords.tsx:65
+#: src/screens/Settings/AppPasswords.tsx:66
 msgid "Use app passwords to sign in to other Bluesky clients without giving full access to your account or password."
 msgstr "Egy alkalmazásjelszó használatával bármely egyéb Bluesky-kliensbe bejelentkezhetsz, anélkül hogy teljes hozzáférést biztosítanál a fiókodhoz vagy a valódi jelszavadhoz."
 
@@ -10192,8 +10260,8 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr "Felhasználólista frissítve"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:212
-#: src/components/dialogs/VerusServiceDialog.tsx:216
+#: src/components/dialogs/VerusServiceDialog.tsx:213
+#: src/components/dialogs/VerusServiceDialog.tsx:217
 msgid "Username"
 msgstr ""
 
@@ -10343,8 +10411,8 @@ msgstr ""
 msgid "VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:276
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:280
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
 msgid "VerusID Name"
@@ -10401,7 +10469,7 @@ msgstr "A videó feltöltése sikeresen befejeződött"
 msgid "Video: {0}"
 msgstr "Videó: {0}"
 
-#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:244
 msgid "Videos"
 msgstr "Videók"
 
@@ -10473,7 +10541,7 @@ msgstr "Bejegyzés megtekintése"
 #: src/components/ProfileHoverCard/index.web.tsx:466
 #: src/components/ProfileHoverCard/index.web.tsx:486
 #: src/components/ProfileHoverCard/index.web.tsx:513
-#: src/view/com/posts/PostFeedErrorMessage.tsx:179
+#: src/view/com/posts/PostFeedErrorMessage.tsx:182
 #: src/view/com/util/PostMeta.tsx:90
 #: src/view/com/util/PostMeta.tsx:127
 msgid "View profile"
@@ -10707,7 +10775,7 @@ msgstr "Sajnáljuk, de a keresés meghiúsult. Próbáld újra egy pár percen b
 msgid "We're sorry! The post you are replying to has been deleted."
 msgstr "Sajnáljuk, de törölték a bejegyzést, amire válaszolnál."
 
-#: src/components/Lists.tsx:194
+#: src/components/Lists.tsx:221
 #: src/view/screens/NotFound.tsx:50
 msgid "We're sorry! We can't find the page you were looking for."
 msgstr "Sajnáljuk, de a keresett oldal nem található."
@@ -10831,6 +10899,11 @@ msgstr "Szeretnéd letiltani ezt a felhasználót és/vagy törölni a beszélge
 msgid "Write a message"
 msgstr "Üzenet írása"
 
+#: src/view/screens/Profile.tsx:441
+#: src/view/screens/Profile.tsx:442
+msgid "Write a post"
+msgstr ""
+
 #: src/view/com/composer/Composer.tsx:955
 msgid "Write post"
 msgstr "Bejegyzés írása"
@@ -10916,9 +10989,9 @@ msgstr "Nincs jogosultságod élő adások elindításához"
 msgid "You are not allowed to upload videos."
 msgstr "Nincs jogosultságod a videófeltöltésre."
 
-#: src/view/com/profile/ProfileFollows.tsx:132
-msgid "You are not following anyone."
-msgstr "Még senkit sem követsz."
+#: src/view/com/profile/ProfileFollows.tsx:146
+msgid "You are not following anyone yet"
+msgstr ""
 
 #: src/components/live/queries.ts:156
 msgid "You are now live!"
@@ -10957,7 +11030,7 @@ msgstr "A csevegési értesítések hangosítását/némítását az alkalmazás
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "A már létező csevegéseket a fenti beállításoktól függetlenül folytathatod."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:265
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
 msgid "You can do this later in Settings → Verus Services."
 msgstr ""
 
@@ -10997,10 +11070,6 @@ msgstr "Egy bejegyzéshez csak {MAX_IMAGES, plural, other {# kép}} csatolható.
 #: src/view/shell/desktop/SidebarTrendingTopics.tsx:110
 msgid "You can update this later from your settings."
 msgstr "Ezt a beállítást később is módosíthatod."
-
-#: src/view/com/profile/ProfileFollowers.tsx:132
-msgid "You do not have any followers."
-msgstr "Még nincsenek követőid."
 
 #: src/screens/Profile/KnownFollowers.tsx:112
 msgid "You don't follow any users who follow @{name}."
@@ -11063,12 +11132,7 @@ msgstr "Elnémítottad ezt a felhasználót"
 msgid "You have no conversations yet. Start one!"
 msgstr "Még senkivel sem kezdtél el beszélgetni. Hajrá!"
 
-#: src/view/com/feeds/ProfileFeedgens.tsx:151
-msgid "You have no feeds."
-msgstr "A nyilvános hírfolyamgyűjteményed üres."
-
 #: src/view/com/lists/MyLists.tsx:81
-#: src/view/com/lists/ProfileLists.tsx:149
 msgid "You have no lists."
 msgstr "Még nincsenek listáid."
 
@@ -11084,7 +11148,7 @@ msgstr "Még egy fiókot sem tiltottál le. Ha szeretnél egy fiókot letiltani,
 msgid "You have not muted any accounts yet. To mute an account, go to their profile and select \"Mute account\" from the menu on their account."
 msgstr "Még egy fiókot sem némítottál el. Ha szeretnél egy fiókot elnémítani, akkor nyisd meg a profilját és a menüből válaszd ki a „Fiók elnémítása” lehetőséget."
 
-#: src/components/Lists.tsx:57
+#: src/components/Lists.tsx:61
 msgid "You have reached the end"
 msgstr "Elérted a hírfolyam végét"
 
@@ -11096,9 +11160,13 @@ msgstr "Visszaigazoltad az e-mail-címedet – most már bezárhatod ezt az abla
 msgid "You have temporarily reached the limit for video uploads. Please try again later."
 msgstr "Átmenetileg elérted a videófeltöltési korlátot. Próbáld újra később."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:259
+#: src/components/StarterPack/ProfileStarterPacks.tsx:291
 msgid "You haven't created a starter pack yet!"
 msgstr "Még egy kezdőcsomagot sem hoztál létre."
+
+#: src/view/com/feeds/ProfileFeedgens.tsx:155
+msgid "You haven't made any custom feeds yet."
+msgstr ""
 
 #: src/components/dialogs/MutedWords.tsx:403
 msgid "You haven't muted any words or tags yet"
@@ -11145,7 +11213,7 @@ msgstr "A regisztrációhoz legalább 13 évesnek kell lenned."
 msgid "You must be at least 13 years old to use Bluesky. Read our <0>Terms of Service</0> for more information."
 msgstr "A Bluesky használatához be kell töltened a 13. életévedet. További információért olvasd el a <0>felhasználási feltételeket</0>."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:330
+#: src/components/StarterPack/ProfileStarterPacks.tsx:362
 msgid "You must be following at least seven other people to generate a starter pack."
 msgstr "Egy kezdőcsomag létrehozásához legalább hét különböző személyt követned kell."
 
@@ -11464,7 +11532,7 @@ msgstr "Az érdeklődési köreid megadásával személyre szabhatod a javasolt 
 msgid "Your verifications"
 msgstr "Saját hitelesítések"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:120
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
 msgid "Your VerusID {name} has been successfully linked to this account."
 msgstr ""
 

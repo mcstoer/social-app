@@ -714,8 +714,8 @@ msgstr "Ychwanegu rhybudd cynnwys"
 msgid "Add a temporary live status to your profile. When someone clicks on your avatar, they’ll see information about your live event."
 msgstr "Ychwanegwch statws byw dros dro at eich proffil. Pan fydd rhywun yn clicio ar eich afatar, byddan nhw'n gweld manylion eich digwyddiad byw."
 
-#: src/screens/ProfileList/AboutSection.tsx:62
-#: src/screens/ProfileList/AboutSection.tsx:80
+#: src/screens/ProfileList/AboutSection.tsx:63
+#: src/screens/ProfileList/AboutSection.tsx:81
 msgid "Add a user to this list"
 msgstr "Ychwanegu defnyddiwr at y rhestr hon"
 
@@ -757,8 +757,8 @@ msgstr "Ychwanegu postiad arall i edefyn"
 msgid "Add app password"
 msgstr "Ychwanegu cyfrinair apiau"
 
-#: src/screens/Settings/AppPasswords.tsx:73
-#: src/screens/Settings/AppPasswords.tsx:81
+#: src/screens/Settings/AppPasswords.tsx:74
+#: src/screens/Settings/AppPasswords.tsx:82
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:111
 msgid "Add App Password"
 msgstr "Ychwanegu Cyfrinair Apiau"
@@ -785,8 +785,8 @@ msgstr "Ychwanegu gair mud gyda'r gosodiadau a ddewiswyd"
 msgid "Add muted words and tags"
 msgstr "Ychwanegu geiriau a thagiau wedi'u tewi"
 
-#: src/screens/ProfileList/AboutSection.tsx:70
-#: src/screens/ProfileList/AboutSection.tsx:88
+#: src/screens/ProfileList/AboutSection.tsx:71
+#: src/screens/ProfileList/AboutSection.tsx:89
 msgid "Add people"
 msgstr "Ychwanegu pobl"
 
@@ -911,7 +911,7 @@ msgstr "Wedi cyflwyno ymholiad sicrwydd oed"
 msgid "Age assurance only takes a few minutes"
 msgstr "Dim ond ychydig funudau fydd yr ymholiad Sicrwydd Oed yn ei gymryd"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:281
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
 msgid "Alice@"
 msgstr ""
@@ -987,7 +987,7 @@ msgstr "Caniatáu defnyddwyr yn {0} i ateb"
 msgid "Allow your followers to reply"
 msgstr "Caniatáu i'ch dilynwyr i ateb"
 
-#: src/screens/Settings/AppPasswords.tsx:199
+#: src/screens/Settings/AppPasswords.tsx:200
 msgid "Allows access to direct messages"
 msgstr "Yn caniatáu mynediad i negeseuon uniongyrchol"
 
@@ -1025,7 +1025,7 @@ msgstr "Testun amgen"
 msgid "Alt Text"
 msgstr "Testun Amgen"
 
-#: src/view/com/composer/photos/Gallery.tsx:260
+#: src/view/com/composer/photos/Gallery.tsx:261
 msgid "Alt text describes images for blind and low-vision users, and helps give context to everyone."
 msgstr "Mae testun amgan yn disgrifio delweddau ar gyfer defnyddwyr dall a rhai â golwg gwan, ac yn helpu i roi cyd-destun i bawb."
 
@@ -1060,7 +1060,7 @@ msgstr "Digwyddodd gwall wrth estyn y cyfrifon hyn."
 msgid "An error occurred while fetching the feed."
 msgstr "Digwyddodd gwall wrth nôl y ffrwd."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:339
+#: src/components/StarterPack/ProfileStarterPacks.tsx:371
 msgid "An error occurred while generating your starter pack. Want to try again?"
 msgstr "Digwyddodd gwall wrth gynhyrchu'ch pecyn cychwyn. Eisiau ceisio eto?"
 
@@ -1189,7 +1189,7 @@ msgstr "Iaith Ap"
 msgid "App Password"
 msgstr "Cyfrinair Ap"
 
-#: src/screens/Settings/AppPasswords.tsx:145
+#: src/screens/Settings/AppPasswords.tsx:146
 msgctxt "toast"
 msgid "App password deleted"
 msgstr "Cyfrinair ap wedi'i ddileu"
@@ -1212,7 +1212,7 @@ msgid "App passwords"
 msgstr "Cyfrineiriau apiau"
 
 #: src/Navigation.tsx:357
-#: src/screens/Settings/AppPasswords.tsx:49
+#: src/screens/Settings/AppPasswords.tsx:50
 msgid "App Passwords"
 msgstr "Cyfrineiriau Apiau"
 
@@ -1273,7 +1273,7 @@ msgstr "Wedi'i archifo o {0}"
 msgid "Archived post"
 msgstr "Post wedi'i archifo"
 
-#: src/screens/Settings/AppPasswords.tsx:208
+#: src/screens/Settings/AppPasswords.tsx:209
 msgid "Are you sure you want to delete the app password \"{0}\"?"
 msgstr "Ydych chi'n siŵr eich bod am ddileu cyfrinair ap \"{0}\"?"
 
@@ -1346,7 +1346,7 @@ msgctxt "Name of app icon variant"
 msgid "Aurora"
 msgstr "Aurora"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:200
+#: src/components/dialogs/VerusServiceDialog.tsx:201
 msgid "Authentication (Optional)"
 msgstr ""
 
@@ -1368,8 +1368,8 @@ msgstr "Ar gael"
 msgid "Awaiting confirmation"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:364
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
 #: src/components/moderation/LabelsOnMeDialog.tsx:333
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/screens/Login/ChooseAccountForm.tsx:91
@@ -1412,8 +1412,9 @@ msgid "Before creating a post or replying, you must first verify your email."
 msgstr "Cyn creu postiad neu ateb, rhaid i chi ddilysu'ch e-bost yn gyntaf."
 
 #: src/components/dialogs/StarterPackDialog.tsx:71
-#: src/components/StarterPack/ProfileStarterPacks.tsx:231
-#: src/components/StarterPack/ProfileStarterPacks.tsx:241
+#: src/components/StarterPack/ProfileStarterPacks.tsx:263
+#: src/components/StarterPack/ProfileStarterPacks.tsx:273
+#: src/view/screens/Profile.tsx:358
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr "Cyn creu pecyn cychwyn, rhaid i chi wirio'ch e-bost yn gyntaf."
 
@@ -1574,7 +1575,7 @@ msgstr "Mae Bluesky yn well gyda ffrindiau!"
 msgid "Bluesky Social Terms of Service"
 msgstr "Telerau Gwasanaeth Cymdeithasol Bluesky"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:306
+#: src/components/StarterPack/ProfileStarterPacks.tsx:338
 msgid "Bluesky will choose a set of recommended accounts from people in your network."
 msgstr "Bydd Bluesky yn dewis set o gyfrifon wedi'u hargymhell gan bobl yn eich rhwydwaith."
 
@@ -1610,6 +1611,11 @@ msgstr "Llyfrau"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:215
 msgid "Breaking site rules"
 msgstr "Torri rheolau gwefan"
+
+#: src/view/com/feeds/ProfileFeedgens.tsx:158
+#: src/view/com/feeds/ProfileFeedgens.tsx:159
+msgid "Browse custom feeds"
+msgstr ""
 
 #: src/components/FeedInterstitials.tsx:436
 msgid "Browse more accounts on the Explore page"
@@ -1656,6 +1662,10 @@ msgstr "Porwch bwnc {displayName}"
 #: src/view/com/auth/SplashScreen.web.tsx:174
 msgid "Business"
 msgstr "Busnes"
+
+#: src/screens/Bookmarks/index.tsx:277
+msgid "Button to go back to the home timeline"
+msgstr ""
 
 #: src/components/LabelingServiceCard/index.tsx:62
 #: src/components/moderation/ReportDialog/index.tsx:834
@@ -1926,7 +1936,7 @@ msgstr "Dewiswch ddull dilysu parth"
 msgid "Choose Feeds"
 msgstr "Dewiswch Ffrydiau"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:314
+#: src/components/StarterPack/ProfileStarterPacks.tsx:346
 msgid "Choose for me"
 msgstr "Dewiswch i mi"
 
@@ -2023,12 +2033,12 @@ msgstr "Clip 🐴 clop 🐴"
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:171
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:178
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:187
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:136
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
 #: src/components/dialogs/SearchablePeopleList.tsx:295
 #: src/components/dialogs/StarterPackDialog.tsx:179
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:370
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:375
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
 #: src/components/dms/AfterReportDialog.tsx:93
@@ -2327,7 +2337,7 @@ msgstr "Rhybuddion cynnwys"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "Cefndir ddewislen cyd-destun, cliciwch i gau'r ddewislen."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:336
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:162
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:170
 #: src/screens/Onboarding/StepInterests/index.tsx:94
@@ -2479,7 +2489,7 @@ msgstr "Copïo testun postiad"
 msgid "Copy QR code"
 msgstr "Copïo cod QR"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:248
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
 msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
 msgstr ""
 
@@ -2511,7 +2521,7 @@ msgstr "Methu canfod proffil"
 msgid "Could not leave chat"
 msgstr "Methu gadael y sgwrs"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:83
+#: src/screens/Profile/ProfileFeed/index.tsx:84
 msgid "Could not load feed"
 msgstr "Methu llwytho ffrwd"
 
@@ -2541,21 +2551,31 @@ msgstr "Wedi methu diweddaru gosodiadau hysbysu"
 #. Text on button to create a new starter pack
 #: src/components/dialogs/StarterPackDialog.tsx:112
 #: src/components/dialogs/StarterPackDialog.tsx:201
-#: src/components/StarterPack/ProfileStarterPacks.tsx:296
+#: src/components/StarterPack/ProfileStarterPacks.tsx:328
 msgid "Create"
 msgstr "Creu"
+
+#: src/view/com/lists/ProfileLists.tsx:159
+#: src/view/com/lists/ProfileLists.tsx:160
+msgid "Create a list"
+msgstr ""
 
 #: src/components/StarterPack/QrCodeDialog.tsx:163
 msgid "Create a QR code for a starter pack"
 msgstr "Creu cod QR ar gyfer pecyn cychwyn"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:174
-#: src/components/StarterPack/ProfileStarterPacks.tsx:283
+#: src/components/StarterPack/ProfileStarterPacks.tsx:206
+#: src/components/StarterPack/ProfileStarterPacks.tsx:315
 #: src/Navigation.tsx:603
 msgid "Create a starter pack"
 msgstr "Creu pecyn cychwyn"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:270
+#: src/view/screens/Profile.tsx:550
+#: src/view/screens/Profile.tsx:551
+msgid "Create a Starter Pack"
+msgstr ""
+
+#: src/components/StarterPack/ProfileStarterPacks.tsx:302
 msgid "Create a starter pack for me"
 msgstr "Creu pecyn cychwyn i mi"
 
@@ -2592,7 +2612,7 @@ msgstr "Crëwch gyfrif heb ddefnyddio'r pecyn cychwyn hwn"
 msgid "Create an avatar instead"
 msgstr "Creu afatar yn lle hynny"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:181
+#: src/components/StarterPack/ProfileStarterPacks.tsx:213
 msgid "Create another"
 msgstr "Creu un arall"
 
@@ -2620,7 +2640,7 @@ msgstr "Creu pecyn cychwyn"
 msgid "Create user list"
 msgstr "Creu rhestr defnyddwyr"
 
-#: src/screens/Settings/AppPasswords.tsx:172
+#: src/screens/Settings/AppPasswords.tsx:173
 msgid "Created {0}"
 msgstr "Wedi creu {0}"
 
@@ -2666,7 +2686,7 @@ msgctxt "Name of app icon variant"
 msgid "Dark"
 msgstr "Tywyll"
 
-#: src/view/screens/Debug.tsx:68
+#: src/view/screens/Debug.tsx:69
 msgid "Dark mode"
 msgstr "Modd tywyll"
 
@@ -2688,7 +2708,7 @@ msgstr "Cau cyfrif"
 msgid "Debug Moderation"
 msgstr "Cymedroli Dadfygio"
 
-#: src/view/screens/Debug.tsx:88
+#: src/view/screens/Debug.tsx:89
 msgid "Debug panel"
 msgstr "Panel dadfygio"
 
@@ -2708,7 +2728,7 @@ msgstr "Eiconau rhagosodedig"
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:736
 #: src/screens/Messages/components/ChatStatusInfo.tsx:55
 #: src/screens/ProfileList/components/MoreOptionsMenu.tsx:280
-#: src/screens/Settings/AppPasswords.tsx:211
+#: src/screens/Settings/AppPasswords.tsx:212
 #: src/screens/StarterPack/StarterPackScreen.tsx:601
 #: src/screens/StarterPack/StarterPackScreen.tsx:690
 #: src/screens/StarterPack/StarterPackScreen.tsx:762
@@ -2724,11 +2744,11 @@ msgstr "Dileu cyfrif"
 msgid "Delete Account <0>\"</0><1>{0}</1><2>\"</2>"
 msgstr "Dileu Cyfrif <0>\"</0> <1>{0}</1> <2>\"</2>"
 
-#: src/screens/Settings/AppPasswords.tsx:185
+#: src/screens/Settings/AppPasswords.tsx:186
 msgid "Delete app password"
 msgstr "Dileu cyfrinair ap"
 
-#: src/screens/Settings/AppPasswords.tsx:206
+#: src/screens/Settings/AppPasswords.tsx:207
 msgid "Delete app password?"
 msgstr "Dileu cyfrinair ap?"
 
@@ -2779,7 +2799,7 @@ msgstr "Dileu fy ngyfrif"
 msgid "Delete post"
 msgstr "Dileu postiad"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:123
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
 msgid "Delete Post and Remove Link"
 msgstr ""
 
@@ -2836,8 +2856,8 @@ msgstr "Datgysylltu dyfyniad"
 msgid "Detach quote post?"
 msgstr "Datgysylltu postiad dyfyniad?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:294
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:298
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
 msgid "Details to Sign"
 msgstr ""
 
@@ -3012,8 +3032,8 @@ msgstr "Peidiwch â phoeni! Mae'r holl negeseuon a gosodiadau wedi'u cadw a bydd
 
 #: src/components/dialogs/BirthDateSettings.tsx:149
 #: src/components/dialogs/BirthDateSettings.tsx:156
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
 #: src/components/dialogs/ServerInput.tsx:240
 #: src/components/dialogs/ServerInput.tsx:242
 #: src/components/dms/AfterReportDialog.tsx:142
@@ -3341,7 +3361,7 @@ msgstr "Galluogi fideos tueddol yn eich ffrwd Darganfod"
 msgid "Enabled"
 msgstr "Galluogwyd"
 
-#: src/screens/Profile/Sections/Feed.tsx:109
+#: src/screens/Profile/Sections/Feed.tsx:131
 msgid "End of feed"
 msgstr "Diwedd y ffrwd"
 
@@ -3587,7 +3607,7 @@ msgstr "Wedi methu ychwanegu at becyn cychwyn"
 msgid "Failed to change handle. Please try again."
 msgstr "Wedi methu newid enw dangos. Ceisiwch eto."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:224
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
 msgid "Failed to create a post for linking the VerusID. Please try again."
 msgstr ""
 
@@ -3689,7 +3709,7 @@ msgstr "Wedi methu nodi pob cais wedi'i ddarllen"
 msgid "Failed to pin post"
 msgstr "Wedi methu pinio post"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:146
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
 msgid "Failed to prepare linking details."
 msgstr ""
 
@@ -3702,7 +3722,7 @@ msgstr "Wedi methu dileu emoji ymateb"
 msgid "Failed to remove from starter pack"
 msgstr "Wedi methu tynnu o becyn cychwyn"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:91
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
 msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
@@ -3776,8 +3796,8 @@ msgstr "Methu diweddaru datganiad hysbysiad"
 msgid "Failed to update settings"
 msgstr "Wedi methu diweddaru gosodiadau"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:134
-msgid "Failed to update the Verus Service instance. Please try again"
+#: src/components/dialogs/VerusServiceDialog.tsx:135
+msgid "Failed to update the Verus Service endpoint. Please try again"
 msgstr ""
 
 #: src/lib/media/video/upload.ts:72
@@ -3795,7 +3815,7 @@ msgstr "Wedi methu dilysu'r e-bost, ceisiwch eto."
 msgid "Failed to verify handle. Please try again."
 msgstr "Wedi methu dilysu enw dangos. Ceisiwch eto."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:184
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
 msgid "Failed to verify signature. Please try again."
 msgstr ""
 
@@ -3853,7 +3873,7 @@ msgstr "Adborth wedi'i anfon at weithredwr ffrwd"
 #: src/screens/Search/SearchResults.tsx:77
 #: src/screens/StarterPack/StarterPackScreen.tsx:190
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:237
+#: src/view/screens/Profile.tsx:246
 #: src/view/shell/desktop/LeftNav.tsx:728
 #: src/view/shell/Drawer.tsx:530
 msgid "Feeds"
@@ -4163,7 +4183,7 @@ msgctxt "from-feed"
 msgid "From <0/>"
 msgstr "Oddi wrth <0/>"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:303
+#: src/components/StarterPack/ProfileStarterPacks.tsx:335
 msgid "Generate a starter pack"
 msgstr "Creu pecyn cychwyn"
 
@@ -4254,13 +4274,15 @@ msgstr "Gogoneddu trais"
 #: src/components/moderation/ScreenHider.tsx:160
 #: src/components/moderation/ScreenHider.tsx:169
 #: src/screens/Messages/Inbox.tsx:251
-#: src/screens/Profile/ProfileFeed/index.tsx:92
+#: src/screens/Profile/ProfileFeed/index.tsx:93
 #: src/screens/ProfileList/components/ErrorScreen.tsx:34
 #: src/screens/ProfileList/components/ErrorScreen.tsx:40
 #: src/screens/VideoFeed/components/Header.tsx:163
 #: src/screens/VideoFeed/index.tsx:1162
 #: src/screens/VideoFeed/index.tsx:1166
 #: src/view/com/auth/LoggedOut.tsx:72
+#: src/view/com/profile/ProfileFollowers.tsx:144
+#: src/view/com/profile/ProfileFollowers.tsx:145
 #: src/view/screens/NotFound.tsx:57
 msgid "Go back"
 msgstr "Mynd nôl"
@@ -4269,7 +4291,7 @@ msgstr "Mynd nôl"
 #: src/screens/List/ListHiddenScreen.tsx:224
 #: src/screens/Profile/ErrorState.tsx:62
 #: src/screens/Profile/ErrorState.tsx:66
-#: src/screens/Profile/ProfileFeed/index.tsx:97
+#: src/screens/Profile/ProfileFeed/index.tsx:98
 #: src/screens/StarterPack/StarterPackScreen.tsx:775
 #: src/view/screens/NotFound.tsx:56
 msgid "Go Back"
@@ -4287,6 +4309,7 @@ msgctxt "Button to go back to the home timeline"
 msgid "Go home"
 msgstr "Ewch adref"
 
+#: src/screens/Bookmarks/index.tsx:278
 #: src/view/screens/NotFound.tsx:57
 msgid "Go home"
 msgstr "Ewch adref"
@@ -4540,23 +4563,23 @@ msgstr "Cuddio bathodynnau dilysu"
 msgid "Hides the content"
 msgstr "Yn cuddio'r cynnwys"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:121
+#: src/view/com/posts/PostFeedErrorMessage.tsx:124
 msgid "Hmm, some kind of issue occurred when contacting the feed server. Please let the feed owner know about this issue."
 msgstr "Hmm, digwyddodd rhyw fath o broblem wrth gysylltu â'r gweinydd ffrydio. Rhowch wybod i berchennog y ffrwd am y mater hwn."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:109
+#: src/view/com/posts/PostFeedErrorMessage.tsx:112
 msgid "Hmm, the feed server appears to be misconfigured. Please let the feed owner know about this issue."
 msgstr "Hmm, mae'n ymddangos bod y gweinydd ffrydio wedi'i gam ffurfweddu. Rhowch wybod i berchennog y ffrwd am y mater hwn."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:115
+#: src/view/com/posts/PostFeedErrorMessage.tsx:118
 msgid "Hmm, the feed server appears to be offline. Please let the feed owner know about this issue."
 msgstr "Hmm, mae'n ymddangos bod y gweinydd ffrydio all-lein. Rhowch wybod i berchennog y ffrwd am y mater hwn."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:112
+#: src/view/com/posts/PostFeedErrorMessage.tsx:115
 msgid "Hmm, the feed server gave a bad response. Please let the feed owner know about this issue."
 msgstr "Hmm, rhoddodd y gweinydd ffrydio ymateb gwael. Rhowch wybod i berchennog y ffrwd am y mater hwn."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:106
+#: src/view/com/posts/PostFeedErrorMessage.tsx:109
 msgid "Hmm, we're having trouble finding this feed. It may have been deleted."
 msgstr "Hmm, rydyn ni'n cael trafferth dod o hyd i'r ffrwd yma. Efallai ei fod wedi'i ddileu."
 
@@ -4620,7 +4643,7 @@ msgstr ""
 msgid "If alt text is long, toggles alt text expanded state"
 msgstr "Os yw'r testun amgen yn hir, bydd y testun amgen yn toglo'r cyflwr estynedig"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:203
+#: src/components/dialogs/VerusServiceDialog.tsx:204
 msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
 msgstr ""
 
@@ -4786,7 +4809,7 @@ msgstr ""
 msgid "Invalid report subject"
 msgstr "Pwnc adrodd annilys"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:178
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
 msgid "Invalid signature. Please try again."
 msgstr ""
 
@@ -4881,7 +4904,7 @@ msgid "Labeled by the author."
 msgstr "Wedi'i labelu gan yr awdur."
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:69
-#: src/view/screens/Profile.tsx:230
+#: src/view/screens/Profile.tsx:239
 msgid "Labels"
 msgstr "Labeli"
 
@@ -5023,7 +5046,7 @@ msgstr "Gadael Bluesky"
 msgid "left to go."
 msgstr "chwith i fynd."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:319
+#: src/components/StarterPack/ProfileStarterPacks.tsx:351
 msgid "Let me choose"
 msgstr "Gadewch i mi ddewis"
 
@@ -5104,7 +5127,7 @@ msgstr "Wedi'i hoffi gan {likeCount, plural, one {# defnyddiwr} other {# defnydd
 #: src/lib/hooks/useNotificationHandler.ts:126
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:236
+#: src/view/screens/Profile.tsx:245
 msgid "Likes"
 msgstr "Hoffi"
 
@@ -5132,19 +5155,19 @@ msgstr "Llinol"
 msgid "Link Account to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
 msgid "Link Removed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:106
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
 msgid "Link VerusID to account"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:59
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
 msgid "Link VerusID to Profile"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:111
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
 msgid "Link your VerusID to this account to verify your identity."
 msgstr ""
 
@@ -5152,7 +5175,7 @@ msgstr ""
 msgid "Linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:118
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
 msgid "Linking complete"
 msgstr ""
 
@@ -5242,12 +5265,17 @@ msgstr "Rhestr heb ei thewi"
 
 #: src/Navigation.tsx:178
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:231
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:248
 #: src/view/shell/desktop/LeftNav.tsx:746
 #: src/view/shell/Drawer.tsx:545
 msgid "Lists"
 msgstr "Rhestrau"
+
+#: src/view/com/lists/MyLists.tsx:72
+#: src/view/com/lists/ProfileLists.tsx:155
+msgid "Lists allow you to see content from your favorite people."
+msgstr ""
 
 #: src/components/dms/BlockedByListDialog.tsx:39
 msgid "Lists blocking this user:"
@@ -5282,9 +5310,9 @@ msgstr "Llwytho rhagor o ffrydiau wedi'u hawgrymu"
 msgid "Load new notifications"
 msgstr "Llwytho hysbysiadau newydd"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:224
-#: src/screens/Profile/Sections/Feed.tsx:94
-#: src/screens/ProfileList/FeedSection.tsx:105
+#: src/screens/Profile/ProfileFeed/index.tsx:231
+#: src/screens/Profile/Sections/Feed.tsx:116
+#: src/screens/ProfileList/FeedSection.tsx:112
 #: src/view/com/feeds/FeedPage.tsx:169
 msgid "Load new posts"
 msgstr "Llwytho postiadau newydd"
@@ -5346,7 +5374,7 @@ msgstr "Mae'n ymddangos eich bod chi'n colli'r ffrwd canlynol. <0>Cliciwch yma i
 msgid "Make adjustments to email settings for your account"
 msgstr "Gwnewch addasiadau i osodiadau e-bost eich cyfrif"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:278
+#: src/components/StarterPack/ProfileStarterPacks.tsx:310
 msgid "Make one for me"
 msgstr "Gwnewch un i mi"
 
@@ -5388,7 +5416,7 @@ msgstr "Wedi marcio'r cyfan fel wedi'u darllen"
 msgid "Maybe later"
 msgstr "Efallai yn nes ymlaen"
 
-#: src/view/screens/Profile.tsx:234
+#: src/view/screens/Profile.tsx:243
 msgid "Media"
 msgstr "Cyfryngau"
 
@@ -5432,7 +5460,7 @@ msgstr "Neges wedi'i dileu"
 msgid "Message from @{0}: {1}"
 msgstr "Neges gan @{0}: {1}"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:205
+#: src/view/com/posts/PostFeedErrorMessage.tsx:208
 msgid "Message from server: {0}"
 msgstr "Neges gan y gweinydd: {0}"
 
@@ -5780,12 +5808,12 @@ msgstr "Negeseuon newydd"
 msgid "New password"
 msgstr "Cyfrinair newydd"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:241
+#: src/screens/Profile/ProfileFeed/index.tsx:248
 #: src/screens/ProfileList/index.tsx:246
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:167
-#: src/view/screens/Profile.tsx:518
+#: src/view/screens/Profile.tsx:579
 msgid "New post"
 msgstr "Postiad newydd"
 
@@ -5854,7 +5882,7 @@ msgstr "Delwedd nesaf"
 msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
 msgstr "Dim hysbysebion, dim tracio ymwthiol, dim maglau ymgysylltu. Mae Bluesky'n parchu'ch amser a'ch sylw."
 
-#: src/screens/Settings/AppPasswords.tsx:106
+#: src/screens/Settings/AppPasswords.tsx:107
 msgid "No app passwords yet"
 msgstr "Dim cyfrineiriau apiau eto"
 
@@ -5875,12 +5903,17 @@ msgstr "Heb ganfod unrhyw GIFs dan sylw. Gall fod problem gyda Tenor."
 msgid "No feeds found. Try searching for something else."
 msgstr "Heb ganfod unrhyw ffrydiau. Ceisiwch chwilio am rywbeth arall."
 
+#: src/view/com/profile/ProfileFollowers.tsx:135
+msgid "No followers yet"
+msgstr ""
+
 #: src/components/live/LinkPreview.tsx:63
 msgid "No image"
 msgstr "Dim delwedd"
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
+#: src/view/screens/Profile.tsx:519
 msgid "No likes yet"
 msgstr "Dim hoffi eto"
 
@@ -5890,6 +5923,10 @@ msgstr "Dim hoffi eto"
 msgid "No longer following {0}"
 msgstr "Ddim yn dilyn {0} bellach"
 
+#: src/view/screens/Profile.tsx:475
+msgid "No media yet"
+msgstr ""
+
 #: src/screens/Messages/components/ChatListItem.tsx:142
 msgid "No messages yet"
 msgstr "Dim negeseuon eto"
@@ -5898,7 +5935,7 @@ msgstr "Dim negeseuon eto"
 msgid "No more doomscrolling junk-filled algorithms. Find feeds that work for you, not against you."
 msgstr "Dim rhagor o algorithmau sgrolio gwae, ofer. Darganfyddwch ffrydiau sy'n gweithio drosoch chi, nid yn eich erbyn."
 
-#: src/view/com/notifications/NotificationFeed.tsx:122
+#: src/view/com/notifications/NotificationFeed.tsx:123
 msgid "No notifications yet!"
 msgstr "Dim hysbysiadau eto!"
 
@@ -5914,17 +5951,22 @@ msgstr "Neb"
 msgid "No one but the author can quote this post."
 msgstr "Gall neb ond yr awdur ddyfynnu'r postiad hon."
 
-#: src/screens/Notifications/ActivityList.tsx:38
+#: src/screens/Notifications/ActivityList.tsx:42
 msgid "No posts here"
 msgstr "Dim postiadau yma"
 
-#: src/screens/Profile/Sections/Feed.tsx:62
-msgid "No posts yet."
-msgstr "Dim postiadau eto."
+#: src/screens/Profile/Sections/Feed.tsx:80
+#: src/view/screens/Profile.tsx:439
+msgid "No posts yet"
+msgstr ""
 
 #: src/view/com/post-thread/PostQuotes.tsx:105
 msgid "No quotes yet"
 msgstr "Dim dyfyniadau eto"
+
+#: src/view/screens/Profile.tsx:460
+msgid "No replies yet"
+msgstr ""
 
 #: src/view/com/post-thread/PostRepostedBy.tsx:90
 msgid "No reposts yet"
@@ -5944,7 +5986,8 @@ msgstr "Dim canlyniadau"
 msgid "No results for \"{0}\"."
 msgstr "Dim canlyniadau ar gyfer \"{0}\"."
 
-#: src/components/Lists.tsx:189
+#: src/components/Lists.tsx:201
+#: src/components/Lists.tsx:216
 msgid "No results found"
 msgstr "Heb ganfod canlyniad"
 
@@ -5969,8 +6012,12 @@ msgstr "Heb ganfod canlyniadau chwilio \"{search}\"."
 msgid "No thanks"
 msgstr "Dim diolch"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:80
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
 msgid "No VerusID link found to remove"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:497
+msgid "No video posts yet"
 msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:465
@@ -6011,7 +6058,7 @@ msgid "Not followed by anyone you're following"
 msgstr "Dim yn cael ei ddilyn gan neb rydych chi'n eu dilyn"
 
 #: src/Navigation.tsx:173
-#: src/view/screens/Profile.tsx:127
+#: src/view/screens/Profile.tsx:134
 msgid "Not Found"
 msgstr "Heb ei Ganfod"
 
@@ -6036,6 +6083,7 @@ msgid "Nothing here"
 msgstr "Dim byd yma"
 
 #: src/screens/Bookmarks/components/EmptyState.tsx:35
+#: src/screens/Bookmarks/index.tsx:274
 msgid "Nothing saved yet"
 msgstr "Dim wedi'i gadw eto"
 
@@ -6055,7 +6103,7 @@ msgstr "Seiniau Hysbysu"
 
 #: src/Navigation.tsx:578
 #: src/Navigation.tsx:778
-#: src/screens/Notifications/ActivityList.tsx:29
+#: src/screens/Notifications/ActivityList.tsx:30
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:90
 #: src/screens/Settings/NotificationSettings/index.tsx:92
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:30
@@ -6174,16 +6222,16 @@ msgstr "Dim ond ffeiliau delwedd sy'n cael eu cefnogi"
 msgid "Only WebVTT (.vtt) files are supported"
 msgstr "Dim ond ffeiliau WebVTT (.vtt) sy'n cael eu cefnogi"
 
-#: src/components/Lists.tsx:94
+#: src/components/Lists.tsx:98
 msgid "Oops, something went wrong!"
 msgstr "Wps, aeth rhywbeth o'i le!"
 
-#: src/components/Lists.tsx:173
-#: src/components/StarterPack/ProfileStarterPacks.tsx:328
-#: src/components/StarterPack/ProfileStarterPacks.tsx:337
-#: src/screens/Settings/AppPasswords.tsx:57
+#: src/components/Lists.tsx:183
+#: src/components/StarterPack/ProfileStarterPacks.tsx:360
+#: src/components/StarterPack/ProfileStarterPacks.tsx:369
+#: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:127
+#: src/view/screens/Profile.tsx:134
 msgid "Oops!"
 msgstr "Wps!"
 
@@ -6435,7 +6483,8 @@ msgstr "Mae'n tîm cymedroli wedi derbyn eich adroddiad."
 msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
 msgstr "Mae'n cymedrolwyr wedi adolygu adroddiadau ac wedi penderfynu analluogi eich mynediad at sgyrsiau ar Bluesky."
 
-#: src/components/Lists.tsx:190
+#: src/components/Lists.tsx:202
+#: src/components/Lists.tsx:217
 #: src/view/screens/NotFound.tsx:47
 msgid "Page not found"
 msgstr "Heb ganfod y dudalen"
@@ -6446,8 +6495,8 @@ msgstr "Tudalen Heb ei Chanfod"
 
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
-#: src/components/dialogs/VerusServiceDialog.tsx:228
-#: src/components/dialogs/VerusServiceDialog.tsx:232
+#: src/components/dialogs/VerusServiceDialog.tsx:229
+#: src/components/dialogs/VerusServiceDialog.tsx:233
 #: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:121
 #: src/screens/Settings/AccountSettings.tsx:125
@@ -6473,7 +6522,7 @@ msgstr "Cyfrinair wedi'i ddiweddaru"
 msgid "Password updated!"
 msgstr "Cyfrinair wedi'i ddiweddaru!"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
 msgid "Paste your signature here"
 msgstr ""
 
@@ -6700,7 +6749,7 @@ msgstr "Rhowch y cod rydych wedi'i dderbyn a'r cyfrinair hoffech chi ei ddefnydd
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "Rhowch y cod diogelwch a anfonwyd gennym at eich cyfeiriad e-bost blaenorol."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:154
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
 msgid "Please enter the signature."
 msgstr ""
 
@@ -6738,7 +6787,7 @@ msgstr "Rhowch eich enw defnyddiwr"
 msgid "Please enter your VerusID name"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:127
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
 msgid "Please enter your VerusID name."
 msgstr ""
 
@@ -6803,6 +6852,16 @@ msgstr "Postio"
 msgctxt "action"
 msgid "Post"
 msgstr "Postio"
+
+#: src/view/screens/Profile.tsx:477
+#: src/view/screens/Profile.tsx:478
+msgid "Post a photo"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:499
+#: src/view/screens/Profile.tsx:500
+msgid "Post a video"
+msgstr ""
 
 #: src/view/com/composer/Composer.tsx:1117
 msgctxt "action"
@@ -6884,7 +6943,7 @@ msgstr "Postiad wedi ei ddadbinio"
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:191
-#: src/view/screens/Profile.tsx:232
+#: src/view/screens/Profile.tsx:241
 msgid "Posts"
 msgstr "Postiadau"
 
@@ -6892,7 +6951,7 @@ msgstr "Postiadau"
 msgid "Posts can be muted based on their text, their tags, or both. We recommend avoiding common words that appear in many posts, since it can result in no posts being shown."
 msgstr "Mae modd tewi postiadau ar sail eu testun, eu tagiau neu'r ddau. Rydym yn argymell osgoi geiriau cyffredin sy'n ymddangos mewn llawer o bostiadau, gan y gall arwain at atal pob postiad."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:72
+#: src/view/com/posts/PostFeedErrorMessage.tsx:75
 msgid "Posts hidden"
 msgstr "Postiadau wedi'u cuddio"
 
@@ -6908,7 +6967,7 @@ msgstr "Dolen camarweiniol posib"
 msgid "Potentially misleading link warning"
 msgstr "Rhybudd dolen camarweiniol posib"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:330
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
 msgid "Prepare linking"
 msgstr ""
 
@@ -6917,7 +6976,7 @@ msgid "Press to attempt reconnection"
 msgstr "Pwyswch i geisio ailgysylltu"
 
 #: src/components/Error.tsx:60
-#: src/components/Lists.tsx:99
+#: src/components/Lists.tsx:103
 #: src/screens/Messages/components/MessageListError.tsx:24
 #: src/screens/Signup/BackNextButtons.tsx:47
 msgid "Press to retry"
@@ -6982,7 +7041,7 @@ msgid "Processing..."
 msgstr "Wrthi’n prosesu..."
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:372
+#: src/view/screens/Profile.tsx:392
 msgid "profile"
 msgstr "proffil"
 
@@ -7013,10 +7072,6 @@ msgstr "Cyhoeddus"
 #: src/view/com/lists/MyLists.tsx:77
 msgid "Public, sharable lists of users to mute or block in bulk."
 msgstr "Rhestrau cyhoeddus, y mae modd eu rhannu o ddefnyddwyr i'w tewi neu eu rhwystro'n lluosog."
-
-#: src/view/com/lists/MyLists.tsx:72
-msgid "Public, sharable lists which can be used to drive feeds."
-msgstr "Rhestrau cyhoeddus, y mae modd eu rhannu a'u defnyddio i yrru ffrydiau."
 
 #. Accessibility label for button to publish a single post
 #: src/view/com/composer/Composer.tsx:1099
@@ -7223,10 +7278,10 @@ msgstr "Ail-lwytho sgyrsiau"
 #: src/components/FeedCard.tsx:343
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:105
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:112
-#: src/screens/Bookmarks/index.tsx:255
+#: src/screens/Bookmarks/index.tsx:259
 #: src/screens/Settings/Settings.tsx:673
 #: src/view/com/modals/UserAddRemoveLists.tsx:235
-#: src/view/com/posts/PostFeedErrorMessage.tsx:217
+#: src/view/com/posts/PostFeedErrorMessage.tsx:220
 msgid "Remove"
 msgstr "Tynnu"
 
@@ -7263,11 +7318,11 @@ msgstr "Tynnu mewblaniad"
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:116
 #: src/view/com/posts/FeedShutdownMsg.tsx:120
-#: src/view/com/posts/PostFeedErrorMessage.tsx:173
+#: src/view/com/posts/PostFeedErrorMessage.tsx:176
 msgid "Remove feed"
 msgstr "Tynnu ffrwd"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:214
+#: src/view/com/posts/PostFeedErrorMessage.tsx:217
 msgid "Remove feed?"
 msgstr "Tynnu ffrwd?"
 
@@ -7289,7 +7344,7 @@ msgid "Remove from saved feeds"
 msgstr "Tynnu o'r ffrydiau wedi'u cadw"
 
 #: src/components/PostControls/BookmarkButton.tsx:128
-#: src/screens/Bookmarks/index.tsx:249
+#: src/screens/Bookmarks/index.tsx:253
 msgid "Remove from saved posts"
 msgstr "Tynnu o'r postiadau wedi'u cadw"
 
@@ -7301,15 +7356,15 @@ msgstr "Tynnu o'ch ffrydiau?"
 msgid "Remove image"
 msgstr "Tynnu delwedd"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:130
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
 msgid "Remove Link"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:63
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
 msgid "Remove link to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:36
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
 msgid "Remove Link to VerusID"
 msgstr ""
 
@@ -7340,7 +7395,7 @@ msgstr "Tynnu'r ailbostiad"
 msgid "Remove subtitle file"
 msgstr "Tynnu ffeil is-deitl"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:215
+#: src/view/com/posts/PostFeedErrorMessage.tsx:218
 msgid "Remove this feed from your saved feeds"
 msgstr "Tynnu'r ffrydiwr hwn o'ch ffrydiau wedi'u cadw"
 
@@ -7382,7 +7437,7 @@ msgid "Removed from saved feeds"
 msgstr "Wedi'i dynnu o'r ffrydiau sydd wedi'u cadw"
 
 #: src/components/PostControls/BookmarkButton.tsx:94
-#: src/screens/Bookmarks/index.tsx:207
+#: src/screens/Bookmarks/index.tsx:211
 msgid "Removed from saved posts"
 msgstr "Wedi'i dynnu o'r postiadau wedi'u cadw"
 
@@ -7431,7 +7486,7 @@ msgstr "Mewn ymateb i chi"
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:233
+#: src/view/screens/Profile.tsx:242
 msgid "Replies"
 msgstr "Atebion"
 
@@ -7694,11 +7749,11 @@ msgstr "Yn ceisio'r weithred olaf eto, oedd yn wallus"
 
 #: src/components/dms/MessageItem.tsx:322
 #: src/components/Error.tsx:65
-#: src/components/Lists.tsx:110
+#: src/components/Lists.tsx:114
 #: src/components/moderation/ReportDialog/index.tsx:274
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:55
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:58
-#: src/components/StarterPack/ProfileStarterPacks.tsx:342
+#: src/components/StarterPack/ProfileStarterPacks.tsx:374
 #: src/screens/Login/LoginForm.tsx:638
 #: src/screens/Login/LoginForm.tsx:645
 #: src/screens/Messages/ChatList.tsx:292
@@ -7732,7 +7787,7 @@ msgstr "Nôl i'r dudalen flaenorol"
 msgid "Returns to home page"
 msgstr "Yn mynd nôl i'r dudalen gartref"
 
-#: src/screens/Profile/ProfileFeed/index.tsx:93
+#: src/screens/Profile/ProfileFeed/index.tsx:94
 #: src/screens/ProfileList/components/ErrorScreen.tsx:35
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:575
 #: src/screens/VideoFeed/index.tsx:1163
@@ -7833,7 +7888,7 @@ msgstr "Ffrydiau wedi'u Cadw"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:143
 #: src/Navigation.tsx:622
-#: src/screens/Bookmarks/index.tsx:55
+#: src/screens/Bookmarks/index.tsx:59
 msgid "Saved Posts"
 msgstr "Postiadau Wedi'u Cadw"
 
@@ -7874,7 +7929,7 @@ msgstr "Sgrolio i'r chwith"
 msgid "Scroll right"
 msgstr "Sgrolio i'r dde"
 
-#: src/screens/ProfileList/AboutSection.tsx:130
+#: src/screens/ProfileList/AboutSection.tsx:131
 msgid "Scroll to top"
 msgstr "Sgrolio i'r brig"
 
@@ -8007,6 +8062,11 @@ msgstr "Gweld rhagor"
 #: src/components/FeedInterstitials.tsx:392
 msgid "See more suggested profiles on the Explore page"
 msgstr "Gweld rhagor o broffiliau awgrymedig ar y dudalen Explore"
+
+#: src/view/com/profile/ProfileFollows.tsx:155
+#: src/view/com/profile/ProfileFollows.tsx:156
+msgid "See suggested accounts"
+msgstr ""
 
 #: src/screens/SavedFeeds.tsx:220
 msgid "See this guide"
@@ -8228,8 +8288,8 @@ msgstr "Yn anfon e-bost gyda chod cadarnhau er mwyn dileu cyfrif"
 msgid "Server address"
 msgstr "Cyfeiriad gweinydd"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:162
-#: src/components/dialogs/VerusServiceDialog.tsx:166
+#: src/components/dialogs/VerusServiceDialog.tsx:163
+#: src/components/dialogs/VerusServiceDialog.tsx:167
 msgid "Service URL"
 msgstr ""
 
@@ -8249,7 +8309,7 @@ msgstr "Gosod cyfrinair newydd"
 msgid "Set precisely which groups of people can reply to your post"
 msgstr "Gosod yn glir pa grwpiau o bobl sy'n gallu ateb i'ch postiad"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:154
+#: src/components/dialogs/VerusServiceDialog.tsx:155
 msgid "Set the Verus service endpoint to use for VerusID and media."
 msgstr ""
 
@@ -8603,7 +8663,7 @@ msgstr "Allgofnodi"
 msgid "Sign out?"
 msgstr "Allgofnodi?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
 msgid "Sign the linking details"
 msgstr ""
 
@@ -8612,8 +8672,8 @@ msgstr ""
 msgid "Sign-in Required"
 msgstr "Mae Angen Mewngofnodi"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:308
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:312
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
 msgid "Signature"
 msgstr ""
 
@@ -8702,7 +8762,7 @@ msgstr "Aeth rhywbeth o'i le, ceisiwch eto"
 msgid "Something went wrong, please try again."
 msgstr "Aeth rhywbeth o'i le, ceisiwch eto."
 
-#: src/components/Lists.tsx:174
+#: src/components/Lists.tsx:184
 msgid "Something went wrong!"
 msgstr "Aeth rhywbeth o'i le!"
 
@@ -8766,13 +8826,13 @@ msgstr "Dechreuwch sgwrs, a bydd yn ymddangos yma."
 msgid "Start a new chat"
 msgstr "Cychwyn sgwrs newydd"
 
-#: src/screens/ProfileList/AboutSection.tsx:102
-#: src/screens/ProfileList/FeedSection.tsx:74
+#: src/screens/ProfileList/AboutSection.tsx:103
+#: src/screens/ProfileList/FeedSection.tsx:81
 msgid "Start adding people"
 msgstr "Dechreuwch ychwanegu pobl"
 
-#: src/screens/ProfileList/AboutSection.tsx:108
-#: src/screens/ProfileList/FeedSection.tsx:80
+#: src/screens/ProfileList/AboutSection.tsx:109
+#: src/screens/ProfileList/FeedSection.tsx:87
 msgid "Start adding people!"
 msgstr "Dechreuwch ychwanegu pobl!"
 
@@ -8804,13 +8864,17 @@ msgid "Starter pack is invalid"
 msgstr "Mae'r pecyn cychwyn yn annilys"
 
 #: src/screens/Search/Explore.tsx:625
-#: src/view/screens/Profile.tsx:238
+#: src/view/screens/Profile.tsx:247
 msgid "Starter Packs"
 msgstr "Pecynnau Cychwyn"
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:262
+#: src/components/StarterPack/ProfileStarterPacks.tsx:294
 msgid "Starter packs let you easily share your favorite feeds and people with your friends."
 msgstr "Mae pecynnau cychwyn yn caniatáu i chi rannu gyda'ch ffrindiau eich hoff ffrydiau a phobl."
+
+#: src/view/screens/Profile.tsx:547
+msgid "Starter packs let you share your favorite feeds and people with your friends."
+msgstr ""
 
 #: src/screens/Settings/AboutSettings.tsx:100
 #: src/screens/Settings/AboutSettings.tsx:103
@@ -8853,8 +8917,8 @@ msgstr "Cyflwyno Apêl"
 msgid "Submit report"
 msgstr "Cyflwyno adroddiad"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:344
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:350
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
 msgid "Submit Signature and Create Post"
 msgstr ""
 
@@ -8963,8 +9027,8 @@ msgstr ""
 msgid "System"
 msgstr "System"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:179
-#: src/components/dialogs/VerusServiceDialog.tsx:183
+#: src/components/dialogs/VerusServiceDialog.tsx:180
+#: src/components/dialogs/VerusServiceDialog.tsx:184
 msgid "System ID"
 msgstr ""
 
@@ -9170,7 +9234,7 @@ msgstr "Mae'r gyfraith yn eich gwlad yn gofyn i chi ddilysu eich bod yn oedolyn 
 msgid "The laws in your location require you to verify you're an adult to access certain features. Tap to learn more."
 msgstr "Mae'r gyfraith yn eich gwlad yn gofyn i chi ddilysu eich bod yn oedolyn i gael mynediad at rhai nodweddion. Tapiwch i wybod mwy."
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
 msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
@@ -9212,11 +9276,11 @@ msgstr "Mae'r Telerau Gwasanaeth wedi'u symud i"
 msgid "The verification code you have provided is invalid. Please make sure that you have used the correct verification link or request a new one."
 msgstr "Mae'r cod dilysu darparwyd gennych yn annilys. Gwnewch yn siŵr eich bod wedi defnyddio'r ddolen ddilysu gywir neu ofyn am un newydd."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
 msgid "The VerusID currently linked to this account is {0}."
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:66
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
 msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
 msgstr ""
 
@@ -9224,7 +9288,7 @@ msgstr ""
 msgid "Theme"
 msgstr "Thema"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
 msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
@@ -9248,7 +9312,7 @@ msgstr "Bu anhawster wrth gysylltu â'r gweinydd"
 msgid "There was an issue contacting the server, please check your internet connection and try again."
 msgstr "Bu anhawster wrth gysylltu â'r gweinydd, gwiriwch eich cysylltiad rhyngrwyd a rhowch gynnig arall arni."
 
-#: src/view/com/notifications/NotificationFeed.tsx:130
+#: src/view/com/notifications/NotificationFeed.tsx:131
 msgid "There was an issue fetching notifications. Tap here to try again."
 msgstr "Bu anhawster wrth geisio cael hysbysiadau. Tapiwch yma i geisio eto."
 
@@ -9261,12 +9325,12 @@ msgstr "Bu anhawster wrth nôl postiadau. Tapiwch yma i geisio eto."
 msgid "There was an issue fetching the list. Tap here to try again."
 msgstr "Roedd problem wrth nôl y rhestr. Tapiwch yma i geisio eto."
 
-#: src/screens/Settings/AppPasswords.tsx:58
+#: src/screens/Settings/AppPasswords.tsx:59
 msgid "There was an issue fetching your app passwords"
 msgstr "Bu anhawster wrth nôl eich cyfrineiriau apiau"
 
-#: src/view/com/feeds/ProfileFeedgens.tsx:163
-#: src/view/com/lists/ProfileLists.tsx:161
+#: src/view/com/feeds/ProfileFeedgens.tsx:174
+#: src/view/com/lists/ProfileLists.tsx:175
 msgid "There was an issue fetching your lists. Tap here to try again."
 msgstr "Roedd problem wrth nôl eich rhestrau. Tapiwch yma i geisio eto."
 
@@ -9274,7 +9338,7 @@ msgstr "Roedd problem wrth nôl eich rhestrau. Tapiwch yma i geisio eto."
 msgid "There was an issue fetching your service info"
 msgstr "Bu anhawster wrth nôl eich manylion gwasanaeth"
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:149
+#: src/view/com/posts/PostFeedErrorMessage.tsx:152
 msgid "There was an issue removing this feed. Please check your internet connection and try again."
 msgstr "Bu anhawster wrth ddileu'r ffrwd hwn. Gwiriwch eich cysylltiad rhyngrwyd a rhowch gynnig arall arni."
 
@@ -9394,7 +9458,7 @@ msgstr "Mae'r cynnwys hwn yn cael ei letya gan {0}. Ydych chi am alluogi cyfryng
 msgid "This content is not available because one of the users involved has blocked the other."
 msgstr "Dyw'r cynnwys hwn ddim ar gael oherwydd bod un o'r defnyddwyr dan sylw wedi rhwystro'r llall."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:118
+#: src/view/com/posts/PostFeedErrorMessage.tsx:121
 msgid "This content is not viewable without a Bluesky account."
 msgstr "Dyw'r cynnwys hwn ddim yn weladwy heb gyfrif Bluesky."
 
@@ -9422,7 +9486,7 @@ msgstr "Dyw'r nodwedd hon ddim ar gael wrth ddefnyddio cyfrinair ap. Mewngofnodw
 msgid "This feature is not available while using an App Password. Please sign in with your main password."
 msgstr "Dyw'r nodwedd hon ddim ar gael wrth ddefnyddio Cyfrinair Ap. Mewngofnodwch gyda'ch prif gyfrinair."
 
-#: src/view/com/posts/PostFeedErrorMessage.tsx:124
+#: src/view/com/posts/PostFeedErrorMessage.tsx:127
 msgid "This feed is currently receiving high traffic and is temporarily unavailable. Please try again later."
 msgstr "Mae'r ffrwd hon yn brysur iawn ar hyn o bryd ac nid yw ar gael dros dro. Ceisiwch eto yn nes ymlaen."
 
@@ -9430,9 +9494,9 @@ msgstr "Mae'r ffrwd hon yn brysur iawn ar hyn o bryd ac nid yw ar gael dros dro.
 msgid "This feed is empty! You may need to follow more users or tune your language settings."
 msgstr "Mae'r ffrwd hon yn wag! Efallai y bydd angen i chi ddilyn mwy o ddefnyddwyr neu newid eich gosodiadau iaith."
 
-#: src/components/StarterPack/Main/PostsList.tsx:36
-#: src/screens/Profile/ProfileFeed/index.tsx:192
-#: src/screens/ProfileList/FeedSection.tsx:71
+#: src/components/StarterPack/Main/PostsList.tsx:41
+#: src/screens/Profile/ProfileFeed/index.tsx:197
+#: src/screens/ProfileList/FeedSection.tsx:77
 msgid "This feed is empty."
 msgstr "Mae'r ffrwd hon yn wag."
 
@@ -9447,6 +9511,10 @@ msgstr "Mae'r handlen hon wedi'i chadw. Rhowch gynnig ar un arall."
 #: src/components/dialogs/BirthDateSettings.tsx:45
 msgid "This information is private and not shared with other users."
 msgstr "Mae'r wybodaeth yma'n breifat ac nid yw'n cael ei rannu gyda defnyddwyr eraill."
+
+#: src/view/screens/Debug.tsx:343
+msgid "This is an empty state"
+msgstr ""
 
 #: src/components/live/EditLiveDialog.tsx:189
 #: src/components/live/GoLiveDialog.tsx:157
@@ -9477,7 +9545,7 @@ msgstr "Mae'r rhestr hon - wedi'i chreu gan <0>{0}</0> – yn cynnwys achosion p
 msgid "This list – created by you – contains possible violations of Bluesky's community guidelines in its name or description."
 msgstr "Mae'r rhestr hon - a grëwyd gennych chi - yn cynnwys achosion posibl o dorri canllawiau cymunedol Bluesky yn ei enw neu ddisgrifiad."
 
-#: src/screens/ProfileList/AboutSection.tsx:98
+#: src/screens/ProfileList/AboutSection.tsx:99
 msgid "This list is empty."
 msgstr "Mae'r rhestr hon yn wag."
 
@@ -9497,7 +9565,7 @@ msgstr "Mae gan y postiad hwn fath anhysbys o adwy edau arno. Mae'n bosibl bod e
 msgid "This post is only visible to logged-in users."
 msgstr "Dim ond ar gyfer aelodau sydd wedi mewngofnodi mae'r postiad hwn yn weladwy."
 
-#: src/screens/Bookmarks/index.tsx:245
+#: src/screens/Bookmarks/index.tsx:249
 msgid "This post was deleted by its author"
 msgstr "Cafodd y postiad hwn ei ddileu gan yr awdur"
 
@@ -9533,7 +9601,7 @@ msgstr "Dylai gymryd dim ond ychydig funudau."
 msgid "This user does not have a display name, and therefore cannot be verified."
 msgstr "Does gan y defnyddiwr hwn ddim enw dangos, ac felly does dim modd ei ddilysu."
 
-#: src/view/com/profile/ProfileFollowers.tsx:133
+#: src/view/com/profile/ProfileFollowers.tsx:136
 msgid "This user doesn't have any followers."
 msgstr "Does gan y defnyddiwr hwn ddim dilynwyr."
 
@@ -9562,11 +9630,11 @@ msgstr "Mae'r defnyddiwr hwn wedi'i gynnwys yn y rhestr <0>{0}</0> rydych wedi'i
 msgid "This user is new here. Press for more info about when they joined."
 msgstr "Mae'r defnyddiwr hwn yn newydd yma. Pwyswch am ragor o wybodaeth ynghylch pryd y gwnaethon nhw ymuno."
 
-#: src/view/com/profile/ProfileFollows.tsx:133
+#: src/view/com/profile/ProfileFollows.tsx:147
 msgid "This user isn't following anyone."
 msgstr "Dyw'r defnyddiwr hwn ddim yn dilyn unrhyw un."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:254
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
 msgid "This will create a post linking your VerusID to this account."
 msgstr ""
 
@@ -9716,7 +9784,7 @@ msgid "Unable to access location. You'll need to visit your system settings to e
 msgstr "Methu cael mynediad i'ch lleoliad. Bydd rhaid i chi fynd i osodiadau'ch system i alluogi gwasanaethau lleoliad ar gyfer Bluesky."
 
 #: src/components/dialogs/VerusServiceDialog.tsx:121
-msgid "Unable to connect to Verus Service. Please verify your input details are correct and try again"
+msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again"
 msgstr ""
 
 #: src/lib/hooks/useCleanError.ts:27
@@ -9750,7 +9818,7 @@ msgstr "Methu dileu"
 msgid "Unable to get the signing service identity address"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:134
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
 msgid "Unable to link account with no handle."
 msgstr ""
 
@@ -9758,7 +9826,7 @@ msgstr ""
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:159
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
 msgid "Unable to verify signature."
 msgstr ""
 
@@ -9984,8 +10052,8 @@ msgstr "Wedi dad-danysgrifio o'r rhestr"
 msgid "Unsupported video type: {mimeType}"
 msgstr "Math o fideo sydd ddim yn cael ei gynnal: {mimeType}"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:249
-#: src/components/dialogs/VerusServiceDialog.tsx:253
+#: src/components/dialogs/VerusServiceDialog.tsx:250
+#: src/components/dialogs/VerusServiceDialog.tsx:254
 #: src/screens/Settings/components/OTAInfo.tsx:58
 #: src/screens/Settings/components/OTAInfo.tsx:74
 msgid "Update"
@@ -10011,7 +10079,7 @@ msgstr ""
 msgid "Update email"
 msgstr "Diweddaru e-bost"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:105
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
 msgid "Update linked VerusID"
 msgstr ""
 
@@ -10024,11 +10092,11 @@ msgstr ""
 msgid "Update to {domain}"
 msgstr "Diweddaru i {domain}"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:151
+#: src/components/dialogs/VerusServiceDialog.tsx:152
 msgid "Update Verus Service Endpoint"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:142
+#: src/components/dialogs/VerusServiceDialog.tsx:143
 msgid "Update Verus Service Instance"
 msgstr ""
 
@@ -10107,7 +10175,7 @@ msgstr "Wrthi'n lwytho dolen llun bach i fyny..."
 msgid "Uploading video..."
 msgstr "Wrthi'n llwytho fideo i fyny..."
 
-#: src/screens/Settings/AppPasswords.tsx:65
+#: src/screens/Settings/AppPasswords.tsx:66
 msgid "Use app passwords to sign in to other Bluesky clients without giving full access to your account or password."
 msgstr "Defnyddiwch gyfrineiriau apiau i fewngofnodi i raglenni Bluesky eraill heb roi mynediad llawn i'ch cyfrif neu'ch cyfrinair."
 
@@ -10190,8 +10258,8 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr "Rhestr defnyddwyr wedi'i diweddaru"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:212
-#: src/components/dialogs/VerusServiceDialog.tsx:216
+#: src/components/dialogs/VerusServiceDialog.tsx:213
+#: src/components/dialogs/VerusServiceDialog.tsx:217
 msgid "Username"
 msgstr ""
 
@@ -10341,8 +10409,8 @@ msgstr ""
 msgid "VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:276
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:280
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
 msgid "VerusID Name"
@@ -10399,7 +10467,7 @@ msgstr "Fideo wedi'i lwytho i fyny"
 msgid "Video: {0}"
 msgstr "Fideo: {0}"
 
-#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:244
 msgid "Videos"
 msgstr "Fideos"
 
@@ -10471,7 +10539,7 @@ msgstr "Edrych ar y postiad"
 #: src/components/ProfileHoverCard/index.web.tsx:466
 #: src/components/ProfileHoverCard/index.web.tsx:486
 #: src/components/ProfileHoverCard/index.web.tsx:513
-#: src/view/com/posts/PostFeedErrorMessage.tsx:179
+#: src/view/com/posts/PostFeedErrorMessage.tsx:182
 #: src/view/com/util/PostMeta.tsx:90
 #: src/view/com/util/PostMeta.tsx:127
 msgid "View profile"
@@ -10705,7 +10773,7 @@ msgstr "Mae'n ddrwg gennym, ond nid oedd modd cwblhau eich chwilio. Ceisiwch eto
 msgid "We're sorry! The post you are replying to has been deleted."
 msgstr "Mae'n ddrwg gennym! Mae'r postiad rydych chi'n ymateb iddo wedi'i dileu."
 
-#: src/components/Lists.tsx:194
+#: src/components/Lists.tsx:221
 #: src/view/screens/NotFound.tsx:50
 msgid "We're sorry! We can't find the page you were looking for."
 msgstr "Mae'n ddrwg gennym! Gallwn ni ddim dod o hyd i'r dudalen yr oeddech yn chwilio amdani."
@@ -10829,6 +10897,11 @@ msgstr "Hoffech chi rwystro'r defnyddiwr hwn a/neu ddileu'r sgwrs hon?"
 msgid "Write a message"
 msgstr "Ysgrifennwch neges"
 
+#: src/view/screens/Profile.tsx:441
+#: src/view/screens/Profile.tsx:442
+msgid "Write a post"
+msgstr ""
+
 #: src/view/com/composer/Composer.tsx:955
 msgid "Write post"
 msgstr "Ysgrifennwch bostiad"
@@ -10914,9 +10987,9 @@ msgstr "Does dim caniatâd i chi fynd yn fyw"
 msgid "You are not allowed to upload videos."
 msgstr "Does dim caniatâd i chi lwytho fideos i fyny."
 
-#: src/view/com/profile/ProfileFollows.tsx:132
-msgid "You are not following anyone."
-msgstr "Nid ydych yn dilyn unrhyw un."
+#: src/view/com/profile/ProfileFollows.tsx:146
+msgid "You are not following anyone yet"
+msgstr ""
 
 #: src/components/live/queries.ts:156
 msgid "You are now live!"
@@ -10955,7 +11028,7 @@ msgstr "Gallwch ddewis os oes gan hysbysiadau sgyrsiau sain yn y gosodiadau sgwr
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "Gallwch barhau â sgyrsiau parhaus beth bynnag yw'r gosodiad rydych chi'n ei ddewis."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:265
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
 msgid "You can do this later in Settings → Verus Services."
 msgstr ""
 
@@ -10995,10 +11068,6 @@ msgstr "Gallwch ddewis hyd at {MAX_IMAGES, plural, other {# delwedd}} i gyd."
 #: src/view/shell/desktop/SidebarTrendingTopics.tsx:110
 msgid "You can update this later from your settings."
 msgstr "Gallwch ddiweddaru hwn yn ddiweddarach o'ch gosodiadau."
-
-#: src/view/com/profile/ProfileFollowers.tsx:132
-msgid "You do not have any followers."
-msgstr "Does gennych chi ddim unrhyw ddilynwyr."
 
 #: src/screens/Profile/KnownFollowers.tsx:112
 msgid "You don't follow any users who follow @{name}."
@@ -11061,12 +11130,7 @@ msgstr "Rydych wedi tewi'r defnyddiwr hwn"
 msgid "You have no conversations yet. Start one!"
 msgstr "Does gennych chi ddim sgyrsiau eto. Dechreuwch un!"
 
-#: src/view/com/feeds/ProfileFeedgens.tsx:151
-msgid "You have no feeds."
-msgstr "Does gennych chi ddim ddim ffrydiau."
-
 #: src/view/com/lists/MyLists.tsx:81
-#: src/view/com/lists/ProfileLists.tsx:149
 msgid "You have no lists."
 msgstr "Nid oes gennych unrhyw restrau."
 
@@ -11082,7 +11146,7 @@ msgstr "Dydych chi ddim wedi rhwystro unrhyw gyfrifon eto. I rwystro cyfrif, ewc
 msgid "You have not muted any accounts yet. To mute an account, go to their profile and select \"Mute account\" from the menu on their account."
 msgstr "Dydych chi ddim wedi tewi unrhyw gyfrifon eto. I dewi cyfrif, ewch i'w proffil a dewiswch \"Tewi cyfrif\" o'r ddewislen ar eu cyfrif."
 
-#: src/components/Lists.tsx:57
+#: src/components/Lists.tsx:61
 msgid "You have reached the end"
 msgstr "Rydych wedi cyrraedd y diwedd"
 
@@ -11094,9 +11158,13 @@ msgstr "Diolch, rydych chi wedi dilysu'ch cyfeiriad e-bost yn llwyddiannus. Gall
 msgid "You have temporarily reached the limit for video uploads. Please try again later."
 msgstr "Rydych wedi cyrraedd y terfyn ar gyfer llwytho fideo i fyny dros dro. Ceisiwch eto yn nes ymlaen."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:259
+#: src/components/StarterPack/ProfileStarterPacks.tsx:291
 msgid "You haven't created a starter pack yet!"
 msgstr "Dydych chi ddim wedi creu pecyn cychwyn eto!"
+
+#: src/view/com/feeds/ProfileFeedgens.tsx:155
+msgid "You haven't made any custom feeds yet."
+msgstr ""
 
 #: src/components/dialogs/MutedWords.tsx:403
 msgid "You haven't muted any words or tags yet"
@@ -11143,7 +11211,7 @@ msgstr "Rhaid i chi fod yn 13 oed neu'n hŷn i greu cyfrif."
 msgid "You must be at least 13 years old to use Bluesky. Read our <0>Terms of Service</0> for more information."
 msgstr "Rhaid eich bod yn o leiaf 13 oed i ddefnyddio Bluesky. Darllenwch ein <0>Amodau Gwasanaeth</0> am ragor o wybodaeth."
 
-#: src/components/StarterPack/ProfileStarterPacks.tsx:330
+#: src/components/StarterPack/ProfileStarterPacks.tsx:362
 msgid "You must be following at least seven other people to generate a starter pack."
 msgstr "Rhaid i chi fod yn dilyn o leiaf saith o bobl eraill i gynhyrchu pecyn cychwyn."
 
@@ -11462,7 +11530,7 @@ msgstr "Mae'r diddordebau rydych wedi'u dewis yn ein helpu i ddarparu cynnwys sy
 msgid "Your verifications"
 msgstr "Eich dilysiadau"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:120
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
 msgid "Your VerusID {name} has been successfully linked to this account."
 msgstr ""
 
