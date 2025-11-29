@@ -114,11 +114,11 @@ export function PrivacyAndSecuritySettingsScreen({}: Props) {
                 <Admonition.Content>
                   <Admonition.Text>
                     <Trans>
-                      Note: Bluesky is an open and public network. This setting
-                      only limits the visibility of your content on the Bluesky
-                      app and website, and other apps may not respect this
-                      setting. Your content may still be shown to logged-out
-                      users by other apps and websites.
+                      Note: VerusSky uses the open and public network Bluesky
+                      network. This setting only limits the visibility of your
+                      content on the Bluesky app and website, and other apps may
+                      not respect this setting. Your content may still be shown
+                      to logged-out users by other apps and websites.
                     </Trans>
                   </Admonition.Text>
                   <Admonition.Text>

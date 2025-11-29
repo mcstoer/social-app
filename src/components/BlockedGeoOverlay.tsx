@@ -45,7 +45,9 @@ export function BlockedGeoOverlay() {
   }
 
   const blocks = [
-    _(msg`Unfortunately, Bluesky is unavailable in Mississippi right now.`),
+    _(
+      msg`Unfortunately, Bluesky's services are unavailable in Mississippi right now.`,
+    ),
     _(
       msg`A new Mississippi law requires us to implement age verification for all users before they can access Bluesky. We think this law creates challenges that go beyond its child safety goals, and creates significant barriers that limit free speech and disproportionately harm smaller platforms and emerging technologies.`,
     ),
@@ -53,7 +55,7 @@ export function BlockedGeoOverlay() {
       msg`As a small team, we cannot justify building the expensive infrastructure this requirement demands while legal challenges to this law are pending.`,
     ),
     _(
-      msg`For now, we have made the difficult decision to block access to Bluesky in the state of Mississippi.`,
+      msg`For now, Bluesky has made the difficult decision to block access to Bluesky in the state of Mississippi.`,
     ),
     <>
       To learn more, read our{' '}

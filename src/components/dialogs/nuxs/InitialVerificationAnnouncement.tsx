@@ -92,8 +92,8 @@ export function InitialVerificationAnnouncement() {
             </Text>
             <Text style={[a.leading_snug, a.text_md]}>
               <Trans>
-                We’re introducing a new layer of verification on Bluesky — an
-                easy-to-see checkmark.
+                Bluesky is introducing a new layer of verification on VerusSky —
+                an easy-to-see checkmark.
               </Trans>
             </Text>
           </View>

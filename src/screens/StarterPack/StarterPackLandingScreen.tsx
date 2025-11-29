@@ -207,13 +207,13 @@ function LandingScreenLoaded({
           ) : null}
           <View style={[a.gap_sm]}>
             <Button
-              label={_(msg`Join Bluesky`)}
+              label={_(msg`Join VerusSky`)}
               onPress={onJoinPress}
               variant="solid"
               color="primary"
               size="large">
               <ButtonText style={[a.text_lg]}>
-                <Trans>Join Bluesky</Trans>
+                <Trans>Join VerusSky</Trans>
               </ButtonText>
             </Button>
             <View style={[a.flex_row, a.align_center, a.gap_sm]}>
@@ -327,11 +327,11 @@ function LandingScreenLoaded({
       />
       <Prompt.Outer control={androidDialogControl}>
         <Prompt.TitleText>
-          <Trans>Download Bluesky</Trans>
+          <Trans>Download VerusSky</Trans>
         </Prompt.TitleText>
         <Prompt.DescriptionText>
           <Trans>
-            The experience is better in the app. Download Bluesky now and we'll
+            The experience is better in the app. Download VerusSky now and we'll
             pick back up where you left off.
           </Trans>
         </Prompt.DescriptionText>
@@ -401,7 +401,7 @@ export function AppClipOverlay({
               a.text_4xl,
               {lineHeight: 40, color: 'white'},
             ]}>
-            Download Bluesky to get started!
+            Download VerusSky to get started!
           </Text>
           <Text style={[a.text_lg, {color: 'white'}]}>
             We'll remember the starter pack you chose and use it when you create
