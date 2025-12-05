@@ -8,7 +8,6 @@ import {
   type ViewabilityConfig,
   type ViewToken,
 } from 'react-native'
-import {SystemBars} from 'react-native-edge-to-edge'
 import {
   Gesture,
   GestureDetector,
@@ -153,7 +152,6 @@ export function VideoFeed({}: NativeStackScreenProps<
     <ThemeProvider theme="dark">
       <Layout.Screen noInsetTop style={{backgroundColor: 'black'}}>
         <KeepAwake />
-        <SystemBars style={{statusBar: 'light', navigationBar: 'light'}} />
         <View
           style={[
             a.absolute,
@@ -494,7 +492,8 @@ let VideoItem = ({
 }): React.ReactNode => {
   const postShadow = usePostShadow(post)
   const {width, height} = useSafeAreaFrame()
-  const {sendInteraction} = useFeedFeedbackContext()
+  const {sendInteraction, feedDescriptor} = useFeedFeedbackContext()
+  const hasTrackedView = useRef(false)
 
   useEffect(() => {
     if (active) {
@@ -504,8 +503,31 @@ let VideoItem = ({
         feedContext,
         reqId,
       })
+
+      // Track post:view event
+      if (!hasTrackedView.current) {
+        hasTrackedView.current = true
+        logger.metric(
+          'post:view',
+          {
+            uri: post.uri,
+            authorDid: post.author.did,
+            logContext: 'ImmersiveVideo',
+            feedDescriptor,
+          },
+          {statsig: false},
+        )
+      }
     }
-  }, [active, post.uri, feedContext, reqId, sendInteraction])
+  }, [
+    active,
+    post.uri,
+    post.author.did,
+    feedContext,
+    reqId,
+    sendInteraction,
+    feedDescriptor,
+  ])
 
   // TODO: high-performance android phones should also
   // be capable of rendering 3 video players, but currently

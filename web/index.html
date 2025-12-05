@@ -73,11 +73,19 @@
         width: 100%;
       }
       #splash {
+        display: flex;
         position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      #splash svg {
+        position: relative;
+        top: -50px;
         width: 100px;
-        left: 50%;
-        top: 50%;
-        transform: translateX(-50%) translateY(-50%) translateY(-50px);
       }
       /**
        * We need these styles to prevent shifting due to scrollbar show/hide on

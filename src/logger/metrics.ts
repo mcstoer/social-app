@@ -22,6 +22,7 @@ export type MetricEvents = {
       | 'SignupQueued'
       | 'Deactivated'
       | 'Takendown'
+      | 'AgeAssuranceNoAccessScreen'
     scope: 'current' | 'every'
   }
   'notifications:openApp': {
@@ -202,6 +203,10 @@ export type MetricEvents = {
 
   'composer:gif:open': {}
   'composer:gif:select': {}
+  'postComposer:click': {}
+  'composerPrompt:press': {}
+  'composerPrompt:camera:press': {}
+  'composerPrompt:gallery:press': {}
 
   'composer:threadgate:open': {
     nudged: boolean
@@ -266,7 +271,17 @@ export type MetricEvents = {
   'post:view': {
     uri: string
     authorDid: string
-    logContext: 'FeedItem' | 'PostThreadItem' | 'Post' | 'ImmersiveVideo'
+    logContext:
+      | 'FeedItem'
+      | 'PostThreadItem'
+      | 'Post'
+      | 'ImmersiveVideo'
+      | 'SearchResults'
+      | 'Bookmarks'
+      | 'Notifications'
+      | 'Hashtag'
+      | 'Topic'
+      | 'PostQuotes'
     feedDescriptor?: string
     position?: number
   }
@@ -296,6 +311,24 @@ export type MetricEvents = {
       | 'ExploreSuggestedAccounts'
       | 'OnboardingSuggestedAccounts'
   }
+  'profile:followers:view': {
+    contextProfileDid: string
+    isOwnProfile: boolean
+  }
+  'profile:followers:paginate': {
+    contextProfileDid: string
+    itemCount: number
+    page: number
+  }
+  'profile:following:view': {
+    contextProfileDid: string
+    isOwnProfile: boolean
+  }
+  'profile:following:paginate': {
+    contextProfileDid: string
+    itemCount: number
+    page: number
+  }
   'profileCard:seen': {
     contextProfileDid?: string
     profileDid: string
@@ -311,6 +344,8 @@ export type MetricEvents = {
     location: 'Card' | 'Profile'
     recId?: number
     position: number
+    suggestedDid: string
+    category: string | null
   }
   'suggestedUser:press': {
     logContext:
@@ -320,11 +355,21 @@ export type MetricEvents = {
       | 'Onboarding'
     recId?: number
     position: number
+    suggestedDid: string
+    category: string | null
   }
   'suggestedUser:seen': {
-    logContext: 'Explore' | 'InterstitialDiscover' | 'InterstitialProfile'
+    logContext:
+      | 'Explore'
+      | 'InterstitialDiscover'
+      | 'InterstitialProfile'
+      | 'Profile'
+      | 'Onboarding'
+      | 'ProgressGuide'
     recId?: number
     position: number
+    suggestedDid: string
+    category: string | null
   }
   'suggestedUser:seeMore': {
     logContext:
