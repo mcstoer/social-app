@@ -118,7 +118,7 @@ function VerusServiceInner() {
 
         setError(
           _(
-            msg`Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again`,
+            msg`Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again.`,
           ),
         )
         return
