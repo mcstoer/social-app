@@ -513,7 +513,14 @@ export async function createVskyAgentAndLogin(
   const account = agentToSessionAccountOrThrow(agent)
   const gates = tryFetchGates(account.did, 'prefer-fresh-gates')
   const moderation = configureModerationForAccount(agent, account)
-  return agent.prepare(gates, moderation, onSessionChange)
+  const aa = prefetchAgeAssuranceData({agent})
+
+  agent.configureProxy(BLUESKY_PROXY_HEADER.get())
+
+  return agent.prepare({
+    resolvers: [gates, moderation, aa],
+    onSessionChange,
+  })
 }
 
 // Not exported. Use factories above to create it.
@@ -527,18 +534,20 @@ class VskyAppAgent extends BskyAppAgent {
   persistSessionHandler: ((event: AtpSessionEvent) => void) | undefined =
     undefined
 
-  async prepare(
+  async prepare({
+    resolvers,
+    onSessionChange,
+  }: {
     // Not awaited in the calling code so we can delay blocking on them.
-    gates: Promise<void>,
-    moderation: Promise<void>,
+    resolvers: Promise<unknown>[]
     onSessionChange: (
       agent: BskyAgent,
       did: string,
       event: AtpSessionEvent,
-    ) => void,
-  ) {
+    ) => void
+  }) {
     // There's nothing else left to do, so block on them here.
-    await Promise.all([gates, moderation])
+    await Promise.all(resolvers)
 
     // Now the agent is ready.
     const account = agentToSessionAccountOrThrow(this)
