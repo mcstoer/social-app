@@ -31,6 +31,14 @@ msgstr "（包含嵌入内容）"
 msgid "(no email)"
 msgstr "（没有电子邮箱）"
 
+#: src/screens/Settings/VerusServicesSettings.tsx:74
+msgid "(no identity)"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:77
+msgid "(unknown)"
+msgstr ""
+
 #: src/lib/hooks/useTimeAgo.ts:169
 msgid "{0, plural, one {# day} other {# days}}"
 msgstr "{0, plural, one {# 天} other {# 天}}"
@@ -428,6 +436,10 @@ msgstr "{hours, plural, one {# 小时} other {# 小时}}"
 msgid "{joinedAllTimeCount, plural, other {# users have}} joined!"
 msgstr "{joinedAllTimeCount, plural,other {# 位用户}}已加入！"
 
+#: src/screens/Login/LoginForm.tsx:391
+msgid "{message}"
+msgstr ""
+
 #: src/components/live/utils.ts:10
 msgid "{minutes, plural, one {# minute} other {# minutes}}"
 msgstr "{minutes, plural, one {# 分钟} other {# 分钟}}"
@@ -437,12 +449,12 @@ msgid "{notificationCount, plural, one {# unread item} other {# unread items}}"
 msgstr "{notificationCount, plural, one {# 条未读通知} other {# 条未读通知}}"
 
 #: src/components/NewskieDialog.tsx:113
-msgid "{profileName} joined Bluesky {timeAgoString} ago"
-msgstr "{profileName}在 {timeAgoString}前加入了 Bluesky"
+msgid "{profileName} joined VerusSky {timeAgoString} ago"
+msgstr ""
 
 #: src/components/NewskieDialog.tsx:110
-msgid "{profileName} joined Bluesky using a starter pack {timeAgoString} ago"
-msgstr "{profileName}在 {timeAgoString}前使用新手包加入了 Bluesky"
+msgid "{profileName} joined VerusSky using a starter pack {timeAgoString} ago"
+msgstr ""
 
 #. The trending topic rank, i.e. "1. March Madness", "2. The Bachelor"
 #: src/screens/Search/modules/ExploreTrendingTopics.tsx:111
@@ -509,8 +521,8 @@ msgstr "<0>{date}</0> {time}"
 
 #: src/screens/Hashtag.tsx:225
 #: src/screens/Search/SearchResults.tsx:294
-msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on Bluesky.</4>"
-msgstr "请<0>登录</0><1>或</1><2>创建账户</2><3></3><4>即可在 Bluesky 上搜索新闻、体育、政治等新鲜事。</4>"
+msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on VerusSky.</4>"
+msgstr ""
 
 #: src/screens/StarterPack/Wizard/index.tsx:502
 msgid "<0>You</0> and<1> </1><2>{0} </2>are included in your starter pack"
@@ -524,7 +536,7 @@ msgstr "⚠无效的账户代码"
 msgid "24 hours"
 msgstr "24 小时"
 
-#: src/screens/Login/LoginForm.tsx:278
+#: src/screens/Login/LoginForm.tsx:590
 msgid "2FA Confirmation"
 msgstr "两步验证"
 
@@ -537,8 +549,8 @@ msgid "7 days"
 msgstr "7 天"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:17
-msgid "A collection of popular feeds you can find on Bluesky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
-msgstr "目前在 Bluesky 上热门的动态源集合，包括 News、Booksky、Game Dev、Blacksky 以及 Fountain Pens"
+msgid "A collection of popular feeds you can find on VerusSky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
+msgstr ""
 
 #. If last message does not contain text, fall back to "{user} reacted to {a message}"
 #: src/screens/Messages/components/ChatListItem.tsx:213
@@ -558,10 +570,10 @@ msgstr "一张展示帖文收藏功能的屏幕截图，显示在分享按钮旁
 msgid "A screenshot of a profile page with a bell icon next to the follow button, indicating the new activity notifications feature."
 msgstr "一张个人主页的截图，显示“关注”按钮旁新增的提醒图标，用于介绍全新动态提醒功能。"
 
-#: src/Navigation.tsx:524
+#: src/Navigation.tsx:538
 #: src/screens/Settings/AboutSettings.tsx:75
-#: src/screens/Settings/Settings.tsx:244
-#: src/screens/Settings/Settings.tsx:247
+#: src/screens/Settings/Settings.tsx:253
+#: src/screens/Settings/Settings.tsx:256
 msgid "About"
 msgstr "关于"
 
@@ -588,20 +600,20 @@ msgid "Accept this language suggestion"
 msgstr "应用此语言建议"
 
 #: src/screens/Settings/AccessibilitySettings.tsx:44
-#: src/screens/Settings/Settings.tsx:220
-#: src/screens/Settings/Settings.tsx:223
+#: src/screens/Settings/Settings.tsx:229
+#: src/screens/Settings/Settings.tsx:232
 msgid "Accessibility"
 msgstr "无障碍"
 
-#: src/Navigation.tsx:383
+#: src/Navigation.tsx:389
 msgid "Accessibility Settings"
 msgstr "无障碍设置"
 
-#: src/Navigation.tsx:399
-#: src/screens/Login/LoginForm.tsx:194
+#: src/Navigation.tsx:405
+#: src/screens/Login/LoginForm.tsx:461
 #: src/screens/Settings/AccountSettings.tsx:51
-#: src/screens/Settings/Settings.tsx:174
-#: src/screens/Settings/Settings.tsx:177
+#: src/screens/Settings/Settings.tsx:175
+#: src/screens/Settings/Settings.tsx:178
 msgid "Account"
 msgstr "账户"
 
@@ -632,20 +644,22 @@ msgstr "已隐藏该账户"
 msgid "Account Muted by List"
 msgstr "该账户已被列表隐藏"
 
-#: src/screens/Settings/Settings.tsx:626
+#: src/screens/Settings/Settings.tsx:635
 msgid "Account options"
 msgstr "账户选项"
 
 #: src/components/dialogs/ServerInput.tsx:141
+#: src/screens/Login/ForgotPasswordForm.tsx:83
+#: src/screens/Login/LoginForm.tsx:444
 msgid "Account provider"
 msgstr "账户提供商"
 
-#: src/screens/Settings/Settings.tsx:662
+#: src/screens/Settings/Settings.tsx:671
 msgid "Account removed from quick access"
 msgstr "已从快速访问中移除该账户"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:84
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:290
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:312
 #: src/view/com/profile/ProfileMenu.tsx:156
 msgctxt "toast"
 msgid "Account unblocked"
@@ -672,7 +686,7 @@ msgstr "带有蓝色扇形外观认证徽章的账户 <0><1/></0> 可以为其�
 msgid "Activity from others"
 msgstr "其他人的动态"
 
-#: src/Navigation.tsx:492
+#: src/Navigation.tsx:506
 msgid "Activity notifications"
 msgstr "动态提醒"
 
@@ -725,8 +739,8 @@ msgstr "添加替代文本"
 msgid "Add alt text (optional)"
 msgstr "添加替代文本（可选）"
 
-#: src/screens/Settings/Settings.tsx:566
-#: src/screens/Settings/Settings.tsx:569
+#: src/screens/Settings/Settings.tsx:575
+#: src/screens/Settings/Settings.tsx:578
 #: src/view/shell/desktop/LeftNav.tsx:262
 #: src/view/shell/desktop/LeftNav.tsx:266
 msgid "Add another account"
@@ -828,9 +842,13 @@ msgstr "添加至新手包"
 msgid "Add user to list"
 msgstr "将用户新增至列表"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:182
+#: src/ageAssurance/components/NoAccessScreen.tsx:199
 msgid "Add your birthdate"
 msgstr "添加你的出生日期"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
+msgid "Add your sign in credentials to your VerusID for seamless logins."
+msgstr ""
 
 #: src/components/dialogs/lists/ListAddRemoveUsersDialog.tsx:109
 #: src/view/com/modals/UserAddRemoveLists.tsx:162
@@ -898,12 +916,18 @@ msgctxt "toast"
 msgid "Age assurance inquiry was submitted"
 msgstr "已提交年龄验证信息"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:302
+#: src/ageAssurance/components/NoAccessScreen.tsx:330
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:191
 msgid "Age assurance only takes a few minutes"
 msgstr "只需几分钟即可完成年龄验证"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
+msgid "Alice@"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:223
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 msgid "alice@example.com"
 msgstr "alice@example.com"
 
@@ -978,8 +1002,8 @@ msgid "Allows access to direct messages"
 msgstr "允许读取私信"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:171
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:236
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:242
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:239
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:245
 msgid "Already have a code?"
 msgstr "已经有验证码了？"
 
@@ -1078,8 +1102,8 @@ msgid "An error occurred while uploading the video."
 msgstr "上传视频时发生错误。"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:35
-msgid "An illustration of several Bluesky posts alongside repost, like, and comment icons"
-msgstr "包含 Bluesky 的几则帖文插图，旁边还有转发、喜欢和评论图标"
+msgid "An illustration of several VerusSky posts alongside repost, like, and comment icons"
+msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:84
 #: src/components/verification/VerifierDialog.tsx:86
@@ -1159,12 +1183,16 @@ msgstr "任何人都可以参与互动"
 msgid "Anyone who follows me"
 msgstr "关注我的人"
 
-#: src/Navigation.tsx:532
+#: src/Navigation.tsx:546
 #: src/screens/Settings/AppIconSettings/index.tsx:67
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:18
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:23
 msgid "App Icon"
 msgstr "应用图标"
+
+#: src/screens/Settings/LanguageSettings.tsx:103
+msgid "App language"
+msgstr ""
 
 #: src/screens/Settings/LanguageSettings.tsx:87
 msgid "App Language"
@@ -1196,7 +1224,7 @@ msgstr "应用密码至少应含有 4 个字符"
 msgid "App passwords"
 msgstr "应用密码"
 
-#: src/Navigation.tsx:351
+#: src/Navigation.tsx:357
 #: src/screens/Settings/AppPasswords.tsx:50
 msgid "App Passwords"
 msgstr "应用密码"
@@ -1232,10 +1260,10 @@ msgstr "暂停申诉"
 msgid "Appeal this decision"
 msgstr "对此决定提出申诉"
 
-#: src/Navigation.tsx:391
+#: src/Navigation.tsx:397
 #: src/screens/Settings/AppearanceSettings.tsx:73
-#: src/screens/Settings/Settings.tsx:212
-#: src/screens/Settings/Settings.tsx:215
+#: src/screens/Settings/Settings.tsx:221
+#: src/screens/Settings/Settings.tsx:224
 msgid "Appearance"
 msgstr "外观"
 
@@ -1244,8 +1272,8 @@ msgstr "外观"
 msgid "Apply default recommended feeds"
 msgstr "使用默认推荐的动态源"
 
-#: src/screens/Settings/Settings.tsx:498
-#: src/screens/Settings/Settings.tsx:500
+#: src/screens/Settings/Settings.tsx:507
+#: src/screens/Settings/Settings.tsx:509
 msgid "Apply Pull Request"
 msgstr "应用提交变更"
 
@@ -1317,7 +1345,8 @@ msgstr "带有艺术性或非色情的裸露。"
 msgid "Assign topic for algo"
 msgstr "为算法指定主题"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:208
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:211
 msgid "At least 8 characters"
 msgstr "至少应含有 8 个字符"
 
@@ -1325,6 +1354,14 @@ msgstr "至少应含有 8 个字符"
 msgctxt "Name of app icon variant"
 msgid "Aurora"
 msgstr "极光"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:201
+msgid "Authentication (Optional)"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:114
+msgid "Authentication failed. Please check your credentials."
+msgstr ""
 
 #: src/screens/Settings/ContentAndMediaSettings.tsx:116
 #: src/screens/Settings/ContentAndMediaSettings.tsx:122
@@ -1336,21 +1373,27 @@ msgstr "自动播放视频及 GIF"
 msgid "Available"
 msgstr "可用"
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
+msgid "Awaiting confirmation"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
 #: src/components/moderation/LabelsOnMeDialog.tsx:333
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/screens/Login/ChooseAccountForm.tsx:91
 #: src/screens/Login/ChooseAccountForm.tsx:96
 #: src/screens/Login/ForgotPasswordForm.tsx:123
 #: src/screens/Login/ForgotPasswordForm.tsx:129
-#: src/screens/Login/LoginForm.tsx:313
-#: src/screens/Login/LoginForm.tsx:319
+#: src/screens/Login/LoginForm.tsx:625
+#: src/screens/Login/LoginForm.tsx:631
 #: src/screens/Login/SetNewPasswordForm.tsx:168
 #: src/screens/Login/SetNewPasswordForm.tsx:174
 #: src/screens/Messages/components/ChatDisabled.tsx:145
 #: src/screens/Messages/components/ChatDisabled.tsx:146
 #: src/screens/Profile/Header/Shell.tsx:158
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:272
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:281
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:275
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:284
 #: src/screens/Signup/BackNextButtons.tsx:41
 #: src/screens/StarterPack/Wizard/index.tsx:323
 msgid "Back"
@@ -1380,7 +1423,7 @@ msgstr "在你撰写贴文或回复之前，你必须首先验证你的电子邮
 #: src/components/dialogs/StarterPackDialog.tsx:71
 #: src/components/StarterPack/ProfileStarterPacks.tsx:263
 #: src/components/StarterPack/ProfileStarterPacks.tsx:273
-#: src/view/screens/Profile.tsx:351
+#: src/view/screens/Profile.tsx:358
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr "在创建新手包之前，你必须首先验证你的电子邮箱。"
 
@@ -1399,11 +1442,11 @@ msgstr "在你接收 {name} 的发帖提醒之前，你必须首先验证你的�
 msgid "Before you can message another user, you must first verify your email."
 msgstr "在与其他人展开对话以前，你必须首先验证你的电子邮箱。"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:317
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:318
 msgid "Begin"
 msgstr "开始"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:311
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:312
 msgid "Begin age assurance process"
 msgstr "开始年龄验证流程"
 
@@ -1411,7 +1454,7 @@ msgstr "开始年龄验证流程"
 msgid "Begin the age assurance process by completing the fields below."
 msgstr "请填写以下栏位，以开始年龄验证流程。"
 
-#: src/components/dialogs/BirthDateSettings.tsx:147
+#: src/components/dialogs/BirthDateSettings.tsx:149
 msgid "Birthdate"
 msgstr "出生日期"
 
@@ -1420,7 +1463,7 @@ msgid "Birthday"
 msgstr "出生日期"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:792
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Block"
 msgstr "屏蔽"
@@ -1483,7 +1526,7 @@ msgstr "已被屏蔽"
 msgid "Blocked accounts"
 msgstr "已屏蔽账户"
 
-#: src/Navigation.tsx:192
+#: src/Navigation.tsx:198
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "已屏蔽账户"
@@ -1518,10 +1561,6 @@ msgstr "博客"
 msgid "Bluesky"
 msgstr "Bluesky"
 
-#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
-msgid "Bluesky cannot confirm the authenticity of the claimed date."
-msgstr "Bluesky 无法确认帖文发布时间的真实性。"
-
 #: src/screens/Settings/AppIconSettings/useAppIconSets.ts:165
 msgctxt "Name of app icon variant"
 msgid "Bluesky Classic™"
@@ -1535,10 +1574,9 @@ msgstr "Bluesky 是一个开放的社交网络，你可以自行选择托管服�
 msgid "Bluesky is an open network where you can choose your own provider. If you're new here, we recommend sticking with the default Bluesky Social option."
 msgstr "Bluesky 是一个开放的社交网络，你可以自行选择托管服务提供商。但如果你是新用户，我们建议你选择默认的 Bluesky Social 选项。"
 
-#: src/components/ProgressGuide/List.tsx:53
-#: src/components/ProgressGuide/List.tsx:70
-msgid "Bluesky is better with friends!"
-msgstr "与天友们一起，Bluesky 更美好！"
+#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
+msgid "Bluesky is introducing a new layer of verification on VerusSky — an easy-to-see checkmark."
+msgstr ""
 
 #: src/screens/Takendown.tsx:226
 msgid "Bluesky Social Terms of Service"
@@ -1555,6 +1593,10 @@ msgstr "Bluesky 将不会向未登录的用户显示你的个人资料和帖文�
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:132
 msgid "Bluesky will proactively verify notable and authentic accounts."
 msgstr "Bluesky 官方会主动确认部分知名账户的真实性并授予认证。"
+
+#: src/screens/Messages/components/ChatDisabled.tsx:34
+msgid "Bluesky's moderators have reviewed reports and decided to disable your access to Bluesky's chats."
+msgstr ""
 
 #: src/screens/Settings/AppIconSettings/index.tsx:99
 msgid "Bluesky+"
@@ -1651,7 +1693,7 @@ msgstr "来自 <0>{0}</0>"
 msgid "By clicking \"Continue\" you acknowledge that you understand and agree to these updates."
 msgstr "按下“继续”即表示你了解并同意这些改动。"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:328
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:329
 msgid "By continuing, you agree to the <0>KWS Terms of Use</0> and acknowledge that KWS will store your verified status with your hashed email address in accordance with the <1>KWS Privacy Policy</1>. This means you won’t need to verify again the next time you use this email for other apps, games, and services powered by KWS technology."
 msgstr "继续即代表你同意<0> KWS 服务条款</0>并了解 KWS 会依据<1> LWS 隐私政策</1>保存你的验证状态及经哈希匿名处理的电子邮件地址。这将使你下次使用此电子邮箱地址登录其他由 KWS 提供技术支持的应用、游戏及服务时，无需再次进行验证。"
 
@@ -1686,6 +1728,8 @@ msgstr "相机"
 #: src/components/dialogs/InAppBrowserConsent.tsx:104
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:274
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:282
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
 #: src/components/live/GoLiveDialog.tsx:244
 #: src/components/live/GoLiveDialog.tsx:250
 #: src/components/Menu/index.tsx:350
@@ -1701,9 +1745,9 @@ msgstr "相机"
 #: src/screens/Settings/AppIconSettings/index.tsx:230
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:78
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:85
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:247
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:253
-#: src/screens/Settings/Settings.tsx:289
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:250
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:256
+#: src/screens/Settings/Settings.tsx:298
 #: src/screens/Takendown.tsx:108
 #: src/screens/Takendown.tsx:111
 #: src/view/com/composer/Composer.tsx:1050
@@ -1779,12 +1823,12 @@ msgstr "更改账户代码"
 msgid "Change moderation service"
 msgstr "更改内容审核提供方"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:261
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:267
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:264
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:270
 msgid "Change password"
 msgstr "更改密码"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:164
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:167
 msgid "Change password dialog"
 msgstr "更改密码对话框"
 
@@ -1796,7 +1840,7 @@ msgstr "更改举报类型"
 msgid "Change report reason"
 msgstr "更改举报原因"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:57
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:60
 msgid "Change your password"
 msgstr "更改你的密码"
 
@@ -1814,7 +1858,7 @@ msgid "Changes saved"
 msgstr "已保存更改"
 
 #: src/lib/hooks/useNotificationHandler.ts:99
-#: src/Navigation.tsx:549
+#: src/Navigation.tsx:563
 #: src/view/shell/bottom-bar/BottomBar.tsx:221
 #: src/view/shell/desktop/LeftNav.tsx:608
 #: src/view/shell/Drawer.tsx:466
@@ -1840,7 +1884,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "已隐藏私信"
 
-#: src/Navigation.tsx:559
+#: src/Navigation.tsx:573
 #: src/screens/Messages/components/InboxPreview.tsx:22
 msgid "Chat request inbox"
 msgstr "私信请求收件箱"
@@ -1852,7 +1896,7 @@ msgid "Chat requests"
 msgstr "私信请求"
 
 #: src/components/dms/ConvoMenu.tsx:78
-#: src/Navigation.tsx:554
+#: src/Navigation.tsx:568
 #: src/screens/Messages/ChatList.tsx:81
 #: src/screens/Messages/ChatList.tsx:85
 #: src/screens/Messages/ChatList.tsx:380
@@ -1879,7 +1923,7 @@ msgstr "私信"
 msgid "Check my status"
 msgstr "检查我的状态"
 
-#: src/screens/Login/LoginForm.tsx:304
+#: src/screens/Login/LoginForm.tsx:616
 msgid "Check your email for a sign in code and enter it here."
 msgstr "请在这里输入发送到你电子邮箱的验证码。"
 
@@ -1924,6 +1968,7 @@ msgid "Choose this color as your avatar"
 msgstr "选择此颜色作为你的头像背景"
 
 #: src/components/dialogs/ServerInput.tsx:137
+#: src/screens/Login/index.tsx:137
 msgid "Choose your account provider"
 msgstr "选择你的服务提供商"
 
@@ -1939,11 +1984,11 @@ msgstr "设置你的密码"
 msgid "Choose your username"
 msgstr "设置你的用户名"
 
-#: src/screens/Settings/Settings.tsx:490
+#: src/screens/Settings/Settings.tsx:499
 msgid "Clear all storage data"
 msgstr "清除所有数据"
 
-#: src/screens/Settings/Settings.tsx:492
+#: src/screens/Settings/Settings.tsx:501
 msgid "Clear all storage data (restart after this)"
 msgstr "清除所有数据（并重新启动应用）"
 
@@ -1964,11 +2009,11 @@ msgstr "点击以了解详情"
 msgid "click here"
 msgstr "点击这里"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:102
+#: src/ageAssurance/components/NoAccessScreen.tsx:106
 msgid "Click here to contact our support team"
 msgstr "点击这里来联系我们的支持团队"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:194
+#: src/ageAssurance/components/NoAccessScreen.tsx:222
 msgid "Click here to log out"
 msgstr "点击这里来登出"
 
@@ -1976,8 +2021,8 @@ msgstr "点击这里来登出"
 msgid "Click here to restart the verification process."
 msgstr "点击这里来重新开始验证流程。"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:86
-#: src/ageAssurance/components/NoAccessScreen.tsx:179
+#: src/ageAssurance/components/NoAccessScreen.tsx:90
+#: src/ageAssurance/components/NoAccessScreen.tsx:196
 msgid "Click here to update your birthdate"
 msgstr "点击这里来更新你的出生日期"
 
@@ -2016,8 +2061,14 @@ msgstr "哒哒🐴哒哒🐴"
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:171
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:178
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:187
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
 #: src/components/dialogs/SearchablePeopleList.tsx:295
 #: src/components/dialogs/StarterPackDialog.tsx:179
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:208
@@ -2033,10 +2084,11 @@ msgstr "哒哒🐴哒哒🐴"
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:124
 #: src/components/verification/VerificationsDialog.tsx:144
 #: src/components/verification/VerifierDialog.tsx:150
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
 #: src/components/WhoCanReply.tsx:234
 #: src/components/WhoCanReply.tsx:241
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:287
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:292
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:290
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:300
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:335
 #: src/view/com/feeds/MissingFeed.tsx:210
 #: src/view/com/feeds/MissingFeed.tsx:217
@@ -2061,13 +2113,14 @@ msgstr "关闭底部抽屉"
 #: src/components/dialogs/GifSelect.tsx:263
 #: src/components/verification/VerificationsDialog.tsx:136
 #: src/components/verification/VerifierDialog.tsx:142
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:204
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:298
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:330
 msgid "Close dialog"
 msgstr "关闭对话框"
 
-#: src/view/shell/index.web.tsx:108
+#: src/view/shell/index.web.tsx:114
 msgid "Close drawer menu"
 msgstr "关闭抽屉菜单"
 
@@ -2147,7 +2200,7 @@ msgid "Comics"
 msgstr "漫画"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:45
-#: src/Navigation.tsx:341
+#: src/Navigation.tsx:347
 #: src/view/screens/CommunityGuidelines.tsx:37
 msgid "Community Guidelines"
 msgstr "社群准则"
@@ -2201,7 +2254,7 @@ msgstr "确认内容语言设置"
 msgid "Confirm delete account"
 msgstr "确认删除账户"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:316
+#: src/ageAssurance/components/NoAccessScreen.tsx:344
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:87
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:40
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:105
@@ -2209,9 +2262,9 @@ msgid "Confirm your location"
 msgstr "确认你的所在位置"
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:36
-#: src/screens/Login/LoginForm.tsx:284
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:186
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:190
+#: src/screens/Login/LoginForm.tsx:596
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:189
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:193
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:144
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:150
 #: src/view/com/modals/DeleteAccount.tsx:220
@@ -2219,7 +2272,11 @@ msgstr "确认你的所在位置"
 msgid "Confirmation code"
 msgstr "验证码"
 
-#: src/screens/Login/LoginForm.tsx:340
+#: src/screens/Settings/VerusServicesSettings.tsx:145
+msgid "Connected"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:652
 msgid "Connecting..."
 msgstr "连接中……"
 
@@ -2228,7 +2285,7 @@ msgstr "连接中……"
 msgid "Connection issue"
 msgstr "连接问题"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:253
+#: src/ageAssurance/components/NoAccessScreen.tsx:281
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:130
 #: src/components/ageAssurance/AgeAssuranceAppealDialog.tsx:29
 msgid "Contact our moderation team"
@@ -2248,12 +2305,12 @@ msgstr "联系我们"
 msgid "Content & Media"
 msgstr "内容与媒体"
 
-#: src/screens/Settings/Settings.tsx:204
-#: src/screens/Settings/Settings.tsx:207
+#: src/screens/Settings/Settings.tsx:213
+#: src/screens/Settings/Settings.tsx:216
 msgid "Content and media"
 msgstr "内容与媒体"
 
-#: src/Navigation.tsx:508
+#: src/Navigation.tsx:522
 msgid "Content and Media"
 msgstr "内容与媒体"
 
@@ -2269,7 +2326,7 @@ msgstr "内容过滤器"
 msgid "Content from across the network we think you might like."
 msgstr "我们从网络的各个角落精选出了你可能会感兴趣的内容。"
 
-#: src/screens/Settings/LanguageSettings.tsx:153
+#: src/screens/Settings/LanguageSettings.tsx:155
 #: src/view/com/modals/lang-settings/ContentLanguagesSettings.tsx:76
 msgid "Content Languages"
 msgstr "内容语言"
@@ -2298,6 +2355,7 @@ msgstr "内容警告"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "上下文菜单背景，点击以关闭菜单。"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:162
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:170
 #: src/screens/Onboarding/StepInterests/index.tsx:94
@@ -2449,13 +2507,17 @@ msgstr "复制帖文文字"
 msgid "Copy QR code"
 msgstr "复制二维码"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
+msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:455
 msgid "Copy TXT record value"
 msgstr "复制 TXT 记录值"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:40
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:107
-#: src/Navigation.tsx:346
+#: src/Navigation.tsx:352
 #: src/view/screens/CopyrightPolicy.tsx:34
 msgid "Copyright Policy"
 msgstr "版权许可"
@@ -2503,6 +2565,10 @@ msgstr "无法保存如下更改：{0}"
 msgid "Could not update notification settings"
 msgstr "无法更新通知设置"
 
+#: src/components/InternationalPhoneCodeSelect.tsx:78
+msgid "Country code"
+msgstr ""
+
 #. Text on button to create a new starter pack
 #. Text on button to create a new starter pack
 #: src/components/dialogs/StarterPackDialog.tsx:112
@@ -2522,12 +2588,12 @@ msgstr "为新手包创建二维码"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:206
 #: src/components/StarterPack/ProfileStarterPacks.tsx:315
-#: src/Navigation.tsx:589
+#: src/Navigation.tsx:603
 msgid "Create a starter pack"
 msgstr "创建新手包"
 
-#: src/view/screens/Profile.tsx:542
-#: src/view/screens/Profile.tsx:543
+#: src/view/screens/Profile.tsx:550
+#: src/view/screens/Profile.tsx:551
 msgid "Create a Starter Pack"
 msgstr "创建新手包"
 
@@ -2619,8 +2685,8 @@ msgid "Customization options"
 msgstr "自定义选项"
 
 #: src/screens/Onboarding/Layout.tsx:60
-msgid "Customizes your Bluesky experience"
-msgstr "自定义你的 Bluesky 体验"
+msgid "Customizes your VerusSky experience"
+msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:200
 msgid "Dangerous challenges or activities"
@@ -2660,7 +2726,7 @@ msgstr "出生日期"
 msgid "Deactivate account"
 msgstr "停用账户"
 
-#: src/screens/Settings/Settings.tsx:455
+#: src/screens/Settings/Settings.tsx:464
 msgid "Debug Moderation"
 msgstr "调试内容审核"
 
@@ -2713,7 +2779,7 @@ msgstr "要删除应用密码吗？"
 msgid "Delete chat"
 msgstr "删除私信"
 
-#: src/screens/Settings/Settings.tsx:462
+#: src/screens/Settings/Settings.tsx:471
 msgid "Delete chat declaration record"
 msgstr "删除聊天记录"
 
@@ -2754,6 +2820,10 @@ msgstr "删除我的账户"
 #: src/view/com/composer/Composer.tsx:969
 msgid "Delete post"
 msgstr "删除帖文"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+msgid "Delete Post and Remove Link"
+msgstr ""
 
 #: src/screens/StarterPack/StarterPackScreen.tsx:595
 #: src/screens/StarterPack/StarterPackScreen.tsx:753
@@ -2808,6 +2878,11 @@ msgstr "分离引用"
 msgid "Detach quote post?"
 msgstr "要分离引用帖文吗？"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
+msgid "Details to Sign"
+msgstr ""
+
 #: src/screens/Settings/AboutSettings.tsx:140
 msgctxt "toast"
 msgid "Developer mode disabled"
@@ -2818,8 +2893,8 @@ msgctxt "toast"
 msgid "Developer mode enabled"
 msgstr "已启用开发者模式"
 
-#: src/screens/Settings/Settings.tsx:271
-#: src/screens/Settings/Settings.tsx:274
+#: src/screens/Settings/Settings.tsx:280
+#: src/screens/Settings/Settings.tsx:283
 msgid "Developer options"
 msgstr "开发者选项"
 
@@ -2889,6 +2964,10 @@ msgstr "要舍弃草稿吗？"
 #: src/view/com/composer/Composer.tsx:994
 msgid "Discard post?"
 msgstr "要放弃发布吗？"
+
+#: src/screens/Settings/VerusServicesSettings.tsx:147
+msgid "Disconnected"
+msgstr ""
 
 #: src/screens/Settings/components/PwiOptOut.tsx:87
 #: src/screens/Settings/components/PwiOptOut.tsx:91
@@ -2973,15 +3052,15 @@ msgstr "不再显示"
 msgid "Don't worry! All existing messages and settings are saved and will be available after you verify you're an adult."
 msgstr "别担心！你现有的对话及设置都已保存，只需验证你已成年即可恢复访问。"
 
-#: src/components/dialogs/BirthDateSettings.tsx:181
-#: src/components/dialogs/BirthDateSettings.tsx:188
+#: src/components/dialogs/BirthDateSettings.tsx:183
+#: src/components/dialogs/BirthDateSettings.tsx:190
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
 #: src/components/dialogs/ServerInput.tsx:240
 #: src/components/dialogs/ServerInput.tsx:242
 #: src/components/dms/AfterReportDialog.tsx:142
 #: src/components/forms/DateField/index.tsx:103
 #: src/components/forms/DateField/index.tsx:109
-#: src/components/Select/index.tsx:185
-#: src/components/Select/index.tsx:192
 #: src/lib/media/picker.tsx:35
 #: src/screens/Onboarding/StepProfile/index.tsx:341
 #: src/screens/Onboarding/StepProfile/index.tsx:344
@@ -3017,14 +3096,14 @@ msgstr "双击以关闭对话框"
 msgid "Double tap to like"
 msgstr "双击以点赞"
 
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
-msgid "Download Bluesky"
-msgstr "下载 Bluesky"
-
-#: src/screens/Settings/components/ExportCarDialog.tsx:78
-#: src/screens/Settings/components/ExportCarDialog.tsx:83
+#: src/screens/Settings/components/ExportCarDialog.tsx:79
+#: src/screens/Settings/components/ExportCarDialog.tsx:84
 msgid "Download CAR file"
 msgstr "下载 CAR 文件"
+
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
+msgid "Download VerusSky"
+msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:115
 msgid "Doxxing"
@@ -3131,7 +3210,7 @@ msgstr "编辑直播状态"
 msgid "Edit moderation list"
 msgstr "编辑内容审核列表"
 
-#: src/Navigation.tsx:356
+#: src/Navigation.tsx:362
 #: src/view/screens/Feeds.tsx:518
 msgid "Edit My Feeds"
 msgstr "编辑我的动态源"
@@ -3152,12 +3231,12 @@ msgstr "编辑帖文互动选项"
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:292
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:343
 msgid "Edit profile"
 msgstr "编辑个人资料"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:295
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:323
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:345
 msgid "Edit Profile"
 msgstr "编辑个人资料"
 
@@ -3173,7 +3252,7 @@ msgstr "编辑用户列表"
 msgid "Edit who can reply"
 msgstr "编辑哪些人可以回复"
 
-#: src/Navigation.tsx:594
+#: src/Navigation.tsx:608
 msgid "Edit your starter pack"
 msgstr "编辑你的新手包"
 
@@ -3186,6 +3265,8 @@ msgstr "教育"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr "此列表的创建者屏蔽了你，或你已屏蔽了对方。"
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
 #: src/screens/Settings/AccountSettings.tsx:66
 #: src/screens/Signup/StepInfo/index.tsx:196
 msgid "Email"
@@ -3323,7 +3404,7 @@ msgstr "输入字词或标签"
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:201
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:320
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:63
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:66
 msgid "Enter code"
 msgstr "输入验证码"
 
@@ -3339,11 +3420,11 @@ msgstr "输入你想使用的域名"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "输入你创建账户时使用的电子邮箱。我们将向你发送用于密码重置的验证码。"
 
-#: src/screens/Login/LoginForm.tsx:219
+#: src/screens/Login/LoginForm.tsx:488
 msgid "Enter the username or email address you used when you created your account"
 msgstr "请输入创建账户时使用的用户名或电子邮箱地址"
 
-#: src/components/dialogs/BirthDateSettings.tsx:148
+#: src/components/dialogs/BirthDateSettings.tsx:150
 msgid "Enter your birthdate"
 msgstr "输入你的出生日期"
 
@@ -3352,13 +3433,9 @@ msgstr "输入你的出生日期"
 msgid "Enter your email address"
 msgstr "输入你的电子邮箱地址"
 
-#: src/screens/Login/LoginForm.tsx:243
+#: src/screens/Login/LoginForm.tsx:512
 msgid "Enter your password"
 msgstr "输入你的密码"
-
-#: src/screens/Login/index.tsx:137
-msgid "Enter your username and password"
-msgstr "输入你的用户名和密码"
 
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:132
 msgid "Enters full screen"
@@ -3491,7 +3568,7 @@ msgstr "血腥、露骨或其他可能引起不适的媒体内容。"
 msgid "Explicit sexual images."
 msgstr "露骨的色情图片。"
 
-#: src/Navigation.tsx:759
+#: src/Navigation.tsx:773
 #: src/screens/Search/Shell.tsx:327
 #: src/view/shell/desktop/LeftNav.tsx:690
 #: src/view/shell/Drawer.tsx:414
@@ -3508,7 +3585,7 @@ msgstr "探索应用"
 msgid "Export my data"
 msgstr "导出账户数据"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:62
+#: src/screens/Settings/components/ExportCarDialog.tsx:63
 msgid "Export My Data"
 msgstr "导出账户数据"
 
@@ -3527,7 +3604,7 @@ msgstr "外部媒体"
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "外部媒体可能会收集你或设备储存的个人信息。在你按下“播放”按钮之前，平台不会发送任何请求给外部媒体。"
 
-#: src/Navigation.tsx:375
+#: src/Navigation.tsx:381
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "外部媒体偏好设置"
@@ -3553,6 +3630,10 @@ msgstr "无法添加到新手包"
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:603
 msgid "Failed to change handle. Please try again."
 msgstr "无法更改账户代码，请重试。"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
+msgid "Failed to create a post for linking the VerusID. Please try again."
+msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:173
 msgid "Failed to create app password. Please try again."
@@ -3588,6 +3669,11 @@ msgstr "无法删除新手包"
 #: src/screens/Onboarding/StepSuggestedAccounts/index.tsx:125
 msgid "Failed to follow all suggested accounts, please try again"
 msgstr "无法关注所有建议的账户，请重试"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
+msgid "Failed to initiate credential update"
+msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:282
 #: src/screens/Messages/Inbox.tsx:209
@@ -3647,6 +3733,10 @@ msgstr "无法标记所有为已读"
 msgid "Failed to pin post"
 msgstr "无法固定帖文"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
+msgid "Failed to prepare linking details."
+msgstr ""
+
 #: src/components/dms/ActionsWrapper.web.tsx:60
 #: src/components/dms/MessageContextMenu.tsx:95
 msgid "Failed to remove emoji reaction"
@@ -3655,6 +3745,10 @@ msgstr "无法删除表情符号反应"
 #: src/components/dialogs/StarterPackDialog.tsx:289
 msgid "Failed to remove from starter pack"
 msgstr "无法从新手包删除"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
+msgid "Failed to remove the VerusID link, please try again"
+msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
 msgid "Failed to remove verification"
@@ -3700,6 +3794,11 @@ msgstr "无法隐藏讨论串，请重试"
 msgid "Failed to unpin list"
 msgstr "无法取消固定列表"
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
+msgid "Failed to update credentials"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:149
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Enable.tsx:83
 msgid "Failed to update email 2FA settings"
@@ -3721,6 +3820,10 @@ msgstr "无法更新动态提醒范围"
 msgid "Failed to update settings"
 msgstr "无法更新设置"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:135
+msgid "Failed to update the Verus Service endpoint. Please try again"
+msgstr ""
+
 #: src/lib/media/video/upload.ts:72
 #: src/lib/media/video/upload.web.ts:74
 #: src/lib/media/video/upload.web.ts:78
@@ -3736,6 +3839,10 @@ msgstr "无法验证电子邮箱，请重试。"
 msgid "Failed to verify handle. Please try again."
 msgstr "无法验证账户代码，请重试。"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
+msgid "Failed to verify signature. Please try again."
+msgstr ""
+
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:47
 msgid "Fake account or bot"
 msgstr "虚假账户或机器人"
@@ -3744,7 +3851,7 @@ msgstr "虚假账户或机器人"
 msgid "False information about elections"
 msgstr "散布选举相关虚假信息"
 
-#: src/Navigation.tsx:291
+#: src/Navigation.tsx:297
 msgid "Feed"
 msgstr "动态源"
 
@@ -3785,12 +3892,12 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr "已提交反馈给动态源维护者"
 
-#: src/Navigation.tsx:574
+#: src/Navigation.tsx:588
 #: src/screens/SavedFeeds.tsx:108
 #: src/screens/Search/SearchResults.tsx:78
 #: src/screens/StarterPack/StarterPackScreen.tsx:190
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:246
 #: src/view/shell/desktop/LeftNav.tsx:728
 #: src/view/shell/Drawer.tsx:530
 msgid "Feeds"
@@ -3864,8 +3971,8 @@ msgid "Find people to follow"
 msgstr "寻找一些用户关注"
 
 #: src/screens/Search/Shell.tsx:526
-msgid "Find posts, users, and feeds on Bluesky"
-msgstr "在 Bluesky 寻找感兴趣的帖文、用户和动态源"
+msgid "Find posts, users, and feeds on VerusSky"
+msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:21
 msgid "Find your people"
@@ -3903,13 +4010,13 @@ msgstr "灵活"
 #: src/components/ProfileHoverCard/index.web.tsx:496
 #: src/components/ProfileHoverCard/index.web.tsx:507
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:131
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:378
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:400
 #: src/screens/VideoFeed/index.tsx:879
 msgid "Follow"
 msgstr "关注"
 
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:113
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:366
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:388
 msgid "Follow {0}"
 msgstr "关注 {0}"
 
@@ -3946,7 +4053,7 @@ msgstr "关注所有账户"
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:547
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:129
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:376
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:398
 #: src/view/com/notifications/NotificationFeedItem.tsx:835
 #: src/view/com/notifications/NotificationFeedItem.tsx:842
 msgid "Follow back"
@@ -3972,7 +4079,7 @@ msgstr "已被你认识的 <0>{0}</0> 及 <1>{1}</1> 关注"
 msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {# others}}"
 msgstr "已被你认识的<0>{0}</0>、<1>{1}</1> 及{2, plural, one {其他#人} other {其他#人}}关注"
 
-#: src/Navigation.tsx:245
+#: src/Navigation.tsx:251
 msgid "Followers of @{0} that you know"
 msgstr "已被你认识的 @{0} 关注"
 
@@ -3987,7 +4094,7 @@ msgstr "你认识的关注者"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:134
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:396
 #: src/screens/VideoFeed/index.tsx:877
 #: src/view/com/notifications/NotificationFeedItem.tsx:813
 #: src/view/com/notifications/NotificationFeedItem.tsx:830
@@ -4001,7 +4108,7 @@ msgid "Following"
 msgstr "正在关注"
 
 #: src/components/ProfileCard.tsx:503
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:244
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:266
 #: src/view/com/notifications/NotificationFeedItem.tsx:767
 msgid "Following {0}"
 msgstr "已关注 {0}"
@@ -4015,7 +4122,7 @@ msgstr "已关注 {handle}"
 msgid "Following feed preferences"
 msgstr "“Following”动态源偏好设置"
 
-#: src/Navigation.tsx:362
+#: src/Navigation.tsx:368
 #: src/screens/Settings/FollowingFeedPreferences.tsx:56
 msgid "Following Feed Preferences"
 msgstr "“Following”动态源偏好设置"
@@ -4071,11 +4178,11 @@ msgstr "忘记那些无止尽的骚扰"
 msgid "Forgot Password"
 msgstr "忘记密码"
 
-#: src/screens/Login/LoginForm.tsx:258
+#: src/screens/Login/LoginForm.tsx:527
 msgid "Forgot password?"
 msgstr "忘记密码？"
 
-#: src/screens/Login/LoginForm.tsx:269
+#: src/screens/Login/LoginForm.tsx:538
 msgid "Forgot?"
 msgstr "忘记了？"
 
@@ -4338,7 +4445,7 @@ msgstr "有害或高风险活动"
 msgid "Harming or endangering minors"
 msgstr "伤害或危及未成年人安全"
 
-#: src/Navigation.tsx:539
+#: src/Navigation.tsx:553
 msgid "Hashtag"
 msgstr "标签"
 
@@ -4359,8 +4466,8 @@ msgstr "拥有验证码？<0>点击这里。</0>"
 msgid "Having trouble?"
 msgstr "遇到问题了？"
 
-#: src/screens/Settings/Settings.tsx:236
-#: src/screens/Settings/Settings.tsx:240
+#: src/screens/Settings/Settings.tsx:245
+#: src/screens/Settings/Settings.tsx:249
 #: src/view/shell/desktop/RightNav.tsx:123
 #: src/view/shell/desktop/RightNav.tsx:124
 #: src/view/shell/Drawer.tsx:381
@@ -4379,6 +4486,14 @@ msgstr "以下是你的应用密码！"
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:119
 msgid "Hey there 👋"
 msgstr "嗨👋"
+
+#: src/ageAssurance/components/NoAccessScreen.tsx:147
+msgid "Hey there!"
+msgstr ""
+
+#: src/ageAssurance/components/NoAccessScreen.tsx:178
+msgid "Hi there!"
+msgstr ""
 
 #: src/components/VideoPostCard.tsx:178
 #: src/components/VideoPostCard.tsx:462
@@ -4476,6 +4591,10 @@ msgstr "隐藏认证徽章"
 msgid "Hides the content"
 msgstr "隐藏内容"
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:205
+msgid "Hmm, it looks like you're logged in with an <0>App Password</0>. To set your birthdate, you'll need to log in with your main account password, or ask whomever controls this account to do so."
+msgstr ""
+
 #: src/view/com/posts/PostFeedErrorMessage.tsx:124
 msgid "Hmm, some kind of issue occurred when contacting the feed server. Please let the feed owner know about this issue."
 msgstr "抱歉，连接动态源服务器出现问题。请联系动态源的维护者反馈此问题。"
@@ -4508,8 +4627,8 @@ msgstr "抱歉，我们无法加载该内容审核提供服务方。"
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "请稍等！我们正在逐步开放上传视频的权限。你目前仍在等待队伍中，请稍后再回来查看！"
 
-#: src/Navigation.tsx:754
-#: src/Navigation.tsx:774
+#: src/Navigation.tsx:768
+#: src/Navigation.tsx:788
 #: src/view/shell/bottom-bar/BottomBar.tsx:178
 #: src/view/shell/desktop/LeftNav.tsx:672
 #: src/view/shell/Drawer.tsx:440
@@ -4519,11 +4638,6 @@ msgstr "主页"
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:428
 msgid "Host:"
 msgstr "主机："
-
-#: src/screens/Login/ForgotPasswordForm.tsx:83
-#: src/screens/Login/LoginForm.tsx:184
-msgid "Hosting provider"
-msgstr "托管服务提供商"
 
 #: src/screens/Search/modules/ExploreTrendingTopics.tsx:191
 msgid "Hot"
@@ -4553,19 +4667,27 @@ msgstr "我拥有自己的域名"
 msgid "I understand"
 msgstr "我了解"
 
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
+msgid "Identity:"
+msgstr ""
+
 #: src/view/com/lightbox/Lightbox.web.tsx:187
 msgid "If alt text is long, toggles alt text expanded state"
 msgstr "若替代文本过长，切换替代文本的展开状态"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:204
+msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
+msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:110
 msgid "If you are not yet an adult according to the laws of your country, your parent or legal guardian must read these Terms on your behalf."
 msgstr "若你是所在国家法律定义的未成年人，则你的父母或法定监护人必须代表你阅读这些条款。"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:98
+#: src/ageAssurance/components/NoAccessScreen.tsx:102
 msgid "If you believe your birthdate is incorrect, please <0>contact our support team</0>."
 msgstr "如果你认为你的出生日期不正确，请<0>联系我们的支持团队</0>。"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:83
+#: src/ageAssurance/components/NoAccessScreen.tsx:87
 msgid "If you believe your birthdate is incorrect, you can update it by <0>clicking here</0>."
 msgstr "如果你认为你的出生日期不正确，你可以<0>点击这里</0>来更新。"
 
@@ -4589,7 +4711,7 @@ msgstr "如果你删除这则帖文，则以后将无法恢复。"
 msgid "If you update your email address, email 2FA will be disabled."
 msgstr "如果你更新电子邮箱地址，电子邮箱两步验证将会停用。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:59
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:62
 msgid "If you want to change your password, we will send you a code to verify that this is your account."
 msgstr "如果你想要更改密码，我们将发送验证码到你的电子邮箱地址，以验证这是你的账户。"
 
@@ -4632,6 +4754,10 @@ msgstr "无法保存图片，请允许应用访问照片图库。"
 msgid "Impersonation"
 msgstr "冒充身份"
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:181
+msgid "In order to provide an age-appropriate experience, we need to know your birthdate. This is a one-time thing, and your data will be kept private."
+msgstr ""
+
 #: src/screens/Settings/NotificationSettings/index.tsx:284
 msgid "In-app"
 msgstr "应用内"
@@ -4665,7 +4791,7 @@ msgstr "应用内、系统推送、你关注的人"
 msgid "Inbox zero!"
 msgstr "收件箱清空啦！"
 
-#: src/screens/Login/LoginForm.tsx:164
+#: src/screens/Login/LoginForm.tsx:330
 msgid "Incorrect username or password"
 msgstr "用户名或密码不正确"
 
@@ -4685,7 +4811,7 @@ msgstr "输入新的密码"
 msgid "Input password for account deletion"
 msgstr "输入密码以删除账户"
 
-#: src/screens/Login/LoginForm.tsx:296
+#: src/screens/Login/LoginForm.tsx:608
 msgid "Input the code which has been emailed to you"
 msgstr "输入发送至你电子邮箱的验证码"
 
@@ -4705,7 +4831,7 @@ msgstr "全新推出动态提醒"
 msgid "Introducing saved posts AKA bookmarks"
 msgstr "隆重介绍帖文收藏（又名书签）"
 
-#: src/screens/Login/LoginForm.tsx:156
+#: src/screens/Login/LoginForm.tsx:310
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:70
 msgid "Invalid 2FA confirmation code."
 msgstr "两步验证码无效。"
@@ -4719,9 +4845,17 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr "无效的互动选项。"
 
+#: src/screens/Login/LoginForm.tsx:423
+msgid "Invalid login response. Please try again or sign in manually."
+msgstr ""
+
 #: src/components/moderation/ReportDialog/index.tsx:81
 msgid "Invalid report subject"
 msgstr "无效的举报内容"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
+msgid "Invalid signature. Please try again."
+msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:85
 msgid "Invalid Verification Code"
@@ -4747,14 +4881,10 @@ msgstr "邀请朋友关注你喜欢的动态源和用户"
 msgid "Invites, but personal"
 msgstr "以个性化的方式邀请朋友加入"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:313
+#: src/ageAssurance/components/NoAccessScreen.tsx:341
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:84
 msgid "Is your location not accurate? <0>Tap here to confirm your location.</0>"
 msgstr "当前的位置信息不准确？<0>点击这里来重新确认你所在的位置。</0>"
-
-#: src/ageAssurance/components/NoAccessScreen.tsx:171
-msgid "It looks like you haven't added your birthdate. You must provide an accurate date of birth to use Bluesky."
-msgstr "看起来你还没有添加你的出生日期，你必须向我们提供准确的出生日期才能继续使用 Bluesky。"
 
 #: src/screens/Signup/StepInfo/index.tsx:292
 msgid "It's correct"
@@ -4777,8 +4907,6 @@ msgstr "作业 ID：{0}"
 msgid "Jobs"
 msgstr "工作"
 
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:464
 #: src/screens/StarterPack/StarterPackScreen.tsx:475
 msgid "Join Bluesky"
@@ -4789,6 +4917,11 @@ msgstr "加入 Bluesky"
 msgid "Join the conversation"
 msgstr "加入对话"
 
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
+msgid "Join VerusSky"
+msgstr ""
+
 #: src/lib/interests.ts:63
 #: src/screens/Onboarding/index.tsx:52
 msgid "Journalism"
@@ -4798,11 +4931,11 @@ msgstr "新闻学"
 msgid "Keep me posted"
 msgstr "保持联系"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:339
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:340
 msgid "KWS Privacy Policy"
 msgstr "KWS 隐私政策"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:331
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:332
 msgid "KWS Terms of Use"
 msgstr "KWS 服务条款"
 
@@ -4819,7 +4952,7 @@ msgid "Labeled by the author."
 msgstr "由发布者标记。"
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:69
-#: src/view/screens/Profile.tsx:232
+#: src/view/screens/Profile.tsx:239
 msgid "Labels"
 msgstr "标记"
 
@@ -4839,13 +4972,13 @@ msgstr "你账户上的标记"
 msgid "Labels on your content"
 msgstr "你内容上的标记"
 
-#: src/Navigation.tsx:218
+#: src/Navigation.tsx:224
 msgid "Language Settings"
 msgstr "语言设置"
 
 #: src/screens/Settings/LanguageSettings.tsx:78
-#: src/screens/Settings/Settings.tsx:228
-#: src/screens/Settings/Settings.tsx:231
+#: src/screens/Settings/Settings.tsx:237
+#: src/screens/Settings/Settings.tsx:240
 msgid "Languages"
 msgstr "语言"
 
@@ -4853,12 +4986,12 @@ msgstr "语言"
 msgid "Larger"
 msgstr "更大"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:296
+#: src/ageAssurance/components/NoAccessScreen.tsx:324
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:185
 msgid "Last initiated {timeAgo} ago"
 msgstr "最后一次请求于 {timeAgo} 前"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:294
+#: src/ageAssurance/components/NoAccessScreen.tsx:322
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:183
 msgid "Last initiated just now"
 msgstr "最后一次请求于不久前"
@@ -4956,8 +5089,8 @@ msgstr "全部留空以显示所有语言的帖文。"
 
 #: src/components/dialogs/LinkWarning.tsx:67
 #: src/components/dialogs/LinkWarning.tsx:75
-msgid "Leaving Bluesky"
-msgstr "离开 Bluesky"
+msgid "Leaving VerusSky"
+msgstr ""
 
 #: src/screens/SignupQueued.tsx:155
 msgid "left to go."
@@ -5006,7 +5139,7 @@ msgstr "喜欢 10 则帖文"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "喜欢 10 则帖文以训练“Discover”资讯源"
 
-#: src/Navigation.tsx:452
+#: src/Navigation.tsx:466
 msgid "Like notifications"
 msgstr "喜欢通知"
 
@@ -5018,8 +5151,8 @@ msgstr "喜欢此动态源"
 msgid "Like this labeler"
 msgstr "喜欢此标记者"
 
-#: src/Navigation.tsx:296
-#: src/Navigation.tsx:301
+#: src/Navigation.tsx:302
+#: src/Navigation.tsx:307
 msgid "Liked by"
 msgstr "喜欢的用户"
 
@@ -5044,7 +5177,7 @@ msgstr "{likeCount, plural, one {# 位用户} other {# 位用户}}喜欢"
 #: src/lib/hooks/useNotificationHandler.ts:126
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:238
+#: src/view/screens/Profile.tsx:245
 msgid "Likes"
 msgstr "喜欢"
 
@@ -5054,7 +5187,7 @@ msgstr "喜欢"
 msgid "Likes of your reposts"
 msgstr "喜欢你转发的帖文"
 
-#: src/Navigation.tsx:476
+#: src/Navigation.tsx:490
 msgid "Likes of your reposts notifications"
 msgstr "喜欢你转发帖文的通知"
 
@@ -5067,7 +5200,40 @@ msgstr "这则帖文的喜欢数"
 msgid "Linear"
 msgstr "线性视图"
 
-#: src/Navigation.tsx:251
+#: src/screens/Settings/VerusServicesSettings.tsx:91
+#: src/screens/Settings/VerusServicesSettings.tsx:98
+msgid "Link Account to VerusID"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
+msgid "Link Removed"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+msgid "Link VerusID to account"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
+msgid "Link VerusID to Profile"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+msgid "Link your VerusID to this account to verify your identity."
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:67
+msgid "Linked VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
+msgid "Linking complete"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:683
+msgid "Links to signing in on the same device"
+msgstr ""
+
+#: src/Navigation.tsx:257
 msgid "List"
 msgstr "列表"
 
@@ -5147,10 +5313,10 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "已取消隐藏该列表"
 
-#: src/Navigation.tsx:172
+#: src/Navigation.tsx:178
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:233
-#: src/view/screens/Profile.tsx:241
+#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:248
 #: src/view/shell/desktop/LeftNav.tsx:746
 #: src/view/shell/Drawer.tsx:545
 msgid "Lists"
@@ -5213,7 +5379,7 @@ msgstr "正在加载帖文互动选项……"
 msgid "Loading..."
 msgstr "加载中……"
 
-#: src/Navigation.tsx:321
+#: src/Navigation.tsx:327
 msgid "Log"
 msgstr "日志"
 
@@ -5300,7 +5466,7 @@ msgstr "已标记所有为已读"
 msgid "Maybe later"
 msgstr "之后再说"
 
-#: src/view/screens/Profile.tsx:236
+#: src/view/screens/Profile.tsx:243
 msgid "Media"
 msgstr "媒体"
 
@@ -5308,7 +5474,7 @@ msgstr "媒体"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "可能会令部分受众不安或造成不适的媒体内容。"
 
-#: src/Navigation.tsx:436
+#: src/Navigation.tsx:450
 msgid "Mention notifications"
 msgstr "提及通知"
 
@@ -5361,7 +5527,7 @@ msgstr "私信过长"
 msgid "Message options"
 msgstr "私信选项"
 
-#: src/Navigation.tsx:769
+#: src/Navigation.tsx:783
 msgid "Messages"
 msgstr "私信"
 
@@ -5374,7 +5540,7 @@ msgstr "午夜"
 msgid "Minor harassment or bullying"
 msgstr "轻度骚扰或霸凌行为"
 
-#: src/Navigation.tsx:500
+#: src/Navigation.tsx:514
 msgid "Miscellaneous notifications"
 msgstr "其他通知"
 
@@ -5382,10 +5548,14 @@ msgstr "其他通知"
 msgid "Misleading"
 msgstr "误导"
 
-#: src/Navigation.tsx:177
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
+msgid "Mobile support coming soon"
+msgstr ""
+
+#: src/Navigation.tsx:183
 #: src/screens/Moderation/index.tsx:99
-#: src/screens/Settings/Settings.tsx:188
-#: src/screens/Settings/Settings.tsx:191
+#: src/screens/Settings/Settings.tsx:197
+#: src/screens/Settings/Settings.tsx:200
 msgid "Moderation"
 msgstr "内容审核"
 
@@ -5421,7 +5591,7 @@ msgstr "已更新内容审核列表"
 msgid "Moderation lists"
 msgstr "内容审核列表"
 
-#: src/Navigation.tsx:182
+#: src/Navigation.tsx:188
 #: src/view/screens/ModerationModlists.tsx:67
 msgid "Moderation Lists"
 msgstr "内容审核列表"
@@ -5430,7 +5600,7 @@ msgstr "内容审核列表"
 msgid "moderation settings"
 msgstr "内容审核设置"
 
-#: src/Navigation.tsx:311
+#: src/Navigation.tsx:317
 msgid "Moderation states"
 msgstr "内容审核状态"
 
@@ -5553,7 +5723,7 @@ msgstr "隐藏字词和标签"
 msgid "Muted accounts"
 msgstr "已隐藏账户"
 
-#: src/Navigation.tsx:187
+#: src/Navigation.tsx:193
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "已隐藏账户"
@@ -5602,7 +5772,7 @@ msgid "Navigate to starter pack"
 msgstr "转到新手包"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:166
-#: src/screens/Login/LoginForm.tsx:347
+#: src/screens/Login/LoginForm.tsx:684
 msgid "Navigates to the next screen"
 msgstr "转到下一页"
 
@@ -5657,7 +5827,7 @@ msgstr "新的电子邮箱地址"
 msgid "New Feature"
 msgstr "新功能"
 
-#: src/Navigation.tsx:468
+#: src/Navigation.tsx:482
 msgid "New follower notifications"
 msgstr "新关注者通知"
 
@@ -5683,8 +5853,8 @@ msgid "New messages"
 msgstr "新私信"
 
 #: src/screens/Login/SetNewPasswordForm.tsx:141
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:203
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:207
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:206
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:210
 msgid "New password"
 msgstr "新密码"
 
@@ -5693,7 +5863,7 @@ msgstr "新密码"
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:167
-#: src/view/screens/Profile.tsx:571
+#: src/view/screens/Profile.tsx:579
 msgid "New post"
 msgstr "新帖文"
 
@@ -5738,8 +5908,8 @@ msgstr "新闻"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:137
 #: src/screens/Login/ForgotPasswordForm.tsx:143
-#: src/screens/Login/LoginForm.tsx:346
-#: src/screens/Login/LoginForm.tsx:353
+#: src/screens/Login/LoginForm.tsx:680
+#: src/screens/Login/LoginForm.tsx:691
 #: src/screens/Login/SetNewPasswordForm.tsx:182
 #: src/screens/Login/SetNewPasswordForm.tsx:188
 #: src/screens/Onboarding/StepFinished/index.tsx:341
@@ -5759,8 +5929,8 @@ msgid "Next image"
 msgstr "下一张图片"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:32
-msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
-msgstr "无广告，无侵入式追踪，更没有成瘾性设计。Bluesky 充分尊重你宝贵的时间与注意力。"
+msgid "No ads, no invasive tracking, no engagement traps. VerusSky respects your time and attention."
+msgstr ""
 
 #: src/screens/Settings/AppPasswords.tsx:107
 msgid "No app passwords yet"
@@ -5793,17 +5963,17 @@ msgstr "没有图片"
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
-#: src/view/screens/Profile.tsx:511
+#: src/view/screens/Profile.tsx:519
 msgid "No likes yet"
 msgstr "目前还没有喜欢"
 
 #: src/components/ProfileCard.tsx:525
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:269
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:291
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "已不再关注 {0}"
 
-#: src/view/screens/Profile.tsx:467
+#: src/view/screens/Profile.tsx:475
 msgid "No media yet"
 msgstr "目前还没有媒体内容"
 
@@ -5836,7 +6006,7 @@ msgid "No posts here"
 msgstr "目前这里还没有帖文"
 
 #: src/screens/Profile/Sections/Feed.tsx:80
-#: src/view/screens/Profile.tsx:431
+#: src/view/screens/Profile.tsx:439
 msgid "No posts yet"
 msgstr "目前还没有帖文"
 
@@ -5844,7 +6014,7 @@ msgstr "目前还没有帖文"
 msgid "No quotes yet"
 msgstr "目前还没有引用"
 
-#: src/view/screens/Profile.tsx:452
+#: src/view/screens/Profile.tsx:460
 msgid "No replies yet"
 msgstr "目前还没有回复"
 
@@ -5866,8 +6036,8 @@ msgstr "没有结果"
 msgid "No results for \"{0}\"."
 msgstr "找不到符合“{0}”的结果。"
 
-#: src/components/Lists.tsx:201
-#: src/components/Lists.tsx:216
+#: src/components/Lists.tsx:203
+#: src/components/Lists.tsx:218
 msgid "No results found"
 msgstr "找不到结果"
 
@@ -5892,7 +6062,11 @@ msgstr "找不到符合“{search}”的搜索结果。"
 msgid "No thanks"
 msgstr "不，谢谢"
 
-#: src/view/screens/Profile.tsx:489
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
+msgid "No VerusID link found to remove"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:497
 msgid "No video posts yet"
 msgstr "目前还没有视频帖文"
 
@@ -5933,8 +6107,8 @@ msgstr "无"
 msgid "Not followed by anyone you're following"
 msgstr "没有任何你认识的人关注"
 
-#: src/Navigation.tsx:167
-#: src/view/screens/Profile.tsx:132
+#: src/Navigation.tsx:173
+#: src/view/screens/Profile.tsx:134
 msgid "Not Found"
 msgstr "找不到"
 
@@ -5942,13 +6116,13 @@ msgstr "找不到"
 msgid "Note about sharing"
 msgstr "分享注意事项"
 
-#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
-msgid "Note: Bluesky is an open and public network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
-msgstr "注意：Bluesky 是一个开放的社交网络。此设置仅限制你的内容在 Bluesky 应用及网页上的可见性，但第三方应用未必会遵从此设置，仍可能会向未登录的用户显示你发布的内容。"
-
 #: src/components/PostControls/ShareMenu/ShareMenuItems.web.tsx:133
 msgid "Note: This post is only visible to logged-in users."
 msgstr "注：这则帖文仅对已登录用户可见。"
+
+#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
+msgid "Note: VerusSky uses the open and public network Bluesky network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
+msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:304
 msgid "Nothing here"
@@ -5959,8 +6133,8 @@ msgstr "这里什么也没有"
 msgid "Nothing saved yet"
 msgstr "目前没有收藏内容"
 
-#: src/Navigation.tsx:422
-#: src/Navigation.tsx:569
+#: src/Navigation.tsx:436
+#: src/Navigation.tsx:583
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "通知设置"
@@ -5973,8 +6147,8 @@ msgstr "通知提示音"
 msgid "Notification Sounds"
 msgstr "通知提示音"
 
-#: src/Navigation.tsx:564
-#: src/Navigation.tsx:764
+#: src/Navigation.tsx:578
+#: src/Navigation.tsx:778
 #: src/screens/Notifications/ActivityList.tsx:30
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:90
 #: src/screens/Settings/NotificationSettings/index.tsx:92
@@ -5987,8 +6161,8 @@ msgstr "通知提示音"
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostsOnRepostsNotificationSettings.tsx:30
-#: src/screens/Settings/Settings.tsx:196
-#: src/screens/Settings/Settings.tsx:199
+#: src/screens/Settings/Settings.tsx:205
+#: src/screens/Settings/Settings.tsx:208
 #: src/view/screens/Notifications.tsx:130
 #: src/view/shell/bottom-bar/BottomBar.tsx:252
 #: src/view/shell/desktop/LeftNav.tsx:709
@@ -6048,7 +6222,7 @@ msgstr "最早回复优先"
 msgid "on<0><1/><2><3/></2></0>"
 msgstr "于<0><1/><2><3/></2></0>"
 
-#: src/screens/Settings/Settings.tsx:388
+#: src/screens/Settings/Settings.tsx:397
 msgid "Onboarding reset"
 msgstr "重新开始入门引导"
 
@@ -6103,7 +6277,7 @@ msgstr "糟糕，出了点问题！"
 #: src/components/StarterPack/ProfileStarterPacks.tsx:369
 #: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:132
+#: src/view/screens/Profile.tsx:134
 msgid "Oops!"
 msgstr "糟糕！"
 
@@ -6123,6 +6297,10 @@ msgstr "开启相机"
 #: src/screens/Messages/components/ChatListItem.tsx:378
 msgid "Open conversation options"
 msgstr "开启对话选项"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
+msgid "Open credential update deeplink"
+msgstr ""
 
 #: src/components/Layout/Header/index.tsx:159
 msgid "Open drawer menu"
@@ -6154,7 +6332,7 @@ msgstr "开启指向 {niceUrl} 的链接"
 msgid "Open message options"
 msgstr "开启私信选项"
 
-#: src/screens/Settings/Settings.tsx:453
+#: src/screens/Settings/Settings.tsx:462
 msgid "Open moderation debug page"
 msgstr "开启内容审核调试页面"
 
@@ -6183,14 +6361,18 @@ msgstr "开启分享菜单"
 msgid "Open starter pack menu"
 msgstr "开启新手包菜单"
 
-#: src/screens/Settings/Settings.tsx:446
-#: src/screens/Settings/Settings.tsx:460
+#: src/screens/Settings/Settings.tsx:455
+#: src/screens/Settings/Settings.tsx:469
 msgid "Open storybook page"
 msgstr "开启 Storybook 页面"
 
-#: src/screens/Settings/Settings.tsx:439
+#: src/screens/Settings/Settings.tsx:448
 msgid "Open system log"
 msgstr "开启系统日志"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
+msgid "Open Verus Wallet"
+msgstr ""
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:62
 msgid "Opens a dialog to add a content warning to your post"
@@ -6251,7 +6433,7 @@ msgstr "开启登录到你现有的 Bluesky 账户流程"
 msgid "Opens GIF select dialog"
 msgstr "开启 GIF 选择对话框"
 
-#: src/screens/Settings/Settings.tsx:237
+#: src/screens/Settings/Settings.tsx:246
 msgid "Opens helpdesk in browser"
 msgstr "在浏览器中打开说明中心"
 
@@ -6267,7 +6449,7 @@ msgstr "开启链接 {0}"
 msgid "Opens live status dialog"
 msgstr "打开直播状态对话框"
 
-#: src/screens/Login/LoginForm.tsx:259
+#: src/screens/Login/LoginForm.tsx:528
 msgid "Opens password reset form"
 msgstr "开启密码重置申请"
 
@@ -6359,12 +6541,8 @@ msgstr "我们的博客文章"
 msgid "Our moderation team has received your report."
 msgstr "我们的审核团队已收到你的举报。"
 
-#: src/screens/Messages/components/ChatDisabled.tsx:34
-msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
-msgstr "内容审核服务提供方已收到相关举报，并决定停用你的 Bluesky 私信功能。"
-
-#: src/components/Lists.tsx:202
-#: src/components/Lists.tsx:217
+#: src/components/Lists.tsx:204
+#: src/components/Lists.tsx:219
 #: src/view/screens/NotFound.tsx:47
 msgid "Page not found"
 msgstr "无法找到此页面"
@@ -6373,7 +6551,11 @@ msgstr "无法找到此页面"
 msgid "Page Not Found"
 msgstr "无法找到此页面"
 
-#: src/screens/Login/LoginForm.tsx:229
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
+#: src/components/dialogs/VerusServiceDialog.tsx:229
+#: src/components/dialogs/VerusServiceDialog.tsx:233
+#: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:121
 #: src/screens/Settings/AccountSettings.tsx:125
 #: src/screens/Signup/StepInfo/index.tsx:231
@@ -6382,11 +6564,11 @@ msgstr "无法找到此页面"
 msgid "Password"
 msgstr "密码"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:69
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:72
 msgid "Password changed"
 msgstr "已更改密码"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:124
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:127
 msgid "Password must be at least 8 characters long."
 msgstr "密码应至少包含 8 个字符。"
 
@@ -6397,6 +6579,10 @@ msgstr "已更新密码"
 #: src/screens/Login/PasswordUpdatedForm.tsx:23
 msgid "Password updated!"
 msgstr "已更新密码！"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
+msgid "Paste your signature here"
+msgstr ""
 
 #: src/components/Post/Embed/ExternalEmbed/Gif.tsx:43
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:137
@@ -6414,11 +6600,11 @@ msgstr "暂停视频"
 msgid "People"
 msgstr "用户"
 
-#: src/Navigation.tsx:238
+#: src/Navigation.tsx:244
 msgid "People followed by @{0}"
 msgstr "被 @{0} 关注的用户"
 
-#: src/Navigation.tsx:231
+#: src/Navigation.tsx:237
 msgid "People following @{0}"
 msgstr "关注 @{0} 的用户"
 
@@ -6562,13 +6748,25 @@ msgstr "请完成 CAPTCHA（人机验证）。"
 msgid "Please double-check that you have entered your email address correctly."
 msgstr "请再次确认你输入的电子邮箱地址是否正确。"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:75
+msgid "Please enter a password for the provided username"
+msgstr ""
+
 #: src/screens/Login/SetNewPasswordForm.tsx:58
 msgid "Please enter a password."
 msgstr "请输入密码。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:119
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:122
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr "请输入密码，至少应包含 8 个字符。"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:56
+msgid "Please enter a service URL"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:70
+msgid "Please enter a system ID"
+msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
 msgid "Please enter a unique name for this app password or use our randomly generated one."
@@ -6585,6 +6783,10 @@ msgstr "请输入有效的验证码。"
 msgid "Please enter a valid email address."
 msgstr "请输入有效的电子邮件地址。"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:65
+msgid "Please enter a valid URL"
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:86
 msgid "Please enter a valid word, tag, or phrase to mute"
 msgstr "请输入有效的字词或标签以进行隐藏"
@@ -6597,13 +6799,21 @@ msgstr "请输入一个有效、非临时的电子邮箱地址，你日后可能
 msgid "Please enter the code we sent to <0>{0}</0> below."
 msgstr "请输入我们发送到 <0>{0}</0> 的验证码。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:65
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:68
 msgid "Please enter the code you received and the new password you would like to use."
 msgstr "请输入你收到的验证码以及你想使用的新密码。"
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:247
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "请输入我们之前发送到你电子邮箱地址的验证码。"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
+msgid "Please enter the signature."
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
+msgid "Please enter your email"
+msgstr ""
 
 #: src/screens/Signup/state.ts:265
 #: src/screens/Signup/StepInfo/index.tsx:93
@@ -6618,7 +6828,8 @@ msgstr "请输入你的邀请码。"
 msgid "Please enter your new email address."
 msgstr "请输入你的新电子邮箱地址。"
 
-#: src/screens/Login/LoginForm.tsx:99
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
+#: src/screens/Login/LoginForm.tsx:222
 msgid "Please enter your password"
 msgstr "请输入你的密码"
 
@@ -6626,9 +6837,17 @@ msgstr "请输入你的密码"
 msgid "Please enter your password as well:"
 msgstr "请输入你的密码："
 
-#: src/screens/Login/LoginForm.tsx:94
+#: src/screens/Login/LoginForm.tsx:217
 msgid "Please enter your username"
 msgstr "请输入你的用户名"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
+msgid "Please enter your VerusID name"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
+msgid "Please enter your VerusID name."
+msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:308
 msgid "Please explain why you think this label was incorrectly applied by {0}"
@@ -6647,7 +6866,7 @@ msgstr "请返回，或触发这个元素以回到内容的开头。"
 msgid "Please provide any additional details you feel moderators may need in order to properly assess your Age Assurance status."
 msgstr "请提供你认为支持团队所需要的任何额外补充信息，以便评估你的年龄验证状态。"
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:302
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:303
 msgid "Please select a language"
 msgstr "请选择语言"
 
@@ -6692,13 +6911,13 @@ msgctxt "action"
 msgid "Post"
 msgstr "发布"
 
-#: src/view/screens/Profile.tsx:469
-#: src/view/screens/Profile.tsx:470
+#: src/view/screens/Profile.tsx:477
+#: src/view/screens/Profile.tsx:478
 msgid "Post a photo"
 msgstr "发布一张图片"
 
-#: src/view/screens/Profile.tsx:491
-#: src/view/screens/Profile.tsx:492
+#: src/view/screens/Profile.tsx:499
+#: src/view/screens/Profile.tsx:500
 msgid "Post a video"
 msgstr "发布一段视频"
 
@@ -6711,10 +6930,10 @@ msgstr "全部发布"
 msgid "Post blocked"
 msgstr "帖文已被屏蔽"
 
-#: src/Navigation.tsx:264
-#: src/Navigation.tsx:271
-#: src/Navigation.tsx:278
-#: src/Navigation.tsx:285
+#: src/Navigation.tsx:270
+#: src/Navigation.tsx:277
+#: src/Navigation.tsx:284
+#: src/Navigation.tsx:291
 msgid "Post by @{0}"
 msgstr "@{0} 的帖文"
 
@@ -6748,7 +6967,7 @@ msgstr "你已隐藏这则帖文"
 msgid "Post interaction settings"
 msgstr "帖文互动选项"
 
-#: src/Navigation.tsx:198
+#: src/Navigation.tsx:204
 #: src/screens/ModerationInteractionSettings/index.tsx:34
 msgid "Post Interaction Settings"
 msgstr "帖文互动选项"
@@ -6782,7 +7001,7 @@ msgstr "已取消固定帖文"
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:191
-#: src/view/screens/Profile.tsx:234
+#: src/view/screens/Profile.tsx:241
 msgid "Posts"
 msgstr "帖文"
 
@@ -6806,6 +7025,14 @@ msgstr "潜在误导性链接"
 msgid "Potentially misleading link warning"
 msgstr "潜在误导性链接警告"
 
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:292
+msgid "Preferred language"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
+msgid "Prepare linking"
+msgstr ""
+
 #: src/screens/Messages/components/MessageListError.tsx:19
 msgid "Press to attempt reconnection"
 msgstr "点按此处以重试连接"
@@ -6825,7 +7052,11 @@ msgstr "点按此处以查看同样关注该账户的关注者"
 msgid "Previous image"
 msgstr "上一张图片"
 
-#: src/screens/Settings/LanguageSettings.tsx:120
+#: src/screens/Settings/LanguageSettings.tsx:137
+msgid "Primary language"
+msgstr ""
+
+#: src/screens/Settings/LanguageSettings.tsx:121
 msgid "Primary Language"
 msgstr "主要语言"
 
@@ -6834,13 +7065,13 @@ msgstr "主要语言"
 msgid "Privacy"
 msgstr "隐私"
 
-#: src/screens/Settings/Settings.tsx:182
-#: src/screens/Settings/Settings.tsx:185
+#: src/screens/Settings/Settings.tsx:191
+#: src/screens/Settings/Settings.tsx:194
 msgid "Privacy and security"
 msgstr "隐私与安全"
 
-#: src/Navigation.tsx:407
-#: src/Navigation.tsx:415
+#: src/Navigation.tsx:421
+#: src/Navigation.tsx:429
 #: src/screens/Settings/ActivityPrivacySettings.tsx:40
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:44
 msgid "Privacy and Security"
@@ -6853,7 +7084,7 @@ msgstr "隐私与安全设置"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:35
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:102
-#: src/Navigation.tsx:331
+#: src/Navigation.tsx:337
 #: src/screens/Settings/AboutSettings.tsx:92
 #: src/screens/Settings/AboutSettings.tsx:95
 #: src/view/screens/PrivacyPolicy.tsx:34
@@ -6876,7 +7107,7 @@ msgid "Processing..."
 msgstr "处理中……"
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:384
+#: src/view/screens/Profile.tsx:392
 msgid "profile"
 msgstr "个人资料"
 
@@ -6956,7 +7187,7 @@ msgstr "已下载二维码！"
 msgid "QR code saved to your camera roll!"
 msgstr "已保存二维码至照片图库！"
 
-#: src/Navigation.tsx:444
+#: src/Navigation.tsx:458
 msgid "Quote notifications"
 msgstr "引用通知"
 
@@ -7046,13 +7277,13 @@ msgstr "浏览 Bluesky 博客"
 
 #: src/screens/Signup/StepInfo/Policies.tsx:56
 #: src/screens/Signup/StepInfo/Policies.tsx:82
-msgid "Read the Bluesky Privacy Policy"
-msgstr "浏览 Bluesky 隐私设置"
+msgid "Read the VerusSky Privacy Policy"
+msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:49
 #: src/screens/Signup/StepInfo/Policies.tsx:69
-msgid "Read the Bluesky Terms of Service"
-msgstr "浏览 Bluesky 服务条款"
+msgid "Read the VerusSky Terms of Service"
+msgstr ""
 
 #: src/components/WelcomeModal.tsx:146
 msgid "Real conversations."
@@ -7113,7 +7344,7 @@ msgstr "重新加载对话"
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:105
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:112
 #: src/screens/Bookmarks/index.tsx:266
-#: src/screens/Settings/Settings.tsx:664
+#: src/screens/Settings/Settings.tsx:673
 #: src/view/com/modals/UserAddRemoveLists.tsx:235
 #: src/view/com/posts/PostFeedErrorMessage.tsx:220
 msgid "Remove"
@@ -7127,8 +7358,8 @@ msgstr "从你的新手包中删除 {displayName}"
 msgid "Remove {historyItem}"
 msgstr "删除 {historyItem}"
 
-#: src/screens/Settings/Settings.tsx:643
-#: src/screens/Settings/Settings.tsx:646
+#: src/screens/Settings/Settings.tsx:652
+#: src/screens/Settings/Settings.tsx:655
 msgid "Remove account"
 msgstr "移除账户"
 
@@ -7168,7 +7399,7 @@ msgstr "要删除动态源吗？"
 msgid "Remove from my feeds"
 msgstr "从我的动态源中删除"
 
-#: src/screens/Settings/Settings.tsx:656
+#: src/screens/Settings/Settings.tsx:665
 msgid "Remove from quick access?"
 msgstr "要从快速访问中移除吗？"
 
@@ -7189,6 +7420,23 @@ msgstr "要从你的动态源中删除吗？"
 #: src/view/com/composer/photos/Gallery.tsx:204
 msgid "Remove image"
 msgstr "删除图片"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
+msgid "Remove Link"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+msgid "Remove link to VerusID"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
+msgid "Remove Link to VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:558
+#: src/screens/Login/LoginForm.tsx:566
+msgid "Remove linked VerusID"
+msgstr ""
 
 #: src/components/live/EditLiveDialog.tsx:240
 #: src/components/live/EditLiveDialog.tsx:247
@@ -7226,6 +7474,11 @@ msgstr "从列表中移除用户"
 #: src/view/com/profile/ProfileMenu.tsx:356
 msgid "Remove verification"
 msgstr "撤回认证"
+
+#: src/screens/Settings/VerusServicesSettings.tsx:105
+#: src/screens/Settings/VerusServicesSettings.tsx:110
+msgid "Remove VerusID Link"
+msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:44
 msgid "Remove your verification for this account?"
@@ -7298,7 +7551,7 @@ msgstr "对你进行回复"
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:242
 msgid "Replies"
 msgstr "回复"
 
@@ -7330,7 +7583,7 @@ msgstr "已被这条讨论串的发布者隐藏回复"
 msgid "Reply Hidden by You"
 msgstr "你已隐藏这则回复"
 
-#: src/Navigation.tsx:428
+#: src/Navigation.tsx:442
 msgid "Reply notifications"
 msgstr "回复通知"
 
@@ -7445,7 +7698,7 @@ msgstr "转发"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "转发（{0, plural, one {# 次转发} other {# 次转发}}）"
 
-#: src/Navigation.tsx:460
+#: src/Navigation.tsx:474
 msgid "Repost notifications"
 msgstr "转发通知"
 
@@ -7486,12 +7739,12 @@ msgstr "转发这则帖文"
 msgid "Reposts of your reposts"
 msgstr "转发你转发的帖文"
 
-#: src/Navigation.tsx:484
+#: src/Navigation.tsx:498
 msgid "Reposts of your reposts notifications"
 msgstr "转发你转发帖文的通知"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:225
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:231
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:228
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:234
 msgid "Request code"
 msgstr "请求码"
 
@@ -7529,8 +7782,8 @@ msgstr "重新发送电子邮件"
 msgid "Resend Verification Email"
 msgstr "重新发送验证码电子邮件"
 
-#: src/screens/Settings/Settings.tsx:482
-#: src/screens/Settings/Settings.tsx:484
+#: src/screens/Settings/Settings.tsx:491
+#: src/screens/Settings/Settings.tsx:493
 msgid "Reset activity subscription nudge"
 msgstr "重置动态提醒功能提示"
 
@@ -7538,8 +7791,8 @@ msgstr "重置动态提醒功能提示"
 msgid "Reset code"
 msgstr "重置码"
 
-#: src/screens/Settings/Settings.tsx:467
-#: src/screens/Settings/Settings.tsx:469
+#: src/screens/Settings/Settings.tsx:476
+#: src/screens/Settings/Settings.tsx:478
 msgid "Reset onboarding state"
 msgstr "重置入门引导状态"
 
@@ -7547,7 +7800,7 @@ msgstr "重置入门引导状态"
 msgid "Reset password"
 msgstr "重置密码"
 
-#: src/screens/Login/LoginForm.tsx:327
+#: src/screens/Login/LoginForm.tsx:639
 msgid "Retries signing in"
 msgstr "重试登录"
 
@@ -7563,8 +7816,8 @@ msgstr "重试上次出错的操作"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:55
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:58
 #: src/components/StarterPack/ProfileStarterPacks.tsx:374
-#: src/screens/Login/LoginForm.tsx:326
-#: src/screens/Login/LoginForm.tsx:333
+#: src/screens/Login/LoginForm.tsx:638
+#: src/screens/Login/LoginForm.tsx:645
 #: src/screens/Messages/ChatList.tsx:292
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:219
@@ -7608,7 +7861,7 @@ msgstr "返回上一页"
 msgid "Returns to the previous step"
 msgstr "返回上一步"
 
-#: src/components/dialogs/BirthDateSettings.tsx:188
+#: src/components/dialogs/BirthDateSettings.tsx:190
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:292
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:307
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:662
@@ -7634,7 +7887,7 @@ msgctxt "action"
 msgid "Save"
 msgstr "保存"
 
-#: src/components/dialogs/BirthDateSettings.tsx:181
+#: src/components/dialogs/BirthDateSettings.tsx:183
 msgid "Save birthdate"
 msgstr "保存出生日期"
 
@@ -7650,6 +7903,14 @@ msgstr "保存更改"
 msgid "Save image"
 msgstr "保存图片"
 
+#: src/screens/Login/LoginForm.tsx:545
+msgid "Save Login with VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:553
+msgid "Save my sign in with VerusID"
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:253
 msgid "Save new handle"
 msgstr "保存新的账户代码"
@@ -7657,6 +7918,15 @@ msgstr "保存新的账户代码"
 #: src/components/StarterPack/QrCodeDialog.tsx:196
 msgid "Save QR code"
 msgstr "保存二维码"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
+msgid "Save sign in with VerusID"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:120
+#: src/screens/Settings/VerusServicesSettings.tsx:132
+msgid "Save Sign in with VerusID"
+msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:643
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:649
@@ -7679,7 +7949,7 @@ msgid "Saved Feeds"
 msgstr "已保存动态源"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:143
-#: src/Navigation.tsx:608
+#: src/Navigation.tsx:622
 #: src/screens/Bookmarks/index.tsx:60
 msgid "Saved Posts"
 msgstr "帖文收藏"
@@ -7699,6 +7969,14 @@ msgstr "问声好！"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:43
 msgid "Scam"
 msgstr "诈骗"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
+msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:578
+msgid "Scan the QR code below or press Sign in to continue"
+msgstr ""
 
 #: src/lib/interests.ts:71
 #: src/screens/Onboarding/index.tsx:64
@@ -7726,7 +8004,7 @@ msgstr "滚动到顶部"
 msgid "Search"
 msgstr "搜索"
 
-#: src/Navigation.tsx:257
+#: src/Navigation.tsx:263
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr "搜索 @{0} 的帖文"
@@ -7898,7 +8176,7 @@ msgstr "选择一个头像"
 msgid "Select an emoji"
 msgstr "选择一个表情符号"
 
-#: src/components/Select/index.tsx:206
+#: src/components/Select/index.tsx:199
 msgid "Select an option"
 msgstr "选择一个选项"
 
@@ -7906,7 +8184,7 @@ msgstr "选择一个选项"
 msgid "Select app language"
 msgstr "选择应用语言"
 
-#: src/screens/Settings/LanguageSettings.tsx:164
+#: src/screens/Settings/LanguageSettings.tsx:166
 msgid "Select content languages"
 msgstr "选择内容语言"
 
@@ -7938,8 +8216,9 @@ msgstr "选择 GIF “{0}”"
 msgid "Select how long to mute this word for."
 msgstr "选择要将这个字词隐藏多长时间。"
 
-#: src/components/LanguageSelect.tsx:35
-#: src/components/LanguageSelect.tsx:36
+#: src/components/AppLanguageDropdown.tsx:69
+#: src/components/LanguageSelect.tsx:37
+#: src/components/LanguageSelect.tsx:38
 msgid "Select language"
 msgstr "选择语言"
 
@@ -7947,7 +8226,7 @@ msgstr "选择语言"
 msgid "Select language..."
 msgstr "选择语言……"
 
-#: src/screens/Settings/LanguageSettings.tsx:178
+#: src/screens/Settings/LanguageSettings.tsx:180
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:248
 msgid "Select languages"
 msgstr "选择语言"
@@ -7960,7 +8239,7 @@ msgstr "选择内容审核服务提供方"
 msgid "Select post language"
 msgstr "选择帖文语言"
 
-#: src/screens/Settings/LanguageSettings.tsx:131
+#: src/screens/Settings/LanguageSettings.tsx:132
 msgid "Select primary language"
 msgstr "选择主要语言"
 
@@ -7968,6 +8247,10 @@ msgstr "选择主要语言"
 #: src/view/com/composer/videos/SubtitleFilePicker.tsx:67
 msgid "Select subtitle file (.vtt)"
 msgstr "选择字幕文件（.vtt）"
+
+#: src/components/InternationalPhoneCodeSelect.tsx:66
+msgid "Select telephone code"
+msgstr ""
 
 #: src/screens/Onboarding/StepProfile/AvatarCreatorItems.tsx:83
 msgid "Select the {emojiName} emoji as your avatar"
@@ -7985,7 +8268,7 @@ msgstr "选择将这个隐藏字词应用于哪些内容。"
 msgid "Select which language to use for the app's user interface."
 msgstr "选择应用界面所使用的语言。"
 
-#: src/screens/Settings/LanguageSettings.tsx:157
+#: src/screens/Settings/LanguageSettings.tsx:159
 msgid "Select which languages you want your subscribed feeds to include. If none are selected, all languages will be shown."
 msgstr "选择你希望在动态源中显示的语言。如果留空，将默认显示全部语言的帖文。"
 
@@ -7998,7 +8281,7 @@ msgstr "输入你的出生日期"
 msgid "Select your interests from the options below"
 msgstr "在下面选择你感兴趣的选项"
 
-#: src/screens/Settings/LanguageSettings.tsx:124
+#: src/screens/Settings/LanguageSettings.tsx:125
 msgid "Select your preferred language for translations in your feed."
 msgstr "选择你在订阅的动态源中翻译的目标语言。"
 
@@ -8072,6 +8355,11 @@ msgstr "发送包含删除账户验证码的电子邮件"
 msgid "Server address"
 msgstr "服务器地址"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:163
+#: src/components/dialogs/VerusServiceDialog.tsx:167
+msgid "Service URL"
+msgstr ""
+
 #: src/screens/Settings/AppIconSettings/index.tsx:178
 msgid "Set app icon to {0}"
 msgstr "将应用图标更改为 {0}"
@@ -8084,6 +8372,10 @@ msgstr "设置新密码"
 msgid "Set precisely which groups of people can reply to your post"
 msgstr "精确设置哪些范围的人可以回复你的帖文"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:155
+msgid "Set the Verus service endpoint to use for VerusID and media."
+msgstr ""
+
 #: src/screens/Onboarding/Layout.tsx:49
 msgid "Set up your account"
 msgstr "设置你的账户"
@@ -8092,12 +8384,16 @@ msgstr "设置你的账户"
 msgid "Set who can reply to your post"
 msgstr "设置哪些人可以回复你的帖文"
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:188
+msgid "Set your birthdate below and we'll get you back to posting and exploring in no time!"
+msgstr ""
+
 #: src/screens/Login/ForgotPasswordForm.tsx:107
 msgid "Sets email for password reset"
 msgstr "设置用于重置密码的电子邮箱"
 
-#: src/Navigation.tsx:213
-#: src/screens/Settings/Settings.tsx:99
+#: src/Navigation.tsx:219
+#: src/screens/Settings/Settings.tsx:100
 #: src/view/shell/desktop/LeftNav.tsx:805
 #: src/view/shell/Drawer.tsx:609
 msgid "Settings"
@@ -8237,7 +8533,7 @@ msgstr "分享到……"
 msgid "Share your favorite feed!"
 msgstr "分享你最喜欢的动态源吧！"
 
-#: src/Navigation.tsx:316
+#: src/Navigation.tsx:322
 msgid "Shared Preferences Tester"
 msgstr "共享偏好测试器"
 
@@ -8343,7 +8639,7 @@ msgstr "显示警告并从动态源中过滤"
 msgid "Shows information about when this post was created"
 msgstr "显示这则帖文的创建时间"
 
-#: src/screens/Settings/Settings.tsx:125
+#: src/screens/Settings/Settings.tsx:126
 msgid "Shows other accounts you can switch to"
 msgstr "显示可供你切换的其他账户"
 
@@ -8359,7 +8655,8 @@ msgstr "显示内容"
 #: src/screens/Hashtag.tsx:227
 #: src/screens/Login/index.tsx:136
 #: src/screens/Login/index.tsx:157
-#: src/screens/Login/LoginForm.tsx:181
+#: src/screens/Login/LoginForm.tsx:441
+#: src/screens/Login/LoginForm.tsx:691
 #: src/screens/Search/SearchResults.tsx:296
 #: src/view/com/auth/SplashScreen.tsx:81
 #: src/view/com/auth/SplashScreen.tsx:89
@@ -8396,17 +8693,25 @@ msgid "Sign in to account that is not listed"
 msgstr "登录未列出的账户"
 
 #: src/components/dialogs/Signin.tsx:46
-msgid "Sign in to Bluesky or create a new account"
-msgstr "登录 Bluesky 或创建新账户"
+msgid "Sign in to VerusSky or create a new account"
+msgstr ""
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:493
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:495
 msgid "Sign in to view post"
 msgstr "登录以查看帖文"
 
-#: src/screens/Settings/Settings.tsx:254
-#: src/screens/Settings/Settings.tsx:256
-#: src/screens/Settings/Settings.tsx:288
+#: src/screens/Login/LoginForm.tsx:674
+msgid "Sign in with VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:672
+msgid "Sign in without VerusID"
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:263
+#: src/screens/Settings/Settings.tsx:265
+#: src/screens/Settings/Settings.tsx:297
 #: src/screens/SignupQueued.tsx:93
 #: src/screens/SignupQueued.tsx:96
 #: src/screens/Takendown.tsx:94
@@ -8420,15 +8725,24 @@ msgstr "登出"
 msgid "Sign Out"
 msgstr "登出"
 
-#: src/screens/Settings/Settings.tsx:285
+#: src/screens/Settings/Settings.tsx:294
 #: src/view/shell/desktop/LeftNav.tsx:209
 msgid "Sign out?"
 msgstr "确定要登出吗？"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
+msgid "Sign the linking details"
+msgstr ""
 
 #: src/components/moderation/ScreenHider.tsx:97
 #: src/lib/moderation/useGlobalLabelStrings.ts:28
 msgid "Sign-in Required"
 msgstr "需要登录"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
+msgid "Signature"
+msgstr ""
 
 #: src/lib/hooks/useAccountSwitcher.ts:41
 #: src/screens/Login/ChooseAccountForm.tsx:53
@@ -8536,7 +8850,7 @@ msgid "Sorry, we're unable to load account suggestions at this time."
 msgstr "很抱歉，我们现在无法加载帐户建议。"
 
 #: src/App.native.tsx:127
-#: src/App.web.tsx:100
+#: src/App.web.tsx:102
 msgid "Sorry! Your session expired. Please sign in again."
 msgstr "很抱歉，你的登录会话已过期，请重新登录。"
 
@@ -8593,8 +8907,8 @@ msgstr "开始添加用户！"
 msgid "Start chat with {displayName}"
 msgstr "与 {displayName} 开始私信"
 
-#: src/Navigation.tsx:579
-#: src/Navigation.tsx:584
+#: src/Navigation.tsx:593
+#: src/Navigation.tsx:598
 #: src/screens/StarterPack/Wizard/index.tsx:209
 msgid "Starter Pack"
 msgstr "新手包"
@@ -8617,7 +8931,7 @@ msgid "Starter pack is invalid"
 msgstr "无效的新手包"
 
 #: src/screens/Search/Explore.tsx:625
-#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:247
 msgid "Starter Packs"
 msgstr "新手包"
 
@@ -8625,7 +8939,7 @@ msgstr "新手包"
 msgid "Starter packs let you easily share your favorite feeds and people with your friends."
 msgstr "新手包能使你轻松与朋友分享你喜欢的用户和动态源。"
 
-#: src/view/screens/Profile.tsx:539
+#: src/view/screens/Profile.tsx:547
 msgid "Starter packs let you share your favorite feeds and people with your friends."
 msgstr "新手包能使你与朋友分享你喜欢的用户和动态源。"
 
@@ -8638,12 +8952,12 @@ msgstr "状态页"
 msgid "Step {0} of {1}"
 msgstr "第 {0} 步（共 {1} 步）"
 
-#: src/screens/Settings/Settings.tsx:393
+#: src/screens/Settings/Settings.tsx:402
 msgid "Storage cleared, you need to restart the app now."
 msgstr "已清除数据，请立即重新启动应用。"
 
-#: src/Navigation.tsx:306
-#: src/screens/Settings/Settings.tsx:448
+#: src/Navigation.tsx:312
+#: src/screens/Settings/Settings.tsx:457
 msgid "Storybook"
 msgstr "Storybook"
 
@@ -8669,6 +8983,11 @@ msgstr "提交申诉"
 #: src/components/moderation/ReportDialog/index.tsx:555
 msgid "Submit report"
 msgstr "提交举报"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
+msgid "Submit Signature and Create Post"
+msgstr ""
 
 #: src/screens/ProfileList/components/SubscribeMenu.tsx:81
 msgid "Subscribe"
@@ -8735,15 +9054,19 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr "日落"
 
-#: src/Navigation.tsx:326
+#: src/Navigation.tsx:332
 #: src/view/screens/Support.tsx:34
 #: src/view/screens/Support.tsx:37
 msgid "Support"
 msgstr "支持"
 
-#: src/screens/Settings/Settings.tsx:123
-#: src/screens/Settings/Settings.tsx:137
-#: src/screens/Settings/Settings.tsx:606
+#: src/screens/Login/LoginForm.tsx:659
+msgid "Switch"
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:124
+#: src/screens/Settings/Settings.tsx:138
+#: src/screens/Settings/Settings.tsx:615
 #: src/view/shell/desktop/LeftNav.tsx:247
 msgid "Switch account"
 msgstr "切换账户"
@@ -8761,6 +9084,10 @@ msgstr "切换账户"
 msgid "Switch to {0}"
 msgstr "切换到 {0}"
 
+#: src/screens/Login/LoginForm.tsx:660
+msgid "Switches login method"
+msgstr ""
+
 #: src/components/dialogs/Embed.tsx:158
 #: src/components/dialogs/Embed.tsx:160
 #: src/screens/Settings/AppearanceSettings.tsx:85
@@ -8768,10 +9095,15 @@ msgstr "切换到 {0}"
 msgid "System"
 msgstr "系统"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:180
+#: src/components/dialogs/VerusServiceDialog.tsx:184
+msgid "System ID"
+msgstr ""
+
 #: src/screens/Log.tsx:58
 #: src/screens/Settings/AboutSettings.tsx:107
 #: src/screens/Settings/AboutSettings.tsx:110
-#: src/screens/Settings/Settings.tsx:441
+#: src/screens/Settings/Settings.tsx:450
 msgid "System log"
 msgstr "系统日志"
 
@@ -8780,8 +9112,8 @@ msgid "Tags only"
 msgstr "仅限标签"
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:109
-msgid "Tap below to allow Bluesky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
-msgstr "点击下方的“允许”按钮以允许 Bluesky 读取你的位置信息，我们将使用该数据来更准确地确认你所在地区可用的内容及功能。"
+msgid "Tap below to allow VerusSky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
+msgstr ""
 
 #: src/view/com/feeds/MissingFeed.tsx:89
 msgid "Tap for information"
@@ -8843,10 +9175,10 @@ msgstr "告诉我们更多"
 msgid "Terms"
 msgstr "条款"
 
-#: src/components/dialogs/BirthDateSettings.tsx:167
+#: src/components/dialogs/BirthDateSettings.tsx:169
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:30
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:97
-#: src/Navigation.tsx:336
+#: src/Navigation.tsx:342
 #: src/screens/Settings/AboutSettings.tsx:84
 #: src/screens/Settings/AboutSettings.tsx:87
 #: src/view/screens/TermsOfService.tsx:34
@@ -8872,7 +9204,7 @@ msgstr "感谢你的反馈，相关信息将会发送给动态源维护者。"
 msgid "Thanks, you have successfully verified your email address. You can close this dialog."
 msgstr "谢谢，你已成功验证电子邮箱地址，现在你可以关闭此对话框。"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:342
+#: src/ageAssurance/components/NoAccessScreen.tsx:370
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:113
 msgid "Thanks! You're all set."
 msgstr "谢谢！你已完成全部设置。"
@@ -8902,8 +9234,8 @@ msgstr "就这些，完毕！"
 msgid "That's everything!"
 msgstr "就这些了！"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:186
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:391
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:208
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:413
 #: src/view/com/profile/ProfileMenu.tsx:483
 msgid "The account will be able to interact with you after unblocking."
 msgstr "取消屏蔽后，该账户将重新能够与你互动。"
@@ -8918,7 +9250,7 @@ msgstr "应用将会重新启动"
 msgid "The author of this thread has hidden this reply."
 msgstr "这条讨论串的发布者隐藏了这则回复。"
 
-#: src/components/dialogs/BirthDateSettings.tsx:154
+#: src/components/dialogs/BirthDateSettings.tsx:156
 msgid "The birthdate you've entered means you are under 18 years old. Certain content and features may be unavailable to you."
 msgstr "你输入的出生日期表明你未满18周岁，你可能无法使用某些功能或查看部分内容。"
 
@@ -8943,8 +9275,8 @@ msgid "The Discover feed now knows what you like"
 msgstr "现在“Discover”动态源了解你的喜好内容了"
 
 #: src/screens/StarterPack/StarterPackLandingScreen.tsx:333
-msgid "The experience is better in the app. Download Bluesky now and we'll pick back up where you left off."
-msgstr "使用 App 的体验会更好。现在下载 Bluesky，我们将从你离开的的地方继续。"
+msgid "The experience is better in the app. Download VerusSky now and we'll pick back up where you left off."
+msgstr ""
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:67
 msgid "The feed has been replaced with Discover."
@@ -8965,6 +9297,10 @@ msgstr "在发布新帖文时，以下设置将被用作默认值。你可以通
 #: src/components/ageAssurance/useAgeAssuranceCopy.ts:14
 msgid "The laws in your location require you to verify you're an adult to access certain features. Tap to learn more."
 msgstr "你所在地的相关法律要求需要验证你已成年后，才能使用 Bluesky 上的部分功能。点击以了解详情。"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
+msgid "The link to VerusID {0} has been successfully removed from this account."
+msgstr ""
 
 #: src/view/com/composer/select-language/SuggestedLanguage.tsx:119
 msgid "The post you're replying to was marked as being written in {suggestedLanguageName} by its author. Would you like to reply in <0>{suggestedLanguageName}</0>?"
@@ -9004,9 +9340,21 @@ msgstr "服务条款已移动到"
 msgid "The verification code you have provided is invalid. Please make sure that you have used the correct verification link or request a new one."
 msgstr "你提供的验证码无效。请检查你使用的验证链接是否正确，或重试请求新验证链接。"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
+msgid "The VerusID currently linked to this account is {0}."
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
+msgstr ""
+
 #: src/screens/Settings/AppearanceSettings.tsx:139
 msgid "Theme"
 msgstr "主题"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+msgid "There currently is no VerusID linked to this account."
+msgstr ""
 
 #: src/components/dialogs/BirthDateSettings.tsx:91
 msgid "There is a limit to how often you can change your birthdate. You may need to wait a day or two before updating it again."
@@ -9073,10 +9421,10 @@ msgstr "更新动态源时出现问题。请检查网络连接并重试。"
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:420
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:90
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:101
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:253
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:279
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:275
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:301
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:316
 #: src/view/com/profile/ProfileMenu.tsx:136
 #: src/view/com/profile/ProfileMenu.tsx:146
 #: src/view/com/profile/ProfileMenu.tsx:160
@@ -9106,8 +9454,8 @@ msgid "There was an unexpected issue in the application. Please let us know if t
 msgstr "应用发生意外错误，请联系我们进行错误反馈！"
 
 #: src/screens/SignupQueued.tsx:130
-msgid "There's been a rush of new users to Bluesky! We'll activate your account as soon as we can."
-msgstr "Bluesky 目前迎来了大量新用户！我们将尽快启用你的账户。"
+msgid "There's been a rush of new users to VerusSky! We'll activate your account as soon as we can."
+msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:654
 msgid "These are your default settings"
@@ -9137,6 +9485,10 @@ msgstr "该账户要求登录后才能查看其个人资料。"
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "该账户已被一个或多个内容审核列表所屏蔽。如要取消对该账户的屏蔽，请查看内容审核列表并从中删除该账户。"
 
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
+msgid "This account is linked to VerusID, a decentralized identity system."
+msgstr ""
+
 #: src/components/verification/VerificationCreatePrompt.tsx:55
 msgid "This action can be undone at any time."
 msgstr "此操作可随时撤销。"
@@ -9153,7 +9505,7 @@ msgstr "这条申诉将提交给 Bluesky 内容审核服务。"
 msgid "This chat was disconnected"
 msgstr "对话已被断开"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:144
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:147
 msgid "This confirmation code is not valid. Please try again."
 msgstr "此验证码无效，请重试。"
 
@@ -9190,15 +9542,15 @@ msgstr "此电子邮箱已与你的账户关联。"
 msgid "This feature allows users to receive notifications for your new posts and replies. Who do you want to enable this for?"
 msgstr "此功能可让其他用户在你发布新帖或回复时收到提醒，你希望允许谁接收你的动态提醒？"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:95
+#: src/screens/Settings/components/ExportCarDialog.tsx:96
 msgid "This feature is in beta. You can read more about repository exports in <0>this blogpost</0>."
 msgstr "该功能正在测试。你可以在<0>这篇博客文章</0>中获得关于导出数据的更多详情。"
 
-#: src/lib/hooks/useCleanError.ts:49
+#: src/lib/hooks/useCleanError.ts:64
 msgid "This feature is not available while using an app password. Please sign in with your main password."
 msgstr "该功能在使用应用密码登录时不可用，请改用你的主密码登录。"
 
-#: src/lib/strings/errors.ts:22
+#: src/lib/strings/errors.ts:31
 msgid "This feature is not available while using an App Password. Please sign in with your main password."
 msgstr "该功能在使用应用密码登录时不可用。请改用你的主密码登录。"
 
@@ -9270,8 +9622,8 @@ msgid "This moderation service is unavailable. See below for more details. If th
 msgstr "该内容审核提供服务不可用，请查看下方获取更多详情。如果问题持续存在，请联系我们。"
 
 #: src/screens/PostThread/components/ThreadItemAnchor.tsx:669
-msgid "This post claims to have been created on <0>{0}</0>, but was first seen by Bluesky on <1>{1}</1>."
-msgstr "这则帖文声称发布于 <0>{0}</0>，但首次出现在 Bluesky 的时间为 <1>{1}</1>。"
+msgid "This post claims to have been created on <0>{0}</0>, but was first seen by VerusSky on <1>{1}</1>."
+msgstr ""
 
 #: src/components/WhoCanReply.tsx:272
 msgid "This post has an unknown type of threadgate on it. Your app may be out of date."
@@ -9350,11 +9702,15 @@ msgstr "该用户是近期加入 Bluesky 的。点按此处可获取其加入的
 msgid "This user isn't following anyone."
 msgstr "该账户目前没有关注任何人。"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
+msgid "This will create a post linking your VerusID to this account."
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:440
 msgid "This will delete \"{0}\" from your muted words. You can always add it back later."
 msgstr "这将从你的隐藏字词中删除“{0}”。你随时可以将其重新添加回来。"
 
-#: src/screens/Settings/Settings.tsx:658
+#: src/screens/Settings/Settings.tsx:667
 msgid "This will remove @{0} from the quick access list."
 msgstr "这将从你的快速访问中移除 @{0}。"
 
@@ -9381,7 +9737,7 @@ msgstr "讨论串偏好设置"
 msgid "Threaded"
 msgstr "树形视图"
 
-#: src/Navigation.tsx:369
+#: src/Navigation.tsx:375
 msgid "Threads Preferences"
 msgstr "讨论串偏好设置"
 
@@ -9402,7 +9758,7 @@ msgstr "如果需要停用电子邮箱两步验证，请首先验证你的电子
 msgid "To disable your email 2FA method, please verify your access to <0>{0}</0>"
 msgstr "如果需要停用电子邮箱两步验证，请首先验证你的电子邮箱地址 <0>{0}</0>"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:191
+#: src/ageAssurance/components/NoAccessScreen.tsx:219
 msgid "To log out, <0>click here</0>."
 msgstr "<0>点击这里</0>来登出。"
 
@@ -9435,7 +9791,7 @@ msgstr "热门"
 msgid "Top replies first"
 msgstr "热门回复优先"
 
-#: src/Navigation.tsx:544
+#: src/Navigation.tsx:558
 msgid "Topic"
 msgstr "话题"
 
@@ -9499,19 +9855,28 @@ msgstr "类型："
 msgid "Unable to access location. You'll need to visit your system settings to enable location services for Bluesky."
 msgstr "无法获取位置信息，你需要进入系统设置，找到并允许 Bluesky 获取你的位置。"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:121
+msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again."
+msgstr ""
+
 #: src/lib/hooks/useCleanError.ts:27
 #: src/lib/strings/errors.ts:12
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "无法连接到服务器。请检查网络连接并重试。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:95
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:140
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
+msgid "Unable to contact the service. Please check your Internet connection."
+msgstr ""
+
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:98
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:143
 msgid "Unable to contact your service. Please check your internet connection and try again."
 msgstr "无法连接到你的服务，请检查网络连接并重试。"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:68
 #: src/screens/Login/index.tsx:93
-#: src/screens/Login/LoginForm.tsx:169
+#: src/screens/Login/LoginForm.tsx:336
 #: src/screens/Login/SetNewPasswordForm.tsx:81
 #: src/screens/Signup/index.tsx:77
 msgid "Unable to contact your service. Please check your Internet connection."
@@ -9521,11 +9886,31 @@ msgstr "无法连接到服务，请检查网络连接。"
 msgid "Unable to delete"
 msgstr "无法删除"
 
-#: src/screens/Settings/Settings.tsx:507
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
+msgid "Unable to get the signing service identity address"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
+msgid "Unable to link account with no handle."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:326
+msgid "Unable to verify Bluesky credentials. Please sign in manually."
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
+msgid "Unable to verify signature."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:428
+msgid "Unable to verify the signer of the login."
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:516
 msgid "Unapply Pull Request"
 msgstr "回滚提交变更"
 
-#: src/screens/Settings/Settings.tsx:509
+#: src/screens/Settings/Settings.tsx:518
 msgid "Unapply Pull Request {currentChannel}"
 msgstr "回滚提交变更 {currentChannel}"
 
@@ -9541,16 +9926,16 @@ msgstr "动态源信息不可用"
 #: src/components/dms/MessagesListBlockedFooter.tsx:104
 #: src/components/dms/MessagesListBlockedFooter.tsx:112
 #: src/components/dms/MessagesListBlockedFooter.tsx:119
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:334
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:394
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:356
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:416
 #: src/screens/ProfileList/components/Header.tsx:171
 #: src/screens/ProfileList/components/Header.tsx:178
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Unblock"
 msgstr "取消屏蔽"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:338
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:360
 msgctxt "action"
 msgid "Unblock"
 msgstr "取消屏蔽"
@@ -9562,8 +9947,8 @@ msgstr "取消屏蔽"
 msgid "Unblock account"
 msgstr "取消屏蔽账户"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:184
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:206
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
 #: src/view/com/profile/ProfileMenu.tsx:477
 msgid "Unblock Account?"
 msgstr "要取消屏蔽账户吗？"
@@ -9588,7 +9973,7 @@ msgstr "取消转发"
 msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "取消转发（{0, plural, one {# 次转发} other {# 次转发}}）"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:365
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:387
 msgid "Unfollow {0}"
 msgstr "取消关注 {0}"
 
@@ -9605,7 +9990,7 @@ msgstr "取消关注用户"
 msgid "Unfortunately, none of your subscribed labelers supports this report type."
 msgstr "抱歉，你订阅的标记者不支持此举报类型。"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:158
+#: src/ageAssurance/components/NoAccessScreen.tsx:165
 msgid "Unfortunately, the birthdate you have saved to your profile makes you too young to access Bluesky."
 msgstr "很抱歉，你在个人资料中保存的出生日期信息显示你的年龄太小，暂时还不能使用 Bluesky。"
 
@@ -9713,8 +10098,8 @@ msgstr "已从你的动态源中取消固定"
 msgid "Unpinned list"
 msgstr "已取消固定列表"
 
-#: src/screens/Settings/Settings.tsx:474
-#: src/screens/Settings/Settings.tsx:476
+#: src/screens/Settings/Settings.tsx:483
+#: src/screens/Settings/Settings.tsx:485
 msgid "Unsnooze email reminder"
 msgstr "取消暂停邮件提醒"
 
@@ -9739,6 +10124,8 @@ msgstr "已从列表中取消订阅"
 msgid "Unsupported video type: {mimeType}"
 msgstr "不支持的视频类型：{mimeType}"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:250
+#: src/components/dialogs/VerusServiceDialog.tsx:254
 #: src/screens/Settings/components/OTAInfo.tsx:58
 #: src/screens/Settings/components/OTAInfo.tsx:74
 msgid "Update"
@@ -9748,6 +10135,15 @@ msgstr "更新"
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "要把 <0>{displayName}</0> 更新或删除自哪些列表？"
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
+msgid "Update confirmed"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
+msgid "Update credentials"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:300
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:312
 #: src/screens/Settings/AccountSettings.tsx:107
@@ -9755,10 +10151,43 @@ msgstr "要把 <0>{displayName}</0> 更新或删除自哪些列表？"
 msgid "Update email"
 msgstr "更新电子邮箱"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
+msgid "Update linked VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
+msgid "Update the sign in credentials stored in your VerusID."
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:542
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:563
 msgid "Update to {domain}"
 msgstr "更新至 {domain}"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:152
+msgid "Update Verus Service Endpoint"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:143
+msgid "Update Verus Service Instance"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:96
+msgid "Update VerusID Link"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
+msgid "Update VerusID sign in"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:119
+#: src/screens/Settings/VerusServicesSettings.tsx:130
+msgid "Update VerusID Sign in"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
+msgid "Update VerusID Sign in Credentials"
+msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:203
 msgid "Update your email"
@@ -9901,6 +10330,11 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr "已更新用户列表"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:213
+#: src/components/dialogs/VerusServiceDialog.tsx:217
+msgid "Username"
+msgstr ""
+
 #: src/screens/Signup/StepHandle/index.tsx:233
 msgid "Username cannot be longer than {MAX_SERVICE_HANDLE_LENGTH, plural, other {# characters}}"
 msgstr "用户名不能超过 {MAX_SERVICE_HANDLE_LENGTH, plural, other {# 个字符}}"
@@ -9913,7 +10347,7 @@ msgstr "用户名不能使用连字符（-）开头或结尾"
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr "用户名只能包含字母（a-z）、数字及连字符（-）"
 
-#: src/screens/Login/LoginForm.tsx:202
+#: src/screens/Login/LoginForm.tsx:469
 msgid "Username or email address"
 msgstr "用户名或电子邮箱地址"
 
@@ -9942,7 +10376,7 @@ msgstr "无法授予认证，请重试。"
 msgid "Verification settings"
 msgstr "认证设置"
 
-#: src/Navigation.tsx:206
+#: src/Navigation.tsx:212
 #: src/screens/Moderation/VerificationSettings.tsx:32
 msgid "Verification Settings"
 msgstr "认证设置"
@@ -9962,7 +10396,7 @@ msgstr "认证人："
 msgid "Verify account"
 msgstr "认证账户"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:279
+#: src/ageAssurance/components/NoAccessScreen.tsx:307
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:168
 msgid "Verify again"
 msgstr "重新验证"
@@ -9989,8 +10423,8 @@ msgstr "电子邮箱验证码"
 msgid "Verify email dialog"
 msgstr "验证电子邮箱对话框"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:267
-#: src/ageAssurance/components/NoAccessScreen.tsx:281
+#: src/ageAssurance/components/NoAccessScreen.tsx:295
+#: src/ageAssurance/components/NoAccessScreen.tsx:309
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:156
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:170
 msgid "Verify now"
@@ -10030,6 +10464,48 @@ msgstr "正在确认你的年龄验证状态"
 msgid "Version {0}"
 msgstr "版本号 {0}"
 
+#: src/Navigation.tsx:413
+#: src/screens/Settings/Settings.tsx:183
+#: src/screens/Settings/Settings.tsx:186
+#: src/screens/Settings/VerusServicesSettings.tsx:56
+msgid "Verus Services"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:155
+#: src/screens/Settings/VerusServicesSettings.tsx:159
+msgid "Verus Services Endpoint (Advanced)"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:141
+msgid "Verus Services Endpoint Status"
+msgstr ""
+
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
+msgid "VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
+msgid "VerusID Name"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:574
+msgid "VerusID Sign in"
+msgstr ""
+
+#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
+msgid "VerusSky cannot confirm the authenticity of the claimed date."
+msgstr ""
+
+#: src/components/ProgressGuide/List.tsx:53
+#: src/components/ProgressGuide/List.tsx:70
+msgid "VerusSky is better with friends!"
+msgstr ""
+
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:81
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:131
 msgid "Video"
@@ -10039,7 +10515,7 @@ msgstr "视频"
 msgid "Video failed to process"
 msgstr "视频处理失败"
 
-#: src/Navigation.tsx:600
+#: src/Navigation.tsx:614
 msgid "Video Feed"
 msgstr "视频动态源"
 
@@ -10077,7 +10553,7 @@ msgstr "已上传视频"
 msgid "Video: {0}"
 msgstr "视频：{0}"
 
-#: src/view/screens/Profile.tsx:237
+#: src/view/screens/Profile.tsx:244
 msgid "Videos"
 msgstr "视频"
 
@@ -10110,7 +10586,7 @@ msgstr "查看 {displayName} 的个人资料"
 msgid "View blocked user's profile"
 msgstr "查看该屏蔽账户的个人资料"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:99
+#: src/screens/Settings/components/ExportCarDialog.tsx:100
 msgid "View blogpost for more details"
 msgstr "查看博客文章以获取更多资讯"
 
@@ -10166,6 +10642,10 @@ msgstr "查看由 @{0} 提供的标记服务。"
 #: src/components/verification/VerificationCheckButton.tsx:99
 msgid "View this user's verifications"
 msgstr "查看此用户的认证"
+
+#: src/components/verification/verusid/VerusIDVerificationCheckButton.tsx:57
+msgid "View this VerusID verification"
+msgstr ""
 
 #: src/screens/Profile/components/ProfileFeedHeader.tsx:486
 msgid "View users who like this feed"
@@ -10274,16 +10754,16 @@ msgid "We estimate {estimatedTime} until your account is ready."
 msgstr "我们估计还需要 {estimatedTime} 才能完成你的账户准备。"
 
 #: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:197
-msgid "We have partnered with <0>KWS</0> to verify that you’re an adult. When you click \"Begin\" below, KWS will check if you have previously verified your age using this email address for other games/services powered by KWS technology. If not, KWS will email you instructions for verifying your age. When you’re done, you'll be brought back to continue using Bluesky."
-msgstr "我们已经与 <0>KWS</0> 合作来确认你已成年。当你按下“开始”后，KWS 会确认你是否曾经在其他使用 KWS 技术的游戏或服务使用过你的电子邮箱地址验证年龄。如果没有，KWS 会向你的电子邮箱发送一封包含年龄验证流程的邮件。当你完成验证后，你将会重新跳转回来以继续使用 Bluesky。"
+msgid "We have partnered with <0>KWS</0> to handle age verification. When you click \"Begin\" below, KWS will email you instructions to complete the verification process. If your email address has already been used to verify your age for another game or service that uses KWS, you won’t need to do it again. When you’re done, you'll be brought back to continue using Bluesky."
+msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:101
 msgid "We have sent another verification email to <0>{0}</0>."
 msgstr "我们将发送另一封验证邮件至 <0>{0}</0>。"
 
 #: src/screens/Onboarding/StepFinished/index.tsx:383
-msgid "We hope you have a wonderful time. Remember, Bluesky is:"
-msgstr "我们希望你在此度过愉快的时光。请记住，Bluesky 是："
+msgid "We hope you have a wonderful time. Remember, VerusSky is:"
+msgstr ""
 
 #: src/view/com/posts/DiscoverFallbackHeader.tsx:29
 msgid "We ran out of posts from your follows. Here's the latest from <0/>."
@@ -10348,15 +10828,11 @@ msgstr "我们在初始化年龄验证流程时遇到了问题，请<0>联系支
 msgid "We're having network issues, try again"
 msgstr "我们遇到了网络问题，请再试一次"
 
-#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
-msgid "We’re introducing a new layer of verification on Bluesky — an easy-to-see checkmark."
-msgstr "为你介绍 Bluesky 的全新认证机制 —— 认证徽章。"
-
 #: src/screens/Signup/index.tsx:125
 msgid "We're so excited to have you join us!"
 msgstr "我们非常高兴你加入我们！"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:335
+#: src/ageAssurance/components/NoAccessScreen.tsx:363
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:106
 msgid "We're sorry, but based on your device's location, you are currently located in a region that requires age assurance."
 msgstr "很抱歉，根据你设备回报的位置信息，你目前所处的地区需要进行年龄验证。"
@@ -10378,7 +10854,7 @@ msgstr "很抱歉，无法完成你的搜索。请重试。"
 msgid "We're sorry! The post you are replying to has been deleted."
 msgstr "很抱歉！你回复的帖文已被删除。"
 
-#: src/components/Lists.tsx:221
+#: src/components/Lists.tsx:223
 #: src/view/screens/NotFound.tsx:50
 msgid "We're sorry! We can't find the page you were looking for."
 msgstr "很抱歉！我们找不到你正在寻找的页面。"
@@ -10504,8 +10980,8 @@ msgstr "需要屏蔽该用户、删除整个对话，或两者一并执行吗？
 msgid "Write a message"
 msgstr "撰写私信"
 
-#: src/view/screens/Profile.tsx:433
-#: src/view/screens/Profile.tsx:434
+#: src/view/screens/Profile.tsx:441
+#: src/view/screens/Profile.tsx:442
 msgid "Write a post"
 msgstr "撰写一篇帖文"
 
@@ -10565,7 +11041,7 @@ msgstr "昨天"
 msgid "You are a trusted verifier"
 msgstr "你是可信的认证人"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:143
+#: src/ageAssurance/components/NoAccessScreen.tsx:150
 msgid "You are accessing Bluesky from a region that legally requires us to verify your age before allowing you to access the app."
 msgstr "你所在的地区依法要求我们在允许您使用 Bluesky 应用之前验证你的年龄。"
 
@@ -10573,7 +11049,7 @@ msgstr "你所在的地区依法要求我们在允许您使用 Bluesky 应用之
 msgid "You are creating an account on"
 msgstr "你的账户将创建在"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:249
+#: src/ageAssurance/components/NoAccessScreen.tsx:277
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:126
 msgid "You are currently unable to access Bluesky's Age Assurance flow. Please <0>contact our moderation team</0> if you believe this is an error."
 msgstr "你现在无法访问 Bluesky 的年龄验证流程，如果你认为这是系统误判，请<0>联系我们的支持团队</0>。"
@@ -10640,6 +11116,10 @@ msgstr "你可以自定义应用内的私信通知是否播放提示音"
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "无论使用哪种设置，都不会影响已发起的对话。"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
+msgid "You can do this later in Settings → Verus Services."
+msgstr ""
+
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:357
 msgctxt "toast"
 msgid "You can hide a maximum of {MAX_HIDDEN_REPLIES} replies."
@@ -10677,6 +11157,11 @@ msgstr "你最多只能选择 {MAX_IMAGES, plural, other {# 张图片}}。"
 msgid "You can update this later from your settings."
 msgstr "你可以随时在设置里重新更改。"
 
+#: src/lib/hooks/useCleanError.ts:55
+#: src/lib/strings/errors.ts:28
+msgid "You cannot update your birthdate while using an app password. Please sign in with your main password to update your birthdate."
+msgstr ""
+
 #: src/screens/Profile/KnownFollowers.tsx:112
 msgid "You don't follow any users who follow @{name}."
 msgstr "你没有关注任何同样关注 @{name} 的用户。"
@@ -10713,7 +11198,7 @@ msgstr "你已完全禁用了回复、引用及提及通知，因此此选项卡
 
 #: src/screens/Login/SetNewPasswordForm.tsx:49
 #: src/screens/Login/SetNewPasswordForm.tsx:95
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:112
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:115
 msgid "You have entered an invalid code. It should look like XXXXX-XXXXX."
 msgstr "你输入的验证码无效。验证码的格式应该类似这样 XXXXX-XXXXX。"
 
@@ -10788,12 +11273,12 @@ msgid "You initiated this flow already, {0} ago. It may take up to 5 minutes for
 msgstr "你已在 {0} 前开始此流程，电子邮件应该会在 5 分钟内发送到你的电子邮箱，请考虑稍后几分钟再试一次。"
 
 #: src/components/NewskieDialog.tsx:105
-msgid "You joined Bluesky {timeAgoString} ago"
-msgstr "你在 {timeAgoString}前加入了 Bluesky"
+msgid "You joined VerusSky {timeAgoString} ago"
+msgstr ""
 
 #: src/components/NewskieDialog.tsx:102
-msgid "You joined Bluesky using a starter pack {timeAgoString} ago"
-msgstr "你在 {timeAgoString}前使用新手包加入了 Bluesky"
+msgid "You joined VerusSky using a starter pack {timeAgoString} ago"
+msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:83
 msgid "You may appeal non-self labels if you feel they were placed in error."
@@ -10815,7 +11300,7 @@ msgstr "你最多只能添加 3 个动态源"
 msgid "You must be 13 years of age or older to create an account."
 msgstr "你必须年满 13 岁才能注册账户。"
 
-#: src/components/dialogs/BirthDateSettings.tsx:163
+#: src/components/dialogs/BirthDateSettings.tsx:165
 msgid "You must be at least 13 years old to use Bluesky. Read our <0>Terms of Service</0> for more information."
 msgstr "你必须年满13周岁才能使用 Bluesky，阅读我们的<0>服务条款</0>以获取更多资讯。"
 
@@ -10848,7 +11333,7 @@ msgstr "你需要验证你的电子邮箱地址才能启用电子邮箱两步验
 msgid "You previously deactivated @{0}."
 msgstr "你之前停用了 @{0}。"
 
-#: src/screens/Settings/Settings.tsx:404
+#: src/screens/Settings/Settings.tsx:413
 msgid "You probably want to restart the app now."
 msgstr "你可能需要重启应用程序。"
 
@@ -10865,7 +11350,7 @@ msgstr "你对 {1} 作出了 {0} 反应"
 msgid "You recently changed your birthdate"
 msgstr "你最近修改了你的出生日期"
 
-#: src/screens/Settings/Settings.tsx:286
+#: src/screens/Settings/Settings.tsx:295
 #: src/view/shell/desktop/LeftNav.tsx:210
 msgid "You will be signed out of all your accounts."
 msgstr "你将登出所有账户。"
@@ -10956,7 +11441,7 @@ msgstr "你已到达内容的结尾。"
 msgid "You've reached the end of your feed! Find some more accounts to follow."
 msgstr "你已经浏览完动态源的所有帖文啦！寻找一些更多的账户关注吧。"
 
-#: src/lib/hooks/useCleanError.ts:58
+#: src/lib/hooks/useCleanError.ts:73
 msgid "You've reached the maximum number of requests allowed. Please try again later."
 msgstr "你已达到请求上限，请稍后再试。"
 
@@ -10992,7 +11477,7 @@ msgstr "你的账户已停用"
 msgid "Your account is not yet old enough to upload videos. Please try again later."
 msgstr "你的账户注册时间过短，暂时无法上传视频。请稍后再试。"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:67
+#: src/screens/Settings/components/ExportCarDialog.tsx:68
 msgid "Your account repository, containing all public data records, can be downloaded as a \"CAR\" file. This file does not include media embeds, such as images, or your private data, which must be fetched separately."
 msgstr "你可以将你的账户数据导出为一个“CAR”文件，该文件包含了该账户所有公开的数据记录，但不包括任何嵌入媒体，例如图像或你的私人资料，这些数据需要另外获取。"
 
@@ -11035,7 +11520,7 @@ msgid "Your email"
 msgstr "你的电子邮件"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:51
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:81
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:84
 #: src/screens/Signup/state.ts:273
 #: src/screens/Signup/StepInfo/index.tsx:100
 msgid "Your email appears to be invalid."
@@ -11061,7 +11546,7 @@ msgstr "你的“Following”动态源看起来空荡荡的。快去关注更多
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "你的完整账户代码将修改为 <0>@{0}</0>"
 
-#: src/Navigation.tsx:516
+#: src/Navigation.tsx:530
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:67
 #: src/screens/Settings/ContentAndMediaSettings.tsx:92
 #: src/screens/Settings/ContentAndMediaSettings.tsx:95
@@ -11086,7 +11571,7 @@ msgstr "你的位置信息将不会用于跟踪，且不会上传到云端。"
 msgid "Your muted words"
 msgstr "你的隐藏字词"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:71
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:74
 msgid "Your password has been changed successfully! Please use your new password when you sign in to Bluesky from now on."
 msgstr "已成功更改你的密码！请你今后使用你的新密码登录 Bluesky。"
 
@@ -11138,3 +11623,11 @@ msgstr "你选择的兴趣可帮助我们提供你所关心的内容。"
 #: src/components/verification/VerificationsDialog.tsx:65
 msgid "Your verifications"
 msgstr "你的认证"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
+msgid "Your VerusID {name} has been successfully linked to this account."
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
+msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
+msgstr ""

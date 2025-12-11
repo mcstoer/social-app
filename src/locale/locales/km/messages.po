@@ -31,6 +31,14 @@ msgstr ""
 msgid "(no email)"
 msgstr "(គ្មានអ៊ីមែល)"
 
+#: src/screens/Settings/VerusServicesSettings.tsx:74
+msgid "(no identity)"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:77
+msgid "(unknown)"
+msgstr ""
+
 #: src/lib/hooks/useTimeAgo.ts:169
 msgid "{0, plural, one {# day} other {# days}}"
 msgstr ""
@@ -428,6 +436,10 @@ msgstr ""
 msgid "{joinedAllTimeCount, plural, other {# users have}} joined!"
 msgstr ""
 
+#: src/screens/Login/LoginForm.tsx:391
+msgid "{message}"
+msgstr ""
+
 #: src/components/live/utils.ts:10
 msgid "{minutes, plural, one {# minute} other {# minutes}}"
 msgstr ""
@@ -437,11 +449,11 @@ msgid "{notificationCount, plural, one {# unread item} other {# unread items}}"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:113
-msgid "{profileName} joined Bluesky {timeAgoString} ago"
+msgid "{profileName} joined VerusSky {timeAgoString} ago"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:110
-msgid "{profileName} joined Bluesky using a starter pack {timeAgoString} ago"
+msgid "{profileName} joined VerusSky using a starter pack {timeAgoString} ago"
 msgstr ""
 
 #. The trending topic rank, i.e. "1. March Madness", "2. The Bachelor"
@@ -509,7 +521,7 @@ msgstr "<0>{date}</0> នៅ {time}"
 
 #: src/screens/Hashtag.tsx:225
 #: src/screens/Search/SearchResults.tsx:294
-msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on Bluesky.</4>"
+msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on VerusSky.</4>"
 msgstr ""
 
 #: src/screens/StarterPack/Wizard/index.tsx:502
@@ -524,7 +536,7 @@ msgstr ""
 msgid "24 hours"
 msgstr "២៤ ម៉ោង"
 
-#: src/screens/Login/LoginForm.tsx:278
+#: src/screens/Login/LoginForm.tsx:590
 msgid "2FA Confirmation"
 msgstr "ការបញ្ជាក់ 2FA"
 
@@ -537,7 +549,7 @@ msgid "7 days"
 msgstr "៧ ថ្ងៃ"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:17
-msgid "A collection of popular feeds you can find on Bluesky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
+msgid "A collection of popular feeds you can find on VerusSky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
 msgstr ""
 
 #. If last message does not contain text, fall back to "{user} reacted to {a message}"
@@ -558,10 +570,10 @@ msgstr ""
 msgid "A screenshot of a profile page with a bell icon next to the follow button, indicating the new activity notifications feature."
 msgstr ""
 
-#: src/Navigation.tsx:524
+#: src/Navigation.tsx:538
 #: src/screens/Settings/AboutSettings.tsx:75
-#: src/screens/Settings/Settings.tsx:244
-#: src/screens/Settings/Settings.tsx:247
+#: src/screens/Settings/Settings.tsx:253
+#: src/screens/Settings/Settings.tsx:256
 msgid "About"
 msgstr "អំពី"
 
@@ -588,20 +600,20 @@ msgid "Accept this language suggestion"
 msgstr ""
 
 #: src/screens/Settings/AccessibilitySettings.tsx:44
-#: src/screens/Settings/Settings.tsx:220
-#: src/screens/Settings/Settings.tsx:223
+#: src/screens/Settings/Settings.tsx:229
+#: src/screens/Settings/Settings.tsx:232
 msgid "Accessibility"
 msgstr "ភាពងាយស្រួល"
 
-#: src/Navigation.tsx:383
+#: src/Navigation.tsx:389
 msgid "Accessibility Settings"
 msgstr "ការកំណត់មានភាពងាយស្រួល"
 
-#: src/Navigation.tsx:399
-#: src/screens/Login/LoginForm.tsx:194
+#: src/Navigation.tsx:405
+#: src/screens/Login/LoginForm.tsx:461
 #: src/screens/Settings/AccountSettings.tsx:51
-#: src/screens/Settings/Settings.tsx:174
-#: src/screens/Settings/Settings.tsx:177
+#: src/screens/Settings/Settings.tsx:175
+#: src/screens/Settings/Settings.tsx:178
 msgid "Account"
 msgstr "គណនី"
 
@@ -632,20 +644,22 @@ msgstr "គណនីត្រូវបានបិទសំឡេង"
 msgid "Account Muted by List"
 msgstr "គណនីត្រូវបានបិទសំឡេងដោយបញ្ជី"
 
-#: src/screens/Settings/Settings.tsx:626
+#: src/screens/Settings/Settings.tsx:635
 msgid "Account options"
 msgstr "ជម្រើសគណនី"
 
 #: src/components/dialogs/ServerInput.tsx:141
+#: src/screens/Login/ForgotPasswordForm.tsx:83
+#: src/screens/Login/LoginForm.tsx:444
 msgid "Account provider"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:662
+#: src/screens/Settings/Settings.tsx:671
 msgid "Account removed from quick access"
 msgstr "គណនីត្រូវបានដកចេញពីការចូលប្រើរហ័ស"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:84
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:290
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:312
 #: src/view/com/profile/ProfileMenu.tsx:156
 msgctxt "toast"
 msgid "Account unblocked"
@@ -672,7 +686,7 @@ msgstr ""
 msgid "Activity from others"
 msgstr ""
 
-#: src/Navigation.tsx:492
+#: src/Navigation.tsx:506
 msgid "Activity notifications"
 msgstr ""
 
@@ -725,8 +739,8 @@ msgstr "បន្ថែមអត្ថបទជំនួស"
 msgid "Add alt text (optional)"
 msgstr "បន្ថែមអត្ថបទជំនួស (ជាជម្រើស)"
 
-#: src/screens/Settings/Settings.tsx:566
-#: src/screens/Settings/Settings.tsx:569
+#: src/screens/Settings/Settings.tsx:575
+#: src/screens/Settings/Settings.tsx:578
 #: src/view/shell/desktop/LeftNav.tsx:262
 #: src/view/shell/desktop/LeftNav.tsx:266
 msgid "Add another account"
@@ -828,8 +842,12 @@ msgstr ""
 msgid "Add user to list"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:182
+#: src/ageAssurance/components/NoAccessScreen.tsx:199
 msgid "Add your birthdate"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
+msgid "Add your sign in credentials to your VerusID for seamless logins."
 msgstr ""
 
 #: src/components/dialogs/lists/ListAddRemoveUsersDialog.tsx:109
@@ -898,12 +916,18 @@ msgctxt "toast"
 msgid "Age assurance inquiry was submitted"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:302
+#: src/ageAssurance/components/NoAccessScreen.tsx:330
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:191
 msgid "Age assurance only takes a few minutes"
 msgstr ""
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
+msgid "Alice@"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:223
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 msgid "alice@example.com"
 msgstr ""
 
@@ -978,8 +1002,8 @@ msgid "Allows access to direct messages"
 msgstr "អនុញ្ញាតឱ្យចូលប្រើសារផ្ទាល់"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:171
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:236
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:242
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:239
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:245
 msgid "Already have a code?"
 msgstr "មានលេខកូដរួចហើយ?"
 
@@ -1078,7 +1102,7 @@ msgid "An error occurred while uploading the video."
 msgstr "កំហុស​មួយ​បាន​កើត​ឡើង​ពេល​ផ្ទុក​វីដេអូ"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:35
-msgid "An illustration of several Bluesky posts alongside repost, like, and comment icons"
+msgid "An illustration of several VerusSky posts alongside repost, like, and comment icons"
 msgstr ""
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:84
@@ -1159,12 +1183,16 @@ msgstr ""
 msgid "Anyone who follows me"
 msgstr ""
 
-#: src/Navigation.tsx:532
+#: src/Navigation.tsx:546
 #: src/screens/Settings/AppIconSettings/index.tsx:67
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:18
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:23
 msgid "App Icon"
 msgstr "រូបតំណាងកម្មវិធី"
+
+#: src/screens/Settings/LanguageSettings.tsx:103
+msgid "App language"
+msgstr ""
 
 #: src/screens/Settings/LanguageSettings.tsx:87
 msgid "App Language"
@@ -1196,7 +1224,7 @@ msgstr "ឈ្មោះពាក្យសម្ងាត់កម្មវិធ
 msgid "App passwords"
 msgstr "ពាក្យសម្ងាត់កម្មវិធី"
 
-#: src/Navigation.tsx:351
+#: src/Navigation.tsx:357
 #: src/screens/Settings/AppPasswords.tsx:50
 msgid "App Passwords"
 msgstr "ពាក្យសម្ងាត់កម្មវិធី"
@@ -1232,10 +1260,10 @@ msgstr ""
 msgid "Appeal this decision"
 msgstr "ប្តឹងឧទ្ធរណ៍លើការសម្រេចចិត្តនេះ។"
 
-#: src/Navigation.tsx:391
+#: src/Navigation.tsx:397
 #: src/screens/Settings/AppearanceSettings.tsx:73
-#: src/screens/Settings/Settings.tsx:212
-#: src/screens/Settings/Settings.tsx:215
+#: src/screens/Settings/Settings.tsx:221
+#: src/screens/Settings/Settings.tsx:224
 msgid "Appearance"
 msgstr "រូបរាង"
 
@@ -1244,8 +1272,8 @@ msgstr "រូបរាង"
 msgid "Apply default recommended feeds"
 msgstr "អនុវត្ត​មតិព័ត៌មាន​ដែល​បាន​ណែនាំ​លំនាំដើម"
 
-#: src/screens/Settings/Settings.tsx:498
-#: src/screens/Settings/Settings.tsx:500
+#: src/screens/Settings/Settings.tsx:507
+#: src/screens/Settings/Settings.tsx:509
 msgid "Apply Pull Request"
 msgstr ""
 
@@ -1317,13 +1345,22 @@ msgstr "អាក្រាតកាយបែបសិល្បៈ ឬមិន�
 msgid "Assign topic for algo"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:208
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:211
 msgid "At least 8 characters"
 msgstr ""
 
 #: src/screens/Settings/AppIconSettings/useAppIconSets.ts:48
 msgctxt "Name of app icon variant"
 msgid "Aurora"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:201
+msgid "Authentication (Optional)"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:114
+msgid "Authentication failed. Please check your credentials."
 msgstr ""
 
 #: src/screens/Settings/ContentAndMediaSettings.tsx:116
@@ -1336,21 +1373,27 @@ msgstr "ចាក់វីដេអូ និង GIFs ដោយស្វ័យ�
 msgid "Available"
 msgstr ""
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
+msgid "Awaiting confirmation"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
 #: src/components/moderation/LabelsOnMeDialog.tsx:333
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/screens/Login/ChooseAccountForm.tsx:91
 #: src/screens/Login/ChooseAccountForm.tsx:96
 #: src/screens/Login/ForgotPasswordForm.tsx:123
 #: src/screens/Login/ForgotPasswordForm.tsx:129
-#: src/screens/Login/LoginForm.tsx:313
-#: src/screens/Login/LoginForm.tsx:319
+#: src/screens/Login/LoginForm.tsx:625
+#: src/screens/Login/LoginForm.tsx:631
 #: src/screens/Login/SetNewPasswordForm.tsx:168
 #: src/screens/Login/SetNewPasswordForm.tsx:174
 #: src/screens/Messages/components/ChatDisabled.tsx:145
 #: src/screens/Messages/components/ChatDisabled.tsx:146
 #: src/screens/Profile/Header/Shell.tsx:158
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:272
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:281
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:275
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:284
 #: src/screens/Signup/BackNextButtons.tsx:41
 #: src/screens/StarterPack/Wizard/index.tsx:323
 msgid "Back"
@@ -1380,7 +1423,7 @@ msgstr ""
 #: src/components/dialogs/StarterPackDialog.tsx:71
 #: src/components/StarterPack/ProfileStarterPacks.tsx:263
 #: src/components/StarterPack/ProfileStarterPacks.tsx:273
-#: src/view/screens/Profile.tsx:351
+#: src/view/screens/Profile.tsx:358
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr "មុននឹងបង្កើតកញ្ចប់ចាប់ផ្តើម អ្នកត្រូវតែផ្ទៀងផ្ទាត់អ៊ីមែលរបស់អ្នកជាមុនសិន"
 
@@ -1399,11 +1442,11 @@ msgstr ""
 msgid "Before you can message another user, you must first verify your email."
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:317
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:318
 msgid "Begin"
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:311
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:312
 msgid "Begin age assurance process"
 msgstr ""
 
@@ -1411,7 +1454,7 @@ msgstr ""
 msgid "Begin the age assurance process by completing the fields below."
 msgstr ""
 
-#: src/components/dialogs/BirthDateSettings.tsx:147
+#: src/components/dialogs/BirthDateSettings.tsx:149
 msgid "Birthdate"
 msgstr ""
 
@@ -1420,7 +1463,7 @@ msgid "Birthday"
 msgstr "ថ្ងៃកំណើត"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:792
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Block"
 msgstr "ទប់ស្កាត់"
@@ -1483,7 +1526,7 @@ msgstr "រារាំង"
 msgid "Blocked accounts"
 msgstr "គណនី​ដែល​បាន​ទប់ស្កាត់"
 
-#: src/Navigation.tsx:192
+#: src/Navigation.tsx:198
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "គណនី​ដែល​បាន​ទប់ស្កាត់"
@@ -1518,10 +1561,6 @@ msgstr "ប្លុក"
 msgid "Bluesky"
 msgstr ""
 
-#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
-msgid "Bluesky cannot confirm the authenticity of the claimed date."
-msgstr "Bluesky មិនអាចបញ្ជាក់ពីភាពត្រឹមត្រូវនៃកាលបរិច្ឆេទដែលបានទាមទារនោះទេ"
-
 #: src/screens/Settings/AppIconSettings/useAppIconSets.ts:165
 msgctxt "Name of app icon variant"
 msgid "Bluesky Classic™"
@@ -1535,10 +1574,9 @@ msgstr "Bluesky គឺជាបណ្តាញបើកចំហដែលអ្�
 msgid "Bluesky is an open network where you can choose your own provider. If you're new here, we recommend sticking with the default Bluesky Social option."
 msgstr ""
 
-#: src/components/ProgressGuide/List.tsx:53
-#: src/components/ProgressGuide/List.tsx:70
-msgid "Bluesky is better with friends!"
-msgstr "Bluesky គឺល្អជាមួយមិត្តភក្តិ!"
+#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
+msgid "Bluesky is introducing a new layer of verification on VerusSky — an easy-to-see checkmark."
+msgstr ""
 
 #: src/screens/Takendown.tsx:226
 msgid "Bluesky Social Terms of Service"
@@ -1554,6 +1592,10 @@ msgstr "Bluesky នឹងមិនបង្ហាញប្រវត្តិរ�
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:132
 msgid "Bluesky will proactively verify notable and authentic accounts."
+msgstr ""
+
+#: src/screens/Messages/components/ChatDisabled.tsx:34
+msgid "Bluesky's moderators have reviewed reports and decided to disable your access to Bluesky's chats."
 msgstr ""
 
 #: src/screens/Settings/AppIconSettings/index.tsx:99
@@ -1651,7 +1693,7 @@ msgstr ""
 msgid "By clicking \"Continue\" you acknowledge that you understand and agree to these updates."
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:328
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:329
 msgid "By continuing, you agree to the <0>KWS Terms of Use</0> and acknowledge that KWS will store your verified status with your hashed email address in accordance with the <1>KWS Privacy Policy</1>. This means you won’t need to verify again the next time you use this email for other apps, games, and services powered by KWS technology."
 msgstr ""
 
@@ -1686,6 +1728,8 @@ msgstr "កាមេរ៉ា"
 #: src/components/dialogs/InAppBrowserConsent.tsx:104
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:274
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:282
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
 #: src/components/live/GoLiveDialog.tsx:244
 #: src/components/live/GoLiveDialog.tsx:250
 #: src/components/Menu/index.tsx:350
@@ -1701,9 +1745,9 @@ msgstr "កាមេរ៉ា"
 #: src/screens/Settings/AppIconSettings/index.tsx:230
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:78
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:85
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:247
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:253
-#: src/screens/Settings/Settings.tsx:289
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:250
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:256
+#: src/screens/Settings/Settings.tsx:298
 #: src/screens/Takendown.tsx:108
 #: src/screens/Takendown.tsx:111
 #: src/view/com/composer/Composer.tsx:1050
@@ -1779,12 +1823,12 @@ msgstr "ផ្លាស់ប្តូរ Handle"
 msgid "Change moderation service"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:261
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:267
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:264
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:270
 msgid "Change password"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:164
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:167
 msgid "Change password dialog"
 msgstr ""
 
@@ -1796,7 +1840,7 @@ msgstr ""
 msgid "Change report reason"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:57
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:60
 msgid "Change your password"
 msgstr ""
 
@@ -1814,7 +1858,7 @@ msgid "Changes saved"
 msgstr ""
 
 #: src/lib/hooks/useNotificationHandler.ts:99
-#: src/Navigation.tsx:549
+#: src/Navigation.tsx:563
 #: src/view/shell/bottom-bar/BottomBar.tsx:221
 #: src/view/shell/desktop/LeftNav.tsx:608
 #: src/view/shell/Drawer.tsx:466
@@ -1840,7 +1884,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "បានបិទការជជែក"
 
-#: src/Navigation.tsx:559
+#: src/Navigation.tsx:573
 #: src/screens/Messages/components/InboxPreview.tsx:22
 msgid "Chat request inbox"
 msgstr ""
@@ -1852,7 +1896,7 @@ msgid "Chat requests"
 msgstr ""
 
 #: src/components/dms/ConvoMenu.tsx:78
-#: src/Navigation.tsx:554
+#: src/Navigation.tsx:568
 #: src/screens/Messages/ChatList.tsx:81
 #: src/screens/Messages/ChatList.tsx:85
 #: src/screens/Messages/ChatList.tsx:380
@@ -1879,7 +1923,7 @@ msgstr ""
 msgid "Check my status"
 msgstr "ពិនិត្យស្ថានភាពរបស់ខ្ញុំ"
 
-#: src/screens/Login/LoginForm.tsx:304
+#: src/screens/Login/LoginForm.tsx:616
 msgid "Check your email for a sign in code and enter it here."
 msgstr ""
 
@@ -1924,6 +1968,7 @@ msgid "Choose this color as your avatar"
 msgstr "ជ្រើសរើសពណ៌នេះជារូបតំណាងរបស់អ្នក"
 
 #: src/components/dialogs/ServerInput.tsx:137
+#: src/screens/Login/index.tsx:137
 msgid "Choose your account provider"
 msgstr ""
 
@@ -1939,11 +1984,11 @@ msgstr "ជ្រើសរើសពាក្យសម្ងាត់របស់
 msgid "Choose your username"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:490
+#: src/screens/Settings/Settings.tsx:499
 msgid "Clear all storage data"
 msgstr "សម្អាតទិន្នន័យផ្ទុកទាំងអស់"
 
-#: src/screens/Settings/Settings.tsx:492
+#: src/screens/Settings/Settings.tsx:501
 msgid "Clear all storage data (restart after this)"
 msgstr "សម្អាតទិន្នន័យផ្ទុកទាំងអស់ (ចាប់ផ្តើមឡើងវិញបន្ទាប់ពីនេះ)"
 
@@ -1964,11 +2009,11 @@ msgstr ""
 msgid "click here"
 msgstr "ចុចទីនេះ"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:102
+#: src/ageAssurance/components/NoAccessScreen.tsx:106
 msgid "Click here to contact our support team"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:194
+#: src/ageAssurance/components/NoAccessScreen.tsx:222
 msgid "Click here to log out"
 msgstr ""
 
@@ -1976,8 +2021,8 @@ msgstr ""
 msgid "Click here to restart the verification process."
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:86
-#: src/ageAssurance/components/NoAccessScreen.tsx:179
+#: src/ageAssurance/components/NoAccessScreen.tsx:90
+#: src/ageAssurance/components/NoAccessScreen.tsx:196
 msgid "Click here to update your birthdate"
 msgstr ""
 
@@ -2016,8 +2061,14 @@ msgstr ""
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:171
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:178
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:187
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
 #: src/components/dialogs/SearchablePeopleList.tsx:295
 #: src/components/dialogs/StarterPackDialog.tsx:179
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:208
@@ -2033,10 +2084,11 @@ msgstr ""
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:124
 #: src/components/verification/VerificationsDialog.tsx:144
 #: src/components/verification/VerifierDialog.tsx:150
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
 #: src/components/WhoCanReply.tsx:234
 #: src/components/WhoCanReply.tsx:241
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:287
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:292
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:290
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:300
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:335
 #: src/view/com/feeds/MissingFeed.tsx:210
 #: src/view/com/feeds/MissingFeed.tsx:217
@@ -2061,13 +2113,14 @@ msgstr ""
 #: src/components/dialogs/GifSelect.tsx:263
 #: src/components/verification/VerificationsDialog.tsx:136
 #: src/components/verification/VerifierDialog.tsx:142
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:204
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:298
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:330
 msgid "Close dialog"
 msgstr "បិទប្រអប់"
 
-#: src/view/shell/index.web.tsx:108
+#: src/view/shell/index.web.tsx:114
 msgid "Close drawer menu"
 msgstr ""
 
@@ -2147,7 +2200,7 @@ msgid "Comics"
 msgstr "រឿងកំប្លែង"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:45
-#: src/Navigation.tsx:341
+#: src/Navigation.tsx:347
 #: src/view/screens/CommunityGuidelines.tsx:37
 msgid "Community Guidelines"
 msgstr "គោលការណ៍ណែនាំសហគមន៍"
@@ -2201,7 +2254,7 @@ msgstr "បញ្ជាក់ការកំណត់ភាសាមាតិក
 msgid "Confirm delete account"
 msgstr "បញ្ជាក់ការលុបគណនី"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:316
+#: src/ageAssurance/components/NoAccessScreen.tsx:344
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:87
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:40
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:105
@@ -2209,9 +2262,9 @@ msgid "Confirm your location"
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:36
-#: src/screens/Login/LoginForm.tsx:284
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:186
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:190
+#: src/screens/Login/LoginForm.tsx:596
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:189
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:193
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:144
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:150
 #: src/view/com/modals/DeleteAccount.tsx:220
@@ -2219,7 +2272,11 @@ msgstr ""
 msgid "Confirmation code"
 msgstr "លេខកូដបញ្ជាក់"
 
-#: src/screens/Login/LoginForm.tsx:340
+#: src/screens/Settings/VerusServicesSettings.tsx:145
+msgid "Connected"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:652
 msgid "Connecting..."
 msgstr "កំពុងភ្ជាប់..."
 
@@ -2228,7 +2285,7 @@ msgstr "កំពុងភ្ជាប់..."
 msgid "Connection issue"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:253
+#: src/ageAssurance/components/NoAccessScreen.tsx:281
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:130
 #: src/components/ageAssurance/AgeAssuranceAppealDialog.tsx:29
 msgid "Contact our moderation team"
@@ -2248,12 +2305,12 @@ msgstr ""
 msgid "Content & Media"
 msgstr "ខ្លឹមសារ និងប្រព័ន្ធផ្សព្វផ្សាយ"
 
-#: src/screens/Settings/Settings.tsx:204
-#: src/screens/Settings/Settings.tsx:207
+#: src/screens/Settings/Settings.tsx:213
+#: src/screens/Settings/Settings.tsx:216
 msgid "Content and media"
 msgstr "ខ្លឹមសារ និងប្រព័ន្ធផ្សព្វផ្សាយ"
 
-#: src/Navigation.tsx:508
+#: src/Navigation.tsx:522
 msgid "Content and Media"
 msgstr "ខ្លឹមសារ និងប្រព័ន្ធផ្សព្វផ្សាយ"
 
@@ -2269,7 +2326,7 @@ msgstr "តម្រងមាតិកា"
 msgid "Content from across the network we think you might like."
 msgstr ""
 
-#: src/screens/Settings/LanguageSettings.tsx:153
+#: src/screens/Settings/LanguageSettings.tsx:155
 #: src/view/com/modals/lang-settings/ContentLanguagesSettings.tsx:76
 msgid "Content Languages"
 msgstr "ភាសាមាតិកា"
@@ -2298,6 +2355,7 @@ msgstr "ការព្រមានអំពីខ្លឹមសារ"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "ផ្ទាំងខាងក្រោយម៉ឺនុយបរិបទ ចុចដើម្បីបិទម៉ឺនុយ"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:162
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:170
 #: src/screens/Onboarding/StepInterests/index.tsx:94
@@ -2449,13 +2507,17 @@ msgstr "ចម្លងអត្ថបទអត្ថបទ"
 msgid "Copy QR code"
 msgstr "ចម្លងកូដ QR"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
+msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:455
 msgid "Copy TXT record value"
 msgstr "ចម្លងតម្លៃកំណត់ត្រា TXT"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:40
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:107
-#: src/Navigation.tsx:346
+#: src/Navigation.tsx:352
 #: src/view/screens/CopyrightPolicy.tsx:34
 msgid "Copyright Policy"
 msgstr "គោលការណ៍រក្សាសិទ្ធិ"
@@ -2503,6 +2565,10 @@ msgstr ""
 msgid "Could not update notification settings"
 msgstr ""
 
+#: src/components/InternationalPhoneCodeSelect.tsx:78
+msgid "Country code"
+msgstr ""
+
 #. Text on button to create a new starter pack
 #. Text on button to create a new starter pack
 #: src/components/dialogs/StarterPackDialog.tsx:112
@@ -2522,12 +2588,12 @@ msgstr "បង្កើតលេខកូដ QR សម្រាប់កញ្�
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:206
 #: src/components/StarterPack/ProfileStarterPacks.tsx:315
-#: src/Navigation.tsx:589
+#: src/Navigation.tsx:603
 msgid "Create a starter pack"
 msgstr "បង្កើតកញ្ចប់ចាប់ផ្តើម"
 
-#: src/view/screens/Profile.tsx:542
-#: src/view/screens/Profile.tsx:543
+#: src/view/screens/Profile.tsx:550
+#: src/view/screens/Profile.tsx:551
 msgid "Create a Starter Pack"
 msgstr ""
 
@@ -2619,7 +2685,7 @@ msgid "Customization options"
 msgstr ""
 
 #: src/screens/Onboarding/Layout.tsx:60
-msgid "Customizes your Bluesky experience"
+msgid "Customizes your VerusSky experience"
 msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:200
@@ -2660,7 +2726,7 @@ msgstr "ថ្ងៃខែឆ្នាំកំណើត"
 msgid "Deactivate account"
 msgstr "បិទដំណើរការគណនី"
 
-#: src/screens/Settings/Settings.tsx:455
+#: src/screens/Settings/Settings.tsx:464
 msgid "Debug Moderation"
 msgstr "ការសម្របសម្រួលបំបាត់កំហុស"
 
@@ -2713,7 +2779,7 @@ msgstr "លុបពាក្យសម្ងាត់កម្មវិធី"
 msgid "Delete chat"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:462
+#: src/screens/Settings/Settings.tsx:471
 msgid "Delete chat declaration record"
 msgstr "លុបកំណត់ត្រាប្រកាសការជជែក"
 
@@ -2754,6 +2820,10 @@ msgstr "លុបសារពីខ្ញុំ"
 #: src/view/com/composer/Composer.tsx:969
 msgid "Delete post"
 msgstr "លុប post"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+msgid "Delete Post and Remove Link"
+msgstr ""
 
 #: src/screens/StarterPack/StarterPackScreen.tsx:595
 #: src/screens/StarterPack/StarterPackScreen.tsx:753
@@ -2808,6 +2878,11 @@ msgstr "ផ្ដាច់សម្រង់"
 msgid "Detach quote post?"
 msgstr "ផ្ដាច់សម្រង់ post?"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
+msgid "Details to Sign"
+msgstr ""
+
 #: src/screens/Settings/AboutSettings.tsx:140
 msgctxt "toast"
 msgid "Developer mode disabled"
@@ -2818,8 +2893,8 @@ msgctxt "toast"
 msgid "Developer mode enabled"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:271
-#: src/screens/Settings/Settings.tsx:274
+#: src/screens/Settings/Settings.tsx:280
+#: src/screens/Settings/Settings.tsx:283
 msgid "Developer options"
 msgstr ""
 
@@ -2889,6 +2964,10 @@ msgstr "បោះបង់ការផ្លាស់ប្តូរ?"
 #: src/view/com/composer/Composer.tsx:994
 msgid "Discard post?"
 msgstr "បោះបង់ការបង្ហោះ?"
+
+#: src/screens/Settings/VerusServicesSettings.tsx:147
+msgid "Disconnected"
+msgstr ""
 
 #: src/screens/Settings/components/PwiOptOut.tsx:87
 #: src/screens/Settings/components/PwiOptOut.tsx:91
@@ -2973,15 +3052,15 @@ msgstr ""
 msgid "Don't worry! All existing messages and settings are saved and will be available after you verify you're an adult."
 msgstr ""
 
-#: src/components/dialogs/BirthDateSettings.tsx:181
-#: src/components/dialogs/BirthDateSettings.tsx:188
+#: src/components/dialogs/BirthDateSettings.tsx:183
+#: src/components/dialogs/BirthDateSettings.tsx:190
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
 #: src/components/dialogs/ServerInput.tsx:240
 #: src/components/dialogs/ServerInput.tsx:242
 #: src/components/dms/AfterReportDialog.tsx:142
 #: src/components/forms/DateField/index.tsx:103
 #: src/components/forms/DateField/index.tsx:109
-#: src/components/Select/index.tsx:185
-#: src/components/Select/index.tsx:192
 #: src/lib/media/picker.tsx:35
 #: src/screens/Onboarding/StepProfile/index.tsx:341
 #: src/screens/Onboarding/StepProfile/index.tsx:344
@@ -3017,13 +3096,13 @@ msgstr "ចុចពីរដងដើម្បីបិទប្រអប់"
 msgid "Double tap to like"
 msgstr ""
 
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
-msgid "Download Bluesky"
+#: src/screens/Settings/components/ExportCarDialog.tsx:79
+#: src/screens/Settings/components/ExportCarDialog.tsx:84
+msgid "Download CAR file"
 msgstr ""
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:78
-#: src/screens/Settings/components/ExportCarDialog.tsx:83
-msgid "Download CAR file"
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
+msgid "Download VerusSky"
 msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:115
@@ -3131,7 +3210,7 @@ msgstr ""
 msgid "Edit moderation list"
 msgstr ""
 
-#: src/Navigation.tsx:356
+#: src/Navigation.tsx:362
 #: src/view/screens/Feeds.tsx:518
 msgid "Edit My Feeds"
 msgstr "កែសម្រួលមតិព័ត៌មានរបស់ខ្ញុំ"
@@ -3152,12 +3231,12 @@ msgstr "កែសម្រួលការកំណត់អន្តរកម្
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:292
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:343
 msgid "Edit profile"
 msgstr "កែប្រវត្តិរូប"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:295
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:323
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:345
 msgid "Edit Profile"
 msgstr "កែប្រវត្តិរូប"
 
@@ -3173,7 +3252,7 @@ msgstr ""
 msgid "Edit who can reply"
 msgstr "កែសម្រួលអ្នកណាអាចឆ្លើយតបបាន"
 
-#: src/Navigation.tsx:594
+#: src/Navigation.tsx:608
 msgid "Edit your starter pack"
 msgstr "កែសម្រួលកញ្ចប់ចាប់ផ្តើមរបស់អ្នក"
 
@@ -3186,6 +3265,8 @@ msgstr "ការអប់រំ"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr ""
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
 #: src/screens/Settings/AccountSettings.tsx:66
 #: src/screens/Signup/StepInfo/index.tsx:196
 msgid "Email"
@@ -3323,7 +3404,7 @@ msgstr "បញ្ចូលពាក្យ ឬស្លាក"
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:201
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:320
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:63
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:66
 msgid "Enter code"
 msgstr ""
 
@@ -3339,11 +3420,11 @@ msgstr "បញ្ចូល Domain ដែលអ្នកចង់ប្រើ"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "បញ្ចូលអ៊ីមែលដែលអ្នកធ្លាប់បង្កើតគណនីរបស់អ្នក។ យើងនឹងផ្ញើ \"កំណត់លេខកូដឡើងវិញ\" ដល់អ្នក ដូច្នេះអ្នកអាចកំណត់ពាក្យសម្ងាត់ថ្មី"
 
-#: src/screens/Login/LoginForm.tsx:219
+#: src/screens/Login/LoginForm.tsx:488
 msgid "Enter the username or email address you used when you created your account"
 msgstr ""
 
-#: src/components/dialogs/BirthDateSettings.tsx:148
+#: src/components/dialogs/BirthDateSettings.tsx:150
 msgid "Enter your birthdate"
 msgstr ""
 
@@ -3352,13 +3433,9 @@ msgstr ""
 msgid "Enter your email address"
 msgstr "បញ្ចូលអាសយដ្ឋានអ៊ីមែលរបស់អ្នក"
 
-#: src/screens/Login/LoginForm.tsx:243
+#: src/screens/Login/LoginForm.tsx:512
 msgid "Enter your password"
 msgstr ""
-
-#: src/screens/Login/index.tsx:137
-msgid "Enter your username and password"
-msgstr "បញ្ចូលឈ្មោះអ្នកប្រើប្រាស់ និងពាក្យសម្ងាត់របស់អ្នក។"
 
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:132
 msgid "Enters full screen"
@@ -3491,7 +3568,7 @@ msgstr "ប្រព័ន្ធផ្សព្វផ្សាយច្បាស
 msgid "Explicit sexual images."
 msgstr "រូបភាពផ្លូវភេទច្បាស់លាស់"
 
-#: src/Navigation.tsx:759
+#: src/Navigation.tsx:773
 #: src/screens/Search/Shell.tsx:327
 #: src/view/shell/desktop/LeftNav.tsx:690
 #: src/view/shell/Drawer.tsx:414
@@ -3508,7 +3585,7 @@ msgstr ""
 msgid "Export my data"
 msgstr "នាំចេញទិន្នន័យរបស់ខ្ញុំ"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:62
+#: src/screens/Settings/components/ExportCarDialog.tsx:63
 msgid "Export My Data"
 msgstr "នាំចេញទិន្នន័យរបស់ខ្ញុំ"
 
@@ -3527,7 +3604,7 @@ msgstr "ប្រព័ន្ធផ្សព្វផ្សាយខាងក្
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "ប្រព័ន្ធផ្សព្វផ្សាយខាងក្រៅអាចអនុញ្ញាតឱ្យគេហទំព័រប្រមូលព័ត៌មានអំពីអ្នក និងឧបករណ៍របស់អ្នក។ គ្មាន​ព័ត៌មាន​ត្រូវ​បាន​ផ្ញើ ឬ​ស្នើ​រហូត​ដល់​អ្នក​ចុច​ប៊ូតុង \"play\""
 
-#: src/Navigation.tsx:375
+#: src/Navigation.tsx:381
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "ចំណូលចិត្តប្រព័ន្ធផ្សព្វផ្សាយខាងក្រៅ"
@@ -3553,6 +3630,10 @@ msgstr ""
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:603
 msgid "Failed to change handle. Please try again."
 msgstr "បរាជ័យក្នុងការផ្លាស់ប្តូរចំណុចទាញ។ សូមព្យាយាមម្តងទៀត"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
+msgid "Failed to create a post for linking the VerusID. Please try again."
+msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:173
 msgid "Failed to create app password. Please try again."
@@ -3587,6 +3668,11 @@ msgstr "បរាជ័យក្នុងការលុបកញ្ចប់ច
 
 #: src/screens/Onboarding/StepSuggestedAccounts/index.tsx:125
 msgid "Failed to follow all suggested accounts, please try again"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
+msgid "Failed to initiate credential update"
 msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:282
@@ -3647,6 +3733,10 @@ msgstr ""
 msgid "Failed to pin post"
 msgstr "បរាជ័យក្នុងការខ្ទាស់ការបង្ហោះ"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
+msgid "Failed to prepare linking details."
+msgstr ""
+
 #: src/components/dms/ActionsWrapper.web.tsx:60
 #: src/components/dms/MessageContextMenu.tsx:95
 msgid "Failed to remove emoji reaction"
@@ -3654,6 +3744,10 @@ msgstr ""
 
 #: src/components/dialogs/StarterPackDialog.tsx:289
 msgid "Failed to remove from starter pack"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
+msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
@@ -3700,6 +3794,11 @@ msgstr "មិន​អាច​បិទ​បើក​បិទ​សំឡេ
 msgid "Failed to unpin list"
 msgstr ""
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
+msgid "Failed to update credentials"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:149
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Enable.tsx:83
 msgid "Failed to update email 2FA settings"
@@ -3721,6 +3820,10 @@ msgstr ""
 msgid "Failed to update settings"
 msgstr "បរាជ័យក្នុងការធ្វើបច្ចុប្បន្នភាពការកំណត់"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:135
+msgid "Failed to update the Verus Service endpoint. Please try again"
+msgstr ""
+
 #: src/lib/media/video/upload.ts:72
 #: src/lib/media/video/upload.web.ts:74
 #: src/lib/media/video/upload.web.ts:78
@@ -3736,6 +3839,10 @@ msgstr ""
 msgid "Failed to verify handle. Please try again."
 msgstr "បរាជ័យក្នុងការផ្ទៀងផ្ទាត់ចំណុចទាញ។ សូមព្យាយាមម្តងទៀត"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
+msgid "Failed to verify signature. Please try again."
+msgstr ""
+
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:47
 msgid "Fake account or bot"
 msgstr ""
@@ -3744,7 +3851,7 @@ msgstr ""
 msgid "False information about elections"
 msgstr ""
 
-#: src/Navigation.tsx:291
+#: src/Navigation.tsx:297
 msgid "Feed"
 msgstr "ព័ត៌មាន"
 
@@ -3785,12 +3892,12 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr ""
 
-#: src/Navigation.tsx:574
+#: src/Navigation.tsx:588
 #: src/screens/SavedFeeds.tsx:108
 #: src/screens/Search/SearchResults.tsx:78
 #: src/screens/StarterPack/StarterPackScreen.tsx:190
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:246
 #: src/view/shell/desktop/LeftNav.tsx:728
 #: src/view/shell/Drawer.tsx:530
 msgid "Feeds"
@@ -3864,7 +3971,7 @@ msgid "Find people to follow"
 msgstr ""
 
 #: src/screens/Search/Shell.tsx:526
-msgid "Find posts, users, and feeds on Bluesky"
+msgid "Find posts, users, and feeds on VerusSky"
 msgstr ""
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:21
@@ -3903,13 +4010,13 @@ msgstr "អាចបត់បែនបាន"
 #: src/components/ProfileHoverCard/index.web.tsx:496
 #: src/components/ProfileHoverCard/index.web.tsx:507
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:131
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:378
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:400
 #: src/screens/VideoFeed/index.tsx:879
 msgid "Follow"
 msgstr "តាម"
 
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:113
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:366
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:388
 msgid "Follow {0}"
 msgstr "តាម {0}"
 
@@ -3946,7 +4053,7 @@ msgstr ""
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:547
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:129
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:376
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:398
 #: src/view/com/notifications/NotificationFeedItem.tsx:835
 #: src/view/com/notifications/NotificationFeedItem.tsx:842
 msgid "Follow back"
@@ -3972,7 +4079,7 @@ msgstr "តាមដោយ <0>{0}</0> និង <1>{1}</1>"
 msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {# others}}"
 msgstr ""
 
-#: src/Navigation.tsx:245
+#: src/Navigation.tsx:251
 msgid "Followers of @{0} that you know"
 msgstr "អ្នកតាមដាន @{0} ដែលអ្នកស្គាល់"
 
@@ -3987,7 +4094,7 @@ msgstr "អ្នកតាមដែលអ្នកស្គាល់"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:134
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:396
 #: src/screens/VideoFeed/index.tsx:877
 #: src/view/com/notifications/NotificationFeedItem.tsx:813
 #: src/view/com/notifications/NotificationFeedItem.tsx:830
@@ -4001,7 +4108,7 @@ msgid "Following"
 msgstr "កំពុងតាម"
 
 #: src/components/ProfileCard.tsx:503
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:244
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:266
 #: src/view/com/notifications/NotificationFeedItem.tsx:767
 msgid "Following {0}"
 msgstr "កំពុងតាម {0}"
@@ -4015,7 +4122,7 @@ msgstr ""
 msgid "Following feed preferences"
 msgstr "ធ្វើតាមចំណូលចិត្តមតិព័ត៌មាន"
 
-#: src/Navigation.tsx:362
+#: src/Navigation.tsx:368
 #: src/screens/Settings/FollowingFeedPreferences.tsx:56
 msgid "Following Feed Preferences"
 msgstr "ធ្វើតាមចំណូលចិត្តមតិព័ត៌មាន"
@@ -4071,11 +4178,11 @@ msgstr ""
 msgid "Forgot Password"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:258
+#: src/screens/Login/LoginForm.tsx:527
 msgid "Forgot password?"
 msgstr "ភ្លេចពាក្យសម្ងា?ត់"
 
-#: src/screens/Login/LoginForm.tsx:269
+#: src/screens/Login/LoginForm.tsx:538
 msgid "Forgot?"
 msgstr "ភ្លេច?"
 
@@ -4338,7 +4445,7 @@ msgstr ""
 msgid "Harming or endangering minors"
 msgstr ""
 
-#: src/Navigation.tsx:539
+#: src/Navigation.tsx:553
 msgid "Hashtag"
 msgstr ""
 
@@ -4359,8 +4466,8 @@ msgstr ""
 msgid "Having trouble?"
 msgstr "មានបញ្ហា?"
 
-#: src/screens/Settings/Settings.tsx:236
-#: src/screens/Settings/Settings.tsx:240
+#: src/screens/Settings/Settings.tsx:245
+#: src/screens/Settings/Settings.tsx:249
 #: src/view/shell/desktop/RightNav.tsx:123
 #: src/view/shell/desktop/RightNav.tsx:124
 #: src/view/shell/Drawer.tsx:381
@@ -4378,6 +4485,14 @@ msgstr "នេះគឺជាពាក្យសម្ងាត់កម្មវ
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:73
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:119
 msgid "Hey there 👋"
+msgstr ""
+
+#: src/ageAssurance/components/NoAccessScreen.tsx:147
+msgid "Hey there!"
+msgstr ""
+
+#: src/ageAssurance/components/NoAccessScreen.tsx:178
+msgid "Hi there!"
 msgstr ""
 
 #: src/components/VideoPostCard.tsx:178
@@ -4476,6 +4591,10 @@ msgstr ""
 msgid "Hides the content"
 msgstr ""
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:205
+msgid "Hmm, it looks like you're logged in with an <0>App Password</0>. To set your birthdate, you'll need to log in with your main account password, or ask whomever controls this account to do so."
+msgstr ""
+
 #: src/view/com/posts/PostFeedErrorMessage.tsx:124
 msgid "Hmm, some kind of issue occurred when contacting the feed server. Please let the feed owner know about this issue."
 msgstr "ហ៎ បញ្ហា​មួយ​ចំនួន​បាន​កើត​ឡើង​ពេល​ទាក់ទង​ទៅ​ម៉ាស៊ីន​បម្រើ​មតិព័ត៌មាន។ សូមប្រាប់ម្ចាស់ព័ត៌មានអំពីបញ្ហានេះ"
@@ -4508,8 +4627,8 @@ msgstr "ហ៊ឺ យើងមិនអាចផ្ទុកសេវាកម�
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "ចាំ! យើងកំពុងផ្តល់សិទ្ធិចូលប្រើវីដេអូបន្តិចម្តងៗ ហើយអ្នកនៅតែរង់ចាំក្នុងជួរ។ សូមពិនិត្យមើលឡើងវិញឆាប់ៗនេះ"
 
-#: src/Navigation.tsx:754
-#: src/Navigation.tsx:774
+#: src/Navigation.tsx:768
+#: src/Navigation.tsx:788
 #: src/view/shell/bottom-bar/BottomBar.tsx:178
 #: src/view/shell/desktop/LeftNav.tsx:672
 #: src/view/shell/Drawer.tsx:440
@@ -4518,11 +4637,6 @@ msgstr "ទំព័រដើម"
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:428
 msgid "Host:"
-msgstr ""
-
-#: src/screens/Login/ForgotPasswordForm.tsx:83
-#: src/screens/Login/LoginForm.tsx:184
-msgid "Hosting provider"
 msgstr ""
 
 #: src/screens/Search/modules/ExploreTrendingTopics.tsx:191
@@ -4553,19 +4667,27 @@ msgstr "ខ្ញុំមាន domain ផ្ទាល់ខ្លួន"
 msgid "I understand"
 msgstr "ខ្ញុំយល់"
 
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
+msgid "Identity:"
+msgstr ""
+
 #: src/view/com/lightbox/Lightbox.web.tsx:187
 msgid "If alt text is long, toggles alt text expanded state"
 msgstr "ប្រសិនបើអត្ថបទ alt វែង បិទ/បើកស្ថានភាពពង្រីកអត្ថបទ"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:204
+msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
+msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:110
 msgid "If you are not yet an adult according to the laws of your country, your parent or legal guardian must read these Terms on your behalf."
 msgstr "ប្រសិនបើអ្នកមិនទាន់ពេញវ័យស្របតាមច្បាប់នៃប្រទេសរបស់អ្នក ឪពុកម្តាយ ឬអាណាព្យាបាលស្របច្បាប់របស់អ្នកត្រូវតែអានលក្ខខណ្ឌទាំងនេះជំនួសអ្នក"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:98
+#: src/ageAssurance/components/NoAccessScreen.tsx:102
 msgid "If you believe your birthdate is incorrect, please <0>contact our support team</0>."
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:83
+#: src/ageAssurance/components/NoAccessScreen.tsx:87
 msgid "If you believe your birthdate is incorrect, you can update it by <0>clicking here</0>."
 msgstr ""
 
@@ -4589,7 +4711,7 @@ msgstr "ប្រសិនបើអ្នកលុបការបង្ហោះ
 msgid "If you update your email address, email 2FA will be disabled."
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:59
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:62
 msgid "If you want to change your password, we will send you a code to verify that this is your account."
 msgstr "ប្រសិនបើអ្នកចង់ផ្លាស់ប្តូរពាក្យសម្ងាត់របស់អ្នក យើងនឹងផ្ញើលេខកូដទៅអ្នកដើម្បីផ្ទៀងផ្ទាត់ថានេះគឺជាគណនីរបស់អ្នក"
 
@@ -4632,6 +4754,10 @@ msgstr ""
 msgid "Impersonation"
 msgstr ""
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:181
+msgid "In order to provide an age-appropriate experience, we need to know your birthdate. This is a one-time thing, and your data will be kept private."
+msgstr ""
+
 #: src/screens/Settings/NotificationSettings/index.tsx:284
 msgid "In-app"
 msgstr ""
@@ -4665,7 +4791,7 @@ msgstr ""
 msgid "Inbox zero!"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:164
+#: src/screens/Login/LoginForm.tsx:330
 msgid "Incorrect username or password"
 msgstr "ឈ្មោះអ្នកប្រើ ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ"
 
@@ -4685,7 +4811,7 @@ msgstr "បញ្ចូលពាក្យសម្ងាត់ថ្មី"
 msgid "Input password for account deletion"
 msgstr "បញ្ចូលពាក្យសម្ងាត់សម្រាប់ការលុបគណនី"
 
-#: src/screens/Login/LoginForm.tsx:296
+#: src/screens/Login/LoginForm.tsx:608
 msgid "Input the code which has been emailed to you"
 msgstr "បញ្ចូលលេខកូដដែលបានផ្ញើទៅអ្នក"
 
@@ -4705,7 +4831,7 @@ msgstr ""
 msgid "Introducing saved posts AKA bookmarks"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:156
+#: src/screens/Login/LoginForm.tsx:310
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:70
 msgid "Invalid 2FA confirmation code."
 msgstr "លេខកូដបញ្ជាក់ 2FA មិនត្រឹមត្រូវ"
@@ -4719,8 +4845,16 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr ""
 
+#: src/screens/Login/LoginForm.tsx:423
+msgid "Invalid login response. Please try again or sign in manually."
+msgstr ""
+
 #: src/components/moderation/ReportDialog/index.tsx:81
 msgid "Invalid report subject"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
+msgid "Invalid signature. Please try again."
 msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:85
@@ -4747,13 +4881,9 @@ msgstr "អញ្ជើញមិត្តភ័ក្តិរបស់អ្ន
 msgid "Invites, but personal"
 msgstr "ការអញ្ជើញ ប៉ុន្តែផ្ទាល់ខ្លួន"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:313
+#: src/ageAssurance/components/NoAccessScreen.tsx:341
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:84
 msgid "Is your location not accurate? <0>Tap here to confirm your location.</0>"
-msgstr ""
-
-#: src/ageAssurance/components/NoAccessScreen.tsx:171
-msgid "It looks like you haven't added your birthdate. You must provide an accurate date of birth to use Bluesky."
 msgstr ""
 
 #: src/screens/Signup/StepInfo/index.tsx:292
@@ -4777,8 +4907,6 @@ msgstr ""
 msgid "Jobs"
 msgstr "ការងារ"
 
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:464
 #: src/screens/StarterPack/StarterPackScreen.tsx:475
 msgid "Join Bluesky"
@@ -4789,6 +4917,11 @@ msgstr "ចូលរួមជាមួយ Bluesky"
 msgid "Join the conversation"
 msgstr "ចូលរួមការសន្ទនា"
 
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
+msgid "Join VerusSky"
+msgstr ""
+
 #: src/lib/interests.ts:63
 #: src/screens/Onboarding/index.tsx:52
 msgid "Journalism"
@@ -4798,11 +4931,11 @@ msgstr "សារព័ត៌មាន"
 msgid "Keep me posted"
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:339
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:340
 msgid "KWS Privacy Policy"
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:331
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:332
 msgid "KWS Terms of Use"
 msgstr ""
 
@@ -4819,7 +4952,7 @@ msgid "Labeled by the author."
 msgstr "ដាក់ស្លាកដោយអ្នកនិពន្ធ"
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:69
-#: src/view/screens/Profile.tsx:232
+#: src/view/screens/Profile.tsx:239
 msgid "Labels"
 msgstr "ស្លាក"
 
@@ -4839,13 +4972,13 @@ msgstr "ស្លាកនៅលើគណនីរបស់អ្នក"
 msgid "Labels on your content"
 msgstr "ស្លាកនៅលើមាតិការបស់អ្នក"
 
-#: src/Navigation.tsx:218
+#: src/Navigation.tsx:224
 msgid "Language Settings"
 msgstr "ការកំណត់ភាសា"
 
 #: src/screens/Settings/LanguageSettings.tsx:78
-#: src/screens/Settings/Settings.tsx:228
-#: src/screens/Settings/Settings.tsx:231
+#: src/screens/Settings/Settings.tsx:237
+#: src/screens/Settings/Settings.tsx:240
 msgid "Languages"
 msgstr "ភាសា"
 
@@ -4853,12 +4986,12 @@ msgstr "ភាសា"
 msgid "Larger"
 msgstr "ធំជាង"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:296
+#: src/ageAssurance/components/NoAccessScreen.tsx:324
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:185
 msgid "Last initiated {timeAgo} ago"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:294
+#: src/ageAssurance/components/NoAccessScreen.tsx:322
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:183
 msgid "Last initiated just now"
 msgstr ""
@@ -4956,8 +5089,8 @@ msgstr ""
 
 #: src/components/dialogs/LinkWarning.tsx:67
 #: src/components/dialogs/LinkWarning.tsx:75
-msgid "Leaving Bluesky"
-msgstr "ចាកចេញពី Bluesky"
+msgid "Leaving VerusSky"
+msgstr ""
 
 #: src/screens/SignupQueued.tsx:155
 msgid "left to go."
@@ -5006,7 +5139,7 @@ msgstr "ចូលចិត្ត 10 ប្រកាស"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "ចូលចិត្តការបង្ហោះចំនួន 10 ដើម្បីបណ្តុះបណ្តាល Discover feed"
 
-#: src/Navigation.tsx:452
+#: src/Navigation.tsx:466
 msgid "Like notifications"
 msgstr ""
 
@@ -5018,8 +5151,8 @@ msgstr "ចូលចិត្តមតិព័ត៌មាននេះ"
 msgid "Like this labeler"
 msgstr ""
 
-#: src/Navigation.tsx:296
-#: src/Navigation.tsx:301
+#: src/Navigation.tsx:302
+#: src/Navigation.tsx:307
 msgid "Liked by"
 msgstr "ចូលចិត្ត"
 
@@ -5044,7 +5177,7 @@ msgstr ""
 #: src/lib/hooks/useNotificationHandler.ts:126
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:238
+#: src/view/screens/Profile.tsx:245
 msgid "Likes"
 msgstr "ចូលចិត្ត"
 
@@ -5054,7 +5187,7 @@ msgstr "ចូលចិត្ត"
 msgid "Likes of your reposts"
 msgstr ""
 
-#: src/Navigation.tsx:476
+#: src/Navigation.tsx:490
 msgid "Likes of your reposts notifications"
 msgstr ""
 
@@ -5067,7 +5200,40 @@ msgstr "ចូលចិត្តនៅលើប្រកាសនេះ"
 msgid "Linear"
 msgstr ""
 
-#: src/Navigation.tsx:251
+#: src/screens/Settings/VerusServicesSettings.tsx:91
+#: src/screens/Settings/VerusServicesSettings.tsx:98
+msgid "Link Account to VerusID"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
+msgid "Link Removed"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+msgid "Link VerusID to account"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
+msgid "Link VerusID to Profile"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+msgid "Link your VerusID to this account to verify your identity."
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:67
+msgid "Linked VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
+msgid "Linking complete"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:683
+msgid "Links to signing in on the same device"
+msgstr ""
+
+#: src/Navigation.tsx:257
 msgid "List"
 msgstr "បញ្ជី"
 
@@ -5147,10 +5313,10 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "បាន​បិទ​បញ្ជី"
 
-#: src/Navigation.tsx:172
+#: src/Navigation.tsx:178
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:233
-#: src/view/screens/Profile.tsx:241
+#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:248
 #: src/view/shell/desktop/LeftNav.tsx:746
 #: src/view/shell/Drawer.tsx:545
 msgid "Lists"
@@ -5213,7 +5379,7 @@ msgstr ""
 msgid "Loading..."
 msgstr "កំពុងផ្ទុក..."
 
-#: src/Navigation.tsx:321
+#: src/Navigation.tsx:327
 msgid "Log"
 msgstr "កំណត់ហេតុ"
 
@@ -5300,7 +5466,7 @@ msgstr ""
 msgid "Maybe later"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:236
+#: src/view/screens/Profile.tsx:243
 msgid "Media"
 msgstr "ប្រព័ន្ធផ្សព្វផ្សាយ"
 
@@ -5308,7 +5474,7 @@ msgstr "ប្រព័ន្ធផ្សព្វផ្សាយ"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "ប្រព័ន្ធផ្សព្វផ្សាយដែលអាចរំខាន ឬមិនសមរម្យសម្រាប់ទស្សនិកជនមួយចំនួន"
 
-#: src/Navigation.tsx:436
+#: src/Navigation.tsx:450
 msgid "Mention notifications"
 msgstr ""
 
@@ -5361,7 +5527,7 @@ msgstr "សារវែងពេក"
 msgid "Message options"
 msgstr ""
 
-#: src/Navigation.tsx:769
+#: src/Navigation.tsx:783
 msgid "Messages"
 msgstr "សារ"
 
@@ -5374,7 +5540,7 @@ msgstr ""
 msgid "Minor harassment or bullying"
 msgstr ""
 
-#: src/Navigation.tsx:500
+#: src/Navigation.tsx:514
 msgid "Miscellaneous notifications"
 msgstr ""
 
@@ -5382,10 +5548,14 @@ msgstr ""
 msgid "Misleading"
 msgstr ""
 
-#: src/Navigation.tsx:177
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
+msgid "Mobile support coming soon"
+msgstr ""
+
+#: src/Navigation.tsx:183
 #: src/screens/Moderation/index.tsx:99
-#: src/screens/Settings/Settings.tsx:188
-#: src/screens/Settings/Settings.tsx:191
+#: src/screens/Settings/Settings.tsx:197
+#: src/screens/Settings/Settings.tsx:200
 msgid "Moderation"
 msgstr "ការសម្របសម្រួល"
 
@@ -5421,7 +5591,7 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាពបញ្
 msgid "Moderation lists"
 msgstr "បញ្ជីសម្របសម្រួល"
 
-#: src/Navigation.tsx:182
+#: src/Navigation.tsx:188
 #: src/view/screens/ModerationModlists.tsx:67
 msgid "Moderation Lists"
 msgstr "បញ្ជីការសម្របសម្រួល"
@@ -5430,7 +5600,7 @@ msgstr "បញ្ជីការសម្របសម្រួល"
 msgid "moderation settings"
 msgstr "ការកំណត់កម្រិតមធ្យម"
 
-#: src/Navigation.tsx:311
+#: src/Navigation.tsx:317
 msgid "Moderation states"
 msgstr ""
 
@@ -5553,7 +5723,7 @@ msgstr "បិទពាក្យ & ស្លាក"
 msgid "Muted accounts"
 msgstr "គណនីបិទ"
 
-#: src/Navigation.tsx:187
+#: src/Navigation.tsx:193
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "គណនីបិទ"
@@ -5602,7 +5772,7 @@ msgid "Navigate to starter pack"
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:166
-#: src/screens/Login/LoginForm.tsx:347
+#: src/screens/Login/LoginForm.tsx:684
 msgid "Navigates to the next screen"
 msgstr "រុករកទៅអេក្រង់បន្ទាប់"
 
@@ -5657,7 +5827,7 @@ msgstr ""
 msgid "New Feature"
 msgstr ""
 
-#: src/Navigation.tsx:468
+#: src/Navigation.tsx:482
 msgid "New follower notifications"
 msgstr ""
 
@@ -5683,8 +5853,8 @@ msgid "New messages"
 msgstr "សារថ្មី"
 
 #: src/screens/Login/SetNewPasswordForm.tsx:141
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:203
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:207
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:206
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:210
 msgid "New password"
 msgstr "ពាក្យសម្ងាត់ថ្មី"
 
@@ -5693,7 +5863,7 @@ msgstr "ពាក្យសម្ងាត់ថ្មី"
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:167
-#: src/view/screens/Profile.tsx:571
+#: src/view/screens/Profile.tsx:579
 msgid "New post"
 msgstr "post ថ្មី"
 
@@ -5738,8 +5908,8 @@ msgstr "ព័ត៌មាន"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:137
 #: src/screens/Login/ForgotPasswordForm.tsx:143
-#: src/screens/Login/LoginForm.tsx:346
-#: src/screens/Login/LoginForm.tsx:353
+#: src/screens/Login/LoginForm.tsx:680
+#: src/screens/Login/LoginForm.tsx:691
 #: src/screens/Login/SetNewPasswordForm.tsx:182
 #: src/screens/Login/SetNewPasswordForm.tsx:188
 #: src/screens/Onboarding/StepFinished/index.tsx:341
@@ -5759,7 +5929,7 @@ msgid "Next image"
 msgstr "រូបភាពបន្ទាប់"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:32
-msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
+msgid "No ads, no invasive tracking, no engagement traps. VerusSky respects your time and attention."
 msgstr ""
 
 #: src/screens/Settings/AppPasswords.tsx:107
@@ -5793,17 +5963,17 @@ msgstr ""
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
-#: src/view/screens/Profile.tsx:511
+#: src/view/screens/Profile.tsx:519
 msgid "No likes yet"
 msgstr "មិនទាន់មានអ្នកចូលចិត្តទេ"
 
 #: src/components/ProfileCard.tsx:525
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:269
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:291
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "លែង​តាម {0}"
 
-#: src/view/screens/Profile.tsx:467
+#: src/view/screens/Profile.tsx:475
 msgid "No media yet"
 msgstr ""
 
@@ -5836,7 +6006,7 @@ msgid "No posts here"
 msgstr ""
 
 #: src/screens/Profile/Sections/Feed.tsx:80
-#: src/view/screens/Profile.tsx:431
+#: src/view/screens/Profile.tsx:439
 msgid "No posts yet"
 msgstr ""
 
@@ -5844,7 +6014,7 @@ msgstr ""
 msgid "No quotes yet"
 msgstr "មិនទាន់មានសម្រង់ទេ"
 
-#: src/view/screens/Profile.tsx:452
+#: src/view/screens/Profile.tsx:460
 msgid "No replies yet"
 msgstr ""
 
@@ -5866,8 +6036,8 @@ msgstr "គ្មានលទ្ធផល"
 msgid "No results for \"{0}\"."
 msgstr ""
 
-#: src/components/Lists.tsx:201
-#: src/components/Lists.tsx:216
+#: src/components/Lists.tsx:203
+#: src/components/Lists.tsx:218
 msgid "No results found"
 msgstr "រកមិនឃើញលទ្ធផលទេ"
 
@@ -5892,7 +6062,11 @@ msgstr "រកមិនឃើញលទ្ធផលស្វែងរកសម្
 msgid "No thanks"
 msgstr "ទេ អរគុណ"
 
-#: src/view/screens/Profile.tsx:489
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
+msgid "No VerusID link found to remove"
+msgstr ""
+
+#: src/view/screens/Profile.tsx:497
 msgid "No video posts yet"
 msgstr ""
 
@@ -5933,8 +6107,8 @@ msgstr ""
 msgid "Not followed by anyone you're following"
 msgstr ""
 
-#: src/Navigation.tsx:167
-#: src/view/screens/Profile.tsx:132
+#: src/Navigation.tsx:173
+#: src/view/screens/Profile.tsx:134
 msgid "Not Found"
 msgstr "រកមិនឃើញ"
 
@@ -5942,12 +6116,12 @@ msgstr "រកមិនឃើញ"
 msgid "Note about sharing"
 msgstr "ចំណាំអំពីការចែករំលែក"
 
-#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
-msgid "Note: Bluesky is an open and public network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
-msgstr "ចំណាំ៖ Bluesky គឺជាបណ្តាញបើកចំហ និងសាធារណៈ។ ការកំណត់នេះកំណត់តែការមើលឃើញខ្លឹមសាររបស់អ្នកនៅលើកម្មវិធី និងគេហទំព័រ Bluesky ហើយកម្មវិធីផ្សេងទៀតប្រហែលជាមិនគោរពការកំណត់នេះទេ។ ខ្លឹមសាររបស់អ្នកអាចនៅតែត្រូវបានបង្ហាញដល់អ្នកប្រើប្រាស់ដែលបានចេញពីគណនីដោយកម្មវិធី និងគេហទំព័រផ្សេងទៀត"
-
 #: src/components/PostControls/ShareMenu/ShareMenuItems.web.tsx:133
 msgid "Note: This post is only visible to logged-in users."
+msgstr ""
+
+#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
+msgid "Note: VerusSky uses the open and public network Bluesky network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
 msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:304
@@ -5959,8 +6133,8 @@ msgstr "គ្មានអ្វីនៅទីនេះទេ"
 msgid "Nothing saved yet"
 msgstr ""
 
-#: src/Navigation.tsx:422
-#: src/Navigation.tsx:569
+#: src/Navigation.tsx:436
+#: src/Navigation.tsx:583
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "ការកំណត់ការជូនដំណឹង"
@@ -5973,8 +6147,8 @@ msgstr "សំឡេងជូនដំណឹង"
 msgid "Notification Sounds"
 msgstr "សំឡេងជូនដំណឹង"
 
-#: src/Navigation.tsx:564
-#: src/Navigation.tsx:764
+#: src/Navigation.tsx:578
+#: src/Navigation.tsx:778
 #: src/screens/Notifications/ActivityList.tsx:30
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:90
 #: src/screens/Settings/NotificationSettings/index.tsx:92
@@ -5987,8 +6161,8 @@ msgstr "សំឡេងជូនដំណឹង"
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostsOnRepostsNotificationSettings.tsx:30
-#: src/screens/Settings/Settings.tsx:196
-#: src/screens/Settings/Settings.tsx:199
+#: src/screens/Settings/Settings.tsx:205
+#: src/screens/Settings/Settings.tsx:208
 #: src/view/screens/Notifications.tsx:130
 #: src/view/shell/bottom-bar/BottomBar.tsx:252
 #: src/view/shell/desktop/LeftNav.tsx:709
@@ -6048,7 +6222,7 @@ msgstr "ចម្លើយចាស់បំផុតជាមុនសិន"
 msgid "on<0><1/><2><3/></2></0>"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:388
+#: src/screens/Settings/Settings.tsx:397
 msgid "Onboarding reset"
 msgstr "កំណត់ការចូលដំណើរការឡើងវិញ"
 
@@ -6103,7 +6277,7 @@ msgstr "ឯកសារ WebVTT (.vtt) ងាយស្រួលគាំទ្រ
 #: src/components/StarterPack/ProfileStarterPacks.tsx:369
 #: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:132
+#: src/view/screens/Profile.tsx:134
 msgid "Oops!"
 msgstr ""
 
@@ -6123,6 +6297,10 @@ msgstr ""
 #: src/screens/Messages/components/ChatListItem.tsx:378
 msgid "Open conversation options"
 msgstr "បើកជម្រើសការសន្ទនា"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
+msgid "Open credential update deeplink"
+msgstr ""
 
 #: src/components/Layout/Header/index.tsx:159
 msgid "Open drawer menu"
@@ -6154,7 +6332,7 @@ msgstr "បើកតំណទៅ {niceUrl}"
 msgid "Open message options"
 msgstr "បើកជម្រើសសារ"
 
-#: src/screens/Settings/Settings.tsx:453
+#: src/screens/Settings/Settings.tsx:462
 msgid "Open moderation debug page"
 msgstr "បើកទំព័របំបាត់កំហុសការសម្របសម្រួល"
 
@@ -6183,13 +6361,17 @@ msgstr ""
 msgid "Open starter pack menu"
 msgstr "បើកម៉ឺនុយកញ្ចប់ចាប់ផ្តើម"
 
-#: src/screens/Settings/Settings.tsx:446
-#: src/screens/Settings/Settings.tsx:460
+#: src/screens/Settings/Settings.tsx:455
+#: src/screens/Settings/Settings.tsx:469
 msgid "Open storybook page"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:439
+#: src/screens/Settings/Settings.tsx:448
 msgid "Open system log"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
+msgid "Open Verus Wallet"
 msgstr ""
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:62
@@ -6251,7 +6433,7 @@ msgstr ""
 msgid "Opens GIF select dialog"
 msgstr "បើកប្រអប់ជ្រើសរើស GIF"
 
-#: src/screens/Settings/Settings.tsx:237
+#: src/screens/Settings/Settings.tsx:246
 msgid "Opens helpdesk in browser"
 msgstr ""
 
@@ -6267,7 +6449,7 @@ msgstr ""
 msgid "Opens live status dialog"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:259
+#: src/screens/Login/LoginForm.tsx:528
 msgid "Opens password reset form"
 msgstr "បើកទម្រង់កំណត់ពាក្យសម្ងាត់ឡើងវិញ"
 
@@ -6359,12 +6541,8 @@ msgstr ""
 msgid "Our moderation team has received your report."
 msgstr ""
 
-#: src/screens/Messages/components/ChatDisabled.tsx:34
-msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
-msgstr "អ្នកសម្របសម្រួលរបស់យើងបានពិនិត្យរបាយការណ៍ ហើយបានសម្រេចចិត្តបិទការចូលប្រើការជជែករបស់អ្នកនៅលើ Bluesky"
-
-#: src/components/Lists.tsx:202
-#: src/components/Lists.tsx:217
+#: src/components/Lists.tsx:204
+#: src/components/Lists.tsx:219
 #: src/view/screens/NotFound.tsx:47
 msgid "Page not found"
 msgstr "រកមិនឃើញទំព័រ"
@@ -6373,7 +6551,11 @@ msgstr "រកមិនឃើញទំព័រ"
 msgid "Page Not Found"
 msgstr "រកមិនឃើញទំព័រ"
 
-#: src/screens/Login/LoginForm.tsx:229
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
+#: src/components/dialogs/VerusServiceDialog.tsx:229
+#: src/components/dialogs/VerusServiceDialog.tsx:233
+#: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:121
 #: src/screens/Settings/AccountSettings.tsx:125
 #: src/screens/Signup/StepInfo/index.tsx:231
@@ -6382,11 +6564,11 @@ msgstr "រកមិនឃើញទំព័រ"
 msgid "Password"
 msgstr "ពាក្យសម្ងាត់"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:69
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:72
 msgid "Password changed"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:124
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:127
 msgid "Password must be at least 8 characters long."
 msgstr ""
 
@@ -6397,6 +6579,10 @@ msgstr "បានធ្វើបច្ចុប្បន្នភាពពាក
 #: src/screens/Login/PasswordUpdatedForm.tsx:23
 msgid "Password updated!"
 msgstr "បានធ្វើបច្ចុប្បន្នភាពពាក្យសម្ងាត់"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
+msgid "Paste your signature here"
+msgstr ""
 
 #: src/components/Post/Embed/ExternalEmbed/Gif.tsx:43
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:137
@@ -6414,11 +6600,11 @@ msgstr "ផ្អាក video"
 msgid "People"
 msgstr "មនុស្ស"
 
-#: src/Navigation.tsx:238
+#: src/Navigation.tsx:244
 msgid "People followed by @{0}"
 msgstr "មនុស្ស​តាម​ដោយ @{0}"
 
-#: src/Navigation.tsx:231
+#: src/Navigation.tsx:237
 msgid "People following @{0}"
 msgstr "មនុស្ស​តាម @{0}"
 
@@ -6562,12 +6748,24 @@ msgstr "សូមបំពេញការផ្ទៀងផ្ទាត់ captc
 msgid "Please double-check that you have entered your email address correctly."
 msgstr ""
 
+#: src/components/dialogs/VerusServiceDialog.tsx:75
+msgid "Please enter a password for the provided username"
+msgstr ""
+
 #: src/screens/Login/SetNewPasswordForm.tsx:58
 msgid "Please enter a password."
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:119
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:122
 msgid "Please enter a password. It must be at least 8 characters long."
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:56
+msgid "Please enter a service URL"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:70
+msgid "Please enter a system ID"
 msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
@@ -6585,6 +6783,10 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
+#: src/components/dialogs/VerusServiceDialog.tsx:65
+msgid "Please enter a valid URL"
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:86
 msgid "Please enter a valid word, tag, or phrase to mute"
 msgstr "សូមបញ្ចូលពាក្យ ស្លាក ឬឃ្លាដែលត្រឹមត្រូវ ដើម្បីបិទសំឡេង"
@@ -6597,12 +6799,20 @@ msgstr ""
 msgid "Please enter the code we sent to <0>{0}</0> below."
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:65
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:68
 msgid "Please enter the code you received and the new password you would like to use."
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:247
 msgid "Please enter the security code we sent to your previous email address."
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
+msgid "Please enter the signature."
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
+msgid "Please enter your email"
 msgstr ""
 
 #: src/screens/Signup/state.ts:265
@@ -6618,7 +6828,8 @@ msgstr "សូមបញ្ចូលលេខកូដអញ្ជើញរបស
 msgid "Please enter your new email address."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:99
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
+#: src/screens/Login/LoginForm.tsx:222
 msgid "Please enter your password"
 msgstr ""
 
@@ -6626,8 +6837,16 @@ msgstr ""
 msgid "Please enter your password as well:"
 msgstr "សូមបញ្ចូលពាក្យសម្ងាត់របស់អ្នកផងដែរ៖"
 
-#: src/screens/Login/LoginForm.tsx:94
+#: src/screens/Login/LoginForm.tsx:217
 msgid "Please enter your username"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
+msgid "Please enter your VerusID name"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
+msgid "Please enter your VerusID name."
 msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:308
@@ -6647,7 +6866,7 @@ msgstr ""
 msgid "Please provide any additional details you feel moderators may need in order to properly assess your Age Assurance status."
 msgstr ""
 
-#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:302
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:303
 msgid "Please select a language"
 msgstr ""
 
@@ -6692,13 +6911,13 @@ msgctxt "action"
 msgid "Post"
 msgstr "ការបង្ហោះ"
 
-#: src/view/screens/Profile.tsx:469
-#: src/view/screens/Profile.tsx:470
+#: src/view/screens/Profile.tsx:477
+#: src/view/screens/Profile.tsx:478
 msgid "Post a photo"
 msgstr ""
 
-#: src/view/screens/Profile.tsx:491
-#: src/view/screens/Profile.tsx:492
+#: src/view/screens/Profile.tsx:499
+#: src/view/screens/Profile.tsx:500
 msgid "Post a video"
 msgstr ""
 
@@ -6711,10 +6930,10 @@ msgstr "Post ទាំងអស់"
 msgid "Post blocked"
 msgstr ""
 
-#: src/Navigation.tsx:264
-#: src/Navigation.tsx:271
-#: src/Navigation.tsx:278
-#: src/Navigation.tsx:285
+#: src/Navigation.tsx:270
+#: src/Navigation.tsx:277
+#: src/Navigation.tsx:284
+#: src/Navigation.tsx:291
 msgid "Post by @{0}"
 msgstr ""
 
@@ -6748,7 +6967,7 @@ msgstr ""
 msgid "Post interaction settings"
 msgstr "ការ​កំណត់​អន្តរកម្ម​ post"
 
-#: src/Navigation.tsx:198
+#: src/Navigation.tsx:204
 #: src/screens/ModerationInteractionSettings/index.tsx:34
 msgid "Post Interaction Settings"
 msgstr ""
@@ -6782,7 +7001,7 @@ msgstr ""
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:191
-#: src/view/screens/Profile.tsx:234
+#: src/view/screens/Profile.tsx:241
 msgid "Posts"
 msgstr "ការបង្ហោះ"
 
@@ -6806,6 +7025,14 @@ msgstr ""
 msgid "Potentially misleading link warning"
 msgstr ""
 
+#: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:292
+msgid "Preferred language"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
+msgid "Prepare linking"
+msgstr ""
+
 #: src/screens/Messages/components/MessageListError.tsx:19
 msgid "Press to attempt reconnection"
 msgstr "ចុចដើម្បីព្យាយាមភ្ជាប់ឡើងវិញ"
@@ -6825,7 +7052,11 @@ msgstr "ចុចដើម្បីមើលអ្នកតាមដានគណ
 msgid "Previous image"
 msgstr "រូបភាពពីមុន"
 
-#: src/screens/Settings/LanguageSettings.tsx:120
+#: src/screens/Settings/LanguageSettings.tsx:137
+msgid "Primary language"
+msgstr ""
+
+#: src/screens/Settings/LanguageSettings.tsx:121
 msgid "Primary Language"
 msgstr "ភាសាចម្បង"
 
@@ -6834,13 +7065,13 @@ msgstr "ភាសាចម្បង"
 msgid "Privacy"
 msgstr "ឯកជនភាព"
 
-#: src/screens/Settings/Settings.tsx:182
-#: src/screens/Settings/Settings.tsx:185
+#: src/screens/Settings/Settings.tsx:191
+#: src/screens/Settings/Settings.tsx:194
 msgid "Privacy and security"
 msgstr "ភាពឯកជន និងសុវត្ថិភាព"
 
-#: src/Navigation.tsx:407
-#: src/Navigation.tsx:415
+#: src/Navigation.tsx:421
+#: src/Navigation.tsx:429
 #: src/screens/Settings/ActivityPrivacySettings.tsx:40
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:44
 msgid "Privacy and Security"
@@ -6853,7 +7084,7 @@ msgstr ""
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:35
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:102
-#: src/Navigation.tsx:331
+#: src/Navigation.tsx:337
 #: src/screens/Settings/AboutSettings.tsx:92
 #: src/screens/Settings/AboutSettings.tsx:95
 #: src/view/screens/PrivacyPolicy.tsx:34
@@ -6876,7 +7107,7 @@ msgid "Processing..."
 msgstr "កំពុងដំណើរការ..."
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:384
+#: src/view/screens/Profile.tsx:392
 msgid "profile"
 msgstr "ប្រវត្តិរូប"
 
@@ -6956,7 +7187,7 @@ msgstr "កូដ QR ត្រូវបានទាញយកហើយ"
 msgid "QR code saved to your camera roll!"
 msgstr "លេខកូដ QR ត្រូវបានរក្សាទុកទៅក្នុងក្រឡុកកាមេរ៉ារបស់អ្នក"
 
-#: src/Navigation.tsx:444
+#: src/Navigation.tsx:458
 msgid "Quote notifications"
 msgstr ""
 
@@ -7046,13 +7277,13 @@ msgstr "អានប្លក់ Bluesky"
 
 #: src/screens/Signup/StepInfo/Policies.tsx:56
 #: src/screens/Signup/StepInfo/Policies.tsx:82
-msgid "Read the Bluesky Privacy Policy"
-msgstr "អានគោលការណ៍ឯកជនភាព Bluesky"
+msgid "Read the VerusSky Privacy Policy"
+msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:49
 #: src/screens/Signup/StepInfo/Policies.tsx:69
-msgid "Read the Bluesky Terms of Service"
-msgstr "អានលក្ខខណ្ឌនៃសេវាកម្ម Bluesky"
+msgid "Read the VerusSky Terms of Service"
+msgstr ""
 
 #: src/components/WelcomeModal.tsx:146
 msgid "Real conversations."
@@ -7113,7 +7344,7 @@ msgstr "ផ្ទុកការសន្ទនាឡើងវិញ"
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:105
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:112
 #: src/screens/Bookmarks/index.tsx:266
-#: src/screens/Settings/Settings.tsx:664
+#: src/screens/Settings/Settings.tsx:673
 #: src/view/com/modals/UserAddRemoveLists.tsx:235
 #: src/view/com/posts/PostFeedErrorMessage.tsx:220
 msgid "Remove"
@@ -7127,8 +7358,8 @@ msgstr "លុប {displayName} ចេញពីកញ្ចប់ចាប់ផ
 msgid "Remove {historyItem}"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:643
-#: src/screens/Settings/Settings.tsx:646
+#: src/screens/Settings/Settings.tsx:652
+#: src/screens/Settings/Settings.tsx:655
 msgid "Remove account"
 msgstr "លុបគណនី"
 
@@ -7168,7 +7399,7 @@ msgstr "លុប​មតិព័ត៌មាន?"
 msgid "Remove from my feeds"
 msgstr "លុបចេញពីមតិព័ត៌មានរបស់ខ្ញុំ"
 
-#: src/screens/Settings/Settings.tsx:656
+#: src/screens/Settings/Settings.tsx:665
 msgid "Remove from quick access?"
 msgstr "ដកចេញពីការចូលប្រើរហ័ស?"
 
@@ -7189,6 +7420,23 @@ msgstr ""
 #: src/view/com/composer/photos/Gallery.tsx:204
 msgid "Remove image"
 msgstr "លុបរូបភាព"
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
+msgid "Remove Link"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+msgid "Remove link to VerusID"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
+msgid "Remove Link to VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:558
+#: src/screens/Login/LoginForm.tsx:566
+msgid "Remove linked VerusID"
+msgstr ""
 
 #: src/components/live/EditLiveDialog.tsx:240
 #: src/components/live/EditLiveDialog.tsx:247
@@ -7225,6 +7473,11 @@ msgstr ""
 #: src/view/com/profile/ProfileMenu.tsx:353
 #: src/view/com/profile/ProfileMenu.tsx:356
 msgid "Remove verification"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:105
+#: src/screens/Settings/VerusServicesSettings.tsx:110
+msgid "Remove VerusID Link"
 msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:44
@@ -7298,7 +7551,7 @@ msgstr ""
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:235
+#: src/view/screens/Profile.tsx:242
 msgid "Replies"
 msgstr "ការឆ្លើយតប"
 
@@ -7330,7 +7583,7 @@ msgstr "ឆ្លើយតបដែលលាក់ដោយ Thread Author"
 msgid "Reply Hidden by You"
 msgstr "ឆ្លើយតបដែលលាក់ដោយអ្នក"
 
-#: src/Navigation.tsx:428
+#: src/Navigation.tsx:442
 msgid "Reply notifications"
 msgstr ""
 
@@ -7445,7 +7698,7 @@ msgstr "បង្ហោះឡើងវិញ"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr ""
 
-#: src/Navigation.tsx:460
+#: src/Navigation.tsx:474
 msgid "Repost notifications"
 msgstr ""
 
@@ -7486,12 +7739,12 @@ msgstr "ការផ្សាយឡើងវិញនៃប្រកាសនេ
 msgid "Reposts of your reposts"
 msgstr ""
 
-#: src/Navigation.tsx:484
+#: src/Navigation.tsx:498
 msgid "Reposts of your reposts notifications"
 msgstr ""
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:225
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:231
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:228
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:234
 msgid "Request code"
 msgstr ""
 
@@ -7529,8 +7782,8 @@ msgstr "ផ្ញើអ៊ីមែលឡើងវិញ"
 msgid "Resend Verification Email"
 msgstr "ផ្ញើអ៊ីមែលផ្ទៀងផ្ទាត់ឡើងវិញ"
 
-#: src/screens/Settings/Settings.tsx:482
-#: src/screens/Settings/Settings.tsx:484
+#: src/screens/Settings/Settings.tsx:491
+#: src/screens/Settings/Settings.tsx:493
 msgid "Reset activity subscription nudge"
 msgstr ""
 
@@ -7538,8 +7791,8 @@ msgstr ""
 msgid "Reset code"
 msgstr "កំណត់លេខកូដឡើងវិញ"
 
-#: src/screens/Settings/Settings.tsx:467
-#: src/screens/Settings/Settings.tsx:469
+#: src/screens/Settings/Settings.tsx:476
+#: src/screens/Settings/Settings.tsx:478
 msgid "Reset onboarding state"
 msgstr "កំណត់ស្ថានភាពចាប់ផ្តើមឡើងវិញ"
 
@@ -7547,7 +7800,7 @@ msgstr "កំណត់ស្ថានភាពចាប់ផ្តើមឡើ
 msgid "Reset password"
 msgstr "កំណត់ពាក្យសម្ងាត់ឡើងវិញ"
 
-#: src/screens/Login/LoginForm.tsx:327
+#: src/screens/Login/LoginForm.tsx:639
 msgid "Retries signing in"
 msgstr ""
 
@@ -7563,8 +7816,8 @@ msgstr "ព្យាយាមម្តងទៀតនូវសកម្មភា
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:55
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:58
 #: src/components/StarterPack/ProfileStarterPacks.tsx:374
-#: src/screens/Login/LoginForm.tsx:326
-#: src/screens/Login/LoginForm.tsx:333
+#: src/screens/Login/LoginForm.tsx:638
+#: src/screens/Login/LoginForm.tsx:645
 #: src/screens/Messages/ChatList.tsx:292
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:219
@@ -7608,7 +7861,7 @@ msgstr "ត្រឡប់ទៅទំព័រមុនវិញ"
 msgid "Returns to the previous step"
 msgstr ""
 
-#: src/components/dialogs/BirthDateSettings.tsx:188
+#: src/components/dialogs/BirthDateSettings.tsx:190
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:292
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:307
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:662
@@ -7634,7 +7887,7 @@ msgctxt "action"
 msgid "Save"
 msgstr "រក្សាទុក"
 
-#: src/components/dialogs/BirthDateSettings.tsx:181
+#: src/components/dialogs/BirthDateSettings.tsx:183
 msgid "Save birthdate"
 msgstr ""
 
@@ -7650,6 +7903,14 @@ msgstr "រក្សាទុកការផ្លាស់ប្តូរ"
 msgid "Save image"
 msgstr "រក្សាទុករូបភាព"
 
+#: src/screens/Login/LoginForm.tsx:545
+msgid "Save Login with VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:553
+msgid "Save my sign in with VerusID"
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:253
 msgid "Save new handle"
 msgstr "រក្សាទុក handle ថ្មី"
@@ -7657,6 +7918,15 @@ msgstr "រក្សាទុក handle ថ្មី"
 #: src/components/StarterPack/QrCodeDialog.tsx:196
 msgid "Save QR code"
 msgstr "រក្សាទុកកូដ QR"
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
+msgid "Save sign in with VerusID"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:120
+#: src/screens/Settings/VerusServicesSettings.tsx:132
+msgid "Save Sign in with VerusID"
+msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:643
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:649
@@ -7679,7 +7949,7 @@ msgid "Saved Feeds"
 msgstr "មតិព័ត៌មានដែលបានរក្សាទុក"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:143
-#: src/Navigation.tsx:608
+#: src/Navigation.tsx:622
 #: src/screens/Bookmarks/index.tsx:60
 msgid "Saved Posts"
 msgstr ""
@@ -7698,6 +7968,14 @@ msgstr "និយាយថាជំរាបសួរ"
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:43
 msgid "Scam"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
+msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:578
+msgid "Scan the QR code below or press Sign in to continue"
 msgstr ""
 
 #: src/lib/interests.ts:71
@@ -7726,7 +8004,7 @@ msgstr "រំកិលទៅកំពូល"
 msgid "Search"
 msgstr "ស្វែងរក"
 
-#: src/Navigation.tsx:257
+#: src/Navigation.tsx:263
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr ""
@@ -7898,7 +8176,7 @@ msgstr "ជ្រើសរើសរូបតំណាង"
 msgid "Select an emoji"
 msgstr "ជ្រើសរើសរូបអារម្មណ៍"
 
-#: src/components/Select/index.tsx:206
+#: src/components/Select/index.tsx:199
 msgid "Select an option"
 msgstr ""
 
@@ -7906,7 +8184,7 @@ msgstr ""
 msgid "Select app language"
 msgstr ""
 
-#: src/screens/Settings/LanguageSettings.tsx:164
+#: src/screens/Settings/LanguageSettings.tsx:166
 msgid "Select content languages"
 msgstr "ជ្រើសរើសភាសាមាតិកា"
 
@@ -7938,8 +8216,9 @@ msgstr "ជ្រើសរើស GIF \"{0}\""
 msgid "Select how long to mute this word for."
 msgstr "ជ្រើសរើសរយៈពេលដើម្បីបិទពាក្យនេះ"
 
-#: src/components/LanguageSelect.tsx:35
-#: src/components/LanguageSelect.tsx:36
+#: src/components/AppLanguageDropdown.tsx:69
+#: src/components/LanguageSelect.tsx:37
+#: src/components/LanguageSelect.tsx:38
 msgid "Select language"
 msgstr ""
 
@@ -7947,7 +8226,7 @@ msgstr ""
 msgid "Select language..."
 msgstr "ជ្រើសរើសភាសា..."
 
-#: src/screens/Settings/LanguageSettings.tsx:178
+#: src/screens/Settings/LanguageSettings.tsx:180
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:248
 msgid "Select languages"
 msgstr "ជ្រើសរើសភាសា"
@@ -7960,7 +8239,7 @@ msgstr ""
 msgid "Select post language"
 msgstr ""
 
-#: src/screens/Settings/LanguageSettings.tsx:131
+#: src/screens/Settings/LanguageSettings.tsx:132
 msgid "Select primary language"
 msgstr ""
 
@@ -7968,6 +8247,10 @@ msgstr ""
 #: src/view/com/composer/videos/SubtitleFilePicker.tsx:67
 msgid "Select subtitle file (.vtt)"
 msgstr "ជ្រើសរើសឯកសារចំណងជើងរង (.vtt)"
+
+#: src/components/InternationalPhoneCodeSelect.tsx:66
+msgid "Select telephone code"
+msgstr ""
 
 #: src/screens/Onboarding/StepProfile/AvatarCreatorItems.tsx:83
 msgid "Select the {emojiName} emoji as your avatar"
@@ -7985,7 +8268,7 @@ msgstr "ជ្រើសរើសខ្លឹមសារអ្វីដែលព
 msgid "Select which language to use for the app's user interface."
 msgstr ""
 
-#: src/screens/Settings/LanguageSettings.tsx:157
+#: src/screens/Settings/LanguageSettings.tsx:159
 msgid "Select which languages you want your subscribed feeds to include. If none are selected, all languages will be shown."
 msgstr "ជ្រើសរើសភាសាណាមួយដែលអ្នកចង់បញ្ចូលព័ត៌មានដែលបានជាវរបស់អ្នក។ ប្រសិនបើ​មិន​ត្រូវ​បាន​ជ្រើសរើស​ទេ ភាសា​ទាំងអស់​នឹង​ត្រូវ​បាន​បង្ហាញ"
 
@@ -7998,7 +8281,7 @@ msgstr "ជ្រើសរើសថ្ងៃខែឆ្នាំកំណើត
 msgid "Select your interests from the options below"
 msgstr "ជ្រើសរើសចំណាប់អារម្មណ៍របស់អ្នកពីជម្រើសខាងក្រោម"
 
-#: src/screens/Settings/LanguageSettings.tsx:124
+#: src/screens/Settings/LanguageSettings.tsx:125
 msgid "Select your preferred language for translations in your feed."
 msgstr "ជ្រើសរើសភាសាដែលអ្នកពេញចិត្តសម្រាប់ការបកប្រែនៅក្នុងព័ត៌មានរបស់អ្នក"
 
@@ -8072,6 +8355,11 @@ msgstr "ផ្ញើអ៊ីមែលដែលមានលេខកូដបញ
 msgid "Server address"
 msgstr "អាសយដ្ឋានម៉ាស៊ីនមេ"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:163
+#: src/components/dialogs/VerusServiceDialog.tsx:167
+msgid "Service URL"
+msgstr ""
+
 #: src/screens/Settings/AppIconSettings/index.tsx:178
 msgid "Set app icon to {0}"
 msgstr ""
@@ -8084,6 +8372,10 @@ msgstr "កំណត់ពាក្យសម្ងាត់ថ្មី"
 msgid "Set precisely which groups of people can reply to your post"
 msgstr ""
 
+#: src/components/dialogs/VerusServiceDialog.tsx:155
+msgid "Set the Verus service endpoint to use for VerusID and media."
+msgstr ""
+
 #: src/screens/Onboarding/Layout.tsx:49
 msgid "Set up your account"
 msgstr "រៀបចំគណនីរបស់អ្នក"
@@ -8092,12 +8384,16 @@ msgstr "រៀបចំគណនីរបស់អ្នក"
 msgid "Set who can reply to your post"
 msgstr ""
 
+#: src/ageAssurance/components/NoAccessScreen.tsx:188
+msgid "Set your birthdate below and we'll get you back to posting and exploring in no time!"
+msgstr ""
+
 #: src/screens/Login/ForgotPasswordForm.tsx:107
 msgid "Sets email for password reset"
 msgstr "កំណត់អ៊ីមែលសម្រាប់កំណត់ពាក្យសម្ងាត់ឡើងវិញ"
 
-#: src/Navigation.tsx:213
-#: src/screens/Settings/Settings.tsx:99
+#: src/Navigation.tsx:219
+#: src/screens/Settings/Settings.tsx:100
 #: src/view/shell/desktop/LeftNav.tsx:805
 #: src/view/shell/Drawer.tsx:609
 msgid "Settings"
@@ -8237,7 +8533,7 @@ msgstr ""
 msgid "Share your favorite feed!"
 msgstr "ចែករំលែកមតិព័ត៌មានដែលអ្នកចូលចិត្ត"
 
-#: src/Navigation.tsx:316
+#: src/Navigation.tsx:322
 msgid "Shared Preferences Tester"
 msgstr "កម្មវិធីសាកល្បងចំណូលចិត្តដែលបានចែករំលែក"
 
@@ -8343,7 +8639,7 @@ msgstr "បង្ហាញការព្រមាន និងត្រងព�
 msgid "Shows information about when this post was created"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:125
+#: src/screens/Settings/Settings.tsx:126
 msgid "Shows other accounts you can switch to"
 msgstr ""
 
@@ -8359,7 +8655,8 @@ msgstr ""
 #: src/screens/Hashtag.tsx:227
 #: src/screens/Login/index.tsx:136
 #: src/screens/Login/index.tsx:157
-#: src/screens/Login/LoginForm.tsx:181
+#: src/screens/Login/LoginForm.tsx:441
+#: src/screens/Login/LoginForm.tsx:691
 #: src/screens/Search/SearchResults.tsx:296
 #: src/view/com/auth/SplashScreen.tsx:81
 #: src/view/com/auth/SplashScreen.tsx:89
@@ -8396,17 +8693,25 @@ msgid "Sign in to account that is not listed"
 msgstr "ចូលទៅគណនីដែលមិនមានក្នុងបញ្ជី"
 
 #: src/components/dialogs/Signin.tsx:46
-msgid "Sign in to Bluesky or create a new account"
-msgstr "ចូល Bluesky ឬបង្កើតគណនីថ្មីមួយ"
+msgid "Sign in to VerusSky or create a new account"
+msgstr ""
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:493
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:495
 msgid "Sign in to view post"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:254
-#: src/screens/Settings/Settings.tsx:256
-#: src/screens/Settings/Settings.tsx:288
+#: src/screens/Login/LoginForm.tsx:674
+msgid "Sign in with VerusID"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:672
+msgid "Sign in without VerusID"
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:263
+#: src/screens/Settings/Settings.tsx:265
+#: src/screens/Settings/Settings.tsx:297
 #: src/screens/SignupQueued.tsx:93
 #: src/screens/SignupQueued.tsx:96
 #: src/screens/Takendown.tsx:94
@@ -8420,15 +8725,24 @@ msgstr "ចេញ"
 msgid "Sign Out"
 msgstr "ចេញ"
 
-#: src/screens/Settings/Settings.tsx:285
+#: src/screens/Settings/Settings.tsx:294
 #: src/view/shell/desktop/LeftNav.tsx:209
 msgid "Sign out?"
 msgstr "ចេញ?"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
+msgid "Sign the linking details"
+msgstr ""
 
 #: src/components/moderation/ScreenHider.tsx:97
 #: src/lib/moderation/useGlobalLabelStrings.ts:28
 msgid "Sign-in Required"
 msgstr "តម្រូវឱ្យចូល"
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
+msgid "Signature"
+msgstr ""
 
 #: src/lib/hooks/useAccountSwitcher.ts:41
 #: src/screens/Login/ChooseAccountForm.tsx:53
@@ -8536,7 +8850,7 @@ msgid "Sorry, we're unable to load account suggestions at this time."
 msgstr ""
 
 #: src/App.native.tsx:127
-#: src/App.web.tsx:100
+#: src/App.web.tsx:102
 msgid "Sorry! Your session expired. Please sign in again."
 msgstr ""
 
@@ -8593,8 +8907,8 @@ msgstr ""
 msgid "Start chat with {displayName}"
 msgstr "ចាប់ផ្តើមជជែកជាមួយ {displayName}"
 
-#: src/Navigation.tsx:579
-#: src/Navigation.tsx:584
+#: src/Navigation.tsx:593
+#: src/Navigation.tsx:598
 #: src/screens/StarterPack/Wizard/index.tsx:209
 msgid "Starter Pack"
 msgstr "កញ្ចប់ចាប់ផ្តើម"
@@ -8617,7 +8931,7 @@ msgid "Starter pack is invalid"
 msgstr "កញ្ចប់ចាប់ផ្តើមមិនត្រឹមត្រូវទេ"
 
 #: src/screens/Search/Explore.tsx:625
-#: src/view/screens/Profile.tsx:240
+#: src/view/screens/Profile.tsx:247
 msgid "Starter Packs"
 msgstr "កញ្ចប់ចាប់ផ្តើម"
 
@@ -8625,7 +8939,7 @@ msgstr "កញ្ចប់ចាប់ផ្តើម"
 msgid "Starter packs let you easily share your favorite feeds and people with your friends."
 msgstr "កញ្ចប់ចាប់ផ្តើមអនុញ្ញាតឱ្យអ្នកចែករំលែកព័ត៌មានដែលអ្នកចូលចិត្ត និងមនុស្សយ៉ាងងាយស្រួលជាមួយមិត្តភក្តិរបស់អ្នក"
 
-#: src/view/screens/Profile.tsx:539
+#: src/view/screens/Profile.tsx:547
 msgid "Starter packs let you share your favorite feeds and people with your friends."
 msgstr ""
 
@@ -8638,12 +8952,12 @@ msgstr "ទំព័រស្ថានភាព"
 msgid "Step {0} of {1}"
 msgstr "ជំហានទី {0} នៃ {1}"
 
-#: src/screens/Settings/Settings.tsx:393
+#: src/screens/Settings/Settings.tsx:402
 msgid "Storage cleared, you need to restart the app now."
 msgstr "កន្លែងផ្ទុកត្រូវបានសម្អាត អ្នកត្រូវចាប់ផ្តើមកម្មវិធីឡើងវិញឥឡូវនេះ"
 
-#: src/Navigation.tsx:306
-#: src/screens/Settings/Settings.tsx:448
+#: src/Navigation.tsx:312
+#: src/screens/Settings/Settings.tsx:457
 msgid "Storybook"
 msgstr ""
 
@@ -8668,6 +8982,11 @@ msgstr ""
 #: src/components/moderation/ReportDialog/index.tsx:548
 #: src/components/moderation/ReportDialog/index.tsx:555
 msgid "Submit report"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
+msgid "Submit Signature and Create Post"
 msgstr ""
 
 #: src/screens/ProfileList/components/SubscribeMenu.tsx:81
@@ -8735,15 +9054,19 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr ""
 
-#: src/Navigation.tsx:326
+#: src/Navigation.tsx:332
 #: src/view/screens/Support.tsx:34
 #: src/view/screens/Support.tsx:37
 msgid "Support"
 msgstr "គាំទ្រ"
 
-#: src/screens/Settings/Settings.tsx:123
-#: src/screens/Settings/Settings.tsx:137
-#: src/screens/Settings/Settings.tsx:606
+#: src/screens/Login/LoginForm.tsx:659
+msgid "Switch"
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:124
+#: src/screens/Settings/Settings.tsx:138
+#: src/screens/Settings/Settings.tsx:615
 #: src/view/shell/desktop/LeftNav.tsx:247
 msgid "Switch account"
 msgstr "ប្តូរគណនី"
@@ -8761,6 +9084,10 @@ msgstr ""
 msgid "Switch to {0}"
 msgstr ""
 
+#: src/screens/Login/LoginForm.tsx:660
+msgid "Switches login method"
+msgstr ""
+
 #: src/components/dialogs/Embed.tsx:158
 #: src/components/dialogs/Embed.tsx:160
 #: src/screens/Settings/AppearanceSettings.tsx:85
@@ -8768,10 +9095,15 @@ msgstr ""
 msgid "System"
 msgstr "ប្រព័ន្ធ"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:180
+#: src/components/dialogs/VerusServiceDialog.tsx:184
+msgid "System ID"
+msgstr ""
+
 #: src/screens/Log.tsx:58
 #: src/screens/Settings/AboutSettings.tsx:107
 #: src/screens/Settings/AboutSettings.tsx:110
-#: src/screens/Settings/Settings.tsx:441
+#: src/screens/Settings/Settings.tsx:450
 msgid "System log"
 msgstr "កំណត់ហេតុប្រព័ន្ធ"
 
@@ -8780,7 +9112,7 @@ msgid "Tags only"
 msgstr "ស្លាកតែប៉ុណ្ណោះ"
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:109
-msgid "Tap below to allow Bluesky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
+msgid "Tap below to allow VerusSky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
 msgstr ""
 
 #: src/view/com/feeds/MissingFeed.tsx:89
@@ -8843,10 +9175,10 @@ msgstr "ប្រាប់យើងបន្តិចទៀត"
 msgid "Terms"
 msgstr "លក្ខខណ្ឌ"
 
-#: src/components/dialogs/BirthDateSettings.tsx:167
+#: src/components/dialogs/BirthDateSettings.tsx:169
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:30
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:97
-#: src/Navigation.tsx:336
+#: src/Navigation.tsx:342
 #: src/screens/Settings/AboutSettings.tsx:84
 #: src/screens/Settings/AboutSettings.tsx:87
 #: src/view/screens/TermsOfService.tsx:34
@@ -8872,7 +9204,7 @@ msgstr ""
 msgid "Thanks, you have successfully verified your email address. You can close this dialog."
 msgstr "សូមអរគុណ អ្នកបានផ្ទៀងផ្ទាត់អាសយដ្ឋានអ៊ីមែលរបស់អ្នកដោយជោគជ័យ។ អ្នកអាចបិទប្រអប់នេះ"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:342
+#: src/ageAssurance/components/NoAccessScreen.tsx:370
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:113
 msgid "Thanks! You're all set."
 msgstr ""
@@ -8902,8 +9234,8 @@ msgstr ""
 msgid "That's everything!"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:186
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:391
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:208
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:413
 #: src/view/com/profile/ProfileMenu.tsx:483
 msgid "The account will be able to interact with you after unblocking."
 msgstr "គណនីនឹងអាចធ្វើអន្តរកម្មជាមួយអ្នកបន្ទាប់ពីឈប់ទប់ស្កាត់"
@@ -8918,7 +9250,7 @@ msgstr ""
 msgid "The author of this thread has hidden this reply."
 msgstr "អ្នកនិពន្ធនៃអត្ថបទនេះបានលាក់ការឆ្លើយតបនេះ"
 
-#: src/components/dialogs/BirthDateSettings.tsx:154
+#: src/components/dialogs/BirthDateSettings.tsx:156
 msgid "The birthdate you've entered means you are under 18 years old. Certain content and features may be unavailable to you."
 msgstr ""
 
@@ -8943,8 +9275,8 @@ msgid "The Discover feed now knows what you like"
 msgstr "ឥឡូវនេះផ្ទាំងព័ត៌មាន Discover ដឹងពីអ្វីដែលអ្នកចូលចិត្ត"
 
 #: src/screens/StarterPack/StarterPackLandingScreen.tsx:333
-msgid "The experience is better in the app. Download Bluesky now and we'll pick back up where you left off."
-msgstr "បទពិសោធន៍គឺប្រសើរជាងនៅក្នុងកម្មវិធី។ ទាញយក Bluesky ឥឡូវនេះ ហើយយើងនឹងយកមកវិញនូវកន្លែងដែលអ្នកបានចាកចេញ"
+msgid "The experience is better in the app. Download VerusSky now and we'll pick back up where you left off."
+msgstr ""
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:67
 msgid "The feed has been replaced with Discover."
@@ -8964,6 +9296,10 @@ msgstr ""
 
 #: src/components/ageAssurance/useAgeAssuranceCopy.ts:14
 msgid "The laws in your location require you to verify you're an adult to access certain features. Tap to learn more."
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
+msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
 #: src/view/com/composer/select-language/SuggestedLanguage.tsx:119
@@ -9004,8 +9340,20 @@ msgstr "លក្ខខណ្ឌនៃសេវាកម្មត្រូវប
 msgid "The verification code you have provided is invalid. Please make sure that you have used the correct verification link or request a new one."
 msgstr "លេខកូដផ្ទៀងផ្ទាត់ដែលអ្នកបានផ្តល់មិនត្រឹមត្រូវទេ។ សូមប្រាកដថាអ្នកបានប្រើតំណផ្ទៀងផ្ទាត់ត្រឹមត្រូវ ឬស្នើសុំថ្មីមួយ"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
+msgid "The VerusID currently linked to this account is {0}."
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
+msgstr ""
+
 #: src/screens/Settings/AppearanceSettings.tsx:139
 msgid "Theme"
+msgstr ""
+
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
 #: src/components/dialogs/BirthDateSettings.tsx:91
@@ -9073,10 +9421,10 @@ msgstr "មានបញ្ហាក្នុងការធ្វើបច្ច
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:420
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:90
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:101
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:253
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:279
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:275
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:301
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:316
 #: src/view/com/profile/ProfileMenu.tsx:136
 #: src/view/com/profile/ProfileMenu.tsx:146
 #: src/view/com/profile/ProfileMenu.tsx:160
@@ -9106,8 +9454,8 @@ msgid "There was an unexpected issue in the application. Please let us know if t
 msgstr "មានបញ្ហាដែលមិននឹកស្មានដល់នៅក្នុងកម្មវិធី។ សូមប្រាប់ពួកយើងប្រសិនបើរឿងនេះកើតឡើងចំពោះអ្នក"
 
 #: src/screens/SignupQueued.tsx:130
-msgid "There's been a rush of new users to Bluesky! We'll activate your account as soon as we can."
-msgstr "មានការប្រញាប់ប្រញាល់នៃអ្នកប្រើប្រាស់ថ្មីទៅកាន់ Bluesky! យើងនឹងដំណើរការគណនីរបស់អ្នកឱ្យបានឆាប់តាមដែលយើងអាចធ្វើបាន"
+msgid "There's been a rush of new users to VerusSky! We'll activate your account as soon as we can."
+msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:654
 msgid "These are your default settings"
@@ -9137,6 +9485,10 @@ msgstr "គណនីនេះបានស្នើសុំឱ្យអ្នក
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "គណនីនេះត្រូវបានរារាំងដោយបញ្ជីសម្របសម្រួលមួយ ឬច្រើនរបស់អ្នក។ ដើម្បីឈប់ទប់ស្កាត់ សូមចូលទៅកាន់បញ្ជីដោយផ្ទាល់ ហើយលុបអ្នកប្រើប្រាស់នេះចេញ"
 
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
+msgid "This account is linked to VerusID, a decentralized identity system."
+msgstr ""
+
 #: src/components/verification/VerificationCreatePrompt.tsx:55
 msgid "This action can be undone at any time."
 msgstr ""
@@ -9153,7 +9505,7 @@ msgstr "ការអំពាវនាវនេះនឹងត្រូវបញ
 msgid "This chat was disconnected"
 msgstr "ការជជែកនេះត្រូវបានផ្ដាច់"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:144
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:147
 msgid "This confirmation code is not valid. Please try again."
 msgstr ""
 
@@ -9190,15 +9542,15 @@ msgstr ""
 msgid "This feature allows users to receive notifications for your new posts and replies. Who do you want to enable this for?"
 msgstr ""
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:95
+#: src/screens/Settings/components/ExportCarDialog.tsx:96
 msgid "This feature is in beta. You can read more about repository exports in <0>this blogpost</0>."
 msgstr "មុខងារនេះស្ថិតនៅក្នុងបេតា។ អ្នកអាចអានបន្ថែមអំពីការនាំចេញឃ្លាំងនៅក្នុង <0>ប្លុកនេះ</0>"
 
-#: src/lib/hooks/useCleanError.ts:49
+#: src/lib/hooks/useCleanError.ts:64
 msgid "This feature is not available while using an app password. Please sign in with your main password."
 msgstr ""
 
-#: src/lib/strings/errors.ts:22
+#: src/lib/strings/errors.ts:31
 msgid "This feature is not available while using an App Password. Please sign in with your main password."
 msgstr "មុខងារនេះមិនមានពេលប្រើពាក្យសម្ងាត់កម្មវិធីទេ។ សូមចូលដោយប្រើពាក្យសម្ងាត់ចម្បងរបស់អ្នក"
 
@@ -9270,8 +9622,8 @@ msgid "This moderation service is unavailable. See below for more details. If th
 msgstr "សេវាកម្មសម្របសម្រួលនេះមិនមានទេ។ សូមមើលខាងក្រោមសម្រាប់ព័ត៌មានលម្អិតបន្ថែម។ ប្រសិនបើបញ្ហានេះនៅតែបន្តកើតមាន សូមទាក់ទងមកយើងខ្ញុំ"
 
 #: src/screens/PostThread/components/ThreadItemAnchor.tsx:669
-msgid "This post claims to have been created on <0>{0}</0>, but was first seen by Bluesky on <1>{1}</1>."
-msgstr "ប្រកាសនេះអះអាងថាត្រូវបានបង្កើតឡើងនៅលើ <0>{0}</0> ប៉ុន្តែត្រូវបានមើលឃើញជាលើកដំបូងដោយ Bluesky នៅលើ <1>{1}</1>"
+msgid "This post claims to have been created on <0>{0}</0>, but was first seen by VerusSky on <1>{1}</1>."
+msgstr ""
 
 #: src/components/WhoCanReply.tsx:272
 msgid "This post has an unknown type of threadgate on it. Your app may be out of date."
@@ -9350,11 +9702,15 @@ msgstr "អ្នកប្រើប្រាស់នេះថ្មីនៅទ
 msgid "This user isn't following anyone."
 msgstr "អ្នកប្រើប្រាស់នេះមិនតាមដាននរណាម្នាក់ទេ"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
+msgid "This will create a post linking your VerusID to this account."
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:440
 msgid "This will delete \"{0}\" from your muted words. You can always add it back later."
 msgstr "វានឹងលុប \"{0}\" ចេញពីពាក្យដែលអ្នកបានបិទ។ អ្នកតែងតែអាចបន្ថែមវាត្រឡប់មកវិញនៅពេលក្រោយ"
 
-#: src/screens/Settings/Settings.tsx:658
+#: src/screens/Settings/Settings.tsx:667
 msgid "This will remove @{0} from the quick access list."
 msgstr "វានឹងដក @{0} ចេញពីបញ្ជីចូលប្រើរហ័ស"
 
@@ -9381,7 +9737,7 @@ msgstr "ចំណូលចិត្តខ្សែស្រឡាយ"
 msgid "Threaded"
 msgstr ""
 
-#: src/Navigation.tsx:369
+#: src/Navigation.tsx:375
 msgid "Threads Preferences"
 msgstr ""
 
@@ -9402,7 +9758,7 @@ msgstr "ដើម្បីបិទវិធីសាស្ត្រ 2FA អ៊�
 msgid "To disable your email 2FA method, please verify your access to <0>{0}</0>"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:191
+#: src/ageAssurance/components/NoAccessScreen.tsx:219
 msgid "To log out, <0>click here</0>."
 msgstr ""
 
@@ -9435,7 +9791,7 @@ msgstr "កំពូល"
 msgid "Top replies first"
 msgstr ""
 
-#: src/Navigation.tsx:544
+#: src/Navigation.tsx:558
 msgid "Topic"
 msgstr ""
 
@@ -9499,19 +9855,28 @@ msgstr "ប្រភេទ៖"
 msgid "Unable to access location. You'll need to visit your system settings to enable location services for Bluesky."
 msgstr ""
 
+#: src/components/dialogs/VerusServiceDialog.tsx:121
+msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again."
+msgstr ""
+
 #: src/lib/hooks/useCleanError.ts:27
 #: src/lib/strings/errors.ts:12
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "មិនអាចភ្ជាប់បានទេ។ សូមពិនិត្យមើលការតភ្ជាប់អ៊ីនធឺណិតរបស់អ្នក ហើយព្យាយាមម្តងទៀត"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:95
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:140
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
+msgid "Unable to contact the service. Please check your Internet connection."
+msgstr ""
+
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:98
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:143
 msgid "Unable to contact your service. Please check your internet connection and try again."
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:68
 #: src/screens/Login/index.tsx:93
-#: src/screens/Login/LoginForm.tsx:169
+#: src/screens/Login/LoginForm.tsx:336
 #: src/screens/Login/SetNewPasswordForm.tsx:81
 #: src/screens/Signup/index.tsx:77
 msgid "Unable to contact your service. Please check your Internet connection."
@@ -9521,11 +9886,31 @@ msgstr "មិនអាចទាក់ទងសេវាកម្មរបស់
 msgid "Unable to delete"
 msgstr "មិនអាចលុបបានទេ"
 
-#: src/screens/Settings/Settings.tsx:507
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
+msgid "Unable to get the signing service identity address"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
+msgid "Unable to link account with no handle."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:326
+msgid "Unable to verify Bluesky credentials. Please sign in manually."
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
+msgid "Unable to verify signature."
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:428
+msgid "Unable to verify the signer of the login."
+msgstr ""
+
+#: src/screens/Settings/Settings.tsx:516
 msgid "Unapply Pull Request"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:509
+#: src/screens/Settings/Settings.tsx:518
 msgid "Unapply Pull Request {currentChannel}"
 msgstr ""
 
@@ -9541,16 +9926,16 @@ msgstr ""
 #: src/components/dms/MessagesListBlockedFooter.tsx:104
 #: src/components/dms/MessagesListBlockedFooter.tsx:112
 #: src/components/dms/MessagesListBlockedFooter.tsx:119
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:334
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:394
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:356
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:416
 #: src/screens/ProfileList/components/Header.tsx:171
 #: src/screens/ProfileList/components/Header.tsx:178
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Unblock"
 msgstr "ឈប់ទប់ស្កាត់"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:338
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:360
 msgctxt "action"
 msgid "Unblock"
 msgstr "ឈប់ទប់ស្កាត់"
@@ -9562,8 +9947,8 @@ msgstr "ឈប់ទប់ស្កាត់"
 msgid "Unblock account"
 msgstr "បិទគណនី"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:184
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:206
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
 #: src/view/com/profile/ProfileMenu.tsx:477
 msgid "Unblock Account?"
 msgstr "បិទគណនី?"
@@ -9588,7 +9973,7 @@ msgstr "បោះបង់ការបង្ហោះឡើងវិញ"
 msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr ""
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:365
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:387
 msgid "Unfollow {0}"
 msgstr "ឈប់តាម {0}"
 
@@ -9605,7 +9990,7 @@ msgstr ""
 msgid "Unfortunately, none of your subscribed labelers supports this report type."
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:158
+#: src/ageAssurance/components/NoAccessScreen.tsx:165
 msgid "Unfortunately, the birthdate you have saved to your profile makes you too young to access Bluesky."
 msgstr ""
 
@@ -9713,8 +10098,8 @@ msgstr ""
 msgid "Unpinned list"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:474
-#: src/screens/Settings/Settings.tsx:476
+#: src/screens/Settings/Settings.tsx:483
+#: src/screens/Settings/Settings.tsx:485
 msgid "Unsnooze email reminder"
 msgstr ""
 
@@ -9739,6 +10124,8 @@ msgstr "ឈប់ជាវពីបញ្ជី"
 msgid "Unsupported video type: {mimeType}"
 msgstr ""
 
+#: src/components/dialogs/VerusServiceDialog.tsx:250
+#: src/components/dialogs/VerusServiceDialog.tsx:254
 #: src/screens/Settings/components/OTAInfo.tsx:58
 #: src/screens/Settings/components/OTAInfo.tsx:74
 msgid "Update"
@@ -9748,6 +10135,15 @@ msgstr ""
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "ធ្វើបច្ចុប្បន្នភាព <0>{displayName}</0> នៅក្នុងបញ្ជី"
 
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
+msgid "Update confirmed"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
+msgid "Update credentials"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:300
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:312
 #: src/screens/Settings/AccountSettings.tsx:107
@@ -9755,10 +10151,43 @@ msgstr "ធ្វើបច្ចុប្បន្នភាព <0>{displayName}<
 msgid "Update email"
 msgstr ""
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
+msgid "Update linked VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
+msgid "Update the sign in credentials stored in your VerusID."
+msgstr ""
+
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:542
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:563
 msgid "Update to {domain}"
 msgstr "ធ្វើបច្ចុប្បន្នភាពទៅ {domain}"
+
+#: src/components/dialogs/VerusServiceDialog.tsx:152
+msgid "Update Verus Service Endpoint"
+msgstr ""
+
+#: src/components/dialogs/VerusServiceDialog.tsx:143
+msgid "Update Verus Service Instance"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:96
+msgid "Update VerusID Link"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
+msgid "Update VerusID sign in"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:119
+#: src/screens/Settings/VerusServicesSettings.tsx:130
+msgid "Update VerusID Sign in"
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
+msgid "Update VerusID Sign in Credentials"
+msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:203
 msgid "Update your email"
@@ -9901,6 +10330,11 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr "ធ្វើបច្ចុប្បន្នភាពបញ្ជីអ្នកប្រើប្រាស់"
 
+#: src/components/dialogs/VerusServiceDialog.tsx:213
+#: src/components/dialogs/VerusServiceDialog.tsx:217
+msgid "Username"
+msgstr ""
+
 #: src/screens/Signup/StepHandle/index.tsx:233
 msgid "Username cannot be longer than {MAX_SERVICE_HANDLE_LENGTH, plural, other {# characters}}"
 msgstr ""
@@ -9913,7 +10347,7 @@ msgstr ""
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:202
+#: src/screens/Login/LoginForm.tsx:469
 msgid "Username or email address"
 msgstr "ឈ្មោះអ្នកប្រើប្រាស់ ឬអាសយដ្ឋានអ៊ីមែល"
 
@@ -9942,7 +10376,7 @@ msgstr ""
 msgid "Verification settings"
 msgstr ""
 
-#: src/Navigation.tsx:206
+#: src/Navigation.tsx:212
 #: src/screens/Moderation/VerificationSettings.tsx:32
 msgid "Verification Settings"
 msgstr ""
@@ -9962,7 +10396,7 @@ msgstr ""
 msgid "Verify account"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:279
+#: src/ageAssurance/components/NoAccessScreen.tsx:307
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:168
 msgid "Verify again"
 msgstr ""
@@ -9989,8 +10423,8 @@ msgstr ""
 msgid "Verify email dialog"
 msgstr "ផ្ទៀងផ្ទាត់ប្រអប់អ៊ីមែល"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:267
-#: src/ageAssurance/components/NoAccessScreen.tsx:281
+#: src/ageAssurance/components/NoAccessScreen.tsx:295
+#: src/ageAssurance/components/NoAccessScreen.tsx:309
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:156
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:170
 msgid "Verify now"
@@ -10030,6 +10464,48 @@ msgstr ""
 msgid "Version {0}"
 msgstr ""
 
+#: src/Navigation.tsx:413
+#: src/screens/Settings/Settings.tsx:183
+#: src/screens/Settings/Settings.tsx:186
+#: src/screens/Settings/VerusServicesSettings.tsx:56
+msgid "Verus Services"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:155
+#: src/screens/Settings/VerusServicesSettings.tsx:159
+msgid "Verus Services Endpoint (Advanced)"
+msgstr ""
+
+#: src/screens/Settings/VerusServicesSettings.tsx:141
+msgid "Verus Services Endpoint Status"
+msgstr ""
+
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
+msgid "VerusID"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
+msgid "VerusID Name"
+msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:574
+msgid "VerusID Sign in"
+msgstr ""
+
+#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
+msgid "VerusSky cannot confirm the authenticity of the claimed date."
+msgstr ""
+
+#: src/components/ProgressGuide/List.tsx:53
+#: src/components/ProgressGuide/List.tsx:70
+msgid "VerusSky is better with friends!"
+msgstr ""
+
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:81
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:131
 msgid "Video"
@@ -10039,7 +10515,7 @@ msgstr "វីដេអូ"
 msgid "Video failed to process"
 msgstr "វីដេអូបានបរាជ័យក្នុងដំណើរការ"
 
-#: src/Navigation.tsx:600
+#: src/Navigation.tsx:614
 msgid "Video Feed"
 msgstr ""
 
@@ -10077,7 +10553,7 @@ msgstr "បង្ហោះវីដេអូ"
 msgid "Video: {0}"
 msgstr "វីដេអូ៖ {0}"
 
-#: src/view/screens/Profile.tsx:237
+#: src/view/screens/Profile.tsx:244
 msgid "Videos"
 msgstr ""
 
@@ -10110,7 +10586,7 @@ msgstr "មើលប្រវត្តិរូបរបស់ {displayName}"
 msgid "View blocked user's profile"
 msgstr "មើលប្រវត្តិរូបរបស់អ្នកប្រើដែលត្រូវបានរារាំង"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:99
+#: src/screens/Settings/components/ExportCarDialog.tsx:100
 msgid "View blogpost for more details"
 msgstr "មើលប្លុកសម្រាប់ព័ត៌មានលម្អិតបន្ថែម"
 
@@ -10165,6 +10641,10 @@ msgstr "មើលសេវាកម្មដាក់ស្លាកដែលផ
 
 #: src/components/verification/VerificationCheckButton.tsx:99
 msgid "View this user's verifications"
+msgstr ""
+
+#: src/components/verification/verusid/VerusIDVerificationCheckButton.tsx:57
+msgid "View this VerusID verification"
 msgstr ""
 
 #: src/screens/Profile/components/ProfileFeedHeader.tsx:486
@@ -10274,7 +10754,7 @@ msgid "We estimate {estimatedTime} until your account is ready."
 msgstr "យើងប៉ាន់ស្មាន {estimatedTime} រហូតដល់គណនីរបស់អ្នករួចរាល់"
 
 #: src/components/ageAssurance/AgeAssuranceInitDialog.tsx:197
-msgid "We have partnered with <0>KWS</0> to verify that you’re an adult. When you click \"Begin\" below, KWS will check if you have previously verified your age using this email address for other games/services powered by KWS technology. If not, KWS will email you instructions for verifying your age. When you’re done, you'll be brought back to continue using Bluesky."
+msgid "We have partnered with <0>KWS</0> to handle age verification. When you click \"Begin\" below, KWS will email you instructions to complete the verification process. If your email address has already been used to verify your age for another game or service that uses KWS, you won’t need to do it again. When you’re done, you'll be brought back to continue using Bluesky."
 msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:101
@@ -10282,8 +10762,8 @@ msgid "We have sent another verification email to <0>{0}</0>."
 msgstr "យើងបានផ្ញើអ៊ីមែលផ្ទៀងផ្ទាត់មួយផ្សេងទៀតទៅ <0>{0}</0>"
 
 #: src/screens/Onboarding/StepFinished/index.tsx:383
-msgid "We hope you have a wonderful time. Remember, Bluesky is:"
-msgstr "យើងសង្ឃឹមថាអ្នកមានពេលវេលាដ៏អស្ចារ្យ។ សូមចាំថា Bluesky គឺ៖"
+msgid "We hope you have a wonderful time. Remember, VerusSky is:"
+msgstr ""
 
 #: src/view/com/posts/DiscoverFallbackHeader.tsx:29
 msgid "We ran out of posts from your follows. Here's the latest from <0/>."
@@ -10348,15 +10828,11 @@ msgstr ""
 msgid "We're having network issues, try again"
 msgstr "យើងកំពុងមានបញ្ហាបណ្តាញ សូមព្យាយាមម្តងទៀត"
 
-#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
-msgid "We’re introducing a new layer of verification on Bluesky — an easy-to-see checkmark."
-msgstr ""
-
 #: src/screens/Signup/index.tsx:125
 msgid "We're so excited to have you join us!"
 msgstr "យើងពិតជារំភើបណាស់ដែលមានអ្នកចូលរួមជាមួយយើង"
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:335
+#: src/ageAssurance/components/NoAccessScreen.tsx:363
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:106
 msgid "We're sorry, but based on your device's location, you are currently located in a region that requires age assurance."
 msgstr ""
@@ -10378,7 +10854,7 @@ msgstr "យើងសុំទោស ប៉ុន្តែការស្វែ�
 msgid "We're sorry! The post you are replying to has been deleted."
 msgstr "យើងសុំទោស! ប្រកាសដែលអ្នកកំពុងឆ្លើយតបត្រូវបានលុប"
 
-#: src/components/Lists.tsx:221
+#: src/components/Lists.tsx:223
 #: src/view/screens/NotFound.tsx:50
 msgid "We're sorry! We can't find the page you were looking for."
 msgstr "យើងសុំទោស! យើងមិនអាចស្វែងរកទំព័រដែលអ្នកកំពុងស្វែងរកបានទេ"
@@ -10504,8 +10980,8 @@ msgstr ""
 msgid "Write a message"
 msgstr "សរសេរសារ"
 
-#: src/view/screens/Profile.tsx:433
-#: src/view/screens/Profile.tsx:434
+#: src/view/screens/Profile.tsx:441
+#: src/view/screens/Profile.tsx:442
 msgid "Write a post"
 msgstr ""
 
@@ -10565,7 +11041,7 @@ msgstr "ម្សិលមិញ"
 msgid "You are a trusted verifier"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:143
+#: src/ageAssurance/components/NoAccessScreen.tsx:150
 msgid "You are accessing Bluesky from a region that legally requires us to verify your age before allowing you to access the app."
 msgstr ""
 
@@ -10573,7 +11049,7 @@ msgstr ""
 msgid "You are creating an account on"
 msgstr ""
 
-#: src/ageAssurance/components/NoAccessScreen.tsx:249
+#: src/ageAssurance/components/NoAccessScreen.tsx:277
 #: src/components/ageAssurance/AgeAssuranceAccountCard.tsx:126
 msgid "You are currently unable to access Bluesky's Age Assurance flow. Please <0>contact our moderation team</0> if you believe this is an error."
 msgstr ""
@@ -10640,6 +11116,10 @@ msgstr ""
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "អ្នកអាចបន្តការសន្ទនាបន្តដោយមិនគិតពីការកំណត់ណាមួយដែលអ្នកជ្រើសរើស"
 
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
+msgid "You can do this later in Settings → Verus Services."
+msgstr ""
+
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:357
 msgctxt "toast"
 msgid "You can hide a maximum of {MAX_HIDDEN_REPLIES} replies."
@@ -10675,6 +11155,11 @@ msgstr ""
 #: src/components/interstitials/TrendingVideos.tsx:137
 #: src/view/shell/desktop/SidebarTrendingTopics.tsx:110
 msgid "You can update this later from your settings."
+msgstr ""
+
+#: src/lib/hooks/useCleanError.ts:55
+#: src/lib/strings/errors.ts:28
+msgid "You cannot update your birthdate while using an app password. Please sign in with your main password to update your birthdate."
 msgstr ""
 
 #: src/screens/Profile/KnownFollowers.tsx:112
@@ -10713,7 +11198,7 @@ msgstr ""
 
 #: src/screens/Login/SetNewPasswordForm.tsx:49
 #: src/screens/Login/SetNewPasswordForm.tsx:95
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:112
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:115
 msgid "You have entered an invalid code. It should look like XXXXX-XXXXX."
 msgstr "អ្នកបានបញ្ចូលលេខកូដមិនត្រឹមត្រូវ។ វាគួរតែមើលទៅដូចជា XXXXX-XXXXX"
 
@@ -10788,11 +11273,11 @@ msgid "You initiated this flow already, {0} ago. It may take up to 5 minutes for
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:105
-msgid "You joined Bluesky {timeAgoString} ago"
+msgid "You joined VerusSky {timeAgoString} ago"
 msgstr ""
 
 #: src/components/NewskieDialog.tsx:102
-msgid "You joined Bluesky using a starter pack {timeAgoString} ago"
+msgid "You joined VerusSky using a starter pack {timeAgoString} ago"
 msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:83
@@ -10815,7 +11300,7 @@ msgstr "អ្នកអាចបន្ថែមបានត្រឹមតែ 3 
 msgid "You must be 13 years of age or older to create an account."
 msgstr ""
 
-#: src/components/dialogs/BirthDateSettings.tsx:163
+#: src/components/dialogs/BirthDateSettings.tsx:165
 msgid "You must be at least 13 years old to use Bluesky. Read our <0>Terms of Service</0> for more information."
 msgstr ""
 
@@ -10848,7 +11333,7 @@ msgstr ""
 msgid "You previously deactivated @{0}."
 msgstr "ពីមុនអ្នកបានបិទដំណើរការ @{0}"
 
-#: src/screens/Settings/Settings.tsx:404
+#: src/screens/Settings/Settings.tsx:413
 msgid "You probably want to restart the app now."
 msgstr ""
 
@@ -10865,7 +11350,7 @@ msgstr ""
 msgid "You recently changed your birthdate"
 msgstr ""
 
-#: src/screens/Settings/Settings.tsx:286
+#: src/screens/Settings/Settings.tsx:295
 #: src/view/shell/desktop/LeftNav.tsx:210
 msgid "You will be signed out of all your accounts."
 msgstr "អ្នកនឹងត្រូវបានចេញពីគណនីរបស់អ្នកទាំងអស់"
@@ -10956,7 +11441,7 @@ msgstr ""
 msgid "You've reached the end of your feed! Find some more accounts to follow."
 msgstr "អ្នក​បាន​ដល់​ចុង​បញ្ចប់​នៃ​ព័ត៌មាន​របស់​អ្នក​ហើយ! ស្វែងរកគណនីមួយចំនួនទៀតដើម្បីតាមដាន"
 
-#: src/lib/hooks/useCleanError.ts:58
+#: src/lib/hooks/useCleanError.ts:73
 msgid "You've reached the maximum number of requests allowed. Please try again later."
 msgstr ""
 
@@ -10992,7 +11477,7 @@ msgstr ""
 msgid "Your account is not yet old enough to upload videos. Please try again later."
 msgstr "គណនីរបស់អ្នកមិនទាន់ចាស់គ្រប់គ្រាន់ក្នុងការបង្ហោះវីដេអូ។ សូមព្យាយាមម្តងទៀតនៅពេលក្រោយ"
 
-#: src/screens/Settings/components/ExportCarDialog.tsx:67
+#: src/screens/Settings/components/ExportCarDialog.tsx:68
 msgid "Your account repository, containing all public data records, can be downloaded as a \"CAR\" file. This file does not include media embeds, such as images, or your private data, which must be fetched separately."
 msgstr "ឃ្លាំងគណនីរបស់អ្នកដែលមានកំណត់ត្រាទិន្នន័យសាធារណៈទាំងអស់ អាចទាញយកជាឯកសារ \"CAR\"។ ឯកសារនេះមិនរួមបញ្ចូលការបង្កប់មេឌៀ ដូចជារូបភាព ឬទិន្នន័យឯកជនរបស់អ្នក ដែលត្រូវតែទាញយកដោយឡែកពីគ្នា"
 
@@ -11035,7 +11520,7 @@ msgid "Your email"
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:51
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:81
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:84
 #: src/screens/Signup/state.ts:273
 #: src/screens/Signup/StepInfo/index.tsx:100
 msgid "Your email appears to be invalid."
@@ -11061,7 +11546,7 @@ msgstr "មតិព័ត៌មានខាងក្រោមរបស់អ្
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "ចំណុចទាញពេញលេញរបស់អ្នកនឹងមាន <0>@{0}</0>"
 
-#: src/Navigation.tsx:516
+#: src/Navigation.tsx:530
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:67
 #: src/screens/Settings/ContentAndMediaSettings.tsx:92
 #: src/screens/Settings/ContentAndMediaSettings.tsx:95
@@ -11086,7 +11571,7 @@ msgstr ""
 msgid "Your muted words"
 msgstr "ពាក្យដែលអ្នកបានបិទ"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:71
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:74
 msgid "Your password has been changed successfully! Please use your new password when you sign in to Bluesky from now on."
 msgstr ""
 
@@ -11137,4 +11622,12 @@ msgstr ""
 
 #: src/components/verification/VerificationsDialog.tsx:65
 msgid "Your verifications"
+msgstr ""
+
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
+msgid "Your VerusID {name} has been successfully linked to this account."
+msgstr ""
+
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
+msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
 msgstr ""
