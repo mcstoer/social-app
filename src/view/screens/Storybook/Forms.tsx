@@ -119,6 +119,21 @@ export function Forms() {
             label="Input"
           />
         </View>
+
+        {/* commented out so it's not in the web bundle */}
+        {/*<H3>InternationalPhoneCodeSelect</H3>
+
+        <View style={[a.flex_row, a.gap_sm, a.align_center]}>
+          <View>
+            <InternationalPhoneCodeSelect
+              value={telCode}
+              onChange={setTelCode}
+            />
+          </View>
+          <View style={[a.flex_1]}>
+            <TextField.Input label="Phone number" />
+          </View>
+        </View>*/}
       </View>
 
       <View style={[a.gap_md, a.align_start, a.w_full]}>

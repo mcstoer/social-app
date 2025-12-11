@@ -27,6 +27,10 @@ module.exports = async function (env, argv) {
     stream: 'stream-browserify',
     buffer: 'buffer',
     crypto: 'crypto-browserify',
+    // Force ESM version
+    'unicode-segmenter/grapheme': require
+      .resolve('unicode-segmenter/grapheme')
+      .replace(/\.cjs$/, '.js'),
   })
   config.module.rules = [
     ...(config.module.rules || []),

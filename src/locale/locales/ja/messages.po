@@ -8,7 +8,7 @@ msgstr ""
 "Language: ja\n"
 "Project-Id-Version: 49a8cb746fbc2ae5707392ee41ddec4c\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-20 18:09\n"
+"PO-Revision-Date: 2025-12-05 22:12\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
@@ -30,14 +30,6 @@ msgstr "（埋め込みコンテンツあり）"
 #: src/screens/Settings/AccountSettings.tsx:71
 msgid "(no email)"
 msgstr "（メールがありません）"
-
-#: src/screens/Settings/VerusServicesSettings.tsx:74
-msgid "(no identity)"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:77
-msgid "(unknown)"
-msgstr ""
 
 #: src/lib/hooks/useTimeAgo.ts:169
 msgid "{0, plural, one {# day} other {# days}}"
@@ -144,7 +136,7 @@ msgstr "{0, plural, other {+#}}"
 #: src/lib/strings/time.ts:13
 msgctxt "date and time formatted like this: [time] · [date]"
 msgid "{0} · {1}"
-msgstr ""
+msgstr "{1} {0}"
 
 #: src/components/moderation/ContentHider.tsx:89
 msgid "{0} (Account)"
@@ -436,10 +428,6 @@ msgstr "{hours, plural, other {#時間}}"
 msgid "{joinedAllTimeCount, plural, other {# users have}} joined!"
 msgstr "{joinedAllTimeCount, plural, other {#人のユーザーが}}参加しました！"
 
-#: src/screens/Login/LoginForm.tsx:391
-msgid "{message}"
-msgstr ""
-
 #: src/components/live/utils.ts:10
 msgid "{minutes, plural, one {# minute} other {# minutes}}"
 msgstr "{minutes, plural, other {#分}}"
@@ -449,12 +437,12 @@ msgid "{notificationCount, plural, one {# unread item} other {# unread items}}"
 msgstr "{notificationCount, plural, other {#件の未読}}"
 
 #: src/components/NewskieDialog.tsx:113
-msgid "{profileName} joined VerusSky {timeAgoString} ago"
-msgstr ""
+msgid "{profileName} joined Bluesky {timeAgoString} ago"
+msgstr "{profileName}はBlueskyに{timeAgoString}前に参加しました"
 
 #: src/components/NewskieDialog.tsx:110
-msgid "{profileName} joined VerusSky using a starter pack {timeAgoString} ago"
-msgstr ""
+msgid "{profileName} joined Bluesky using a starter pack {timeAgoString} ago"
+msgstr "{profileName}はスターターパックを使って{timeAgoString}前に参加しました"
 
 #. The trending topic rank, i.e. "1. March Madness", "2. The Bachelor"
 #: src/screens/Search/modules/ExploreTrendingTopics.tsx:111
@@ -521,8 +509,8 @@ msgstr "<0>{date}</0> {time}"
 
 #: src/screens/Hashtag.tsx:225
 #: src/screens/Search/SearchResults.tsx:294
-msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on VerusSky.</4>"
-msgstr ""
+msgid "<0>Sign in</0><1> or </1><2>create an account</2><3> </3><4>to search for news, sports, politics, and everything else happening on Bluesky.</4>"
+msgstr "<4>ニュース、スポーツ、政治、ほか、Bluesky上で起こっているその他すべてのことを検索するためには</4><0>サインイン</0><1>するか</1><2>アカウントを作成</2><3>してください。</3>"
 
 #: src/screens/StarterPack/Wizard/index.tsx:502
 msgid "<0>You</0> and<1> </1><2>{0} </2>are included in your starter pack"
@@ -536,7 +524,7 @@ msgstr "⚠無効なハンドル"
 msgid "24 hours"
 msgstr "24時間"
 
-#: src/screens/Login/LoginForm.tsx:590
+#: src/screens/Login/LoginForm.tsx:278
 msgid "2FA Confirmation"
 msgstr "2要素認証の確認"
 
@@ -549,8 +537,8 @@ msgid "7 days"
 msgstr "7日"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:17
-msgid "A collection of popular feeds you can find on VerusSky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
-msgstr ""
+msgid "A collection of popular feeds you can find on Bluesky, including News, Booksky, Game Dev, Blacksky, and Fountain Pens"
+msgstr "News、Booksky、Game Dev、Blacksky、そしてFountain PensといったBlueskyで見つけることのできる人気のフィードのコレクション"
 
 #. If last message does not contain text, fall back to "{user} reacted to {a message}"
 #: src/screens/Messages/components/ChatListItem.tsx:213
@@ -570,10 +558,10 @@ msgstr "共有ボタンの隣に投稿をブックマークに保存できるよ
 msgid "A screenshot of a profile page with a bell icon next to the follow button, indicating the new activity notifications feature."
 msgstr "プロフィールページのスクリーンショットには、フォローボタンの横にベルのアイコンが付いており、新しいアクティビティ通知機能を示します。"
 
-#: src/Navigation.tsx:538
+#: src/Navigation.tsx:524
 #: src/screens/Settings/AboutSettings.tsx:75
-#: src/screens/Settings/Settings.tsx:253
-#: src/screens/Settings/Settings.tsx:256
+#: src/screens/Settings/Settings.tsx:244
+#: src/screens/Settings/Settings.tsx:247
 msgid "About"
 msgstr "このアプリについて"
 
@@ -600,20 +588,20 @@ msgid "Accept this language suggestion"
 msgstr "この言語の提案を受け入れる"
 
 #: src/screens/Settings/AccessibilitySettings.tsx:44
-#: src/screens/Settings/Settings.tsx:229
-#: src/screens/Settings/Settings.tsx:232
+#: src/screens/Settings/Settings.tsx:220
+#: src/screens/Settings/Settings.tsx:223
 msgid "Accessibility"
 msgstr "アクセシビリティ"
 
-#: src/Navigation.tsx:389
+#: src/Navigation.tsx:383
 msgid "Accessibility Settings"
 msgstr "アクセシビリティの設定"
 
-#: src/Navigation.tsx:405
-#: src/screens/Login/LoginForm.tsx:461
+#: src/Navigation.tsx:399
+#: src/screens/Login/LoginForm.tsx:194
 #: src/screens/Settings/AccountSettings.tsx:51
-#: src/screens/Settings/Settings.tsx:175
-#: src/screens/Settings/Settings.tsx:178
+#: src/screens/Settings/Settings.tsx:174
+#: src/screens/Settings/Settings.tsx:177
 msgid "Account"
 msgstr "アカウント"
 
@@ -644,22 +632,20 @@ msgstr "ミュート中のアカウント"
 msgid "Account Muted by List"
 msgstr "リストによってミュート中のアカウント"
 
-#: src/screens/Settings/Settings.tsx:635
+#: src/screens/Settings/Settings.tsx:626
 msgid "Account options"
 msgstr "アカウントオプション"
 
 #: src/components/dialogs/ServerInput.tsx:141
-#: src/screens/Login/ForgotPasswordForm.tsx:83
-#: src/screens/Login/LoginForm.tsx:444
 msgid "Account provider"
 msgstr "アカウントプロバイダー"
 
-#: src/screens/Settings/Settings.tsx:671
+#: src/screens/Settings/Settings.tsx:662
 msgid "Account removed from quick access"
 msgstr "クイックアクセスからアカウントを解除"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:312
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:84
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:290
 #: src/view/com/profile/ProfileMenu.tsx:156
 msgctxt "toast"
 msgid "Account unblocked"
@@ -686,7 +672,7 @@ msgstr "スカラップ状（帆立貝の形状）の青色のチェックマー
 msgid "Activity from others"
 msgstr "他のユーザーからのアクティビティ"
 
-#: src/Navigation.tsx:506
+#: src/Navigation.tsx:492
 msgid "Activity notifications"
 msgstr "アクティビティの通知"
 
@@ -739,8 +725,8 @@ msgstr "ALTテキストを追加"
 msgid "Add alt text (optional)"
 msgstr "ALTテキストを追加（オプション）"
 
-#: src/screens/Settings/Settings.tsx:575
-#: src/screens/Settings/Settings.tsx:578
+#: src/screens/Settings/Settings.tsx:566
+#: src/screens/Settings/Settings.tsx:569
 #: src/view/shell/desktop/LeftNav.tsx:262
 #: src/view/shell/desktop/LeftNav.tsx:266
 msgid "Add another account"
@@ -768,9 +754,9 @@ msgstr "アプリパスワードを追加"
 msgid "Add emoji reaction"
 msgstr "絵文字リアクションを追加"
 
-#: src/view/com/feeds/ComposerPrompt.tsx:227
+#: src/view/com/feeds/ComposerPrompt.tsx:224
 msgid "Add image"
-msgstr ""
+msgstr "画像を追加"
 
 #. Accessibility label for button in composer to add images, a video, or a GIF to a post
 #: src/view/com/composer/SelectMediaButton.tsx:481
@@ -844,11 +830,7 @@ msgstr "リストにユーザーを追加"
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:182
 msgid "Add your birthdate"
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
-msgid "Add your sign in credentials to your VerusID for seamless logins."
-msgstr ""
+msgstr "生年月日を追加"
 
 #: src/components/dialogs/lists/ListAddRemoveUsersDialog.tsx:109
 #: src/view/com/modals/UserAddRemoveLists.tsx:162
@@ -921,13 +903,7 @@ msgstr "年齢保証の問い合わせが送られました"
 msgid "Age assurance only takes a few minutes"
 msgstr "年齢保証には数分かかります"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
-msgid "Alice@"
-msgstr ""
-
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:223
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 msgid "alice@example.com"
 msgstr "alice@example.com"
 
@@ -1002,8 +978,8 @@ msgid "Allows access to direct messages"
 msgstr "ダイレクトメッセージへのアクセスを許可"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:171
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:239
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:245
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:236
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:242
 msgid "Already have a code?"
 msgstr "コードをすでに持っていますか？"
 
@@ -1102,8 +1078,8 @@ msgid "An error occurred while uploading the video."
 msgstr "ビデオのアップロード中にエラーが発生しました。"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:35
-msgid "An illustration of several VerusSky posts alongside repost, like, and comment icons"
-msgstr ""
+msgid "An illustration of several Bluesky posts alongside repost, like, and comment icons"
+msgstr "リポスト、いいね、そしてコメントのアイコンと一緒に並んだいくつかのBlueskyの投稿のイラスト"
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:84
 #: src/components/verification/VerifierDialog.tsx:86
@@ -1183,7 +1159,7 @@ msgstr "誰でも反応可能"
 msgid "Anyone who follows me"
 msgstr "フォローしている人"
 
-#: src/Navigation.tsx:546
+#: src/Navigation.tsx:532
 #: src/screens/Settings/AppIconSettings/index.tsx:67
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:18
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:23
@@ -1220,7 +1196,7 @@ msgstr "アプリパスワードの名前は長さが4文字以上である必�
 msgid "App passwords"
 msgstr "アプリパスワード"
 
-#: src/Navigation.tsx:357
+#: src/Navigation.tsx:351
 #: src/screens/Settings/AppPasswords.tsx:50
 msgid "App Passwords"
 msgstr "アプリパスワード"
@@ -1256,10 +1232,10 @@ msgstr "アカウント停止に異議申し立て"
 msgid "Appeal this decision"
 msgstr "この決定に異議を申し立てる"
 
-#: src/Navigation.tsx:397
+#: src/Navigation.tsx:391
 #: src/screens/Settings/AppearanceSettings.tsx:73
-#: src/screens/Settings/Settings.tsx:221
-#: src/screens/Settings/Settings.tsx:224
+#: src/screens/Settings/Settings.tsx:212
+#: src/screens/Settings/Settings.tsx:215
 msgid "Appearance"
 msgstr "外観"
 
@@ -1268,8 +1244,8 @@ msgstr "外観"
 msgid "Apply default recommended feeds"
 msgstr "デフォルトのおすすめフィードを追加"
 
-#: src/screens/Settings/Settings.tsx:507
-#: src/screens/Settings/Settings.tsx:509
+#: src/screens/Settings/Settings.tsx:498
+#: src/screens/Settings/Settings.tsx:500
 msgid "Apply Pull Request"
 msgstr "プルリクエストを適用"
 
@@ -1341,8 +1317,7 @@ msgstr "芸術的または性的ではないヌード。"
 msgid "Assign topic for algo"
 msgstr "アルゴリズム用にトピックを割り当て"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:211
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:208
 msgid "At least 8 characters"
 msgstr "少なくとも8文字"
 
@@ -1350,14 +1325,6 @@ msgstr "少なくとも8文字"
 msgctxt "Name of app icon variant"
 msgid "Aurora"
 msgstr "オーロラ"
-
-#: src/components/dialogs/VerusServiceDialog.tsx:201
-msgid "Authentication (Optional)"
-msgstr ""
-
-#: src/components/dialogs/VerusServiceDialog.tsx:114
-msgid "Authentication failed. Please check your credentials."
-msgstr ""
 
 #: src/screens/Settings/ContentAndMediaSettings.tsx:116
 #: src/screens/Settings/ContentAndMediaSettings.tsx:122
@@ -1369,27 +1336,21 @@ msgstr "ビデオとGIFの自動再生"
 msgid "Available"
 msgstr "利用可能"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
-msgid "Awaiting confirmation"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
 #: src/components/moderation/LabelsOnMeDialog.tsx:333
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/screens/Login/ChooseAccountForm.tsx:91
 #: src/screens/Login/ChooseAccountForm.tsx:96
 #: src/screens/Login/ForgotPasswordForm.tsx:123
 #: src/screens/Login/ForgotPasswordForm.tsx:129
-#: src/screens/Login/LoginForm.tsx:625
-#: src/screens/Login/LoginForm.tsx:631
+#: src/screens/Login/LoginForm.tsx:313
+#: src/screens/Login/LoginForm.tsx:319
 #: src/screens/Login/SetNewPasswordForm.tsx:168
 #: src/screens/Login/SetNewPasswordForm.tsx:174
 #: src/screens/Messages/components/ChatDisabled.tsx:145
 #: src/screens/Messages/components/ChatDisabled.tsx:146
 #: src/screens/Profile/Header/Shell.tsx:158
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:275
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:284
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:272
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:281
 #: src/screens/Signup/BackNextButtons.tsx:41
 #: src/screens/StarterPack/Wizard/index.tsx:323
 msgid "Back"
@@ -1419,7 +1380,7 @@ msgstr "投稿や返信には、まずメールアドレスの確認が必要で
 #: src/components/dialogs/StarterPackDialog.tsx:71
 #: src/components/StarterPack/ProfileStarterPacks.tsx:263
 #: src/components/StarterPack/ProfileStarterPacks.tsx:273
-#: src/view/screens/Profile.tsx:358
+#: src/view/screens/Profile.tsx:351
 msgid "Before creating a starter pack, you must first verify your email."
 msgstr "スターターパックを作る前に、まずメールアドレスを確認しなければなりません。"
 
@@ -1452,14 +1413,14 @@ msgstr "年齢保証プロセスを開始するには、以下のフィールド
 
 #: src/components/dialogs/BirthDateSettings.tsx:147
 msgid "Birthdate"
-msgstr ""
+msgstr "生年月日"
 
 #: src/screens/Settings/AccountSettings.tsx:142
 msgid "Birthday"
 msgstr "生年月日"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:792
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Block"
 msgstr "ブロック"
@@ -1522,7 +1483,7 @@ msgstr "ブロックされています"
 msgid "Blocked accounts"
 msgstr "ブロック中のアカウント"
 
-#: src/Navigation.tsx:198
+#: src/Navigation.tsx:192
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "ブロック中のアカウント"
@@ -1557,6 +1518,10 @@ msgstr "ブログ"
 msgid "Bluesky"
 msgstr "Bluesky"
 
+#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
+msgid "Bluesky cannot confirm the authenticity of the claimed date."
+msgstr "Blueskyでは、この投稿日時の信憑性を確認できません。"
+
 #: src/screens/Settings/AppIconSettings/useAppIconSets.ts:165
 msgctxt "Name of app icon variant"
 msgid "Bluesky Classic™"
@@ -1570,9 +1535,10 @@ msgstr "Bluesky は、ホスティング プロバイダーを選択できるオ
 msgid "Bluesky is an open network where you can choose your own provider. If you're new here, we recommend sticking with the default Bluesky Social option."
 msgstr "Blueskyはオープンなネットワークで、自分自身でプロバイダーを選ぶことができます。初めて利用するのであれば、デフォルトのオプションであるBluesky Socialのままにしておくのをお勧めします。"
 
-#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
-msgid "Bluesky is introducing a new layer of verification on VerusSky — an easy-to-see checkmark."
-msgstr ""
+#: src/components/ProgressGuide/List.tsx:53
+#: src/components/ProgressGuide/List.tsx:70
+msgid "Bluesky is better with friends!"
+msgstr "Blueskyは友達と一緒のほうが楽しい！"
 
 #: src/screens/Takendown.tsx:226
 msgid "Bluesky Social Terms of Service"
@@ -1589,10 +1555,6 @@ msgstr "Blueskyはログアウトしたユーザーにあなたのプロフィ�
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:132
 msgid "Bluesky will proactively verify notable and authentic accounts."
 msgstr "Blueskyは著名な本物のアカウントを積極的に認証します。"
-
-#: src/screens/Messages/components/ChatDisabled.tsx:34
-msgid "Bluesky's moderators have reviewed reports and decided to disable your access to Bluesky's chats."
-msgstr ""
 
 #: src/screens/Settings/AppIconSettings/index.tsx:99
 msgid "Bluesky+"
@@ -1622,7 +1584,7 @@ msgstr "サイト規約違反"
 #: src/view/com/feeds/ProfileFeedgens.tsx:158
 #: src/view/com/feeds/ProfileFeedgens.tsx:159
 msgid "Browse custom feeds"
-msgstr ""
+msgstr "カスタムフィードを見る"
 
 #: src/components/FeedInterstitials.tsx:547
 msgid "Browse more accounts"
@@ -1672,7 +1634,7 @@ msgstr "ビジネス"
 
 #: src/screens/Bookmarks/index.tsx:284
 msgid "Button to go back to the home timeline"
-msgstr ""
+msgstr "ホームタイムラインに戻るボタン"
 
 #: src/components/LabelingServiceCard/index.tsx:62
 #: src/components/moderation/ReportDialog/index.tsx:834
@@ -1724,8 +1686,6 @@ msgstr "カメラ"
 #: src/components/dialogs/InAppBrowserConsent.tsx:104
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:274
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:282
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
 #: src/components/live/GoLiveDialog.tsx:244
 #: src/components/live/GoLiveDialog.tsx:250
 #: src/components/Menu/index.tsx:350
@@ -1741,9 +1701,9 @@ msgstr "カメラ"
 #: src/screens/Settings/AppIconSettings/index.tsx:230
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:78
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:85
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:250
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:256
-#: src/screens/Settings/Settings.tsx:298
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:247
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:253
+#: src/screens/Settings/Settings.tsx:289
 #: src/screens/Takendown.tsx:108
 #: src/screens/Takendown.tsx:111
 #: src/view/com/composer/Composer.tsx:1050
@@ -1819,12 +1779,12 @@ msgstr "ハンドルを変更"
 msgid "Change moderation service"
 msgstr "モデレーションサービスを変更"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:264
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:270
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:261
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:267
 msgid "Change password"
 msgstr "パスワードの変更"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:167
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:164
 msgid "Change password dialog"
 msgstr "パスワード変更ダイアログ"
 
@@ -1836,7 +1796,7 @@ msgstr "レポートカテゴリの変更"
 msgid "Change report reason"
 msgstr "報告の理由を変更"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:60
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:57
 msgid "Change your password"
 msgstr "パスワードの変更"
 
@@ -1854,7 +1814,7 @@ msgid "Changes saved"
 msgstr "変更を保存しました"
 
 #: src/lib/hooks/useNotificationHandler.ts:99
-#: src/Navigation.tsx:563
+#: src/Navigation.tsx:549
 #: src/view/shell/bottom-bar/BottomBar.tsx:221
 #: src/view/shell/desktop/LeftNav.tsx:608
 #: src/view/shell/Drawer.tsx:466
@@ -1880,7 +1840,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "チャットをミュートしました"
 
-#: src/Navigation.tsx:573
+#: src/Navigation.tsx:559
 #: src/screens/Messages/components/InboxPreview.tsx:22
 msgid "Chat request inbox"
 msgstr "チャット要求の受信トレイ"
@@ -1892,7 +1852,7 @@ msgid "Chat requests"
 msgstr "チャットの要求"
 
 #: src/components/dms/ConvoMenu.tsx:78
-#: src/Navigation.tsx:568
+#: src/Navigation.tsx:554
 #: src/screens/Messages/ChatList.tsx:81
 #: src/screens/Messages/ChatList.tsx:85
 #: src/screens/Messages/ChatList.tsx:380
@@ -1919,7 +1879,7 @@ msgstr "チャット"
 msgid "Check my status"
 msgstr "ステータスを確認"
 
-#: src/screens/Login/LoginForm.tsx:616
+#: src/screens/Login/LoginForm.tsx:304
 msgid "Check your email for a sign in code and enter it here."
 msgstr "確認コードが記載されたメールを確認し、ここに入力してください。"
 
@@ -1964,7 +1924,6 @@ msgid "Choose this color as your avatar"
 msgstr "この色をアバターとして選択"
 
 #: src/components/dialogs/ServerInput.tsx:137
-#: src/screens/Login/index.tsx:137
 msgid "Choose your account provider"
 msgstr "アカウントプロバイダーを選んでください"
 
@@ -1980,11 +1939,11 @@ msgstr "パスワードを入力"
 msgid "Choose your username"
 msgstr "ユーザー名を選んでください"
 
-#: src/screens/Settings/Settings.tsx:499
+#: src/screens/Settings/Settings.tsx:490
 msgid "Clear all storage data"
 msgstr "すべてのストレージデータをクリア"
 
-#: src/screens/Settings/Settings.tsx:501
+#: src/screens/Settings/Settings.tsx:492
 msgid "Clear all storage data (restart after this)"
 msgstr "すべてのストレージデータをクリア（このあと再起動します）"
 
@@ -2007,11 +1966,11 @@ msgstr "こちらをクリック"
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:102
 msgid "Click here to contact our support team"
-msgstr ""
+msgstr "こちらをクリックしてサポートチームにご連絡ください"
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:194
 msgid "Click here to log out"
-msgstr ""
+msgstr "ここをクリックしてログアウト"
 
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:383
 msgid "Click here to restart the verification process."
@@ -2020,7 +1979,7 @@ msgstr "確認プロセスを再開するには、ここをクリックしてく
 #: src/ageAssurance/components/NoAccessScreen.tsx:86
 #: src/ageAssurance/components/NoAccessScreen.tsx:179
 msgid "Click here to update your birthdate"
-msgstr ""
+msgstr "ここをクリックして生年月日を更新"
 
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:275
 msgid "Click here to update your email"
@@ -2057,14 +2016,8 @@ msgstr "パカラッ 🐴 パカラッ 🐴"
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:171
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:178
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:187
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
 #: src/components/dialogs/SearchablePeopleList.tsx:295
 #: src/components/dialogs/StarterPackDialog.tsx:179
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:208
@@ -2080,11 +2033,10 @@ msgstr "パカラッ 🐴 パカラッ 🐴"
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:124
 #: src/components/verification/VerificationsDialog.tsx:144
 #: src/components/verification/VerifierDialog.tsx:150
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
 #: src/components/WhoCanReply.tsx:234
 #: src/components/WhoCanReply.tsx:241
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:290
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:300
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:287
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:292
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:335
 #: src/view/com/feeds/MissingFeed.tsx:210
 #: src/view/com/feeds/MissingFeed.tsx:217
@@ -2109,14 +2061,13 @@ msgstr "一番下の引き出しを閉じる"
 #: src/components/dialogs/GifSelect.tsx:263
 #: src/components/verification/VerificationsDialog.tsx:136
 #: src/components/verification/VerifierDialog.tsx:142
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:204
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:298
 #: src/view/com/composer/select-language/PostLanguageSelectDialog.tsx:330
 msgid "Close dialog"
 msgstr "ダイアログを閉じる"
 
-#: src/view/shell/index.web.tsx:114
+#: src/view/shell/index.web.tsx:108
 msgid "Close drawer menu"
 msgstr "引き出しメニューを閉じる"
 
@@ -2196,7 +2147,7 @@ msgid "Comics"
 msgstr "漫画"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:45
-#: src/Navigation.tsx:347
+#: src/Navigation.tsx:341
 #: src/view/screens/CommunityGuidelines.tsx:37
 msgid "Community Guidelines"
 msgstr "コミュニティガイドライン"
@@ -2258,9 +2209,9 @@ msgid "Confirm your location"
 msgstr "現在地を確認する"
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:36
-#: src/screens/Login/LoginForm.tsx:596
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:189
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:193
+#: src/screens/Login/LoginForm.tsx:284
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:186
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:190
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:144
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:150
 #: src/view/com/modals/DeleteAccount.tsx:220
@@ -2268,11 +2219,7 @@ msgstr "現在地を確認する"
 msgid "Confirmation code"
 msgstr "確認コード"
 
-#: src/screens/Settings/VerusServicesSettings.tsx:145
-msgid "Connected"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:652
+#: src/screens/Login/LoginForm.tsx:340
 msgid "Connecting..."
 msgstr "接続中…"
 
@@ -2301,12 +2248,12 @@ msgstr "お問い合わせ"
 msgid "Content & Media"
 msgstr "コンテンツ＆メディア"
 
-#: src/screens/Settings/Settings.tsx:213
-#: src/screens/Settings/Settings.tsx:216
+#: src/screens/Settings/Settings.tsx:204
+#: src/screens/Settings/Settings.tsx:207
 msgid "Content and media"
 msgstr "コンテンツとメディア"
 
-#: src/Navigation.tsx:522
+#: src/Navigation.tsx:508
 msgid "Content and Media"
 msgstr "コンテンツとメディア"
 
@@ -2351,7 +2298,6 @@ msgstr "コンテンツの警告"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "コンテキストメニューの背景をクリックし、メニューを閉じる。"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:162
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:170
 #: src/screens/Onboarding/StepInterests/index.tsx:94
@@ -2503,17 +2449,13 @@ msgstr "投稿のテキストをコピー"
 msgid "Copy QR code"
 msgstr "QRコードをコピー"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
-msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
-msgstr ""
-
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:455
 msgid "Copy TXT record value"
 msgstr "TXTレコードの値をコピー"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:40
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:107
-#: src/Navigation.tsx:352
+#: src/Navigation.tsx:346
 #: src/view/screens/CopyrightPolicy.tsx:34
 msgid "Copyright Policy"
 msgstr "著作権ポリシー"
@@ -2572,7 +2514,7 @@ msgstr "作成"
 #: src/view/com/lists/ProfileLists.tsx:159
 #: src/view/com/lists/ProfileLists.tsx:160
 msgid "Create a list"
-msgstr ""
+msgstr "リストを作成"
 
 #: src/components/StarterPack/QrCodeDialog.tsx:163
 msgid "Create a QR code for a starter pack"
@@ -2580,14 +2522,14 @@ msgstr "スターターパックのQRコードを作成"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:206
 #: src/components/StarterPack/ProfileStarterPacks.tsx:315
-#: src/Navigation.tsx:603
+#: src/Navigation.tsx:589
 msgid "Create a starter pack"
 msgstr "スターターパックを作成"
 
-#: src/view/screens/Profile.tsx:550
-#: src/view/screens/Profile.tsx:551
+#: src/view/screens/Profile.tsx:542
+#: src/view/screens/Profile.tsx:543
 msgid "Create a Starter Pack"
-msgstr ""
+msgstr "スターターパックを作成"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:302
 msgid "Create a starter pack for me"
@@ -2677,8 +2619,8 @@ msgid "Customization options"
 msgstr "カスタマイズオプション"
 
 #: src/screens/Onboarding/Layout.tsx:60
-msgid "Customizes your VerusSky experience"
-msgstr ""
+msgid "Customizes your Bluesky experience"
+msgstr "Blueskyでの体験をカスタマイズ"
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:200
 msgid "Dangerous challenges or activities"
@@ -2718,7 +2660,7 @@ msgstr "生年月日"
 msgid "Deactivate account"
 msgstr "アカウントを無効化"
 
-#: src/screens/Settings/Settings.tsx:464
+#: src/screens/Settings/Settings.tsx:455
 msgid "Debug Moderation"
 msgstr "モデレーションをデバッグ"
 
@@ -2771,7 +2713,7 @@ msgstr "アプリパスワードを削除しますか？"
 msgid "Delete chat"
 msgstr "チャットを削除"
 
-#: src/screens/Settings/Settings.tsx:471
+#: src/screens/Settings/Settings.tsx:462
 msgid "Delete chat declaration record"
 msgstr "チャットの宣言レコードを削除"
 
@@ -2812,10 +2754,6 @@ msgstr "アカウントを削除"
 #: src/view/com/composer/Composer.tsx:969
 msgid "Delete post"
 msgstr "投稿を削除"
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
-msgid "Delete Post and Remove Link"
-msgstr ""
 
 #: src/screens/StarterPack/StarterPackScreen.tsx:595
 #: src/screens/StarterPack/StarterPackScreen.tsx:753
@@ -2870,11 +2808,6 @@ msgstr "引用を切り離す"
 msgid "Detach quote post?"
 msgstr "引用投稿を切り離しますか？"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
-msgid "Details to Sign"
-msgstr ""
-
 #: src/screens/Settings/AboutSettings.tsx:140
 msgctxt "toast"
 msgid "Developer mode disabled"
@@ -2885,8 +2818,8 @@ msgctxt "toast"
 msgid "Developer mode enabled"
 msgstr "開発者モードを有効にしました"
 
-#: src/screens/Settings/Settings.tsx:280
-#: src/screens/Settings/Settings.tsx:283
+#: src/screens/Settings/Settings.tsx:271
+#: src/screens/Settings/Settings.tsx:274
 msgid "Developer options"
 msgstr "開発者用オプション"
 
@@ -2956,10 +2889,6 @@ msgstr "下書きを削除しますか？"
 #: src/view/com/composer/Composer.tsx:994
 msgid "Discard post?"
 msgstr "投稿を削除しますか？"
-
-#: src/screens/Settings/VerusServicesSettings.tsx:147
-msgid "Disconnected"
-msgstr ""
 
 #: src/screens/Settings/components/PwiOptOut.tsx:87
 #: src/screens/Settings/components/PwiOptOut.tsx:91
@@ -3046,8 +2975,6 @@ msgstr "心配しないでください！すべての既存のメッセージと
 
 #: src/components/dialogs/BirthDateSettings.tsx:181
 #: src/components/dialogs/BirthDateSettings.tsx:188
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
 #: src/components/dialogs/ServerInput.tsx:240
 #: src/components/dialogs/ServerInput.tsx:242
 #: src/components/dms/AfterReportDialog.tsx:142
@@ -3090,14 +3017,14 @@ msgstr "ダブルタップでダイアログを閉じる"
 msgid "Double tap to like"
 msgstr "ダブルタップでいいね"
 
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
+msgid "Download Bluesky"
+msgstr "Blueskyをダウンロード"
+
 #: src/screens/Settings/components/ExportCarDialog.tsx:78
 #: src/screens/Settings/components/ExportCarDialog.tsx:83
 msgid "Download CAR file"
 msgstr "CARファイルをダウンロード"
-
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:330
-msgid "Download VerusSky"
-msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:115
 msgid "Doxxing"
@@ -3109,7 +3036,7 @@ msgstr "ドロップして画像を追加する"
 
 #: src/components/ageAssurance/useAgeAssuranceCopy.ts:11
 msgid "Due to laws in your region, certain features on Bluesky are currently restricted until you're able to verify you're an adult."
-msgstr ""
+msgstr "お住まいの地域の法律により、現在Blueskyの一部の機能は大人であることを確認できるまで制限されています。"
 
 #: src/components/dialogs/MutedWords.tsx:158
 msgid "Duration:"
@@ -3204,7 +3131,7 @@ msgstr "ライブステータスを編集"
 msgid "Edit moderation list"
 msgstr "モデレーションリストを編集"
 
-#: src/Navigation.tsx:362
+#: src/Navigation.tsx:356
 #: src/view/screens/Feeds.tsx:518
 msgid "Edit My Feeds"
 msgstr "マイフィードを編集"
@@ -3225,12 +3152,12 @@ msgstr "投稿への反応の設定を編集"
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:292
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:343
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
 msgid "Edit profile"
 msgstr "プロフィールを編集"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:295
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:345
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:323
 msgid "Edit Profile"
 msgstr "プロフィールを編集"
 
@@ -3246,7 +3173,7 @@ msgstr "ユーザーリストを編集"
 msgid "Edit who can reply"
 msgstr "誰が返信できるのかを編集"
 
-#: src/Navigation.tsx:608
+#: src/Navigation.tsx:594
 msgid "Edit your starter pack"
 msgstr "スターターパックを編集"
 
@@ -3259,8 +3186,6 @@ msgstr "教育"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr "リストの作者にブロックされているか、作者をブロックしています。"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
 #: src/screens/Settings/AccountSettings.tsx:66
 #: src/screens/Signup/StepInfo/index.tsx:196
 msgid "Email"
@@ -3398,7 +3323,7 @@ msgstr "ワードまたはタグを入力"
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:201
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:320
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:66
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:63
 msgid "Enter code"
 msgstr "コードを入力"
 
@@ -3414,22 +3339,26 @@ msgstr "使用するドメインを入力してください"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "アカウントの作成に使用したメールアドレスを入力します。新しいパスワードを設定できるように、「リセットコード」をお送りします。"
 
-#: src/screens/Login/LoginForm.tsx:488
+#: src/screens/Login/LoginForm.tsx:219
 msgid "Enter the username or email address you used when you created your account"
 msgstr "アカウント作成時に使用したユーザー名またはメールアドレスを入力してください"
 
 #: src/components/dialogs/BirthDateSettings.tsx:148
 msgid "Enter your birthdate"
-msgstr ""
+msgstr "生年月日を入力してください"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:99
 #: src/screens/Signup/StepInfo/index.tsx:216
 msgid "Enter your email address"
 msgstr "メールアドレスを入力してください"
 
-#: src/screens/Login/LoginForm.tsx:512
+#: src/screens/Login/LoginForm.tsx:243
 msgid "Enter your password"
 msgstr "パスワードを入力"
+
+#: src/screens/Login/index.tsx:137
+msgid "Enter your username and password"
+msgstr "ユーザー名とパスワードを入力してください"
 
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:132
 msgid "Enters full screen"
@@ -3562,7 +3491,7 @@ msgstr "露骨な、または不愉快になる可能性のあるメディア。
 msgid "Explicit sexual images."
 msgstr "露骨な性的画像。"
 
-#: src/Navigation.tsx:773
+#: src/Navigation.tsx:759
 #: src/screens/Search/Shell.tsx:327
 #: src/view/shell/desktop/LeftNav.tsx:690
 #: src/view/shell/Drawer.tsx:414
@@ -3598,7 +3527,7 @@ msgstr "外部メディア"
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "外部メディアを有効にすると、それらのメディアのウェブサイトがあなたやお使いのデバイスに関する情報を収集する場合があります。その場合でも、あなたが「再生」ボタンを押すまで情報は送信されず、要求もされません。"
 
-#: src/Navigation.tsx:381
+#: src/Navigation.tsx:375
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "外部メディアの設定"
@@ -3624,10 +3553,6 @@ msgstr "スターターパックへの追加に失敗しました"
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:603
 msgid "Failed to change handle. Please try again."
 msgstr "ハンドルの変更に失敗しました。もう一度試してください。"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
-msgid "Failed to create a post for linking the VerusID. Please try again."
-msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:173
 msgid "Failed to create app password. Please try again."
@@ -3663,11 +3588,6 @@ msgstr "スターターパックの削除に失敗しました"
 #: src/screens/Onboarding/StepSuggestedAccounts/index.tsx:125
 msgid "Failed to follow all suggested accounts, please try again"
 msgstr "すべての推奨アカウントをフォローできませんでした。もう一度やり直してください"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
-msgid "Failed to initiate credential update"
-msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:282
 #: src/screens/Messages/Inbox.tsx:209
@@ -3727,10 +3647,6 @@ msgstr "すべての要求を既読としてマークできませんでした"
 msgid "Failed to pin post"
 msgstr "投稿の固定に失敗しました"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
-msgid "Failed to prepare linking details."
-msgstr ""
-
 #: src/components/dms/ActionsWrapper.web.tsx:60
 #: src/components/dms/MessageContextMenu.tsx:95
 msgid "Failed to remove emoji reaction"
@@ -3739,10 +3655,6 @@ msgstr "絵文字リアクションの削除に失敗しました"
 #: src/components/dialogs/StarterPackDialog.tsx:289
 msgid "Failed to remove from starter pack"
 msgstr "スターターパックからの削除に失敗しました"
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
-msgid "Failed to remove the VerusID link, please try again"
-msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
 msgid "Failed to remove verification"
@@ -3788,11 +3700,6 @@ msgstr "スレッドのミュートの切り替えに失敗しました。もう
 msgid "Failed to unpin list"
 msgstr "リストのピン留めの解除に失敗しました"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
-msgid "Failed to update credentials"
-msgstr ""
-
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:149
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Enable.tsx:83
 msgid "Failed to update email 2FA settings"
@@ -3814,10 +3721,6 @@ msgstr "通知受信制限の更新に失敗しました"
 msgid "Failed to update settings"
 msgstr "設定の更新に失敗しました"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:135
-msgid "Failed to update the Verus Service endpoint. Please try again"
-msgstr ""
-
 #: src/lib/media/video/upload.ts:72
 #: src/lib/media/video/upload.web.ts:74
 #: src/lib/media/video/upload.web.ts:78
@@ -3833,10 +3736,6 @@ msgstr "メールの確認に失敗しました。後でもう一度お試しく
 msgid "Failed to verify handle. Please try again."
 msgstr "ハンドルの変更に失敗しました。もう一度試してください。"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
-msgid "Failed to verify signature. Please try again."
-msgstr ""
-
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:47
 msgid "Fake account or bot"
 msgstr "偽のアカウントまたはボット"
@@ -3845,7 +3744,7 @@ msgstr "偽のアカウントまたはボット"
 msgid "False information about elections"
 msgstr "選挙に関する誤った情報"
 
-#: src/Navigation.tsx:297
+#: src/Navigation.tsx:291
 msgid "Feed"
 msgstr "フィード"
 
@@ -3886,12 +3785,12 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr "フィードの運営者にフィードバックを送りました"
 
-#: src/Navigation.tsx:588
+#: src/Navigation.tsx:574
 #: src/screens/SavedFeeds.tsx:108
 #: src/screens/Search/SearchResults.tsx:78
 #: src/screens/StarterPack/StarterPackScreen.tsx:190
 #: src/view/screens/Feeds.tsx:511
-#: src/view/screens/Profile.tsx:246
+#: src/view/screens/Profile.tsx:239
 #: src/view/shell/desktop/LeftNav.tsx:728
 #: src/view/shell/Drawer.tsx:530
 msgid "Feeds"
@@ -3965,8 +3864,8 @@ msgid "Find people to follow"
 msgstr "フォローするユーザーを探す"
 
 #: src/screens/Search/Shell.tsx:526
-msgid "Find posts, users, and feeds on VerusSky"
-msgstr ""
+msgid "Find posts, users, and feeds on Bluesky"
+msgstr "Blueskyの投稿、ユーザー、フィードを検索"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:21
 msgid "Find your people"
@@ -4004,13 +3903,13 @@ msgstr "柔軟です"
 #: src/components/ProfileHoverCard/index.web.tsx:496
 #: src/components/ProfileHoverCard/index.web.tsx:507
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:131
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:400
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:378
 #: src/screens/VideoFeed/index.tsx:879
 msgid "Follow"
 msgstr "フォロー"
 
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:113
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:388
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:366
 msgid "Follow {0}"
 msgstr "{0}をフォロー"
 
@@ -4047,7 +3946,7 @@ msgstr "すべてのアカウントをフォロー"
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:547
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:129
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:398
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:376
 #: src/view/com/notifications/NotificationFeedItem.tsx:835
 #: src/view/com/notifications/NotificationFeedItem.tsx:842
 msgid "Follow back"
@@ -4073,7 +3972,7 @@ msgstr "<0>{0}</0>と<1>{1}</1>がフォロー中"
 msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {# others}}"
 msgstr "<0>{0}</0>、<1>{1}</1>および{2, plural, other {他#人}}がフォロー中"
 
-#: src/Navigation.tsx:251
+#: src/Navigation.tsx:245
 msgid "Followers of @{0} that you know"
 msgstr "あなたが知っている@{0}のフォロワー"
 
@@ -4088,7 +3987,7 @@ msgstr "あなたが知っているフォロワー"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:134
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:396
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
 #: src/screens/VideoFeed/index.tsx:877
 #: src/view/com/notifications/NotificationFeedItem.tsx:813
 #: src/view/com/notifications/NotificationFeedItem.tsx:830
@@ -4102,7 +4001,7 @@ msgid "Following"
 msgstr "フォロー中"
 
 #: src/components/ProfileCard.tsx:503
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:266
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:244
 #: src/view/com/notifications/NotificationFeedItem.tsx:767
 msgid "Following {0}"
 msgstr "{0}をフォローしました"
@@ -4116,7 +4015,7 @@ msgstr "{handle}をフォローしています"
 msgid "Following feed preferences"
 msgstr "Followingフィードの設定"
 
-#: src/Navigation.tsx:368
+#: src/Navigation.tsx:362
 #: src/screens/Settings/FollowingFeedPreferences.tsx:56
 msgid "Following Feed Preferences"
 msgstr "Followingフィードの設定"
@@ -4172,11 +4071,11 @@ msgstr "ノイズを忘れよう"
 msgid "Forgot Password"
 msgstr "パスワードを忘れた"
 
-#: src/screens/Login/LoginForm.tsx:527
+#: src/screens/Login/LoginForm.tsx:258
 msgid "Forgot password?"
 msgstr "パスワードを忘れた？"
 
-#: src/screens/Login/LoginForm.tsx:538
+#: src/screens/Login/LoginForm.tsx:269
 msgid "Forgot?"
 msgstr "忘れた？"
 
@@ -4439,7 +4338,7 @@ msgstr "有害または高リスクの活動"
 msgid "Harming or endangering minors"
 msgstr "未成年者への危害または危険行為"
 
-#: src/Navigation.tsx:553
+#: src/Navigation.tsx:539
 msgid "Hashtag"
 msgstr "ハッシュタグ"
 
@@ -4460,8 +4359,8 @@ msgstr "コードがありませんか？<0>ここをクリックしてくださ
 msgid "Having trouble?"
 msgstr "なにか問題が発生しましたか？"
 
-#: src/screens/Settings/Settings.tsx:245
-#: src/screens/Settings/Settings.tsx:249
+#: src/screens/Settings/Settings.tsx:236
+#: src/screens/Settings/Settings.tsx:240
 #: src/view/shell/desktop/RightNav.tsx:123
 #: src/view/shell/desktop/RightNav.tsx:124
 #: src/view/shell/Drawer.tsx:381
@@ -4609,8 +4508,8 @@ msgstr "そのモデレーションサービスを読み込めませんでした
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "待って！徐々にビデオへのアクセスを許可していますが、あなたの順番はまだです。しばらくしてもう一度確認を！"
 
-#: src/Navigation.tsx:768
-#: src/Navigation.tsx:788
+#: src/Navigation.tsx:754
+#: src/Navigation.tsx:774
 #: src/view/shell/bottom-bar/BottomBar.tsx:178
 #: src/view/shell/desktop/LeftNav.tsx:672
 #: src/view/shell/Drawer.tsx:440
@@ -4620,6 +4519,11 @@ msgstr "ホーム"
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:428
 msgid "Host:"
 msgstr "ホスト："
+
+#: src/screens/Login/ForgotPasswordForm.tsx:83
+#: src/screens/Login/LoginForm.tsx:184
+msgid "Hosting provider"
+msgstr "ホスティングプロバイダー"
 
 #: src/screens/Search/modules/ExploreTrendingTopics.tsx:191
 msgid "Hot"
@@ -4649,17 +4553,9 @@ msgstr "自分のドメインを持っています"
 msgid "I understand"
 msgstr "理解した"
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
-msgid "Identity:"
-msgstr ""
-
 #: src/view/com/lightbox/Lightbox.web.tsx:187
 msgid "If alt text is long, toggles alt text expanded state"
 msgstr "ALTテキストが長い場合、ALTテキストの展開状態を切り替える"
-
-#: src/components/dialogs/VerusServiceDialog.tsx:204
-msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
-msgstr ""
 
 #: src/screens/Signup/StepInfo/Policies.tsx:110
 msgid "If you are not yet an adult according to the laws of your country, your parent or legal guardian must read these Terms on your behalf."
@@ -4667,11 +4563,11 @@ msgstr "あなたがお住いの国の法律においてまだ成人していな
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:98
 msgid "If you believe your birthdate is incorrect, please <0>contact our support team</0>."
-msgstr ""
+msgstr "生年月日が正しくない場合は、<0>サポートチームまでご連絡</0>ください。"
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:83
 msgid "If you believe your birthdate is incorrect, you can update it by <0>clicking here</0>."
-msgstr ""
+msgstr "生年月日が正しくない場合は、<0>ここをクリック</0>して更新することができます。"
 
 #: src/screens/ProfileList/components/MoreOptionsMenu.tsx:277
 msgid "If you delete this list, you won't be able to recover it."
@@ -4693,7 +4589,7 @@ msgstr "この投稿を削除すると、復元できなくなります。"
 msgid "If you update your email address, email 2FA will be disabled."
 msgstr "メールアドレスを更新すると、メールでの2要素認証は無効になります。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:62
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:59
 msgid "If you want to change your password, we will send you a code to verify that this is your account."
 msgstr "パスワードを変更する場合は、あなたのアカウントであることを確認するためのコードをお送りします。"
 
@@ -4769,7 +4665,7 @@ msgstr "アプリ内、プッシュ、フォロー中の人"
 msgid "Inbox zero!"
 msgstr "受信トレイが空です！"
 
-#: src/screens/Login/LoginForm.tsx:330
+#: src/screens/Login/LoginForm.tsx:164
 msgid "Incorrect username or password"
 msgstr "無効なユーザー名またはパスワード"
 
@@ -4789,7 +4685,7 @@ msgstr "新しいパスワードを入力"
 msgid "Input password for account deletion"
 msgstr "アカウント削除のためにパスワードを入力"
 
-#: src/screens/Login/LoginForm.tsx:608
+#: src/screens/Login/LoginForm.tsx:296
 msgid "Input the code which has been emailed to you"
 msgstr "メールで送られたコードを入力"
 
@@ -4809,7 +4705,7 @@ msgstr "アクティビティの通知の紹介"
 msgid "Introducing saved posts AKA bookmarks"
 msgstr "保存済投稿、いわゆるブックマークを紹介します"
 
-#: src/screens/Login/LoginForm.tsx:310
+#: src/screens/Login/LoginForm.tsx:156
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:70
 msgid "Invalid 2FA confirmation code."
 msgstr "無効な2要素認証の確認コードです。"
@@ -4823,17 +4719,9 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr "無効な反応関連の設定。"
 
-#: src/screens/Login/LoginForm.tsx:423
-msgid "Invalid login response. Please try again or sign in manually."
-msgstr ""
-
 #: src/components/moderation/ReportDialog/index.tsx:81
 msgid "Invalid report subject"
 msgstr "報告の件名が無効です"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
-msgid "Invalid signature. Please try again."
-msgstr ""
 
 #: src/components/intents/VerifyEmailIntentDialog.tsx:85
 msgid "Invalid Verification Code"
@@ -4866,7 +4754,7 @@ msgstr "位置情報は正確ですか？<0>ここをタップして現在位置
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:171
 msgid "It looks like you haven't added your birthdate. You must provide an accurate date of birth to use Bluesky."
-msgstr ""
+msgstr "生年月日を追加していないようです。Blueskyを使用するには正確な生年月日を入力する必要があります。"
 
 #: src/screens/Signup/StepInfo/index.tsx:292
 msgid "It's correct"
@@ -4889,6 +4777,8 @@ msgstr "ジョブID：{0}"
 msgid "Jobs"
 msgstr "仕事"
 
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
+#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:464
 #: src/screens/StarterPack/StarterPackScreen.tsx:475
 msgid "Join Bluesky"
@@ -4898,11 +4788,6 @@ msgstr "Blueskyに参加"
 #: src/view/shell/NavSignupCard.tsx:40
 msgid "Join the conversation"
 msgstr "会話に参加"
-
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:210
-#: src/screens/StarterPack/StarterPackLandingScreen.tsx:216
-msgid "Join VerusSky"
-msgstr ""
 
 #: src/lib/interests.ts:63
 #: src/screens/Onboarding/index.tsx:52
@@ -4934,7 +4819,7 @@ msgid "Labeled by the author."
 msgstr "投稿者によるラベル。"
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:69
-#: src/view/screens/Profile.tsx:239
+#: src/view/screens/Profile.tsx:232
 msgid "Labels"
 msgstr "ラベル"
 
@@ -4954,13 +4839,13 @@ msgstr "あなたのアカウントのラベル"
 msgid "Labels on your content"
 msgstr "あなたのコンテンツのラベル"
 
-#: src/Navigation.tsx:224
+#: src/Navigation.tsx:218
 msgid "Language Settings"
 msgstr "言語の設定"
 
 #: src/screens/Settings/LanguageSettings.tsx:78
-#: src/screens/Settings/Settings.tsx:237
-#: src/screens/Settings/Settings.tsx:240
+#: src/screens/Settings/Settings.tsx:228
+#: src/screens/Settings/Settings.tsx:231
 msgid "Languages"
 msgstr "言語"
 
@@ -5071,8 +4956,8 @@ msgstr "すべての言語を表示するには、選択されていないまま
 
 #: src/components/dialogs/LinkWarning.tsx:67
 #: src/components/dialogs/LinkWarning.tsx:75
-msgid "Leaving VerusSky"
-msgstr ""
+msgid "Leaving Bluesky"
+msgstr "Blueskyから離れる"
 
 #: src/screens/SignupQueued.tsx:155
 msgid "left to go."
@@ -5121,7 +5006,7 @@ msgstr "10投稿をいいね"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "Discoverフィードを訓練するために10投稿をいいねする"
 
-#: src/Navigation.tsx:466
+#: src/Navigation.tsx:452
 msgid "Like notifications"
 msgstr "いいねの通知"
 
@@ -5133,8 +5018,8 @@ msgstr "このフィードをいいね"
 msgid "Like this labeler"
 msgstr "このラベラーをいいね"
 
-#: src/Navigation.tsx:302
-#: src/Navigation.tsx:307
+#: src/Navigation.tsx:296
+#: src/Navigation.tsx:301
 msgid "Liked by"
 msgstr "いいねしたユーザー"
 
@@ -5159,7 +5044,7 @@ msgstr "{likeCount, plural, other {#人のユーザー}}がいいね"
 #: src/lib/hooks/useNotificationHandler.ts:126
 #: src/screens/Settings/NotificationSettings/index.tsx:126
 #: src/screens/Settings/NotificationSettings/LikeNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:245
+#: src/view/screens/Profile.tsx:238
 msgid "Likes"
 msgstr "いいね"
 
@@ -5169,7 +5054,7 @@ msgstr "いいね"
 msgid "Likes of your reposts"
 msgstr "リポストへのいいね"
 
-#: src/Navigation.tsx:490
+#: src/Navigation.tsx:476
 msgid "Likes of your reposts notifications"
 msgstr "リポストへのいいねの通知"
 
@@ -5182,40 +5067,7 @@ msgstr "この投稿をいいねする"
 msgid "Linear"
 msgstr "リニア"
 
-#: src/screens/Settings/VerusServicesSettings.tsx:91
-#: src/screens/Settings/VerusServicesSettings.tsx:98
-msgid "Link Account to VerusID"
-msgstr ""
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
-msgid "Link Removed"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
-msgid "Link VerusID to account"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
-msgid "Link VerusID to Profile"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
-msgid "Link your VerusID to this account to verify your identity."
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:67
-msgid "Linked VerusID"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
-msgid "Linking complete"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:683
-msgid "Links to signing in on the same device"
-msgstr ""
-
-#: src/Navigation.tsx:257
+#: src/Navigation.tsx:251
 msgid "List"
 msgstr "リスト"
 
@@ -5295,10 +5147,10 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "リストのミュートを解除しました"
 
-#: src/Navigation.tsx:178
+#: src/Navigation.tsx:172
 #: src/view/screens/Lists.tsx:67
-#: src/view/screens/Profile.tsx:240
-#: src/view/screens/Profile.tsx:248
+#: src/view/screens/Profile.tsx:233
+#: src/view/screens/Profile.tsx:241
 #: src/view/shell/desktop/LeftNav.tsx:746
 #: src/view/shell/Drawer.tsx:545
 msgid "Lists"
@@ -5307,7 +5159,7 @@ msgstr "リスト"
 #: src/view/com/lists/MyLists.tsx:72
 #: src/view/com/lists/ProfileLists.tsx:155
 msgid "Lists allow you to see content from your favorite people."
-msgstr ""
+msgstr "リストを使用すると、お気に入りの人からのコンテンツを見ることができます。"
 
 #: src/components/dms/BlockedByListDialog.tsx:39
 msgid "Lists blocking this user:"
@@ -5361,7 +5213,7 @@ msgstr "投稿への反応の設定を読み込み中…"
 msgid "Loading..."
 msgstr "読み込み中…"
 
-#: src/Navigation.tsx:327
+#: src/Navigation.tsx:321
 msgid "Log"
 msgstr "ログ"
 
@@ -5448,7 +5300,7 @@ msgstr "すべて既読にしました"
 msgid "Maybe later"
 msgstr "後で"
 
-#: src/view/screens/Profile.tsx:243
+#: src/view/screens/Profile.tsx:236
 msgid "Media"
 msgstr "メディア"
 
@@ -5456,7 +5308,7 @@ msgstr "メディア"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "一部の閲覧者にとっては困惑する、あるいは不適切なメディアです。"
 
-#: src/Navigation.tsx:450
+#: src/Navigation.tsx:436
 msgid "Mention notifications"
 msgstr "メンションの通知"
 
@@ -5509,7 +5361,7 @@ msgstr "メッセージが長すぎます"
 msgid "Message options"
 msgstr "メッセージのオプション"
 
-#: src/Navigation.tsx:783
+#: src/Navigation.tsx:769
 msgid "Messages"
 msgstr "メッセージ"
 
@@ -5522,7 +5374,7 @@ msgstr "ミッドナイト"
 msgid "Minor harassment or bullying"
 msgstr "未成年者への嫌がらせまたはいじめ"
 
-#: src/Navigation.tsx:514
+#: src/Navigation.tsx:500
 msgid "Miscellaneous notifications"
 msgstr "その他の通知"
 
@@ -5530,14 +5382,10 @@ msgstr "その他の通知"
 msgid "Misleading"
 msgstr "誤解を招くこと"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
-msgid "Mobile support coming soon"
-msgstr ""
-
-#: src/Navigation.tsx:183
+#: src/Navigation.tsx:177
 #: src/screens/Moderation/index.tsx:99
-#: src/screens/Settings/Settings.tsx:197
-#: src/screens/Settings/Settings.tsx:200
+#: src/screens/Settings/Settings.tsx:188
+#: src/screens/Settings/Settings.tsx:191
 msgid "Moderation"
 msgstr "モデレーション"
 
@@ -5573,7 +5421,7 @@ msgstr "モデレーションリストを更新しました"
 msgid "Moderation lists"
 msgstr "モデレーションリスト"
 
-#: src/Navigation.tsx:188
+#: src/Navigation.tsx:182
 #: src/view/screens/ModerationModlists.tsx:67
 msgid "Moderation Lists"
 msgstr "モデレーションリスト"
@@ -5582,7 +5430,7 @@ msgstr "モデレーションリスト"
 msgid "moderation settings"
 msgstr "モデレーションの設定"
 
-#: src/Navigation.tsx:317
+#: src/Navigation.tsx:311
 msgid "Moderation states"
 msgstr "モデレーションのステータス"
 
@@ -5705,7 +5553,7 @@ msgstr "ワードとタグをミュート"
 msgid "Muted accounts"
 msgstr "ミュート中のアカウント"
 
-#: src/Navigation.tsx:193
+#: src/Navigation.tsx:187
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "ミュート中のアカウント"
@@ -5729,7 +5577,7 @@ msgstr "ミュートの設定は非公開です。ミュート中のアカウン
 #: src/components/dialogs/BirthDateSettings.tsx:43
 #: src/components/dialogs/BirthDateSettings.tsx:47
 msgid "My Birthdate"
-msgstr ""
+msgstr "生年月日"
 
 #: src/view/screens/Feeds.tsx:704
 msgid "My Feeds"
@@ -5754,7 +5602,7 @@ msgid "Navigate to starter pack"
 msgstr "スターターパックに移動"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:166
-#: src/screens/Login/LoginForm.tsx:684
+#: src/screens/Login/LoginForm.tsx:347
 msgid "Navigates to the next screen"
 msgstr "次の画面に移動します"
 
@@ -5809,7 +5657,7 @@ msgstr "新しいメールアドレス"
 msgid "New Feature"
 msgstr "新機能"
 
-#: src/Navigation.tsx:482
+#: src/Navigation.tsx:468
 msgid "New follower notifications"
 msgstr "新しいフォロワーの通知"
 
@@ -5835,8 +5683,8 @@ msgid "New messages"
 msgstr "新しいメッセージ"
 
 #: src/screens/Login/SetNewPasswordForm.tsx:141
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:206
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:210
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:203
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:207
 msgid "New password"
 msgstr "新しいパスワード"
 
@@ -5845,7 +5693,7 @@ msgstr "新しいパスワード"
 #: src/screens/ProfileList/index.tsx:284
 #: src/view/screens/Feeds.tsx:552
 #: src/view/screens/Notifications.tsx:167
-#: src/view/screens/Profile.tsx:579
+#: src/view/screens/Profile.tsx:571
 msgid "New post"
 msgstr "新しい投稿"
 
@@ -5890,8 +5738,8 @@ msgstr "ニュース"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:137
 #: src/screens/Login/ForgotPasswordForm.tsx:143
-#: src/screens/Login/LoginForm.tsx:680
-#: src/screens/Login/LoginForm.tsx:691
+#: src/screens/Login/LoginForm.tsx:346
+#: src/screens/Login/LoginForm.tsx:353
 #: src/screens/Login/SetNewPasswordForm.tsx:182
 #: src/screens/Login/SetNewPasswordForm.tsx:188
 #: src/screens/Onboarding/StepFinished/index.tsx:341
@@ -5911,8 +5759,8 @@ msgid "Next image"
 msgstr "次の画像"
 
 #: src/screens/Onboarding/StepFinished/ValuePropositionPager.shared.tsx:32
-msgid "No ads, no invasive tracking, no engagement traps. VerusSky respects your time and attention."
-msgstr ""
+msgid "No ads, no invasive tracking, no engagement traps. Bluesky respects your time and attention."
+msgstr "広告ゼロ。しつこい追跡なし。使い続けさせるために手放せなくする罠、エンゲージメントトラップもなし。Blueskyは、あなたの時間と集中を大切にします。"
 
 #: src/screens/Settings/AppPasswords.tsx:107
 msgid "No app passwords yet"
@@ -5937,7 +5785,7 @@ msgstr "フィードが見つかりませんでした。他を探してみて。
 
 #: src/view/com/profile/ProfileFollowers.tsx:171
 msgid "No followers yet"
-msgstr ""
+msgstr "まだフォロワーがいません"
 
 #: src/components/live/LinkPreview.tsx:63
 msgid "No image"
@@ -5945,19 +5793,19 @@ msgstr "画像なし"
 
 #: src/components/LikedByList.tsx:84
 #: src/view/com/post-thread/PostLikedBy.tsx:84
-#: src/view/screens/Profile.tsx:519
+#: src/view/screens/Profile.tsx:511
 msgid "No likes yet"
 msgstr "いいねはありません"
 
 #: src/components/ProfileCard.tsx:525
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:291
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:269
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "{0}のフォローを解除しました"
 
-#: src/view/screens/Profile.tsx:475
+#: src/view/screens/Profile.tsx:467
 msgid "No media yet"
-msgstr ""
+msgstr "まだメディアがありません"
 
 #: src/screens/Messages/components/ChatListItem.tsx:142
 msgid "No messages yet"
@@ -5988,17 +5836,17 @@ msgid "No posts here"
 msgstr "ここに投稿はありません"
 
 #: src/screens/Profile/Sections/Feed.tsx:80
-#: src/view/screens/Profile.tsx:439
+#: src/view/screens/Profile.tsx:431
 msgid "No posts yet"
-msgstr ""
+msgstr "まだ投稿がありません"
 
 #: src/view/com/post-thread/PostQuotes.tsx:107
 msgid "No quotes yet"
 msgstr "まだ引用がありません"
 
-#: src/view/screens/Profile.tsx:460
+#: src/view/screens/Profile.tsx:452
 msgid "No replies yet"
-msgstr ""
+msgstr "まだ返信がありません"
 
 #: src/view/com/post-thread/PostRepostedBy.tsx:90
 msgid "No reposts yet"
@@ -6029,7 +5877,7 @@ msgstr "「{query}」の検索結果はありません"
 
 #: src/screens/Search/SearchResults.tsx:168
 msgid "No results found for \"<0>{query}</0>\"."
-msgstr ""
+msgstr "「<0>{query}</0>」の検索結果はありません。"
 
 #: src/screens/Search/Explore.tsx:797
 msgid "No results."
@@ -6044,13 +5892,9 @@ msgstr "「{search}」の検索結果はありません。"
 msgid "No thanks"
 msgstr "結構です"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
-msgid "No VerusID link found to remove"
-msgstr ""
-
-#: src/view/screens/Profile.tsx:497
+#: src/view/screens/Profile.tsx:489
 msgid "No video posts yet"
-msgstr ""
+msgstr "まだビデオの投稿がありません"
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:465
 msgid "Nobody"
@@ -6089,8 +5933,8 @@ msgstr "なし"
 msgid "Not followed by anyone you're following"
 msgstr "フォローしている人は誰にもフォローしていません"
 
-#: src/Navigation.tsx:173
-#: src/view/screens/Profile.tsx:134
+#: src/Navigation.tsx:167
+#: src/view/screens/Profile.tsx:132
 msgid "Not Found"
 msgstr "見つかりません"
 
@@ -6098,13 +5942,13 @@ msgstr "見つかりません"
 msgid "Note about sharing"
 msgstr "共有についての注意事項"
 
+#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
+msgid "Note: Bluesky is an open and public network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
+msgstr "注記：Blueskyはオープンでパブリックなネットワークです。この設定はBlueskyのアプリおよびウェブサイト上のみでのあなたのコンテンツの可視性を制限するものであり、他のアプリではこの設定を尊重しない場合があります。他のアプリやウェブサイトでは、ログアウトしたユーザーにあなたのコンテンツが表示される場合があります。"
+
 #: src/components/PostControls/ShareMenu/ShareMenuItems.web.tsx:133
 msgid "Note: This post is only visible to logged-in users."
 msgstr "注：この投稿はログイン中のユーザーにのみ表示されます。"
-
-#: src/screens/Settings/PrivacyAndSecuritySettings.tsx:116
-msgid "Note: VerusSky uses the open and public network Bluesky network. This setting only limits the visibility of your content on the Bluesky app and website, and other apps may not respect this setting. Your content may still be shown to logged-out users by other apps and websites."
-msgstr ""
 
 #: src/screens/Messages/ChatList.tsx:304
 msgid "Nothing here"
@@ -6115,8 +5959,8 @@ msgstr "何もありません"
 msgid "Nothing saved yet"
 msgstr "まだ何も保存されていません"
 
-#: src/Navigation.tsx:436
-#: src/Navigation.tsx:583
+#: src/Navigation.tsx:422
+#: src/Navigation.tsx:569
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "通知設定"
@@ -6129,8 +5973,8 @@ msgstr "通知音"
 msgid "Notification Sounds"
 msgstr "通知音"
 
-#: src/Navigation.tsx:578
-#: src/Navigation.tsx:778
+#: src/Navigation.tsx:564
+#: src/Navigation.tsx:764
 #: src/screens/Notifications/ActivityList.tsx:30
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:90
 #: src/screens/Settings/NotificationSettings/index.tsx:92
@@ -6143,8 +5987,8 @@ msgstr "通知音"
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostNotificationSettings.tsx:30
 #: src/screens/Settings/NotificationSettings/RepostsOnRepostsNotificationSettings.tsx:30
-#: src/screens/Settings/Settings.tsx:205
-#: src/screens/Settings/Settings.tsx:208
+#: src/screens/Settings/Settings.tsx:196
+#: src/screens/Settings/Settings.tsx:199
 #: src/view/screens/Notifications.tsx:130
 #: src/view/shell/bottom-bar/BottomBar.tsx:252
 #: src/view/shell/desktop/LeftNav.tsx:709
@@ -6204,7 +6048,7 @@ msgstr "古い順に返信を表示"
 msgid "on<0><1/><2><3/></2></0>"
 msgstr "<0><1/><2><3/></2></0>"
 
-#: src/screens/Settings/Settings.tsx:397
+#: src/screens/Settings/Settings.tsx:388
 msgid "Onboarding reset"
 msgstr "オンボーディングのリセット"
 
@@ -6259,7 +6103,7 @@ msgstr "おっと、何らかの問題が発生したようです！"
 #: src/components/StarterPack/ProfileStarterPacks.tsx:369
 #: src/screens/Settings/AppPasswords.tsx:58
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:106
-#: src/view/screens/Profile.tsx:134
+#: src/view/screens/Profile.tsx:132
 msgid "Oops!"
 msgstr "おっと！"
 
@@ -6271,18 +6115,14 @@ msgstr "開かれています"
 msgid "Open avatar creator"
 msgstr "アバター・クリエイターを開く"
 
-#: src/view/com/feeds/ComposerPrompt.tsx:206
+#: src/view/com/feeds/ComposerPrompt.tsx:202
 msgid "Open camera"
-msgstr ""
+msgstr "カメラを起動"
 
 #: src/screens/Messages/components/ChatListItem.tsx:374
 #: src/screens/Messages/components/ChatListItem.tsx:378
 msgid "Open conversation options"
 msgstr "会話のオプションを開く"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
-msgid "Open credential update deeplink"
-msgstr ""
 
 #: src/components/Layout/Header/index.tsx:159
 msgid "Open drawer menu"
@@ -6314,7 +6154,7 @@ msgstr "{niceUrl}へのリンクを開く"
 msgid "Open message options"
 msgstr "メッセージのオプションを開く"
 
-#: src/screens/Settings/Settings.tsx:462
+#: src/screens/Settings/Settings.tsx:453
 msgid "Open moderation debug page"
 msgstr "モデレーションデバッグページを開く"
 
@@ -6343,18 +6183,14 @@ msgstr "共有メニューを開く"
 msgid "Open starter pack menu"
 msgstr "スターターパックのメニューを開く"
 
-#: src/screens/Settings/Settings.tsx:455
-#: src/screens/Settings/Settings.tsx:469
+#: src/screens/Settings/Settings.tsx:446
+#: src/screens/Settings/Settings.tsx:460
 msgid "Open storybook page"
 msgstr "絵本のページを開く"
 
-#: src/screens/Settings/Settings.tsx:448
+#: src/screens/Settings/Settings.tsx:439
 msgid "Open system log"
 msgstr "システムのログを開く"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
-msgid "Open Verus Wallet"
-msgstr ""
 
 #: src/view/com/composer/labels/LabelsBtn.tsx:62
 msgid "Opens a dialog to add a content warning to your post"
@@ -6388,9 +6224,9 @@ msgstr "ハンドル変更ダイアログを開く"
 msgid "Opens composer"
 msgstr "編集画面を開く"
 
-#: src/view/com/feeds/ComposerPrompt.tsx:207
+#: src/view/com/feeds/ComposerPrompt.tsx:203
 msgid "Opens device camera"
-msgstr ""
+msgstr "デバイスのカメラを起動"
 
 #. Accessibility hint for button in composer to add images, a video, or a GIF to a post. Maximum number of images that can be selected is currently 4 but may change.
 #: src/view/com/composer/SelectMediaButton.tsx:487
@@ -6415,13 +6251,13 @@ msgstr "既存のBlueskyアカウントにサインインする画面を開き�
 msgid "Opens GIF select dialog"
 msgstr "GIFの選択のダイアログを開く"
 
-#: src/screens/Settings/Settings.tsx:246
+#: src/screens/Settings/Settings.tsx:237
 msgid "Opens helpdesk in browser"
 msgstr "ブラウザでヘルプデスクを開く"
 
-#: src/view/com/feeds/ComposerPrompt.tsx:228
+#: src/view/com/feeds/ComposerPrompt.tsx:225
 msgid "Opens image picker"
-msgstr ""
+msgstr "画像選択を開く"
 
 #: src/components/dialogs/LinkWarning.tsx:97
 msgid "Opens link {0}"
@@ -6431,7 +6267,7 @@ msgstr "リンク{0}を開く"
 msgid "Opens live status dialog"
 msgstr "ライブステータスのダイアログを開く"
 
-#: src/screens/Login/LoginForm.tsx:528
+#: src/screens/Login/LoginForm.tsx:259
 msgid "Opens password reset form"
 msgstr "パスワードリセットのフォームを開く"
 
@@ -6441,7 +6277,7 @@ msgstr "投稿言語の設定を開く"
 
 #: src/view/com/feeds/ComposerPrompt.tsx:144
 msgid "Opens the post composer"
-msgstr ""
+msgstr "投稿作成画面を開く"
 
 #: src/view/com/notifications/NotificationFeedItem.tsx:1021
 #: src/view/com/util/UserAvatar.tsx:600
@@ -6523,6 +6359,10 @@ msgstr "私たちのブログの記事"
 msgid "Our moderation team has received your report."
 msgstr "あなたの報告をモデレーションチームが受け付けました。"
 
+#: src/screens/Messages/components/ChatDisabled.tsx:34
+msgid "Our moderators have reviewed reports and decided to disable your access to chats on Bluesky."
+msgstr "モデレーターが報告をレビューし、Blueskyであなたがチャットにアクセスできないようにしました。"
+
 #: src/components/Lists.tsx:202
 #: src/components/Lists.tsx:217
 #: src/view/screens/NotFound.tsx:47
@@ -6533,11 +6373,7 @@ msgstr "ページが見つかりません"
 msgid "Page Not Found"
 msgstr "ページが見つかりません"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
-#: src/components/dialogs/VerusServiceDialog.tsx:229
-#: src/components/dialogs/VerusServiceDialog.tsx:233
-#: src/screens/Login/LoginForm.tsx:498
+#: src/screens/Login/LoginForm.tsx:229
 #: src/screens/Settings/AccountSettings.tsx:121
 #: src/screens/Settings/AccountSettings.tsx:125
 #: src/screens/Signup/StepInfo/index.tsx:231
@@ -6546,11 +6382,11 @@ msgstr "ページが見つかりません"
 msgid "Password"
 msgstr "パスワード"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:72
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:69
 msgid "Password changed"
 msgstr "パスワードが変更されました"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:127
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:124
 msgid "Password must be at least 8 characters long."
 msgstr "パスワードは 8 文字以上である必要があります。"
 
@@ -6561,10 +6397,6 @@ msgstr "パスワードが更新されました"
 #: src/screens/Login/PasswordUpdatedForm.tsx:23
 msgid "Password updated!"
 msgstr "パスワードが更新されました！"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
-msgid "Paste your signature here"
-msgstr ""
 
 #: src/components/Post/Embed/ExternalEmbed/Gif.tsx:43
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:137
@@ -6582,11 +6414,11 @@ msgstr "ビデオを一時停止"
 msgid "People"
 msgstr "ユーザー"
 
-#: src/Navigation.tsx:244
+#: src/Navigation.tsx:238
 msgid "People followed by @{0}"
 msgstr "@{0}がフォロー中のユーザー"
 
-#: src/Navigation.tsx:237
+#: src/Navigation.tsx:231
 msgid "People following @{0}"
 msgstr "@{0}をフォロー中のユーザー"
 
@@ -6730,25 +6562,13 @@ msgstr "CAPTCHA認証を完了してください。"
 msgid "Please double-check that you have entered your email address correctly."
 msgstr "メールアドレスが正しく入力されていることを再確認してください。"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:75
-msgid "Please enter a password for the provided username"
-msgstr ""
-
 #: src/screens/Login/SetNewPasswordForm.tsx:58
 msgid "Please enter a password."
 msgstr "パスワードを入力してください。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:122
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:119
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr "パスワードを入力してください。8 文字以上である必要があります。"
-
-#: src/components/dialogs/VerusServiceDialog.tsx:56
-msgid "Please enter a service URL"
-msgstr ""
-
-#: src/components/dialogs/VerusServiceDialog.tsx:70
-msgid "Please enter a system ID"
-msgstr ""
 
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
 msgid "Please enter a unique name for this app password or use our randomly generated one."
@@ -6765,10 +6585,6 @@ msgstr "有効なコードを入力してください。"
 msgid "Please enter a valid email address."
 msgstr "有効な形式のメールアドレスを入力してください。"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:65
-msgid "Please enter a valid URL"
-msgstr ""
-
 #: src/components/dialogs/MutedWords.tsx:86
 msgid "Please enter a valid word, tag, or phrase to mute"
 msgstr "ミュートにする有効な単語、タグ、フレーズを入力してください"
@@ -6781,21 +6597,13 @@ msgstr "一時的ではない有効なメールアドレスを入力してくだ
 msgid "Please enter the code we sent to <0>{0}</0> below."
 msgstr "以下の<0>{0}</0>に送信したコードを入力してください。"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:68
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:65
 msgid "Please enter the code you received and the new password you would like to use."
 msgstr "受け取ったコードと、使用したい新しいパスワードを入力してください。"
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:247
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "前のメールアドレスに送ったセキュリティコードを入力してください。"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
-msgid "Please enter the signature."
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
-msgid "Please enter your email"
-msgstr ""
 
 #: src/screens/Signup/state.ts:265
 #: src/screens/Signup/StepInfo/index.tsx:93
@@ -6810,8 +6618,7 @@ msgstr "招待コードを入力してください。"
 msgid "Please enter your new email address."
 msgstr "新しいメールアドレスを入力してください。"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
-#: src/screens/Login/LoginForm.tsx:222
+#: src/screens/Login/LoginForm.tsx:99
 msgid "Please enter your password"
 msgstr "パスワードを入力してください"
 
@@ -6819,17 +6626,9 @@ msgstr "パスワードを入力してください"
 msgid "Please enter your password as well:"
 msgstr "パスワードも入力してください："
 
-#: src/screens/Login/LoginForm.tsx:217
+#: src/screens/Login/LoginForm.tsx:94
 msgid "Please enter your username"
 msgstr "ユーザー名を入力してください"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
-msgid "Please enter your VerusID name"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
-msgid "Please enter your VerusID name."
-msgstr ""
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:308
 msgid "Please explain why you think this label was incorrectly applied by {0}"
@@ -6893,15 +6692,15 @@ msgctxt "action"
 msgid "Post"
 msgstr "投稿"
 
-#: src/view/screens/Profile.tsx:477
-#: src/view/screens/Profile.tsx:478
+#: src/view/screens/Profile.tsx:469
+#: src/view/screens/Profile.tsx:470
 msgid "Post a photo"
-msgstr ""
+msgstr "写真を投稿"
 
-#: src/view/screens/Profile.tsx:499
-#: src/view/screens/Profile.tsx:500
+#: src/view/screens/Profile.tsx:491
+#: src/view/screens/Profile.tsx:492
 msgid "Post a video"
-msgstr ""
+msgstr "ビデオを投稿"
 
 #: src/view/com/composer/Composer.tsx:1119
 msgctxt "action"
@@ -6912,10 +6711,10 @@ msgstr "すべてポスト"
 msgid "Post blocked"
 msgstr "ブロックされた投稿"
 
-#: src/Navigation.tsx:270
-#: src/Navigation.tsx:277
-#: src/Navigation.tsx:284
-#: src/Navigation.tsx:291
+#: src/Navigation.tsx:264
+#: src/Navigation.tsx:271
+#: src/Navigation.tsx:278
+#: src/Navigation.tsx:285
 msgid "Post by @{0}"
 msgstr "@{0}による投稿"
 
@@ -6949,7 +6748,7 @@ msgstr "あなたが非表示にした投稿"
 msgid "Post interaction settings"
 msgstr "投稿への反応の設定"
 
-#: src/Navigation.tsx:204
+#: src/Navigation.tsx:198
 #: src/screens/ModerationInteractionSettings/index.tsx:34
 msgid "Post Interaction Settings"
 msgstr "投稿への反応の設定"
@@ -6983,7 +6782,7 @@ msgstr "投稿の固定を解除しました"
 #: src/screens/ProfileList/index.tsx:166
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:216
 #: src/screens/StarterPack/StarterPackScreen.tsx:191
-#: src/view/screens/Profile.tsx:241
+#: src/view/screens/Profile.tsx:234
 msgid "Posts"
 msgstr "投稿"
 
@@ -7006,10 +6805,6 @@ msgstr "誤解を招く可能性のあるリンク"
 #: src/components/dialogs/LinkWarning.tsx:66
 msgid "Potentially misleading link warning"
 msgstr "誤解を招く可能性のあるリンクの警告"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
-msgid "Prepare linking"
-msgstr ""
 
 #: src/screens/Messages/components/MessageListError.tsx:19
 msgid "Press to attempt reconnection"
@@ -7039,13 +6834,13 @@ msgstr "第一言語"
 msgid "Privacy"
 msgstr "プライバシー"
 
-#: src/screens/Settings/Settings.tsx:191
-#: src/screens/Settings/Settings.tsx:194
+#: src/screens/Settings/Settings.tsx:182
+#: src/screens/Settings/Settings.tsx:185
 msgid "Privacy and security"
 msgstr "プライバシーとセキュリティ"
 
-#: src/Navigation.tsx:421
-#: src/Navigation.tsx:429
+#: src/Navigation.tsx:407
+#: src/Navigation.tsx:415
 #: src/screens/Settings/ActivityPrivacySettings.tsx:40
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:44
 msgid "Privacy and Security"
@@ -7058,7 +6853,7 @@ msgstr "プライバシーとセキュリティの設定"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:35
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:102
-#: src/Navigation.tsx:337
+#: src/Navigation.tsx:331
 #: src/screens/Settings/AboutSettings.tsx:92
 #: src/screens/Settings/AboutSettings.tsx:95
 #: src/view/screens/PrivacyPolicy.tsx:34
@@ -7081,7 +6876,7 @@ msgid "Processing..."
 msgstr "処理中…"
 
 #: src/view/screens/DebugMod.tsx:936
-#: src/view/screens/Profile.tsx:392
+#: src/view/screens/Profile.tsx:384
 msgid "profile"
 msgstr "プロフィール"
 
@@ -7161,7 +6956,7 @@ msgstr "QRコードをダウンロードしました！"
 msgid "QR code saved to your camera roll!"
 msgstr "QRコードをカメラロールに保存しました！"
 
-#: src/Navigation.tsx:458
+#: src/Navigation.tsx:444
 msgid "Quote notifications"
 msgstr "引用の通知"
 
@@ -7222,7 +7017,7 @@ msgstr "{0, plural, other {さらに#個の返信}}を読む"
 #: src/screens/Search/SearchResults.tsx:180
 msgctxt "english-only-resource"
 msgid "read about how to use search filters"
-msgstr ""
+msgstr "検索フィルタの使い方を読む"
 
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:158
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:173
@@ -7251,13 +7046,13 @@ msgstr "Blueskyのブログを読む"
 
 #: src/screens/Signup/StepInfo/Policies.tsx:56
 #: src/screens/Signup/StepInfo/Policies.tsx:82
-msgid "Read the VerusSky Privacy Policy"
-msgstr ""
+msgid "Read the Bluesky Privacy Policy"
+msgstr "Blueskyのプライバシーポリシーを読む"
 
 #: src/screens/Signup/StepInfo/Policies.tsx:49
 #: src/screens/Signup/StepInfo/Policies.tsx:69
-msgid "Read the VerusSky Terms of Service"
-msgstr ""
+msgid "Read the Bluesky Terms of Service"
+msgstr "Blueskyの利用規約を読む"
 
 #: src/components/WelcomeModal.tsx:146
 msgid "Real conversations."
@@ -7318,7 +7113,7 @@ msgstr "会話を再読み込み"
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:105
 #: src/components/StarterPack/Wizard/WizardListCard.tsx:112
 #: src/screens/Bookmarks/index.tsx:266
-#: src/screens/Settings/Settings.tsx:673
+#: src/screens/Settings/Settings.tsx:664
 #: src/view/com/modals/UserAddRemoveLists.tsx:235
 #: src/view/com/posts/PostFeedErrorMessage.tsx:220
 msgid "Remove"
@@ -7332,8 +7127,8 @@ msgstr "{displayName}をスターターパックから削除"
 msgid "Remove {historyItem}"
 msgstr "{historyItem}を削除"
 
-#: src/screens/Settings/Settings.tsx:652
-#: src/screens/Settings/Settings.tsx:655
+#: src/screens/Settings/Settings.tsx:643
+#: src/screens/Settings/Settings.tsx:646
 msgid "Remove account"
 msgstr "アカウント切替リストから取り除く"
 
@@ -7373,7 +7168,7 @@ msgstr "フィードを削除しますか？"
 msgid "Remove from my feeds"
 msgstr "マイフィードから削除"
 
-#: src/screens/Settings/Settings.tsx:665
+#: src/screens/Settings/Settings.tsx:656
 msgid "Remove from quick access?"
 msgstr "クイックアクセスから削除しますか？"
 
@@ -7394,23 +7189,6 @@ msgstr "フィードから削除しますか？"
 #: src/view/com/composer/photos/Gallery.tsx:204
 msgid "Remove image"
 msgstr "イメージを削除"
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
-msgid "Remove Link"
-msgstr ""
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
-msgid "Remove link to VerusID"
-msgstr ""
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
-msgid "Remove Link to VerusID"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:558
-#: src/screens/Login/LoginForm.tsx:566
-msgid "Remove linked VerusID"
-msgstr ""
 
 #: src/components/live/EditLiveDialog.tsx:240
 #: src/components/live/EditLiveDialog.tsx:247
@@ -7448,11 +7226,6 @@ msgstr "リストからユーザーを削除"
 #: src/view/com/profile/ProfileMenu.tsx:356
 msgid "Remove verification"
 msgstr "認証を削除"
-
-#: src/screens/Settings/VerusServicesSettings.tsx:105
-#: src/screens/Settings/VerusServicesSettings.tsx:110
-msgid "Remove VerusID Link"
-msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:44
 msgid "Remove your verification for this account?"
@@ -7525,7 +7298,7 @@ msgstr "あなたへの返信"
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:218
 #: src/screens/Settings/NotificationSettings/index.tsx:148
 #: src/screens/Settings/NotificationSettings/ReplyNotificationSettings.tsx:41
-#: src/view/screens/Profile.tsx:242
+#: src/view/screens/Profile.tsx:235
 msgid "Replies"
 msgstr "返信"
 
@@ -7557,7 +7330,7 @@ msgstr "返信はスレッドの投稿者によって非表示に"
 msgid "Reply Hidden by You"
 msgstr "返信はあなたによって非表示に"
 
-#: src/Navigation.tsx:442
+#: src/Navigation.tsx:428
 msgid "Reply notifications"
 msgstr "返信の通知"
 
@@ -7672,7 +7445,7 @@ msgstr "リポスト"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "リポストする（{0, plural, other {#件のリポスト}}）"
 
-#: src/Navigation.tsx:474
+#: src/Navigation.tsx:460
 msgid "Repost notifications"
 msgstr "リポストの通知"
 
@@ -7713,12 +7486,12 @@ msgstr "この投稿をリポストする"
 msgid "Reposts of your reposts"
 msgstr "リポストのリポスト"
 
-#: src/Navigation.tsx:498
+#: src/Navigation.tsx:484
 msgid "Reposts of your reposts notifications"
 msgstr "リポストのリポストの通知"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:228
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:234
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:225
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:231
 msgid "Request code"
 msgstr "コードをリクエスト"
 
@@ -7756,8 +7529,8 @@ msgstr "メール再送済"
 msgid "Resend Verification Email"
 msgstr "確認メールを再送済"
 
-#: src/screens/Settings/Settings.tsx:491
-#: src/screens/Settings/Settings.tsx:493
+#: src/screens/Settings/Settings.tsx:482
+#: src/screens/Settings/Settings.tsx:484
 msgid "Reset activity subscription nudge"
 msgstr "アクティビティ購読ナッジをリセット"
 
@@ -7765,8 +7538,8 @@ msgstr "アクティビティ購読ナッジをリセット"
 msgid "Reset code"
 msgstr "リセットコード"
 
-#: src/screens/Settings/Settings.tsx:476
-#: src/screens/Settings/Settings.tsx:478
+#: src/screens/Settings/Settings.tsx:467
+#: src/screens/Settings/Settings.tsx:469
 msgid "Reset onboarding state"
 msgstr "オンボーディングの状態をリセット"
 
@@ -7774,7 +7547,7 @@ msgstr "オンボーディングの状態をリセット"
 msgid "Reset password"
 msgstr "パスワードをリセット"
 
-#: src/screens/Login/LoginForm.tsx:639
+#: src/screens/Login/LoginForm.tsx:327
 msgid "Retries signing in"
 msgstr "サインインを再試行"
 
@@ -7790,8 +7563,8 @@ msgstr "エラーになった最後のアクションをやり直す"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:55
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:58
 #: src/components/StarterPack/ProfileStarterPacks.tsx:374
-#: src/screens/Login/LoginForm.tsx:638
-#: src/screens/Login/LoginForm.tsx:645
+#: src/screens/Login/LoginForm.tsx:326
+#: src/screens/Login/LoginForm.tsx:333
 #: src/screens/Messages/ChatList.tsx:292
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:219
@@ -7863,7 +7636,7 @@ msgstr "保存"
 
 #: src/components/dialogs/BirthDateSettings.tsx:181
 msgid "Save birthdate"
-msgstr ""
+msgstr "生年月日を保存"
 
 #: src/components/activity-notifications/SubscribeProfileDialog.tsx:191
 #: src/components/activity-notifications/SubscribeProfileDialog.tsx:200
@@ -7877,14 +7650,6 @@ msgstr "変更を保存"
 msgid "Save image"
 msgstr "画像を保存"
 
-#: src/screens/Login/LoginForm.tsx:545
-msgid "Save Login with VerusID"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:553
-msgid "Save my sign in with VerusID"
-msgstr ""
-
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:253
 msgid "Save new handle"
 msgstr "新しいハンドルを保存"
@@ -7892,15 +7657,6 @@ msgstr "新しいハンドルを保存"
 #: src/components/StarterPack/QrCodeDialog.tsx:196
 msgid "Save QR code"
 msgstr "QRコードを保存"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
-msgid "Save sign in with VerusID"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:120
-#: src/screens/Settings/VerusServicesSettings.tsx:132
-msgid "Save Sign in with VerusID"
-msgstr ""
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:643
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:649
@@ -7923,7 +7679,7 @@ msgid "Saved Feeds"
 msgstr "保存されたフィード"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:143
-#: src/Navigation.tsx:622
+#: src/Navigation.tsx:608
 #: src/screens/Bookmarks/index.tsx:60
 msgid "Saved Posts"
 msgstr "保存済投稿"
@@ -7943,14 +7699,6 @@ msgstr "よろしく！"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:43
 msgid "Scam"
 msgstr "詐欺"
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
-msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:578
-msgid "Scan the QR code below or press Sign in to continue"
-msgstr ""
 
 #: src/lib/interests.ts:71
 #: src/screens/Onboarding/index.tsx:64
@@ -7978,7 +7726,7 @@ msgstr "一番上までスクロール"
 msgid "Search"
 msgstr "検索"
 
-#: src/Navigation.tsx:263
+#: src/Navigation.tsx:257
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr "@{0}の投稿を検索"
@@ -8102,7 +7850,7 @@ msgstr ""
 #: src/view/com/profile/ProfileFollows.tsx:191
 #: src/view/com/profile/ProfileFollows.tsx:192
 msgid "See suggested accounts"
-msgstr ""
+msgstr "おすすめのアカウントを見る"
 
 #: src/screens/SavedFeeds.tsx:220
 msgid "See this guide"
@@ -8324,11 +8072,6 @@ msgstr "アカウントの削除の確認コードをメールに送信"
 msgid "Server address"
 msgstr "サーバーアドレス"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:163
-#: src/components/dialogs/VerusServiceDialog.tsx:167
-msgid "Service URL"
-msgstr ""
-
 #: src/screens/Settings/AppIconSettings/index.tsx:178
 msgid "Set app icon to {0}"
 msgstr "アプリアイコンを{0}に設定"
@@ -8340,10 +8083,6 @@ msgstr "新しいパスワードを設定"
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:475
 msgid "Set precisely which groups of people can reply to your post"
 msgstr "投稿に返信できるグループを正確に設定します"
-
-#: src/components/dialogs/VerusServiceDialog.tsx:155
-msgid "Set the Verus service endpoint to use for VerusID and media."
-msgstr ""
 
 #: src/screens/Onboarding/Layout.tsx:49
 msgid "Set up your account"
@@ -8357,8 +8096,8 @@ msgstr "投稿に誰が返信できるかを設定します"
 msgid "Sets email for password reset"
 msgstr "パスワードをリセットするためのメールアドレスを入力"
 
-#: src/Navigation.tsx:219
-#: src/screens/Settings/Settings.tsx:100
+#: src/Navigation.tsx:213
+#: src/screens/Settings/Settings.tsx:99
 #: src/view/shell/desktop/LeftNav.tsx:805
 #: src/view/shell/Drawer.tsx:609
 msgid "Settings"
@@ -8498,7 +8237,7 @@ msgstr "共有…"
 msgid "Share your favorite feed!"
 msgstr "お気に入りのフィードをシェアして！"
 
-#: src/Navigation.tsx:322
+#: src/Navigation.tsx:316
 msgid "Shared Preferences Tester"
 msgstr "Shared Preferencesのテスター"
 
@@ -8604,7 +8343,7 @@ msgstr "警告の表示とフィードからのフィルタリング"
 msgid "Shows information about when this post was created"
 msgstr "この投稿がいつ作成されたかについての情報を表示する"
 
-#: src/screens/Settings/Settings.tsx:126
+#: src/screens/Settings/Settings.tsx:125
 msgid "Shows other accounts you can switch to"
 msgstr "切替可能な他のアカウントを表示"
 
@@ -8620,8 +8359,7 @@ msgstr "コンテンツを表示"
 #: src/screens/Hashtag.tsx:227
 #: src/screens/Login/index.tsx:136
 #: src/screens/Login/index.tsx:157
-#: src/screens/Login/LoginForm.tsx:441
-#: src/screens/Login/LoginForm.tsx:691
+#: src/screens/Login/LoginForm.tsx:181
 #: src/screens/Search/SearchResults.tsx:296
 #: src/view/com/auth/SplashScreen.tsx:81
 #: src/view/com/auth/SplashScreen.tsx:89
@@ -8658,25 +8396,17 @@ msgid "Sign in to account that is not listed"
 msgstr "リストにないアカウントにサインイン"
 
 #: src/components/dialogs/Signin.tsx:46
-msgid "Sign in to VerusSky or create a new account"
-msgstr ""
+msgid "Sign in to Bluesky or create a new account"
+msgstr "Blueskyにサインイン または 新規アカウントの登録"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:493
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:495
 msgid "Sign in to view post"
 msgstr "サインインして投稿を表示"
 
-#: src/screens/Login/LoginForm.tsx:674
-msgid "Sign in with VerusID"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:672
-msgid "Sign in without VerusID"
-msgstr ""
-
-#: src/screens/Settings/Settings.tsx:263
-#: src/screens/Settings/Settings.tsx:265
-#: src/screens/Settings/Settings.tsx:297
+#: src/screens/Settings/Settings.tsx:254
+#: src/screens/Settings/Settings.tsx:256
+#: src/screens/Settings/Settings.tsx:288
 #: src/screens/SignupQueued.tsx:93
 #: src/screens/SignupQueued.tsx:96
 #: src/screens/Takendown.tsx:94
@@ -8690,24 +8420,15 @@ msgstr "サインアウト"
 msgid "Sign Out"
 msgstr "サインアウト"
 
-#: src/screens/Settings/Settings.tsx:294
+#: src/screens/Settings/Settings.tsx:285
 #: src/view/shell/desktop/LeftNav.tsx:209
 msgid "Sign out?"
 msgstr "サインアウトしますか？"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
-msgid "Sign the linking details"
-msgstr ""
 
 #: src/components/moderation/ScreenHider.tsx:97
 #: src/lib/moderation/useGlobalLabelStrings.ts:28
 msgid "Sign-in Required"
 msgstr "サインインが必要"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
-msgid "Signature"
-msgstr ""
 
 #: src/lib/hooks/useAccountSwitcher.ts:41
 #: src/screens/Login/ChooseAccountForm.tsx:53
@@ -8815,7 +8536,7 @@ msgid "Sorry, we're unable to load account suggestions at this time."
 msgstr "申し訳ありません。現在、アカウントのおすすめを読み込むことができません。"
 
 #: src/App.native.tsx:127
-#: src/App.web.tsx:102
+#: src/App.web.tsx:100
 msgid "Sorry! Your session expired. Please sign in again."
 msgstr "申し訳ありません！セッションの有効期限が切れました。もう一度サインインしてください。"
 
@@ -8872,8 +8593,8 @@ msgstr "ユーザーを追加して！"
 msgid "Start chat with {displayName}"
 msgstr "{displayName}とのチャットを開始"
 
-#: src/Navigation.tsx:593
-#: src/Navigation.tsx:598
+#: src/Navigation.tsx:579
+#: src/Navigation.tsx:584
 #: src/screens/StarterPack/Wizard/index.tsx:209
 msgid "Starter Pack"
 msgstr "スターターパック"
@@ -8896,7 +8617,7 @@ msgid "Starter pack is invalid"
 msgstr "スターターパックが無効です"
 
 #: src/screens/Search/Explore.tsx:625
-#: src/view/screens/Profile.tsx:247
+#: src/view/screens/Profile.tsx:240
 msgid "Starter Packs"
 msgstr "スターターパック"
 
@@ -8904,9 +8625,9 @@ msgstr "スターターパック"
 msgid "Starter packs let you easily share your favorite feeds and people with your friends."
 msgstr "スターターパックを使ってお気に入りのフィードやユーザーを友人へ簡単に共有できます。"
 
-#: src/view/screens/Profile.tsx:547
+#: src/view/screens/Profile.tsx:539
 msgid "Starter packs let you share your favorite feeds and people with your friends."
-msgstr ""
+msgstr "スターターパックを使ってお気に入りのフィードやユーザーを友人へ簡単に共有できます。"
 
 #: src/screens/Settings/AboutSettings.tsx:100
 #: src/screens/Settings/AboutSettings.tsx:103
@@ -8917,12 +8638,12 @@ msgstr "ステータスページ"
 msgid "Step {0} of {1}"
 msgstr "ステップ {0} / {1}"
 
-#: src/screens/Settings/Settings.tsx:402
+#: src/screens/Settings/Settings.tsx:393
 msgid "Storage cleared, you need to restart the app now."
 msgstr "ストレージがクリアされたため、今すぐアプリを再起動する必要があります。"
 
-#: src/Navigation.tsx:312
-#: src/screens/Settings/Settings.tsx:457
+#: src/Navigation.tsx:306
+#: src/screens/Settings/Settings.tsx:448
 msgid "Storybook"
 msgstr "ストーリーブック"
 
@@ -8948,11 +8669,6 @@ msgstr "異議申し立てを送信"
 #: src/components/moderation/ReportDialog/index.tsx:555
 msgid "Submit report"
 msgstr "報告を送信"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
-msgid "Submit Signature and Create Post"
-msgstr ""
 
 #: src/screens/ProfileList/components/SubscribeMenu.tsx:81
 msgid "Subscribe"
@@ -9019,19 +8735,15 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr "サンセット"
 
-#: src/Navigation.tsx:332
+#: src/Navigation.tsx:326
 #: src/view/screens/Support.tsx:34
 #: src/view/screens/Support.tsx:37
 msgid "Support"
 msgstr "サポート"
 
-#: src/screens/Login/LoginForm.tsx:659
-msgid "Switch"
-msgstr ""
-
-#: src/screens/Settings/Settings.tsx:124
-#: src/screens/Settings/Settings.tsx:138
-#: src/screens/Settings/Settings.tsx:615
+#: src/screens/Settings/Settings.tsx:123
+#: src/screens/Settings/Settings.tsx:137
+#: src/screens/Settings/Settings.tsx:606
 #: src/view/shell/desktop/LeftNav.tsx:247
 msgid "Switch account"
 msgstr "アカウントを切り替える"
@@ -9049,10 +8761,6 @@ msgstr "アカウントを切り替える"
 msgid "Switch to {0}"
 msgstr "{0}へ切り替える"
 
-#: src/screens/Login/LoginForm.tsx:660
-msgid "Switches login method"
-msgstr ""
-
 #: src/components/dialogs/Embed.tsx:158
 #: src/components/dialogs/Embed.tsx:160
 #: src/screens/Settings/AppearanceSettings.tsx:85
@@ -9060,15 +8768,10 @@ msgstr ""
 msgid "System"
 msgstr "システム"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:180
-#: src/components/dialogs/VerusServiceDialog.tsx:184
-msgid "System ID"
-msgstr ""
-
 #: src/screens/Log.tsx:58
 #: src/screens/Settings/AboutSettings.tsx:107
 #: src/screens/Settings/AboutSettings.tsx:110
-#: src/screens/Settings/Settings.tsx:450
+#: src/screens/Settings/Settings.tsx:441
 msgid "System log"
 msgstr "システムログ"
 
@@ -9077,8 +8780,8 @@ msgid "Tags only"
 msgstr "タグのみ"
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:109
-msgid "Tap below to allow VerusSky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
-msgstr ""
+msgid "Tap below to allow Bluesky to access your GPS location. We will then use that data to more accurately determine the content and features available in your region."
+msgstr "下をタップするとBlueskyがGPSの位置情報にアクセスできるようになります。 その後、そのデータを使用して、お住まいの地域で利用可能なコンテンツと機能をより正確に決定します。"
 
 #: src/view/com/feeds/MissingFeed.tsx:89
 msgid "Tap for information"
@@ -9143,7 +8846,7 @@ msgstr "規約"
 #: src/components/dialogs/BirthDateSettings.tsx:167
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:30
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:97
-#: src/Navigation.tsx:342
+#: src/Navigation.tsx:336
 #: src/screens/Settings/AboutSettings.tsx:84
 #: src/screens/Settings/AboutSettings.tsx:87
 #: src/view/screens/TermsOfService.tsx:34
@@ -9199,8 +8902,8 @@ msgstr "以上です、皆さん！"
 msgid "That's everything!"
 msgstr "これで全部です！"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:208
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:413
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:186
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:391
 #: src/view/com/profile/ProfileMenu.tsx:483
 msgid "The account will be able to interact with you after unblocking."
 msgstr "このアカウントは、ブロック解除後にあなたとやり取りすることができます。"
@@ -9240,8 +8943,8 @@ msgid "The Discover feed now knows what you like"
 msgstr "Discoverフィードはあなたの好みを学習しました"
 
 #: src/screens/StarterPack/StarterPackLandingScreen.tsx:333
-msgid "The experience is better in the app. Download VerusSky now and we'll pick back up where you left off."
-msgstr ""
+msgid "The experience is better in the app. Download Bluesky now and we'll pick back up where you left off."
+msgstr "アプリのほうがより良い体験をすることができます。今すぐBlueskyをダウンロードして、中断したところから再開しましょう。"
 
 #: src/view/com/posts/FeedShutdownMsg.tsx:67
 msgid "The feed has been replaced with Discover."
@@ -9262,10 +8965,6 @@ msgstr "新しい投稿を作成する場合、以下の設定がデフォルト
 #: src/components/ageAssurance/useAgeAssuranceCopy.ts:14
 msgid "The laws in your location require you to verify you're an adult to access certain features. Tap to learn more."
 msgstr "あなたの地域の法律では、特定の機能にアクセスするにはあなたが成人であることを確認する必要があります。詳細はタップしてください。"
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
-msgid "The link to VerusID {0} has been successfully removed from this account."
-msgstr ""
 
 #: src/view/com/composer/select-language/SuggestedLanguage.tsx:119
 msgid "The post you're replying to was marked as being written in {suggestedLanguageName} by its author. Would you like to reply in <0>{suggestedLanguageName}</0>?"
@@ -9305,25 +9004,13 @@ msgstr "サービス規約は移動しました"
 msgid "The verification code you have provided is invalid. Please make sure that you have used the correct verification link or request a new one."
 msgstr "入力された確認コードが正しくありません。正しいリンクを使用したかを確認するか、新しい確認コードを要求してください。"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
-msgid "The VerusID currently linked to this account is {0}."
-msgstr ""
-
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
-msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
-msgstr ""
-
 #: src/screens/Settings/AppearanceSettings.tsx:139
 msgid "Theme"
 msgstr "テーマ"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
-msgid "There currently is no VerusID linked to this account."
-msgstr ""
-
 #: src/components/dialogs/BirthDateSettings.tsx:91
 msgid "There is a limit to how often you can change your birthdate. You may need to wait a day or two before updating it again."
-msgstr ""
+msgstr "生年月日を変更できる頻度に制限があります。再度更新する前に1日か2日待つ必要があるかもしれません。"
 
 #: src/screens/Settings/components/DeactivateAccountDialog.tsx:86
 msgid "There is no time limit for account deactivation, come back any time."
@@ -9386,10 +9073,10 @@ msgstr "フィードの更新中に問題が発生したので、インターネ
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:420
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:90
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:101
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:275
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:301
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:316
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:88
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:253
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:279
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
 #: src/view/com/profile/ProfileMenu.tsx:136
 #: src/view/com/profile/ProfileMenu.tsx:146
 #: src/view/com/profile/ProfileMenu.tsx:160
@@ -9419,8 +9106,8 @@ msgid "There was an unexpected issue in the application. Please let us know if t
 msgstr "アプリケーションに予期しない問題が発生しました。このようなことが繰り返した場合はサポートへお知らせください！"
 
 #: src/screens/SignupQueued.tsx:130
-msgid "There's been a rush of new users to VerusSky! We'll activate your account as soon as we can."
-msgstr ""
+msgid "There's been a rush of new users to Bluesky! We'll activate your account as soon as we can."
+msgstr "Blueskyに新規ユーザーが殺到しています！できるだけ早くアカウントを有効にできるよう努めます。"
 
 #: src/components/dialogs/PostInteractionSettingsDialog.tsx:654
 msgid "These are your default settings"
@@ -9450,10 +9137,6 @@ msgstr "このアカウントを閲覧するためにはサインインが必要
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "このアカウントは1つ、あるいは複数のモデレーションリストでブロックされています。ブロックを解除するにはリストの画面に移動してこのユーザーをリストから外してください。"
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
-msgid "This account is linked to VerusID, a decentralized identity system."
-msgstr ""
-
 #: src/components/verification/VerificationCreatePrompt.tsx:55
 msgid "This action can be undone at any time."
 msgstr "この操作はいつでも元に戻すことができます。"
@@ -9470,7 +9153,7 @@ msgstr "この異議申し立てはBlueskyのモデレーション・サービ�
 msgid "This chat was disconnected"
 msgstr "このチャットは切断されました"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:147
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:144
 msgid "This confirmation code is not valid. Please try again."
 msgstr "この確認コードは無効です。もう一度やり直してください。"
 
@@ -9547,7 +9230,7 @@ msgstr "この情報はプライベートで他のユーザーと共有されま
 
 #: src/view/screens/Debug.tsx:343
 msgid "This is an empty state"
-msgstr ""
+msgstr "これは空の状態です"
 
 #: src/components/live/EditLiveDialog.tsx:189
 #: src/components/live/GoLiveDialog.tsx:157
@@ -9587,8 +9270,8 @@ msgid "This moderation service is unavailable. See below for more details. If th
 msgstr "このモデレーションのサービスはご利用できません。詳細は以下をご覧ください。この問題が解決しない場合は、サポートへお問い合わせください。"
 
 #: src/screens/PostThread/components/ThreadItemAnchor.tsx:669
-msgid "This post claims to have been created on <0>{0}</0>, but was first seen by VerusSky on <1>{1}</1>."
-msgstr ""
+msgid "This post claims to have been created on <0>{0}</0>, but was first seen by Bluesky on <1>{1}</1>."
+msgstr "<0>{0}</0>に投稿されたと表示されていますが、Blueskyに初めて登場したのは<1>{1}</1>です。"
 
 #: src/components/WhoCanReply.tsx:272
 msgid "This post has an unknown type of threadgate on it. Your app may be out of date."
@@ -9667,15 +9350,11 @@ msgstr "新しいユーザーです。ここを押すといつ参加したかの
 msgid "This user isn't following anyone."
 msgstr "このユーザーは誰もフォローしていません。"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
-msgid "This will create a post linking your VerusID to this account."
-msgstr ""
-
 #: src/components/dialogs/MutedWords.tsx:440
 msgid "This will delete \"{0}\" from your muted words. You can always add it back later."
 msgstr "ミュートしたワードから「{0}」が削除されます。あとでいつでも戻すことができます。"
 
-#: src/screens/Settings/Settings.tsx:667
+#: src/screens/Settings/Settings.tsx:658
 msgid "This will remove @{0} from the quick access list."
 msgstr "クイックアクセスのリストから@{0}を削除します。"
 
@@ -9702,7 +9381,7 @@ msgstr "スレッドの設定"
 msgid "Threaded"
 msgstr "スレッド"
 
-#: src/Navigation.tsx:375
+#: src/Navigation.tsx:369
 msgid "Threads Preferences"
 msgstr "スレッドの設定"
 
@@ -9725,7 +9404,7 @@ msgstr "メールでの2要素認証を無効にするには、<0>{0}</0>にア�
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:191
 msgid "To log out, <0>click here</0>."
-msgstr ""
+msgstr "ログアウトするには、<0>ここをクリック</0>。"
 
 #: src/components/dms/ReportConversationPrompt.tsx:19
 msgid "To report a conversation, please report one of its messages via the conversation screen. This lets our moderators understand the context of your issue."
@@ -9756,7 +9435,7 @@ msgstr "トップ"
 msgid "Top replies first"
 msgstr "トップの返信を最初に"
 
-#: src/Navigation.tsx:558
+#: src/Navigation.tsx:544
 msgid "Topic"
 msgstr "トピック"
 
@@ -9793,7 +9472,7 @@ msgstr "信頼は人間関係、コミュニティ、共有されている文脈
 #: src/screens/Search/SearchResults.tsx:176
 msgctxt "english-only-resource"
 msgid "Try a different search term, or <0>read about how to use search filters</0>."
-msgstr ""
+msgstr "他の単語で検索を試してください。または、<0>検索フィルタの使い方を読んでください</0>。"
 
 #: src/view/com/util/error/ErrorScreen.tsx:103
 msgctxt "action"
@@ -9820,28 +9499,19 @@ msgstr "タイプ："
 msgid "Unable to access location. You'll need to visit your system settings to enable location services for Bluesky."
 msgstr "位置情報にアクセスできません。システムの設定を確認して、位置情報サービスをBlueskyが使えるよう許可する必要があります。"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:121
-msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again"
-msgstr ""
-
 #: src/lib/hooks/useCleanError.ts:27
 #: src/lib/strings/errors.ts:12
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "接続できません。インターネットへの接続を確認して再度試してください。"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
-msgid "Unable to contact the service. Please check your Internet connection."
-msgstr ""
-
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:98
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:143
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:95
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:140
 msgid "Unable to contact your service. Please check your internet connection and try again."
 msgstr "サービスに接続できません。インターネットの接続を確認してください。"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:68
 #: src/screens/Login/index.tsx:93
-#: src/screens/Login/LoginForm.tsx:336
+#: src/screens/Login/LoginForm.tsx:169
 #: src/screens/Login/SetNewPasswordForm.tsx:81
 #: src/screens/Signup/index.tsx:77
 msgid "Unable to contact your service. Please check your Internet connection."
@@ -9851,31 +9521,11 @@ msgstr "あなたのサービスに接続できません。インターネット
 msgid "Unable to delete"
 msgstr "削除できません"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
-msgid "Unable to get the signing service identity address"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
-msgid "Unable to link account with no handle."
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:326
-msgid "Unable to verify Bluesky credentials. Please sign in manually."
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
-msgid "Unable to verify signature."
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:428
-msgid "Unable to verify the signer of the login."
-msgstr ""
-
-#: src/screens/Settings/Settings.tsx:516
+#: src/screens/Settings/Settings.tsx:507
 msgid "Unapply Pull Request"
 msgstr "プルリクエストを適用しない"
 
-#: src/screens/Settings/Settings.tsx:518
+#: src/screens/Settings/Settings.tsx:509
 msgid "Unapply Pull Request {currentChannel}"
 msgstr "プルリクエスト {currentChannel} を適用しない"
 
@@ -9891,16 +9541,16 @@ msgstr "フィードの情報が利用できません"
 #: src/components/dms/MessagesListBlockedFooter.tsx:104
 #: src/components/dms/MessagesListBlockedFooter.tsx:112
 #: src/components/dms/MessagesListBlockedFooter.tsx:119
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:212
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:356
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:416
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:190
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:334
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:394
 #: src/screens/ProfileList/components/Header.tsx:171
 #: src/screens/ProfileList/components/Header.tsx:178
 #: src/view/com/profile/ProfileMenu.tsx:495
 msgid "Unblock"
 msgstr "ブロックを解除"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:360
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:338
 msgctxt "action"
 msgid "Unblock"
 msgstr "ブロックを解除"
@@ -9912,8 +9562,8 @@ msgstr "ブロックを解除"
 msgid "Unblock account"
 msgstr "アカウントのブロックを解除"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:206
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:184
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
 #: src/view/com/profile/ProfileMenu.tsx:477
 msgid "Unblock Account?"
 msgstr "アカウントのブロックを解除しますか？"
@@ -9938,7 +9588,7 @@ msgstr "リポストを元に戻す"
 msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "リポストを元に戻す（{0, plural, other {#件のリポスト}}）"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:387
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:365
 msgid "Unfollow {0}"
 msgstr "{0}のフォローを解除"
 
@@ -9957,7 +9607,7 @@ msgstr "残念ながら、登録しているラベラーはどれもこのタイ
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:158
 msgid "Unfortunately, the birthdate you have saved to your profile makes you too young to access Bluesky."
-msgstr ""
+msgstr "残念ながら、あなたがプロフィールに設定した生年月日は、Blueskyにアクセスするには若すぎます。"
 
 #: src/components/verification/VerificationsDialog.tsx:211
 msgid "Unknown verifier"
@@ -10063,8 +9713,8 @@ msgstr "フィードからピン留めを解除"
 msgid "Unpinned list"
 msgstr "リストのピン留めを解除しました"
 
-#: src/screens/Settings/Settings.tsx:483
-#: src/screens/Settings/Settings.tsx:485
+#: src/screens/Settings/Settings.tsx:474
+#: src/screens/Settings/Settings.tsx:476
 msgid "Unsnooze email reminder"
 msgstr "メールのリマインダーのスヌーズを解除"
 
@@ -10089,8 +9739,6 @@ msgstr "リストの登録を解除しました"
 msgid "Unsupported video type: {mimeType}"
 msgstr "サポートしていないビデオ形式：{mimeType}"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:250
-#: src/components/dialogs/VerusServiceDialog.tsx:254
 #: src/screens/Settings/components/OTAInfo.tsx:58
 #: src/screens/Settings/components/OTAInfo.tsx:74
 msgid "Update"
@@ -10100,15 +9748,6 @@ msgstr "更新する"
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "リストの<0>{displayName}</0>を更新"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
-msgid "Update confirmed"
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
-msgid "Update credentials"
-msgstr ""
-
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:300
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:312
 #: src/screens/Settings/AccountSettings.tsx:107
@@ -10116,43 +9755,10 @@ msgstr ""
 msgid "Update email"
 msgstr "メールアドレスの更新"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
-msgid "Update linked VerusID"
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
-msgid "Update the sign in credentials stored in your VerusID."
-msgstr ""
-
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:542
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:563
 msgid "Update to {domain}"
 msgstr "{domain}に更新"
-
-#: src/components/dialogs/VerusServiceDialog.tsx:152
-msgid "Update Verus Service Endpoint"
-msgstr ""
-
-#: src/components/dialogs/VerusServiceDialog.tsx:143
-msgid "Update Verus Service Instance"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:96
-msgid "Update VerusID Link"
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
-msgid "Update VerusID sign in"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:119
-#: src/screens/Settings/VerusServicesSettings.tsx:130
-msgid "Update VerusID Sign in"
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
-msgid "Update VerusID Sign in Credentials"
-msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:203
 msgid "Update your email"
@@ -10295,11 +9901,6 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr "ユーザーリストを更新しました"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:213
-#: src/components/dialogs/VerusServiceDialog.tsx:217
-msgid "Username"
-msgstr ""
-
 #: src/screens/Signup/StepHandle/index.tsx:233
 msgid "Username cannot be longer than {MAX_SERVICE_HANDLE_LENGTH, plural, other {# characters}}"
 msgstr "ユーザー名は{MAX_SERVICE_HANDLE_LENGTH, plural, other {#文字}}までです"
@@ -10312,7 +9913,7 @@ msgstr "ユーザー名はハイフンで始まったり終わったりできま
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr "ユーザー名はアルファベット(a-z)、数字、ハイフンのみ使用できます"
 
-#: src/screens/Login/LoginForm.tsx:469
+#: src/screens/Login/LoginForm.tsx:202
 msgid "Username or email address"
 msgstr "ユーザー名またはメールアドレス"
 
@@ -10341,7 +9942,7 @@ msgstr "認証に失敗しました。再度試してください。"
 msgid "Verification settings"
 msgstr "認証設定"
 
-#: src/Navigation.tsx:212
+#: src/Navigation.tsx:206
 #: src/screens/Moderation/VerificationSettings.tsx:32
 msgid "Verification Settings"
 msgstr "認証設定"
@@ -10429,48 +10030,6 @@ msgstr "年齢保証ステータスを確認中"
 msgid "Version {0}"
 msgstr "バージョン {0}"
 
-#: src/Navigation.tsx:413
-#: src/screens/Settings/Settings.tsx:183
-#: src/screens/Settings/Settings.tsx:186
-#: src/screens/Settings/VerusServicesSettings.tsx:56
-msgid "Verus Services"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:155
-#: src/screens/Settings/VerusServicesSettings.tsx:159
-msgid "Verus Services Endpoint (Advanced)"
-msgstr ""
-
-#: src/screens/Settings/VerusServicesSettings.tsx:141
-msgid "Verus Services Endpoint Status"
-msgstr ""
-
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
-msgid "VerusID"
-msgstr ""
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
-msgid "VerusID Name"
-msgstr ""
-
-#: src/screens/Login/LoginForm.tsx:574
-msgid "VerusID Sign in"
-msgstr ""
-
-#: src/screens/PostThread/components/ThreadItemAnchor.tsx:688
-msgid "VerusSky cannot confirm the authenticity of the claimed date."
-msgstr ""
-
-#: src/components/ProgressGuide/List.tsx:53
-#: src/components/ProgressGuide/List.tsx:70
-msgid "VerusSky is better with friends!"
-msgstr ""
-
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:81
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoEmbedInnerNative.tsx:131
 msgid "Video"
@@ -10480,7 +10039,7 @@ msgstr "ビデオ"
 msgid "Video failed to process"
 msgstr "ビデオの処理に失敗"
 
-#: src/Navigation.tsx:614
+#: src/Navigation.tsx:600
 msgid "Video Feed"
 msgstr "ビデオフィード"
 
@@ -10518,7 +10077,7 @@ msgstr "ビデオをアップロードしました"
 msgid "Video: {0}"
 msgstr "ビデオ：{0}"
 
-#: src/view/screens/Profile.tsx:244
+#: src/view/screens/Profile.tsx:237
 msgid "Videos"
 msgstr "ビデオ"
 
@@ -10607,10 +10166,6 @@ msgstr "@{0}によって提供されるラベリングサービスを見る"
 #: src/components/verification/VerificationCheckButton.tsx:99
 msgid "View this user's verifications"
 msgstr "このユーザーの認証情報を表示"
-
-#: src/components/verification/verusid/VerusIDVerificationCheckButton.tsx:57
-msgid "View this VerusID verification"
-msgstr ""
 
 #: src/screens/Profile/components/ProfileFeedHeader.tsx:486
 msgid "View users who like this feed"
@@ -10727,8 +10282,8 @@ msgid "We have sent another verification email to <0>{0}</0>."
 msgstr "別の確認コードを<0>{0}</0>へ送りました。"
 
 #: src/screens/Onboarding/StepFinished/index.tsx:383
-msgid "We hope you have a wonderful time. Remember, VerusSky is:"
-msgstr ""
+msgid "We hope you have a wonderful time. Remember, Bluesky is:"
+msgstr "素敵なひとときをお過ごしください。覚えておいてください、Blueskyは："
 
 #: src/view/com/posts/DiscoverFallbackHeader.tsx:29
 msgid "We ran out of posts from your follows. Here's the latest from <0/>."
@@ -10748,7 +10303,7 @@ msgstr "あなたがビデオのアップロードを許可されているかど
 
 #: src/components/dialogs/BirthDateSettings.tsx:63
 msgid "We were unable to load your birthdate preferences. Please try again."
-msgstr ""
+msgstr "生年月日の設定を読み込むことができませんでした。もう一度お試しください。"
 
 #: src/screens/Moderation/index.tsx:449
 msgid "We were unable to load your configured labelers at this time."
@@ -10792,6 +10347,10 @@ msgstr "あなたのアカウントの年齢保証手順の初期化に問題が
 #: src/components/ProgressGuide/FollowDialog.tsx:184
 msgid "We're having network issues, try again"
 msgstr "ネットワークで問題が発生しています。もう一度試してください"
+
+#: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:94
+msgid "We’re introducing a new layer of verification on Bluesky — an easy-to-see checkmark."
+msgstr "Blueskyに新しい認証方式を導入しました。見やすいチェックマークです。"
 
 #: src/screens/Signup/index.tsx:125
 msgid "We're so excited to have you join us!"
@@ -10868,7 +10427,7 @@ msgstr "あなたのスターターパックを何と呼びたいですか？"
 #: src/view/com/auth/SplashScreen.tsx:51
 #: src/view/com/auth/SplashScreen.web.tsx:103
 #: src/view/com/composer/Composer.tsx:857
-#: src/view/com/feeds/ComposerPrompt.tsx:197
+#: src/view/com/feeds/ComposerPrompt.tsx:193
 msgid "What's up?"
 msgstr "最近どう？"
 
@@ -10945,10 +10504,10 @@ msgstr "ユーザーをブロックするかこの会話を削除しますか（
 msgid "Write a message"
 msgstr "メッセージを書く"
 
-#: src/view/screens/Profile.tsx:441
-#: src/view/screens/Profile.tsx:442
+#: src/view/screens/Profile.tsx:433
+#: src/view/screens/Profile.tsx:434
 msgid "Write a post"
-msgstr ""
+msgstr "投稿を書く"
 
 #: src/view/com/composer/Composer.tsx:957
 msgid "Write post"
@@ -11008,7 +10567,7 @@ msgstr "あなたは信頼された認証者です"
 
 #: src/ageAssurance/components/NoAccessScreen.tsx:143
 msgid "You are accessing Bluesky from a region that legally requires us to verify your age before allowing you to access the app."
-msgstr ""
+msgstr "お客様は、アプリにアクセスする前に年齢を確認することを法的に要求する地域からBlueskyにアクセスしています。"
 
 #: src/components/forms/HostingProvider.tsx:45
 msgid "You are creating an account on"
@@ -11042,7 +10601,7 @@ msgstr "あなたはビデオのアップロードを許可されていません
 
 #: src/view/com/profile/ProfileFollows.tsx:182
 msgid "You are not following anyone yet"
-msgstr ""
+msgstr "まだ誰もフォローしていません"
 
 #: src/components/live/queries.ts:156
 msgid "You are now live!"
@@ -11080,10 +10639,6 @@ msgstr "アプリ内のチャット設定でチャット通知の音の有無を
 #: src/screens/Messages/Settings.tsx:116
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "どの設定を選択しても進行中の会話は続けることができます。"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
-msgid "You can do this later in Settings → Verus Services."
-msgstr ""
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:357
 msgctxt "toast"
@@ -11158,7 +10713,7 @@ msgstr "返信、引用、メンションの通知が完全に無効になって
 
 #: src/screens/Login/SetNewPasswordForm.tsx:49
 #: src/screens/Login/SetNewPasswordForm.tsx:95
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:115
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:112
 msgid "You have entered an invalid code. It should look like XXXXX-XXXXX."
 msgstr "無効なコードが入力されました。それはXXXXX-XXXXXのようになっているはずです。"
 
@@ -11217,7 +10772,7 @@ msgstr "スターターパックをまだ作成していません！"
 
 #: src/view/com/feeds/ProfileFeedgens.tsx:155
 msgid "You haven't made any custom feeds yet."
-msgstr ""
+msgstr "まだカスタムフィードを作成していません。"
 
 #: src/components/dialogs/MutedWords.tsx:403
 msgid "You haven't muted any words or tags yet"
@@ -11233,12 +10788,12 @@ msgid "You initiated this flow already, {0} ago. It may take up to 5 minutes for
 msgstr "{0} 前にこのフローを開始しました。メールが受信トレイに届くまでに最大 5 分かかる場合があります。 再試行する前に数分お待ちください。"
 
 #: src/components/NewskieDialog.tsx:105
-msgid "You joined VerusSky {timeAgoString} ago"
-msgstr ""
+msgid "You joined Bluesky {timeAgoString} ago"
+msgstr "あなたはBlueskyに{timeAgoString}前に参加しました"
 
 #: src/components/NewskieDialog.tsx:102
-msgid "You joined VerusSky using a starter pack {timeAgoString} ago"
-msgstr ""
+msgid "You joined Bluesky using a starter pack {timeAgoString} ago"
+msgstr "あなたはBlueskyにスターターパックを使って{timeAgoString}前に参加しました"
 
 #: src/components/moderation/LabelsOnMeDialog.tsx:83
 msgid "You may appeal non-self labels if you feel they were placed in error."
@@ -11293,7 +10848,7 @@ msgstr "2要素認証メールを有効にする前に、メールアドレス�
 msgid "You previously deactivated @{0}."
 msgstr "以前、あなたは@{0}を無効化しました。"
 
-#: src/screens/Settings/Settings.tsx:413
+#: src/screens/Settings/Settings.tsx:404
 msgid "You probably want to restart the app now."
 msgstr "今すぐアプリを再起動したほうが良いでしょう。"
 
@@ -11308,9 +10863,9 @@ msgstr "あなたは{1}に{0}とリアクションしました"
 #: src/components/dialogs/BirthDateSettings.tsx:77
 #: src/components/dialogs/BirthDateSettings.tsx:87
 msgid "You recently changed your birthdate"
-msgstr ""
+msgstr "最近、生年月日を変更しました"
 
-#: src/screens/Settings/Settings.tsx:295
+#: src/screens/Settings/Settings.tsx:286
 #: src/view/shell/desktop/LeftNav.tsx:210
 msgid "You will be signed out of all your accounts."
 msgstr "すべてのアカウントからサインアウトします。"
@@ -11480,7 +11035,7 @@ msgid "Your email"
 msgstr "あなたのメールアドレス"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:51
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:84
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:81
 #: src/screens/Signup/state.ts:273
 #: src/screens/Signup/StepInfo/index.tsx:100
 msgid "Your email appears to be invalid."
@@ -11506,7 +11061,7 @@ msgstr "Followingフィードは空です！もっと多くのユーザーをフ
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "フルハンドルは<0>@{0}</0>になります"
 
-#: src/Navigation.tsx:530
+#: src/Navigation.tsx:516
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:67
 #: src/screens/Settings/ContentAndMediaSettings.tsx:92
 #: src/screens/Settings/ContentAndMediaSettings.tsx:95
@@ -11531,7 +11086,7 @@ msgstr "あなたの位置情報は追跡されず、デバイスの外に送信
 msgid "Your muted words"
 msgstr "ミュートしたワード"
 
-#: src/screens/Settings/components/ChangePasswordDialog.tsx:74
+#: src/screens/Settings/components/ChangePasswordDialog.tsx:71
 msgid "Your password has been changed successfully! Please use your new password when you sign in to Bluesky from now on."
 msgstr "パスワードが正常に変更されました！これからBlueskyにサインインする際は、新しいパスワードを使用してください。"
 
@@ -11583,11 +11138,3 @@ msgstr "「気になること」は興味を引くコンテンツを提供する
 #: src/components/verification/VerificationsDialog.tsx:65
 msgid "Your verifications"
 msgstr "あなたの認証情報"
-
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
-msgid "Your VerusID {name} has been successfully linked to this account."
-msgstr ""
-
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
-msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
-msgstr ""
