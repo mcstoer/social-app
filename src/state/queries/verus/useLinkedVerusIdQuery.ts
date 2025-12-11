@@ -77,7 +77,11 @@ export function useLinkedVerusIDQuery(
     return augmentSearchQuery(query || '', {did: resolvedDid})
   }, [query, resolvedDid])
 
-  const {data: results} = useSearchPostsQuery({query: augmentedQuery, sort})
+  const {data: results} = useSearchPostsQuery({
+    query: augmentedQuery,
+    sort,
+    enabled: (enabled ?? true) && !!resolvedDid,
+  })
 
   const posts = useMemo(() => {
     return results?.pages.flatMap(page => page.posts) || []

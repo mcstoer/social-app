@@ -192,6 +192,7 @@ function ProfileScreenLoaded({
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
     linkIdentifier,
     profile.did,
+    hasSession,
   )
   const [currentPage, setCurrentPage] = React.useState(0)
   const {_} = useLingui()

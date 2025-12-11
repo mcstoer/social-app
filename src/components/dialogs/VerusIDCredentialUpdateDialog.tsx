@@ -57,7 +57,7 @@ export function VerusIDCredentialUpdateDialog() {
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
     PROOFS_CONTROLLER_BLUESKY.vdxfid,
     currentAccount?.did,
-    checkVerusIDAccountLink,
+    checkVerusIDAccountLink && control.control.isOpen,
   )
 
   const onClose = useCallback(async () => {
