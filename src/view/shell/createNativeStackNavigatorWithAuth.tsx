@@ -35,10 +35,8 @@ import {
   useLoggedOutViewControls,
 } from '#/state/shell/logged-out'
 import {LoggedOut} from '#/view/com/auth/LoggedOut'
-import {Deactivated} from '#/screens/Deactivated'
 import {Onboarding} from '#/screens/Onboarding'
 import {SignupQueued} from '#/screens/SignupQueued'
-import {Takendown} from '#/screens/Takendown'
 import {atoms as a, useLayoutBreakpoints} from '#/alf'
 import {PolicyUpdateOverlay} from '#/components/PolicyUpdateOverlay'
 import {BottomBarWeb} from './bottom-bar/BottomBarWeb'
@@ -52,11 +50,13 @@ type NativeStackNavigationOptionsWithAuth = NativeStackNavigationOptions & {
 function NativeStackNavigator({
   id,
   initialRouteName,
+  UNSTABLE_routeNamesChangeBehavior,
   children,
   layout,
   screenListeners,
   screenOptions,
   screenLayout,
+  UNSTABLE_router,
   ...rest
 }: NativeStackNavigatorProps) {
   // --- this is copy and pasted from the original native stack navigator ---
@@ -70,11 +70,13 @@ function NativeStackNavigator({
     >(StackRouter, {
       id,
       initialRouteName,
+      UNSTABLE_routeNamesChangeBehavior,
       children,
       layout,
       screenListeners,
       screenOptions,
       screenLayout,
+      UNSTABLE_router,
     })
 
   React.useEffect(
@@ -119,14 +121,8 @@ function NativeStackNavigator({
   if (hasSession && currentAccount?.signupQueued) {
     return <SignupQueued />
   }
-  if (hasSession && currentAccount?.status === 'takendown') {
-    return <Takendown />
-  }
   if (showLoggedOut) {
     return <LoggedOut onDismiss={() => setShowLoggedOut(false)} />
-  }
-  if (currentAccount?.status === 'deactivated') {
-    return <Deactivated />
   }
   if (onboardingState.isActive) {
     return <Onboarding />
@@ -177,7 +173,7 @@ function NativeStackNavigator({
 
 export function createNativeStackNavigatorWithAuth<
   const ParamList extends ParamListBase,
-  const NavigatorID extends string | undefined = undefined,
+  const NavigatorID extends string | undefined = string | undefined,
   const TypeBag extends NavigatorTypeBagBase = {
     ParamList: ParamList
     NavigatorID: NavigatorID

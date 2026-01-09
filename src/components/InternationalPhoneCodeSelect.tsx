@@ -1,9 +1,11 @@
 import {Fragment, useMemo} from 'react'
+import {Text as RNText} from 'react-native'
 import {Image} from 'expo-image'
 import {msg} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
 
 import {
+  type CountryCode,
   getDefaultCountry,
   INTERNATIONAL_TELEPHONE_CODES,
 } from '#/lib/international-telephone-codes'
@@ -23,8 +25,8 @@ export function InternationalPhoneCodeSelect({
   value,
   onChange,
 }: {
-  value?: string
-  onChange: (value: string) => void
+  value?: CountryCode
+  onChange: (value: CountryCode) => void
 }) {
   const {_, i18n} = useLingui()
   const location = useGeolocation()
@@ -62,7 +64,7 @@ export function InternationalPhoneCodeSelect({
   }, [value, items])
 
   return (
-    <Select.Root value={value} onValueChange={onChange}>
+    <Select.Root value={value} onValueChange={onChange as (v: string) => void}>
       <Select.Trigger label={_(msg`Select telephone code`)}>
         <Select.ValueText placeholder="+..." webOverrideValue={selected}>
           {selected => (
@@ -112,5 +114,5 @@ function Flag({unicodeFlag, svgFlag}: {unicodeFlag: string; svgFlag: any}) {
       />
     )
   }
-  return unicodeFlag + ' '
+  return <RNText style={[{lineHeight: 21}]}>{unicodeFlag + ' '}</RNText>
 }

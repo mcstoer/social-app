@@ -1,6 +1,5 @@
 import React from 'react'
-import {Pressable, View} from 'react-native'
-import {type ScrollView} from 'react-native-gesture-handler'
+import {Pressable, type ScrollView, View} from 'react-native'
 import {type AppBskyLabelerDefs, BSKY_LABELER_DID} from '@atproto/api'
 import {msg, Trans} from '@lingui/macro'
 import {useLingui} from '@lingui/react'
@@ -18,7 +17,7 @@ import * as Admonition from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
 import {useDelayedLoading} from '#/components/hooks/useDelayedLoading'
-import {ArrowRotateCounterClockwise_Stroke2_Corner0_Rounded as Retry} from '#/components/icons/ArrowRotateCounterClockwise'
+import {ArrowRotateCounterClockwise_Stroke2_Corner0_Rounded as Retry} from '#/components/icons/ArrowRotate'
 import {
   Check_Stroke2_Corner0_Rounded as CheckThin,
   CheckThick_Stroke2_Corner0_Rounded as Check,
