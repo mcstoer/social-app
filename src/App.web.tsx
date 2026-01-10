@@ -145,8 +145,6 @@ function InnerApp() {
                                                             <Shell />
                                                             <ToastOutlet />
                                                           </VerusDaemonProvider>
-                                                          <Shell />
-                                                          <ToastOutlet />
                                                         </IntentDialogProvider>
                                                       </HideBottomBarBorderProvider>
                                                     </EmailVerificationProvider>
