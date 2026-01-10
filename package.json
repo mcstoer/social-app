@@ -230,8 +230,8 @@
     "tldts": "6.1.46",
     "unicode-segmenter": "0.14.5",
     "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#key-updates-and-additions",
-    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git",
-    "verusid-ts-client": "git+https://github.com/michaeltout/verusid-ts-client.git",
+    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git#a2519d42650e0bd014e73ab0cbc26c2cadd4a672",
+    "verusid-ts-client": "git+https://github.com/michaeltout/verusid-ts-client.git#fa8c07d215a5013779c20afd2cda42b5af10dab6",
     "zod": "3.23.8"
   },
   "devDependencies": {
