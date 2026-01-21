@@ -31,7 +31,6 @@ import {cleanError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
-import {isIOS} from '#/platform/detection'
 import {emitVerusIDLoginCompleted} from '#/state/events'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
@@ -52,6 +51,7 @@ import {Ticket_Stroke2_Corner0_Rounded as Ticket} from '#/components/icons/Ticke
 import {Loader} from '#/components/Loader'
 import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
+import {IS_IOS} from '#/env'
 import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {FormContainer} from './FormContainer'
 
@@ -468,7 +468,7 @@ export const LoginForm = ({
                   inputRef={identifierRef}
                   label={_(msg`Username or email address`)}
                   autoCapitalize="none"
-                  autoFocus={!isIOS}
+                  autoFocus={!IS_IOS}
                   autoCorrect={false}
                   autoComplete="username"
                   returnKeyType="next"
@@ -579,7 +579,7 @@ export const LoginForm = ({
           </Text>
           {loginUri && (
             <View style={[a.align_center, a.py_lg]}>
-              <QrCodeInner link={loginUri} />
+              <QrCodeInner link={loginUri} useBackupSVG={false} />
             </View>
           )}
         </View>

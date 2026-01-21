@@ -27,6 +27,7 @@ import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {useWelcomeModal} from '#/components/hooks/useWelcomeModal'
+import {GlobalReportDialog} from '#/components/moderation/ReportDialog'
 import {
   Outlet as PolicyUpdateOverlayPortalOutlet,
   usePolicyUpdateContext,
@@ -79,6 +80,7 @@ function ShellInner() {
       <LinkWarningDialog />
       <Lightbox />
       <NuxDialogs />
+      <GlobalReportDialog />
 
       {welcomeModalControl.isOpen && (
         <WelcomeModal control={welcomeModalControl} />

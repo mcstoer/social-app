@@ -15,3 +15,36 @@ export const APP_VERSION = RELEASE_VERSION
 export const APP_METADATA = `${BUNDLE_IDENTIFIER.slice(0, 7)} (${__DEV__ ? 'dev' : 'prod'})`
 
 export {VERUSSKY_CONFIG, type VerusSkyConfig} from './verussky'
+/**
+ * Platform detection
+ */
+export const IS_IOS: boolean = false
+export const IS_ANDROID: boolean = false
+export const IS_NATIVE: boolean = false
+export const IS_WEB: boolean = true
+
+/**
+ * Web-specific platform detection
+ */
+export const IS_WEB_TOUCH_DEVICE =
+  window.matchMedia('(pointer: coarse)').matches
+export const IS_WEB_MOBILE: boolean = window.matchMedia(
+  'only screen and (max-width: 1300px)',
+)?.matches
+export const IS_WEB_MOBILE_IOS: boolean = /iPhone/.test(navigator.userAgent)
+export const IS_WEB_MOBILE_ANDROID: boolean =
+  /android/i.test(navigator.userAgent) && IS_WEB_TOUCH_DEVICE
+export const IS_WEB_SAFARI: boolean = /^((?!chrome|android).)*safari/i.test(
+  // https://stackoverflow.com/questions/7944460/detect-safari-browser
+  navigator.userAgent,
+)
+export const IS_WEB_FIREFOX: boolean = /firefox|fxios/i.test(
+  navigator.userAgent,
+)
+
+/**
+ * Misc
+ */
+export const IS_HIGH_DPI: boolean = window.matchMedia(
+  '(min-resolution: 2dppx)',
+).matches

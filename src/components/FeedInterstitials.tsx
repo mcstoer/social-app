@@ -7,10 +7,9 @@ import {useLingui} from '@lingui/react'
 import {useNavigation} from '@react-navigation/native'
 
 import {type NavigationProp} from '#/lib/routes/types'
-import {logEvent, useGate} from '#/lib/statsig/statsig'
+import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
 import {type MetricEvents} from '#/logger/metrics'
-import {isIOS} from '#/platform/detection'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {useGetPopularFeedsQuery} from '#/state/queries/feed'
 import {type FeedDescriptor} from '#/state/queries/post-feed'
@@ -39,6 +38,7 @@ import {TimesLarge_Stroke2_Corner0_Rounded as X} from '#/components/icons/Times'
 import {InlineLinkText} from '#/components/Link'
 import * as ProfileCard from '#/components/ProfileCard'
 import {Text} from '#/components/Typography'
+import {IS_IOS} from '#/env'
 import type * as bsky from '#/types/bsky'
 import {FollowDialogWithoutGuide} from './ProgressGuide/FollowDialog'
 import {ProgressGuideList} from './ProgressGuide/List'
@@ -435,7 +435,6 @@ export function ProfileGrid({
 }) {
   const t = useTheme()
   const {_} = useLingui()
-  const gate = useGate()
   const moderationOpts = useModerationOpts()
   const {gtMobile} = useBreakpoints()
   const followDialogControl = useDialogControl()
@@ -443,7 +442,6 @@ export function ProfileGrid({
   const isLoading = isSuggestionsLoading || !moderationOpts
   const isProfileHeaderContext = viewContext === 'profileHeader'
   const isFeedContext = viewContext === 'feed'
-  const showDismissButton = onDismiss && gate('suggested_users_dismiss')
 
   const maxLength = gtMobile ? 3 : isProfileHeaderContext ? 12 : 6
   const minLength = gtMobile ? 3 : 4
@@ -584,12 +582,12 @@ export function ProfileGrid({
                     (hovered || pressed) && t.atoms.border_contrast_high,
                   ]}>
                   <ProfileCard.Outer>
-                    {showDismissButton && (
+                    {onDismiss && (
                       <Button
                         label={_(msg`Dismiss this suggestion`)}
                         onPress={e => {
                           e.preventDefault()
-                          onDismiss!(profile.did)
+                          onDismiss(profile.did)
                           logEvent('suggestedUser:dismiss', {
                             logContext: isFeedContext
                               ? 'InterstitialDiscover'
@@ -692,7 +690,7 @@ export function ProfileGrid({
         t.atoms.border_contrast_low,
         t.atoms.bg_contrast_25,
       ]}
-      pointerEvents={isIOS ? 'auto' : 'box-none'}>
+      pointerEvents={IS_IOS ? 'auto' : 'box-none'}>
       <View
         style={[
           a.px_lg,
@@ -701,7 +699,7 @@ export function ProfileGrid({
           a.align_center,
           a.justify_between,
         ]}
-        pointerEvents={isIOS ? 'auto' : 'box-none'}>
+        pointerEvents={IS_IOS ? 'auto' : 'box-none'}>
         <Text style={[a.text_sm, a.font_semi_bold, t.atoms.text]}>
           {isFeedContext ? (
             <Trans>Suggested for you</Trans>
@@ -842,6 +840,7 @@ export function SuggestedFeeds() {
                   <FeedCard.TitleAndByline
                     title={feed.displayName}
                     creator={feed.creator}
+                    uri={feed.uri}
                   />
                 </FeedCard.Header>
                 <FeedCard.Description
@@ -933,8 +932,15 @@ export function SuggestedFeeds() {
 
 export function ProgressGuide() {
   const t = useTheme()
+  const {gtMobile} = useBreakpoints()
   return (
-    <View style={[t.atoms.border_contrast_low, a.px_lg, a.py_lg, a.pb_lg]}>
+    <View
+      style={[
+        t.atoms.border_contrast_low,
+        a.px_lg,
+        a.py_lg,
+        !gtMobile && {marginTop: 4},
+      ]}>
       <ProgressGuideList />
     </View>
   )

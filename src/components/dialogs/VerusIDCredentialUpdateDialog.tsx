@@ -18,7 +18,6 @@ import {
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {logger} from '#/logger'
-import {isNative, isWeb} from '#/platform/detection'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdUpdateQuery} from '#/state/queries/verus/useVerusIdUpdateQuery'
@@ -32,6 +31,7 @@ import * as TextField from '#/components/forms/TextField'
 import {Loader} from '#/components/Loader'
 import {Text} from '#/components/Typography'
 import {QrCodeInner} from '../StarterPack/QrCode'
+import {IS_NATIVE, IS_WEB} from '#/env'
 
 enum Stages {
   UpdateCredentials = 'UpdateCredentials',
@@ -262,7 +262,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
       const updateRequestIdString = detailsJson.requestid!
 
       // Send the update request.
-      if (isWeb) {
+      if (IS_WEB) {
         // Web implementation using signing server
         const response = await fetch(
           `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/update-credentials`,
@@ -309,7 +309,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           setError(_(msg`Failed to initiate credential update`))
           setIsProcessing(false)
         }
-      } else if (isNative) {
+      } else if (IS_NATIVE) {
         // Mobile implementation will be different
         // This is a placeholder for the actual implementation
         setError(_(msg`Mobile support coming soon`))
@@ -404,7 +404,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         <>
           {deeplinkUri && (
             <View style={[a.align_center, a.py_lg]}>
-              <QrCodeInner link={deeplinkUri} />
+              <QrCodeInner link={deeplinkUri} useBackupSVG={false} />
             </View>
           )}
         </>
@@ -424,7 +424,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
               </ButtonText>
               {isProcessing && <ButtonIcon icon={Loader} />}
             </Button>
-            {isNative && (
+            {IS_NATIVE && (
               <Button
                 label={_(msg`Cancel`)}
                 color="secondary"

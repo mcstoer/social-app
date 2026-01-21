@@ -20,9 +20,8 @@ import {
   VIDEO_SAVED_FEED,
 } from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
-import {logEvent, useGate} from '#/lib/statsig/statsig'
+import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
-import {isWeb} from '#/platform/detection'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {getAllListMembers} from '#/state/queries/list-members'
 import {preferencesQueryKey} from '#/state/queries/preferences'
@@ -47,6 +46,7 @@ import {atoms as a, useBreakpoints} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {ArrowRight_Stroke2_Corner0_Rounded as ArrowRight} from '#/components/icons/Arrow'
 import {Loader} from '#/components/Loader'
+import {IS_WEB} from '#/env'
 import * as bsky from '#/types/bsky'
 import {ValuePropositionPager} from './ValuePropositionPager'
 
@@ -61,7 +61,6 @@ export function StepFinished() {
   const setActiveStarterPack = useSetActiveStarterPack()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
   const {startProgressGuide} = useProgressGuideControls()
-  const gate = useGate()
 
   const finishOnboarding = useCallback(async () => {
     setSaving(true)
@@ -114,13 +113,11 @@ export function StepFinished() {
               ...TIMELINE_SAVED_FEED,
               id: TID.nextStr(),
             },
-          ]
-          if (gate('onboarding_add_video_feed')) {
-            feedsToSave.push({
+            {
               ...VIDEO_SAVED_FEED,
               id: TID.nextStr(),
-            })
-          }
+            },
+          ]
 
           // Any starter pack feeds will be pinned _after_ the defaults
           if (starterPack && starterPack.feeds?.length) {
@@ -200,9 +197,7 @@ export function StepFinished() {
     setSaving(false)
     setActiveStarterPack(undefined)
     setHasCheckedForStarterPack(true)
-    startProgressGuide(
-      gate('old_postonboarding') ? 'like-10-and-follow-7' : 'follow-10',
-    )
+    startProgressGuide('follow-10')
     dispatch({type: 'finish'})
     onboardDispatch({type: 'finish'})
     logEvent('onboarding:finished:nextPressed', {
@@ -238,7 +233,6 @@ export function StepFinished() {
     setActiveStarterPack,
     setHasCheckedForStarterPack,
     startProgressGuide,
-    gate,
   ])
 
   return (
@@ -305,7 +299,7 @@ function ValueProposition({
 
       <OnboardingControls.Portal>
         <View style={gtMobile && [a.gap_md, a.flex_row]}>
-          {gtMobile && (isWeb ? subStep !== 2 : true) && (
+          {gtMobile && (IS_WEB ? subStep !== 2 : true) && (
             <Button
               disabled={saving}
               color="secondary"

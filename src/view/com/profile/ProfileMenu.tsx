@@ -12,9 +12,9 @@ import {type NavigationProp} from '#/lib/routes/types'
 import {shareText, shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
 import {logger} from '#/logger'
-import {isWeb} from '#/platform/detection'
 import {type Shadow} from '#/state/cache/types'
 import {useModalControls} from '#/state/modals'
+import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
 import {
   RQKEY as profileQueryKey,
   useProfileBlockMutationQueue,
@@ -25,6 +25,7 @@ import {useCanGoLive} from '#/state/service-config'
 import {useSession} from '#/state/session'
 import {EventStopper} from '#/view/com/util/EventStopper'
 import * as Toast from '#/view/com/util/Toast'
+import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
 import {useDialogControl} from '#/components/Dialog'
 import {StarterPackDialog} from '#/components/dialogs/StarterPackDialog'
@@ -49,6 +50,7 @@ import {SpeakerVolumeFull_Stroke2_Corner0_Rounded as Unmute} from '#/components/
 import {StarterPack} from '#/components/icons/StarterPack'
 import {EditLiveDialog} from '#/components/live/EditLiveDialog'
 import {GoLiveDialog} from '#/components/live/GoLiveDialog'
+import {GoLiveDisabledDialog} from '#/components/live/GoLiveDisabledDialog'
 import * as Menu from '#/components/Menu'
 import {
   ReportDialog,
@@ -58,6 +60,9 @@ import * as Prompt from '#/components/Prompt'
 import {useFullVerificationState} from '#/components/verification'
 import {VerificationCreatePrompt} from '#/components/verification/VerificationCreatePrompt'
 import {VerificationRemovePrompt} from '#/components/verification/VerificationRemovePrompt'
+import {IS_WEB} from '#/env'
+import {Dot} from '#/features/nuxs/components/Dot'
+import {Gradient} from '#/features/nuxs/components/Gradient'
 import {useDevMode} from '#/storage/hooks/dev-mode'
 
 let ProfileMenu = ({
@@ -65,6 +70,7 @@ let ProfileMenu = ({
 }: {
   profile: Shadow<AppBskyActorDefs.ProfileViewDetailed>
 }): React.ReactNode => {
+  const t = useTheme()
   const {_} = useLingui()
   const {currentAccount, hasSession} = useSession()
   const {openModal} = useModalControls()
@@ -78,7 +84,15 @@ let ProfileMenu = ({
   const isLabelerAndNotBlocked = !!profile.associated?.labeler && !isBlocked
   const [devModeEnabled] = useDevMode()
   const verification = useFullVerificationState({profile})
-  const canGoLive = useCanGoLive(currentAccount?.did)
+  const canGoLive = useCanGoLive()
+  const status = useActorStatus(profile)
+  const statusNudge = useNux(Nux.LiveNowBetaNudge)
+  const statusNudgeActive =
+    isSelf &&
+    canGoLive &&
+    statusNudge.status === 'ready' &&
+    !statusNudge.nux?.completed
+  const {mutate: saveNux} = useSaveNux()
 
   const [queueMute, queueUnmute] = useProfileMuteMutationQueue(profile)
   const [queueBlock, queueUnblock] = useProfileBlockMutationQueue(profile)
@@ -90,6 +104,7 @@ let ProfileMenu = ({
   const blockPromptControl = Prompt.usePromptControl()
   const loggedOutWarningPromptControl = Prompt.usePromptControl()
   const goLiveDialogControl = useDialogControl()
+  const goLiveDisabledDialogControl = useDialogControl()
   const addToStarterPacksDialogControl = useDialogControl()
 
   const showLoggedOutWarning = React.useMemo(() => {
@@ -220,25 +235,28 @@ let ProfileMenu = ({
       return v.issuer === currentAccount?.did
     }) ?? []
 
-  const status = useActorStatus(profile)
-
   return (
     <EventStopper onKeyDown={false}>
       <Menu.Root>
         <Menu.Trigger label={_(msg`More options`)}>
           {({props}) => {
             return (
-              <Button
-                {...props}
-                testID="profileHeaderDropdownBtn"
-                label={_(msg`More options`)}
-                hitSlop={HITSLOP_20}
-                variant="solid"
-                color="secondary"
-                size="small"
-                shape="round">
-                <ButtonIcon icon={Ellipsis} size="sm" />
-              </Button>
+              <>
+                <Button
+                  {...props}
+                  testID="profileHeaderDropdownBtn"
+                  label={_(msg`More options`)}
+                  hitSlop={HITSLOP_20}
+                  variant="solid"
+                  color="secondary"
+                  size="small"
+                  shape="round">
+                  {statusNudgeActive && <Gradient style={[a.rounded_full]} />}
+                  <ButtonIcon icon={Ellipsis} size="sm" />
+                </Button>
+
+                {statusNudgeActive && <Dot top={1} right={1} />}
+              </>
             )
           }}
         </Menu.Trigger>
@@ -248,7 +266,7 @@ let ProfileMenu = ({
             <Menu.Item
               testID="profileHeaderDropdownShareBtn"
               label={
-                isWeb ? _(msg`Copy link to profile`) : _(msg`Share via...`)
+                IS_WEB ? _(msg`Copy link to profile`) : _(msg`Share via...`)
               }
               onPress={() => {
                 if (showLoggedOutWarning) {
@@ -258,13 +276,15 @@ let ProfileMenu = ({
                 }
               }}>
               <Menu.ItemText>
-                {isWeb ? (
+                {IS_WEB ? (
                   <Trans>Copy link to profile</Trans>
                 ) : (
                   <Trans>Share via...</Trans>
                 )}
               </Menu.ItemText>
-              <Menu.ItemIcon icon={isWeb ? ChainLinkIcon : ArrowOutOfBoxIcon} />
+              <Menu.ItemIcon
+                icon={IS_WEB ? ChainLinkIcon : ArrowOutOfBoxIcon}
+              />
             </Menu.Item>
             <Menu.Item
               testID="profileHeaderDropdownSearchBtn"
@@ -330,19 +350,54 @@ let ProfileMenu = ({
                   <Menu.Item
                     testID="profileHeaderDropdownListAddRemoveBtn"
                     label={
-                      status.isActive
-                        ? _(msg`Edit live status`)
-                        : _(msg`Go live`)
+                      status.isDisabled
+                        ? _(msg`Go live (disabled)`)
+                        : status.isActive
+                          ? _(msg`Edit live status`)
+                          : _(msg`Go live`)
                     }
-                    onPress={goLiveDialogControl.open}>
+                    onPress={() => {
+                      if (status.isDisabled) {
+                        goLiveDisabledDialogControl.open()
+                      } else {
+                        goLiveDialogControl.open()
+                      }
+                      saveNux({
+                        id: Nux.LiveNowBetaNudge,
+                        data: undefined,
+                        completed: true,
+                      })
+                    }}>
+                    {statusNudgeActive && <Gradient />}
                     <Menu.ItemText>
-                      {status.isActive ? (
+                      {status.isDisabled ? (
+                        <Trans>Go live (disabled)</Trans>
+                      ) : status.isActive ? (
                         <Trans>Edit live status</Trans>
                       ) : (
                         <Trans>Go live</Trans>
                       )}
                     </Menu.ItemText>
-                    <Menu.ItemIcon icon={LiveIcon} />
+                    {statusNudgeActive && (
+                      <Menu.ItemText
+                        style={[
+                          a.flex_0,
+                          {
+                            color: t.palette.primary_500,
+                            right: IS_WEB ? -8 : -4,
+                          },
+                        ]}>
+                        <Trans>New</Trans>
+                      </Menu.ItemText>
+                    )}
+                    <Menu.ItemIcon
+                      icon={LiveIcon}
+                      fill={
+                        statusNudgeActive
+                          ? () => t.palette.primary_500
+                          : undefined
+                      }
+                    />
                   </Menu.Item>
                 )}
                 {verification.viewer.role === 'verifier' &&
@@ -517,7 +572,12 @@ let ProfileMenu = ({
         verifications={currentAccountVerifications}
       />
 
-      {status.isActive ? (
+      {status.isDisabled ? (
+        <GoLiveDisabledDialog
+          control={goLiveDisabledDialogControl}
+          status={status}
+        />
+      ) : status.isActive ? (
         <EditLiveDialog
           control={goLiveDialogControl}
           status={status}
