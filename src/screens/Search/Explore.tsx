@@ -5,16 +5,15 @@ import {
   type AppBskyFeedDefs,
   type AppBskyGraphDefs,
 } from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useQueryClient} from '@tanstack/react-query'
 import * as bcp47Match from 'bcp-47-match'
 
 import {popularInterests, useInterestsDisplayNames} from '#/lib/interests'
 import {cleanError} from '#/lib/strings/errors'
 import {sanitizeHandle} from '#/lib/strings/handles'
-import {logger} from '#/logger'
-import {type MetricEvents} from '#/logger/metrics'
 import {useLanguagePrefs} from '#/state/preferences/languages'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {RQKEY_ROOT as useActorSearchQueryKeyRoot} from '#/state/queries/actor-search'
@@ -68,6 +67,7 @@ import {Loader} from '#/components/Loader'
 import * as ProfileCard from '#/components/ProfileCard'
 import {SubtleHover} from '#/components/SubtleHover'
 import {Text} from '#/components/Typography'
+import {type Metrics, useAnalytics} from '#/analytics'
 import {ExploreScreenLiveEventFeedsBanner} from '#/features/liveEvents/components/ExploreScreenLiveEventFeedsBanner'
 import * as ModuleHeader from './components/ModuleHeader'
 import {
@@ -79,10 +79,14 @@ function LoadMore({item}: {item: ExploreScreenItems & {type: 'loadMore'}}) {
   const t = useTheme()
   const {_} = useLingui()
 
+  const handleOnPress = () => {
+    void item.onLoadMore()
+  }
+
   return (
     <Button
       label={_(msg`Load more`)}
-      onPress={item.onLoadMore}
+      onPress={handleOnPress}
       style={[a.relative, a.w_full]}>
       {({hovered, pressed}) => (
         <>
@@ -124,7 +128,7 @@ type ExploreScreenItems =
       bottomBorder?: boolean
       searchButton?: {
         label: string
-        metricsTag: MetricEvents['explore:module:searchButtonPress']['module']
+        metricsTag: Metrics['explore:module:searchButtonPress']['module']
         tab: 'user' | 'profile' | 'feed'
       }
     }
@@ -135,7 +139,7 @@ type ExploreScreenItems =
       icon: React.ComponentType<SVGIconProps>
       searchButton?: {
         label: string
-        metricsTag: MetricEvents['explore:module:searchButtonPress']['module']
+        metricsTag: Metrics['explore:module:searchButtonPress']['module']
         tab: 'user' | 'profile' | 'feed'
       }
       hideDefaultTab?: boolean
@@ -172,7 +176,7 @@ type ExploreScreenItems =
       key: string
       message: string
       isLoadingMore: boolean
-      onLoadMore: () => void
+      onLoadMore: () => void | Promise<void>
     }
   | {
       type: 'profilePlaceholder'
@@ -213,6 +217,7 @@ export function Explore({
   focusSearchInput: (tab: 'user' | 'profile' | 'feed') => void
   headerHeight: number
 }) {
+  const ax = useAnalytics()
   const {_} = useLingui()
   const t = useTheme()
   const {data: preferences, error: preferencesError} = usePreferencesQuery()
@@ -273,9 +278,10 @@ export function Explore({
     try {
       await fetchNextFeedsPage()
     } catch (err) {
-      logger.error('Failed to load more suggested follows', {message: err})
+      ax.logger.error('Failed to load more suggested follows', {message: err})
     }
   }, [
+    ax,
     isFetchingNextFeedsPage,
     hasNextFeedsPage,
     feedsError,
@@ -333,9 +339,10 @@ export function Explore({
     try {
       await fetchNextPageFeedPreviews()
     } catch (err) {
-      logger.error('Failed to load more feed previews', {message: err})
+      ax.logger.error('Failed to load more feed previews', {message: err})
     }
   }, [
+    ax,
     isPendingFeedPreviews,
     isFetchingNextPageFeedPreviews,
     hasNextPageFeedPreviews,
@@ -344,11 +351,19 @@ export function Explore({
   ])
 
   const topBorder = useMemo(
-    () => ({type: 'topBorder', key: 'top-border'}) as const,
+    () =>
+      ({
+        type: 'topBorder',
+        key: 'top-border',
+      }) as const,
     [],
   )
   const trendingTopicsModule = useMemo(
-    () => ({type: 'trendingTopics', key: 'trending-topics'}) as const,
+    () =>
+      ({
+        type: 'trendingTopics',
+        key: 'trending-topics',
+      }) as const,
     [],
   )
   const suggestedFollowsModule = useMemo(() => {
@@ -356,7 +371,7 @@ export function Explore({
     i.push({
       type: 'tabbedHeader',
       key: 'suggested-accounts-header',
-      title: _(msg`Suggested Accounts`),
+      title: _(msg`Suggested accounts`),
       icon: Person,
       searchButton: {
         label: _(msg`Search for more accounts`),
@@ -433,7 +448,7 @@ export function Explore({
     i.push({
       type: 'header',
       key: 'suggested-feeds-header',
-      title: _(msg`Discover New Feeds`),
+      title: _(msg`Discover new feeds`),
       icon: ListSparkle,
       searchButton: {
         label: _(msg`Search for more feeds`),
@@ -461,9 +476,9 @@ export function Explore({
         if (suggestedFeedsError) {
           i.push({
             type: 'error',
-            key: 'feedsError',
+            key: 'suggestedFeedsError',
             message: _(msg`Failed to load suggested feeds`),
-            error: cleanError(feedsError),
+            error: cleanError(suggestedFeedsError),
           })
         } else if (preferencesError) {
           i.push({
@@ -492,11 +507,7 @@ export function Explore({
               if (hasPressedLoadMoreFeeds && index < 6) {
                 continue
               }
-              logger.metric(
-                'feed:suggestion:seen',
-                {feedUrl: item.feed.uri},
-                {statsig: false},
-              )
+              ax.metric('feed:suggestion:seen', {feedUrl: item.feed.uri})
             }
           }
           if (!hasPressedLoadMoreFeeds) {
@@ -514,8 +525,15 @@ export function Explore({
           i.push({
             type: 'error',
             key: 'feedsError',
-            message: _(msg`Failed to load suggested feeds`),
+            message: _(msg`Failed to load feeds`),
             error: cleanError(feedsError),
+          })
+        } else if (suggestedFeedsError) {
+          i.push({
+            type: 'error',
+            key: 'suggestedFeedsError',
+            message: _(msg`Failed to load suggested feeds`),
+            error: cleanError(suggestedFeedsError),
           })
         } else if (preferencesError) {
           i.push({
@@ -552,8 +570,15 @@ export function Explore({
           i.push({
             type: 'error',
             key: 'feedsError',
-            message: _(msg`Failed to load suggested feeds`),
+            message: _(msg`Failed to load feeds`),
             error: cleanError(feedsError),
+          })
+        } else if (suggestedFeedsError) {
+          i.push({
+            type: 'error',
+            key: 'suggestedFeedsError',
+            message: _(msg`Failed to load suggested feeds`),
+            error: cleanError(suggestedFeedsError),
           })
         } else if (preferencesError) {
           i.push({
@@ -591,8 +616,15 @@ export function Explore({
           i.push({
             type: 'error',
             key: 'feedsError',
-            message: _(msg`Failed to load suggested feeds`),
+            message: _(msg`Failed to load feeds`),
             error: cleanError(feedsError),
+          })
+        } else if (suggestedFeedsError) {
+          i.push({
+            type: 'error',
+            key: 'feedsError',
+            message: _(msg`Failed to load suggested feeds`),
+            error: cleanError(suggestedFeedsError),
           })
         } else if (preferencesError) {
           i.push({
@@ -609,6 +641,7 @@ export function Explore({
     return i
   }, [
     _,
+    ax,
     useFullExperience,
     suggestedFeeds,
     preferences,
@@ -715,6 +748,9 @@ export function Explore({
 
   const renderItem = useCallback(
     ({item, index}: {item: ExploreScreenItems; index: number}) => {
+      const handleOnPressRetry = () => {
+        void fetchNextPageFeedPreviews()
+      }
       switch (item.type) {
         case 'topBorder':
           return (
@@ -729,12 +765,7 @@ export function Explore({
                 <ModuleHeader.SearchButton
                   {...item.searchButton}
                   onPress={() =>
-                    focusSearchInput(
-                      (item.searchButton?.tab || 'user') as
-                        | 'user'
-                        | 'profile'
-                        | 'feed',
-                    )
+                    focusSearchInput(item.searchButton?.tab || 'user')
                   }
                 />
               )}
@@ -751,12 +782,7 @@ export function Explore({
                   <ModuleHeader.SearchButton
                     {...item.searchButton}
                     onPress={() =>
-                      focusSearchInput(
-                        (item.searchButton?.tab || 'user') as
-                          | 'user'
-                          | 'profile'
-                          | 'feed',
-                      )
+                      focusSearchInput(item.searchButton?.tab || 'user')
                     }
                   />
                 )}
@@ -822,7 +848,7 @@ export function Explore({
                   if (!useFullExperience) {
                     return
                   }
-                  logger.metric('feed:suggestion:press', {
+                  ax.metric('feed:suggestion:press', {
                     feedUrl: item.feed.uri,
                   })
                 }}
@@ -998,7 +1024,7 @@ export function Explore({
               label={_(
                 msg`There was an issue fetching posts. Tap here to try again.`,
               )}
-              onPress={fetchNextPageFeedPreviews}
+              onPress={handleOnPressRetry}
             />
           )
         }
@@ -1011,6 +1037,7 @@ export function Explore({
       }
     },
     [
+      ax,
       t.atoms.border_contrast_low,
       t.atoms.bg_contrast_25,
       t.atoms.text_contrast_medium,
@@ -1043,7 +1070,7 @@ export function Explore({
   const seenProfilesRef = useRef<Set<string>>(new Set())
   const onItemSeen = useCallback(
     (item: ExploreScreenItems) => {
-      let module: MetricEvents['explore:module:seen']['module']
+      let module: Metrics['explore:module:seen']['module']
       if (item.type === 'trendingTopics' || item.type === 'trendingVideos') {
         module = item.type
       } else if (item.type === 'profile') {
@@ -1054,17 +1081,13 @@ export function Explore({
           const position = suggestedFollowsModule.findIndex(
             i => i.type === 'profile' && i.profile.did === item.profile.did,
           )
-          logger.metric(
-            'suggestedUser:seen',
-            {
-              logContext: 'Explore',
-              recId: item.recId,
-              position: position !== -1 ? position - 1 : 0, // -1 to account for header
-              suggestedDid: item.profile.did,
-              category: null,
-            },
-            {statsig: true},
-          )
+          ax.metric('suggestedUser:seen', {
+            logContext: 'Explore',
+            recId: item.recId,
+            position: position !== -1 ? position - 1 : 0, // -1 to account for header
+            suggestedDid: item.profile.did,
+            category: null,
+          })
         }
       } else if (item.type === 'feed') {
         module = 'suggestedFeeds'
@@ -1077,11 +1100,19 @@ export function Explore({
       }
       if (!alreadyReportedRef.current.has(module)) {
         alreadyReportedRef.current.set(module, module)
-        logger.metric('explore:module:seen', {module}, {statsig: false})
+        ax.metric('explore:module:seen', {module})
       }
     },
-    [suggestedFollowsModule],
+    [ax, suggestedFollowsModule],
   )
+
+  const handleOnEndReached = () => {
+    void onLoadMoreFeedPreviews()
+  }
+
+  const handleOnRefresh = () => {
+    void onPTR()
+  }
 
   return (
     <List
@@ -1095,7 +1126,7 @@ export function Explore({
       stickyHeaderIndices={native(stickyHeaderIndices)}
       viewabilityConfig={viewabilityConfig}
       onItemSeen={onItemSeen}
-      onEndReached={onLoadMoreFeedPreviews}
+      onEndReached={handleOnEndReached}
       /**
        * Default: 2
        */
@@ -1131,7 +1162,7 @@ export function Explore({
        */
       updateCellsBatchingPeriod={50}
       refreshing={isPTR}
-      onRefresh={onPTR}
+      onRefresh={handleOnRefresh}
     />
   )
 }

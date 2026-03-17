@@ -2,8 +2,9 @@ import {useEffect, useMemo, useState} from 'react'
 import {Keyboard, type StyleProp, type ViewStyle} from 'react-native'
 import {type AnimatedStyle} from 'react-native-reanimated'
 import {type AppBskyFeedPostgate} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import deepEqual from 'fast-deep-equal'
 
 import {isNetworkError} from '#/lib/strings/errors'
@@ -24,6 +25,7 @@ import {Earth_Stroke2_Corner0_Rounded as EarthIcon} from '#/components/icons/Glo
 import {Group3_Stroke2_Corner0_Rounded as GroupIcon} from '#/components/icons/Group'
 import * as Tooltip from '#/components/Tooltip'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
 import {IS_NATIVE} from '#/env'
 import {useThreadgateNudged} from '#/storage/hooks/threadgate-nudged'
 
@@ -42,6 +44,7 @@ export function ThreadgateBtn({
   style?: StyleProp<AnimatedStyle<ViewStyle>>
 }) {
   const {_} = useLingui()
+  const ax = useAnalytics()
   const control = Dialog.useDialogControl()
   const [threadgateNudged, setThreadgateNudged] = useThreadgateNudged()
   const [showTooltip, setShowTooltip] = useState(false)
@@ -66,7 +69,7 @@ export function ThreadgateBtn({
   const [persist, setPersist] = useState(false)
 
   const onPress = () => {
-    logger.metric('composer:threadgate:open', {
+    ax.metric('composer:threadgate:open', {
       nudged: tooltipWasShown,
     })
 
@@ -151,7 +154,9 @@ export function ThreadgateBtn({
               msg`Opens a dialog to choose who can interact with this post`,
             )}>
             <ButtonIcon icon={anyoneCanInteract ? EarthIcon : GroupIcon} />
-            <ButtonText numberOfLines={1}>{label}</ButtonText>
+            <ButtonText numberOfLines={1} maxFontSizeMultiplier={2}>
+              {label}
+            </ButtonText>
             <ButtonIcon icon={TinyChevronIcon} size="2xs" />
           </Button>
         </Tooltip.Target>

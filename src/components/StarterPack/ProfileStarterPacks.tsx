@@ -8,8 +8,9 @@ import {
   type ViewStyle,
 } from 'react-native'
 import {type AppBskyGraphDefs} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useNavigation} from '@react-navigation/native'
 
 import {useGenerateStarterPackMutation} from '#/lib/generate-starterpack'
@@ -101,7 +102,7 @@ export function ProfileStarterPacks({
             message={
               emptyStateMessage ??
               _(
-                'Starter packs let you share your favorite feeds and people with your friends.',
+                msg`Starter packs let you share your favorite feeds and people with your friends.`,
               )
             }
             button={emptyStateButton}
@@ -331,15 +332,17 @@ function Empty() {
       </View>
 
       <Prompt.Outer control={confirmDialogControl}>
-        <Prompt.TitleText>
-          <Trans>Generate a starter pack</Trans>
-        </Prompt.TitleText>
-        <Prompt.DescriptionText>
-          <Trans>
-            Bluesky will choose a set of recommended accounts from people in
-            your network.
-          </Trans>
-        </Prompt.DescriptionText>
+        <Prompt.Content>
+          <Prompt.TitleText>
+            <Trans>Generate a starter pack</Trans>
+          </Prompt.TitleText>
+          <Prompt.DescriptionText>
+            <Trans>
+              Bluesky will choose a set of recommended accounts from people in
+              your network.
+            </Trans>
+          </Prompt.DescriptionText>
+        </Prompt.Content>
         <Prompt.Actions>
           <Prompt.Action
             color="primary"

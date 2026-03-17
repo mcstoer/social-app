@@ -3,8 +3,9 @@ import {AppState, type AppStateStatus, View} from 'react-native'
 import ReactNativeDeviceAttest from 'react-native-device-attest'
 import Animated, {FadeIn, LayoutAnimationConfig} from 'react-native-reanimated'
 import {AppBskyGraphStarterpack} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {FEEDBACK_FORM_URL} from '#/lib/constants'
 import {logger} from '#/logger'
@@ -29,16 +30,27 @@ import {LinearGradientBackground} from '#/components/LinearGradientBackground'
 import {InlineLinkText} from '#/components/Link'
 import {ScreenTransition} from '#/components/ScreenTransition'
 import {Text} from '#/components/Typography'
-import {IS_ANDROID} from '#/env'
-import {GCP_PROJECT_ID} from '#/env'
+import {useAnalytics} from '#/analytics'
+import {GCP_PROJECT_ID, IS_ANDROID} from '#/env'
 import * as bsky from '#/types/bsky'
 
 export function Signup({onPressBack}: {onPressBack: () => void}) {
+  const ax = useAnalytics()
   const {_} = useLingui()
   const t = useTheme()
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    analytics: ax,
+  })
   const {gtMobile} = useBreakpoints()
   const submit = useSubmitSignup()
+
+  useEffect(() => {
+    dispatch({
+      type: 'setAnalytics',
+      value: ax,
+    })
+  }, [ax])
 
   const activeStarterPack = useActiveStarterPack()
   const {

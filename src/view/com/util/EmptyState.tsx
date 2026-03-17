@@ -1,4 +1,4 @@
-import React from 'react'
+import {isValidElement} from 'react'
 import {type StyleProp, type TextStyle, type ViewStyle} from 'react-native'
 import {View} from 'react-native'
 
@@ -45,7 +45,7 @@ export function EmptyState({
       return placeholderIcon
     }
 
-    if (React.isValidElement(icon)) {
+    if (isValidElement(icon)) {
       return icon
     }
 
@@ -67,7 +67,7 @@ export function EmptyState({
   }
 
   return (
-    <View testID={testID} style={style}>
+    <View testID={testID} style={[a.w_full, style]}>
       <View
         style={[
           a.flex_row,
@@ -77,7 +77,7 @@ export function EmptyState({
           a.rounded_full,
           a.mt_5xl,
           {height: 64, width: 64},
-          React.isValidElement(icon)
+          isValidElement(icon)
             ? a.bg_transparent
             : [isTabletOrDesktop && {marginTop: 50}],
         ]}>
@@ -95,12 +95,13 @@ export function EmptyState({
           a.leading_snug,
           a.text_center,
           a.self_center,
+          !button && a.mb_5xl,
           textStyle,
         ]}>
         {message}
       </Text>
       {button && (
-        <View style={[a.flex_shrink, a.mt_xl, a.self_center]}>
+        <View style={[a.flex_shrink, a.mt_xl, a.self_center, a.mb_5xl]}>
           <Button {...button}>
             <ButtonText>{button.text}</ButtonText>
           </Button>

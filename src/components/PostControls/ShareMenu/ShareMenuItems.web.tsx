@@ -1,14 +1,14 @@
 import {memo, useMemo} from 'react'
 import {AtUri} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useNavigation} from '@react-navigation/native'
 
 import {makeProfileLink} from '#/lib/routes/links'
 import {type NavigationProp} from '#/lib/routes/types'
 import {shareText, shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
-import {logger} from '#/logger'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {useSession} from '#/state/session'
 import {useBreakpoints} from '#/alf'
@@ -21,6 +21,7 @@ import {CodeBrackets_Stroke2_Corner0_Rounded as CodeBracketsIcon} from '#/compon
 import {PaperPlane_Stroke2_Corner0_Rounded as Send} from '#/components/icons/PaperPlane'
 import * as Menu from '#/components/Menu'
 import {useAgeAssurance} from '#/ageAssurance'
+import {useAnalytics} from '#/analytics'
 import {IS_WEB} from '#/env'
 import {useDevMode} from '#/storage/hooks/dev-mode'
 import {type ShareMenuItemsProps} from './ShareMenuItems.types'
@@ -31,6 +32,7 @@ let ShareMenuItems = ({
   timestamp,
   onShare: onShareProp,
 }: ShareMenuItemsProps): React.ReactNode => {
+  const ax = useAnalytics()
   const {hasSession} = useSession()
   const {gtMobile} = useBreakpoints()
   const {_} = useLingui()
@@ -56,14 +58,14 @@ let ShareMenuItems = ({
   }, [postAuthor])
 
   const onCopyLink = () => {
-    logger.metric('share:press:copyLink', {}, {statsig: true})
+    ax.metric('share:press:copyLink', {})
     const url = toShareUrl(href)
     shareUrl(url)
     onShareProp()
   }
 
   const onSelectChatToShareTo = (conversation: string) => {
-    logger.metric('share:press:dmSelected', {}, {statsig: true})
+    ax.metric('share:press:dmSelected', {})
     navigation.navigate('MessagesConversation', {
       conversation,
       embed: postUri,
@@ -102,7 +104,7 @@ let ShareMenuItems = ({
             testID="postDropdownSendViaDMBtn"
             label={_(msg`Send via direct message`)}
             onPress={() => {
-              logger.metric('share:press:openDmSearch', {}, {statsig: true})
+              ax.metric('share:press:openDmSearch', {})
               sendViaChatControl.open()
             }}>
             <Menu.ItemText>
@@ -117,7 +119,7 @@ let ShareMenuItems = ({
             testID="postDropdownEmbedBtn"
             label={_(msg`Embed post`)}
             onPress={() => {
-              logger.metric('share:press:embed', {}, {statsig: true})
+              ax.metric('share:press:embed', {})
               embedPostControl.open()
             }}>
             <Menu.ItemText>{_(msg`Embed post`)}</Menu.ItemText>

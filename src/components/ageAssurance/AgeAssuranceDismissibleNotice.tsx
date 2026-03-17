@@ -1,5 +1,5 @@
 import {View} from 'react-native'
-import {msg} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
@@ -10,10 +10,11 @@ import {useAgeAssuranceCopy} from '#/components/ageAssurance/useAgeAssuranceCopy
 import {Button, ButtonIcon} from '#/components/Button'
 import {TimesLarge_Stroke2_Corner0_Rounded as X} from '#/components/icons/Times'
 import {useAgeAssurance} from '#/ageAssurance'
-import {logger} from '#/ageAssurance'
+import {useAnalytics} from '#/analytics'
 
 export function AgeAssuranceDismissibleNotice({style}: ViewStyleProp & {}) {
   const {_} = useLingui()
+  const ax = useAnalytics()
   const aa = useAgeAssurance()
   const {nux} = useNux(Nux.AgeAssuranceDismissibleNotice)
   const copy = useAgeAssuranceCopy()
@@ -45,7 +46,7 @@ export function AgeAssuranceDismissibleNotice({style}: ViewStyleProp & {}) {
                 completed: true,
                 data: undefined,
               })
-              logger.metric('ageAssurance:dismissSettingsNotice', {})
+              ax.metric('ageAssurance:dismissSettingsNotice', {})
             }}
             style={[
               a.absolute,

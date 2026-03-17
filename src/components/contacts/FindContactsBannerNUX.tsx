@@ -2,16 +2,17 @@ import {useMemo} from 'react'
 import {View} from 'react-native'
 import {Image} from 'expo-image'
 import {LinearGradient} from 'expo-linear-gradient'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {HITSLOP_10} from '#/lib/constants'
-import {logger} from '#/logger'
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
 import {atoms as a, useTheme} from '#/alf'
 import {Button} from '#/components/Button'
 import {TimesLarge_Stroke2_Corner0_Rounded as XIcon} from '#/components/icons/Times'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
 import {IS_WEB} from '#/env'
 import {Link} from '../Link'
 import {useIsFindContactsFeatureEnabledBasedOnGeolocation} from './country-allowlist'
@@ -19,6 +20,7 @@ import {useIsFindContactsFeatureEnabledBasedOnGeolocation} from './country-allow
 export function FindContactsBannerNUX() {
   const t = useTheme()
   const {_} = useLingui()
+  const ax = useAnalytics()
   const {visible, close} = useInternalState()
 
   if (!visible) return null
@@ -30,7 +32,7 @@ export function FindContactsBannerNUX() {
           to={{screen: 'FindContactsFlow'}}
           label={_(msg`Import contacts to find your friends`)}
           onPress={() => {
-            logger.metric('contacts:nux:bannerPressed', {})
+            ax.metric('contacts:nux:bannerPressed', {})
           }}
           style={[
             a.w_full,
@@ -84,6 +86,7 @@ export function FindContactsBannerNUX() {
   )
 }
 function useInternalState() {
+  const ax = useAnalytics()
   const {nux} = useNux(Nux.FindContactsDismissibleBanner)
   const {mutate: save, variables} = useSaveNux()
   const hidden = !!variables
@@ -103,7 +106,7 @@ function useInternalState() {
       completed: true,
       data: undefined,
     })
-    logger.metric('contacts:nux:bannerDismissed', {})
+    ax.metric('contacts:nux:bannerDismissed', {})
   }
 
   return {visible, close}

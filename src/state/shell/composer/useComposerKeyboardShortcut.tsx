@@ -1,4 +1,4 @@
-import React from 'react'
+import {useEffect} from 'react'
 
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
 import {useDialogStateContext} from '#/state/dialogs'
@@ -46,7 +46,7 @@ export function useComposerKeyboardShortcut() {
   const isDrawerOpen = useIsDrawerOpen()
   const {hasSession} = useSession()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!hasSession) {
       return
     }
@@ -61,7 +61,7 @@ export function useComposerKeyboardShortcut() {
       )
         return
       if (event.key === 'n' || event.key === 'N') {
-        openComposer({})
+        openComposer({logContext: 'Other'})
       }
     }
     document.addEventListener('keydown', handler)

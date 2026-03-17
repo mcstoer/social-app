@@ -1,6 +1,7 @@
 import {Keyboard, View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {
   ADULT_CONTENT_LABELS,
@@ -33,18 +34,18 @@ export function LabelsBtn({
 
   const updateAdultLabels = (newLabels: AdultSelfLabel[]) => {
     const newLabel = newLabels[newLabels.length - 1]
-    const filtered = labels.filter(l => !ADULT_CONTENT_LABELS.includes(l))
-    onChange([
-      ...new Set([...filtered, newLabel].filter(Boolean) as SelfLabel[]),
-    ])
+    const filtered = labels.filter(
+      l => !ADULT_CONTENT_LABELS.includes(l as AdultSelfLabel),
+    )
+    onChange([...new Set([...filtered, newLabel].filter(Boolean))])
   }
 
   const updateOtherLabels = (newLabels: OtherSelfLabel[]) => {
     const newLabel = newLabels[newLabels.length - 1]
-    const filtered = labels.filter(l => !OTHER_SELF_LABELS.includes(l))
-    onChange([
-      ...new Set([...filtered, newLabel].filter(Boolean) as SelfLabel[]),
-    ])
+    const filtered = labels.filter(
+      l => !OTHER_SELF_LABELS.includes(l as OtherSelfLabel),
+    )
+    onChange([...new Set([...filtered, newLabel].filter(Boolean))])
   }
 
   return (
@@ -62,7 +63,7 @@ export function LabelsBtn({
           msg`Opens a dialog to add a content warning to your post`,
         )}>
         <ButtonIcon icon={hasLabel ? Check : Shield_Stroke2_Corner0_Rounded} />
-        <ButtonText numberOfLines={1}>
+        <ButtonText numberOfLines={1} maxFontSizeMultiplier={2}>
           {labels.length > 0 ? (
             <Trans>Labels added</Trans>
           ) : (

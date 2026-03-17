@@ -7,10 +7,10 @@ import {
   type ModerationOpts,
   type RichText as RichTextAPI,
 } from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
-import {useActorStatus} from '#/lib/actor-status'
 import {useHaptics} from '#/lib/haptics'
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
@@ -34,18 +34,20 @@ import {
   KnownFollowers,
   shouldShowKnownFollowers,
 } from '#/components/KnownFollowers'
+import {ProfileBadges} from '#/components/ProfileBadges'
 import * as Prompt from '#/components/Prompt'
 import {RichText} from '#/components/RichText'
 import * as Toast from '#/components/Toast'
 import {Text} from '#/components/Typography'
-import {VerificationCheckButton} from '#/components/verification/VerificationCheckButton'
 import {VerusIDVerificationCheckButton} from '#/components/verification/verusid/VerusIDVerificationCheckButton'
 import {IS_IOS} from '#/env'
+import {useActorStatus} from '#/features/liveNow'
+import {GermButton} from '../components/GermButton'
 import {EditProfileDialog} from './EditProfileDialog'
 import {ProfileHeaderHandle} from './Handle'
 import {ProfileHeaderMetrics} from './Metrics'
 import {ProfileHeaderShell} from './Shell'
-import {AnimatedProfileHeaderSuggestedFollows} from './SuggestedFollows'
+import {ProfileHeaderSuggestedFollows} from './SuggestedFollows'
 
 interface Props {
   profile: AppBskyActorDefs.ProfileViewDetailed
@@ -77,6 +79,8 @@ let ProfileHeaderStandard = ({
   const [, queueUnblock] = useProfileBlockMutationQueue(profile)
   const unblockPromptControl = Prompt.usePromptControl()
   const [showSuggestedFollows, setShowSuggestedFollows] = useState(false)
+  const [hasSeenAllSuggestedFollows, setHasSeenAllSuggestedFollows] =
+    useState(false)
   const isBlockedUser =
     profile.viewer?.blocking ||
     profile.viewer?.blockedBy ||
@@ -86,12 +90,18 @@ let ProfileHeaderStandard = ({
     try {
       await queueUnblock()
       Toast.show(_(msg({message: 'Account unblocked', context: 'toast'})))
-    } catch (e: any) {
+    } catch (err) {
+      const e = err as Error
       if (e?.name !== 'AbortError') {
         logger.error('Failed to unblock account', {message: e})
         Toast.show(_(msg`There was an issue! ${e.toString()}`), {type: 'error'})
       }
     }
+  }
+
+  const onRequestHide = () => {
+    setHasSeenAllSuggestedFollows(true)
+    setShowSuggestedFollows(false)
   }
 
   const isMe = currentAccount?.did === profile.did
@@ -145,7 +155,7 @@ let ProfileHeaderStandard = ({
                   moderation.ui('displayName'),
                 )}
                 <View style={[a.pl_xs, {marginTop: platform({ios: 2})}]}>
-                  <VerificationCheckButton profile={profile} size="lg" />
+                  <ProfileBadges profile={profile} size="lg" interactive />
                   {linkedVerusID && (
                     <VerusIDVerificationCheckButton
                       verusIdLink={linkedVerusID}
@@ -178,12 +188,17 @@ let ProfileHeaderStandard = ({
                     testID="profileHeaderDescription"
                     style={[a.text_md]}
                     numberOfLines={15}
+                    selectable
                     value={descriptionRT}
                     enableTags
                     authorHandle={profile.handle}
                   />
                 </View>
               ) : undefined}
+
+              {profile.associated?.germ && (
+                <GermButton germ={profile.associated.germ} profile={profile} />
+              )}
 
               {!isMe &&
                 !isBlockedUser &&
@@ -207,7 +222,9 @@ let ProfileHeaderStandard = ({
           description={_(
             msg`The account will be able to interact with you after unblocking.`,
           )}
-          onConfirm={unblockAccount}
+          onConfirm={() => {
+            void unblockAccount()
+          }}
           confirmButtonCta={
             profile.viewer?.blocking ? _(msg`Unblock`) : _(msg`Block`)
           }
@@ -215,9 +232,10 @@ let ProfileHeaderStandard = ({
         />
       </ProfileHeaderShell>
 
-      <AnimatedProfileHeaderSuggestedFollows
-        isExpanded={showSuggestedFollows}
+      <ProfileHeaderSuggestedFollows
+        isExpanded={!hasSeenAllSuggestedFollows && showSuggestedFollows}
         actorDid={profile.did}
+        onRequestHide={onRequestHide}
       />
     </>
   )
@@ -269,7 +287,8 @@ export function HeaderStandardButtons({
             )}`,
           ),
         )
-      } catch (e: any) {
+      } catch (err) {
+        const e = err as Error
         if (e?.name !== 'AbortError') {
           logger.error('Failed to follow', {message: String(e)})
           Toast.show(_(msg`There was an issue! ${e.toString()}`), {
@@ -295,7 +314,8 @@ export function HeaderStandardButtons({
           ),
           {type: 'default'},
         )
-      } catch (e: any) {
+      } catch (err) {
+        const e = err as Error
         if (e?.name !== 'AbortError') {
           logger.error('Failed to unfollow', {message: String(e)})
           Toast.show(_(msg`There was an issue! ${e.toString()}`), {
@@ -310,7 +330,8 @@ export function HeaderStandardButtons({
     try {
       await queueUnblock()
       Toast.show(_(msg({message: 'Account unblocked', context: 'toast'})))
-    } catch (e: any) {
+    } catch (err) {
+      const e = err as Error
       if (e?.name !== 'AbortError') {
         logger.error('Failed to unblock account', {message: e})
         Toast.show(_(msg`There was an issue! ${e.toString()}`), {type: 'error'})
@@ -339,7 +360,10 @@ export function HeaderStandardButtons({
             testID="profileHeaderEditProfileButton"
             size="small"
             color="secondary"
-            onPress={editProfileControl.open}
+            onPress={() => {
+              playHaptic('Light')
+              editProfileControl.open()
+            }}
             label={_(msg`Edit profile`)}>
             <ButtonText>
               <Trans>Edit Profile</Trans>
@@ -412,7 +436,9 @@ export function HeaderStandardButtons({
         description={_(
           msg`The account will be able to interact with you after unblocking.`,
         )}
-        onConfirm={unblockAccount}
+        onConfirm={() => {
+          void unblockAccount()
+        }}
         confirmButtonCta={_(msg`Unblock`)}
         confirmButtonColor="negative"
       />

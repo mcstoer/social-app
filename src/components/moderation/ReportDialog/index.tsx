@@ -1,13 +1,21 @@
-import React from 'react'
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
 import {Pressable, type ScrollView, View} from 'react-native'
 import {type AppBskyLabelerDefs, BSKY_LABELER_DID} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {wait} from '#/lib/async/wait'
 import {getLabelingServiceTitle} from '#/lib/moderation'
+import {useCallOnce} from '#/lib/once'
 import {sanitizeHandle} from '#/lib/strings/handles'
-import {Logger} from '#/logger'
 import {useMyLabelersQuery} from '#/state/queries/preferences'
 import {CharProgress} from '#/view/com/composer/char-progress/CharProgress'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
@@ -28,6 +36,7 @@ import {TimesLarge_Stroke2_Corner0_Rounded as X} from '#/components/icons/Times'
 import {createStaticClick, InlineLinkText, Link} from '#/components/Link'
 import {Loader} from '#/components/Loader'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
 import {IS_NATIVE} from '#/env'
 import {useSubmitReportMutation} from './action'
 import {
@@ -53,8 +62,6 @@ export function useGlobalReportDialogControl() {
   return useGlobalDialogsControlContext().reportDialogControl
 }
 
-const logger = Logger.create(Logger.Context.ReportDialog)
-
 export function GlobalReportDialog() {
   const {value, control} = useGlobalReportDialogControl()
   return <ReportDialog control={control} subject={value?.subject} />
@@ -65,13 +72,14 @@ export function ReportDialog(
     subject?: ReportSubject
   },
 ) {
-  const subject = React.useMemo(
+  const ax = useAnalytics()
+  const subject = useMemo(
     () => (props.subject ? parseReportSubject(props.subject) : undefined),
     [props.subject],
   )
-  const onClose = React.useCallback(() => {
-    logger.metric('reportDialog:close', {}, {statsig: false})
-  }, [])
+  const onClose = useCallback(() => {
+    ax.metric('reportDialog:close', {})
+  }, [ax])
   return (
     <Dialog.Outer control={props.control} onClose={onClose}>
       <Dialog.Handle />
@@ -103,9 +111,11 @@ function Invalid() {
 }
 
 function Inner(props: ReportDialogProps) {
+  const ax = useAnalytics()
+  const logger = ax.logger.useChild(ax.logger.Context.ReportDialog)
   const t = useTheme()
   const {_} = useLingui()
-  const ref = React.useRef<ScrollView>(null)
+  const ref = useRef<ScrollView>(null)
   const {
     data: allLabelers,
     isLoading: isLabelerLoading,
@@ -115,14 +125,14 @@ function Inner(props: ReportDialogProps) {
   const isLoading = useDelayedLoading(500, isLabelerLoading)
   const copy = useCopyForSubject(props.subject)
   const {categories, getCategory} = useReportOptions()
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   /**
    * Submission handling
    */
   const {mutateAsync: submitReport} = useSubmitReportMutation()
-  const [isPending, setPending] = React.useState(false)
-  const [isSuccess, setSuccess] = React.useState(false)
+  const [isPending, setPending] = useState(false)
+  const [isSuccess, setSuccess] = useState(false)
 
   // some reasons ONLY go to Bluesky
   const isBskyOnlyReason = state?.selectedOption?.reason
@@ -136,7 +146,7 @@ function Inner(props: ReportDialogProps) {
   /**
    * Labelers that support this `subject` and its NSID collection
    */
-  const supportedLabelers = React.useMemo(() => {
+  const supportedLabelers = useMemo(() => {
     if (!allLabelers) return []
     return allLabelers
       .filter(l => {
@@ -166,8 +176,8 @@ function Inner(props: ReportDialogProps) {
         if (supportedReasonTypes === undefined) return true
         return (
           // supports new reason type
-          supportedReasonTypes.includes(state.selectedOption.reason) ||
           // supports old reason type (backwards compat)
+          supportedReasonTypes.includes(state.selectedOption.reason) ||
           supportedReasonTypes.includes(
             NEW_TO_OLD_REASONS_MAP[state.selectedOption.reason],
           )
@@ -192,7 +202,7 @@ function Inner(props: ReportDialogProps) {
   const isAlwaysBskyLabeler =
     hasSingleSupportedLabeler && (isBskyOnlyReason || isBskyOnlySubject)
 
-  const onSubmit = React.useCallback(async () => {
+  const onSubmit = useCallback(async () => {
     dispatch({type: 'clearError'})
 
     logger.info('submitting')
@@ -208,15 +218,11 @@ function Inner(props: ReportDialogProps) {
         }),
       )
       setSuccess(true)
-      logger.metric(
-        'reportDialog:success',
-        {
-          reason: state.selectedOption?.reason ?? '',
-          labeler: state.selectedLabeler?.creator.handle ?? '',
-          details: !!state.details,
-        },
-        {statsig: false},
-      )
+      ax.metric('reportDialog:success', {
+        reason: state.selectedOption?.reason ?? '',
+        labeler: state.selectedLabeler?.creator.handle ?? '',
+        details: !!state.details,
+      })
       // give time for user feedback
       setTimeout(() => {
         props.control.close(() => {
@@ -224,7 +230,7 @@ function Inner(props: ReportDialogProps) {
         })
       }, 1e3)
     } catch (e: any) {
-      logger.metric('reportDialog:failure', {}, {statsig: false})
+      ax.metric('reportDialog:failure', {})
       logger.error(e, {
         source: 'ReportDialog',
       })
@@ -237,15 +243,11 @@ function Inner(props: ReportDialogProps) {
     }
   }, [_, submitReport, state, dispatch, props, setPending, setSuccess])
 
-  React.useEffect(() => {
-    logger.metric(
-      'reportDialog:open',
-      {
-        subjectType: props.subject.type,
-      },
-      {statsig: false},
-    )
-  }, [props.subject])
+  useCallOnce(() => {
+    ax.metric('reportDialog:open', {
+      subjectType: props.subject.type,
+    })
+  })()
 
   return (
     <Dialog.ScrollableInner
@@ -581,7 +583,6 @@ function Inner(props: ReportDialogProps) {
           )}
         </StepOuter>
       </View>
-
       <Dialog.Close />
     </Dialog.ScrollableInner>
   )
@@ -594,7 +595,7 @@ function ActionOnce({
   check: () => boolean
   callback: () => void
 }) {
-  React.useEffect(() => {
+  useEffect(() => {
     if (check()) {
       callback()
     }
@@ -693,7 +694,7 @@ function CategoryCard({
   const t = useTheme()
   const {_} = useLingui()
   const gutters = useGutters(['compact'])
-  const onPress = React.useCallback(() => {
+  const onPress = useCallback(() => {
     onSelect?.(option)
   }, [onSelect, option])
   return (
@@ -738,7 +739,7 @@ function OptionCard({
   const t = useTheme()
   const {_} = useLingui()
   const gutters = useGutters(['compact'])
-  const onPress = React.useCallback(() => {
+  const onPress = useCallback(() => {
     onSelect?.(option)
   }, [onSelect, option])
   return (
@@ -800,7 +801,7 @@ function LabelerCard({
 }) {
   const t = useTheme()
   const {_} = useLingui()
-  const onPress = React.useCallback(() => {
+  const onPress = useCallback(() => {
     onSelect?.(labeler)
   }, [onSelect, labeler])
   const title = getLabelingServiceTitle({

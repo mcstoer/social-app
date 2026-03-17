@@ -1,17 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react'
-import {
-  ActivityIndicator,
-  Keyboard,
-  LayoutAnimation,
-  type TextInput,
-  View,
-} from 'react-native'
+import React, {useCallback, useEffect, useRef, useState} from 'react'
+import {Keyboard, type TextInput, View} from 'react-native'
 import {
   ComAtprotoServerCreateSession,
   type ComAtprotoServerDescribeServer,
 } from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import crypto from 'crypto'
 import {
   IDENTITY_CREDENTIAL_PLAINLOGIN,
@@ -26,8 +21,7 @@ import {
 
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
-import {isNetworkError} from '#/lib/strings/errors'
-import {cleanError} from '#/lib/strings/errors'
+import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {parseVerusIdLogin} from '#/lib/verus/login'
 import {logger} from '#/logger'
@@ -37,7 +31,7 @@ import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
 import {useSessionApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
-import {atoms as a, ios, useTheme} from '#/alf'
+import {atoms as a, ios, useTheme, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
@@ -51,7 +45,7 @@ import {Ticket_Stroke2_Corner0_Rounded as Ticket} from '#/components/icons/Ticke
 import {Loader} from '#/components/Loader'
 import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
-import {IS_IOS} from '#/env'
+import {IS_IOS, IS_WEB} from '#/env'
 import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {FormContainer} from './FormContainer'
 
@@ -83,9 +77,10 @@ export const LoginForm = ({
   onAttemptFailed: () => void
 }) => {
   const t = useTheme()
-  const [isProcessing, setIsProcessing] = useState<boolean>(false)
-  const [isAuthFactorTokenNeeded, setIsAuthFactorTokenNeeded] =
-    useState<boolean>(false)
+  const [isProcessing, setIsProcessing] = useState(false)
+  const [errorField, setErrorField] = useState<
+    'none' | 'identifier' | 'password' | '2fa'
+  >('none')
   const [isVerusIdLogin, setIsVerusIdLogin] = useState<boolean>(
     VERUSSKY_CONFIG.defaultLoginVerusid,
   )
@@ -93,7 +88,7 @@ export const LoginForm = ({
     useState<boolean>(false)
   const [openRemoveVerusIdLinkDialog, setOpenRemoveVerusIdLinkDialog] =
     useState<boolean>(false)
-
+  const [isAuthFactorTokenNeeded, setIsAuthFactorTokenNeeded] = useState(false)
   const identifierValueRef = useRef<string>(initialHandle || '')
   const passwordValueRef = useRef<string>('')
   const [authFactorToken, setAuthFactorToken] = useState('')
@@ -197,15 +192,15 @@ export const LoginForm = ({
     }
   }, [isVerusIdLogin, setError])
 
-  const onPressSelectService = React.useCallback(() => {
+  const onPressSelectService = useCallback(() => {
     Keyboard.dismiss()
   }, [])
 
   const onPressNext = async () => {
     if (isProcessing) return
     Keyboard.dismiss()
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
     setError('')
+    setErrorField('none')
 
     const identifier = identifierValueRef.current.toLowerCase().trim()
     const password = passwordValueRef.current
@@ -215,11 +210,13 @@ export const LoginForm = ({
 
     if (!identifier) {
       setError(_(msg`Please enter your username`))
+      setErrorField('identifier')
       return
     }
 
     if (!password) {
       setError(_(msg`Please enter your password`))
+      setErrorField('password')
       return
     }
 
@@ -295,7 +292,6 @@ export const LoginForm = ({
       }
     } catch (e: any) {
       const errMsg = e.toString()
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut)
       setIsProcessing(false)
       if (
         e instanceof ComAtprotoServerCreateSession.AuthFactorTokenRequiredError
@@ -308,6 +304,7 @@ export const LoginForm = ({
             error: errMsg,
           })
           setError(_(msg`Invalid 2FA confirmation code.`))
+          setErrorField('2fa')
         } else if (
           errMsg.includes('Authentication Required') ||
           errMsg.includes('Invalid identifier or password')
@@ -398,6 +395,7 @@ export const LoginForm = ({
       setIsVerusIdLogin(false)
 
       setIsProcessing(false)
+      onAttemptFailed()
       return
     }
 
@@ -435,7 +433,8 @@ export const LoginForm = ({
     setIsVerusIdLogin(false)
 
     setIsProcessing(false)
-  }, [verusIdLoginError, _, setError])
+    onAttemptFailed()
+  }, [verusIdLoginError, _, setError, onAttemptFailed])
 
   return (
     <FormContainer testID="loginForm" titleText={<Trans>Sign in</Trans>}>
@@ -461,7 +460,7 @@ export const LoginForm = ({
               <Trans>Account</Trans>
             </TextField.LabelText>
             <View style={[a.gap_sm]}>
-              <TextField.Root>
+              <TextField.Root isInvalid={errorField === 'identifier'}>
                 <TextField.Icon icon={At} />
                 <TextField.Input
                   testID="loginUsernameInput"
@@ -478,6 +477,7 @@ export const LoginForm = ({
                   }
                   onChangeText={v => {
                     identifierValueRef.current = v
+                    if (errorField) setErrorField('none')
                   }}
                   onSubmitEditing={() => {
                     passwordRef.current?.focus()
@@ -490,7 +490,7 @@ export const LoginForm = ({
                 />
               </TextField.Root>
 
-              <TextField.Root>
+              <TextField.Root isInvalid={errorField === 'password'}>
                 <TextField.Icon icon={Lock} />
                 <TextField.Input
                   testID="loginPasswordInput"
@@ -505,6 +505,7 @@ export const LoginForm = ({
                   clearButtonMode="while-editing"
                   onChangeText={v => {
                     passwordValueRef.current = v
+                    if (errorField) setErrorField('none')
                   }}
                   onSubmitEditing={onPressNext}
                   blurOnSubmit={false} // HACK: https://github.com/facebook/react-native/issues/21911#issuecomment-558343069 Keyboard blur behavior is now handled in onSubmitEditing
@@ -589,7 +590,7 @@ export const LoginForm = ({
           <TextField.LabelText>
             <Trans>2FA Confirmation</Trans>
           </TextField.LabelText>
-          <TextField.Root>
+          <TextField.Root isInvalid={errorField === '2fa'}>
             <TextField.Icon icon={Ticket} />
             <TextField.Input
               testID="loginAuthFactorTokenInput"
@@ -600,8 +601,11 @@ export const LoginForm = ({
               autoComplete="one-time-code"
               returnKeyType="done"
               blurOnSubmit={false} // prevents flickering due to onSubmitEditing going to next field
-              onChangeText={setAuthFactorToken}
               value={authFactorToken} // controlled input due to uncontrolled input not receiving pasted values properly
+              onChangeText={text => {
+                setAuthFactorToken(text)
+                if (errorField) setErrorField('none')
+              }}
               onSubmitEditing={onPressNext}
               editable={!isProcessing}
               accessibilityHint={_(
@@ -620,25 +624,24 @@ export const LoginForm = ({
         </View>
       )}
       <FormError error={error} />
-      <View style={[a.flex_row, a.align_center, a.pt_md]}>
-        <Button
-          label={_(msg`Back`)}
-          variant="solid"
-          color="secondary"
-          size="large"
-          onPress={onPressBack}>
-          <ButtonText>
-            <Trans>Back</Trans>
-          </ButtonText>
-        </Button>
-        <View style={a.flex_1} />
+      <View style={[a.pt_md, web([a.justify_between, a.flex_row])]}>
+        {IS_WEB && (
+          <Button
+            label={_(msg`Back`)}
+            color="secondary"
+            size="large"
+            onPress={onPressBack}>
+            <ButtonText>
+              <Trans>Back</Trans>
+            </ButtonText>
+          </Button>
+        )}
         {!serviceDescription && error ? (
           <Button
             testID="loginRetryButton"
             label={_(msg`Retry`)}
             accessibilityHint={_(msg`Retries signing in`)}
-            variant="solid"
-            color="secondary"
+            color="primary_subtle"
             size="large"
             onPress={onPressRetryConnect}>
             <ButtonText>
@@ -646,14 +649,16 @@ export const LoginForm = ({
             </ButtonText>
           </Button>
         ) : !serviceDescription ? (
-          <>
-            <ActivityIndicator />
-            <Text style={[t.atoms.text_contrast_high, a.pl_md]}>
-              <Trans>Connecting...</Trans>
-            </Text>
-          </>
+          <Button
+            label={_(msg`Connecting to service...`)}
+            size="large"
+            color="secondary"
+            disabled>
+            <ButtonIcon icon={Loader} />
+            <ButtonText>Connecting...</ButtonText>
+          </Button>
         ) : (
-          <>
+          <View style={[a.flex_row, a.gap_sm]}>
             <Button
               testID="loginMethodSwitchButton"
               label={_(msg`Switch`)}
@@ -665,8 +670,7 @@ export const LoginForm = ({
                 setIsVerusIdLogin(!isVerusIdLogin)
                 setLoginUri('') // Clear the link so that the QR code doesn't appear briefly
                 setError('')
-              }}
-              style={[a.mr_sm]}>
+              }}>
               <ButtonText>
                 {isVerusIdLogin ? (
                   <Trans>Sign in without VerusID</Trans>
@@ -683,16 +687,15 @@ export const LoginForm = ({
                   ? _(msg`Links to signing in on the same device`)
                   : _(msg`Navigates to the next screen`)
               }
-              variant="solid"
               color="primary"
               size="large"
               onPress={isVerusIdLogin ? startVskyLogin : onPressNext}>
               <ButtonText>
-                {isVerusIdLogin ? <Trans>Sign in</Trans> : <Trans>Next</Trans>}
+                <Trans>Sign in</Trans>
               </ButtonText>
               {isProcessing && <ButtonIcon icon={Loader} />}
             </Button>
-          </>
+          </View>
         )}
       </View>
     </FormContainer>

@@ -1,17 +1,16 @@
-import React, {memo} from 'react'
+import {memo, useCallback, useMemo} from 'react'
 import {type AppBskyActorDefs} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useNavigation} from '@react-navigation/native'
 import {useQueryClient} from '@tanstack/react-query'
 
-import {useActorStatus} from '#/lib/actor-status'
 import {HITSLOP_20} from '#/lib/constants'
 import {makeProfileLink} from '#/lib/routes/links'
 import {type NavigationProp} from '#/lib/routes/types'
 import {shareText, shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
-import {logger} from '#/logger'
 import {type Shadow} from '#/state/cache/types'
 import {useModalControls} from '#/state/modals'
 import {Nux, useNux, useSaveNux} from '#/state/queries/nuxs'
@@ -21,10 +20,8 @@ import {
   useProfileFollowMutationQueue,
   useProfileMuteMutationQueue,
 } from '#/state/queries/profile'
-import {useCanGoLive} from '#/state/service-config'
 import {useSession} from '#/state/session'
 import {EventStopper} from '#/view/com/util/EventStopper'
-import * as Toast from '#/view/com/util/Toast'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
 import {useDialogControl} from '#/components/Dialog'
@@ -34,7 +31,7 @@ import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/i
 import {CircleCheck_Stroke2_Corner0_Rounded as CircleCheckIcon} from '#/components/icons/CircleCheck'
 import {CircleX_Stroke2_Corner0_Rounded as CircleXIcon} from '#/components/icons/CircleX'
 import {Clipboard_Stroke2_Corner2_Rounded as ClipboardIcon} from '#/components/icons/Clipboard'
-import {DotGrid_Stroke2_Corner0_Rounded as Ellipsis} from '#/components/icons/DotGrid'
+import {DotGrid3x1_Stroke2_Corner0_Rounded as Ellipsis} from '#/components/icons/DotGrid'
 import {Flag_Stroke2_Corner0_Rounded as Flag} from '#/components/icons/Flag'
 import {ListSparkle_Stroke2_Corner0_Rounded as List} from '#/components/icons/ListSparkle'
 import {Live_Stroke2_Corner0_Rounded as LiveIcon} from '#/components/icons/Live'
@@ -48,19 +45,22 @@ import {
 import {PlusLarge_Stroke2_Corner0_Rounded as Plus} from '#/components/icons/Plus'
 import {SpeakerVolumeFull_Stroke2_Corner0_Rounded as Unmute} from '#/components/icons/Speaker'
 import {StarterPack} from '#/components/icons/StarterPack'
-import {EditLiveDialog} from '#/components/live/EditLiveDialog'
-import {GoLiveDialog} from '#/components/live/GoLiveDialog'
-import {GoLiveDisabledDialog} from '#/components/live/GoLiveDisabledDialog'
 import * as Menu from '#/components/Menu'
 import {
   ReportDialog,
   useReportDialogControl,
 } from '#/components/moderation/ReportDialog'
 import * as Prompt from '#/components/Prompt'
+import * as Toast from '#/components/Toast'
 import {useFullVerificationState} from '#/components/verification'
 import {VerificationCreatePrompt} from '#/components/verification/VerificationCreatePrompt'
 import {VerificationRemovePrompt} from '#/components/verification/VerificationRemovePrompt'
+import {useAnalytics} from '#/analytics'
 import {IS_WEB} from '#/env'
+import {useActorStatus, useLiveNowConfig} from '#/features/liveNow'
+import {EditLiveDialog} from '#/features/liveNow/components/EditLiveDialog'
+import {GoLiveDialog} from '#/features/liveNow/components/GoLiveDialog'
+import {GoLiveDisabledDialog} from '#/features/liveNow/components/GoLiveDisabledDialog'
 import {Dot} from '#/features/nuxs/components/Dot'
 import {Gradient} from '#/features/nuxs/components/Gradient'
 import {useDevMode} from '#/storage/hooks/dev-mode'
@@ -71,6 +71,7 @@ let ProfileMenu = ({
   profile: Shadow<AppBskyActorDefs.ProfileViewDetailed>
 }): React.ReactNode => {
   const t = useTheme()
+  const ax = useAnalytics()
   const {_} = useLingui()
   const {currentAccount, hasSession} = useSession()
   const {openModal} = useModalControls()
@@ -84,7 +85,7 @@ let ProfileMenu = ({
   const isLabelerAndNotBlocked = !!profile.associated?.labeler && !isBlocked
   const [devModeEnabled] = useDevMode()
   const verification = useFullVerificationState({profile})
-  const canGoLive = useCanGoLive()
+  const {canGoLive} = useLiveNowConfig()
   const status = useActorStatus(profile)
   const statusNudge = useNux(Nux.LiveNowBetaNudge)
   const statusNudgeActive =
@@ -107,29 +108,29 @@ let ProfileMenu = ({
   const goLiveDisabledDialogControl = useDialogControl()
   const addToStarterPacksDialogControl = useDialogControl()
 
-  const showLoggedOutWarning = React.useMemo(() => {
+  const showLoggedOutWarning = useMemo(() => {
     return (
       profile.did !== currentAccount?.did &&
       !!profile.labels?.find(label => label.val === '!no-unauthenticated')
     )
   }, [currentAccount, profile])
 
-  const invalidateProfileQuery = React.useCallback(() => {
+  const invalidateProfileQuery = useCallback(() => {
     queryClient.invalidateQueries({
       queryKey: profileQueryKey(profile.did),
     })
   }, [queryClient, profile.did])
 
-  const onPressAddToStarterPacks = React.useCallback(() => {
-    logger.metric('profile:addToStarterPack', {})
+  const onPressAddToStarterPacks = useCallback(() => {
+    ax.metric('profile:addToStarterPack', {})
     addToStarterPacksDialogControl.open()
   }, [addToStarterPacksDialogControl])
 
-  const onPressShare = React.useCallback(() => {
+  const onPressShare = useCallback(() => {
     shareUrl(toShareUrl(makeProfileLink(profile)))
   }, [profile])
 
-  const onPressAddRemoveLists = React.useCallback(() => {
+  const onPressAddRemoveLists = useCallback(() => {
     openModal({
       name: 'user-add-remove-lists',
       subject: profile.did,
@@ -140,15 +141,17 @@ let ProfileMenu = ({
     })
   }, [profile, openModal, invalidateProfileQuery])
 
-  const onPressMuteAccount = React.useCallback(async () => {
+  const onPressMuteAccount = useCallback(async () => {
     if (profile.viewer?.muted) {
       try {
         await queueUnmute()
         Toast.show(_(msg({message: 'Account unmuted', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
-          logger.error('Failed to unmute account', {message: e})
-          Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+          ax.logger.error('Failed to unmute account', {message: e})
+          Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+            type: 'error',
+          })
         }
       }
     } else {
@@ -157,22 +160,26 @@ let ProfileMenu = ({
         Toast.show(_(msg({message: 'Account muted', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
-          logger.error('Failed to mute account', {message: e})
-          Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+          ax.logger.error('Failed to mute account', {message: e})
+          Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+            type: 'error',
+          })
         }
       }
     }
-  }, [profile.viewer?.muted, queueUnmute, _, queueMute])
+  }, [ax, profile.viewer?.muted, queueUnmute, _, queueMute])
 
-  const blockAccount = React.useCallback(async () => {
+  const blockAccount = useCallback(async () => {
     if (profile.viewer?.blocking) {
       try {
         await queueUnblock()
         Toast.show(_(msg({message: 'Account unblocked', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
-          logger.error('Failed to unblock account', {message: e})
-          Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+          ax.logger.error('Failed to unblock account', {message: e})
+          Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+            type: 'error',
+          })
         }
       }
     } else {
@@ -181,50 +188,56 @@ let ProfileMenu = ({
         Toast.show(_(msg({message: 'Account blocked', context: 'toast'})))
       } catch (e: any) {
         if (e?.name !== 'AbortError') {
-          logger.error('Failed to block account', {message: e})
-          Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+          ax.logger.error('Failed to block account', {message: e})
+          Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+            type: 'error',
+          })
         }
       }
     }
-  }, [profile.viewer?.blocking, _, queueUnblock, queueBlock])
+  }, [ax, profile.viewer?.blocking, _, queueUnblock, queueBlock])
 
-  const onPressFollowAccount = React.useCallback(async () => {
+  const onPressFollowAccount = useCallback(async () => {
     try {
       await queueFollow()
       Toast.show(_(msg({message: 'Account followed', context: 'toast'})))
     } catch (e: any) {
       if (e?.name !== 'AbortError') {
-        logger.error('Failed to follow account', {message: e})
-        Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+        ax.logger.error('Failed to follow account', {message: e})
+        Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+          type: 'error',
+        })
       }
     }
-  }, [_, queueFollow])
+  }, [_, ax, queueFollow])
 
-  const onPressUnfollowAccount = React.useCallback(async () => {
+  const onPressUnfollowAccount = useCallback(async () => {
     try {
       await queueUnfollow()
       Toast.show(_(msg({message: 'Account unfollowed', context: 'toast'})))
     } catch (e: any) {
       if (e?.name !== 'AbortError') {
-        logger.error('Failed to unfollow account', {message: e})
-        Toast.show(_(msg`There was an issue! ${e.toString()}`), 'xmark')
+        ax.logger.error('Failed to unfollow account', {message: e})
+        Toast.show(_(msg`There was an issue! ${e.toString()}`), {
+          type: 'error',
+        })
       }
     }
-  }, [_, queueUnfollow])
+  }, [_, ax, queueUnfollow])
 
-  const onPressReportAccount = React.useCallback(() => {
+  const onPressReportAccount = useCallback(() => {
     reportDialogControl.open()
   }, [reportDialogControl])
 
-  const onPressShareATUri = React.useCallback(() => {
+  const onPressShareATUri = useCallback(() => {
     shareText(`at://${profile.did}`)
   }, [profile.did])
 
-  const onPressShareDID = React.useCallback(() => {
+  const onPressShareDID = useCallback(() => {
     shareText(profile.did)
   }, [profile.did])
 
-  const onPressSearch = React.useCallback(() => {
+  const onPressSearch = useCallback(() => {
     navigation.navigate('ProfileSearch', {name: profile.handle})
   }, [navigation, profile.handle])
 
@@ -328,15 +341,17 @@ let ProfileMenu = ({
                     )}
                   </>
                 )}
-                <Menu.Item
-                  testID="profileHeaderDropdownStarterPackAddRemoveBtn"
-                  label={_(msg`Add to starter packs`)}
-                  onPress={onPressAddToStarterPacks}>
-                  <Menu.ItemText>
-                    <Trans>Add to starter packs</Trans>
-                  </Menu.ItemText>
-                  <Menu.ItemIcon icon={StarterPack} />
-                </Menu.Item>
+                {!isSelf && (
+                  <Menu.Item
+                    testID="profileHeaderDropdownStarterPackAddRemoveBtn"
+                    label={_(msg`Add to starter packs`)}
+                    onPress={onPressAddToStarterPacks}>
+                    <Menu.ItemText>
+                      <Trans>Add to starter packs</Trans>
+                    </Menu.ItemText>
+                    <Menu.ItemIcon icon={StarterPack} />
+                  </Menu.Item>
+                )}
                 <Menu.Item
                   testID="profileHeaderDropdownListAddRemoveBtn"
                   label={_(msg`Add to lists`)}

@@ -33,6 +33,7 @@ import {PostAlerts} from '#/components/moderation/PostAlerts'
 import {Embed, PostEmbedViewContext} from '#/components/Post/Embed'
 import {PostRepliedTo} from '#/components/Post/PostRepliedTo'
 import {ShowMoreTextButton} from '#/components/Post/ShowMoreTextButton'
+import {TranslatedPost} from '#/components/Post/Translated'
 import {PostControls} from '#/components/PostControls'
 import {RichText} from '#/components/RichText'
 import {SubtleHover} from '#/components/SubtleHover'
@@ -138,6 +139,7 @@ function PostInner({
         moderation,
         langs: record.langs,
       },
+      logContext: 'PostReply',
     })
   }, [openComposer, post, record, moderation])
 
@@ -151,6 +153,7 @@ function PostInner({
   }, [queryClient, post.author, outerOnBeforePress])
 
   const [hover, setHover] = useState(false)
+
   return (
     <Link
       href={itemHref}
@@ -198,7 +201,7 @@ function PostInner({
               style={[a.pb_xs]}
             />
             {richText.text ? (
-              <View>
+              <View style={[a.mb_2xs]}>
                 <RichText
                   enableTags
                   testID="postText"
@@ -216,6 +219,11 @@ function PostInner({
                 )}
               </View>
             ) : undefined}
+            <TranslatedPost
+              hideTranslateLink={true}
+              post={post}
+              postText={record.text}
+            />
             {post.embed ? (
               <Embed
                 embed={post.embed}

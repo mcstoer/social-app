@@ -1,11 +1,8 @@
 import 'array.prototype.findlast/auto'
+import 'setimmediate'
 
-/// <reference lib="dom" />
 import {Buffer} from 'buffer'
 import crypto from 'crypto-browserify'
-
-// @ts-ignore whatever typescript wants to complain about here, I dont care about -prf
-window.setImmediate = (cb: () => void) => setTimeout(cb, 0)
 
 if (window) {
   // Add to fix for Buffer being undefined.
@@ -59,3 +56,5 @@ if (process.env.NODE_ENV !== 'production') {
     }
   }
 }
+
+export {}

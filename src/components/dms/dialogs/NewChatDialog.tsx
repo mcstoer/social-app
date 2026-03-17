@@ -1,17 +1,18 @@
 import {useCallback} from 'react'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {useRequireEmailVerification} from '#/lib/hooks/useRequireEmailVerification'
-import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
 import {useGetConvoForMembers} from '#/state/queries/messages/get-convo-for-members'
 import {FAB} from '#/view/com/util/fab/FAB'
-import * as Toast from '#/view/com/util/Toast'
 import {useTheme} from '#/alf'
 import * as Dialog from '#/components/Dialog'
 import {SearchablePeopleList} from '#/components/dialogs/SearchablePeopleList'
 import {PlusLarge_Stroke2_Corner0_Rounded as Plus} from '#/components/icons/Plus'
+import * as Toast from '#/components/Toast'
+import {useAnalytics} from '#/analytics'
 
 export function NewChat({
   control,
@@ -22,6 +23,7 @@ export function NewChat({
 }) {
   const t = useTheme()
   const {_} = useLingui()
+  const ax = useAnalytics()
   const requireEmailVerification = useRequireEmailVerification()
 
   const {mutate: createChat} = useGetConvoForMembers({
@@ -29,13 +31,15 @@ export function NewChat({
       onNewChat(data.convo.id)
 
       if (!data.convo.lastMessage) {
-        logEvent('chat:create', {logContext: 'NewChatDialog'})
+        ax.metric('chat:create', {logContext: 'NewChatDialog'})
       }
-      logEvent('chat:open', {logContext: 'NewChatDialog'})
+      ax.metric('chat:open', {logContext: 'NewChatDialog'})
     },
     onError: error => {
       logger.error('Failed to create chat', {safeMessage: error})
-      Toast.show(_(msg`An issue occurred starting the chat`), 'xmark')
+      Toast.show(_(msg`An issue occurred starting the chat`), {
+        type: 'error',
+      })
     },
   })
 
@@ -68,7 +72,10 @@ export function NewChat({
         accessibilityHint=""
       />
 
-      <Dialog.Outer control={control} testID="newChatDialog">
+      <Dialog.Outer
+        control={control}
+        testID="newChatDialog"
+        nativeOptions={{fullHeight: true}}>
         <Dialog.Handle />
         <SearchablePeopleList
           title={_(msg`Start a new chat`)}

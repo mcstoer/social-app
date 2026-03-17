@@ -1,18 +1,17 @@
 import {memo, useMemo} from 'react'
 import * as ExpoClipboard from 'expo-clipboard'
 import {AtUri} from '@atproto/api'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useNavigation} from '@react-navigation/native'
 
 import {makeProfileLink} from '#/lib/routes/links'
 import {type NavigationProp} from '#/lib/routes/types'
 import {shareText, shareUrl} from '#/lib/sharing'
 import {toShareUrl} from '#/lib/strings/url-helpers'
-import {logger} from '#/logger'
 import {useProfileShadow} from '#/state/cache/profile-shadow'
 import {useSession} from '#/state/session'
-import * as Toast from '#/view/com/util/Toast'
 import {atoms as a} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {useDialogControl} from '#/components/Dialog'
@@ -22,7 +21,9 @@ import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/i
 import {Clipboard_Stroke2_Corner2_Rounded as ClipboardIcon} from '#/components/icons/Clipboard'
 import {PaperPlane_Stroke2_Corner0_Rounded as PaperPlaneIcon} from '#/components/icons/PaperPlane'
 import * as Menu from '#/components/Menu'
+import * as Toast from '#/components/Toast'
 import {useAgeAssurance} from '#/ageAssurance'
+import {useAnalytics} from '#/analytics'
 import {IS_IOS} from '#/env'
 import {useDevMode} from '#/storage/hooks/dev-mode'
 import {RecentChats} from './RecentChats'
@@ -32,6 +33,7 @@ let ShareMenuItems = ({
   post,
   onShare: onShareProp,
 }: ShareMenuItemsProps): React.ReactNode => {
+  const ax = useAnalytics()
   const {hasSession} = useSession()
   const {_} = useLingui()
   const navigation = useNavigation<NavigationProp>()
@@ -54,14 +56,14 @@ let ShareMenuItems = ({
   }, [postAuthor])
 
   const onSharePost = () => {
-    logger.metric('share:press:nativeShare', {}, {statsig: true})
+    ax.metric('share:press:nativeShare', {})
     const url = toShareUrl(href)
     shareUrl(url)
     onShareProp()
   }
 
   const onCopyLink = async () => {
-    logger.metric('share:press:copyLink', {}, {statsig: true})
+    ax.metric('share:press:copyLink', {})
     const url = toShareUrl(href)
     if (IS_IOS) {
       // iOS only
@@ -69,7 +71,9 @@ let ShareMenuItems = ({
     } else {
       await ExpoClipboard.setStringAsync(url)
     }
-    Toast.show(_(msg`Copied to clipboard`), 'clipboard-check')
+    Toast.show(_(msg`Copied to clipboard`), {
+      type: 'success',
+    })
     onShareProp()
   }
 
@@ -100,7 +104,7 @@ let ShareMenuItems = ({
               testID="postDropdownSendViaDMBtn"
               label={_(msg`Send via direct message`)}
               onPress={() => {
-                logger.metric('share:press:openDmSearch', {}, {statsig: true})
+                ax.metric('share:press:openDmSearch', {})
                 sendViaChatControl.open()
               }}>
               <Menu.ItemText>

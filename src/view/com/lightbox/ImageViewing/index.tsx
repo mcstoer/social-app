@@ -7,9 +7,14 @@
  */
 // Original code copied and simplified from the link below as the codebase is currently not maintained:
 // https://github.com/jobtoday/react-native-image-viewing
-
-import React, {useCallback, useEffect, useMemo, useState} from 'react'
-import {LayoutAnimation, PixelRatio, StyleSheet, View} from 'react-native'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
+import {
+  LayoutAnimation,
+  PixelRatio,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native'
 import {SystemBars} from 'react-native-edge-to-edge'
 import {Gesture} from 'react-native-gesture-handler'
 import PagerView from 'react-native-pager-view'
@@ -30,14 +35,10 @@ import Animated, {
   withSpring,
   type WithSpringConfig,
 } from 'react-native-reanimated'
-import {
-  SafeAreaView,
-  useSafeAreaFrame,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context'
+import {SafeAreaView} from 'react-native-safe-area-context'
 import * as ScreenOrientation from 'expo-screen-orientation'
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome'
-import {Trans} from '@lingui/macro'
+import {Trans} from '@lingui/react/macro'
 
 import {type Dimensions} from '#/lib/media/types'
 import {colors, s} from '#/lib/styles'
@@ -62,13 +63,13 @@ const SLOW_SPRING: WithSpringConfig = {
   mass: IS_IOS ? 1.25 : 0.75,
   damping: 300,
   stiffness: 800,
-  restDisplacementThreshold: 0.01,
+  restDisplacementThreshold: 0.001,
 }
 const FAST_SPRING: WithSpringConfig = {
   mass: IS_IOS ? 1.25 : 0.75,
   damping: 150,
   stiffness: 900,
-  restDisplacementThreshold: 0.01,
+  restDisplacementThreshold: 0.001,
 }
 
 function canAnimate(lightbox: Lightbox): boolean {
@@ -103,7 +104,7 @@ export default function ImageViewRoot({
     setActiveLightbox(nextLightbox)
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!nextLightbox) {
       return
     }
@@ -149,7 +150,7 @@ export default function ImageViewRoot({
     },
   )
 
-  const onFlyAway = React.useCallback(() => {
+  const onFlyAway = useCallback(() => {
     'worklet'
     openProgress.set(0)
     runOnJS(onRequestClose)()
@@ -215,7 +216,7 @@ function ImageView({
   const [isDragging, setIsDragging] = useState(false)
   const [imageIndex, setImageIndex] = useState(initialImageIndex)
   const [showControls, setShowControls] = useState(true)
-  const [isAltExpanded, setAltExpanded] = React.useState(false)
+  const [isAltExpanded, setAltExpanded] = useState(false)
   const dismissSwipeTranslateY = useSharedValue(0)
   const isFlyingAway = useSharedValue(false)
 
@@ -417,7 +418,7 @@ function LightboxImage({
   openProgress: SharedValue<number>
   dismissSwipeTranslateY: SharedValue<number>
 }) {
-  const [fetchedDims, setFetchedDims] = React.useState<Dimensions | null>(null)
+  const [fetchedDims, setFetchedDims] = useState<Dimensions | null>(null)
   const dims = fetchedDims ?? imageSrc.dimensions ?? imageSrc.thumbDimensions
   let imageAspect: number | undefined
   if (dims) {
@@ -427,30 +428,26 @@ function LightboxImage({
     }
   }
 
-  const safeFrameDelayedForJSThreadOnly = useSafeAreaFrame()
-  const safeInsetsDelayedForJSThreadOnly = useSafeAreaInsets()
-  const measureSafeArea = React.useCallback(() => {
+  const {
+    width: widthDelayedForJSThreadOnly,
+    height: heightDelayedForJSThreadOnly,
+  } = useWindowDimensions()
+  const measureSafeArea = useCallback(() => {
     'worklet'
     let safeArea: Rect | null = measure(safeAreaRef)
     if (!safeArea) {
       if (_WORKLET) {
         console.error('Expected to always be able to measure safe area.')
       }
-      const frame = safeFrameDelayedForJSThreadOnly
-      const insets = safeInsetsDelayedForJSThreadOnly
       safeArea = {
-        x: frame.x + insets.left,
-        y: frame.y + insets.top,
-        width: frame.width - insets.left - insets.right,
-        height: frame.height - insets.top - insets.bottom,
+        x: 0,
+        y: 0,
+        width: widthDelayedForJSThreadOnly,
+        height: heightDelayedForJSThreadOnly,
       }
     }
     return safeArea
-  }, [
-    safeFrameDelayedForJSThreadOnly,
-    safeInsetsDelayedForJSThreadOnly,
-    safeAreaRef,
-  ])
+  }, [safeAreaRef, heightDelayedForJSThreadOnly, widthDelayedForJSThreadOnly])
 
   const {thumbRect} = imageSrc
   const transforms = useDerivedValue(() => {
@@ -566,7 +563,7 @@ function LightboxFooter({
   onPressShare: (uri: string) => void
 }) {
   const {alt: altText, uri} = images[index]
-  const isMomentumScrolling = React.useRef(false)
+  const isMomentumScrolling = useRef(false)
   return (
     <ScrollView
       style={styles.footerScrollView}

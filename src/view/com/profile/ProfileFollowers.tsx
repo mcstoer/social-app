@@ -1,6 +1,6 @@
-import React from 'react'
+import {useCallback, useEffect, useMemo, useRef, useState} from 'react'
 import {type AppBskyActorDefs as ActorDefs} from '@atproto/api'
-import {msg} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {useNavigation} from '@react-navigation/native'
 
@@ -12,6 +12,7 @@ import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useSession} from '#/state/session'
 import {PeopleRemove2_Stroke1_Corner0_Rounded as PeopleRemoveIcon} from '#/components/icons/PeopleRemove2'
 import {ListFooter, ListMaybePlaceholder} from '#/components/Lists'
+import {useAnalytics} from '#/analytics'
 import {List} from '../util/List'
 import {ProfileCardWithFollowBtn} from './ProfileCard'
 
@@ -41,11 +42,12 @@ function keyExtractor(item: ActorDefs.ProfileViewBasic) {
 
 export function ProfileFollowers({name}: {name: string}) {
   const {_} = useLingui()
+  const ax = useAnalytics()
   const navigation = useNavigation()
   const initialNumToRender = useInitialNumToRender()
   const {currentAccount} = useSession()
 
-  const [isPTRing, setIsPTRing] = React.useState(false)
+  const [isPTRing, setIsPTRing] = useState(false)
   const {
     data: resolvedDid,
     isLoading: isDidLoading,
@@ -64,7 +66,7 @@ export function ProfileFollowers({name}: {name: string}) {
   const isError = !!resolveError || !!error
   const isMe = resolvedDid === currentAccount?.did
 
-  const followers = React.useMemo(() => {
+  const followers = useMemo(() => {
     if (data?.pages) {
       return data.pages.flatMap(page => page.followers)
     }
@@ -72,11 +74,11 @@ export function ProfileFollowers({name}: {name: string}) {
   }, [data])
 
   // Track pagination events - fire for page 3+ (pages 1-2 may auto-load)
-  const paginationTrackingRef = React.useRef<{
+  const paginationTrackingRef = useRef<{
     did: string | undefined
     page: number
   }>({did: undefined, page: 0})
-  React.useEffect(() => {
+  useEffect(() => {
     const currentPageCount = data?.pages?.length || 0
     // Reset tracking when profile changes
     if (paginationTrackingRef.current.did !== resolvedDid) {
@@ -88,16 +90,16 @@ export function ProfileFollowers({name}: {name: string}) {
       currentPageCount >= 3 &&
       currentPageCount > paginationTrackingRef.current.page
     ) {
-      logger.metric('profile:followers:paginate', {
+      ax.metric('profile:followers:paginate', {
         contextProfileDid: resolvedDid,
         itemCount: followers.length,
         page: currentPageCount,
       })
     }
     paginationTrackingRef.current.page = currentPageCount
-  }, [data?.pages?.length, resolvedDid, followers.length])
+  }, [ax, data?.pages?.length, resolvedDid, followers.length])
 
-  const onRefresh = React.useCallback(async () => {
+  const onRefresh = useCallback(async () => {
     setIsPTRing(true)
     try {
       await refetch()
@@ -107,7 +109,7 @@ export function ProfileFollowers({name}: {name: string}) {
     setIsPTRing(false)
   }, [refetch, setIsPTRing])
 
-  const onEndReached = React.useCallback(async () => {
+  const onEndReached = useCallback(async () => {
     if (isFetchingNextPage || !hasNextPage || !!error) return
     try {
       await fetchNextPage()
@@ -116,28 +118,28 @@ export function ProfileFollowers({name}: {name: string}) {
     }
   }, [isFetchingNextPage, hasNextPage, error, fetchNextPage])
 
-  const renderItemWithContext = React.useCallback(
+  const renderItemWithContext = useCallback(
     ({item, index}: {item: ActorDefs.ProfileView; index: number}) =>
       renderItem({item, index, contextProfileDid: resolvedDid}),
     [resolvedDid],
   )
 
   // track pageview
-  React.useEffect(() => {
+  useEffect(() => {
     if (resolvedDid) {
-      logger.metric('profile:followers:view', {
+      ax.metric('profile:followers:view', {
         contextProfileDid: resolvedDid,
         isOwnProfile: isMe,
       })
     }
-  }, [resolvedDid, isMe])
+  }, [ax, resolvedDid, isMe])
 
   // track seen items
-  const seenItemsRef = React.useRef<Set<string>>(new Set())
-  React.useEffect(() => {
+  const seenItemsRef = useRef<Set<string>>(new Set())
+  useEffect(() => {
     seenItemsRef.current.clear()
   }, [resolvedDid])
-  const onItemSeen = React.useCallback(
+  const onItemSeen = useCallback(
     (item: ActorDefs.ProfileView) => {
       if (seenItemsRef.current.has(item.did)) {
         return
@@ -147,17 +149,13 @@ export function ProfileFollowers({name}: {name: string}) {
       if (position === 0) {
         return
       }
-      logger.metric(
-        'profileCard:seen',
-        {
-          profileDid: item.did,
-          position,
-          ...(resolvedDid !== undefined && {contextProfileDid: resolvedDid}),
-        },
-        {statsig: false},
-      )
+      ax.metric('profileCard:seen', {
+        profileDid: item.did,
+        position,
+        ...(resolvedDid !== undefined && {contextProfileDid: resolvedDid}),
+      })
     },
-    [followers, resolvedDid],
+    [ax, followers, resolvedDid],
   )
 
   if (followers.length < 1) {

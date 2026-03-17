@@ -6,7 +6,7 @@ import {
   AtUri,
   RichText as RichTextAPI,
 } from '@atproto/api'
-import {Trans} from '@lingui/macro'
+import {Trans} from '@lingui/react/macro'
 
 import {MAX_POST_LINES} from '#/lib/constants'
 import {useOpenComposer} from '#/lib/hooks/useOpenComposer'
@@ -38,6 +38,7 @@ import {PostHider} from '#/components/moderation/PostHider'
 import {type AppModerationCause} from '#/components/Pills'
 import {Embed, PostEmbedViewContext} from '#/components/Post/Embed'
 import {ShowMoreTextButton} from '#/components/Post/ShowMoreTextButton'
+import {TranslatedPost} from '#/components/Post/Translated'
 import {PostControls, PostControlsSkeleton} from '#/components/PostControls'
 import {RichText} from '#/components/RichText'
 import * as Skele from '#/components/Skeleton'
@@ -302,6 +303,7 @@ const ThreadItemTreePostInner = memo(function ThreadItemTreePostInner({
         langs: post.record.langs,
       },
       onPostSuccess: onPostSuccess,
+      logContext: 'PostReply',
     })
   }, [openComposer, post, record, onPostSuccess, moderation])
 
@@ -342,7 +344,7 @@ const ThreadItemTreePostInner = memo(function ThreadItemTreePostInner({
                     additionalCauses={additionalPostAlerts}
                   />
                   {richText?.text ? (
-                    <>
+                    <View style={[a.mb_2xs]}>
                       <RichText
                         enableTags
                         value={richText}
@@ -357,8 +359,13 @@ const ThreadItemTreePostInner = memo(function ThreadItemTreePostInner({
                           onPress={onPressShowMore}
                         />
                       )}
-                    </>
+                    </View>
                   ) : null}
+                  <TranslatedPost
+                    hideTranslateLink={true}
+                    post={post}
+                    postText={record.text}
+                  />
                   {post.embed && (
                     <View style={[a.pb_xs]}>
                       <Embed

@@ -1,13 +1,16 @@
 import {createContext, useContext, useMemo} from 'react'
+import {hasMutedWord} from '@atproto/api'
 import {QueryClient, useQuery} from '@tanstack/react-query'
 
+import {useOnAppStateChange} from '#/lib/appState'
 import {useIsBskyTeam} from '#/lib/hooks/useIsBskyTeam'
 import {
   convertBskyAppUrlIfNeeded,
   isBskyCustomFeedUrl,
   makeRecordUri,
 } from '#/lib/strings/url-helpers'
-import {LIVE_EVENTS_URL} from '#/env'
+import {usePreferencesQuery} from '#/state/queries/preferences'
+import {IS_DEV, LIVE_EVENTS_URL} from '#/env'
 import {useLiveEventPreferences} from '#/features/liveEvents/preferences'
 import {type LiveEventsWorkerResponse} from '#/features/liveEvents/types'
 import {useDevMode} from '#/storage/hooks/dev-mode'
@@ -35,12 +38,18 @@ const Context = createContext<LiveEventsWorkerResponse>(DEFAULT_LIVE_EVENTS)
 export function Provider({children}: React.PropsWithChildren<{}>) {
   const [isDevMode] = useDevMode()
   const isBskyTeam = useIsBskyTeam()
-  const {data} = useQuery(
+  const {data: preferences} = usePreferencesQuery()
+  const mutedWords = useMemo(
+    () => preferences?.moderationPrefs?.mutedWords ?? [],
+    [preferences?.moderationPrefs?.mutedWords],
+  )
+
+  const {data, refetch} = useQuery(
     {
       // keep this, prefectching handles initial load
       staleTime: 1000 * 15,
       queryKey: liveEventsQueryKey,
-      refetchInterval: 1000 * 60 * 5,
+      refetchInterval: 1000 * 60 * 5, // refetch every 5 minutes
       async queryFn() {
         return fetchLiveEvents()
       },
@@ -48,10 +57,25 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     qc,
   )
 
+  useOnAppStateChange(state => {
+    if (state === 'active') void refetch()
+  })
+
   const ctx = useMemo(() => {
     if (!data) return DEFAULT_LIVE_EVENTS
+    const skipMuteFilter = isBskyTeam || IS_DEV
     const feeds = data.feeds.filter(f => {
       if (f.preview && !isBskyTeam) return false
+      if (!skipMuteFilter && mutedWords.length > 0) {
+        const text = [
+          f.title,
+          f.layouts?.wide?.title,
+          f.layouts?.compact?.title,
+        ]
+          .filter(Boolean)
+          .join(' ')
+        if (hasMutedWord({mutedWords, text})) return false
+      }
       return true
     })
     return {
@@ -59,7 +83,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       // only one at a time for now, unless bsky team and dev mode
       feeds: isBskyTeam && isDevMode ? feeds : feeds.slice(0, 1),
     }
-  }, [data, isBskyTeam, isDevMode])
+  }, [data, isBskyTeam, isDevMode, mutedWords])
 
   return <Context.Provider value={ctx}>{children}</Context.Provider>
 }

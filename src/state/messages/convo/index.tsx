@@ -1,9 +1,16 @@
-import React, {useContext, useState, useSyncExternalStore} from 'react'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  useSyncExternalStore,
+} from 'react'
 import {type ChatBskyConvoDefs} from '@atproto/api'
 import {useFocusEffect} from '@react-navigation/native'
 import {useQueryClient} from '@tanstack/react-query'
 
-import {useAppState} from '#/lib/hooks/useAppState'
+import {useAppState} from '#/lib/appState'
 import {Convo} from '#/state/messages/convo/agent'
 import {
   type ConvoParams,
@@ -25,7 +32,7 @@ import {useAgent} from '#/state/session'
 
 export * from '#/state/messages/convo/util'
 
-const ChatContext = React.createContext<ConvoState | null>(null)
+const ChatContext = createContext<ConvoState | null>(null)
 ChatContext.displayName = 'ChatContext'
 
 export function useConvo() {
@@ -82,7 +89,7 @@ export function ConvoProvider({
   const appState = useAppState()
   const isActive = appState === 'active'
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       if (isActive) {
         convo.resume()
         markAsRead({convoId})
@@ -95,7 +102,7 @@ export function ConvoProvider({
     }, [isActive, convo, convoId, markAsRead]),
   )
 
-  React.useEffect(() => {
+  useEffect(() => {
     return convo.on(event => {
       switch (event.type) {
         case 'invalidate-block-state': {

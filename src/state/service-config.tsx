@@ -1,28 +1,17 @@
 import {createContext, useContext, useMemo} from 'react'
 
-import {useGate} from '#/lib/statsig/statsig'
 import {useLanguagePrefs} from '#/state/preferences/languages'
 import {useServiceConfigQuery} from '#/state/queries/service-config'
-import {useSession} from '#/state/session'
-import {IS_DEV} from '#/env'
 import {device} from '#/storage'
 
 type TrendingContext = {
   enabled: boolean
 }
 
-type LiveNowContext = {
-  did: string
-  domains: string[]
-}[]
-
 const TrendingContext = createContext<TrendingContext>({
   enabled: false,
 })
 TrendingContext.displayName = 'TrendingContext'
-
-const LiveNowContext = createContext<LiveNowContext>([])
-LiveNowContext.displayName = 'LiveNowContext'
 
 const CheckEmailConfirmedContext = createContext<boolean | null>(null)
 
@@ -52,10 +41,6 @@ export function Provider({children}: {children: React.ReactNode}) {
       return {enabled: Boolean(cachedEnabled)}
     }
 
-    /*
-     * Doing an extra check here to reduce hits to statsig. If it's disabled on
-     * the server, we can exit early.
-     */
     const enabled = Boolean(config?.topicsEnabled)
 
     // update cache
@@ -64,53 +49,21 @@ export function Provider({children}: {children: React.ReactNode}) {
     return {enabled}
   }, [isInitialLoad, config, langPrefs.contentLanguages])
 
-  const liveNow = useMemo<LiveNowContext>(() => config?.liveNow ?? [], [config])
-
   // probably true, so default to true when loading
   // if the call fails, the query will set it to false for us
   const checkEmailConfirmed = config?.checkEmailConfirmed ?? true
 
   return (
     <TrendingContext.Provider value={trending}>
-      <LiveNowContext.Provider value={liveNow}>
-        <CheckEmailConfirmedContext.Provider value={checkEmailConfirmed}>
-          {children}
-        </CheckEmailConfirmedContext.Provider>
-      </LiveNowContext.Provider>
+      <CheckEmailConfirmedContext.Provider value={checkEmailConfirmed}>
+        {children}
+      </CheckEmailConfirmedContext.Provider>
     </TrendingContext.Provider>
   )
 }
 
 export function useTrendingConfig() {
   return useContext(TrendingContext)
-}
-
-const DEFAULT_LIVE_ALLOWED_DOMAINS = [
-  'twitch.tv',
-  'www.twitch.tv',
-  'stream.place',
-]
-export type LiveNowConfig = {
-  allowedDomains: Set<string>
-}
-export function useLiveNowConfig(): LiveNowConfig {
-  const ctx = useContext(LiveNowContext)
-  const canGoLive = useCanGoLive()
-  const {currentAccount} = useSession()
-  if (!currentAccount?.did || !canGoLive) return {allowedDomains: new Set()}
-  const vip = ctx.find(live => live.did === currentAccount.did)
-  return {
-    allowedDomains: new Set(
-      DEFAULT_LIVE_ALLOWED_DOMAINS.concat(vip ? vip.domains : []),
-    ),
-  }
-}
-
-export function useCanGoLive() {
-  const gate = useGate()
-  const {hasSession} = useSession()
-  if (!hasSession) return false
-  return IS_DEV ? true : !gate('disable_live_now_beta')
 }
 
 export function useCheckEmailConfirmed() {

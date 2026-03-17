@@ -22,7 +22,6 @@ import {
   PUBLIC_BSKY_SERVICE,
   TIMELINE_SAVED_FEED,
 } from '#/lib/constants'
-import {tryFetchGates} from '#/lib/statsig/statsig'
 import {getAge} from '#/lib/strings/time'
 import {logger} from '#/logger'
 import {snoozeBirthdateUpdateAllowedForDid} from '#/state/birthdate'
@@ -32,6 +31,7 @@ import {
   setBirthdateForDid,
   setCreatedAtForDid,
 } from '#/ageAssurance/data'
+import {features} from '#/analytics'
 import {emitNetworkConfirmed, emitNetworkLost} from '../events'
 import {addSessionErrorLog} from './logging'
 import {
@@ -77,26 +77,15 @@ export async function createAgentAndResume(
   if (storedAccount.pdsUrl) {
     agent.sessionManager.pdsUrl = new URL(storedAccount.pdsUrl)
   }
-  const gates = tryFetchGates(storedAccount.did, 'prefer-low-latency')
+  const gates = features.refresh({
+    strategy: 'prefer-low-latency',
+  })
   const moderation = configureModerationForAccount(agent, storedAccount)
   const prevSession: AtpSessionData = sessionAccountToSession(storedAccount)
   if (isSessionExpired(storedAccount)) {
     await networkRetry(1, () => agent.resumeSession(prevSession))
   } else {
     agent.sessionManager.session = prevSession
-    if (!storedAccount.signupQueued) {
-      networkRetry(3, () => agent.resumeSession(prevSession)).catch(
-        (e: any) => {
-          logger.error(`networkRetry failed to resume session`, {
-            status: e?.status || 'unknown',
-            // this field name is ignored by Sentry scrubbers
-            safeMessage: e?.message || 'unknown',
-          })
-
-          throw e
-        },
-      )
-    }
   }
 
   // after session is attached
@@ -137,7 +126,7 @@ export async function createAgentAndLogin(
   })
 
   const account = agentToSessionAccountOrThrow(agent)
-  const gates = tryFetchGates(account.did, 'prefer-fresh-gates')
+  const gates = features.refresh({strategy: 'prefer-fresh-gates'})
   const moderation = configureModerationForAccount(agent, account)
   const aa = prefetchAgeAssuranceData({agent})
 
@@ -185,7 +174,7 @@ export async function createAgentAndCreateAccount(
     verificationCode,
   })
   const account = agentToSessionAccountOrThrow(agent)
-  const gates = tryFetchGates(account.did, 'prefer-fresh-gates')
+  const gates = features.refresh({strategy: 'prefer-fresh-gates'})
   const moderation = configureModerationForAccount(agent, account)
 
   const createdAt = new Date().toISOString()
@@ -351,7 +340,7 @@ export function agentToSessionAccount(
       accessJwt: agent.session.accessJwt,
       signupQueued: isSignupQueued(agent.session.accessJwt),
       active: agent.session.active,
-      status: agent.session.status as SessionAccount['status'],
+      status: agent.session.status,
       pdsUrl: agent.pdsUrl?.toString(),
       isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
     }
@@ -362,7 +351,7 @@ export function agentToSessionAccount(
     }
     return {
       type: 'bsky',
-      service: agent.service.toString(),
+      service: agent.serviceUrl.toString(),
       did: agent.session.did,
       handle: agent.session.handle,
       email: agent.session.email,
@@ -372,7 +361,7 @@ export function agentToSessionAccount(
       accessJwt: agent.session.accessJwt,
       signupQueued: isSignupQueued(agent.session.accessJwt),
       active: agent.session.active,
-      status: agent.session.status as SessionAccount['status'],
+      status: agent.session.status,
       pdsUrl: agent.pdsUrl?.toString(),
       isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
     }
@@ -508,10 +497,15 @@ export async function createVskyAgentAndLogin(
   if (vskySession) {
     agent.vskySession = vskySession
   }
-  await agent.login({identifier, password, authFactorToken})
+  await agent.login({
+    identifier,
+    password,
+    authFactorToken,
+    allowTakendown: true,
+  })
 
   const account = agentToSessionAccountOrThrow(agent)
-  const gates = tryFetchGates(account.did, 'prefer-fresh-gates')
+  const gates = features.refresh({strategy: 'prefer-fresh-gates'})
   const moderation = configureModerationForAccount(agent, account)
   const aa = prefetchAgeAssuranceData({agent})
 

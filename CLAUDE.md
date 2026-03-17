@@ -24,13 +24,15 @@ yarn android            # Run on Android
 yarn ios                # Run on iOS
 
 # Testing & Quality
+# IMPORTANT: Always use these yarn scripts, never call the underlying tools directly
 yarn test               # Run Jest tests
 yarn lint               # Run ESLint
 yarn typecheck          # Run TypeScript type checking
 
 # Internationalization
-yarn intl:extract       # Extract translation strings
-yarn intl:compile       # Compile translations for runtime
+# DO NOT run these commands - extraction and compilation are handled by CI
+yarn intl:extract       # Extract translation strings (nightly CI job)
+yarn intl:compile       # Compile translations for runtime (nightly CI job)
 
 # Build
 yarn build-web          # Build web version
@@ -44,6 +46,7 @@ src/
 ├── alf/                    # Design system (ALF) - themes, atoms, tokens
 ├── components/             # Shared UI components (Button, Dialog, Menu, etc.)
 ├── screens/                # Full-page screen components (newer pattern)
+├── features/               # Macro-features that bridge components/screens
 ├── view/
 │   ├── screens/            # Full-page screens (legacy location)
 │   ├── com/                # Reusable view components
@@ -57,6 +60,121 @@ src/
 ├── locale/                 # i18n configuration and language files
 └── Navigation.tsx          # Main navigation configuration
 ```
+
+### Project Structure in Depth
+
+When building new things, follow these guidelines for where to put code.
+
+#### Components vs Screens vs Features
+
+**Components** are reusable UI elements that are not full screens. Should be
+platform-agnostic when possible. Examples: Button, Dialog, Menu, TextField. Put
+these in `/components` if they are shared across screens.
+
+**Screens** are full-page components that represent a route in the app. They
+often contain multiple components and handle layout for a page. New screens
+should go in `/screens` (not `/view/screens`) to encourage better organization
+and separation from legacy code.
+
+For complex screens that have specific components or data needs that _are not
+shared by other screens_, we encourage subdirectoreis within `/screens/<name>`
+e.g. `/screens/ProfileScreen/ProfileScreen.tsx` and
+`/screens/ProfileScreen/components/`.
+
+**Features** are higher-level modules that may include context, data fetching,
+components, and utilities related to a specific feature e.g.
+`/features/liveNow`. They don't neatly fit into components or screens and often
+span multiple screens. This is an optional pattern for organizing complex
+features.
+
+#### Legacy Directories
+
+For the most part, avoid writing new files into the `/view` directory and
+subdirectories. This is the older pattern for organizing screens and components,
+and it has become a bit disorganized over time. New development should go into
+`/screens`, `/components`, and `/features`.
+
+#### State
+
+The `/state` directory is where we've historically put all our data fetching and
+state management logic. This is perfectly fine, but for new features, consider
+organizing state logic closer to the components that use it, either within a
+feature directory or co-located with a screen. The key is to keep related code
+together and avoid having "god files" with too much unrelated logic.
+
+#### Lib
+
+The `/lib` directory is for utilities and helpers that don't fit into other
+categories. This can include things like API clients, formatting functions,
+constants, and other shared logic.
+
+#### Top Level Directories
+
+Avoid writing new top-level subdirectories within `/src`. We've done this for a
+few things in the past that, but we have stronger patterns now. Examples:
+`/logger` should probably have been written into `/lib`. And `ageAssurance` is
+better classified within `/features`. We will probably migrate these things
+eventually.
+
+### File and Directory Naming Conventions
+
+Typically JS style for variables, functions, etc. We use ProudCamelCase for
+components, and camelCase directories and files.
+
+When organizing new code, consider if it fits into a single file, or if it
+should be broken down into multiple files. For "macro" component cases, or
+things that live in `/features` or `/screens`, we often follow a pattern of
+having an `index.tsx` for the main component, and then co-locating related
+components, hooks, and utilities in the same directory. For example:
+
+```
+src
+├── screens/
+│   ├── ProfileScreen/
+│   │   ├── index.tsx          # Main screen component
+│   │   ├── components/       # Sub-components used only by this screen
+```
+
+Similar patterns can be found in `/features` and `/components`. The idea here is
+to keep related code together and make it easier to navigate.
+
+You should ask yourself: if someone new was looking for the code related to this
+feature or screen, where would they expect to find it? Organizing code in a way
+that matches developer expectations can make the codebase much more
+approachable. Being able to say "Live Now stuff lives in `/features/liveNow`" is
+easier to understand than having it scattered across multiple directories.
+
+No need to go overboard with this. If a component or feature fits into a single
+file, there's no reason to have a `/Component/index.tsx` file when it could just
+be `/Component.tsx`. Use your judgment based on the complexity and amount of
+related code.
+
+#### Platform Specific Files
+
+We have conflicting patterns in the app for this. The preferred approach is to
+group platform-specific files into a directory as much as possible. For example,
+rather than having `Component.tsx`, `Component.web.tsx`, and
+`Component.native.tsx` in the same directory, we prefer to have a `Component/`
+directory with `index.tsx`, `index.web.tsx`, and `index.native.tsx`. This keeps
+related code together and gives us a better visual cue that there are probably
+other files contained within this "macro" feature, whereas `Component.tsx` on
+its own looks more like a single component file.
+
+### Documentation and Tests Within Features
+
+For larger features or components, it's helpful to include a README.md file
+within the directory that explains the purpose of the feature, how it works, and
+any important implementation details. The `/Component/index.tsx` pattern lends
+itself well to this, since the `index.tsx` can be the main component file, and
+the `README.md` can provide documentation for the whole feature. This is
+optional, but can be a nice way to keep documentation close to the code it
+describes.
+
+Similarly, if there are tests that are specific to a component or feature, it
+can be helpful to include them in the same directory, either as
+`Component.test.tsx` or in a `__tests__/` subdirectory. This keeps everything
+related to the component or feature in one place and makes it easier to find and
+maintain tests.
 
 ## Styling System (ALF)
 
@@ -119,7 +237,7 @@ if (gtMobile) {
 
 ### Naming Conventions
 
-- Spacing: `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `xxl` (t-shirt sizes)
+- Spacing: `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` (t-shirt sizes)
 - Text: `text_xs`, `text_sm`, `text_md`, `text_lg`, `text_xl`
 - Gaps/Padding: `gap_sm`, `p_md`, `px_lg`, `py_xl`
 - Flex: `flex_row`, `flex_1`, `align_center`, `justify_between`
@@ -144,7 +262,8 @@ function MyFeature() {
       </Button>
 
       <Dialog.Outer control={control}>
-        <Dialog.Handle />  {/* Native drag handle */}
+        {/* Typically the inner part is in its own component */}
+        <Dialog.Handle />  {/* Native-only drag handle */}
         <Dialog.ScrollableInner label={_(msg`My Dialog`)}>
           <Dialog.Header>
             <Dialog.HeaderText>Title</Dialog.HeaderText>
@@ -152,9 +271,10 @@ function MyFeature() {
 
           <Text>Dialog content here</Text>
 
-          <Button label="Close" onPress={() => control.close()}>
-            <ButtonText>Close</ButtonText>
+          <Button label="Done" onPress={() => control.close()}>
+            <ButtonText>Done</ButtonText>
           </Button>
+          <Dialog.Close /> {/* Web-only X button in top left */}
         </Dialog.ScrollableInner>
       </Dialog.Outer>
     </>
@@ -215,7 +335,7 @@ import {Button, ButtonText, ButtonIcon} from '#/components/Button'
 
 // Icon-only button
 <Button label="Close" onPress={handleClose} color="secondary" size="small" shape="round">
-  <ButtonIcon icon={X} />
+  <ButtonIcon icon={XIcon} />
 </Button>
 
 // Ghost variant (deprecated - use color prop)
@@ -225,7 +345,7 @@ import {Button, ButtonText, ButtonIcon} from '#/components/Button'
 ```
 
 **Button Props:**
-- `color`: `'primary'` | `'secondary'` | `'negative'` | `'primary_subtle'` | `'negative_subtle'`
+- `color`: `'primary'` | `'secondary'` | `'negative'` | `'primary_subtle'` | `'negative_subtle'` | `'secondary_inverted'`
 - `size`: `'tiny'` | `'small'` | `'large'`
 - `shape`: `'default'` (pill) | `'round'` | `'square'` | `'rectangular'`
 - `variant`: `'solid'` | `'outline'` | `'ghost'` (deprecated, use `color`)
@@ -267,7 +387,8 @@ import * as TextField from '#/components/forms/TextField'
 All user-facing strings must be wrapped for translation using Lingui.
 
 ```tsx
-import {msg, Trans, plural} from '@lingui/macro'
+import {msg, plural} from '@lingui/core/macro'
+import {Trans} from '@lingui/react/macro'
 import {useLingui} from '@lingui/react'
 
 function MyComponent() {
@@ -297,8 +418,9 @@ function MyComponent() {
 
 **Commands:**
 ```bash
+# DO NOT run these commands - extraction and compilation are handled by a nightly CI job
 yarn intl:extract    # Extract new strings to locale files
-yarn intl:compile    # Compile for runtime (required after changes)
+yarn intl:compile    # Compile translations for runtime
 ```
 
 ## State Management
@@ -339,6 +461,16 @@ export function useUpdateProfile() {
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({queryKey: RQKEY(variables.did)})
     },
+    onError: (error) => {
+      if (isNetworkError(error)) {
+        // don't log, but inform user
+      } else if (error instanceof AppBskyExampleProcedure.ExampleError) {
+        // XRPC APIs often have typed errors, allows nicer handling
+      } else {
+        // Log unexpected errors to Sentry
+        logger.error('Error updating profile', {safeMessage: error})
+      }
+    }
   })
 }
 ```
@@ -351,6 +483,26 @@ STALE.MINUTES.FIVE     // 5 minutes
 STALE.HOURS.ONE        // 1 hour
 STALE.INFINITY         // Never stale
 ```
+
+**Paginated APIs:** Many atproto APIs return paginated results with a `cursor`. Use `useInfiniteQuery` for these:
+
+```tsx
+export function useDraftsQuery() {
+  const agent = useAgent()
+
+  return useInfiniteQuery({
+    queryKey: ['drafts'],
+    queryFn: async ({pageParam}) => {
+      const res = await agent.app.bsky.draft.getDrafts({cursor: pageParam})
+      return res.data
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: page => page.cursor,
+  })
+}
+```
+
+To get all items from pages: `data?.pages.flatMap(page => page.items) ?? []`
 
 ### Preferences (React Context)
 
@@ -437,7 +589,19 @@ Example from Dialog:
 - `src/components/Dialog/index.tsx` - Native (uses BottomSheet)
 - `src/components/Dialog/index.web.tsx` - Web (uses modal with Radix primitives)
 
-Platform detection:
+**Important:** The bundler automatically resolves platform-specific files. Just import normally:
+
+```tsx
+// CORRECT - bundler picks storage.ts or storage.web.ts automatically
+import * as storage from '#/state/drafts/storage'
+
+// WRONG - don't use require() or conditional imports for platform files
+const storage = IS_NATIVE
+  ? require('#/state/drafts/storage')
+  : require('#/state/drafts/storage.web')
+```
+
+Platform detection (for runtime logic, not imports):
 ```tsx
 import {IS_WEB, IS_NATIVE, IS_IOS, IS_ANDROID} from '#/env'
 

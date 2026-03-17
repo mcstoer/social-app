@@ -1,6 +1,7 @@
 import {View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {atoms as a} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -13,7 +14,7 @@ import * as Layout from '#/components/Layout'
 import {Link} from '#/components/Link'
 import {Text} from '#/components/Typography'
 import {useAgeAssurance} from '#/ageAssurance'
-import {logger} from '#/ageAssurance'
+import {useAnalytics} from '#/analytics'
 
 export function AgeRestrictedScreen({
   children,
@@ -27,6 +28,7 @@ export function AgeRestrictedScreen({
   rightHeaderSlot?: React.ReactNode
 }) {
   const {_} = useLingui()
+  const ax = useAnalytics()
   const copy = useAgeAssuranceCopy()
   const aa = useAgeAssurance()
 
@@ -58,7 +60,7 @@ export function AgeRestrictedScreen({
           <View style={[a.gap_sm, a.pb_lg]}>
             <Text style={[a.text_xl, a.leading_snug, a.font_bold]}>
               <Trans>
-                You must complete age assurance in order to access this screen.
+                We're sorry, you cannot access this screen at this time.
               </Trans>
             </Text>
 
@@ -74,7 +76,7 @@ export function AgeRestrictedScreen({
               variant="solid"
               color="primary"
               onPress={() => {
-                logger.metric('ageAssurance:navigateToSettings', {})
+                ax.metric('ageAssurance:navigateToSettings', {})
               }}>
               <ButtonText>
                 <Trans>Go to account settings</Trans>

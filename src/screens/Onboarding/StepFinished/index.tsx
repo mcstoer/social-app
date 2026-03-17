@@ -8,8 +8,9 @@ import {
   type Un$Typed,
 } from '@atproto/api'
 import {TID} from '@atproto/common-web'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {useQueryClient} from '@tanstack/react-query'
 
 import {uploadBlob} from '#/lib/api'
@@ -20,7 +21,6 @@ import {
   VIDEO_SAVED_FEED,
 } from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
-import {logEvent} from '#/lib/statsig/statsig'
 import {logger} from '#/logger'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {getAllListMembers} from '#/state/queries/list-members'
@@ -46,12 +46,14 @@ import {atoms as a, useBreakpoints} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {ArrowRight_Stroke2_Corner0_Rounded as ArrowRight} from '#/components/icons/Arrow'
 import {Loader} from '#/components/Loader'
+import {useAnalytics} from '#/analytics'
 import {IS_WEB} from '#/env'
 import * as bsky from '#/types/bsky'
 import {ValuePropositionPager} from './ValuePropositionPager'
 
 export function StepFinished() {
   const {state, dispatch} = useOnboardingInternalState()
+  const ax = useAnalytics()
   const onboardDispatch = useOnboardingDispatch()
   const [saving, setSaving] = useState(false)
   const queryClient = useQueryClient()
@@ -95,10 +97,13 @@ export function StepFinished() {
       const {selectedInterests} = interestsStepResults
 
       await Promise.all([
-        bulkWriteFollows(agent, [
-          BSKY_APP_ACCOUNT_DID,
-          ...(listItems?.map(i => i.subject.did) ?? []),
-        ]),
+        bulkWriteFollows(
+          agent,
+          [BSKY_APP_ACCOUNT_DID, ...(listItems?.map(i => i.subject.did) ?? [])],
+          starterPack
+            ? {uri: starterPack.uri, cid: starterPack.cid}
+            : undefined,
+        ),
         (async () => {
           // Interests need to get saved first, then we can write the feeds to prefs
           await agent.setInterestsPref({tags: selectedInterests})
@@ -165,7 +170,7 @@ export function StepFinished() {
             return next
           })
 
-          logEvent('onboarding:finished:avatarResult', {
+          ax.metric('onboarding:finished:avatarResult', {
             avatarResult: profileStepResults.isCreatedAvatar
               ? 'created'
               : profileStepResults.image
@@ -200,7 +205,7 @@ export function StepFinished() {
     startProgressGuide('follow-10')
     dispatch({type: 'finish'})
     onboardDispatch({type: 'finish'})
-    logEvent('onboarding:finished:nextPressed', {
+    ax.metric('onboarding:finished:nextPressed', {
       usedStarterPack: Boolean(starterPack),
       starterPackName:
         starterPack &&
@@ -216,13 +221,14 @@ export function StepFinished() {
       feedsPinned: starterPack?.feeds?.length ?? 0,
     })
     if (starterPack && listItems?.length) {
-      logEvent('starterPack:followAll', {
+      ax.metric('starterPack:followAll', {
         logContext: 'Onboarding',
         starterPack: starterPack.uri,
         count: listItems?.length,
       })
     }
   }, [
+    ax,
     queryClient,
     agent,
     dispatch,
@@ -255,6 +261,7 @@ function ValueProposition({
 }) {
   const [subStep, setSubStep] = useState<0 | 1 | 2>(0)
   const {_} = useLingui()
+  const ax = useAnalytics()
   const {gtMobile} = useBreakpoints()
 
   const onPress = () => {
@@ -262,10 +269,10 @@ function ValueProposition({
       finishOnboarding() // has its own metrics
     } else if (subStep === 1) {
       setSubStep(2)
-      logger.metric('onboarding:valueProp:stepTwo:nextPressed', {})
+      ax.metric('onboarding:valueProp:stepTwo:nextPressed', {})
     } else if (subStep === 0) {
       setSubStep(1)
-      logger.metric('onboarding:valueProp:stepOne:nextPressed', {})
+      ax.metric('onboarding:valueProp:stepOne:nextPressed', {})
     }
   }
 
@@ -280,7 +287,7 @@ function ValueProposition({
             size="small"
             label={_(msg`Skip introduction and start using your account`)}
             onPress={() => {
-              logger.metric('onboarding:valueProp:skipPressed', {})
+              ax.metric('onboarding:valueProp:skipPressed', {})
               finishOnboarding()
             }}
             style={[a.bg_transparent]}>

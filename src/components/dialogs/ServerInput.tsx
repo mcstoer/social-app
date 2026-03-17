@@ -1,11 +1,10 @@
 import {useCallback, useImperativeHandle, useRef, useState} from 'react'
 import {View} from 'react-native'
-import {useWindowDimensions} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {BSKY_SERVICE} from '#/lib/constants'
-import {logger} from '#/logger'
 import * as persisted from '#/state/persisted'
 import {useSession} from '#/state/session'
 import {atoms as a, platform, useBreakpoints, useTheme, web} from '#/alf'
@@ -17,6 +16,7 @@ import * as TextField from '#/components/forms/TextField'
 import {Globe_Stroke2_Corner0_Rounded as Globe} from '#/components/icons/Globe'
 import {InlineLinkText} from '#/components/Link'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
 
 type SegmentedControlOptions = typeof BSKY_SERVICE | 'custom'
 
@@ -27,7 +27,7 @@ export function ServerInputDialog({
   control: Dialog.DialogOuterProps['control']
   onSelect: (url: string) => void
 }) {
-  const {height} = useWindowDimensions()
+  const ax = useAnalytics()
   const formRef = useRef<DialogInnerRef>(null)
 
   // persist these options between dialog open/close
@@ -43,19 +43,16 @@ export function ServerInputDialog({
         setPreviousCustomAddress(result)
       }
     }
-    logger.metric('signin:hostingProviderPressed', {
+    ax.metric('signin:hostingProviderPressed', {
       hostingProviderDidChange: fixedOption !== BSKY_SERVICE,
     })
-  }, [onSelect, fixedOption])
+  }, [ax, onSelect, fixedOption])
 
   return (
     <Dialog.Outer
       control={control}
       onClose={onClose}
-      nativeOptions={platform({
-        android: {minHeight: height / 2},
-        ios: {preventExpansion: true},
-      })}>
+      nativeOptions={{preventExpansion: true}}>
       <Dialog.Handle />
       <DialogInner
         formRef={formRef}

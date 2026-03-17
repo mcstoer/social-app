@@ -1,8 +1,8 @@
 import {View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
-import {logger} from '#/logger'
 import {
   useTrendingSettings,
   useTrendingSettingsApi,
@@ -11,11 +11,12 @@ import {useTrendingTopics} from '#/state/queries/trending/useTrendingTopics'
 import {useTrendingConfig} from '#/state/service-config'
 import {atoms as a, useTheme} from '#/alf'
 import {Button, ButtonIcon} from '#/components/Button'
-import {DotGrid_Stroke2_Corner0_Rounded as Ellipsis} from '#/components/icons/DotGrid'
+import {DotGrid3x1_Stroke2_Corner0_Rounded as Ellipsis} from '#/components/icons/DotGrid'
 import {Trending3_Stroke2_Corner1_Rounded as TrendingIcon} from '#/components/icons/Trending'
 import * as Prompt from '#/components/Prompt'
 import {TrendingTopicLink} from '#/components/TrendingTopics'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
 
 const TRENDING_LIMIT = 5
 
@@ -28,13 +29,14 @@ export function SidebarTrendingTopics() {
 function Inner() {
   const t = useTheme()
   const {_} = useLingui()
+  const ax = useAnalytics()
   const trendingPrompt = Prompt.usePromptControl()
   const {setTrendingDisabled} = useTrendingSettingsApi()
   const {data: trending, error, isLoading} = useTrendingTopics()
   const noTopics = !isLoading && !error && !trending?.topics?.length
 
   const onConfirmHide = () => {
-    logger.metric('trendingTopics:hide', {context: 'sidebar'})
+    ax.metric('trendingTopics:hide', {context: 'sidebar'})
     setTrendingDisabled(true)
   }
 
@@ -90,7 +92,7 @@ function Inner() {
                   topic={topic}
                   style={[a.self_start]}
                   onPress={() => {
-                    logger.metric('trendingTopic:click', {context: 'sidebar'})
+                    ax.metric('trendingTopic:click', {context: 'sidebar'})
                   }}>
                   {({hovered}) => (
                     <View style={[a.flex_row, a.align_center, a.gap_xs]}>

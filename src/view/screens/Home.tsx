@@ -1,4 +1,4 @@
-import React from 'react'
+import {useCallback, useEffect, useLayoutEffect, useMemo, useRef} from 'react'
 import {ActivityIndicator, StyleSheet} from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
 
@@ -11,7 +11,6 @@ import {
   type HomeTabNavigatorParams,
   type NativeStackScreenProps,
 } from '#/lib/routes/types'
-import {logEvent} from '#/lib/statsig/statsig'
 import {emitSoftReset} from '#/state/events'
 import {
   type SavedFeedSourceInfo,
@@ -36,7 +35,8 @@ import {FollowingEmptyState} from '#/view/com/posts/FollowingEmptyState'
 import {FollowingEndOfFeed} from '#/view/com/posts/FollowingEndOfFeed'
 import {NoFeedsPinned} from '#/screens/Home/NoFeedsPinned'
 import * as Layout from '#/components/Layout'
-import {IS_WEB} from '#/env'
+import {useAnalytics} from '#/analytics'
+import {IS_LIQUID_GLASS, IS_WEB} from '#/env'
 import {useDemoMode} from '#/storage/hooks/demo-mode'
 
 type Props = NativeStackScreenProps<HomeTabNavigatorParams, 'Home' | 'Start'>
@@ -47,7 +47,7 @@ export function HomeScreen(props: Props) {
   const {data: pinnedFeedInfos, isLoading: isPinnedFeedsLoading} =
     usePinnedFeedsInfos()
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (IS_WEB && !currentAccount) {
       const getParams = new URLSearchParams(window.location.search)
       const splash = getParams.get('splash')
@@ -79,7 +79,7 @@ export function HomeScreen(props: Props) {
 
   if (preferences && pinnedFeedInfos && !isPinnedFeedsLoading) {
     return (
-      <Layout.Screen testID="HomeScreen">
+      <Layout.Screen testID="HomeScreen" noInsetTop={IS_LIQUID_GLASS}>
         <HomeScreenReady
           {...props}
           preferences={preferences}
@@ -105,7 +105,8 @@ function HomeScreenReady({
   preferences: UsePreferencesQueryResponse
   pinnedFeedInfos: SavedFeedSourceInfo[]
 }) {
-  const allFeeds = React.useMemo(
+  const ax = useAnalytics()
+  const allFeeds = useMemo(
     () => pinnedFeedInfos.map(f => f.feedDescriptor),
     [pinnedFeedInfos],
   )
@@ -120,13 +121,13 @@ function HomeScreenReady({
   useSetTitle(pinnedFeedInfos[selectedIndex]?.displayName)
   useOTAUpdates()
 
-  React.useEffect(() => {
+  useEffect(() => {
     requestNotificationsPermission('Home')
   }, [requestNotificationsPermission])
 
-  const pagerRef = React.useRef<PagerRef>(null)
-  const lastPagerReportedIndexRef = React.useRef(selectedIndex)
-  React.useLayoutEffect(() => {
+  const pagerRef = useRef<PagerRef>(null)
+  const lastPagerReportedIndexRef = useRef(selectedIndex)
+  useLayoutEffect(() => {
     // Since the pager is not a controlled component, adjust it imperatively
     // if the selected index gets out of sync with what it last reported.
     // This is supposed to only happen on the web when you use the right nav.
@@ -139,7 +140,7 @@ function HomeScreenReady({
   const {hasSession} = useSession()
   const setMinimalShellMode = useSetMinimalShellMode()
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       setMinimalShellMode(false)
     }, [setMinimalShellMode]),
   )
@@ -147,7 +148,7 @@ function HomeScreenReady({
   useFocusEffect(
     useNonReactiveCallback(() => {
       if (maybeSelectedFeed) {
-        logEvent('home:feedDisplayed', {
+        ax.metric('home:feedDisplayed', {
           index: selectedIndex,
           feedType: maybeSelectedFeed.split('|')[0],
           feedUrl: maybeSelectedFeed,
@@ -157,7 +158,7 @@ function HomeScreenReady({
     }),
   )
 
-  const onPageSelected = React.useCallback(
+  const onPageSelected = useCallback(
     (index: number) => {
       setMinimalShellMode(false)
       const maybeFeed = allFeeds[index]
@@ -168,21 +169,21 @@ function HomeScreenReady({
       setSelectedFeed(maybeFeed)
 
       if (maybeFeed) {
-        logEvent('home:feedDisplayed', {
+        ax.metric('home:feedDisplayed', {
           index,
           feedType: maybeFeed.split('|')[0],
           feedUrl: maybeFeed,
         })
       }
     },
-    [setSelectedFeed, setMinimalShellMode, allFeeds],
+    [ax, setSelectedFeed, setMinimalShellMode, allFeeds],
   )
 
-  const onPressSelected = React.useCallback(() => {
+  const onPressSelected = useCallback(() => {
     emitSoftReset()
   }, [])
 
-  const onPageScrollStateChanged = React.useCallback(
+  const onPageScrollStateChanged = useCallback(
     (state: 'idle' | 'dragging' | 'settling') => {
       'worklet'
       if (state === 'dragging') {
@@ -194,7 +195,7 @@ function HomeScreenReady({
 
   const [demoMode] = useDemoMode()
 
-  const renderTabBar = React.useCallback(
+  const renderTabBar = useCallback(
     (props: RenderTabBarFnProps) => {
       if (demoMode) {
         return (
@@ -221,15 +222,15 @@ function HomeScreenReady({
     [onPressSelected, pinnedFeedInfos, demoMode],
   )
 
-  const renderFollowingEmptyState = React.useCallback(() => {
+  const renderFollowingEmptyState = useCallback(() => {
     return <FollowingEmptyState />
   }, [])
 
-  const renderCustomFeedEmptyState = React.useCallback(() => {
+  const renderCustomFeedEmptyState = useCallback(() => {
     return <CustomFeedEmptyState />
   }, [])
 
-  const homeFeedParams = React.useMemo<FeedParams>(() => {
+  const homeFeedParams = useMemo<FeedParams>(() => {
     return {
       mergeFeedEnabled: Boolean(preferences.feedViewPrefs.lab_mergeFeedEnabled),
       mergeFeedSources: preferences.feedViewPrefs.lab_mergeFeedEnabled

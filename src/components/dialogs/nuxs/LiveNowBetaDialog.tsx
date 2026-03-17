@@ -2,8 +2,9 @@ import {useCallback, useMemo} from 'react'
 import {View} from 'react-native'
 import {Image} from 'expo-image'
 import {LinearGradient} from 'expo-linear-gradient'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {atoms as a, select, useTheme, utils, web} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
@@ -24,7 +25,7 @@ export const enabled = createIsEnabledCheck(props => {
       '2026-01-16T00:00:00.000Z',
       props.currentProfile.createdAt,
     ) &&
-    !props.gate('disable_live_now_beta')
+    !props.features.enabled(props.features.LiveNowBetaDisable)
   )
 })
 
