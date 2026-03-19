@@ -312,4 +312,17 @@ export default defineConfig(
       }
     },
   },
+  /**
+   * Signing server files configuration
+   */
+   {
+     files: ['vskysigningserver/**/*.{ts,tsx}'],
+     settings: {
+       'import-x/resolver': {
+         typescript: {
+           project: 'vskysigningserver/tsconfig.json',
+         },
+       },
+     },
+   },
 )

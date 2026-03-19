@@ -5,7 +5,7 @@ import {
   LoginConsentResponse,
 } from 'verus-typescript-primitives'
 
-import {RequestResponseStore} from '../../utils/RequestResponseStore'
+import {RequestResponseStore} from '../../services/RequestResponseStore'
 import {createSignedLoginRequest, verifyLoginResponse} from './getLoginRequest'
 
 const loginRouter = express.Router()

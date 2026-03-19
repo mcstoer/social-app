@@ -2,7 +2,11 @@
   "extends": "@react-native/typescript-config/tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "build"
+    "outDir": "build",
+    "baseUrl": ".",
+    "paths": {
+      "#/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

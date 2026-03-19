@@ -2,7 +2,7 @@
 import './config'
 
 import {app} from './app'
-import {fetchWIF} from './utils/signing'
+import {fetchWIF} from './services/signing'
 
 const PORT = process.env.PORT || 25000
 
@@ -23,4 +23,4 @@ async function startServer() {
   })
 }
 
-startServer()
+void startServer()

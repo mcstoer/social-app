@@ -6,7 +6,7 @@ import {
 import {VerusIdInterface} from 'verusid-ts-client'
 
 import {CHAIN, REMOTE_RPC_URL, signingAddress} from '../../config'
-import {fetchWIF} from '../../utils/signing'
+import {fetchWIF} from '../../services/signing'
 
 const idInterface = new VerusIdInterface(CHAIN, REMOTE_RPC_URL)
 

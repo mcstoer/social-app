@@ -1,3 +1,4 @@
+import {type Identity} from '#/types/identity'
 import {verusDaemonConfig} from '../config'
 import {callRPCDaemon} from './callRPCDaemon'
 
@@ -8,7 +9,7 @@ export const fetchWIF = async (iaddress: string): Promise<string> => {
     [iaddress],
   )
 
-  const primaryAdresses = (identityResponse.result as any).identity
+  const primaryAdresses = (identityResponse.result as Identity).identity
     .primaryaddresses
 
   let privKeyResponse

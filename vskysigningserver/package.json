@@ -1,6 +1,9 @@
 {
   "name": "vskysigningserver",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "imports": {
+    "#/*": "./src/*"
+  },
   "bin": {
     "vsky-signing-server": "bin/vsky-signing-server.js"
   },
@@ -26,9 +29,11 @@
   },
   "dependencies": {
     "@codegenie/serverless-express": "^4.15.0",
+    "@types/bn.js": "5.1.1",
     "aws-sdk": "^2.1684.0",
     "axios": "1.16.0",
     "base64url": "https://github.com/VerusCoin/base64url.git",
+    "bn.js": "5.2.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "crypto-browserify": "^3.12.1",

@@ -15,7 +15,7 @@ export class RequestResponseStore<TIdentifier, TRequest, TResponse> {
   // Creates a new attempt and initializes it with the request.
   setRequest(id: TIdentifier, request: TRequest): void {
     const attempt: Attempt<TRequest, TResponse> = {
-      request: request,
+      request,
       response: undefined,
     }
     this.store.set(id, attempt)
@@ -33,12 +33,12 @@ export class RequestResponseStore<TIdentifier, TRequest, TResponse> {
     const attempt = this.store.get(id)
 
     if (!attempt) {
-      throw new Error(`No attempt found for ID of: ${id}`)
+      throw new Error(`No attempt found for ID of: ${String(id)}`)
     }
 
     this.store.set(id, {
       ...attempt,
-      response: response,
+      response,
     })
   }
 }

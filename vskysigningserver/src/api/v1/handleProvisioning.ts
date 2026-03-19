@@ -32,8 +32,8 @@ import {
   TRANSFERFQN,
   verusDaemonConfig,
 } from '../../config'
-import {callRPCDaemon, type rpcResult} from '../../utils/callRPCDaemon'
-import {fetchWIF} from '../../utils/signing'
+import {callRPCDaemon, type rpcResult} from '../../services/callRPCDaemon'
+import {fetchWIF} from '../../services/signing'
 
 const idInterface = new VerusIdInterface(CHAIN, REMOTE_RPC_URL)
 const rpcInterface = new VerusdRpcInterface(CHAIN, REMOTE_RPC_URL)
@@ -376,7 +376,7 @@ export const checkProvisioningStatus = async (
 
 export const verifyProvisioningResponse = async (
   res: LoginConsentProvisioningResponse,
-): Promise<Boolean> => {
+): Promise<boolean> => {
   return await idInterface.verifyLoginConsentResponse(res)
 }
 
