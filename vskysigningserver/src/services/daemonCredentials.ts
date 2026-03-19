@@ -9,7 +9,8 @@ export interface VerusDaemonConfig {
   rpcpassword: string
 }
 
-// TODO: Use `getvdxfid` and the hash160result to find the symbol for PBaaS chains.
+// TODO: Use `getvdxfid` to find the symbol for PBaaS chains.
+// Example: BETELGEUSE.VRSCTEST@ = hash160result: c79ecabcf7c56da37b520d70270d1c19bd136e11
 const chainNametoSymbol: {[key: string]: string} = {
   VRSC: 'VRSC',
   VRSCTEST: 'vrsctest',
@@ -32,7 +33,7 @@ export const fetchVerusDaemonConfig = (
     return parseConfigFile(customPath)
   }
   const configPath = getConfigPath(chainName)
-  return parseConfigFile(configPath!)
+  return parseConfigFile(configPath)
 }
 
 const getConfigPath = (chainName: string): string => {

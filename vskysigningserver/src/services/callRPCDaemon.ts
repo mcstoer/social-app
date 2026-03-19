@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+import {verusDaemonConfig} from '../config'
 import {type VerusDaemonConfig} from './daemonCredentials'
 
 export interface error {
@@ -8,7 +9,7 @@ export interface error {
 }
 
 export interface rpcResult {
-  result: object
+  result: object | string
   error: error | null
   id: string
 }
@@ -47,4 +48,12 @@ export const callRPCDaemon = async (
   })
 
   return res.data
+}
+
+// Shortcut for calling callRPCDaemon with the verus daemon config.
+export const callDaemon = async (
+  command: string,
+  parameters?: (string | object)[],
+): Promise<rpcResult> => {
+  return await callRPCDaemon(verusDaemonConfig, command, parameters)
 }
