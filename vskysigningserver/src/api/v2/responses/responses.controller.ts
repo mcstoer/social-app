@@ -8,6 +8,32 @@ import {
 import {responsesService} from './responses.service'
 
 export class ResponsesController {
+  getResponse(req: Request, res: Response): void {
+    try {
+      const requestId = req.query.requestId
+
+      if (!requestId || typeof requestId !== 'string') {
+        res.status(400).send('Missing or invalid requestId parameter.')
+        return
+      }
+
+      const response = responsesService.getResponse(requestId)
+
+      if (!response) {
+        res.status(204).send()
+        return
+      }
+
+      res
+        .status(200)
+        .setHeader('Content-Type', 'application/octet-stream')
+        .send(response.toBuffer())
+    } catch (error) {
+      console.error('Error getting response:', error)
+      res.status(500).json({message: 'Internal server error'})
+    }
+  }
+
   async receiveWebhook(req: Request, res: Response): Promise<void> {
     try {
       const buffer: Buffer = req.body

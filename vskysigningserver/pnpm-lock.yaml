@@ -11,12 +11,18 @@ importers:
 
   .:
     dependencies:
+      '@types/bn.js':
+        specifier: 5.1.1
+        version: 5.1.1
       axios:
         specifier: 1.16.0
         version: 1.16.0
       base64url:
         specifier: https://github.com/VerusCoin/base64url.git
         version: https://codeload.github.com/VerusCoin/base64url/tar.gz/3217a593e0e665078aa4a71c9f887f8d2e5424fb
+      bn.js:
+        specifier: 5.2.1
+        version: 5.2.1
       body-parser:
         specifier: ^1.20.3
         version: 1.20.5
@@ -244,7 +250,7 @@ packages:
     resolution: {integrity: sha512-+Neg+nsqUhYOPlvyITHXYzKUTJofyxYdLQTzNjufamifBzxLGTpgn2KKUfvGNsGovlUYzlyPZj+CB6je2D7mhw==}
 
   '@bitgo/utxo-lib@https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/80abaccd57652215bd5d9ebbe969ffe9c4266d25':
-    resolution: {gitHosted: true, integrity: sha512-EGI3EyglXUrlyjW/Tt09+SeD3ZiuQPP915gxuZ0HgYAYPzXmbT6kS1ZhWnNxV1FpDW6pBLq+XBbk1zeCV9PJEQ==, tarball: https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/80abaccd57652215bd5d9ebbe969ffe9c4266d25}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/80abaccd57652215bd5d9ebbe969ffe9c4266d25}
     version: 1.9.6
     engines: {node: '>=10.22.0', npm: '>=3.10.10'}
 
@@ -564,6 +570,9 @@ packages:
 
   '@types/babel__traverse@7.28.0':
     resolution: {integrity: sha512-8PvcXf70gTDZBgt9ptxJ8elBeBjcLOAcOtoO/mPJjtji1+CdGbHgm77om1GrsPxsiE+uXIpNSK64UYaIwQXd4Q==}
+
+  '@types/bn.js@5.1.1':
+    resolution: {integrity: sha512-qNrYbZqMx0uJAfKnKclPh+dTwK33KfLHYqtyODwd5HnXOjnkhc4qgn3BrK6RWyGZm5+sIFE7Q7Vz6QQtJB7w7g==}
 
   '@types/body-parser@1.19.6':
     resolution: {integrity: sha512-HLFeCYgz89uk22N5Qg3dvGvsv46B8GLvKKo1zKG4NybA8U2DiEO3w9lqGg29t/tfLRJpJ6iQxnVw4OnB7MoM9g==}
@@ -2309,7 +2318,7 @@ packages:
     engines: {node: '>= 0.8'}
 
   verus-typescript-primitives@https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b:
-    resolution: {gitHosted: true, integrity: sha512-IOHdy/1V8W2bZ7snW3A0bPjhAGEZkEguz0dk6VkEO/RBEtpGLb6rK/rilyIyDHyJ4xWWudUIRFkNp+SmrN1/oA==, tarball: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b}
     version: 1.0.0
 
   verus-typescript-primitives@https://codeload.github.com/mcstoer/verus-typescript-primitives/tar.gz/009bdaa7405be937e85ab024d6a13b307829edb9:
@@ -2317,7 +2326,7 @@ packages:
     version: 1.0.0
 
   verus-typescript-primitives@https://codeload.github.com/michaeltout/verus-typescript-primitives/tar.gz/98106abde48d107b0b3edeedb5cb3482236e1aab:
-    resolution: {gitHosted: true, integrity: sha512-FHGXVdIl2PcyQ8+F5viu3zuwHhYaYz6KzICPEHL0ysnR/8I+ZgpR/hj4MEgSZozXzLLxt4eVG/1MIgHtb5jnqQ==, tarball: https://codeload.github.com/michaeltout/verus-typescript-primitives/tar.gz/98106abde48d107b0b3edeedb5cb3482236e1aab}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/michaeltout/verus-typescript-primitives/tar.gz/98106abde48d107b0b3edeedb5cb3482236e1aab}
     version: 1.0.0
 
   verusd-rpc-ts-client@https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/a2519d42650e0bd014e73ab0cbc26c2cadd4a672:
@@ -2325,7 +2334,7 @@ packages:
     version: 0.1.0
 
   verusd-rpc-ts-client@https://codeload.github.com/michaeltout/verusd-rpc-ts-client/tar.gz/02cc1c54748698433ccf1b87f34431659a934f52:
-    resolution: {gitHosted: true, integrity: sha512-MCNRayAiD7zxSNs587Yvutf+D5UApuOOKMGpxsVUbr/IxESxlB5IPUGR2vdnj7QY1IjJk7OFSRHh8KxFrQwKdQ==, tarball: https://codeload.github.com/michaeltout/verusd-rpc-ts-client/tar.gz/02cc1c54748698433ccf1b87f34431659a934f52}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/michaeltout/verusd-rpc-ts-client/tar.gz/02cc1c54748698433ccf1b87f34431659a934f52}
     version: 0.1.0
 
   verusid-ts-client@https://codeload.github.com/michaeltout/verusid-ts-client/tar.gz/fa8c07d215a5013779c20afd2cda42b5af10dab6:
@@ -2793,7 +2802,7 @@ snapshots:
     dependencies:
       '@jest/fake-timers': 29.7.0
       '@jest/types': 29.6.3
-      '@types/node': 22.19.19
+      '@types/node': 24.13.0
       jest-mock: 29.7.0
 
   '@jest/expect-utils@29.7.0':
@@ -2811,7 +2820,7 @@ snapshots:
     dependencies:
       '@jest/types': 29.6.3
       '@sinonjs/fake-timers': 10.3.0
-      '@types/node': 22.19.19
+      '@types/node': 24.13.0
       jest-message-util: 29.7.0
       jest-mock: 29.7.0
       jest-util: 29.7.0
@@ -2957,6 +2966,10 @@ snapshots:
     dependencies:
       '@babel/types': 7.29.7
 
+  '@types/bn.js@5.1.1':
+    dependencies:
+      '@types/node': 24.13.0
+
   '@types/body-parser@1.19.6':
     dependencies:
       '@types/connect': 3.4.38
@@ -2989,7 +3002,7 @@ snapshots:
 
   '@types/graceful-fs@4.1.9':
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 24.13.0
 
   '@types/http-errors@2.0.5': {}
 
@@ -3398,7 +3411,7 @@ snapshots:
 
   browserify-rsa@4.1.1:
     dependencies:
-      bn.js: 5.2.3
+      bn.js: 5.2.1
       randombytes: 2.1.0
       safe-buffer: 5.2.1
 
@@ -4335,7 +4348,7 @@ snapshots:
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 22.19.19
+      '@types/node': 24.13.0
       jest-util: 29.7.0
 
   jest-pnp-resolver@1.2.3(jest-resolve@29.7.0):
@@ -4472,7 +4485,7 @@ snapshots:
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 24.13.0
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1

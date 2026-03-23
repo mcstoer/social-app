@@ -274,6 +274,7 @@
     "@react-native/typescript-config": "^0.81.5",
     "@sentry/webpack-plugin": "^3.2.2",
     "@testing-library/react-native": "^13.2.0",
+    "@types/bn.js": "5.1.1",
     "@types/jest": "29.5.14",
     "@types/lodash.chunk": "^4.2.7",
     "@types/lodash.debounce": "^4.0.7",

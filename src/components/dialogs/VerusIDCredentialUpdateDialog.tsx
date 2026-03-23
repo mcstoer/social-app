@@ -3,25 +3,22 @@ import {View} from 'react-native'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {Trans} from '@lingui/react/macro'
-import crypto from 'crypto'
 import {
-  BigNumber,
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
   IDENTITY_CREDENTIAL,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
-  IdentityUpdateRequest,
-  IdentityUpdateRequestDetails,
   PROOFS_CONTROLLER_BLUESKY,
-  ResponseUri,
 } from 'verus-typescript-primitives'
 
-import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
+import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {generateIdentityUpdateRequestOrdinals} from '#/lib/verus/requests/identityUpdateRequest'
 import {logger} from '#/logger'
+import {useVerusService} from '#/state/preferences/verus-service'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
-import {useVerusIdUpdateQuery} from '#/state/queries/verus/useVerusIdUpdateQuery'
+import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSession} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -109,11 +106,12 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const {_} = useLingui()
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
+  const {verusIdInterface} = useVerusService()
 
   const [stage, setStage] = useState(Stages.UpdateCredentials)
   const [isProcessing, setIsProcessing] = useState(false)
   const [name, setName] = useState(
-    currentAccount?.type === 'vsky' ? currentAccount.name + '@' : '',
+    currentAccount?.type === 'vsky' ? currentAccount.name : '',
   )
   const [email, setEmail] = useState(currentAccount?.email || '')
   const [password, setPassword] = useState(initialPassword || '')
@@ -124,10 +122,10 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const {data: signingServiceInfo} = useSigningAddressQuery()
 
   const {
-    data: updateResponse,
-    error: updateError,
-    isError: isUpdateError,
-  } = useVerusIdUpdateQuery({
+    data: requestResponse,
+    error: requestError,
+    isError: isRequestError,
+  } = useVerusIdRequestQuery({
     requestId: requestIdRef.current,
     enabled: stage === Stages.AwaitingResponse && !!requestIdRef.current,
   })
@@ -159,24 +157,24 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     },
   }
 
-  // Handle the credential update
+  // Handle the credential update response
   useEffect(() => {
-    if (updateResponse && updateResponse.details.containsTxid()) {
+    if (requestResponse) {
       setStage(Stages.Done)
       setIsProcessing(false)
       logger.debug('Successfully updated VerusSky credentials')
     }
-  }, [updateResponse])
+  }, [requestResponse])
 
   // Handle the errors for the credential update
   useEffect(() => {
-    if (isUpdateError) {
+    if (isRequestError) {
       const errMsg =
-        updateError?.toString() || _(msg`Failed to update credentials`)
+        requestError?.toString() || _(msg`Failed to update credentials`)
       logger.warn('Error while checking for credential update response', {
         error: errMsg,
       })
-      if (isNetworkError(updateError)) {
+      if (isNetworkError(requestError)) {
         setError(
           _(
             msg`Unable to contact the service. Please check your Internet connection.`,
@@ -188,7 +186,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
       setStage(Stages.UpdateCredentials)
       setIsProcessing(false)
     }
-  }, [isUpdateError, updateError, _])
+  }, [isRequestError, requestError, _])
 
   const onUpdateCredentials = async () => {
     if (!name.trim()) {
@@ -215,8 +213,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     setIsProcessing(true)
 
     try {
-      // Create the identity update request details.
-      const identityUpdateDetailCLIJson = {
+      const identityJSON = {
         name: name,
         contentmultimap: {
           [IDENTITY_CREDENTIAL.vdxfid]: [
@@ -232,84 +229,21 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         },
       }
 
-      const randID = Buffer.from(crypto.randomBytes(20))
-      const updateRequestId = new BigNumber(randID)
-      // Generate the timestamp in seconds, since that's what block times are in.
-      const createdAt = new BigNumber((Date.now() / 1000).toFixed(0))
+      const ordinals = generateIdentityUpdateRequestOrdinals({
+        identityJSON,
+      })
 
-      const details = IdentityUpdateRequestDetails.fromCLIJson(
-        identityUpdateDetailCLIJson,
-      )
-
-      // Add the response URIs.
-      details.responseuris = [
-        ResponseUri.fromUriString(
-          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/confirm-credential-update`,
-          ResponseUri.TYPE_POST,
-        ),
-      ]
-
-      // IMPORTANT: Set the flag to indicate that response URIs are present
-      if (!details.containsResponseUris()) {
-        details.toggleContainsResponseUris()
-      }
-
-      details.requestid = updateRequestId
-      details.createdat = createdAt
-
-      // Get the ID as a string by converting the details to JSON,
-      // since we need to do that anyways to send the details.
-      const detailsJson = details.toJson()
-      const updateRequestIdString = detailsJson.requestid!
-
-      // Send the update request.
       if (IS_WEB) {
-        // Web implementation using signing server
-        const response = await fetch(
-          `${LOCAL_DEV_VSKY_SERVER}/api/v1/identityupdates/update-credentials`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(detailsJson),
-          },
+        const signedRequest = await createAndSignGenericRequest(
+          verusIdInterface,
+          ordinals,
         )
 
-        if (!response.ok) {
-          logger.warn('Failed to initiate credential update', {
-            status: response.status,
-            statusText: response.statusText,
-          })
-          setError(_(msg`Failed to update credentials`))
-          setIsProcessing(false)
-          return
-        }
+        const requestIdString = signedRequest.requestID!.toAddress()
+        setDeeplinkUri(signedRequest.toWalletDeeplinkUri())
 
-        const res = await response.json()
-
-        if (res.error) {
-          logger.warn('Failed to get signed identity update request', {
-            error: res.error,
-          })
-          setError(_(msg`Failed to initiate credential update`))
-          setIsProcessing(false)
-          return
-        }
-
-        if (res) {
-          const signedRequest = IdentityUpdateRequest.fromJson(res)
-          setDeeplinkUri(signedRequest.toWalletDeeplinkUri())
-
-          requestIdRef.current = updateRequestIdString
-          setStage(Stages.AwaitingResponse)
-        } else {
-          logger.warn('Failed to get signed identity update request', {
-            error: 'No URI or requestId returned',
-          })
-          setError(_(msg`Failed to initiate credential update`))
-          setIsProcessing(false)
-        }
+        requestIdRef.current = requestIdString
+        setStage(Stages.AwaitingResponse)
       } else if (IS_NATIVE) {
         // Mobile implementation will be different
         // This is a placeholder for the actual implementation
