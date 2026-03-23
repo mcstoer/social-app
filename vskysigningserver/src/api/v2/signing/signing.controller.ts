@@ -7,8 +7,11 @@ export class SigningController {
     try {
       const buffer: Buffer = req.body
 
-      const uri = await signingService.signGenericRequest(buffer)
-      res.status(200).json({uri})
+      const signed = await signingService.signGenericRequest(buffer)
+      res
+        .status(200)
+        .setHeader('Content-Type', 'application/octet-stream')
+        .send(signed.toBuffer())
     } catch (error) {
       console.error('Error signing request:', error)
       res.status(500).json({message: 'Internal server error'})

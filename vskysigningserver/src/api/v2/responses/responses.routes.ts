@@ -4,6 +4,12 @@ import {responsesController} from './responses.controller'
 
 const router = Router()
 
+const getRouter = Router()
+getRouter.get(
+  '/get',
+  responsesController.getResponse.bind(responsesController) as RequestHandler,
+)
+
 const webhookRouter = Router()
 webhookRouter.use(
   raw({
@@ -26,7 +32,8 @@ redirectRouter.get(
   ) as RequestHandler,
 )
 
-// Mount both routers
+// Mount all routers
+router.use('/', getRouter)
 router.use('/', webhookRouter)
 router.use('/', redirectRouter)
 

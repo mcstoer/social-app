@@ -7,6 +7,15 @@ import {idInterface} from '#/config'
 import {v2StoreInstance} from '../common/request-store'
 
 export class ResponsesService {
+  getResponse(requestId: string): GenericResponse | undefined {
+    if (!v2StoreInstance.hasAttempt(requestId)) {
+      return undefined
+    }
+
+    const attempt = v2StoreInstance.getAttempt(requestId)
+    return attempt?.response as GenericResponse | undefined
+  }
+
   async processResponse(
     response: GenericResponse,
   ): Promise<{success: boolean; status: number; message: string}> {
@@ -40,14 +49,16 @@ export class ResponsesService {
     const attempt = v2StoreInstance.getAttempt(id)
     const originalRequest = attempt?.request as GenericRequest | undefined
 
-    console.log('Response Contents:')
-    console.log(JSON.stringify(response.toJson(), null, 2))
-
     console.log(
       `Received response with id ${id} at ${new Date().toLocaleTimeString()}`,
     )
 
-    if (originalRequest?.getRawDataSha256 !== response?.requestHash) {
+    const originalHash = originalRequest?.getRawDataSha256()
+    if (
+      !originalHash ||
+      !response?.requestHash ||
+      !originalHash.equals(response.requestHash)
+    ) {
       console.log(`Request hash mismatch for response with id ${id}`)
       return {success: false, status: 400, message: 'Request hash mismatch.'}
     }

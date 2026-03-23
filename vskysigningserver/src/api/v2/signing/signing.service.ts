@@ -6,7 +6,7 @@ import {v2StoreInstance} from '../common/request-store'
 import {sigData} from '../helpers/signData'
 
 export class SigningService {
-  async signGenericRequest(buffer: Buffer): Promise<string> {
+  async signGenericRequest(buffer: Buffer): Promise<GenericRequest> {
     const request = new GenericRequest()
     request.fromBuffer(buffer)
     request.signature = sigData
@@ -24,7 +24,7 @@ export class SigningService {
       v2StoreInstance.setRequest(storeKey, signed)
     }
 
-    return signed.toWalletDeeplinkUri()
+    return signed
   }
 }
 

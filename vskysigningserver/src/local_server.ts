@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 25000
 
 async function startServer() {
   try {
-    await fetchWIF(process.env.EXPO_PUBLIC_IADDRESS as string)
+    await fetchWIF(process.env.SIGNING_ADDRESS as string)
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'code' in error) {
       console.error('Unable to fetch wif for signing:', (error as any).code)

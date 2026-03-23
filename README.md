@@ -36,12 +36,12 @@ Deeplinks should work out of the box when you install the Verus Desktop Wallet o
     EXPO_PUBLIC_BUNDLE_IDENTIFIER
     EXPO_PUBLIC_BUNDLE_DATE
 
-    DEFAULT_CHAIN
+    EXPO_PUBLIC_DEFAULT_CHAIN
     DEFAULT_URL
     ```
 
 3. Variables you **must** set:
-    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
+    - `SIGNING_ADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
 
 ## Running the VerusSky Web App 
 
