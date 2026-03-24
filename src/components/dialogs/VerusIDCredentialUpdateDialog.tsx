@@ -13,7 +13,10 @@ import {
 
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
-import {generateIdentityUpdateRequestOrdinals} from '#/lib/verus/requests/identityUpdateRequest'
+import {
+  generateIdentityUpdateRequestOrdinals,
+  processIdentityUpdateResponse,
+} from '#/lib/verus/requests/identityUpdateRequest'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
@@ -111,7 +114,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const [stage, setStage] = useState(Stages.UpdateCredentials)
   const [isProcessing, setIsProcessing] = useState(false)
   const [name, setName] = useState(
-    currentAccount?.type === 'vsky' ? currentAccount.name : '',
+    currentAccount?.type === 'vsky' ? currentAccount.name + '@' : '',
   )
   const [email, setEmail] = useState(currentAccount?.email || '')
   const [password, setPassword] = useState(initialPassword || '')
@@ -160,11 +163,25 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   // Handle the credential update response
   useEffect(() => {
     if (requestResponse) {
-      setStage(Stages.Done)
-      setIsProcessing(false)
-      logger.debug('Successfully updated VerusSky credentials')
+      try {
+        const txid = processIdentityUpdateResponse(requestResponse)
+
+        if (txid) {
+          setStage(Stages.Done)
+          setIsProcessing(false)
+          logger.debug('Successfully updated VerusSky credentials')
+        } else {
+          setError(
+            _(
+              msg`No transaction ID was found in the credentail update response.`,
+            ),
+          )
+        }
+      } catch (e) {
+        setError(_(msg`Failed to process the credential update response.`))
+      }
     }
-  }, [requestResponse])
+  }, [_, requestResponse])
 
   // Handle the errors for the credential update
   useEffect(() => {
@@ -214,7 +231,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
 
     try {
       const identityJSON = {
-        name: name,
+        // The request does not allow a name with an @ suffix.
+        name: name.replace(/@$/, ''),
         contentmultimap: {
           [IDENTITY_CREDENTIAL.vdxfid]: [
             {
