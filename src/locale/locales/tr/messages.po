@@ -631,13 +631,25 @@ msgstr "<0>Siz</0> ve <1></1><2>{0}</2> başlangıç paketinizde yer alıyorsunu
 msgid "⚠Invalid Handle"
 msgstr "⚠Geçersiz Kullanıcı Adı"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:213
+msgid "$1 USD (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:223
+msgid "€1 EUR (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:270
+msgid "1"
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:202
 #: src/components/dialogs/MutedWords.tsx:551
 #: src/components/dialogs/MutedWords.tsx:554
 msgid "24 hours"
 msgstr "24 saat"
 
-#: src/screens/Login/LoginForm.tsx:589
+#: src/screens/Login/LoginForm.tsx:591
 msgid "2FA Confirmation"
 msgstr "2FA Onayı"
 
@@ -698,7 +710,7 @@ msgstr "Takip et butonunun yanında bir zil simgesi bulunan bir profil sayfasın
 msgid "A screenshot of the post composer with a new button next to the post button that says \"Drafts\", with a rainbow firework effect. Below, the text in the composer reads \"Hey, did you hear the news? Bluesky has drafts now!!!\"."
 msgstr "Gönderi düzenleyicisinin bir gönderi yanındaki yeni \"Taslaklar\" butonu ve gökkuşağı havai fişek efekti barındıran ekran görüntüsü. Altında, düzenleyicideki metinde \"Hey, haberleri duydunuz mu? Bluesky'da taslaklar var artık!!!\" yazıyor."
 
-#: src/Navigation.tsx:556
+#: src/Navigation.tsx:557
 #: src/screens/Settings/AboutSettings.tsx:74
 #: src/screens/Settings/Settings.tsx:266
 #: src/screens/Settings/Settings.tsx:269
@@ -733,12 +745,12 @@ msgstr "Bu dil önerisini kabul et"
 msgid "Accessibility"
 msgstr "Erişilebilirlik"
 
-#: src/Navigation.tsx:392
+#: src/Navigation.tsx:393
 msgid "Accessibility Settings"
 msgstr "Erişilebilirlik Ayarları"
 
-#: src/Navigation.tsx:408
-#: src/screens/Login/LoginForm.tsx:458
+#: src/Navigation.tsx:409
+#: src/screens/Login/LoginForm.tsx:460
 #: src/screens/Settings/AccountSettings.tsx:56
 #: src/screens/Settings/Settings.tsx:176
 #: src/screens/Settings/Settings.tsx:179
@@ -786,7 +798,7 @@ msgstr "Hesap seçenekleri"
 
 #: src/components/dialogs/ServerInput.tsx:138
 #: src/screens/Login/ForgotPasswordForm.tsx:85
-#: src/screens/Login/LoginForm.tsx:441
+#: src/screens/Login/LoginForm.tsx:443
 msgid "Account provider"
 msgstr "Hesap sağlayıcısı"
 
@@ -794,8 +806,8 @@ msgstr "Hesap sağlayıcısı"
 msgid "Account removed from quick access"
 msgstr "Hesap hızlı erişimden kaldırıldı"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:332
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:93
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
 #: src/view/com/profile/ProfileMenu.tsx:176
 msgctxt "toast"
 msgid "Account unblocked"
@@ -822,7 +834,7 @@ msgstr "Çıkıntılı onay tikine sahip hesaplar <0><1/></0> başka hesapları 
 msgid "Activity from others"
 msgstr "Başkalarının etkinlikleri"
 
-#: src/Navigation.tsx:524
+#: src/Navigation.tsx:525
 msgid "Activity notifications"
 msgstr "Etkinlik bildirimleri"
 
@@ -992,7 +1004,7 @@ msgstr "Kullanıcıyı listeye ekle"
 msgid "Add your birthdate"
 msgstr "Doğum tarihinizi ekleyin"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:145
 msgid "Add your sign in credentials to your VerusID for seamless logins."
 msgstr ""
 
@@ -1072,13 +1084,13 @@ msgstr "Yaş güvencesi sorgusu yollandı"
 msgid "Age assurance only takes a few minutes"
 msgstr "Yaş güvencesi sadece birkaç dakika alacaktır"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:301
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:363
 msgid "Alice@"
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:224
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:378
 msgid "alice@example.com"
 msgstr "ayse@ornek.com"
 
@@ -1208,6 +1220,11 @@ msgstr "Alternatif metin, görme engelli ve düşük görme yeteneğine sahip ku
 #: src/view/com/composer/photos/ImageAltTextDialog.tsx:149
 msgid "Alt text will be truncated. {MAX_ALT_TEXT, plural, other {Limit: {0} characters.}}"
 msgstr "Alt metin kırpılacaktır. {MAX_ALT_TEXT, plural, other {Sınır: {0} karakter.}}"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:265
+#: src/components/donations/VerusIDDonationDialog.tsx:269
+msgid "Amount"
+msgstr ""
 
 #. placeholder {0}: currentAccount?.email || '(no email)'
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:94
@@ -1373,7 +1390,7 @@ msgstr "Herkes etkileşime geçebilir"
 msgid "Anyone who follows me"
 msgstr "Beni takip eden herkes"
 
-#: src/Navigation.tsx:564
+#: src/Navigation.tsx:565
 #: src/screens/Settings/AppIconSettings/index.tsx:65
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:19
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:24
@@ -1411,7 +1428,7 @@ msgstr "Uygulama şifresi isimleri en az 4 karakter uzunluğunda olmalıdır"
 msgid "App passwords"
 msgstr "Uygulama şifreleri"
 
-#: src/Navigation.tsx:360
+#: src/Navigation.tsx:361
 #: src/screens/Settings/AppPasswords.tsx:51
 msgid "App Passwords"
 msgstr "Uygulama Şifreleri"
@@ -1453,7 +1470,7 @@ msgstr "Askıya Alınmaya İtiraz Et"
 msgid "Appeal this decision"
 msgstr "Bu karara itiraz et"
 
-#: src/Navigation.tsx:400
+#: src/Navigation.tsx:401
 #: src/screens/Settings/AppearanceSettings.tsx:73
 #: src/screens/Settings/Settings.tsx:234
 #: src/screens/Settings/Settings.tsx:237
@@ -1539,7 +1556,7 @@ msgstr "Sanatsal veya erotik olmayan çıplaklık."
 msgid "Assign topic for algo"
 msgstr "Algoritmaya başlık ata"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:394
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:212
 msgid "At least 8 characters"
 msgstr "En az 8 karakter"
@@ -1567,7 +1584,7 @@ msgstr ""
 msgid "Automation label"
 msgstr ""
 
-#: src/Navigation.tsx:423
+#: src/Navigation.tsx:424
 #: src/screens/Settings/AutomationLabelSettings.tsx:103
 msgid "Automation Label"
 msgstr ""
@@ -1582,20 +1599,22 @@ msgstr "Videoları ve GIFleri otomatik oynat"
 msgid "Available"
 msgstr "Kullanılabilir"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:149
 msgid "Awaiting confirmation"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:375
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:384
+#: src/components/donations/VerusIDDonationDialog.tsx:317
+#: src/components/donations/VerusIDDonationDialog.tsx:322
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/components/moderation/LabelsOnMeDialog.tsx:335
 #: src/screens/Login/ChooseAccountForm.tsx:98
 #: src/screens/Login/ChooseAccountForm.tsx:102
 #: src/screens/Login/ForgotPasswordForm.tsx:127
 #: src/screens/Login/ForgotPasswordForm.tsx:132
-#: src/screens/Login/LoginForm.tsx:628
-#: src/screens/Login/LoginForm.tsx:633
+#: src/screens/Login/LoginForm.tsx:630
+#: src/screens/Login/LoginForm.tsx:635
 #: src/screens/Login/SetNewPasswordForm.tsx:172
 #: src/screens/Login/SetNewPasswordForm.tsx:178
 #: src/screens/Messages/components/ChatDisabled.tsx:148
@@ -1678,7 +1697,7 @@ msgid "Birthday"
 msgstr "Doğum günü"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:865
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Block"
 msgstr "Engelle"
@@ -1741,7 +1760,7 @@ msgstr "Engellendi"
 msgid "Blocked accounts"
 msgstr "Engellenen hesaplar"
 
-#: src/Navigation.tsx:201
+#: src/Navigation.tsx:202
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "Engellenen Hesaplar"
@@ -1971,8 +1990,8 @@ msgstr "Kamera"
 #: src/components/dialogs/lists/CreateListFromStarterPackDialog.tsx:200
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:291
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:430
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:436
 #: src/components/Menu/index.tsx:355
 #: src/components/PostControls/RepostButton.tsx:210
 #: src/components/Prompt.tsx:136
@@ -2107,7 +2126,7 @@ msgid "Changes to the starter pack will not be reflected in the list after creat
 msgstr "Başlangıç paketine yapılan değişiklikler listeyi oluşturduktan sonra ona yansıtılmayacaktır. Liste bağımsız bir kopya olacaktır."
 
 #: src/lib/hooks/useNotificationHandler.ts:102
-#: src/Navigation.tsx:581
+#: src/Navigation.tsx:582
 #: src/view/shell/bottom-bar/BottomBar.tsx:224
 #: src/view/shell/desktop/LeftNav.tsx:611
 #: src/view/shell/Drawer.tsx:454
@@ -2133,7 +2152,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "Sohbet sessize alındı"
 
-#: src/Navigation.tsx:591
+#: src/Navigation.tsx:592
 #: src/screens/Messages/components/InboxPreview.tsx:23
 msgid "Chat request inbox"
 msgstr "Sohbet istekleri gelen kutusu"
@@ -2145,7 +2164,7 @@ msgid "Chat requests"
 msgstr "Sohbet istekleri"
 
 #: src/components/dms/ConvoMenu.tsx:84
-#: src/Navigation.tsx:586
+#: src/Navigation.tsx:587
 #: src/screens/Messages/ChatList.tsx:82
 #: src/screens/Messages/ChatList.tsx:86
 #: src/screens/Messages/ChatList.tsx:385
@@ -2176,9 +2195,13 @@ msgstr "Aşağıya girilecek onay kodunu barındıran e-posta için <0>{currentE
 msgid "Check my status"
 msgstr "Durumumu kontrol et"
 
-#: src/screens/Login/LoginForm.tsx:618
+#: src/screens/Login/LoginForm.tsx:620
 msgid "Check your email for a sign in code and enter it here."
 msgstr "E-postanıza gelen giriş kodunu buraya girin."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:294
+msgid "Checking..."
+msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:161
 msgid "Child safety"
@@ -2187,6 +2210,10 @@ msgstr "Çocuk güvenliği"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:165
 msgid "Child Sexual Abuse Material (CSAM)"
 msgstr "Çocuk Cinsel İstismarı Materyali (CSAM)"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:64
+msgid "Choose a preset amount or enter a custom currency to donate."
+msgstr ""
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:401
 msgid "Choose domain verification method"
@@ -2320,14 +2347,14 @@ msgstr "Klip 🐴 klop 🐴"
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:185
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:191
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:199
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:156
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:162
 #: src/components/dialogs/SearchablePeopleList.tsx:296
 #: src/components/dialogs/StarterPackDialog.tsx:186
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:390
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:395
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:457
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:462
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:212
@@ -2341,7 +2368,7 @@ msgstr "Klip 🐴 klop 🐴"
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:128
 #: src/components/verification/VerificationsDialog.tsx:146
 #: src/components/verification/VerifierDialog.tsx:146
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:87
 #: src/components/WhoCanReply.tsx:236
 #: src/components/WhoCanReply.tsx:243
 #: src/features/liveNow/components/EditLiveDialog.tsx:217
@@ -2374,7 +2401,7 @@ msgstr "Alt çekmeceyi kapat"
 #: src/components/dialogs/LanguageSelectDialog.tsx:354
 #: src/components/verification/VerificationsDialog.tsx:138
 #: src/components/verification/VerifierDialog.tsx:139
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:79
 msgid "Close dialog"
 msgstr "Diyalogu kapat"
 
@@ -2457,7 +2484,7 @@ msgid "Comics"
 msgstr "Çizgi romanlar"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:46
-#: src/Navigation.tsx:350
+#: src/Navigation.tsx:351
 #: src/view/screens/CommunityGuidelines.tsx:38
 msgid "Community Guidelines"
 msgstr "Topluluk Kuralları"
@@ -2519,7 +2546,7 @@ msgid "Confirm your location"
 msgstr "Konumunuzu onayla"
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:38
-#: src/screens/Login/LoginForm.tsx:595
+#: src/screens/Login/LoginForm.tsx:597
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:190
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:194
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:247
@@ -2533,7 +2560,7 @@ msgid "Connected"
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:140
-#: src/screens/Login/LoginForm.tsx:651
+#: src/screens/Login/LoginForm.tsx:653
 msgid "Connecting to service..."
 msgstr "Servise bağlanılıyor..."
 
@@ -2584,7 +2611,7 @@ msgstr "İçerik ve Medya"
 msgid "Content and media"
 msgstr "İçerik ve medya"
 
-#: src/Navigation.tsx:540
+#: src/Navigation.tsx:541
 msgid "Content and Media"
 msgstr "İçerik ve Medya"
 
@@ -2628,7 +2655,9 @@ msgstr "İçerik uyarıları"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "Bağlam menüsü arkaplanı, menüyü kapatmak için tıklayın."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:356
+#: src/components/donations/VerusIDDonationDialog.tsx:288
+#: src/components/donations/VerusIDDonationDialog.tsx:294
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:163
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:171
 #: src/screens/Onboarding/StepInterests/index.tsx:93
@@ -2777,7 +2806,7 @@ msgstr "Gönderi metnini kopyala"
 msgid "Copy QR code"
 msgstr "QR kodu kopyala"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:268
 msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
 msgstr ""
 
@@ -2787,7 +2816,7 @@ msgstr "TXT kayıt değerini kopyala"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:41
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:108
-#: src/Navigation.tsx:355
+#: src/Navigation.tsx:356
 #: src/view/screens/CopyrightPolicy.tsx:35
 msgid "Copyright Policy"
 msgstr "Telif Hakkı Politikası"
@@ -2883,7 +2912,7 @@ msgstr "Başlangıç paketi için QR kod oluşturun"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:207
 #: src/components/StarterPack/ProfileStarterPacks.tsx:316
-#: src/Navigation.tsx:621
+#: src/Navigation.tsx:622
 msgid "Create a starter pack"
 msgstr "Bir başlangıç paketi oluştur"
 
@@ -2985,10 +3014,23 @@ msgstr "Oluşturucu engellendi"
 msgid "Culture"
 msgstr "Kültür"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:247
+#: src/components/donations/VerusIDDonationDialog.tsx:251
+msgid "Currency name"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:164
+msgid "Currency not found"
+msgstr ""
+
 #: src/components/dialogs/ServerInput.tsx:152
 #: src/components/dialogs/ServerInput.tsx:154
 msgid "Custom"
 msgstr "Özel"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:235
+msgid "Custom currency and amount"
+msgstr ""
 
 #: src/components/dialogs/Embed.tsx:145
 msgid "Customization options"
@@ -3132,7 +3174,7 @@ msgstr "Hesabımı sil"
 msgid "Delete post"
 msgstr "Gönderiyi sil"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:143
 msgid "Delete Post and Remove Link"
 msgstr ""
 
@@ -3193,8 +3235,8 @@ msgstr "Alıntının ilişiğini kes"
 msgid "Detach quote post?"
 msgstr "Alıntı gönderinin ilişiği kesilsin mi?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:314
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:318
 msgid "Details to Sign"
 msgstr ""
 
@@ -3402,6 +3444,24 @@ msgstr "Bunu tekrar gösterme"
 msgid "Don't worry! All existing messages and settings are saved and will be available after you verify you're an adult."
 msgstr "Merak etmeyin! Tüm mesajlarınız ve ayarlarınız saklandı ve bir yetişkin olduğunuzu teyit ettikten sonra erişilebilir olacaklar."
 
+#: src/components/donations/VerusIDDonationDialog.tsx:42
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:415
+msgid "Donate"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:218
+msgid "Donate 1 Euro (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:208
+msgid "Donate 1 US Dollar (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:230
+msgid "Donate a custom currency"
+msgstr ""
+
 #: src/components/contacts/components/InviteInfo.tsx:73
 #: src/components/contacts/components/InviteInfo.tsx:79
 #: src/components/contacts/screens/ViewMatches.tsx:395
@@ -3409,8 +3469,8 @@ msgstr "Merak etmeyin! Tüm mesajlarınız ve ayarlarınız saklandı ve bir yet
 #: src/components/dialogs/BirthDateSettings.tsx:195
 #: src/components/dialogs/BirthDateSettings.tsx:202
 #: src/components/dialogs/LanguageSelectDialog.tsx:327
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:169
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:175
 #: src/components/dialogs/ServerInput.tsx:237
 #: src/components/dialogs/ServerInput.tsx:239
 #: src/components/dms/AfterReportDialog.tsx:144
@@ -3577,7 +3637,7 @@ msgstr "Canlı yayın durumunu düzenle"
 msgid "Edit moderation list"
 msgstr "Moderasyon listesini düzenle"
 
-#: src/Navigation.tsx:365
+#: src/Navigation.tsx:366
 #: src/view/screens/Feeds.tsx:519
 msgid "Edit My Feeds"
 msgstr "Akışlarımı Düzenle"
@@ -3599,12 +3659,12 @@ msgstr "Gönderi etkileşim ayarlarını düzenle"
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:296
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:367
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:372
 msgid "Edit profile"
 msgstr "Profil düzenle"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:299
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:369
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
 msgid "Edit Profile"
 msgstr "Profil Düzenle"
 
@@ -3620,7 +3680,7 @@ msgstr "Kullanıcı listesini düzenle"
 msgid "Edit who can reply"
 msgstr "Kimin yanıtlayabileceğini düzenle"
 
-#: src/Navigation.tsx:626
+#: src/Navigation.tsx:627
 msgid "Edit your starter pack"
 msgstr "Başlangıç paketini düzenle"
 
@@ -3632,8 +3692,8 @@ msgstr "Eğitim"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr "Ya bu listenin oluşturucusu sizi engellemiş ya da siz onu engellemişsiniz."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:373
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 #: src/screens/Settings/AccountSettings.tsx:71
 #: src/screens/Signup/StepInfo/index.tsx:224
 msgid "Email"
@@ -3800,7 +3860,7 @@ msgstr "Kullanmak istediğiniz alan adını girin"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "Hesabınızı oluşturmak için kullandığınız e-postayı girin. Size yeni bir şifre belirlemeniz için bir \"sıfırlama kodu\" göndereceğiz."
 
-#: src/screens/Login/LoginForm.tsx:486
+#: src/screens/Login/LoginForm.tsx:488
 msgid "Enter the username or email address you used when you created your account"
 msgstr "Hesabınızı oluştururken kullandığınız kullanıcı adını veya e-posta adresini girin"
 
@@ -3813,7 +3873,7 @@ msgstr "Doğum tarihinizi girin"
 msgid "Enter your email address"
 msgstr "E-posta adresinizi girin"
 
-#: src/screens/Login/LoginForm.tsx:511
+#: src/screens/Login/LoginForm.tsx:513
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:298
 msgid "Enter your password"
 msgstr "Şifrenizi girin"
@@ -3951,7 +4011,7 @@ msgstr "Açık veya rahatsız edici olabilecek medya."
 msgid "Explicit sexual images."
 msgstr "Açık cinsel içerikli görseller."
 
-#: src/Navigation.tsx:830
+#: src/Navigation.tsx:831
 #: src/screens/Search/Shell.tsx:354
 #: src/view/shell/desktop/LeftNav.tsx:691
 #: src/view/shell/Drawer.tsx:402
@@ -3987,7 +4047,7 @@ msgstr "Harici Medya"
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "Harici medya, web sitelerinin siz ve cihazınız hakkında bilgi toplamasına izin verebilir. Bilgi, \"oynat\" düğmesine basana kadar gönderilmez veya istenmez."
 
-#: src/Navigation.tsx:384
+#: src/Navigation.tsx:385
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "Harici Medya Tercihleri"
@@ -4014,7 +4074,7 @@ msgstr "Başlangıç paketine eklenemedi"
 msgid "Failed to change handle. Please try again."
 msgstr "Kullanıcı adı değiştirilemedi. Lütfen tekrar deneyin."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:244
 msgid "Failed to create a post for linking the VerusID. Please try again."
 msgstr ""
 
@@ -4062,12 +4122,16 @@ msgstr "Önerilen hesaplar tümden takip edilemedi, lütfen tekrar deneyin"
 msgid "Failed to follow all your friends, please try again"
 msgstr "Tüm arkadaşlarınız takip edilemedi, lütfen tekrar deneyin"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:192
+msgid "Failed to generate invoice"
+msgstr ""
+
 #: src/components/contacts/screens/ViewMatches.tsx:236
 msgid "Failed to hide suggestion, please check your internet connection"
 msgstr "Öneri gizlenemedi, lütfen internet bağlantınızı kontrol edin"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:295
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:310
 msgid "Failed to initiate credential update"
 msgstr ""
 
@@ -4139,7 +4203,7 @@ msgstr "Tüm istekleri okundu olarak işaretleme başarısız oldu"
 msgid "Failed to pin post"
 msgstr "Gönderi sabitlenemedi"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:150
 msgid "Failed to prepare linking details."
 msgstr ""
 
@@ -4166,13 +4230,17 @@ msgstr "Emoji tepkisi kaldırılamadı"
 msgid "Failed to remove from starter pack"
 msgstr "Başlangıç paketinden çıkarılamadı"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:111
 msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
 msgid "Failed to remove verification"
 msgstr "Doğrulama kaldırılamadı"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:178
+msgid "Failed to resolve identity"
+msgstr ""
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:81
 msgid "Failed to resolve location. Please try again."
@@ -4224,8 +4292,8 @@ msgstr "Konuyu sessize alma seçeneği değiştirilemedi, lütfen tekrar deneyin
 msgid "Failed to unpin list"
 msgstr "Listenin sabitlemesi kaldırılamadı"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:175
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:284
 msgid "Failed to update credentials"
 msgstr ""
 
@@ -4269,7 +4337,7 @@ msgstr "E-posta doğrulanamadı, lütfen tekrar deneyin."
 msgid "Failed to verify handle. Please try again."
 msgstr "Kullanıcı adı doğrulanamadı. Lütfen yeniden deneyin."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:188
 msgid "Failed to verify signature. Please try again."
 msgstr ""
 
@@ -4281,7 +4349,7 @@ msgstr "Sahte hesap ya da bot"
 msgid "False information about elections"
 msgstr "Seçimler hakkında yanlış bilgi"
 
-#: src/Navigation.tsx:300
+#: src/Navigation.tsx:301
 msgid "Feed"
 msgstr "Akış"
 
@@ -4326,7 +4394,7 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr "Geribildiriminiz akış operatörüne yollandı"
 
-#: src/Navigation.tsx:606
+#: src/Navigation.tsx:607
 #: src/screens/SavedFeeds.tsx:120
 #: src/screens/SavedFeeds.tsx:318
 #: src/screens/Search/SearchResults.tsx:80
@@ -4405,8 +4473,8 @@ msgstr "Finans"
 msgid "Find accounts to follow"
 msgstr "Takip edilecek hesaplar bul"
 
-#: src/Navigation.tsx:447
-#: src/Navigation.tsx:648
+#: src/Navigation.tsx:448
+#: src/Navigation.tsx:649
 msgid "Find Contacts"
 msgstr "Bağlantılarınızı Bulun"
 
@@ -4481,7 +4549,7 @@ msgstr "Kod giriş alanına odaklan"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:157
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:424
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:449
 #: src/screens/VideoFeed/index.tsx:870
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
@@ -4490,7 +4558,7 @@ msgstr "Takip et"
 
 #. placeholder {0}: profile.handle
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:144
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
 msgid "Follow {0}"
 msgstr "{0} takip et"
 
@@ -4534,7 +4602,7 @@ msgstr "Tüm hesapları takip et"
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:541
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:155
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:422
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:447
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
 msgid "Follow back"
@@ -4573,7 +4641,7 @@ msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {
 msgstr "<0>{0}</0>, <1>{1}</1> ve {2, plural, other {# kişi daha}} tarafından takip ediliyor"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:254
+#: src/Navigation.tsx:255
 msgid "Followers of @{0} that you know"
 msgstr "Tanıdığınız @{0} takipçileri"
 
@@ -4588,7 +4656,7 @@ msgstr "Tanıdığın takipçiler"
 #: src/components/ProfileHoverCard/index.web.tsx:494
 #: src/components/ProfileHoverCard/index.web.tsx:505
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:160
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:420
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:445
 #: src/screens/VideoFeed/index.tsx:868
 #: src/view/com/notifications/NotificationFeedItem.tsx:816
 #: src/view/com/notifications/NotificationFeedItem.tsx:833
@@ -4605,7 +4673,7 @@ msgstr "Takiptekiler"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:497
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:284
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:289
 #: src/view/com/notifications/NotificationFeedItem.tsx:765
 msgid "Following {0}"
 msgstr "{0} takip ediliyor"
@@ -4619,7 +4687,7 @@ msgstr "{handle} takip ediliyor"
 msgid "Following feed preferences"
 msgstr "Takip edilenler akışı tercihleri"
 
-#: src/Navigation.tsx:371
+#: src/Navigation.tsx:372
 #: src/screens/Settings/FollowingFeedPreferences.tsx:57
 msgid "Following Feed Preferences"
 msgstr "Takip Edilenler Akışı Tercihleri"
@@ -4680,11 +4748,11 @@ msgstr "Gürültüyü unutun"
 msgid "Forgot Password"
 msgstr "Şifremi Unuttum"
 
-#: src/screens/Login/LoginForm.tsx:526
+#: src/screens/Login/LoginForm.tsx:528
 msgid "Forgot password?"
 msgstr "Şifrenizi mi unuttunuz?"
 
-#: src/screens/Login/LoginForm.tsx:537
+#: src/screens/Login/LoginForm.tsx:539
 msgid "Forgot?"
 msgstr "Unuttunuz mu?"
 
@@ -4985,7 +5053,7 @@ msgstr "Zararlı ya da yüksek riskli eylemler"
 msgid "Harming or endangering minors"
 msgstr "Küçüklere zarar verme ya da tehlikeye atma"
 
-#: src/Navigation.tsx:571
+#: src/Navigation.tsx:572
 msgid "Hashtag"
 msgstr "Etiket"
 
@@ -5191,8 +5259,8 @@ msgstr "Hmmmm, o moderasyon hizmetini yükleyemedik."
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "Bekleyin! Videoya kademeli olarak erişim veriyoruz ve siz hâlâ sıradasınız. Birazdan tekrar kontrol edin!"
 
-#: src/Navigation.tsx:825
-#: src/Navigation.tsx:845
+#: src/Navigation.tsx:826
+#: src/Navigation.tsx:846
 #: src/view/shell/bottom-bar/BottomBar.tsx:179
 #: src/view/shell/desktop/LeftNav.tsx:673
 #: src/view/shell/Drawer.tsx:428
@@ -5248,7 +5316,7 @@ msgstr "Anladım"
 msgid "I'm on Bluesky as {0} - come find me! https://bsky.app/download"
 msgstr "Bluesky'da {0} olarak yer alıyorum - gel beni bul! https://bsky.app/download"
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:61
 msgid "Identity:"
 msgstr ""
 
@@ -5435,7 +5503,7 @@ msgstr "Şifre sıfırlama için e-postanıza gönderilen kodu girin"
 msgid "Input new password"
 msgstr "Yeni şifre girin"
 
-#: src/screens/Login/LoginForm.tsx:610
+#: src/screens/Login/LoginForm.tsx:612
 msgid "Input the code which has been emailed to you"
 msgstr "Size e-posta olarak gönderilen kodu girin"
 
@@ -5477,7 +5545,7 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr "Geçersiz etkileşim ayarları."
 
-#: src/screens/Login/LoginForm.tsx:420
+#: src/screens/Login/LoginForm.tsx:421
 msgid "Invalid login response. Please try again or sign in manually."
 msgstr ""
 
@@ -5490,7 +5558,7 @@ msgstr "Geçersiz telefon numarası"
 msgid "Invalid report subject"
 msgstr "Geçersiz rapor konusu"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:182
 msgid "Invalid signature. Please try again."
 msgstr ""
 
@@ -5629,7 +5697,7 @@ msgstr "Hesabınızdaki işaretler"
 msgid "Labels on your content"
 msgstr "İçeriğinizdeki işaretler"
 
-#: src/Navigation.tsx:227
+#: src/Navigation.tsx:228
 msgid "Language Settings"
 msgstr "Dil Ayarları"
 
@@ -5811,7 +5879,7 @@ msgstr "10 gönderiyi beğen"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "Keşif akışını (\"Discover\") eğitmek için 10 gönderiyi beğenin"
 
-#: src/Navigation.tsx:484
+#: src/Navigation.tsx:485
 msgid "Like notifications"
 msgstr "Beğeni bildirimleri"
 
@@ -5823,8 +5891,8 @@ msgstr "Bu akışı beğen"
 msgid "Like this labeler"
 msgstr "Bu işaretleyiciyi beğen"
 
-#: src/Navigation.tsx:305
-#: src/Navigation.tsx:310
+#: src/Navigation.tsx:306
+#: src/Navigation.tsx:311
 msgid "Liked by"
 msgstr "Beğenenler"
 
@@ -5861,7 +5929,7 @@ msgstr "Beğeniler"
 msgid "Likes of your reposts"
 msgstr "Yeniden gönderilerinize dair beğeniler"
 
-#: src/Navigation.tsx:508
+#: src/Navigation.tsx:509
 msgid "Likes of your reposts notifications"
 msgstr "Yeniden gönderilerinize dair beğenilerin bildirimleri"
 
@@ -5879,19 +5947,19 @@ msgstr "Düz"
 msgid "Link Account to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:77
 msgid "Link Removed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:110
 msgid "Link VerusID to account"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:63
 msgid "Link VerusID to Profile"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:115
 msgid "Link your VerusID to this account to verify your identity."
 msgstr ""
 
@@ -5899,15 +5967,15 @@ msgstr ""
 msgid "Linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:122
 msgid "Linking complete"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:686
+#: src/screens/Login/LoginForm.tsx:687
 msgid "Links to signing in on the same device"
 msgstr ""
 
-#: src/Navigation.tsx:260
+#: src/Navigation.tsx:261
 msgid "List"
 msgstr "Liste"
 
@@ -5993,7 +6061,7 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "Liste sessizden çıkarıldı"
 
-#: src/Navigation.tsx:181
+#: src/Navigation.tsx:182
 #: src/view/screens/Lists.tsx:68
 #: src/view/screens/Profile.tsx:242
 #: src/view/screens/Profile.tsx:250
@@ -6082,7 +6150,7 @@ msgstr "Gönderi etkileşim ayarları yükleniyor..."
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: src/Navigation.tsx:330
+#: src/Navigation.tsx:331
 msgid "Log"
 msgstr "Log"
 
@@ -6188,7 +6256,7 @@ msgstr "Başka cihazda depolanan görsel"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "Bazı gruplar için rahatsız edici ya da uygunsuz olabilecek medya."
 
-#: src/Navigation.tsx:468
+#: src/Navigation.tsx:469
 msgid "Mention notifications"
 msgstr "Bahsetme bildirimleri"
 
@@ -6245,7 +6313,7 @@ msgstr "Mesaj çok uzun"
 msgid "Message options"
 msgstr "Mesaj seçenekleri"
 
-#: src/Navigation.tsx:840
+#: src/Navigation.tsx:841
 msgid "Messages"
 msgstr "Mesajlar"
 
@@ -6258,7 +6326,7 @@ msgstr "Gece yarısı"
 msgid "Minor harassment or bullying"
 msgstr "Küçüklere taciz ya da kabadayılık"
 
-#: src/Navigation.tsx:532
+#: src/Navigation.tsx:533
 msgid "Miscellaneous notifications"
 msgstr "Diğer bildirimler"
 
@@ -6270,11 +6338,11 @@ msgstr "Yanıltıcı"
 msgid "Missing media"
 msgstr "Kayıp medya"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:316
 msgid "Mobile support coming soon"
 msgstr ""
 
-#: src/Navigation.tsx:186
+#: src/Navigation.tsx:187
 #: src/screens/Moderation/index.tsx:102
 #: src/screens/Settings/Settings.tsx:198
 #: src/screens/Settings/Settings.tsx:201
@@ -6315,7 +6383,7 @@ msgstr "Moderasyon listesi güncellendi"
 msgid "Moderation lists"
 msgstr "Moderasyon listeleri"
 
-#: src/Navigation.tsx:191
+#: src/Navigation.tsx:192
 #: src/view/screens/ModerationModlists.tsx:68
 msgid "Moderation Lists"
 msgstr "Moderasyon Listeleri"
@@ -6324,7 +6392,7 @@ msgstr "Moderasyon Listeleri"
 msgid "moderation settings"
 msgstr "moderasyon araçları"
 
-#: src/Navigation.tsx:320
+#: src/Navigation.tsx:321
 msgid "Moderation states"
 msgstr "Moderasyon durumları"
 
@@ -6449,7 +6517,7 @@ msgstr "Kelimeleri ve etiketleri sustur"
 msgid "Muted accounts"
 msgstr "Sessize alınan hesaplar"
 
-#: src/Navigation.tsx:196
+#: src/Navigation.tsx:197
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "Sessize Alınan Hesaplar"
@@ -6509,7 +6577,7 @@ msgstr "Başlangıç paketine git"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:150
 #: src/screens/Login/ForgotPasswordForm.tsx:175
-#: src/screens/Login/LoginForm.tsx:687
+#: src/screens/Login/LoginForm.tsx:688
 msgid "Navigates to the next screen"
 msgstr "Sonraki ekrana yönlendirir"
 
@@ -6562,7 +6630,7 @@ msgstr "Yeni e-posta adresi"
 msgid "New Feature"
 msgstr "Yeni Özellik"
 
-#: src/Navigation.tsx:500
+#: src/Navigation.tsx:501
 msgid "New follower notifications"
 msgstr "Yeni takipçi bildirimleri"
 
@@ -6644,7 +6712,7 @@ msgstr "Haberler"
 #: src/components/contacts/screens/ViewMatches.tsx:410
 #: src/screens/Login/ForgotPasswordForm.tsx:149
 #: src/screens/Login/ForgotPasswordForm.tsx:156
-#: src/screens/Login/LoginForm.tsx:683
+#: src/screens/Login/LoginForm.tsx:684
 #: src/screens/Login/SetNewPasswordForm.tsx:186
 #: src/screens/Login/SetNewPasswordForm.tsx:192
 #: src/screens/Onboarding/StepFinished/index.tsx:330
@@ -6726,7 +6794,7 @@ msgstr "Liste yok"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:520
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:310
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:315
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "{0} artık takip edilmiyor"
@@ -6834,7 +6902,7 @@ msgstr "Henüz bir başlangıç paketi yok"
 msgid "No thanks"
 msgstr "Teşekkürler"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:86
 msgid "No VerusID link found to remove"
 msgstr ""
 
@@ -6884,7 +6952,7 @@ msgstr "Bu platformda kullanılabilir değil."
 msgid "Not followed by anyone you're following"
 msgstr "Takip ettiğiniz hiçkimse tarafından takip edilmiyor"
 
-#: src/Navigation.tsx:176
+#: src/Navigation.tsx:177
 #: src/view/screens/Profile.tsx:135
 msgid "Not Found"
 msgstr "Bulunamadı"
@@ -6914,8 +6982,8 @@ msgstr "Burada bir şey yok"
 msgid "Nothing saved yet"
 msgstr "Henüz hiçbir şey kaydedilmedi"
 
-#: src/Navigation.tsx:454
-#: src/Navigation.tsx:601
+#: src/Navigation.tsx:455
+#: src/Navigation.tsx:602
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "Bildirim ayarları"
@@ -6928,8 +6996,8 @@ msgstr "Bildirim sesleri"
 msgid "Notification Sounds"
 msgstr "Bildirim Sesleri"
 
-#: src/Navigation.tsx:596
-#: src/Navigation.tsx:835
+#: src/Navigation.tsx:597
+#: src/Navigation.tsx:836
 #: src/screens/Notifications/ActivityList.tsx:31
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:93
 #: src/screens/Settings/NotificationSettings/index.tsx:93
@@ -7088,7 +7156,7 @@ msgstr "Kamerayı aç"
 msgid "Open conversation options"
 msgstr "Yazışma seçeneklerini aç"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:444
 msgid "Open credential update deeplink"
 msgstr ""
 
@@ -7173,7 +7241,7 @@ msgstr "Storybook sayfasını aç"
 msgid "Open system log"
 msgstr "Sistem günlüğünü aç"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:450
 msgid "Open Verus Wallet"
 msgstr ""
 
@@ -7258,7 +7326,7 @@ msgstr "{0} bağlantısını açar"
 msgid "Opens live status dialog"
 msgstr "Canlı yayın diyaloğunu açar"
 
-#: src/screens/Login/LoginForm.tsx:527
+#: src/screens/Login/LoginForm.tsx:529
 msgid "Opens password reset form"
 msgstr "Şifre sıfırlama formunu açar"
 
@@ -7364,11 +7432,11 @@ msgstr "Sayfa bulunamadı"
 msgid "Page Not Found"
 msgstr "Sayfa Bulunamadı"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:389
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
 #: src/components/dialogs/VerusServiceDialog.tsx:229
 #: src/components/dialogs/VerusServiceDialog.tsx:233
-#: src/screens/Login/LoginForm.tsx:496
+#: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:126
 #: src/screens/Settings/AccountSettings.tsx:130
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:291
@@ -7392,7 +7460,7 @@ msgstr "Şifre güncellendi"
 msgid "Password updated!"
 msgstr "Şifre güncellendi!"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:333
 msgid "Paste your signature here"
 msgstr ""
 
@@ -7416,12 +7484,12 @@ msgid "People"
 msgstr "Kişiler"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:247
+#: src/Navigation.tsx:248
 msgid "People followed by @{0}"
 msgstr "@{0} tarafından takip edilenler"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:240
+#: src/Navigation.tsx:241
 msgid "People following @{0}"
 msgstr "@{0} tarafından takip edilenler"
 
@@ -7596,7 +7664,7 @@ msgstr "Lütfen bir şifre girin."
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr "Lütfen bir şifre girin. En az 8 karakter uzunluğunda olmalıdır."
 
-#: src/components/dialogs/VerusServiceDialog.tsx:56
+#: src/components/dialogs/VerusServiceDialog.tsx:57
 msgid "Please enter a service URL"
 msgstr ""
 
@@ -7607,6 +7675,10 @@ msgstr ""
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
 msgid "Please enter a unique name for this app password or use our randomly generated one."
 msgstr "Lütfen bu uygulama şifresi için benzersiz bir isim girin ya da ürettiğimiz rastgele ismi kullanın."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:159
+msgid "Please enter a valid amount"
+msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:132
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:136
@@ -7644,11 +7716,11 @@ msgstr "Lütfen elinize geçen kodu ve kullanmak istediğiniz yeni şifreyi giri
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "Lütfen önceki e-posta adresinize yolladığımız güvenlik kodunu girin."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:158
 msgid "Please enter the signature."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:200
 msgid "Please enter your email"
 msgstr ""
 
@@ -7665,7 +7737,7 @@ msgstr "Lütfen davet kodunuzu girin."
 msgid "Please enter your new email address."
 msgstr "Lütfen yeni e-posta adresinizi girin."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:205
 #: src/screens/Login/LoginForm.tsx:218
 msgid "Please enter your password"
 msgstr "Lütfen şifrenizi girin"
@@ -7674,11 +7746,11 @@ msgstr "Lütfen şifrenizi girin"
 msgid "Please enter your username"
 msgstr "Lütfen kullanıcı adınızı girin"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:195
 msgid "Please enter your VerusID name"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:131
 msgid "Please enter your VerusID name."
 msgstr ""
 
@@ -7777,10 +7849,10 @@ msgid "Post blocked"
 msgstr "Gönderi engellendi"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:273
-#: src/Navigation.tsx:280
-#: src/Navigation.tsx:287
-#: src/Navigation.tsx:294
+#: src/Navigation.tsx:274
+#: src/Navigation.tsx:281
+#: src/Navigation.tsx:288
+#: src/Navigation.tsx:295
 msgid "Post by @{0}"
 msgstr "@{0} tarafından gönderi"
 
@@ -7814,7 +7886,7 @@ msgstr "Gönderi Sizin Tarafınızdan Gizlenmiş"
 msgid "Post interaction settings"
 msgstr "Gönderi etkileşim ayarları"
 
-#: src/Navigation.tsx:207
+#: src/Navigation.tsx:208
 #: src/screens/ModerationInteractionSettings/index.tsx:35
 msgid "Post Interaction Settings"
 msgstr "Gönderi Etkileşim Ayarları"
@@ -7876,7 +7948,7 @@ msgstr "Muhtemelen yanıltıcı bağlantı uyarısı"
 msgid "Preferred language"
 msgstr "Tercih edilen dil"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:350
 msgid "Prepare linking"
 msgstr ""
 
@@ -7918,8 +7990,8 @@ msgstr "Gizlilik"
 msgid "Privacy and security"
 msgstr "Gizlilik ve güvenlik"
 
-#: src/Navigation.tsx:431
-#: src/Navigation.tsx:439
+#: src/Navigation.tsx:432
+#: src/Navigation.tsx:440
 #: src/screens/Settings/ActivityPrivacySettings.tsx:41
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:45
 msgid "Privacy and Security"
@@ -7932,7 +8004,7 @@ msgstr "Gizlilik ve Güvenlik ayarları"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:36
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:103
-#: src/Navigation.tsx:340
+#: src/Navigation.tsx:341
 #: src/screens/Settings/AboutSettings.tsx:91
 #: src/screens/Settings/AboutSettings.tsx:94
 #: src/view/screens/PrivacyPolicy.tsx:35
@@ -8042,7 +8114,7 @@ msgstr "Karekod indirildi!"
 msgid "QR code saved to your camera roll!"
 msgstr "Karekod fotoğraflarınıza kaydedildi!"
 
-#: src/Navigation.tsx:476
+#: src/Navigation.tsx:477
 msgid "Quote notifications"
 msgstr "Alıntı bildirimleri"
 
@@ -8292,20 +8364,20 @@ msgstr "Akışlarınızdan kaldırılsın mı?"
 msgid "Remove image"
 msgstr "Resmi kaldır"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:150
 msgid "Remove Link"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:69
 msgid "Remove link to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:41
 msgid "Remove Link to VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:557
-#: src/screens/Login/LoginForm.tsx:565
+#: src/screens/Login/LoginForm.tsx:559
+#: src/screens/Login/LoginForm.tsx:567
 msgid "Remove linked VerusID"
 msgstr ""
 
@@ -8476,7 +8548,7 @@ msgstr "Konu Yazarı Tarafından Gizlenmiş Yanıt"
 msgid "Reply Hidden by You"
 msgstr "Yanıt Tarafınızdan Gizlenmiş"
 
-#: src/Navigation.tsx:460
+#: src/Navigation.tsx:461
 msgid "Reply notifications"
 msgstr "Yanıt bildirimlerini al"
 
@@ -8598,7 +8670,7 @@ msgstr "Yeniden gönder"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Yeniden gönder ({0, plural, other {# defa yeniden gönderilmiş}})"
 
-#: src/Navigation.tsx:492
+#: src/Navigation.tsx:493
 msgid "Repost notifications"
 msgstr "Yeniden gönderi bildirimleri"
 
@@ -8639,7 +8711,7 @@ msgstr "Bu gönderinin yeniden gönderilmesi"
 msgid "Reposts of your reposts"
 msgstr "Yeniden gönderilerinizin yeniden gönderileri"
 
-#: src/Navigation.tsx:516
+#: src/Navigation.tsx:517
 msgid "Reposts of your reposts notifications"
 msgstr "Yeniden gönderilerinizin yeniden gönderilme bildirimleri"
 
@@ -8717,7 +8789,7 @@ msgstr "Şifreyi sıfırla"
 msgid "Resync contacts"
 msgstr "Bağlantıları güncelle"
 
-#: src/screens/Login/LoginForm.tsx:641
+#: src/screens/Login/LoginForm.tsx:643
 msgid "Retries signing in"
 msgstr "Giriş yapmayı tekrar dener"
 
@@ -8737,8 +8809,8 @@ msgstr "Son hataya neden olan son eylemi tekrarlar"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:56
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:59
 #: src/components/StarterPack/ProfileStarterPacks.tsx:377
-#: src/screens/Login/LoginForm.tsx:640
-#: src/screens/Login/LoginForm.tsx:646
+#: src/screens/Login/LoginForm.tsx:642
+#: src/screens/Login/LoginForm.tsx:648
 #: src/screens/Messages/ChatList.tsx:297
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:220
@@ -8843,11 +8915,11 @@ msgstr "Taslak kaydedilsin mi?"
 msgid "Save image"
 msgstr "Görseli kaydet"
 
-#: src/screens/Login/LoginForm.tsx:544
+#: src/screens/Login/LoginForm.tsx:546
 msgid "Save Login with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:552
+#: src/screens/Login/LoginForm.tsx:554
 msgid "Save my sign in with VerusID"
 msgstr ""
 
@@ -8859,7 +8931,7 @@ msgstr "Yeni kullanıcı adını kaydet"
 msgid "Save QR code"
 msgstr "QR kodu kaydet"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:140
 msgid "Save sign in with VerusID"
 msgstr ""
 
@@ -8890,7 +8962,7 @@ msgid "Saved Feeds"
 msgstr "Kayıtlı Akışlar"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:144
-#: src/Navigation.tsx:640
+#: src/Navigation.tsx:641
 #: src/screens/Bookmarks/index.tsx:62
 msgid "Saved Posts"
 msgstr "Kayıtlı Gönderiler"
@@ -8911,12 +8983,16 @@ msgstr "Merhaba de!"
 msgid "Scam"
 msgstr "Dolandırıcılık"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:151
 msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:577
+#: src/screens/Login/LoginForm.tsx:579
 msgid "Scan the QR code below or press Sign in to continue"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:70
+msgid "Scan the QR code with your Verus wallet to send the donation."
 msgstr ""
 
 #: src/lib/interests.ts:71
@@ -8946,7 +9022,7 @@ msgstr "Ara"
 
 #. placeholder {0}: profile.handle
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:266
+#: src/Navigation.tsx:267
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr "@{0} gönderilerini ara"
@@ -9152,6 +9228,14 @@ msgstr "Altyazı dosyası seç (.vtt)"
 msgid "Select content languages"
 msgstr "İçerik dillerini seç"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:62
+msgid "Select donation"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:201
+msgid "Select donation amount"
+msgstr ""
+
 #: src/features/liveNow/components/GoLiveDialog.tsx:180
 msgid "Select duration"
 msgstr "Süre seçin"
@@ -9270,6 +9354,10 @@ msgstr "Güzel bir web sitesi gönderin!"
 msgid "Send code"
 msgstr "Kodu yolla"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:68
+msgid "Send donation"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:175
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:182
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:303
@@ -9361,7 +9449,7 @@ msgstr "Doğum tarihinizi aşağıda belirlediğinizde sizi en kısa zamanda gö
 msgid "Sets email for password reset"
 msgstr "Şifre sıfırlama için e-posta ayarlar"
 
-#: src/Navigation.tsx:222
+#: src/Navigation.tsx:223
 #: src/screens/Settings/Settings.tsx:101
 #: src/view/shell/desktop/LeftNav.tsx:806
 #: src/view/shell/Drawer.tsx:597
@@ -9506,7 +9594,7 @@ msgstr "Arkadaşlarınızı bulmak için bağlantılarınızı paylaşın"
 msgid "Share your favorite feed!"
 msgstr "En sevdiğiniz akışı paylaşın!"
 
-#: src/Navigation.tsx:325
+#: src/Navigation.tsx:326
 msgid "Shared Preferences Tester"
 msgstr "Paylaşılan Tercihler Test Edicisi"
 
@@ -9643,8 +9731,8 @@ msgstr "İçeriği gösterir"
 #: src/screens/Hashtag.tsx:241
 #: src/screens/Login/index.tsx:140
 #: src/screens/Login/index.tsx:161
-#: src/screens/Login/LoginForm.tsx:438
-#: src/screens/Login/LoginForm.tsx:693
+#: src/screens/Login/LoginForm.tsx:440
+#: src/screens/Login/LoginForm.tsx:694
 #: src/screens/Search/SearchResults.tsx:316
 #: src/view/com/auth/SplashScreen.tsx:118
 #: src/view/com/auth/SplashScreen.tsx:124
@@ -9690,11 +9778,11 @@ msgstr ""
 msgid "Sign in to view post"
 msgstr "Gönderiyi görmek için giriş yap"
 
-#: src/screens/Login/LoginForm.tsx:677
+#: src/screens/Login/LoginForm.tsx:678
 msgid "Sign in with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:675
+#: src/screens/Login/LoginForm.tsx:676
 msgid "Sign in without VerusID"
 msgstr ""
 
@@ -9719,7 +9807,7 @@ msgstr "Çıkış Yap"
 msgid "Sign out?"
 msgstr "Çıkış yap?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:118
 msgid "Sign the linking details"
 msgstr ""
 
@@ -9728,8 +9816,8 @@ msgstr ""
 msgid "Sign-in Required"
 msgstr "Giriş Yapılması Gerekiyor"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:328
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
 msgid "Signature"
 msgstr ""
 
@@ -9911,8 +9999,8 @@ msgstr "Kişileri eklemeye başla!"
 msgid "Start chat with {displayName}"
 msgstr "{displayName} ile sohbet başlat"
 
-#: src/Navigation.tsx:611
-#: src/Navigation.tsx:616
+#: src/Navigation.tsx:612
+#: src/Navigation.tsx:617
 #: src/screens/StarterPack/Wizard/index.tsx:208
 msgid "Starter Pack"
 msgstr "Başlangıç Paketi"
@@ -9974,7 +10062,7 @@ msgstr "Depolama temizlendi, şimdi uygulamayı yeniden başlatmanız gerekiyor.
 msgid "Stored as part of a secure code for matching with others"
 msgstr "Başkalarıyla eşleşme amaçlı güvenli bir kodun parçası olarak depolanır"
 
-#: src/Navigation.tsx:315
+#: src/Navigation.tsx:316
 #: src/screens/Settings/Settings.tsx:467
 msgid "Storybook"
 msgstr "Storybook"
@@ -10008,8 +10096,8 @@ msgstr "İtirazı Yolla"
 msgid "Submit report"
 msgstr "Raporu yolla"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:364
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:370
 msgid "Submit Signature and Create Post"
 msgstr ""
 
@@ -10077,7 +10165,7 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr "Gün batımı"
 
-#: src/Navigation.tsx:335
+#: src/Navigation.tsx:336
 #: src/view/screens/Support.tsx:35
 #: src/view/screens/Support.tsx:38
 msgid "Support"
@@ -10087,7 +10175,7 @@ msgstr "Destek"
 msgid "Support for this feature in your country has not been enabled yet! Please check back later."
 msgstr "Bu özellik ülkenizde henüz etkin değil! Lütfen daha sonra tekrar kontrol edin."
 
-#: src/screens/Login/LoginForm.tsx:662
+#: src/screens/Login/LoginForm.tsx:664
 msgid "Switch"
 msgstr ""
 
@@ -10109,7 +10197,7 @@ msgstr "Hesap değiştir"
 msgid "Switch to {0}"
 msgstr "{0} hesabına geç"
 
-#: src/screens/Login/LoginForm.tsx:663
+#: src/screens/Login/LoginForm.tsx:665
 msgid "Switches login method"
 msgstr ""
 
@@ -10206,7 +10294,7 @@ msgstr "Şartlar"
 #: src/components/dialogs/BirthDateSettings.tsx:181
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:31
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:98
-#: src/Navigation.tsx:345
+#: src/Navigation.tsx:346
 #: src/screens/Settings/AboutSettings.tsx:83
 #: src/screens/Settings/AboutSettings.tsx:86
 #: src/view/screens/TermsOfService.tsx:35
@@ -10263,8 +10351,8 @@ msgstr "Hepsi bu kadar!"
 msgid "That's everything!"
 msgstr "Hepsi bu kadar!"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:225
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:462
 #: src/view/com/profile/ProfileMenu.tsx:553
 msgid "The account will be able to interact with you after unblocking."
 msgstr "Hesap, engeli kaldırdıktan sonra sizinle etkileşime geçebilecek."
@@ -10332,7 +10420,7 @@ msgid "The laws in your region require you to verify you're an adult to access c
 msgstr "Bölgenizdeki yasalar belirli özelliklere erişebilmeniz için bir yetişkin olduğunuzu doğrulamanızı gerektirmektedir. Daha fazla bilgi edinmek için dokunun."
 
 #. placeholder {0}: linkedVerusID ? linkedVerusID.identity : ''
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:79
 msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
@@ -10381,12 +10469,12 @@ msgid "The verification provider was unable to send a code to your phone number.
 msgstr "Doğrulama sağlayıcısı telefon numaranıza kodu yollayamadı. Lütfen telefon numaranızı kontrol edip tekrar deneyin."
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:113
 msgid "The VerusID currently linked to this account is {0}."
 msgstr ""
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:72
 msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
 msgstr ""
 
@@ -10394,7 +10482,7 @@ msgstr ""
 msgid "Theme"
 msgstr "Tema"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:74
 msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
@@ -10469,10 +10557,10 @@ msgstr "Akışlarınızı güncellerken bir sorun oldu, lütfen internet bağlan
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:486
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:117
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:130
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:97
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:98
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:299
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:326
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:342
 #: src/view/com/profile/ProfileMenu.tsx:152
 #: src/view/com/profile/ProfileMenu.tsx:164
 #: src/view/com/profile/ProfileMenu.tsx:180
@@ -10537,7 +10625,7 @@ msgstr "Bu hesap, kullanıcıların profilini görüntülemek için giriş yapma
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "Bu hesap moderasyon listelerinizden birkaçı tarafından engellenmiş. Engeli kaldırmak için lütfen doğrudan listeleri ziyaret edin ve bu kullanıcıyı kaldırın."
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:53
 msgid "This account is linked to VerusID, a decentralized identity system."
 msgstr ""
 
@@ -10794,7 +10882,7 @@ msgstr "Bu kullanıcı kimseyi takip etmiyor."
 msgid "This will create a new list with the same name, description, and members as this starter pack."
 msgstr "Bu, bu başlangıç paketiyle aynı isimle, açıklamayla ve üyelerle yeni bir liste oluşturacaktır."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:274
 msgid "This will create a post linking your VerusID to this account."
 msgstr ""
 
@@ -10835,7 +10923,7 @@ msgstr "Konu Tercihleri"
 msgid "Threaded"
 msgstr "Dallanmalı"
 
-#: src/Navigation.tsx:378
+#: src/Navigation.tsx:379
 msgid "Threads Preferences"
 msgstr "Konu Tercihleri"
 
@@ -10903,7 +10991,7 @@ msgstr "En öne çıkan"
 msgid "Top replies first"
 msgstr "Önce en öne çıkan yanıtlar"
 
-#: src/Navigation.tsx:576
+#: src/Navigation.tsx:577
 msgid "Topic"
 msgstr "Konu başlığı"
 
@@ -10998,8 +11086,8 @@ msgstr ""
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "Bağlanılamıyor. Lütfen internet bağlantınızı kontrol edip tekrar deneyin."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:182
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:325
 msgid "Unable to contact the service. Please check your Internet connection."
 msgstr ""
 
@@ -11020,11 +11108,11 @@ msgstr "Hizmetinize ulaşılamıyor. Lütfen internet bağlantınızı kontrol e
 msgid "Unable to delete"
 msgstr "Silinemedi"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:210
 msgid "Unable to get the signing service identity address"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:138
 msgid "Unable to link account with no handle."
 msgstr ""
 
@@ -11036,11 +11124,11 @@ msgstr "Kullanıcı adı çözümlenemedi"
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:163
 msgid "Unable to verify signature."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:425
+#: src/screens/Login/LoginForm.tsx:426
 msgid "Unable to verify the signer of the login."
 msgstr ""
 
@@ -11064,16 +11152,16 @@ msgstr "Erişilemeyen akış bilgisi"
 #: src/components/dms/MessagesListBlockedFooter.tsx:105
 #: src/components/dms/MessagesListBlockedFooter.tsx:113
 #: src/components/dms/MessagesListBlockedFooter.tsx:120
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:380
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:442
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:385
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:467
 #: src/screens/ProfileList/components/Header.tsx:166
 #: src/screens/ProfileList/components/Header.tsx:173
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Unblock"
 msgstr "Engeli kaldır"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:384
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
 msgctxt "action"
 msgid "Unblock"
 msgstr "Engeli kaldır"
@@ -11085,8 +11173,8 @@ msgstr "Engeli kaldır"
 msgid "Unblock account"
 msgstr "Hesabın engelini kaldır"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:221
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:435
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:460
 #: src/view/com/profile/ProfileMenu.tsx:547
 msgid "Unblock Account?"
 msgstr "Hesabı Engelle?"
@@ -11124,7 +11212,7 @@ msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Yeniden gönderiyi geri al ({0, plural, other {# yeniden gönderi}})"
 
 #. placeholder {0}: profile.handle
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:436
 msgid "Unfollow {0}"
 msgstr "{0} adresini takibi bırak"
 
@@ -11290,12 +11378,12 @@ msgstr "Güncelle"
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "<0>{displayName}</0> kullanıcısının listelerini düzenleyin"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:155
 msgid "Update confirmed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:418
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:424
 msgid "Update credentials"
 msgstr ""
 
@@ -11306,11 +11394,11 @@ msgstr ""
 msgid "Update email"
 msgstr "E-postayı güncelle"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
 msgid "Update linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:143
 msgid "Update the sign in credentials stored in your VerusID."
 msgstr ""
 
@@ -11331,7 +11419,7 @@ msgstr ""
 msgid "Update VerusID Link"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
 msgid "Update VerusID sign in"
 msgstr ""
 
@@ -11340,7 +11428,7 @@ msgstr ""
 msgid "Update VerusID Sign in"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:99
 msgid "Update VerusID Sign in Credentials"
 msgstr ""
 
@@ -11509,7 +11597,7 @@ msgstr "Kullanıcı adı tire işareti ile başlayamaz veya bitemez"
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr "Kullanıcı adı sadece İngilizce harfler (a-z), rakamlar ve tire işareti barındırabilir"
 
-#: src/screens/Login/LoginForm.tsx:466
+#: src/screens/Login/LoginForm.tsx:468
 msgid "Username or email address"
 msgstr "Kullanıcı adı veya e-posta adresi"
 
@@ -11540,7 +11628,7 @@ msgstr "Doğrulama başarısız, lütfen tekrar deneyin."
 msgid "Verification settings"
 msgstr "Doğrulama ayarları"
 
-#: src/Navigation.tsx:215
+#: src/Navigation.tsx:216
 #: src/screens/Moderation/VerificationSettings.tsx:34
 msgid "Verification Settings"
 msgstr "Doğrulama Ayarları"
@@ -11638,7 +11726,7 @@ msgstr "Doğrulanıyor..."
 msgid "Version {0}"
 msgstr "Sürüm {0}"
 
-#: src/Navigation.tsx:416
+#: src/Navigation.tsx:417
 #: src/screens/Settings/Settings.tsx:184
 #: src/screens/Settings/Settings.tsx:187
 #: src/screens/Settings/VerusServicesSettings.tsx:56
@@ -11654,20 +11742,20 @@ msgstr ""
 msgid "Verus Services Endpoint Status"
 msgstr ""
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:44
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:50
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:126
 msgid "VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:296
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:358
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
 msgid "VerusID Name"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:573
+#: src/screens/Login/LoginForm.tsx:575
 msgid "VerusID Sign in"
 msgstr ""
 
@@ -11688,7 +11776,7 @@ msgstr "Video"
 msgid "Video failed to process"
 msgstr "Video işlenemedi"
 
-#: src/Navigation.tsx:632
+#: src/Navigation.tsx:633
 msgid "Video Feed"
 msgstr "Video Akışı"
 
@@ -11901,6 +11989,10 @@ msgstr "Bildirim ayarlarınızı ziyaret edin"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/web-controls/VolumeControl.tsx:80
 msgid "Volume"
 msgstr "Ses"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:252
+msgid "VRSC"
+msgstr ""
 
 #: src/components/moderation/LabelPreference.tsx:142
 #: src/lib/moderation/useLabelBehaviorDescription.ts:20
@@ -12362,7 +12454,7 @@ msgstr "Uygulama içindeki sohbet ayarlarından sohbet bildirimlerinin sesli olu
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "Hangi ayarı seçerseniz seçin devam eden yazışmaları sürdürebilirsiniz."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:285
 msgid "You can do this later in Settings → Verus Services."
 msgstr ""
 
@@ -12839,7 +12931,7 @@ msgstr "Takip ettiğiniz akış boş! Neler olduğunu görmek için daha fazla k
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "Tam kullanıcı adınız <0>@{0}</0> olacak"
 
-#: src/Navigation.tsx:548
+#: src/Navigation.tsx:549
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:68
 #: src/screens/Settings/ContentAndMediaSettings.tsx:94
 #: src/screens/Settings/ContentAndMediaSettings.tsx:97
@@ -12918,10 +13010,10 @@ msgstr "Seçtiğiniz ilgi alanları, önemsediğiniz içerikleri size sunmamıza
 msgid "Your verifications"
 msgstr "Doğrulamalarınız"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:124
 msgid "Your VerusID {name} has been successfully linked to this account."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:157
 msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
 msgstr ""

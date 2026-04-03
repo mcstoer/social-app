@@ -631,13 +631,25 @@ msgstr "Tha <0>thusa</0> agus <1> </1><2>{0} </2> gan gabhail a-staigh sa phacai
 msgid "⚠Invalid Handle"
 msgstr "⚠Làmhrachan mì-dhligheach"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:213
+msgid "$1 USD (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:223
+msgid "€1 EUR (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:270
+msgid "1"
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:202
 #: src/components/dialogs/MutedWords.tsx:551
 #: src/components/dialogs/MutedWords.tsx:554
 msgid "24 hours"
 msgstr "24 uair a thìde"
 
-#: src/screens/Login/LoginForm.tsx:589
+#: src/screens/Login/LoginForm.tsx:591
 msgid "2FA Confirmation"
 msgstr "Daingneachadh 2FA"
 
@@ -698,7 +710,7 @@ msgstr "Glacadh-sgrìn de dhuilleag pròifil le ìomhaigheag cluig ri taobh a’
 msgid "A screenshot of the post composer with a new button next to the post button that says \"Drafts\", with a rainbow firework effect. Below, the text in the composer reads \"Hey, did you hear the news? Bluesky has drafts now!!!\"."
 msgstr "Glacadh-sgrìn de dh’uinneag sgrìobhadh nam post le putan ùr ri taobh a’ phutain “Postaich” a tha ag ràdh “Dreachdan”, le bogh-fhrois de chleasan-teine. Tha an teacsa foidhe anns an bhogsa-sgrìobhaidh ag ràdh “Sin thu, a charaid, an cuala tu an naidheachd? Tha gleus dhreachdan aig Bluesky a-nis!!!”."
 
-#: src/Navigation.tsx:556
+#: src/Navigation.tsx:557
 #: src/screens/Settings/AboutSettings.tsx:74
 #: src/screens/Settings/Settings.tsx:266
 #: src/screens/Settings/Settings.tsx:269
@@ -733,12 +745,12 @@ msgstr "Gabh ris a’ chànan seo a chaidh a mholadh"
 msgid "Accessibility"
 msgstr "So-ruigsinneachd"
 
-#: src/Navigation.tsx:392
+#: src/Navigation.tsx:393
 msgid "Accessibility Settings"
 msgstr "Roghainnean na so-ruigsinneachd"
 
-#: src/Navigation.tsx:408
-#: src/screens/Login/LoginForm.tsx:458
+#: src/Navigation.tsx:409
+#: src/screens/Login/LoginForm.tsx:460
 #: src/screens/Settings/AccountSettings.tsx:56
 #: src/screens/Settings/Settings.tsx:176
 #: src/screens/Settings/Settings.tsx:179
@@ -786,7 +798,7 @@ msgstr "Roghainnean a’ chunntais"
 
 #: src/components/dialogs/ServerInput.tsx:138
 #: src/screens/Login/ForgotPasswordForm.tsx:85
-#: src/screens/Login/LoginForm.tsx:441
+#: src/screens/Login/LoginForm.tsx:443
 msgid "Account provider"
 msgstr "Solaraiche a’ chunntais"
 
@@ -794,8 +806,8 @@ msgstr "Solaraiche a’ chunntais"
 msgid "Account removed from quick access"
 msgstr "Chaidh an cunntas a thoirt air falbh on ghrad-inntrigeadh"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:332
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:93
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
 #: src/view/com/profile/ProfileMenu.tsx:176
 msgctxt "toast"
 msgid "Account unblocked"
@@ -822,7 +834,7 @@ msgstr "’S urrainn do chunntasan aig a bheil cromag chrom-bhileach ghorm <0><1
 msgid "Activity from others"
 msgstr "Gnìomhachd o dhaoine eile"
 
-#: src/Navigation.tsx:524
+#: src/Navigation.tsx:525
 msgid "Activity notifications"
 msgstr "Brathan gnìomhachd"
 
@@ -992,7 +1004,7 @@ msgstr "Cuir an cleachdaiche ri liosta"
 msgid "Add your birthdate"
 msgstr "Cuir latha do bhreith ris"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:145
 msgid "Add your sign in credentials to your VerusID for seamless logins."
 msgstr ""
 
@@ -1072,13 +1084,13 @@ msgstr "Chaidh do cheist mun dearbhadh aoise a chur"
 msgid "Age assurance only takes a few minutes"
 msgstr "Cha toir dearbhadh aoise ach mionaid no dhà"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:301
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:363
 msgid "Alice@"
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:224
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:378
 msgid "alice@example.com"
 msgstr "meadhbh@eisimpleir.com"
 
@@ -1208,6 +1220,11 @@ msgstr "Mìnichidh roghainn teacsa na tha san dealbh do dhaoine a tha dall no ai
 #: src/view/com/composer/photos/ImageAltTextDialog.tsx:149
 msgid "Alt text will be truncated. {MAX_ALT_TEXT, plural, other {Limit: {0} characters.}}"
 msgstr "Thèid an roghainn teacsa a bhuntachadh. Chan eil barrachd air {MAX_ALT_TEXT, plural, one {{0} charactar} two {{0} charactar} few {{0} charactaran} other {{0} caractar}} ceadaichte."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:265
+#: src/components/donations/VerusIDDonationDialog.tsx:269
+msgid "Amount"
+msgstr ""
 
 #. placeholder {0}: currentAccount?.email || '(no email)'
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:94
@@ -1373,7 +1390,7 @@ msgstr "Faodaidh duine sam bith eadar-ghabhail a dhèanamh"
 msgid "Anyone who follows me"
 msgstr "Duine sam bith a tha gam leantainn"
 
-#: src/Navigation.tsx:564
+#: src/Navigation.tsx:565
 #: src/screens/Settings/AppIconSettings/index.tsx:65
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:19
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:24
@@ -1411,7 +1428,7 @@ msgstr "Feumaidh co-dhiù 4 caractaran bhith ann am facal-faire na h-aplacaid"
 msgid "App passwords"
 msgstr "Faclan-faire nan aplacaidean"
 
-#: src/Navigation.tsx:360
+#: src/Navigation.tsx:361
 #: src/screens/Settings/AppPasswords.tsx:51
 msgid "App Passwords"
 msgstr "Faclan-faire nan aplacaidean"
@@ -1453,7 +1470,7 @@ msgstr "Tog ath-thagradh an aghaidh na dàlach"
 msgid "Appeal this decision"
 msgstr "Tog ath-thagradh an aghaidh a’ cho-dhùnaidh seo"
 
-#: src/Navigation.tsx:400
+#: src/Navigation.tsx:401
 #: src/screens/Settings/AppearanceSettings.tsx:73
 #: src/screens/Settings/Settings.tsx:234
 #: src/screens/Settings/Settings.tsx:237
@@ -1539,7 +1556,7 @@ msgstr "Lomnochd ealanta no neo-earotaigeach."
 msgid "Assign topic for algo"
 msgstr "Iomruin cuspair dhan algairim"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:394
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:212
 msgid "At least 8 characters"
 msgstr "Co-dhiù 8 caractaran"
@@ -1567,7 +1584,7 @@ msgstr ""
 msgid "Automation label"
 msgstr ""
 
-#: src/Navigation.tsx:423
+#: src/Navigation.tsx:424
 #: src/screens/Settings/AutomationLabelSettings.tsx:103
 msgid "Automation Label"
 msgstr ""
@@ -1582,20 +1599,22 @@ msgstr "Cluich videothan is GIFs gu fèin-obrachail"
 msgid "Available"
 msgstr "Ri fhaighinn"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:149
 msgid "Awaiting confirmation"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:375
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:384
+#: src/components/donations/VerusIDDonationDialog.tsx:317
+#: src/components/donations/VerusIDDonationDialog.tsx:322
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/components/moderation/LabelsOnMeDialog.tsx:335
 #: src/screens/Login/ChooseAccountForm.tsx:98
 #: src/screens/Login/ChooseAccountForm.tsx:102
 #: src/screens/Login/ForgotPasswordForm.tsx:127
 #: src/screens/Login/ForgotPasswordForm.tsx:132
-#: src/screens/Login/LoginForm.tsx:628
-#: src/screens/Login/LoginForm.tsx:633
+#: src/screens/Login/LoginForm.tsx:630
+#: src/screens/Login/LoginForm.tsx:635
 #: src/screens/Login/SetNewPasswordForm.tsx:172
 #: src/screens/Login/SetNewPasswordForm.tsx:178
 #: src/screens/Messages/components/ChatDisabled.tsx:148
@@ -1678,7 +1697,7 @@ msgid "Birthday"
 msgstr "Co-là breith"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:865
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Block"
 msgstr "Bac"
@@ -1741,7 +1760,7 @@ msgstr "Bacte"
 msgid "Blocked accounts"
 msgstr "Cunntasan air am bacadh"
 
-#: src/Navigation.tsx:201
+#: src/Navigation.tsx:202
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "Cunntasan air am bacadh"
@@ -1971,8 +1990,8 @@ msgstr "An camara"
 #: src/components/dialogs/lists/CreateListFromStarterPackDialog.tsx:200
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:291
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:430
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:436
 #: src/components/Menu/index.tsx:355
 #: src/components/PostControls/RepostButton.tsx:210
 #: src/components/Prompt.tsx:136
@@ -2107,7 +2126,7 @@ msgid "Changes to the starter pack will not be reflected in the list after creat
 msgstr "Cha bhi buaidh air an liosta ma dh’atharraicheas tu a’ phacaid-thòiseachaidh an dèidh dhut a chruthachadh. Bidh an liosta na lethbhreac neo-eisimeileach."
 
 #: src/lib/hooks/useNotificationHandler.ts:102
-#: src/Navigation.tsx:581
+#: src/Navigation.tsx:582
 #: src/view/shell/bottom-bar/BottomBar.tsx:224
 #: src/view/shell/desktop/LeftNav.tsx:611
 #: src/view/shell/Drawer.tsx:454
@@ -2133,7 +2152,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "Chaidh a’ chabadaich a mhùchadh"
 
-#: src/Navigation.tsx:591
+#: src/Navigation.tsx:592
 #: src/screens/Messages/components/InboxPreview.tsx:23
 msgid "Chat request inbox"
 msgstr "Bogsa a-steach nan iarrtasan cabadaich"
@@ -2145,7 +2164,7 @@ msgid "Chat requests"
 msgstr "Iarrtasan cabadaich"
 
 #: src/components/dms/ConvoMenu.tsx:84
-#: src/Navigation.tsx:586
+#: src/Navigation.tsx:587
 #: src/screens/Messages/ChatList.tsx:82
 #: src/screens/Messages/ChatList.tsx:86
 #: src/screens/Messages/ChatList.tsx:385
@@ -2176,9 +2195,13 @@ msgstr "Thoir sùil air <0>{currentEmail}</0> feuch an d’fhuair thu am post-d 
 msgid "Check my status"
 msgstr "Thoir sùil air an staid agam"
 
-#: src/screens/Login/LoginForm.tsx:618
+#: src/screens/Login/LoginForm.tsx:620
 msgid "Check your email for a sign in code and enter it here."
 msgstr "Thoir sùil air a' phost-d agad is cuir an còd airson clàradh a-steach an-seo."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:294
+msgid "Checking..."
+msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:161
 msgid "Child safety"
@@ -2187,6 +2210,10 @@ msgstr "Sàbhailteachd cloinne"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:165
 msgid "Child Sexual Abuse Material (CSAM)"
 msgstr "Stuth a sheallas mì-ghnàthachadh cloinne (CSAM)"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:64
+msgid "Choose a preset amount or enter a custom currency to donate."
+msgstr ""
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:401
 msgid "Choose domain verification method"
@@ -2320,14 +2347,14 @@ msgstr "Turt 🐴 turt 🐴"
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:185
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:191
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:199
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:156
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:162
 #: src/components/dialogs/SearchablePeopleList.tsx:296
 #: src/components/dialogs/StarterPackDialog.tsx:186
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:390
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:395
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:457
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:462
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:212
@@ -2341,7 +2368,7 @@ msgstr "Turt 🐴 turt 🐴"
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:128
 #: src/components/verification/VerificationsDialog.tsx:146
 #: src/components/verification/VerifierDialog.tsx:146
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:87
 #: src/components/WhoCanReply.tsx:236
 #: src/components/WhoCanReply.tsx:243
 #: src/features/liveNow/components/EditLiveDialog.tsx:217
@@ -2374,7 +2401,7 @@ msgstr "Dùin an drathair aig a’ bhonn"
 #: src/components/dialogs/LanguageSelectDialog.tsx:354
 #: src/components/verification/VerificationsDialog.tsx:138
 #: src/components/verification/VerifierDialog.tsx:139
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:79
 msgid "Close dialog"
 msgstr "Dùin an còmhradh"
 
@@ -2457,7 +2484,7 @@ msgid "Comics"
 msgstr "Dealbhan-èibhinn"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:46
-#: src/Navigation.tsx:350
+#: src/Navigation.tsx:351
 #: src/view/screens/CommunityGuidelines.tsx:38
 msgid "Community Guidelines"
 msgstr "Treòrachadh na coimhearsnachd"
@@ -2519,7 +2546,7 @@ msgid "Confirm your location"
 msgstr "Dearbh d’ ionad"
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:38
-#: src/screens/Login/LoginForm.tsx:595
+#: src/screens/Login/LoginForm.tsx:597
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:190
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:194
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:247
@@ -2533,7 +2560,7 @@ msgid "Connected"
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:140
-#: src/screens/Login/LoginForm.tsx:651
+#: src/screens/Login/LoginForm.tsx:653
 msgid "Connecting to service..."
 msgstr "A’ ceangal ris an t-seirbheis…"
 
@@ -2584,7 +2611,7 @@ msgstr "Susbaint ⁊ meadhanan"
 msgid "Content and media"
 msgstr "Susbaint is meadhanan"
 
-#: src/Navigation.tsx:540
+#: src/Navigation.tsx:541
 msgid "Content and Media"
 msgstr "Susbaint is meadhanan"
 
@@ -2628,7 +2655,9 @@ msgstr "Rabhaidhean susbainte"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "Cùlaibh a’ chlàir-thaice cho-theacsail, dèan briogadh airson an clàr-taice a dhùnadh."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:356
+#: src/components/donations/VerusIDDonationDialog.tsx:288
+#: src/components/donations/VerusIDDonationDialog.tsx:294
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:163
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:171
 #: src/screens/Onboarding/StepInterests/index.tsx:93
@@ -2777,7 +2806,7 @@ msgstr "Dèan lethbhreac de theacsa a’ phuist"
 msgid "Copy QR code"
 msgstr "Dèan lethbhreac dhen chòd QR"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:268
 msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
 msgstr ""
 
@@ -2787,7 +2816,7 @@ msgstr "Dèan lethbhreac dhen reacord TXT"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:41
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:108
-#: src/Navigation.tsx:355
+#: src/Navigation.tsx:356
 #: src/view/screens/CopyrightPolicy.tsx:35
 msgid "Copyright Policy"
 msgstr "Poileasaidh na còrach-lethbhreac"
@@ -2883,7 +2912,7 @@ msgstr "Cruthaich còd QR airson pacaid tòiseachaidh"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:207
 #: src/components/StarterPack/ProfileStarterPacks.tsx:316
-#: src/Navigation.tsx:621
+#: src/Navigation.tsx:622
 msgid "Create a starter pack"
 msgstr "Cruthaich pacaid tòiseachaidh"
 
@@ -2985,10 +3014,23 @@ msgstr "Chaidh an cruthadair a bhacadh"
 msgid "Culture"
 msgstr "Cultar"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:247
+#: src/components/donations/VerusIDDonationDialog.tsx:251
+msgid "Currency name"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:164
+msgid "Currency not found"
+msgstr ""
+
 #: src/components/dialogs/ServerInput.tsx:152
 #: src/components/dialogs/ServerInput.tsx:154
 msgid "Custom"
 msgstr "Gnàthaichte"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:235
+msgid "Custom currency and amount"
+msgstr ""
 
 #: src/components/dialogs/Embed.tsx:145
 msgid "Customization options"
@@ -3132,7 +3174,7 @@ msgstr "Sguab an cunntas agam às"
 msgid "Delete post"
 msgstr "Sguab às am post"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:143
 msgid "Delete Post and Remove Link"
 msgstr ""
 
@@ -3193,8 +3235,8 @@ msgstr "Dealaich an luaidh"
 msgid "Detach quote post?"
 msgstr "A bheil thu airson an luaidh air a’ phost a dhealachadh?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:314
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:318
 msgid "Details to Sign"
 msgstr ""
 
@@ -3402,6 +3444,24 @@ msgstr "Na seall seo a-rithist"
 msgid "Don't worry! All existing messages and settings are saved and will be available after you verify you're an adult."
 msgstr "Na gabh dragh! Chaidh gach teachdaireachd is roghainn a shàbhaladh is bidh iad ri do làimh a-rithist an dèidh dhut dearbhadh gur inbheach a th’ annad."
 
+#: src/components/donations/VerusIDDonationDialog.tsx:42
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:415
+msgid "Donate"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:218
+msgid "Donate 1 Euro (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:208
+msgid "Donate 1 US Dollar (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:230
+msgid "Donate a custom currency"
+msgstr ""
+
 #: src/components/contacts/components/InviteInfo.tsx:73
 #: src/components/contacts/components/InviteInfo.tsx:79
 #: src/components/contacts/screens/ViewMatches.tsx:395
@@ -3409,8 +3469,8 @@ msgstr "Na gabh dragh! Chaidh gach teachdaireachd is roghainn a shàbhaladh is b
 #: src/components/dialogs/BirthDateSettings.tsx:195
 #: src/components/dialogs/BirthDateSettings.tsx:202
 #: src/components/dialogs/LanguageSelectDialog.tsx:327
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:169
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:175
 #: src/components/dialogs/ServerInput.tsx:237
 #: src/components/dialogs/ServerInput.tsx:239
 #: src/components/dms/AfterReportDialog.tsx:144
@@ -3577,7 +3637,7 @@ msgstr "Deasaich staid an t-srutha bheò"
 msgid "Edit moderation list"
 msgstr "Deasaich an liosta modarataireachd "
 
-#: src/Navigation.tsx:365
+#: src/Navigation.tsx:366
 #: src/view/screens/Feeds.tsx:519
 msgid "Edit My Feeds"
 msgstr "Deasaich na h-inbhirean agam"
@@ -3599,12 +3659,12 @@ msgstr "Deasaich roghainnean eadar-ghabhail a’ phuist"
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:296
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:367
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:372
 msgid "Edit profile"
 msgstr "Deasaich a’ phròifil"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:299
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:369
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
 msgid "Edit Profile"
 msgstr "Deasaich a’ phròifil"
 
@@ -3620,7 +3680,7 @@ msgstr "Deasaich liosta an luchd-chleachdaidh"
 msgid "Edit who can reply"
 msgstr "Co-dhùin cò aig a bheil cead freagairt"
 
-#: src/Navigation.tsx:626
+#: src/Navigation.tsx:627
 msgid "Edit your starter pack"
 msgstr "Deasaich a’ phacaid tòiseachaidh agad"
 
@@ -3632,8 +3692,8 @@ msgstr "Foghlam"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr "Bhac cruthadair na liosta seo thu no bhac thusa cruthadair na liosta."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:373
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 #: src/screens/Settings/AccountSettings.tsx:71
 #: src/screens/Signup/StepInfo/index.tsx:224
 msgid "Email"
@@ -3800,7 +3860,7 @@ msgstr "Cuir a-steach an àrainn a tha thu airson cleachdadh"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "Cuir a-steach am post-d a chleachd thu nuair a chruthaich thu an cunntas agad. Chuir sinn “còd ath-shuidheachaidh” thugad agus is urrainn dhut facal-faire ùr a chur an sàs leis."
 
-#: src/screens/Login/LoginForm.tsx:486
+#: src/screens/Login/LoginForm.tsx:488
 msgid "Enter the username or email address you used when you created your account"
 msgstr "Cuir a-steach an t-ainm-cleachdaiche no seòladh a’ phuist-d a chleachd thu nuair a chruthaich thu an cunntas agad"
 
@@ -3813,7 +3873,7 @@ msgstr "Cuir a-steach latha do bhreith"
 msgid "Enter your email address"
 msgstr "Cuir a-steach an seòladh puist-d agad"
 
-#: src/screens/Login/LoginForm.tsx:511
+#: src/screens/Login/LoginForm.tsx:513
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:298
 msgid "Enter your password"
 msgstr "Cuir a-steach am facal-faire agad"
@@ -3951,7 +4011,7 @@ msgstr "Meadhanan feòlmhor no draghail."
 msgid "Explicit sexual images."
 msgstr "Dealbhan feiseil is feòlmhor."
 
-#: src/Navigation.tsx:830
+#: src/Navigation.tsx:831
 #: src/screens/Search/Shell.tsx:354
 #: src/view/shell/desktop/LeftNav.tsx:691
 #: src/view/shell/Drawer.tsx:402
@@ -3987,7 +4047,7 @@ msgstr "Meadhanan on taobh a-muigh"
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "Ma cheadaicheas tu meadhanan on taobh a-muigh, dh’fhaodte gun toir seo comas do làraichean-lìn fiosrachadh a chruinneachadh mu do dhèidhinn is mun uidheam agad. Cha tèid fiosrachadh sam bith iarraidh no a chur gus am brùth thu am putan “Cluich”."
 
-#: src/Navigation.tsx:384
+#: src/Navigation.tsx:385
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "Roghainnean nam meadhanan on taobh a-muigh"
@@ -4014,7 +4074,7 @@ msgstr "Cha b’ urrainn dhuinn pacaid tòiseachaidh a chur ris"
 msgid "Failed to change handle. Please try again."
 msgstr "Dh’fhàillig atharrachadh an làmhrachain. Feuch ris a-rithist."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:244
 msgid "Failed to create a post for linking the VerusID. Please try again."
 msgstr ""
 
@@ -4062,12 +4122,16 @@ msgstr "Cha b’ urrainn dhuinn a h-uile cunntas a mholamaid a leantainn, feuch 
 msgid "Failed to follow all your friends, please try again"
 msgstr "Cha b’ urrainn dhuinn a h-uile caraid agad a leantainn, feuch ris a-rithist"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:192
+msgid "Failed to generate invoice"
+msgstr ""
+
 #: src/components/contacts/screens/ViewMatches.tsx:236
 msgid "Failed to hide suggestion, please check your internet connection"
 msgstr "Cha b’ urrainn dhuinn am moladh a chur am falach, thoir sùil air a’ cheangal ris an eadar-lìon agad"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:295
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:310
 msgid "Failed to initiate credential update"
 msgstr ""
 
@@ -4139,7 +4203,7 @@ msgstr "Cha b’ urrainn dhuinn comharradh gun deach gach iarrtas a leughadh"
 msgid "Failed to pin post"
 msgstr "Cha b’ urrainn dhuinn am post a phrìneachadh"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:150
 msgid "Failed to prepare linking details."
 msgstr ""
 
@@ -4166,13 +4230,17 @@ msgstr "Cha b’ urrainn dhuinn an emoji a chuir thu mar fhrith-fhreagairt a tho
 msgid "Failed to remove from starter pack"
 msgstr "Cha b’ urrainn dhuinn a thoirt air falbh on phacaid tòiseachaidh"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:111
 msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
 msgid "Failed to remove verification"
 msgstr "Cha b’ urrainn dhuinn an dearbhadh a thoirt air falbh"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:178
+msgid "Failed to resolve identity"
+msgstr ""
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:81
 msgid "Failed to resolve location. Please try again."
@@ -4224,8 +4292,8 @@ msgstr "Cha b’ urrainn dhuinn mùchadh an t-snàithlein a thoglachadh, feuch r
 msgid "Failed to unpin list"
 msgstr "Cha b’ urrainn dhuinn an liosta a dhì-phrìneachadh"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:175
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:284
 msgid "Failed to update credentials"
 msgstr ""
 
@@ -4269,7 +4337,7 @@ msgstr "Cha b’ urrainn dhuinn am post-d a dhearbhadh, feuch ris a-rithist."
 msgid "Failed to verify handle. Please try again."
 msgstr "Cha b’ urrainn dhuinn an làmhrachan a dhearbhadh. Feuch ris a-rithist."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:188
 msgid "Failed to verify signature. Please try again."
 msgstr ""
 
@@ -4281,7 +4349,7 @@ msgstr "Cunntas brèige no bot"
 msgid "False information about elections"
 msgstr "Fiosrachadh brèige mu thaghadh"
 
-#: src/Navigation.tsx:300
+#: src/Navigation.tsx:301
 msgid "Feed"
 msgstr "Inbhir"
 
@@ -4326,7 +4394,7 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr "Chaidh do bheachd a chur gu muinntir an inbhir"
 
-#: src/Navigation.tsx:606
+#: src/Navigation.tsx:607
 #: src/screens/SavedFeeds.tsx:120
 #: src/screens/SavedFeeds.tsx:318
 #: src/screens/Search/SearchResults.tsx:80
@@ -4405,8 +4473,8 @@ msgstr "Ionmhas"
 msgid "Find accounts to follow"
 msgstr "Lorg cunntasan airson an leantainn"
 
-#: src/Navigation.tsx:447
-#: src/Navigation.tsx:648
+#: src/Navigation.tsx:448
+#: src/Navigation.tsx:649
 msgid "Find Contacts"
 msgstr "Lorg luchd-aithne"
 
@@ -4481,7 +4549,7 @@ msgstr "Cuir fòcas air bogsa ion-chur a’ chòd"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:157
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:424
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:449
 #: src/screens/VideoFeed/index.tsx:870
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
@@ -4490,7 +4558,7 @@ msgstr "Lean"
 
 #. placeholder {0}: profile.handle
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:144
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
 msgid "Follow {0}"
 msgstr "Lean ri {0}"
 
@@ -4534,7 +4602,7 @@ msgstr "Lean a h-uile cunntas"
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:541
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:155
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:422
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:447
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
 msgid "Follow back"
@@ -4573,7 +4641,7 @@ msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {
 msgstr "Tha <0>{0}</0>, <1>{1}</1> is {2, plural, one {# eile} two {# eile} few {# eile} other {# eile}} ga leantainn"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:254
+#: src/Navigation.tsx:255
 msgid "Followers of @{0} that you know"
 msgstr "Luchd-leantainn aig @{0} as aithne dhut-sa cuideachd"
 
@@ -4588,7 +4656,7 @@ msgstr "Luchd-leantainn as aithne dhut"
 #: src/components/ProfileHoverCard/index.web.tsx:494
 #: src/components/ProfileHoverCard/index.web.tsx:505
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:160
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:420
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:445
 #: src/screens/VideoFeed/index.tsx:868
 #: src/view/com/notifications/NotificationFeedItem.tsx:816
 #: src/view/com/notifications/NotificationFeedItem.tsx:833
@@ -4605,7 +4673,7 @@ msgstr "Ga leantainn"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:497
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:284
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:289
 #: src/view/com/notifications/NotificationFeedItem.tsx:765
 msgid "Following {0}"
 msgstr "A’ leantainn {0} a-nis"
@@ -4619,7 +4687,7 @@ msgstr "A’ leantainn {handle}"
 msgid "Following feed preferences"
 msgstr "Roghainnean inbhir nan daoine a tha thu a’ leantainn"
 
-#: src/Navigation.tsx:371
+#: src/Navigation.tsx:372
 #: src/screens/Settings/FollowingFeedPreferences.tsx:57
 msgid "Following Feed Preferences"
 msgstr "Roghainnean inbhir nan daoine a tha thu a’ leantainn"
@@ -4680,11 +4748,11 @@ msgstr "Coma leat an treamsgal"
 msgid "Forgot Password"
 msgstr "Dhìochuimhnich mi am facal-faire"
 
-#: src/screens/Login/LoginForm.tsx:526
+#: src/screens/Login/LoginForm.tsx:528
 msgid "Forgot password?"
 msgstr "Na dhìochuimhnich thu am facal-faire?"
 
-#: src/screens/Login/LoginForm.tsx:537
+#: src/screens/Login/LoginForm.tsx:539
 msgid "Forgot?"
 msgstr "Na dhìochuimhnich thu e?"
 
@@ -4985,7 +5053,7 @@ msgstr "Gnìomhachdan dochainneach no glè chunnartach"
 msgid "Harming or endangering minors"
 msgstr "A’ cur mion-aoisich an cunnart no gan dochann"
 
-#: src/Navigation.tsx:571
+#: src/Navigation.tsx:572
 msgid "Hashtag"
 msgstr "Taga-hais"
 
@@ -5191,8 +5259,8 @@ msgstr "Hm, cha b’ urrainn dhuinn an t-seirbheis modarataireachd sin a luchdad
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "Air do shocair! Tha sinn a’ toirt comas air video mean air mhean – glacaidh foighidinn iasg. Na bi fada gun tilleadh!"
 
-#: src/Navigation.tsx:825
-#: src/Navigation.tsx:845
+#: src/Navigation.tsx:826
+#: src/Navigation.tsx:846
 #: src/view/shell/bottom-bar/BottomBar.tsx:179
 #: src/view/shell/desktop/LeftNav.tsx:673
 #: src/view/shell/Drawer.tsx:428
@@ -5248,7 +5316,7 @@ msgstr "Tha mi a’ tuigsinn"
 msgid "I'm on Bluesky as {0} - come find me! https://bsky.app/download"
 msgstr "Tha mi air Bluesky mar {0} – tiugainn! https://bsky.app/download"
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:61
 msgid "Identity:"
 msgstr ""
 
@@ -5435,7 +5503,7 @@ msgstr "Chuir sinn còd thugad air a’ phost-d airson am facal-faire ath-shuidh
 msgid "Input new password"
 msgstr "Cuir a-steach facal-faire ùr"
 
-#: src/screens/Login/LoginForm.tsx:610
+#: src/screens/Login/LoginForm.tsx:612
 msgid "Input the code which has been emailed to you"
 msgstr "Cuir a-steach an còd a chuir sinn thugad air a’ phost-d"
 
@@ -5477,7 +5545,7 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr "Roghainnean eadar-ghabhalach mì-dhligheach."
 
-#: src/screens/Login/LoginForm.tsx:420
+#: src/screens/Login/LoginForm.tsx:421
 msgid "Invalid login response. Please try again or sign in manually."
 msgstr ""
 
@@ -5490,7 +5558,7 @@ msgstr "Àireamh fòn mhì-dhligheach"
 msgid "Invalid report subject"
 msgstr "Tha cuspair na h-aithrise mì-dhligheach"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:182
 msgid "Invalid signature. Please try again."
 msgstr ""
 
@@ -5629,7 +5697,7 @@ msgstr "Leubailean a tha ris a’ chunntas agad"
 msgid "Labels on your content"
 msgstr "Leubailean a tha ris an t-susbaint agad"
 
-#: src/Navigation.tsx:227
+#: src/Navigation.tsx:228
 msgid "Language Settings"
 msgstr "Roghainnean cànain"
 
@@ -5811,7 +5879,7 @@ msgstr "Nochd gur toil leat 10 puist"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "Nochd gur toil leat 10 puist airson teagasg a thoirt dhan inbhir “Fidir”"
 
-#: src/Navigation.tsx:484
+#: src/Navigation.tsx:485
 msgid "Like notifications"
 msgstr "Brathan mu dhaoine a dh’innis gur toil leotha rud"
 
@@ -5823,8 +5891,8 @@ msgstr "Innis gur toil leat an t-inbhir seo"
 msgid "Like this labeler"
 msgstr "Nochd gur toil leat an leubailich seo"
 
-#: src/Navigation.tsx:305
-#: src/Navigation.tsx:310
+#: src/Navigation.tsx:306
+#: src/Navigation.tsx:311
 msgid "Liked by"
 msgstr "Daoine as toil leotha seo"
 
@@ -5861,7 +5929,7 @@ msgstr "Na ’s toil le daoine"
 msgid "Likes of your reposts"
 msgstr "’S toil le cuideigin rud a dh’ath-phostaich thu"
 
-#: src/Navigation.tsx:508
+#: src/Navigation.tsx:509
 msgid "Likes of your reposts notifications"
 msgstr "Brathan mu dhaoine a dh’innis gur toil leotha rud a dh’ath-phostaich thu"
 
@@ -5879,19 +5947,19 @@ msgstr "Loidhneach"
 msgid "Link Account to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:77
 msgid "Link Removed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:110
 msgid "Link VerusID to account"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:63
 msgid "Link VerusID to Profile"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:115
 msgid "Link your VerusID to this account to verify your identity."
 msgstr ""
 
@@ -5899,15 +5967,15 @@ msgstr ""
 msgid "Linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:122
 msgid "Linking complete"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:686
+#: src/screens/Login/LoginForm.tsx:687
 msgid "Links to signing in on the same device"
 msgstr ""
 
-#: src/Navigation.tsx:260
+#: src/Navigation.tsx:261
 msgid "List"
 msgstr "Liosta"
 
@@ -5993,7 +6061,7 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "Chaidh an liosta a neo-mhùchadh"
 
-#: src/Navigation.tsx:181
+#: src/Navigation.tsx:182
 #: src/view/screens/Lists.tsx:68
 #: src/view/screens/Profile.tsx:242
 #: src/view/screens/Profile.tsx:250
@@ -6082,7 +6150,7 @@ msgstr "A’ luchdadh roghainnean eadar-ghabhail nam post…"
 msgid "Loading..."
 msgstr "Ga luchdadh…"
 
-#: src/Navigation.tsx:330
+#: src/Navigation.tsx:331
 msgid "Log"
 msgstr "Loga"
 
@@ -6188,7 +6256,7 @@ msgstr "Meadhanan a th’ air uidheam eile"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "Meadhanan a chuireadh dragh air cuid a dhaoine no a bhiodh mì-iomchaidh."
 
-#: src/Navigation.tsx:468
+#: src/Navigation.tsx:469
 msgid "Mention notifications"
 msgstr "Brathan mu iomradh"
 
@@ -6245,7 +6313,7 @@ msgstr "Tha an teachdaireachd ro fhada"
 msgid "Message options"
 msgstr "Roghainnean na teachdaireachd"
 
-#: src/Navigation.tsx:840
+#: src/Navigation.tsx:841
 msgid "Messages"
 msgstr "Teachdaireachdan"
 
@@ -6258,7 +6326,7 @@ msgstr "Meadhan-oidhche"
 msgid "Minor harassment or bullying"
 msgstr "Sàrachadh no burraidheachd bheag"
 
-#: src/Navigation.tsx:532
+#: src/Navigation.tsx:533
 msgid "Miscellaneous notifications"
 msgstr "Brathan eile"
 
@@ -6270,11 +6338,11 @@ msgstr "Mì-stiùireadh"
 msgid "Missing media"
 msgstr "Tha meadhanan a dhìth"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:316
 msgid "Mobile support coming soon"
 msgstr ""
 
-#: src/Navigation.tsx:186
+#: src/Navigation.tsx:187
 #: src/screens/Moderation/index.tsx:102
 #: src/screens/Settings/Settings.tsx:198
 #: src/screens/Settings/Settings.tsx:201
@@ -6315,7 +6383,7 @@ msgstr "Chaidh an liosta modarataireachd ùrachadh"
 msgid "Moderation lists"
 msgstr "Liostaichean modarataireachd"
 
-#: src/Navigation.tsx:191
+#: src/Navigation.tsx:192
 #: src/view/screens/ModerationModlists.tsx:68
 msgid "Moderation Lists"
 msgstr "Liostaichean modarataireachd"
@@ -6324,7 +6392,7 @@ msgstr "Liostaichean modarataireachd"
 msgid "moderation settings"
 msgstr "roghainnean modarataireachd"
 
-#: src/Navigation.tsx:320
+#: src/Navigation.tsx:321
 msgid "Moderation states"
 msgstr "Staidean modarataireachd"
 
@@ -6449,7 +6517,7 @@ msgstr "Mùch faclan ⁊ tagaichean"
 msgid "Muted accounts"
 msgstr "Cunntasan a chaidh am mùchadh"
 
-#: src/Navigation.tsx:196
+#: src/Navigation.tsx:197
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "Cunntasan a chaidh am mùchadh"
@@ -6509,7 +6577,7 @@ msgstr "Tadhail air a’ phacaid tòiseachaidh"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:150
 #: src/screens/Login/ForgotPasswordForm.tsx:175
-#: src/screens/Login/LoginForm.tsx:687
+#: src/screens/Login/LoginForm.tsx:688
 msgid "Navigates to the next screen"
 msgstr "Bheir seo thu gun ath-sgrìn"
 
@@ -6562,7 +6630,7 @@ msgstr "Seòladh puist-d ùr"
 msgid "New Feature"
 msgstr "Gleus ùr"
 
-#: src/Navigation.tsx:500
+#: src/Navigation.tsx:501
 msgid "New follower notifications"
 msgstr "Brathan mu luchd-leantainn ùr"
 
@@ -6644,7 +6712,7 @@ msgstr "Naidheachdan"
 #: src/components/contacts/screens/ViewMatches.tsx:410
 #: src/screens/Login/ForgotPasswordForm.tsx:149
 #: src/screens/Login/ForgotPasswordForm.tsx:156
-#: src/screens/Login/LoginForm.tsx:683
+#: src/screens/Login/LoginForm.tsx:684
 #: src/screens/Login/SetNewPasswordForm.tsx:186
 #: src/screens/Login/SetNewPasswordForm.tsx:192
 #: src/screens/Onboarding/StepFinished/index.tsx:330
@@ -6726,7 +6794,7 @@ msgstr "Gun liostaichean"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:520
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:310
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:315
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "Chan eil thu a’ leantainn {0} tuilleadh"
@@ -6834,7 +6902,7 @@ msgstr "Gun phacaid tòiseachaidh fhathast"
 msgid "No thanks"
 msgstr "Cha chuir, mòran taing"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:86
 msgid "No VerusID link found to remove"
 msgstr ""
 
@@ -6884,7 +6952,7 @@ msgstr "Chan eil seo ri fhaighinn air an ùrlar seo."
 msgid "Not followed by anyone you're following"
 msgstr "Chan eil neach sam bith a tha thusa a’ leantainn ga leantainn"
 
-#: src/Navigation.tsx:176
+#: src/Navigation.tsx:177
 #: src/view/screens/Profile.tsx:135
 msgid "Not Found"
 msgstr "Cha deach a lorg"
@@ -6914,8 +6982,8 @@ msgstr "Chan eil dad an-seo"
 msgid "Nothing saved yet"
 msgstr "Cha deach dad a shàbhaladh fhathast"
 
-#: src/Navigation.tsx:454
-#: src/Navigation.tsx:601
+#: src/Navigation.tsx:455
+#: src/Navigation.tsx:602
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "Roghainnean nam brathan"
@@ -6928,8 +6996,8 @@ msgstr "Fuaimean nam brathan"
 msgid "Notification Sounds"
 msgstr "Fuaimean nam brathan"
 
-#: src/Navigation.tsx:596
-#: src/Navigation.tsx:835
+#: src/Navigation.tsx:597
+#: src/Navigation.tsx:836
 #: src/screens/Notifications/ActivityList.tsx:31
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:93
 #: src/screens/Settings/NotificationSettings/index.tsx:93
@@ -7088,7 +7156,7 @@ msgstr "Fosgail an camara"
 msgid "Open conversation options"
 msgstr "Fosgail roghainnean nan còmhraidhean"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:444
 msgid "Open credential update deeplink"
 msgstr ""
 
@@ -7173,7 +7241,7 @@ msgstr "Fosgail duilleag an leabhair-sgeulachd"
 msgid "Open system log"
 msgstr "Fosgail log an t-siostaim"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:450
 msgid "Open Verus Wallet"
 msgstr ""
 
@@ -7258,7 +7326,7 @@ msgstr "Fosglaidh seo an ceangal {0}"
 msgid "Opens live status dialog"
 msgstr "Fosglaidh seo còmhradh an t-srutha bheò"
 
-#: src/screens/Login/LoginForm.tsx:527
+#: src/screens/Login/LoginForm.tsx:529
 msgid "Opens password reset form"
 msgstr "Fosglaidh seo foirm ath-shuidheachadh an fhacail-fhaire"
 
@@ -7364,11 +7432,11 @@ msgstr "Cha deach an duilleag a lorg"
 msgid "Page Not Found"
 msgstr "Cha deach an duilleag a lorg"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:389
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
 #: src/components/dialogs/VerusServiceDialog.tsx:229
 #: src/components/dialogs/VerusServiceDialog.tsx:233
-#: src/screens/Login/LoginForm.tsx:496
+#: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:126
 #: src/screens/Settings/AccountSettings.tsx:130
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:291
@@ -7392,7 +7460,7 @@ msgstr "Chaidh am facal-faire ùrachadh"
 msgid "Password updated!"
 msgstr "Chaidh am facal-faire ùrachadh!"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:333
 msgid "Paste your signature here"
 msgstr ""
 
@@ -7416,12 +7484,12 @@ msgid "People"
 msgstr "Daoine"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:247
+#: src/Navigation.tsx:248
 msgid "People followed by @{0}"
 msgstr "Daoine a tha @{0} a’ leantainn"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:240
+#: src/Navigation.tsx:241
 msgid "People following @{0}"
 msgstr "Daoine a leanas ri @{0}"
 
@@ -7596,7 +7664,7 @@ msgstr "Cuir a-steach facal-faire."
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr "Cuir a-steach facal-faire. Feumaidh e a bhith co-dhiù 8 caractaran a dh’fhaid."
 
-#: src/components/dialogs/VerusServiceDialog.tsx:56
+#: src/components/dialogs/VerusServiceDialog.tsx:57
 msgid "Please enter a service URL"
 msgstr ""
 
@@ -7607,6 +7675,10 @@ msgstr ""
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
 msgid "Please enter a unique name for this app password or use our randomly generated one."
 msgstr "Thoir ainm àraidh air an fhacal-fhaire aplacaid seo no cleachd ainm a thuaiream againne."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:159
+msgid "Please enter a valid amount"
+msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:132
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:136
@@ -7644,11 +7716,11 @@ msgstr "Cuir a-steach an còd a fhuair thu agus am facal-faire ùr a bu toil lea
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "Cuir a-steach an còd tèarainteachd a chuir sinn gu seòladh an t-seann phuist-d agad."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:158
 msgid "Please enter the signature."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:200
 msgid "Please enter your email"
 msgstr ""
 
@@ -7665,7 +7737,7 @@ msgstr "Cuir a-steach an còd cuiridh agad."
 msgid "Please enter your new email address."
 msgstr "Cuir a-steach an seòladh puist-d ùr agad."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:205
 #: src/screens/Login/LoginForm.tsx:218
 msgid "Please enter your password"
 msgstr "Cuir a-steach am facal-faire agad"
@@ -7674,11 +7746,11 @@ msgstr "Cuir a-steach am facal-faire agad"
 msgid "Please enter your username"
 msgstr "Cuir a-steach an t-ainm-cleachdaiche agad"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:195
 msgid "Please enter your VerusID name"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:131
 msgid "Please enter your VerusID name."
 msgstr ""
 
@@ -7777,10 +7849,10 @@ msgid "Post blocked"
 msgstr "Chaidh am post a bhacadh"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:273
-#: src/Navigation.tsx:280
-#: src/Navigation.tsx:287
-#: src/Navigation.tsx:294
+#: src/Navigation.tsx:274
+#: src/Navigation.tsx:281
+#: src/Navigation.tsx:288
+#: src/Navigation.tsx:295
 msgid "Post by @{0}"
 msgstr "Post le @{0}"
 
@@ -7814,7 +7886,7 @@ msgstr "Chaidh am post a chur am falach leat fhèin"
 msgid "Post interaction settings"
 msgstr "Roghainnean eadar-ghabhail a’ phuist"
 
-#: src/Navigation.tsx:207
+#: src/Navigation.tsx:208
 #: src/screens/ModerationInteractionSettings/index.tsx:35
 msgid "Post Interaction Settings"
 msgstr "Roghainnean eadar-ghabhail a’ phuist"
@@ -7876,7 +7948,7 @@ msgstr "Rabhadh o cheangal a dh’fhaodadh a bhith meallta"
 msgid "Preferred language"
 msgstr "An cànan as fheàrr leat"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:350
 msgid "Prepare linking"
 msgstr ""
 
@@ -7918,8 +7990,8 @@ msgstr "Prìobhaideachd"
 msgid "Privacy and security"
 msgstr "Prìobhaideachd ⁊ tèarainteachd"
 
-#: src/Navigation.tsx:431
-#: src/Navigation.tsx:439
+#: src/Navigation.tsx:432
+#: src/Navigation.tsx:440
 #: src/screens/Settings/ActivityPrivacySettings.tsx:41
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:45
 msgid "Privacy and Security"
@@ -7932,7 +8004,7 @@ msgstr "Roghainnean na prìobhaideachd is na tèarainteachd"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:36
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:103
-#: src/Navigation.tsx:340
+#: src/Navigation.tsx:341
 #: src/screens/Settings/AboutSettings.tsx:91
 #: src/screens/Settings/AboutSettings.tsx:94
 #: src/view/screens/PrivacyPolicy.tsx:35
@@ -8042,7 +8114,7 @@ msgstr "Chaidh an còd QR a luchdadh a-nuas!"
 msgid "QR code saved to your camera roll!"
 msgstr "Chaidh an còd QR a shàbhaladh ann an albam a’ chamara agad!"
 
-#: src/Navigation.tsx:476
+#: src/Navigation.tsx:477
 msgid "Quote notifications"
 msgstr "Brathan mu luaidh"
 
@@ -8292,20 +8364,20 @@ msgstr "A bheil thu airson a thoirt air falbh o na h-inbhirean agad?"
 msgid "Remove image"
 msgstr "Thoir an dealbh air falbh"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:150
 msgid "Remove Link"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:69
 msgid "Remove link to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:41
 msgid "Remove Link to VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:557
-#: src/screens/Login/LoginForm.tsx:565
+#: src/screens/Login/LoginForm.tsx:559
+#: src/screens/Login/LoginForm.tsx:567
 msgid "Remove linked VerusID"
 msgstr ""
 
@@ -8476,7 +8548,7 @@ msgstr "Chaidh an fhreagairt a chur am falach le ùghdar an t-snàithlein"
 msgid "Reply Hidden by You"
 msgstr "Chaidh an fhreagairt a chur am falach leat-sa"
 
-#: src/Navigation.tsx:460
+#: src/Navigation.tsx:461
 msgid "Reply notifications"
 msgstr "Brathan mu fhreagairtean"
 
@@ -8598,7 +8670,7 @@ msgstr "Ath-phostaich"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Ath-phostaich ({0, plural, one {air ath-phostadh # turas} two {air ath-phostadh # thuras} few {air ath-phostadh # turais} other {air ath-phostadh # turas}})"
 
-#: src/Navigation.tsx:492
+#: src/Navigation.tsx:493
 msgid "Repost notifications"
 msgstr "Brathan mu ath-phostadh"
 
@@ -8639,7 +8711,7 @@ msgstr "Ath-phostaidh a’ phuist seo"
 msgid "Reposts of your reposts"
 msgstr "Ath-phostadh de rud a dh’ath-phostaich thusa"
 
-#: src/Navigation.tsx:516
+#: src/Navigation.tsx:517
 msgid "Reposts of your reposts notifications"
 msgstr "Brathan mu ath-phostadh de rud a dh’ath-phostaich thusa"
 
@@ -8717,7 +8789,7 @@ msgstr "Ath-shuidhich am facal-faire"
 msgid "Resync contacts"
 msgstr "Ath-shioncronaich an luchd-aithne"
 
-#: src/screens/Login/LoginForm.tsx:641
+#: src/screens/Login/LoginForm.tsx:643
 msgid "Retries signing in"
 msgstr "Feuchaidh seo ri clàradh a-steach a-rithist"
 
@@ -8737,8 +8809,8 @@ msgstr "Feuchaidh seo ris a’ ghnìomh mu dheireadh a-rithist is e air fàillig
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:56
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:59
 #: src/components/StarterPack/ProfileStarterPacks.tsx:377
-#: src/screens/Login/LoginForm.tsx:640
-#: src/screens/Login/LoginForm.tsx:646
+#: src/screens/Login/LoginForm.tsx:642
+#: src/screens/Login/LoginForm.tsx:648
 #: src/screens/Messages/ChatList.tsx:297
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:220
@@ -8843,11 +8915,11 @@ msgstr "A bheil thu airson an dreachd a shàbhaladh?"
 msgid "Save image"
 msgstr "Sàbhail an dealbh"
 
-#: src/screens/Login/LoginForm.tsx:544
+#: src/screens/Login/LoginForm.tsx:546
 msgid "Save Login with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:552
+#: src/screens/Login/LoginForm.tsx:554
 msgid "Save my sign in with VerusID"
 msgstr ""
 
@@ -8859,7 +8931,7 @@ msgstr "Sàbhail an làmhrachan ùr"
 msgid "Save QR code"
 msgstr "Sàbhail an còd QR"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:140
 msgid "Save sign in with VerusID"
 msgstr ""
 
@@ -8890,7 +8962,7 @@ msgid "Saved Feeds"
 msgstr "Inbhirean a shàbhail thu"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:144
-#: src/Navigation.tsx:640
+#: src/Navigation.tsx:641
 #: src/screens/Bookmarks/index.tsx:62
 msgid "Saved Posts"
 msgstr "Puist a shàbhail thu"
@@ -8911,12 +8983,16 @@ msgstr "Can halò!"
 msgid "Scam"
 msgstr "Cleas-meallaidh"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:151
 msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:577
+#: src/screens/Login/LoginForm.tsx:579
 msgid "Scan the QR code below or press Sign in to continue"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:70
+msgid "Scan the QR code with your Verus wallet to send the donation."
 msgstr ""
 
 #: src/lib/interests.ts:71
@@ -8946,7 +9022,7 @@ msgstr "Lorg"
 
 #. placeholder {0}: profile.handle
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:266
+#: src/Navigation.tsx:267
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr "Dèan lorg sna puist aig {0}"
@@ -9152,6 +9228,14 @@ msgstr ""
 msgid "Select content languages"
 msgstr "Tagh cànain na susbainte"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:62
+msgid "Select donation"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:201
+msgid "Select donation amount"
+msgstr ""
+
 #: src/features/liveNow/components/GoLiveDialog.tsx:180
 msgid "Select duration"
 msgstr "Tagh dè cho fada"
@@ -9270,6 +9354,10 @@ msgstr "Cuir làrach-lìn shnasail!"
 msgid "Send code"
 msgstr "Cuir an còd"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:68
+msgid "Send donation"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:175
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:182
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:303
@@ -9361,7 +9449,7 @@ msgstr "Suidhich latha do bhreith gu h-ìosal agus chan fhada gus am bi cead aga
 msgid "Sets email for password reset"
 msgstr "Suidhichidh seo am post-d airson ath-shuidheachadh an fhacail-fhaire"
 
-#: src/Navigation.tsx:222
+#: src/Navigation.tsx:223
 #: src/screens/Settings/Settings.tsx:101
 #: src/view/shell/desktop/LeftNav.tsx:806
 #: src/view/shell/Drawer.tsx:597
@@ -9506,7 +9594,7 @@ msgstr "Co-roinn an luchd-aithne agad leinn is faigh lorg air do charaidean"
 msgid "Share your favorite feed!"
 msgstr "Co-roinn an t-inbhir as fheàrr leat!"
 
-#: src/Navigation.tsx:325
+#: src/Navigation.tsx:326
 msgid "Shared Preferences Tester"
 msgstr "Deuchainn nan co-roghainnean"
 
@@ -9643,8 +9731,8 @@ msgstr "Seallaidh seo an t-susbaint"
 #: src/screens/Hashtag.tsx:241
 #: src/screens/Login/index.tsx:140
 #: src/screens/Login/index.tsx:161
-#: src/screens/Login/LoginForm.tsx:438
-#: src/screens/Login/LoginForm.tsx:693
+#: src/screens/Login/LoginForm.tsx:440
+#: src/screens/Login/LoginForm.tsx:694
 #: src/screens/Search/SearchResults.tsx:316
 #: src/view/com/auth/SplashScreen.tsx:118
 #: src/view/com/auth/SplashScreen.tsx:124
@@ -9690,11 +9778,11 @@ msgstr ""
 msgid "Sign in to view post"
 msgstr "Clàraich a-steach airson am post seo fhaicinn"
 
-#: src/screens/Login/LoginForm.tsx:677
+#: src/screens/Login/LoginForm.tsx:678
 msgid "Sign in with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:675
+#: src/screens/Login/LoginForm.tsx:676
 msgid "Sign in without VerusID"
 msgstr ""
 
@@ -9719,7 +9807,7 @@ msgstr "Clàraich a-mach"
 msgid "Sign out?"
 msgstr "A bheil thu airson clàradh a-mach?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:118
 msgid "Sign the linking details"
 msgstr ""
 
@@ -9728,8 +9816,8 @@ msgstr ""
 msgid "Sign-in Required"
 msgstr "Feumaidh tu clàradh a-steach"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:328
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
 msgid "Signature"
 msgstr ""
 
@@ -9911,8 +9999,8 @@ msgstr "Tòisich air daoine a chur ris!"
 msgid "Start chat with {displayName}"
 msgstr "Tòisich air cabadaich le {displayName}"
 
-#: src/Navigation.tsx:611
-#: src/Navigation.tsx:616
+#: src/Navigation.tsx:612
+#: src/Navigation.tsx:617
 #: src/screens/StarterPack/Wizard/index.tsx:208
 msgid "Starter Pack"
 msgstr "Pacaid tòiseachaidh"
@@ -9974,7 +10062,7 @@ msgstr "Chaidh an stòras fhalamhachadh, feumaidh tu an aplacaid ath-thòiseacha
 msgid "Stored as part of a secure code for matching with others"
 msgstr "Ga chumail mar phàirt de chòd tèarainte airson maidseadh le daoine eile a dhèanamh"
 
-#: src/Navigation.tsx:315
+#: src/Navigation.tsx:316
 #: src/screens/Settings/Settings.tsx:467
 msgid "Storybook"
 msgstr "Leabhar-sgeulachd"
@@ -10008,8 +10096,8 @@ msgstr "Cuir an t-ath-thagradh"
 msgid "Submit report"
 msgstr "Cuir an aithris thugainn"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:364
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:370
 msgid "Submit Signature and Create Post"
 msgstr ""
 
@@ -10077,7 +10165,7 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr "Laighe na grèine"
 
-#: src/Navigation.tsx:335
+#: src/Navigation.tsx:336
 #: src/view/screens/Support.tsx:35
 #: src/view/screens/Support.tsx:38
 msgid "Support"
@@ -10087,7 +10175,7 @@ msgstr "Taic"
 msgid "Support for this feature in your country has not been enabled yet! Please check back later."
 msgstr "Chan eil taic ris a’ ghleus seo nad dhùthaich aig an ìre-sa! Thoir sùil a-rithist uaireigin eile."
 
-#: src/screens/Login/LoginForm.tsx:662
+#: src/screens/Login/LoginForm.tsx:664
 msgid "Switch"
 msgstr ""
 
@@ -10109,7 +10197,7 @@ msgstr "Leum eadar cunntasan"
 msgid "Switch to {0}"
 msgstr "Geàrr leum gu {0}"
 
-#: src/screens/Login/LoginForm.tsx:663
+#: src/screens/Login/LoginForm.tsx:665
 msgid "Switches login method"
 msgstr ""
 
@@ -10206,7 +10294,7 @@ msgstr "Na teirmichean"
 #: src/components/dialogs/BirthDateSettings.tsx:181
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:31
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:98
-#: src/Navigation.tsx:345
+#: src/Navigation.tsx:346
 #: src/screens/Settings/AboutSettings.tsx:83
 #: src/screens/Settings/AboutSettings.tsx:86
 #: src/view/screens/TermsOfService.tsx:35
@@ -10263,8 +10351,8 @@ msgstr "Sin agaibh e, a chàirdean!"
 msgid "That's everything!"
 msgstr "Sin e!"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:225
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:462
 #: src/view/com/profile/ProfileMenu.tsx:553
 msgid "The account will be able to interact with you after unblocking."
 msgstr "’S urrainn dhan chunntas seo eadar-ghabhail a dhèanamh leat a-rithist an dèidh dhut a dhì-bhacadh."
@@ -10332,7 +10420,7 @@ msgid "The laws in your region require you to verify you're an adult to access c
 msgstr "Tha na laghan far a bheil thu a’ sparradh oirnn dearbhadh gur e inbheach a th’ annad mus fhaigh thu cothrom air gleusan àraidh. Thoir gnogag airson barrachd fiosrachaidh."
 
 #. placeholder {0}: linkedVerusID ? linkedVerusID.identity : ''
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:79
 msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
@@ -10381,12 +10469,12 @@ msgid "The verification provider was unable to send a code to your phone number.
 msgstr "Cha b’ urrainn dhan t-solaraiche dearbhaidh còd a chur chun na h-àireimh fòn agad. Dèan cinnteach gu bheil an àireamh ceart is feuch ris a-rithist."
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:113
 msgid "The VerusID currently linked to this account is {0}."
 msgstr ""
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:72
 msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
 msgstr ""
 
@@ -10394,7 +10482,7 @@ msgstr ""
 msgid "Theme"
 msgstr "An t-ùrlar"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:74
 msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
@@ -10469,10 +10557,10 @@ msgstr "Cha b’ urrainn dhuinn na h-inbhirean agad ùrachadh, thoir sùil air a
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:486
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:117
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:130
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:97
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:98
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:299
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:326
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:342
 #: src/view/com/profile/ProfileMenu.tsx:152
 #: src/view/com/profile/ProfileMenu.tsx:164
 #: src/view/com/profile/ProfileMenu.tsx:180
@@ -10537,7 +10625,7 @@ msgstr "Tha an cunntas seo a’ sparradh air daoine clàradh a-steach mus fhaice
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "Chaidh an cunntas seo a bhacadh le co-dhiù aon liosta modarataireachd agad. Airson a dhì-bhacadh, tadhail air na liostaichean iad fhèin is thoir air falbh an cleachdaiche."
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:53
 msgid "This account is linked to VerusID, a decentralized identity system."
 msgstr ""
 
@@ -10794,7 +10882,7 @@ msgstr "Chan eil an cleachdaiche seo a’ leantainn duine sam bith."
 msgid "This will create a new list with the same name, description, and members as this starter pack."
 msgstr "Cruthaichidh seo liosta ùr air am bi an aon ainm, tuairisgeul agus buill ’s a tha aig a’ phacaid-thòiseachaidh seo."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:274
 msgid "This will create a post linking your VerusID to this account."
 msgstr ""
 
@@ -10835,7 +10923,7 @@ msgstr "Roghainnean an t-snàithlein"
 msgid "Threaded"
 msgstr "Mar shnàithlean"
 
-#: src/Navigation.tsx:378
+#: src/Navigation.tsx:379
 msgid "Threads Preferences"
 msgstr "Roghainnean nan snàithleanan"
 
@@ -10903,7 +10991,7 @@ msgstr "Brod nan toradh"
 msgid "Top replies first"
 msgstr "Brod nam freagairtean an toiseach"
 
-#: src/Navigation.tsx:576
+#: src/Navigation.tsx:577
 msgid "Topic"
 msgstr "Cuspair"
 
@@ -10998,8 +11086,8 @@ msgstr ""
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "Cha ghabh ceangal a dhèanamh. Thoir sùil air a’ cheangal ris an eadar-lìon agad is feuch ris a-rithist."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:182
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:325
 msgid "Unable to contact the service. Please check your Internet connection."
 msgstr ""
 
@@ -11020,11 +11108,11 @@ msgstr "Chan urrainn dhut conaltradh a dhèanamh leis an t-seirbheis agad. Thoir
 msgid "Unable to delete"
 msgstr "Cha ghabh a sguabadh às"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:210
 msgid "Unable to get the signing service identity address"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:138
 msgid "Unable to link account with no handle."
 msgstr ""
 
@@ -11036,11 +11124,11 @@ msgstr "Chan fhaigh sinn lorg air an làmhrachan seo"
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:163
 msgid "Unable to verify signature."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:425
+#: src/screens/Login/LoginForm.tsx:426
 msgid "Unable to verify the signer of the login."
 msgstr ""
 
@@ -11064,16 +11152,16 @@ msgstr "Chan eil fiosrachadh mun inbhir ri fhaighinn"
 #: src/components/dms/MessagesListBlockedFooter.tsx:105
 #: src/components/dms/MessagesListBlockedFooter.tsx:113
 #: src/components/dms/MessagesListBlockedFooter.tsx:120
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:380
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:442
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:385
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:467
 #: src/screens/ProfileList/components/Header.tsx:166
 #: src/screens/ProfileList/components/Header.tsx:173
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Unblock"
 msgstr "Dì-bhac"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:384
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
 msgctxt "action"
 msgid "Unblock"
 msgstr "Dì-bhac"
@@ -11085,8 +11173,8 @@ msgstr "Dì-bhac"
 msgid "Unblock account"
 msgstr "Dì-bhac an cunntas"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:221
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:435
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:460
 #: src/view/com/profile/ProfileMenu.tsx:547
 msgid "Unblock Account?"
 msgstr "A bheil thu airson an cunntas a dhì-bhacadh?"
@@ -11124,7 +11212,7 @@ msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Neo-dhèan an t-ath-phostadh ({0, plural, one {air ath-phostadh # turas} two {air ath-phostadh # thuras} few {air ath-phostadh # turais} other {air ath-phostadh # turas}})"
 
 #. placeholder {0}: profile.handle
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:436
 msgid "Unfollow {0}"
 msgstr "Na lean ri {0} tuilleadh"
 
@@ -11290,12 +11378,12 @@ msgstr "Ùraich"
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "Ùraich <0>{displayName}</0> sna liostaichean"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:155
 msgid "Update confirmed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:418
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:424
 msgid "Update credentials"
 msgstr ""
 
@@ -11306,11 +11394,11 @@ msgstr ""
 msgid "Update email"
 msgstr "Ùraich am post-d"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
 msgid "Update linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:143
 msgid "Update the sign in credentials stored in your VerusID."
 msgstr ""
 
@@ -11331,7 +11419,7 @@ msgstr ""
 msgid "Update VerusID Link"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
 msgid "Update VerusID sign in"
 msgstr ""
 
@@ -11340,7 +11428,7 @@ msgstr ""
 msgid "Update VerusID Sign in"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:99
 msgid "Update VerusID Sign in Credentials"
 msgstr ""
 
@@ -11509,7 +11597,7 @@ msgstr "Chan fhaod ainm-cleachdaiche tòiseachadh no a’ crìochnachadh le tàt
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr "Chan fhaod ach litrichean (a-z), àireamhan is tàthanan a bhith ann an ainm-cleachdaiche"
 
-#: src/screens/Login/LoginForm.tsx:466
+#: src/screens/Login/LoginForm.tsx:468
 msgid "Username or email address"
 msgstr "Ainm-chleachdaiche no seòladh puist-d"
 
@@ -11540,7 +11628,7 @@ msgstr "Dh’fhàillig an dearbhadh, feuch ris a-rithist."
 msgid "Verification settings"
 msgstr "Roghainnean dearbhaidh"
 
-#: src/Navigation.tsx:215
+#: src/Navigation.tsx:216
 #: src/screens/Moderation/VerificationSettings.tsx:34
 msgid "Verification Settings"
 msgstr "Roghainnean dearbhaidh"
@@ -11638,7 +11726,7 @@ msgstr "Ga dhearbhadh…"
 msgid "Version {0}"
 msgstr "Tionndadh {0}"
 
-#: src/Navigation.tsx:416
+#: src/Navigation.tsx:417
 #: src/screens/Settings/Settings.tsx:184
 #: src/screens/Settings/Settings.tsx:187
 #: src/screens/Settings/VerusServicesSettings.tsx:56
@@ -11654,20 +11742,20 @@ msgstr ""
 msgid "Verus Services Endpoint Status"
 msgstr ""
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:44
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:50
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:126
 msgid "VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:296
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:358
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
 msgid "VerusID Name"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:573
+#: src/screens/Login/LoginForm.tsx:575
 msgid "VerusID Sign in"
 msgstr ""
 
@@ -11688,7 +11776,7 @@ msgstr "Video"
 msgid "Video failed to process"
 msgstr "Cha b’ urrainn dhuinn a’ video a phròiseasadh"
 
-#: src/Navigation.tsx:632
+#: src/Navigation.tsx:633
 msgid "Video Feed"
 msgstr "Inbhir video"
 
@@ -11901,6 +11989,10 @@ msgstr "Tadhail air roghainnean nam brathan agad"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/web-controls/VolumeControl.tsx:80
 msgid "Volume"
 msgstr "Àirde na fuaime"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:252
+msgid "VRSC"
+msgstr ""
 
 #: src/components/moderation/LabelPreference.tsx:142
 #: src/lib/moderation/useLabelBehaviorDescription.ts:20
@@ -12362,7 +12454,7 @@ msgstr "Tha e an urra riut fhèin an dèan brathan cabadaich fuaim ann an roghai
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "’S urrainn dhut còmhradh beò a leigeil seachad, ge be dè an roghainn a thaghas tu."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:285
 msgid "You can do this later in Settings → Verus Services."
 msgstr ""
 
@@ -12839,7 +12931,7 @@ msgstr "Tha inbhir nan daoine a tha thu gan leantainn falamh! Lean barrachd dhao
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "’S e <0>@{0}</0> an làmhrachan slàn a bhios agad"
 
-#: src/Navigation.tsx:548
+#: src/Navigation.tsx:549
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:68
 #: src/screens/Settings/ContentAndMediaSettings.tsx:94
 #: src/screens/Settings/ContentAndMediaSettings.tsx:97
@@ -12918,10 +13010,10 @@ msgstr "Ma leigeis tu ris dè na rudan sa bheil ùidh agad, bidh e nas fhasa sus
 msgid "Your verifications"
 msgstr "An dearbhadh a rinn thusa"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:124
 msgid "Your VerusID {name} has been successfully linked to this account."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:157
 msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
 msgstr ""

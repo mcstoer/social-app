@@ -1,6 +1,7 @@
 import {View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 
 import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {atoms as a, useBreakpoints, useTheme} from '#/alf'

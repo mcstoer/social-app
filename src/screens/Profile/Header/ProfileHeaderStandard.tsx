@@ -29,6 +29,7 @@ import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {DebugFieldDisplay} from '#/components/DebugFieldDisplay'
 import {useDialogControl} from '#/components/Dialog'
 import {MessageProfileButton} from '#/components/dms/MessageProfileButton'
+import {VerusIDDonationDialog} from '#/components/donations/VerusIDDonationDialog'
 import {PlusLarge_Stroke2_Corner0_Rounded as Plus} from '#/components/icons/Plus'
 import {
   KnownFollowers,
@@ -131,6 +132,7 @@ let ProfileHeaderStandard = ({
             pointerEvents={IS_IOS ? 'auto' : 'box-none'}>
             <HeaderStandardButtons
               profile={profile}
+              linkedVerusID={linkedVerusID}
               moderation={moderation}
               moderationOpts={moderationOpts}
               onFollow={() => setShowSuggestedFollows(true)}
@@ -246,6 +248,7 @@ export {ProfileHeaderStandard}
 
 export function HeaderStandardButtons({
   profile,
+  linkedVerusID,
   moderation,
   moderationOpts,
   onFollow,
@@ -253,6 +256,7 @@ export function HeaderStandardButtons({
   minimal,
 }: {
   profile: Shadow<AppBskyActorDefs.ProfileViewDetailed>
+  linkedVerusID?: VerusIdLink | undefined | null
   moderation: ModerationDecision
   moderationOpts: ModerationOpts
   onFollow?: () => void
@@ -269,6 +273,7 @@ export function HeaderStandardButtons({
   )
   const [, queueUnblock] = useProfileBlockMutationQueue(profile)
   const editProfileControl = useDialogControl()
+  const donationDialogControl = useDialogControl()
   const unblockPromptControl = Prompt.usePromptControl()
 
   const isMe = currentAccount?.did === profile.did
@@ -398,7 +403,27 @@ export function HeaderStandardButtons({
               )}
 
               <MessageProfileButton profile={profile} />
+
+              {linkedVerusID && (
+                <Button
+                  testID="donateBtn"
+                  size="small"
+                  color="secondary"
+                  label={_(msg`Donate`)}
+                  onPress={() => donationDialogControl.open()}>
+                  <ButtonText>
+                    <Trans>Donate</Trans>
+                  </ButtonText>
+                </Button>
+              )}
             </>
+          )}
+
+          {linkedVerusID && (
+            <VerusIDDonationDialog
+              control={donationDialogControl}
+              identity={linkedVerusID.identity}
+            />
           )}
 
           {(!minimal || !profile.viewer?.following) && (

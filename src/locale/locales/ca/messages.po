@@ -631,13 +631,25 @@ msgstr "<0>Tu</0> i<1> </1><2>{0} </2>esteu inclosos al teu starter pack"
 msgid "⚠Invalid Handle"
 msgstr "⚠Identificador invàlid"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:213
+msgid "$1 USD (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:223
+msgid "€1 EUR (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:270
+msgid "1"
+msgstr ""
+
 #: src/components/dialogs/MutedWords.tsx:202
 #: src/components/dialogs/MutedWords.tsx:551
 #: src/components/dialogs/MutedWords.tsx:554
 msgid "24 hours"
 msgstr "24 hores"
 
-#: src/screens/Login/LoginForm.tsx:589
+#: src/screens/Login/LoginForm.tsx:591
 msgid "2FA Confirmation"
 msgstr "Confirmació 2FA"
 
@@ -698,7 +710,7 @@ msgstr "Una captura de pantalla d'una pàgina de perfil amb una icona de campana
 msgid "A screenshot of the post composer with a new button next to the post button that says \"Drafts\", with a rainbow firework effect. Below, the text in the composer reads \"Hey, did you hear the news? Bluesky has drafts now!!!\"."
 msgstr "Una captura de pantalla del compositor de publicacions amb un botó nou al costat que diu \"Esborranys\", amb un efecte de focs artificials de l'arc de Sant Martí. A sota, el text del compositor diu \"Ei, estàs al cas de les novetats? Bluesky ja té esborranys!!!\"."
 
-#: src/Navigation.tsx:556
+#: src/Navigation.tsx:557
 #: src/screens/Settings/AboutSettings.tsx:74
 #: src/screens/Settings/Settings.tsx:266
 #: src/screens/Settings/Settings.tsx:269
@@ -733,12 +745,12 @@ msgstr "Accepta aquest suggeriment d'idioma"
 msgid "Accessibility"
 msgstr "Accessibilitat"
 
-#: src/Navigation.tsx:392
+#: src/Navigation.tsx:393
 msgid "Accessibility Settings"
 msgstr "Configuració d'accessibilitat"
 
-#: src/Navigation.tsx:408
-#: src/screens/Login/LoginForm.tsx:458
+#: src/Navigation.tsx:409
+#: src/screens/Login/LoginForm.tsx:460
 #: src/screens/Settings/AccountSettings.tsx:56
 #: src/screens/Settings/Settings.tsx:176
 #: src/screens/Settings/Settings.tsx:179
@@ -786,7 +798,7 @@ msgstr "Opcions del compte"
 
 #: src/components/dialogs/ServerInput.tsx:138
 #: src/screens/Login/ForgotPasswordForm.tsx:85
-#: src/screens/Login/LoginForm.tsx:441
+#: src/screens/Login/LoginForm.tsx:443
 msgid "Account provider"
 msgstr "Proveïdor de comptes"
 
@@ -794,8 +806,8 @@ msgstr "Proveïdor de comptes"
 msgid "Account removed from quick access"
 msgstr "Compte eliminat de l'accés ràpid"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:92
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:332
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:93
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
 #: src/view/com/profile/ProfileMenu.tsx:176
 msgctxt "toast"
 msgid "Account unblocked"
@@ -822,7 +834,7 @@ msgstr "Els comptes amb una marca de verificació blava<0><1/></0>poden verifica
 msgid "Activity from others"
 msgstr "Activitat d'altres persones"
 
-#: src/Navigation.tsx:524
+#: src/Navigation.tsx:525
 msgid "Activity notifications"
 msgstr "Notificacions d'activitat"
 
@@ -992,7 +1004,7 @@ msgstr "Afegeix usuaris a la llista"
 msgid "Add your birthdate"
 msgstr "Afegeix la teva data de naixement"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:144
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:145
 msgid "Add your sign in credentials to your VerusID for seamless logins."
 msgstr ""
 
@@ -1072,13 +1084,13 @@ msgstr "S'ha enviat la sol·licitud de garantia d'edat"
 msgid "Age assurance only takes a few minutes"
 msgstr "La garantia d'edat només triga uns minuts"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:301
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:363
 msgid "Alice@"
 msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:224
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:378
 msgid "alice@example.com"
 msgstr "josepmaria@exemple.cat"
 
@@ -1208,6 +1220,11 @@ msgstr "El text alternatiu descriu les imatges per a les persones cegues o amb p
 #: src/view/com/composer/photos/ImageAltTextDialog.tsx:149
 msgid "Alt text will be truncated. {MAX_ALT_TEXT, plural, other {Limit: {0} characters.}}"
 msgstr "El text alternatiu sortirà retallat. {MAX_ALT_TEXT, plural, one {}other {Límit: {0} caràcters.}}"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:265
+#: src/components/donations/VerusIDDonationDialog.tsx:269
+msgid "Amount"
+msgstr ""
 
 #. placeholder {0}: currentAccount?.email || '(no email)'
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:94
@@ -1373,7 +1390,7 @@ msgstr "Qualsevol pot interactuar"
 msgid "Anyone who follows me"
 msgstr "Qualsevol que em segueixi"
 
-#: src/Navigation.tsx:564
+#: src/Navigation.tsx:565
 #: src/screens/Settings/AppIconSettings/index.tsx:65
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:19
 #: src/screens/Settings/AppIconSettings/SettingsListItem.tsx:24
@@ -1411,7 +1428,7 @@ msgstr "Els noms de contrasenyes d'aplicació han de tenir almenys 4 caràcters"
 msgid "App passwords"
 msgstr "Contrasenyes de l'aplicació"
 
-#: src/Navigation.tsx:360
+#: src/Navigation.tsx:361
 #: src/screens/Settings/AppPasswords.tsx:51
 msgid "App Passwords"
 msgstr "Contrasenyes de l'aplicació"
@@ -1453,7 +1470,7 @@ msgstr "Apel·la la suspensió"
 msgid "Appeal this decision"
 msgstr "Apel·la aquesta decisió"
 
-#: src/Navigation.tsx:400
+#: src/Navigation.tsx:401
 #: src/screens/Settings/AppearanceSettings.tsx:73
 #: src/screens/Settings/Settings.tsx:234
 #: src/screens/Settings/Settings.tsx:237
@@ -1539,7 +1556,7 @@ msgstr "Nuesa artística o no eròtica."
 msgid "Assign topic for algo"
 msgstr "Assigna un tema per a l'algoritme"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:394
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:212
 msgid "At least 8 characters"
 msgstr "Almenys 8 caràcters"
@@ -1567,7 +1584,7 @@ msgstr ""
 msgid "Automation label"
 msgstr ""
 
-#: src/Navigation.tsx:423
+#: src/Navigation.tsx:424
 #: src/screens/Settings/AutomationLabelSettings.tsx:103
 msgid "Automation Label"
 msgstr ""
@@ -1582,20 +1599,22 @@ msgstr "Reprodueix automàticament vídeos i GIFs"
 msgid "Available"
 msgstr "Disponible"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:148
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:149
 msgid "Awaiting confirmation"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:374
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:383
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:375
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:384
+#: src/components/donations/VerusIDDonationDialog.tsx:317
+#: src/components/donations/VerusIDDonationDialog.tsx:322
 #: src/components/moderation/LabelsOnMeDialog.tsx:334
 #: src/components/moderation/LabelsOnMeDialog.tsx:335
 #: src/screens/Login/ChooseAccountForm.tsx:98
 #: src/screens/Login/ChooseAccountForm.tsx:102
 #: src/screens/Login/ForgotPasswordForm.tsx:127
 #: src/screens/Login/ForgotPasswordForm.tsx:132
-#: src/screens/Login/LoginForm.tsx:628
-#: src/screens/Login/LoginForm.tsx:633
+#: src/screens/Login/LoginForm.tsx:630
+#: src/screens/Login/LoginForm.tsx:635
 #: src/screens/Login/SetNewPasswordForm.tsx:172
 #: src/screens/Login/SetNewPasswordForm.tsx:178
 #: src/screens/Messages/components/ChatDisabled.tsx:148
@@ -1678,7 +1697,7 @@ msgid "Birthday"
 msgstr "Aniversari"
 
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:865
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Block"
 msgstr "Bloqueja"
@@ -1741,7 +1760,7 @@ msgstr "Bloquejada"
 msgid "Blocked accounts"
 msgstr "Comptes bloquejats"
 
-#: src/Navigation.tsx:201
+#: src/Navigation.tsx:202
 #: src/view/screens/ModerationBlockedAccounts.tsx:104
 msgid "Blocked Accounts"
 msgstr "Comptes bloquejats"
@@ -1971,8 +1990,8 @@ msgstr "Càmera"
 #: src/components/dialogs/lists/CreateListFromStarterPackDialog.tsx:200
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:291
 #: src/components/dialogs/lists/CreateOrEditListDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:429
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:435
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:430
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:436
 #: src/components/Menu/index.tsx:355
 #: src/components/PostControls/RepostButton.tsx:210
 #: src/components/Prompt.tsx:136
@@ -2107,7 +2126,7 @@ msgid "Changes to the starter pack will not be reflected in the list after creat
 msgstr "Els canvis a l'Starter Pack no es reflectiran a la llista després de la seva creació. La llista serà una còpia independent."
 
 #: src/lib/hooks/useNotificationHandler.ts:102
-#: src/Navigation.tsx:581
+#: src/Navigation.tsx:582
 #: src/view/shell/bottom-bar/BottomBar.tsx:224
 #: src/view/shell/desktop/LeftNav.tsx:611
 #: src/view/shell/Drawer.tsx:454
@@ -2133,7 +2152,7 @@ msgctxt "toast"
 msgid "Chat muted"
 msgstr "Xat silenciat"
 
-#: src/Navigation.tsx:591
+#: src/Navigation.tsx:592
 #: src/screens/Messages/components/InboxPreview.tsx:23
 msgid "Chat request inbox"
 msgstr "Safata de sol·licituds de xat"
@@ -2145,7 +2164,7 @@ msgid "Chat requests"
 msgstr "Sol·licituds de xat"
 
 #: src/components/dms/ConvoMenu.tsx:84
-#: src/Navigation.tsx:586
+#: src/Navigation.tsx:587
 #: src/screens/Messages/ChatList.tsx:82
 #: src/screens/Messages/ChatList.tsx:86
 #: src/screens/Messages/ChatList.tsx:385
@@ -2176,9 +2195,13 @@ msgstr "Comprova <0>{currentEmail}</0> per a rebre un correu amb el codi de conf
 msgid "Check my status"
 msgstr "Comprova el meu estat"
 
-#: src/screens/Login/LoginForm.tsx:618
+#: src/screens/Login/LoginForm.tsx:620
 msgid "Check your email for a sign in code and enter it here."
 msgstr "Comprova el teu correu electrònic per a obtenir un codi d'inici de sessió i introdueix-lo aquí."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:294
+msgid "Checking..."
+msgstr ""
 
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:161
 msgid "Child safety"
@@ -2187,6 +2210,10 @@ msgstr "Seguretat infantil"
 #: src/components/moderation/ReportDialog/utils/useReportOptions.ts:165
 msgid "Child Sexual Abuse Material (CSAM)"
 msgstr "Material d'abús sexual infantil (CSAM)"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:64
+msgid "Choose a preset amount or enter a custom currency to donate."
+msgstr ""
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:401
 msgid "Choose domain verification method"
@@ -2320,14 +2347,14 @@ msgstr "Clop 🐴 clop 🐴"
 #: src/components/dialogs/nuxs/InitialVerificationAnnouncement.tsx:185
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:191
 #: src/components/dialogs/nuxs/LiveNowBetaDialog.tsx:199
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:155
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:161
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:156
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:162
 #: src/components/dialogs/SearchablePeopleList.tsx:296
 #: src/components/dialogs/StarterPackDialog.tsx:186
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:389
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:394
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:456
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:461
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:390
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:395
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:457
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:462
 #: src/components/dms/AfterReportDialog.tsx:93
 #: src/components/dms/AfterReportDialog.tsx:98
 #: src/components/dms/AfterReportDialog.tsx:212
@@ -2341,7 +2368,7 @@ msgstr "Clop 🐴 clop 🐴"
 #: src/components/StarterPack/Wizard/WizardEditListDialog.tsx:128
 #: src/components/verification/VerificationsDialog.tsx:146
 #: src/components/verification/VerifierDialog.tsx:146
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:86
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:87
 #: src/components/WhoCanReply.tsx:236
 #: src/components/WhoCanReply.tsx:243
 #: src/features/liveNow/components/EditLiveDialog.tsx:217
@@ -2374,7 +2401,7 @@ msgstr "Tanca el calaix inferior"
 #: src/components/dialogs/LanguageSelectDialog.tsx:354
 #: src/components/verification/VerificationsDialog.tsx:138
 #: src/components/verification/VerifierDialog.tsx:139
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:78
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:79
 msgid "Close dialog"
 msgstr "Tanca el diàleg"
 
@@ -2457,7 +2484,7 @@ msgid "Comics"
 msgstr "Còmics"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:46
-#: src/Navigation.tsx:350
+#: src/Navigation.tsx:351
 #: src/view/screens/CommunityGuidelines.tsx:38
 msgid "Community Guidelines"
 msgstr "Directrius de la comunitat"
@@ -2519,7 +2546,7 @@ msgid "Confirm your location"
 msgstr "Confirma la ubicació"
 
 #: src/components/dialogs/EmailDialog/components/TokenField.tsx:38
-#: src/screens/Login/LoginForm.tsx:595
+#: src/screens/Login/LoginForm.tsx:597
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:190
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:194
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:247
@@ -2533,7 +2560,7 @@ msgid "Connected"
 msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:140
-#: src/screens/Login/LoginForm.tsx:651
+#: src/screens/Login/LoginForm.tsx:653
 msgid "Connecting to service..."
 msgstr "Connectant amb el servei..."
 
@@ -2584,7 +2611,7 @@ msgstr "Contingut i multimèdia"
 msgid "Content and media"
 msgstr "Contingut i multimèdia"
 
-#: src/Navigation.tsx:540
+#: src/Navigation.tsx:541
 msgid "Content and Media"
 msgstr "Contingut i multimèdia"
 
@@ -2628,7 +2655,9 @@ msgstr "Advertències del contingut"
 msgid "Context menu backdrop, click to close the menu."
 msgstr "Teló de fons del menú contextual, fes clic per a tancar-lo."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:355
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:356
+#: src/components/donations/VerusIDDonationDialog.tsx:288
+#: src/components/donations/VerusIDDonationDialog.tsx:294
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:163
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:171
 #: src/screens/Onboarding/StepInterests/index.tsx:93
@@ -2777,7 +2806,7 @@ msgstr "Copia el text de la publicació"
 msgid "Copy QR code"
 msgstr "Copia el codi QR"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:267
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:268
 msgid "Copy the details below and sign them as a<0> message </0>with your VerusID {name}, then paste the signature."
 msgstr ""
 
@@ -2787,7 +2816,7 @@ msgstr "Copia el valor del registre TXT"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:41
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:108
-#: src/Navigation.tsx:355
+#: src/Navigation.tsx:356
 #: src/view/screens/CopyrightPolicy.tsx:35
 msgid "Copyright Policy"
 msgstr "Política de drets d'autor"
@@ -2883,7 +2912,7 @@ msgstr "Crea un codi QR per a un starter pack"
 
 #: src/components/StarterPack/ProfileStarterPacks.tsx:207
 #: src/components/StarterPack/ProfileStarterPacks.tsx:316
-#: src/Navigation.tsx:621
+#: src/Navigation.tsx:622
 msgid "Create a starter pack"
 msgstr "Crea un starter pack"
 
@@ -2985,10 +3014,23 @@ msgstr "S'ha bloquejat al creador"
 msgid "Culture"
 msgstr "Cultura"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:247
+#: src/components/donations/VerusIDDonationDialog.tsx:251
+msgid "Currency name"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:164
+msgid "Currency not found"
+msgstr ""
+
 #: src/components/dialogs/ServerInput.tsx:152
 #: src/components/dialogs/ServerInput.tsx:154
 msgid "Custom"
 msgstr "Personalitzat"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:235
+msgid "Custom currency and amount"
+msgstr ""
 
 #: src/components/dialogs/Embed.tsx:145
 msgid "Customization options"
@@ -3132,7 +3174,7 @@ msgstr "Elimina el meu compte"
 msgid "Delete post"
 msgstr "Elimina la publicació"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:142
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:143
 msgid "Delete Post and Remove Link"
 msgstr ""
 
@@ -3193,8 +3235,8 @@ msgstr "Desenganxa la citació"
 msgid "Detach quote post?"
 msgstr "Vols desenganxar la citació?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:313
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:317
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:314
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:318
 msgid "Details to Sign"
 msgstr ""
 
@@ -3402,6 +3444,24 @@ msgstr "No ho tornis a mostrar"
 msgid "Don't worry! All existing messages and settings are saved and will be available after you verify you're an adult."
 msgstr "No pateixis! Tots els missatges i la configuració existents es desen i estaran disponibles un cop s'hagi verificat que ets adult."
 
+#: src/components/donations/VerusIDDonationDialog.tsx:42
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:415
+msgid "Donate"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:218
+msgid "Donate 1 Euro (EURC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:208
+msgid "Donate 1 US Dollar (USDC)"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:230
+msgid "Donate a custom currency"
+msgstr ""
+
 #: src/components/contacts/components/InviteInfo.tsx:73
 #: src/components/contacts/components/InviteInfo.tsx:79
 #: src/components/contacts/screens/ViewMatches.tsx:395
@@ -3409,8 +3469,8 @@ msgstr "No pateixis! Tots els missatges i la configuració existents es desen i 
 #: src/components/dialogs/BirthDateSettings.tsx:195
 #: src/components/dialogs/BirthDateSettings.tsx:202
 #: src/components/dialogs/LanguageSelectDialog.tsx:327
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:168
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:174
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:169
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:175
 #: src/components/dialogs/ServerInput.tsx:237
 #: src/components/dialogs/ServerInput.tsx:239
 #: src/components/dms/AfterReportDialog.tsx:144
@@ -3577,7 +3637,7 @@ msgstr "Edita l'estat en directe"
 msgid "Edit moderation list"
 msgstr "Edita la llista de moderació"
 
-#: src/Navigation.tsx:365
+#: src/Navigation.tsx:366
 #: src/view/screens/Feeds.tsx:519
 msgid "Edit My Feeds"
 msgstr "Edita els meus canals"
@@ -3599,12 +3659,12 @@ msgstr "Edita les preferències de les interaccions a la publicació"
 #: src/screens/Profile/Header/EditProfileDialog.tsx:268
 #: src/screens/Profile/Header/EditProfileDialog.tsx:274
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:296
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:367
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:372
 msgid "Edit profile"
 msgstr "Edita el perfil"
 
 #: src/screens/Profile/Header/ProfileHeaderLabeler.tsx:299
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:369
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:374
 msgid "Edit Profile"
 msgstr "Edita el perfil"
 
@@ -3620,7 +3680,7 @@ msgstr "Edita la llista d'usuaris"
 msgid "Edit who can reply"
 msgstr "Edita qui pot respondre"
 
-#: src/Navigation.tsx:626
+#: src/Navigation.tsx:627
 msgid "Edit your starter pack"
 msgstr "Edita el teu starter pack"
 
@@ -3632,8 +3692,8 @@ msgstr "Ensenyament"
 msgid "Either the creator of this list has blocked you or you have blocked the creator."
 msgstr "El creador d'aquesta llista t'ha bloquejat o l'has bloquejat tu."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:372
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:376
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:373
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:377
 #: src/screens/Settings/AccountSettings.tsx:71
 #: src/screens/Signup/StepInfo/index.tsx:224
 msgid "Email"
@@ -3800,7 +3860,7 @@ msgstr "Introdueix el domini que vols utilitzar"
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr "Introdueix el correu que vas fer servir per a crear el teu compte. T'enviarem un \"codi de restabliment\" perquè puguis posar una nova contrasenya."
 
-#: src/screens/Login/LoginForm.tsx:486
+#: src/screens/Login/LoginForm.tsx:488
 msgid "Enter the username or email address you used when you created your account"
 msgstr "Entra el nom d'usuari o el correu que vas utilitzar per a crear el teu compte"
 
@@ -3813,7 +3873,7 @@ msgstr "Posa la teva data de naixement"
 msgid "Enter your email address"
 msgstr "Introdueix el teu correu"
 
-#: src/screens/Login/LoginForm.tsx:511
+#: src/screens/Login/LoginForm.tsx:513
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:298
 msgid "Enter your password"
 msgstr "Introdueix la teva contrasenya"
@@ -3951,7 +4011,7 @@ msgstr "Contingut explícit o potencialment pertorbador."
 msgid "Explicit sexual images."
 msgstr "Imatges sexuals explícites."
 
-#: src/Navigation.tsx:830
+#: src/Navigation.tsx:831
 #: src/screens/Search/Shell.tsx:354
 #: src/view/shell/desktop/LeftNav.tsx:691
 #: src/view/shell/Drawer.tsx:402
@@ -3987,7 +4047,7 @@ msgstr "Contingut extern"
 msgid "External media may allow websites to collect information about you and your device. No information is sent or requested until you press the \"play\" button."
 msgstr "El contingut extern pot permetre que algunes webs recullin informació sobre tu i el teu dispositiu. No s'envia ni es demana cap informació fins que premis el botó \"reproduir\"."
 
-#: src/Navigation.tsx:384
+#: src/Navigation.tsx:385
 #: src/screens/Settings/ExternalMediaPreferences.tsx:34
 msgid "External Media Preferences"
 msgstr "Preferència del contingut extern"
@@ -4014,7 +4074,7 @@ msgstr "No s'ha pogut afegir a l'starter pack"
 msgid "Failed to change handle. Please try again."
 msgstr "No s'ha pogut canviar l'identificador. Torna-ho a provar."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:243
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:244
 msgid "Failed to create a post for linking the VerusID. Please try again."
 msgstr ""
 
@@ -4062,12 +4122,16 @@ msgstr "No s'han pogut seguir tots els comptes suggerits. Torna-ho a provar"
 msgid "Failed to follow all your friends, please try again"
 msgstr "No has pogut seguir tots els teus amics. Torna-ho a provar"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:192
+msgid "Failed to generate invoice"
+msgstr ""
+
 #: src/components/contacts/screens/ViewMatches.tsx:236
 msgid "Failed to hide suggestion, please check your internet connection"
 msgstr "No s'ha pogut amagar el suggeriment. Comprova la connexió a Internet"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:294
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:309
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:295
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:310
 msgid "Failed to initiate credential update"
 msgstr ""
 
@@ -4139,7 +4203,7 @@ msgstr "No s'han pogut marcar totes les sol·licituds com a llegides"
 msgid "Failed to pin post"
 msgstr "No s'ha pogut fixar la publicació"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:149
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:150
 msgid "Failed to prepare linking details."
 msgstr ""
 
@@ -4166,13 +4230,17 @@ msgstr "No s'ha pogut eliminar la reacció d'emoji"
 msgid "Failed to remove from starter pack"
 msgstr "No s'ha pogut eliminar de l'starter pack"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:110
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:111
 msgid "Failed to remove the VerusID link, please try again"
 msgstr ""
 
 #: src/components/verification/VerificationRemovePrompt.tsx:34
 msgid "Failed to remove verification"
 msgstr "No s'ha pogut eliminar la verificació"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:178
+msgid "Failed to resolve identity"
+msgstr ""
 
 #: src/components/dialogs/DeviceLocationRequestDialog.tsx:81
 msgid "Failed to resolve location. Please try again."
@@ -4224,8 +4292,8 @@ msgstr "No s'ha pogut desactivar el silenci del fil; torneu-ho a provar"
 msgid "Failed to unpin list"
 msgstr "No s'ha pogut desfixar la llista"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:174
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:283
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:175
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:284
 msgid "Failed to update credentials"
 msgstr ""
 
@@ -4269,7 +4337,7 @@ msgstr "No s'ha pogut verificar el correu. Torna-ho a provar."
 msgid "Failed to verify handle. Please try again."
 msgstr "No s'ha pogut verificar l'identificador. Torna-ho a provar."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:187
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:188
 msgid "Failed to verify signature. Please try again."
 msgstr ""
 
@@ -4281,7 +4349,7 @@ msgstr "Compte fals o bot"
 msgid "False information about elections"
 msgstr "Informació falsa sobre les eleccions"
 
-#: src/Navigation.tsx:300
+#: src/Navigation.tsx:301
 msgid "Feed"
 msgstr "Canal"
 
@@ -4326,7 +4394,7 @@ msgctxt "toast"
 msgid "Feedback sent to feed operator"
 msgstr "Comentaris enviats a l'operador del canal"
 
-#: src/Navigation.tsx:606
+#: src/Navigation.tsx:607
 #: src/screens/SavedFeeds.tsx:120
 #: src/screens/SavedFeeds.tsx:318
 #: src/screens/Search/SearchResults.tsx:80
@@ -4405,8 +4473,8 @@ msgstr "Finances"
 msgid "Find accounts to follow"
 msgstr "Troba comptes per a seguir"
 
-#: src/Navigation.tsx:447
-#: src/Navigation.tsx:648
+#: src/Navigation.tsx:448
+#: src/Navigation.tsx:649
 msgid "Find Contacts"
 msgstr "Troba contactes"
 
@@ -4481,7 +4549,7 @@ msgstr "Entrada de codi"
 #: src/components/ProfileHoverCard/index.web.tsx:495
 #: src/components/ProfileHoverCard/index.web.tsx:506
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:157
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:424
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:449
 #: src/screens/VideoFeed/index.tsx:870
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
@@ -4490,7 +4558,7 @@ msgstr "Segueix"
 
 #. placeholder {0}: profile.handle
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:144
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:412
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
 msgid "Follow {0}"
 msgstr "Segueix {0}"
 
@@ -4534,7 +4602,7 @@ msgstr "Segueix tots els comptes"
 #. User is not following this account, click to follow back
 #: src/components/ProfileCard.tsx:541
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:155
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:422
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:447
 #: src/view/com/notifications/NotificationFeedItem.tsx:838
 #: src/view/com/notifications/NotificationFeedItem.tsx:845
 msgid "Follow back"
@@ -4573,7 +4641,7 @@ msgid "Followed by <0>{0}</0>, <1>{1}</1>, and {2, plural, one {# other} other {
 msgstr "Seguit per <0>{0}</0>, <1>{1}</1>, i {2, plural, one {# altre} other {# altres}}"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:254
+#: src/Navigation.tsx:255
 msgid "Followers of @{0} that you know"
 msgstr "Seguidors de @{0} que coneixes"
 
@@ -4588,7 +4656,7 @@ msgstr "Seguidors que coneixes"
 #: src/components/ProfileHoverCard/index.web.tsx:494
 #: src/components/ProfileHoverCard/index.web.tsx:505
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:160
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:420
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:445
 #: src/screens/VideoFeed/index.tsx:868
 #: src/view/com/notifications/NotificationFeedItem.tsx:816
 #: src/view/com/notifications/NotificationFeedItem.tsx:833
@@ -4605,7 +4673,7 @@ msgstr "Seguint"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:497
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:284
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:289
 #: src/view/com/notifications/NotificationFeedItem.tsx:765
 msgid "Following {0}"
 msgstr "Seguint {0}"
@@ -4619,7 +4687,7 @@ msgstr "Seguint {handle}"
 msgid "Following feed preferences"
 msgstr "Preferències del canal Seguint"
 
-#: src/Navigation.tsx:371
+#: src/Navigation.tsx:372
 #: src/screens/Settings/FollowingFeedPreferences.tsx:57
 msgid "Following Feed Preferences"
 msgstr "Preferències del canal Seguint"
@@ -4680,11 +4748,11 @@ msgstr "Oblida't del soroll"
 msgid "Forgot Password"
 msgstr "He oblidat la contrasenya"
 
-#: src/screens/Login/LoginForm.tsx:526
+#: src/screens/Login/LoginForm.tsx:528
 msgid "Forgot password?"
 msgstr "Has oblidat la contrasenya?"
 
-#: src/screens/Login/LoginForm.tsx:537
+#: src/screens/Login/LoginForm.tsx:539
 msgid "Forgot?"
 msgstr "Oblidada?"
 
@@ -4985,7 +5053,7 @@ msgstr "Activitats nocives o d'alt risc"
 msgid "Harming or endangering minors"
 msgstr "Perjudicar o posar en perill els menors"
 
-#: src/Navigation.tsx:571
+#: src/Navigation.tsx:572
 msgid "Hashtag"
 msgstr "Etiqueta"
 
@@ -5191,8 +5259,8 @@ msgstr "No podem carregar el servei de moderació."
 msgid "Hold up! We’re gradually giving access to video, and you’re still waiting in line. Check back soon!"
 msgstr "Espera! A poc a poc estem donant accés al vídeo i encara estàs a la cua. Torna més tard!"
 
-#: src/Navigation.tsx:825
-#: src/Navigation.tsx:845
+#: src/Navigation.tsx:826
+#: src/Navigation.tsx:846
 #: src/view/shell/bottom-bar/BottomBar.tsx:179
 #: src/view/shell/desktop/LeftNav.tsx:673
 #: src/view/shell/Drawer.tsx:428
@@ -5248,7 +5316,7 @@ msgstr "Ho entenc"
 msgid "I'm on Bluesky as {0} - come find me! https://bsky.app/download"
 msgstr "Estic a Bluesky com a {0}. Vine a trobar-me! https://bsky.app/download"
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:60
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:61
 msgid "Identity:"
 msgstr ""
 
@@ -5435,7 +5503,7 @@ msgstr "Introdueix el codi que s'ha enviat al teu correu per a restablir la cont
 msgid "Input new password"
 msgstr "Introdueix una nova contrasenya"
 
-#: src/screens/Login/LoginForm.tsx:610
+#: src/screens/Login/LoginForm.tsx:612
 msgid "Input the code which has been emailed to you"
 msgstr "Introdueix el codi que has rebut per correu"
 
@@ -5477,7 +5545,7 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr "Configuració de les interaccions invàlida."
 
-#: src/screens/Login/LoginForm.tsx:420
+#: src/screens/Login/LoginForm.tsx:421
 msgid "Invalid login response. Please try again or sign in manually."
 msgstr ""
 
@@ -5490,7 +5558,7 @@ msgstr "Número de telèfon no vàlid"
 msgid "Invalid report subject"
 msgstr "El tema de l'informe no és vàlid"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:181
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:182
 msgid "Invalid signature. Please try again."
 msgstr ""
 
@@ -5629,7 +5697,7 @@ msgstr "Etiquetes al teu compte"
 msgid "Labels on your content"
 msgstr "Etiquetes al teu contingut"
 
-#: src/Navigation.tsx:227
+#: src/Navigation.tsx:228
 msgid "Language Settings"
 msgstr "Configuració d'idioma"
 
@@ -5811,7 +5879,7 @@ msgstr "Fes m'agrada a 10 publicacions"
 msgid "Like 10 posts to train the Discover feed"
 msgstr "Fes m'agrada a 10 publicacions per a entrenar el canal Discover"
 
-#: src/Navigation.tsx:484
+#: src/Navigation.tsx:485
 msgid "Like notifications"
 msgstr "Notificacions de \"M'agrada\""
 
@@ -5823,8 +5891,8 @@ msgstr "Fes m'agrada a aquest canal"
 msgid "Like this labeler"
 msgstr "Fes m'agrada a aquest etiquetador"
 
-#: src/Navigation.tsx:305
-#: src/Navigation.tsx:310
+#: src/Navigation.tsx:306
+#: src/Navigation.tsx:311
 msgid "Liked by"
 msgstr "Li ha agradat a"
 
@@ -5861,7 +5929,7 @@ msgstr "M'agrades"
 msgid "Likes of your reposts"
 msgstr "M'agrades de les teves republicacions"
 
-#: src/Navigation.tsx:508
+#: src/Navigation.tsx:509
 msgid "Likes of your reposts notifications"
 msgstr "Notificacions de m'agrades de les teves republicacions"
 
@@ -5879,19 +5947,19 @@ msgstr "Lineal"
 msgid "Link Account to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:76
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:77
 msgid "Link Removed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:110
 msgid "Link VerusID to account"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:62
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:63
 msgid "Link VerusID to Profile"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:114
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:115
 msgid "Link your VerusID to this account to verify your identity."
 msgstr ""
 
@@ -5899,15 +5967,15 @@ msgstr ""
 msgid "Linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:121
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:122
 msgid "Linking complete"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:686
+#: src/screens/Login/LoginForm.tsx:687
 msgid "Links to signing in on the same device"
 msgstr ""
 
-#: src/Navigation.tsx:260
+#: src/Navigation.tsx:261
 msgid "List"
 msgstr "Llista"
 
@@ -5993,7 +6061,7 @@ msgctxt "toast"
 msgid "List unmuted"
 msgstr "Llista no silenciada"
 
-#: src/Navigation.tsx:181
+#: src/Navigation.tsx:182
 #: src/view/screens/Lists.tsx:68
 #: src/view/screens/Profile.tsx:242
 #: src/view/screens/Profile.tsx:250
@@ -6082,7 +6150,7 @@ msgstr "Carregant la configuració d'interaccions de la publicació..."
 msgid "Loading..."
 msgstr "Carregant…"
 
-#: src/Navigation.tsx:330
+#: src/Navigation.tsx:331
 msgid "Log"
 msgstr "Registre"
 
@@ -6188,7 +6256,7 @@ msgstr "Imatge desada en un altre dispositiu"
 msgid "Media that may be disturbing or inappropriate for some audiences."
 msgstr "Continguts que poden ser inquietants o inadequats per a alguns públics."
 
-#: src/Navigation.tsx:468
+#: src/Navigation.tsx:469
 msgid "Mention notifications"
 msgstr "Notificacions de mencions"
 
@@ -6245,7 +6313,7 @@ msgstr "El missatge és massa llarg"
 msgid "Message options"
 msgstr "Opcions del missatge"
 
-#: src/Navigation.tsx:840
+#: src/Navigation.tsx:841
 msgid "Messages"
 msgstr "Missatges"
 
@@ -6258,7 +6326,7 @@ msgstr "Mitjanit"
 msgid "Minor harassment or bullying"
 msgstr "Assetjament o intimidació lleu"
 
-#: src/Navigation.tsx:532
+#: src/Navigation.tsx:533
 msgid "Miscellaneous notifications"
 msgstr "Notificacions diverses"
 
@@ -6270,11 +6338,11 @@ msgstr "Enganyós"
 msgid "Missing media"
 msgstr "No es troba la imatge"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:315
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:316
 msgid "Mobile support coming soon"
 msgstr ""
 
-#: src/Navigation.tsx:186
+#: src/Navigation.tsx:187
 #: src/screens/Moderation/index.tsx:102
 #: src/screens/Settings/Settings.tsx:198
 #: src/screens/Settings/Settings.tsx:201
@@ -6315,7 +6383,7 @@ msgstr "S'ha actualitzat la llista de moderació"
 msgid "Moderation lists"
 msgstr "Llistes de moderació"
 
-#: src/Navigation.tsx:191
+#: src/Navigation.tsx:192
 #: src/view/screens/ModerationModlists.tsx:68
 msgid "Moderation Lists"
 msgstr "Llistes de moderació"
@@ -6324,7 +6392,7 @@ msgstr "Llistes de moderació"
 msgid "moderation settings"
 msgstr "preferències de moderació"
 
-#: src/Navigation.tsx:320
+#: src/Navigation.tsx:321
 msgid "Moderation states"
 msgstr "Estats de moderació"
 
@@ -6449,7 +6517,7 @@ msgstr "Silencia paraules i etiquetes"
 msgid "Muted accounts"
 msgstr "Comptes silenciats"
 
-#: src/Navigation.tsx:196
+#: src/Navigation.tsx:197
 #: src/view/screens/ModerationMutedAccounts.tsx:116
 msgid "Muted Accounts"
 msgstr "Comptes silenciats"
@@ -6509,7 +6577,7 @@ msgstr "Ves a l'starter pack"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:150
 #: src/screens/Login/ForgotPasswordForm.tsx:175
-#: src/screens/Login/LoginForm.tsx:687
+#: src/screens/Login/LoginForm.tsx:688
 msgid "Navigates to the next screen"
 msgstr "Navega a la pantalla següent"
 
@@ -6562,7 +6630,7 @@ msgstr "Adreça de correu nova"
 msgid "New Feature"
 msgstr "Funció nova"
 
-#: src/Navigation.tsx:500
+#: src/Navigation.tsx:501
 msgid "New follower notifications"
 msgstr "Notificacions de nou seguidor"
 
@@ -6644,7 +6712,7 @@ msgstr "Notícies"
 #: src/components/contacts/screens/ViewMatches.tsx:410
 #: src/screens/Login/ForgotPasswordForm.tsx:149
 #: src/screens/Login/ForgotPasswordForm.tsx:156
-#: src/screens/Login/LoginForm.tsx:683
+#: src/screens/Login/LoginForm.tsx:684
 #: src/screens/Login/SetNewPasswordForm.tsx:186
 #: src/screens/Login/SetNewPasswordForm.tsx:192
 #: src/screens/Onboarding/StepFinished/index.tsx:330
@@ -6726,7 +6794,7 @@ msgstr "No hi ha llistes"
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, )
 #. placeholder {0}: sanitizeDisplayName( profile.displayName || profile.handle, moderation.ui('displayName'), )
 #: src/components/ProfileCard.tsx:520
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:310
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:315
 #: src/view/com/notifications/NotificationFeedItem.tsx:787
 msgid "No longer following {0}"
 msgstr "Ja no segueixes a {0}"
@@ -6834,7 +6902,7 @@ msgstr "No hi ha Starter Packs encara"
 msgid "No thanks"
 msgstr "No, gràcies"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:85
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:86
 msgid "No VerusID link found to remove"
 msgstr ""
 
@@ -6884,7 +6952,7 @@ msgstr "No disponible en aquesta plataforma."
 msgid "Not followed by anyone you're following"
 msgstr "No el segueix ningú a qui segueixes"
 
-#: src/Navigation.tsx:176
+#: src/Navigation.tsx:177
 #: src/view/screens/Profile.tsx:135
 msgid "Not Found"
 msgstr "No s'ha trobat"
@@ -6914,8 +6982,8 @@ msgstr "Aquí no hi ha res"
 msgid "Nothing saved yet"
 msgstr "Encara no hi ha res desat"
 
-#: src/Navigation.tsx:454
-#: src/Navigation.tsx:601
+#: src/Navigation.tsx:455
+#: src/Navigation.tsx:602
 #: src/view/screens/Notifications.tsx:136
 msgid "Notification settings"
 msgstr "Configuració de les notificacions"
@@ -6928,8 +6996,8 @@ msgstr "Sons de les notificacions"
 msgid "Notification Sounds"
 msgstr "Sons de les notificacions"
 
-#: src/Navigation.tsx:596
-#: src/Navigation.tsx:835
+#: src/Navigation.tsx:597
+#: src/Navigation.tsx:836
 #: src/screens/Notifications/ActivityList.tsx:31
 #: src/screens/Settings/NotificationSettings/ActivityNotificationSettings.tsx:93
 #: src/screens/Settings/NotificationSettings/index.tsx:93
@@ -7088,7 +7156,7 @@ msgstr "Obre la càmera"
 msgid "Open conversation options"
 msgstr "Obre les opcions de les converses"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:443
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:444
 msgid "Open credential update deeplink"
 msgstr ""
 
@@ -7173,7 +7241,7 @@ msgstr "Obre la pàgina d'historial"
 msgid "Open system log"
 msgstr "Obre el registre del sistema"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:449
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:450
 msgid "Open Verus Wallet"
 msgstr ""
 
@@ -7258,7 +7326,7 @@ msgstr "Obre l'enllaç {0}"
 msgid "Opens live status dialog"
 msgstr "Obre el quadre de diàleg d'estat en directe"
 
-#: src/screens/Login/LoginForm.tsx:527
+#: src/screens/Login/LoginForm.tsx:529
 msgid "Opens password reset form"
 msgstr "Obre el formulari de restabliment de la contrasenya"
 
@@ -7364,11 +7432,11 @@ msgstr "Pàgina no trobada"
 msgid "Page Not Found"
 msgstr "Pàgina no trobada"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:388
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:392
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:389
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:393
 #: src/components/dialogs/VerusServiceDialog.tsx:229
 #: src/components/dialogs/VerusServiceDialog.tsx:233
-#: src/screens/Login/LoginForm.tsx:496
+#: src/screens/Login/LoginForm.tsx:498
 #: src/screens/Settings/AccountSettings.tsx:126
 #: src/screens/Settings/AccountSettings.tsx:130
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:291
@@ -7392,7 +7460,7 @@ msgstr "Contrasenya actualitzada"
 msgid "Password updated!"
 msgstr "Contrasenya actualitzada!"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:333
 msgid "Paste your signature here"
 msgstr ""
 
@@ -7416,12 +7484,12 @@ msgid "People"
 msgstr "Gent"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:247
+#: src/Navigation.tsx:248
 msgid "People followed by @{0}"
 msgstr "Persones seguides per @{0}"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:240
+#: src/Navigation.tsx:241
 msgid "People following @{0}"
 msgstr "Persones seguint a @{0}"
 
@@ -7596,7 +7664,7 @@ msgstr "Introdueix una contrasenya."
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr "Introdueix una contrasenya. Ha de tenir almenys 8 caràcters."
 
-#: src/components/dialogs/VerusServiceDialog.tsx:56
+#: src/components/dialogs/VerusServiceDialog.tsx:57
 msgid "Please enter a service URL"
 msgstr ""
 
@@ -7607,6 +7675,10 @@ msgstr ""
 #: src/screens/Settings/components/AddAppPasswordDialog.tsx:114
 msgid "Please enter a unique name for this app password or use our randomly generated one."
 msgstr "Introdueix un nom únic per aquesta contrasenya d'aplicació o fes servir un nom generat aleatòriament."
+
+#: src/components/donations/VerusIDDonationDialog.tsx:159
+msgid "Please enter a valid amount"
+msgstr ""
 
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:132
 #: src/components/dialogs/EmailDialog/screens/Update.tsx:136
@@ -7644,11 +7716,11 @@ msgstr "Introdueix el codi que has rebut i la nova contrasenya que vols utilitza
 msgid "Please enter the security code we sent to your previous email address."
 msgstr "Introdueix el codi de seguretat que et vam enviar a la teva adreça de correu anterior."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:157
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:158
 msgid "Please enter the signature."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:199
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:200
 msgid "Please enter your email"
 msgstr ""
 
@@ -7665,7 +7737,7 @@ msgstr "Entra el teu codi d'invitació."
 msgid "Please enter your new email address."
 msgstr "Introdueix la teva nova adreça de correu."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:204
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:205
 #: src/screens/Login/LoginForm.tsx:218
 msgid "Please enter your password"
 msgstr "Introdueix la contrasenya"
@@ -7674,11 +7746,11 @@ msgstr "Introdueix la contrasenya"
 msgid "Please enter your username"
 msgstr "Introdueix el nom d'usuari"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:194
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:195
 msgid "Please enter your VerusID name"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:130
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:131
 msgid "Please enter your VerusID name."
 msgstr ""
 
@@ -7777,10 +7849,10 @@ msgid "Post blocked"
 msgstr "Publicació bloquejada"
 
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:273
-#: src/Navigation.tsx:280
-#: src/Navigation.tsx:287
-#: src/Navigation.tsx:294
+#: src/Navigation.tsx:274
+#: src/Navigation.tsx:281
+#: src/Navigation.tsx:288
+#: src/Navigation.tsx:295
 msgid "Post by @{0}"
 msgstr "Publicació per @{0}"
 
@@ -7814,7 +7886,7 @@ msgstr "Publicació amagada per tu"
 msgid "Post interaction settings"
 msgstr "Configuració de les interaccions de la publicació"
 
-#: src/Navigation.tsx:207
+#: src/Navigation.tsx:208
 #: src/screens/ModerationInteractionSettings/index.tsx:35
 msgid "Post Interaction Settings"
 msgstr "Configuració de les interaccions de la publicació"
@@ -7876,7 +7948,7 @@ msgstr "Avís d'enllaç potencialment enganyós"
 msgid "Preferred language"
 msgstr "Idioma preferit"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:349
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:350
 msgid "Prepare linking"
 msgstr ""
 
@@ -7918,8 +7990,8 @@ msgstr "Privacitat"
 msgid "Privacy and security"
 msgstr "Privadesa i seguretat"
 
-#: src/Navigation.tsx:431
-#: src/Navigation.tsx:439
+#: src/Navigation.tsx:432
+#: src/Navigation.tsx:440
 #: src/screens/Settings/ActivityPrivacySettings.tsx:41
 #: src/screens/Settings/PrivacyAndSecuritySettings.tsx:45
 msgid "Privacy and Security"
@@ -7932,7 +8004,7 @@ msgstr "Configuració de privadesa i seguretat"
 
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:36
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:103
-#: src/Navigation.tsx:340
+#: src/Navigation.tsx:341
 #: src/screens/Settings/AboutSettings.tsx:91
 #: src/screens/Settings/AboutSettings.tsx:94
 #: src/view/screens/PrivacyPolicy.tsx:35
@@ -8042,7 +8114,7 @@ msgstr "Codi QR descarregat!"
 msgid "QR code saved to your camera roll!"
 msgstr "Codi QR desat a la teva galeria"
 
-#: src/Navigation.tsx:476
+#: src/Navigation.tsx:477
 msgid "Quote notifications"
 msgstr "Notificacions de citacions"
 
@@ -8292,20 +8364,20 @@ msgstr "Vols eliminar-lo dels teus canals?"
 msgid "Remove image"
 msgstr "Elimina la imatge"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:149
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:150
 msgid "Remove Link"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:68
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:69
 msgid "Remove link to VerusID"
 msgstr ""
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:40
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:41
 msgid "Remove Link to VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:557
-#: src/screens/Login/LoginForm.tsx:565
+#: src/screens/Login/LoginForm.tsx:559
+#: src/screens/Login/LoginForm.tsx:567
 msgid "Remove linked VerusID"
 msgstr ""
 
@@ -8476,7 +8548,7 @@ msgstr "Aquesta resposta ha estat amagada per l'autor del fil de debat"
 msgid "Reply Hidden by You"
 msgstr "Has amagat aquesta resposta"
 
-#: src/Navigation.tsx:460
+#: src/Navigation.tsx:461
 msgid "Reply notifications"
 msgstr "Notificacions de respostes"
 
@@ -8598,7 +8670,7 @@ msgstr "Republica"
 msgid "Repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Republica ({0, plural, one {# republicació} other {# republicacions}})"
 
-#: src/Navigation.tsx:492
+#: src/Navigation.tsx:493
 msgid "Repost notifications"
 msgstr "Notificacions de republicacions"
 
@@ -8639,7 +8711,7 @@ msgstr "Republicacions d'aquesta publicació"
 msgid "Reposts of your reposts"
 msgstr "Republicacions de les teves republicacions"
 
-#: src/Navigation.tsx:516
+#: src/Navigation.tsx:517
 msgid "Reposts of your reposts notifications"
 msgstr "Notificacions de les republicacions de les teves republicacions"
 
@@ -8717,7 +8789,7 @@ msgstr "Restableix la contrasenya"
 msgid "Resync contacts"
 msgstr "Resincronitza els contactes"
 
-#: src/screens/Login/LoginForm.tsx:641
+#: src/screens/Login/LoginForm.tsx:643
 msgid "Retries signing in"
 msgstr "Torna a intentar iniciar sessió"
 
@@ -8737,8 +8809,8 @@ msgstr "Torna a intentar l'última acció, que ha donat error"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:56
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:59
 #: src/components/StarterPack/ProfileStarterPacks.tsx:377
-#: src/screens/Login/LoginForm.tsx:640
-#: src/screens/Login/LoginForm.tsx:646
+#: src/screens/Login/LoginForm.tsx:642
+#: src/screens/Login/LoginForm.tsx:648
 #: src/screens/Messages/ChatList.tsx:297
 #: src/screens/Messages/components/MessageListError.tsx:25
 #: src/screens/Messages/Inbox.tsx:220
@@ -8843,11 +8915,11 @@ msgstr "Vols desar l'esborrany?"
 msgid "Save image"
 msgstr "Desa la imatge"
 
-#: src/screens/Login/LoginForm.tsx:544
+#: src/screens/Login/LoginForm.tsx:546
 msgid "Save Login with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:552
+#: src/screens/Login/LoginForm.tsx:554
 msgid "Save my sign in with VerusID"
 msgstr ""
 
@@ -8859,7 +8931,7 @@ msgstr "Desa el nou identificador"
 msgid "Save QR code"
 msgstr "Desa el codi QR"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:140
 msgid "Save sign in with VerusID"
 msgstr ""
 
@@ -8890,7 +8962,7 @@ msgid "Saved Feeds"
 msgstr "Canals desats"
 
 #: src/components/dialogs/nuxs/BookmarksAnnouncement.tsx:144
-#: src/Navigation.tsx:640
+#: src/Navigation.tsx:641
 #: src/screens/Bookmarks/index.tsx:62
 msgid "Saved Posts"
 msgstr "Publicacions desades"
@@ -8911,12 +8983,16 @@ msgstr "Digues hola!"
 msgid "Scam"
 msgstr "Estafa"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:150
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:151
 msgid "Scan the QR code below or press Open Verus wallet to confirm the update."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:577
+#: src/screens/Login/LoginForm.tsx:579
 msgid "Scan the QR code below or press Sign in to continue"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:70
+msgid "Scan the QR code with your Verus wallet to send the donation."
 msgstr ""
 
 #: src/lib/interests.ts:71
@@ -8946,7 +9022,7 @@ msgstr "Cerca"
 
 #. placeholder {0}: profile.handle
 #. placeholder {0}: route.params.name
-#: src/Navigation.tsx:266
+#: src/Navigation.tsx:267
 #: src/screens/Profile/ProfileSearch.tsx:37
 msgid "Search @{0}'s posts"
 msgstr "Cerca a les publicacions de @{0}"
@@ -9152,6 +9228,14 @@ msgstr "Tria el fitxer de subtítols (.vtt)"
 msgid "Select content languages"
 msgstr "Selecciona els idiomes del contingut"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:62
+msgid "Select donation"
+msgstr ""
+
+#: src/components/donations/VerusIDDonationDialog.tsx:201
+msgid "Select donation amount"
+msgstr ""
+
 #: src/features/liveNow/components/GoLiveDialog.tsx:180
 msgid "Select duration"
 msgstr "Tria la durada"
@@ -9270,6 +9354,10 @@ msgstr "Envia un lloc web net!"
 msgid "Send code"
 msgstr "Envia el codi"
 
+#: src/components/donations/VerusIDDonationDialog.tsx:68
+msgid "Send donation"
+msgstr ""
+
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:175
 #: src/components/dialogs/EmailDialog/screens/Manage2FA/Disable.tsx:182
 #: src/components/dialogs/EmailDialog/screens/Verify.tsx:303
@@ -9361,7 +9449,7 @@ msgstr "Estableix la teva data de naixement a continuació i et permetrem tornar
 msgid "Sets email for password reset"
 msgstr "Estableix un correu per a restablir la contrasenya"
 
-#: src/Navigation.tsx:222
+#: src/Navigation.tsx:223
 #: src/screens/Settings/Settings.tsx:101
 #: src/view/shell/desktop/LeftNav.tsx:806
 #: src/view/shell/Drawer.tsx:597
@@ -9506,7 +9594,7 @@ msgstr "Comparteix els teus contactes per trobar amics"
 msgid "Share your favorite feed!"
 msgstr "Comparteix el teu canal preferit!"
 
-#: src/Navigation.tsx:325
+#: src/Navigation.tsx:326
 msgid "Shared Preferences Tester"
 msgstr "Comprovador de preferències compartides"
 
@@ -9643,8 +9731,8 @@ msgstr "Mostra el contingut"
 #: src/screens/Hashtag.tsx:241
 #: src/screens/Login/index.tsx:140
 #: src/screens/Login/index.tsx:161
-#: src/screens/Login/LoginForm.tsx:438
-#: src/screens/Login/LoginForm.tsx:693
+#: src/screens/Login/LoginForm.tsx:440
+#: src/screens/Login/LoginForm.tsx:694
 #: src/screens/Search/SearchResults.tsx:316
 #: src/view/com/auth/SplashScreen.tsx:118
 #: src/view/com/auth/SplashScreen.tsx:124
@@ -9690,11 +9778,11 @@ msgstr ""
 msgid "Sign in to view post"
 msgstr "Inicia la sessió per veure la publicació"
 
-#: src/screens/Login/LoginForm.tsx:677
+#: src/screens/Login/LoginForm.tsx:678
 msgid "Sign in with VerusID"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:675
+#: src/screens/Login/LoginForm.tsx:676
 msgid "Sign in without VerusID"
 msgstr ""
 
@@ -9719,7 +9807,7 @@ msgstr "Tanca la sessió"
 msgid "Sign out?"
 msgstr "Tancar la sessió?"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:117
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:118
 msgid "Sign the linking details"
 msgstr ""
 
@@ -9728,8 +9816,8 @@ msgstr ""
 msgid "Sign-in Required"
 msgstr "Es requereix iniciar sessió"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:327
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:331
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:328
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:332
 msgid "Signature"
 msgstr ""
 
@@ -9911,8 +9999,8 @@ msgstr "Comença a afegir gent"
 msgid "Start chat with {displayName}"
 msgstr "Comença un xat amb {displayName}"
 
-#: src/Navigation.tsx:611
-#: src/Navigation.tsx:616
+#: src/Navigation.tsx:612
+#: src/Navigation.tsx:617
 #: src/screens/StarterPack/Wizard/index.tsx:208
 msgid "Starter Pack"
 msgstr "Starter pack"
@@ -9974,7 +10062,7 @@ msgstr "L'emmagatzematge s'ha esborrat, cal que reinicieu l'aplicació ara."
 msgid "Stored as part of a secure code for matching with others"
 msgstr "Emmagatzemat com a part d'un codi segur per a la coincidència amb altres persones"
 
-#: src/Navigation.tsx:315
+#: src/Navigation.tsx:316
 #: src/screens/Settings/Settings.tsx:467
 msgid "Storybook"
 msgstr "Historial"
@@ -10008,8 +10096,8 @@ msgstr "Envia l'apel·lació"
 msgid "Submit report"
 msgstr "Envia l'informe"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:363
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:369
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:364
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:370
 msgid "Submit Signature and Create Post"
 msgstr ""
 
@@ -10077,7 +10165,7 @@ msgctxt "Name of app icon variant"
 msgid "Sunset"
 msgstr "Ocàs"
 
-#: src/Navigation.tsx:335
+#: src/Navigation.tsx:336
 #: src/view/screens/Support.tsx:35
 #: src/view/screens/Support.tsx:38
 msgid "Support"
@@ -10087,7 +10175,7 @@ msgstr "Suport"
 msgid "Support for this feature in your country has not been enabled yet! Please check back later."
 msgstr "Encara no s'ha activat la compatibilitat amb aquesta funció al teu país. Torna-ho a comprovar més tard."
 
-#: src/screens/Login/LoginForm.tsx:662
+#: src/screens/Login/LoginForm.tsx:664
 msgid "Switch"
 msgstr ""
 
@@ -10109,7 +10197,7 @@ msgstr "Canvia de compte"
 msgid "Switch to {0}"
 msgstr "Canvia a {0}"
 
-#: src/screens/Login/LoginForm.tsx:663
+#: src/screens/Login/LoginForm.tsx:665
 msgid "Switches login method"
 msgstr ""
 
@@ -10206,7 +10294,7 @@ msgstr "Condicions"
 #: src/components/dialogs/BirthDateSettings.tsx:181
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:31
 #: src/components/PolicyUpdateOverlay/updates/202508/index.tsx:98
-#: src/Navigation.tsx:345
+#: src/Navigation.tsx:346
 #: src/screens/Settings/AboutSettings.tsx:83
 #: src/screens/Settings/AboutSettings.tsx:86
 #: src/view/screens/TermsOfService.tsx:35
@@ -10263,8 +10351,8 @@ msgstr "Això és tot, amics!"
 msgid "That's everything!"
 msgstr "Això és tot!"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:437
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:225
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:462
 #: src/view/com/profile/ProfileMenu.tsx:553
 msgid "The account will be able to interact with you after unblocking."
 msgstr "El compte podrà interactuar amb tu després del desbloqueig."
@@ -10332,7 +10420,7 @@ msgid "The laws in your region require you to verify you're an adult to access c
 msgstr "La legislació de la teva regió exigeix que verifiquis que ets adult per accedir a certes funcionalitats. Toca per obtenir més informació."
 
 #. placeholder {0}: linkedVerusID ? linkedVerusID.identity : ''
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:78
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:79
 msgid "The link to VerusID {0} has been successfully removed from this account."
 msgstr ""
 
@@ -10381,12 +10469,12 @@ msgid "The verification provider was unable to send a code to your phone number.
 msgstr "El proveïdor de verificació no ha pogut enviar un codi al teu número de telèfon. Comprova'l i torna-ho a provar."
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:112
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:113
 msgid "The VerusID currently linked to this account is {0}."
 msgstr ""
 
 #. placeholder {0}: linkedVerusID.identity
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:71
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:72
 msgid "The VerusID currently linked to this account is {0}. Removing this link will delete the post that verifies your identity."
 msgstr ""
 
@@ -10394,7 +10482,7 @@ msgstr ""
 msgid "Theme"
 msgstr "Tema"
 
-#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:73
+#: src/components/dialogs/RemoveVerusIDAccountLinkDialog.tsx:74
 msgid "There currently is no VerusID linked to this account."
 msgstr ""
 
@@ -10469,10 +10557,10 @@ msgstr "S'ha produït un problema actualitzant els teus canals. Comprova la teva
 #: src/components/PostControls/PostMenu/PostMenuItems.tsx:486
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:117
 #: src/screens/PostThread/components/ThreadItemAnchorFollowButton.tsx:130
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:97
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:294
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:321
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:337
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:98
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:299
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:326
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:342
 #: src/view/com/profile/ProfileMenu.tsx:152
 #: src/view/com/profile/ProfileMenu.tsx:164
 #: src/view/com/profile/ProfileMenu.tsx:180
@@ -10537,7 +10625,7 @@ msgstr "Aquest compte ha sol·licitat que els usuaris estiguin registrats per a 
 msgid "This account is blocked by one or more of your moderation lists. To unblock, please visit the lists directly and remove this user."
 msgstr "Aquest compte està bloquejat per una o més de les teves llistes de moderació. Per desbloquejar-lo, visita les llistes directament i elimina aquest usuari."
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:52
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:53
 msgid "This account is linked to VerusID, a decentralized identity system."
 msgstr ""
 
@@ -10794,7 +10882,7 @@ msgstr "Aquest usuari no segueix a ningú."
 msgid "This will create a new list with the same name, description, and members as this starter pack."
 msgstr "Això crearà una nova llista amb el mateix nom, descripció i membres que aquest starter pack."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:273
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:274
 msgid "This will create a post linking your VerusID to this account."
 msgstr ""
 
@@ -10835,7 +10923,7 @@ msgstr "Preferències dels fils de debat"
 msgid "Threaded"
 msgstr "En mode fils de debat"
 
-#: src/Navigation.tsx:378
+#: src/Navigation.tsx:379
 msgid "Threads Preferences"
 msgstr "Preferències dels fils de debat"
 
@@ -10903,7 +10991,7 @@ msgstr "Superior"
 msgid "Top replies first"
 msgstr "Primer les respostes principals"
 
-#: src/Navigation.tsx:576
+#: src/Navigation.tsx:577
 msgid "Topic"
 msgstr "Tema"
 
@@ -10998,8 +11086,8 @@ msgstr ""
 msgid "Unable to connect. Please check your internet connection and try again."
 msgstr "No s'ha pogut connectar. Comprova la teva connexió a Internet i torna-ho a provar."
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:181
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:324
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:182
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:325
 msgid "Unable to contact the service. Please check your Internet connection."
 msgstr ""
 
@@ -11020,11 +11108,11 @@ msgstr "No es pot contactar amb el teu servei. Comprova la teva connexió a inte
 msgid "Unable to delete"
 msgstr "No s'ha pogut eliminar"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:209
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:210
 msgid "Unable to get the signing service identity address"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:137
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:138
 msgid "Unable to link account with no handle."
 msgstr ""
 
@@ -11036,11 +11124,11 @@ msgstr "No es pot resoldre l'identificador de l'usuari"
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:162
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:163
 msgid "Unable to verify signature."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:425
+#: src/screens/Login/LoginForm.tsx:426
 msgid "Unable to verify the signer of the login."
 msgstr ""
 
@@ -11064,16 +11152,16 @@ msgstr "Informació del canal no disponible"
 #: src/components/dms/MessagesListBlockedFooter.tsx:105
 #: src/components/dms/MessagesListBlockedFooter.tsx:113
 #: src/components/dms/MessagesListBlockedFooter.tsx:120
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:229
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:380
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:442
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:231
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:385
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:467
 #: src/screens/ProfileList/components/Header.tsx:166
 #: src/screens/ProfileList/components/Header.tsx:173
 #: src/view/com/profile/ProfileMenu.tsx:565
 msgid "Unblock"
 msgstr "Desbloqueja"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:384
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:389
 msgctxt "action"
 msgid "Unblock"
 msgstr "Desbloqueja"
@@ -11085,8 +11173,8 @@ msgstr "Desbloqueja"
 msgid "Unblock account"
 msgstr "Desbloqueja el compte"
 
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:221
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:435
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:223
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:460
 #: src/view/com/profile/ProfileMenu.tsx:547
 msgid "Unblock Account?"
 msgstr "Vols desbloquejar el compte?"
@@ -11124,7 +11212,7 @@ msgid "Undo repost ({0, plural, one {# repost} other {# reposts}})"
 msgstr "Desfés republicacions ({0, plural, one {# republicació} other {# republicacions}})"
 
 #. placeholder {0}: profile.handle
-#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:411
+#: src/screens/Profile/Header/ProfileHeaderStandard.tsx:436
 msgid "Unfollow {0}"
 msgstr "Deixa de seguir a {0}"
 
@@ -11290,12 +11378,12 @@ msgstr "Actualitza"
 msgid "Update <0>{displayName}</0> in Lists"
 msgstr "Actualitza <0>{displayName}</0> a les Llistes"
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:154
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:155
 msgid "Update confirmed"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:417
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:423
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:418
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:424
 msgid "Update credentials"
 msgstr ""
 
@@ -11306,11 +11394,11 @@ msgstr ""
 msgid "Update email"
 msgstr "Actualitza el correu"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:108
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:109
 msgid "Update linked VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:142
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:143
 msgid "Update the sign in credentials stored in your VerusID."
 msgstr ""
 
@@ -11331,7 +11419,7 @@ msgstr ""
 msgid "Update VerusID Link"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:138
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:139
 msgid "Update VerusID sign in"
 msgstr ""
 
@@ -11340,7 +11428,7 @@ msgstr ""
 msgid "Update VerusID Sign in"
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:98
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:99
 msgid "Update VerusID Sign in Credentials"
 msgstr ""
 
@@ -11509,7 +11597,7 @@ msgstr "El nom d'usuari no pot començar ni acabar amb un guionet"
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr "El nom d'usuari només pot tenir lletres (a-z), nombres i guionets"
 
-#: src/screens/Login/LoginForm.tsx:466
+#: src/screens/Login/LoginForm.tsx:468
 msgid "Username or email address"
 msgstr "Nom d'usuari o correu"
 
@@ -11540,7 +11628,7 @@ msgstr "La verificació ha fallat, torna-ho a provar."
 msgid "Verification settings"
 msgstr "Configuració de verificació"
 
-#: src/Navigation.tsx:215
+#: src/Navigation.tsx:216
 #: src/screens/Moderation/VerificationSettings.tsx:34
 msgid "Verification Settings"
 msgstr "Configuració de verificació"
@@ -11638,7 +11726,7 @@ msgstr "Verificant..."
 msgid "Version {0}"
 msgstr "Versió {0}"
 
-#: src/Navigation.tsx:416
+#: src/Navigation.tsx:417
 #: src/screens/Settings/Settings.tsx:184
 #: src/screens/Settings/Settings.tsx:187
 #: src/screens/Settings/VerusServicesSettings.tsx:56
@@ -11654,20 +11742,20 @@ msgstr ""
 msgid "Verus Services Endpoint Status"
 msgstr ""
 
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:43
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:49
-#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:125
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:44
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:50
+#: src/components/verification/verusid/VerusIdVerificationsDialog.tsx:126
 msgid "VerusID"
 msgstr ""
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:295
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:299
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:357
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:361
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:296
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:300
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:358
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:362
 msgid "VerusID Name"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:573
+#: src/screens/Login/LoginForm.tsx:575
 msgid "VerusID Sign in"
 msgstr ""
 
@@ -11688,7 +11776,7 @@ msgstr "Vídeo"
 msgid "Video failed to process"
 msgstr "El vídeo no s'ha pogut processar"
 
-#: src/Navigation.tsx:632
+#: src/Navigation.tsx:633
 msgid "Video Feed"
 msgstr "Canal de vídeos"
 
@@ -11901,6 +11989,10 @@ msgstr "Ves a la configuració de les notificacions"
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/web-controls/VolumeControl.tsx:80
 msgid "Volume"
 msgstr "Volum"
+
+#: src/components/donations/VerusIDDonationDialog.tsx:252
+msgid "VRSC"
+msgstr ""
 
 #: src/components/moderation/LabelPreference.tsx:142
 #: src/lib/moderation/useLabelBehaviorDescription.ts:20
@@ -12362,7 +12454,7 @@ msgstr "Pots triar si les notificacions dels xats tenen so en la configuració d
 msgid "You can continue ongoing conversations regardless of which setting you choose."
 msgstr "Pots continuar les converses en curs independentment de la configuració que triïs."
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:284
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:285
 msgid "You can do this later in Settings → Verus Services."
 msgstr ""
 
@@ -12839,7 +12931,7 @@ msgstr "El teu canal de seguint està buit! Segueix a més usuaris per a saber q
 msgid "Your full handle will be <0>@{0}</0>"
 msgstr "El teu identificador complet serà <0>@{0}</0>"
 
-#: src/Navigation.tsx:548
+#: src/Navigation.tsx:549
 #: src/screens/Search/modules/ExploreInterestsCard.tsx:68
 #: src/screens/Settings/ContentAndMediaSettings.tsx:94
 #: src/screens/Settings/ContentAndMediaSettings.tsx:97
@@ -12918,10 +13010,10 @@ msgstr "Seleccionar els teus interessos ens ajuda a mostrar-te el contingut que 
 msgid "Your verifications"
 msgstr "Les teves verificacions"
 
-#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:123
+#: src/components/dialogs/VerusIDAccountLinkingDialog.tsx:124
 msgid "Your VerusID {name} has been successfully linked to this account."
 msgstr ""
 
-#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:156
+#: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:157
 msgid "Your VerusID sign in credentials update has been confirmed and will be applied soon."
 msgstr ""

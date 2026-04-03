@@ -1,7 +1,8 @@
 import {useState} from 'react'
 import {View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import {VerusdRpcInterface} from 'verusd-rpc-ts-client'
 
 import {VSKY_SERVICE, VSKY_SERVICE_ID} from '#/lib/constants'
@@ -59,7 +60,6 @@ function VerusServiceInner() {
 
     try {
       // Just check if the URL is valid
-      // eslint-disable-next-line no-new
       new URL(url)
     } catch {
       setError(_(msg`Please enter a valid URL`))

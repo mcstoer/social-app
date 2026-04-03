@@ -44,6 +44,7 @@ import {
   type State,
 } from '#/lib/routes/types'
 import {bskyTitle} from '#/lib/strings/headings'
+import {logger} from '#/logger'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSession} from '#/state/session'

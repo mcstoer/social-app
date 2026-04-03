@@ -1,7 +1,8 @@
 import {useCallback, useEffect, useRef, useState} from 'react'
 import {View} from 'react-native'
-import {msg, Trans} from '@lingui/macro'
+import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
+import {Trans} from '@lingui/react/macro'
 import crypto from 'crypto'
 import {
   BigNumber,
@@ -30,8 +31,8 @@ import {useGlobalDialogsControlContext} from '#/components/dialogs/Context'
 import * as TextField from '#/components/forms/TextField'
 import {Loader} from '#/components/Loader'
 import {Text} from '#/components/Typography'
-import {QrCodeInner} from '../StarterPack/QrCode'
 import {IS_NATIVE, IS_WEB} from '#/env'
+import {QrCodeInner} from '../StarterPack/QrCode'
 
 enum Stages {
   UpdateCredentials = 'UpdateCredentials',
@@ -332,7 +333,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     setIsProcessing(false)
   }
 
-  const onOpenDeeplink = async () => {
+  const onOpenDeeplink = () => {
     if (deeplinkUri) {
       window.location.href = deeplinkUri
     }
