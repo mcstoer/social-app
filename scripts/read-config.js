@@ -67,8 +67,8 @@ const ensureConfigFile = () => {
 
   if (!fs.existsSync(configFilePath)) {
     const defaultConfig = {
-      is_mainnet: false,
-      chain: 'VRSCTEST',
+      is_mainnet: true,
+      chain: 'VRSC',
       default_login_verusid: true,
       server_description: {
         'availableuserdomains[]': '.verus.io',

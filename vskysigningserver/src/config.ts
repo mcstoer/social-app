@@ -9,7 +9,7 @@ dotenv.config({path: '../.env'})
 dotenv.config()
 
 const iaddress = process.env.EXPO_PUBLIC_IADDRESS as string
-export const CHAIN = (process.env.DEFAULT_CHAIN as string) || 'VRSCTEST'
+export const CHAIN = (process.env.DEFAULT_CHAIN as string) || 'VRSC'
 export const REMOTE_RPC_URL = process.env.DEFAULT_URL as string
 export const SERVER_URL = process.env.BASE_URL || 'http://localhost:25000'
 export const WEBHOOK_URL = process.env.BASE_WEBHOOK_URL || SERVER_URL
