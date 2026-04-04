@@ -11,11 +11,10 @@ Before you begin, make sure you have the following installed:
     - Node.js 20.19.5 (LTS) is recommended
     - For Windows users: [Node.js 20.19.5 download](https://nodejs.org/en/download/archive/v20.19.5)
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
-- The following Verus Desktop Wallet development environment branches (required for local development):
-    - [Verus Desktop (password-manager)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager)
-    - [Verus Login Consent Client (password-manager)](https://github.com/mcstoer/verus-login-consent-client/tree/password-manager)
+- Verus Desktop Wallet demo version:
+    - [Verus Desktop (password-manager-dev)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager-dev)
 
-Follow their respective instructions to get the Verus Desktop Wallet running.
+Follow the instructions in the Verus Desktop README to get a production build running.
 
 ### Setting up Deeplinks with the Verus Desktop Wallet
 
@@ -90,7 +89,7 @@ The VerusSky app uses a configuration file that is stored in the following direc
 | macOS            | `~/Library/Application Support/VerusSky/` |
 | Windows          | `%APPDATA%\VerusSky\`                     |
 
-Each time ater updating the configuration file you must run:
+Each time after updating the configuration file you must run:
 ```bash
 yarn dev:setup
 ```
