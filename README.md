@@ -13,6 +13,7 @@ Before you begin, make sure you have the following installed:
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
 - [Verus Desktop demo version (password-manager-dev)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager-dev)
     - Follow the *Prerequisites* and *Creating Builds* instructions in the Verus Desktop README to get a build
+    - Verus Desktop needs to be running for the app to work
 
 ### Setting up Deeplinks with the Verus Desktop Wallet
 
