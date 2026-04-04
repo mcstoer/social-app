@@ -11,36 +11,31 @@ Before you begin, make sure you have the following installed:
     - Node.js 20.19.5 (LTS) is recommended
     - For Windows users: [Node.js 20.19.5 download](https://nodejs.org/en/download/archive/v20.19.5)
 - [Yarn package manager](https://yarnpkg.com/getting-started/install)
-- Verus Desktop Wallet demo version:
-    - [Verus Desktop (password-manager-dev)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager-dev)
-
-Follow the instructions in the Verus Desktop README to get a production build running.
+- [Verus Desktop demo version (password-manager-dev)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager-dev)
+    - Follow the *Prerequisites* and *Creating Builds* instructions in the Verus Desktop README to get a build
 
 ### Setting up Deeplinks with the Verus Desktop Wallet
 
 > This only applies if you have set up the required Verus Desktop Wallet development environment branches (see Prerequisites above).
 
-Deeplinks should work out of the box when you install the Verus Desktop Wallet on MacOS and Windows, or run a production build of the Verus Desktop Wallet on Linux.
+Deeplinks should work out of the box when you install the Verus Desktop Wallet on MacOS and Windows, or run a build of the Verus Desktop Wallet on Linux.
+
+### Cloning the Repository
+
+Clone the repository with:
+
+```
+git clone -b verussky-demo https://github.com/mcstoer/social-app.git
+```
 
 ### Environment Variables
 
 1. Create a `.env` file using `.env.example` as a template.
 
-2. Variables you can leave as-is:
-    ```
-    BITDRIFT_API_KEY
-    SENTRY_AUTH_TOKEN
-    EXPO_PUBLIC_LOG_LEVEL
-    EXPO_PUBLIC_LOG_DEBUG
-    EXPO_PUBLIC_BUNDLE_IDENTIFIER
-    EXPO_PUBLIC_BUNDLE_DATE
+2. Set:
+    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses, e.g., "VeruSky@".
 
-    DEFAULT_CHAIN
-    DEFAULT_URL
-    ```
-
-3. Variables you **must** set:
-    - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
+The other environment variables do not need to be set unless you have a specific reason.
 
 ## Running the VerusSky Web App 
 
