@@ -179,7 +179,7 @@ export function SettingsScreen({}: Props) {
           </SettingsList.LinkItem>
           <SettingsList.LinkItem
             to="/settings/verus-services"
-            label={_(msg`Verus Services`)}>
+            label={l`Verus Services`}>
             <SettingsList.ItemIcon icon={ShieldCheckIcon} />
             <SettingsList.ItemText>
               <Trans>Verus Services</Trans>

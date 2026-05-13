@@ -31,7 +31,6 @@ import {Provider as PrefsStateProvider} from '#/state/preferences'
 import {Provider as LabelDefsProvider} from '#/state/preferences/label-defs'
 import {Provider as ModerationOptsProvider} from '#/state/preferences/moderation-opts'
 import {Provider as UnreadNotifsProvider} from '#/state/queries/notifications/unread'
-import {Provider as VerusDaemonProvider} from '#/state/queries/verus'
 import {Provider as ServiceConfigProvider} from '#/state/service-config'
 import {
   Provider as SessionProvider,
@@ -78,7 +77,6 @@ import {
 import * as Geo from '#/geolocation'
 import {Splash} from '#/Splash'
 import {BackgroundNotificationPreferencesProvider} from '../modules/expo-background-notification-handler/src/BackgroundNotificationHandlerProvider'
-import {LOCAL_DEV_VSKY_SERVER} from './lib/constants'
 import {Provider as HideBottomBarBorderProvider} from './lib/hooks/useHideBottomBarBorder'
 
 /**
@@ -159,13 +157,8 @@ function InnerApp() {
                                                             <IntentDialogProvider>
                                                               <TranslateOnDeviceProvider>
                                                                 <HotkeysProvider>
-                                                                  <VerusDaemonProvider
-                                                                    url={
-                                                                      LOCAL_DEV_VSKY_SERVER
-                                                                    }>
-                                                                    <Shell />
-                                                                    <ToastOutlet />
-                                                                  </VerusDaemonProvider>
+                                                                  <Shell />
+                                                                  <ToastOutlet />
                                                                 </HotkeysProvider>
                                                               </TranslateOnDeviceProvider>
                                                             </IntentDialogProvider>

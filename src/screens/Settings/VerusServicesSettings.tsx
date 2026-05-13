@@ -1,5 +1,4 @@
-import {msg, Trans} from '@lingui/macro'
-import {useLingui} from '@lingui/react'
+import {Trans, useLingui} from '@lingui/react/macro'
 import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
@@ -30,7 +29,7 @@ type Props = NativeStackScreenProps<
 >
 export function VerusServicesSettingsScreen({}: Props) {
   const t = useTheme()
-  const {_} = useLingui()
+  const {t: l} = useLingui()
   const {currentAccount} = useSession()
   const verusIdAccountLinkingControl = useVerusIdAccountLinkingDialogControl()
   const removeVerusIdAccountLinkControl =
@@ -88,7 +87,7 @@ export function VerusServicesSettingsScreen({}: Props) {
           </SettingsList.Item>
           <SettingsList.Divider />
           <SettingsList.PressableItem
-            label={_(msg`Link Account to VerusID`)}
+            label={l`Link Account to VerusID`}
             onPress={() => verusIdAccountLinkingControl.open({})}>
             <SettingsList.ItemIcon icon={ChainLinkIcon} />
             <SettingsList.ItemText>
@@ -102,7 +101,7 @@ export function VerusServicesSettingsScreen({}: Props) {
           </SettingsList.PressableItem>
           {linkedVerusID && (
             <SettingsList.PressableItem
-              label={_(msg`Remove VerusID Link`)}
+              label={l`Remove VerusID Link`}
               onPress={() => removeVerusIdAccountLinkControl.open()}
               destructive>
               <SettingsList.ItemIcon icon={CircleXIcon} />
@@ -116,8 +115,8 @@ export function VerusServicesSettingsScreen({}: Props) {
           <SettingsList.PressableItem
             label={
               currentAccount?.type === 'vsky'
-                ? _(msg`Update VerusID Sign in`)
-                : _(msg`Save Sign in with VerusID`)
+                ? l`Update VerusID Sign in`
+                : l`Save Sign in with VerusID`
             }
             onPress={() =>
               updateVerusIDCredentialsUpdateControl.open({
@@ -152,7 +151,7 @@ export function VerusServicesSettingsScreen({}: Props) {
             )}
           </SettingsList.Item>
           <SettingsList.PressableItem
-            label={_(msg`Verus Services Endpoint (Advanced)`)}
+            label={l`Verus Services Endpoint (Advanced)`}
             onPress={() => verusServiceDialogControl.open()}>
             <SettingsList.ItemIcon icon={EarthIcon} />
             <SettingsList.ItemText>

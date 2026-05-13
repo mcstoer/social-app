@@ -316,7 +316,7 @@ export function agentToSessionAccount(
       auth: agent.vskySession.auth,
       id: agent.vskySession.id,
       name: agent.vskySession.name,
-      service: agent.service.toString(),
+      service: agent.serviceUrl.toString(),
       did: agent.session.did,
       handle: agent.session.handle,
       email: agent.session.email,
