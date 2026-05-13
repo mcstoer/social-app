@@ -36,7 +36,6 @@ import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
-import {useSetMinimalShellMode} from '#/state/shell'
 import {ProfileFeedgens} from '#/view/com/feeds/ProfileFeedgens'
 import {ProfileLists} from '#/view/com/lists/ProfileLists'
 import {PagerWithHeader} from '#/view/com/pager/PagerWithHeader'
@@ -177,7 +176,6 @@ function ProfileScreenLoaded({
 }) {
   const profile = useProfileShadow(profileUnshadowed)
   const {hasSession, currentAccount} = useSession()
-  const setMinimalShellMode = useSetMinimalShellMode()
   const {openComposer} = useOpenComposer()
   const navigation = useNavigation<NavigationProp>()
   const requireEmailVerification = useRequireEmailVerification()
@@ -325,11 +323,10 @@ function ProfileScreenLoaded({
 
   useFocusEffect(
     useCallback(() => {
-      setMinimalShellMode(false)
       return listenSoftReset(() => {
         scrollSectionToTop(currentPage)
       })
-    }, [setMinimalShellMode, currentPage, scrollSectionToTop]),
+    }, [currentPage, scrollSectionToTop]),
   )
 
   // events
@@ -391,7 +388,7 @@ function ProfileScreenLoaded({
     <ScreenHider
       testID="profileView"
       style={styles.container}
-      screenDescription={_(msg`profile`)}
+      screenDescription={_(msg`user`)}
       modui={moderation.ui('profileView')}>
       <PagerWithHeader
         testID="profilePager"

@@ -19,7 +19,6 @@ import {
   useSetDrawerOpen,
 } from '#/state/shell'
 import {useCloseAnyActiveElement} from '#/state/util'
-import {Lightbox} from '#/view/com/lightbox/Lightbox'
 import {ModalsContainer} from '#/view/com/modals/Modal'
 import {ErrorBoundary} from '#/view/com/util/ErrorBoundary'
 import {Deactivated} from '#/screens/Deactivated'
@@ -36,6 +35,7 @@ import {RemoveVerusIDAccountLinkDialog} from '#/components/dialogs/RemoveVerusID
 import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
+import {Lightbox} from '#/components/Lightbox'
 import {GlobalReportDialog} from '#/components/moderation/ReportDialog'
 import {
   Outlet as PolicyUpdateOverlayPortalOutlet,

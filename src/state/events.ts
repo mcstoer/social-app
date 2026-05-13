@@ -1,4 +1,4 @@
-import EventEmitter from 'eventemitter3'
+import {EventEmitter} from 'eventemitter3'
 
 type UnlistenFn = () => void
 
@@ -52,4 +52,12 @@ export function emitVerusIDLoginCompleted() {
 export function listenVerusIDLoginCompleted(fn: () => void): UnlistenFn {
   emitter.on('verusid-login-completed', fn)
   return () => emitter.off('verusid-login-completed', fn)
+}
+
+export function emitFocusSearch() {
+  emitter.emit('focus-search')
+}
+export function listenFocusSearch(fn: () => void): UnlistenFn {
+  emitter.on('focus-search', fn)
+  return () => emitter.off('focus-search', fn)
 }

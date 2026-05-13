@@ -9,9 +9,7 @@ import {useIntentHandler} from '#/lib/hooks/useIntentHandler'
 import {type NavigationProp} from '#/lib/routes/types'
 import {useSession} from '#/state/session'
 import {useIsDrawerOpen, useSetDrawerOpen} from '#/state/shell'
-import {useComposerKeyboardShortcut} from '#/state/shell/composer/useComposerKeyboardShortcut'
 import {useCloseAllActiveElements} from '#/state/util'
-import {Lightbox} from '#/view/com/lightbox/Lightbox'
 import {ModalsContainer} from '#/view/com/modals/Modal'
 import {ErrorBoundary} from '#/view/com/util/ErrorBoundary'
 import {Deactivated} from '#/screens/Deactivated'
@@ -27,6 +25,7 @@ import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {useWelcomeModal} from '#/components/hooks/useWelcomeModal'
+import {Lightbox} from '#/components/Lightbox'
 import {GlobalReportDialog} from '#/components/moderation/ReportDialog'
 import {
   Outlet as PolicyUpdateOverlayPortalOutlet,
@@ -39,7 +38,7 @@ import {NoAccessScreen} from '#/ageAssurance/components/NoAccessScreen'
 import {RedirectOverlay} from '#/ageAssurance/components/RedirectOverlay'
 import {PassiveAnalytics} from '#/analytics/PassiveAnalytics'
 import {FlatNavigator, RoutesContainer} from '#/Navigation'
-import {Composer} from './Composer.web'
+import {Composer} from './Composer'
 import {DrawerContent} from './Drawer'
 
 function ShellInner() {
@@ -48,7 +47,6 @@ function ShellInner() {
   const {state: policyUpdateState} = usePolicyUpdateContext()
   const welcomeModalControl = useWelcomeModal()
 
-  useComposerKeyboardShortcut()
   useIntentHandler()
 
   useEffect(() => {
