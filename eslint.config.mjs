@@ -291,6 +291,17 @@ export default defineConfig(
   },
 
   /**
+   * VerusSky polyfills - needed for Verus functionality, Node.js imports are fine
+   */
+  {
+    files: ['src/platform/polyfills.{ts,web.ts}'],
+    rules: {
+      'import-x/no-nodejs-modules': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+    },
+  },
+
+  /**
    * Test files configuration
    */
   {

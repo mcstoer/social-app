@@ -4,4 +4,7 @@
 // build fails when it tries to do this require. We use a babel
 // and tsconfig alias to direct it here
 // -prf
-export default crypto
+// Since VerusSky uses crypto from crypto-browserify, we can point
+// it to the polyfill instead. If this polyfill is removed, revert
+// back to the web crypto.
+export {default} from 'crypto-browserify'

@@ -50,6 +50,7 @@ cfg.resolver.resolveRequest = (context, moduleName, platform) => {
 // Fix stream and vm in react native for the verus libraries that need it.
 cfg.resolver.extraNodeModules = {
   ...cfg.resolver.extraNodeModules,
+  crypto: require.resolve('crypto-browserify'),
   stream: require.resolve('stream-browserify'),
   vm: require.resolve('vm-browserify'),
 }
