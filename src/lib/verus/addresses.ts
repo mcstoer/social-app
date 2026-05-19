@@ -19,7 +19,7 @@ export function processIAddress(address: string, chain: string): string {
 }
 
 export function generateRequestID(): CompactIAddressObject {
-  const randID = Buffer.from(crypto.randomBytes(20))
+  const randID = Buffer.from(crypto.getRandomValues(new Uint8Array(20)))
   // Use 102, which is the ID_ADDR_VERSION
   const requestID = CompactIAddressObject.fromAddress(
     toBase58Check(randID, 102),

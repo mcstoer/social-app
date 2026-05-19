@@ -18,6 +18,16 @@ if (process.env.BSKY_PROFILE) {
 cfg.resolver.assetExts = [...cfg.resolver.assetExts, 'woff2']
 
 cfg.resolver.resolveRequest = (context, moduleName, platform) => {
+  // Use the browser build of axios instead of the Node build, since the Node build
+  // needs several node libraries (url, http2), whereas React Native has support for
+  // the browser build requirements.
+  if (moduleName === 'axios') {
+    return context.resolveRequest(
+      context,
+      'axios/dist/browser/axios.cjs',
+      platform,
+    )
+  }
   if (process.env.BSKY_PROFILE) {
     if (moduleName.endsWith('ReactNativeRenderer-prod')) {
       return context.resolveRequest(

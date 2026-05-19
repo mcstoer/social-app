@@ -1,4 +1,10 @@
-import React from 'react'
+import {
+  createContext,
+  type PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import {VerusdRpcInterface} from 'verusd-rpc-ts-client'
 import {VerusIdInterface} from 'verusid-ts-client'
 
@@ -41,7 +47,7 @@ const createVerusIdInterface = (preferences: VerusServicePreferences) => {
   )
 }
 
-const stateContext = React.createContext<StateContext>({
+const stateContext = createContext<StateContext>({
   state: persisted.defaults.verusServiceInterface,
   verusRpcInterface: createVerusdRpcInterface(
     persisted.defaults.verusServiceInterface,
@@ -52,40 +58,33 @@ const stateContext = React.createContext<StateContext>({
 })
 stateContext.displayName = 'VerusServiceStateContext'
 
-const setContext = React.createContext<SetContext>(
-  (_: VerusServicePreferences) => {},
-)
+const setContext = createContext<SetContext>((_: VerusServicePreferences) => {})
 setContext.displayName = 'VerusServiceSetContext'
 
-export function Provider({children}: React.PropsWithChildren<{}>) {
-  const [state, setState] = React.useState<VerusServicePreferences>(
+export function Provider({children}: PropsWithChildren<{}>) {
+  const [state, setState] = useState<VerusServicePreferences>(
     persisted.get('verusServiceInterface'),
   )
 
-  const interfaces = React.useMemo(() => {
-    return {
-      state,
-      verusRpcInterface: createVerusdRpcInterface(state),
-      verusIdInterface: createVerusIdInterface(state),
-    }
-  }, [state])
+  const interfaces = {
+    state,
+    verusRpcInterface: createVerusdRpcInterface(state),
+    verusIdInterface: createVerusIdInterface(state),
+  }
 
-  const setStateWrapped = React.useCallback(
-    (preferences: VerusServicePreferences) => {
-      setState(preferences)
-      persisted.write('verusServiceInterface', preferences)
-    },
-    [],
-  )
+  const setStateWrapped = (preferences: VerusServicePreferences) => {
+    setState(preferences)
+    void persisted.write('verusServiceInterface', preferences)
+  }
 
-  React.useEffect(() => {
+  useEffect(() => {
     return persisted.onUpdate(
       'verusServiceInterface',
       nextServicePreferences => {
         setState(nextServicePreferences)
       },
     )
-  }, [setStateWrapped])
+  }, [])
 
   return (
     <stateContext.Provider value={interfaces}>
@@ -97,9 +96,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
 }
 
 export function useVerusService() {
-  return React.useContext(stateContext)
+  return useContext(stateContext)
 }
 
 export function useSetVerusServicePreferences() {
-  return React.useContext(setContext)
+  return useContext(setContext)
 }

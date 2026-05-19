@@ -24,7 +24,7 @@ async function createVerusPayInvoice(
     amount: amount ? new BigNumber(amount * AMOUNT_TO_SATS, 10) : undefined,
     destination: new TransferDestination({
       type: DEST_ID,
-      destination_bytes: fromBase58Check(destinationId).hash,
+      destinationBytes: fromBase58Check(destinationId).hash,
     }),
     requestedcurrencyid: currencyId,
     maxestimatedslippage: MAX_ESTIMATED_SLIPPAGE,

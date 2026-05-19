@@ -15,7 +15,8 @@ export const VSKY_SERVICE = VERUSSKY_CONFIG.isMainnet
   ? 'https://api.verus.services'
   : 'https://api.verustest.net'
 export const VSKY_SERVICE_ID = VERUSSKY_CONFIG.chain
-export const LOCAL_DEV_VSKY_SERVER = 'http://127.0.0.1:25000'
+export const LOCAL_DEV_VSKY_SERVER =
+  Platform.OS === 'android' ? 'http://10.0.2.2:25000' : 'http://localhost:25000'
 export const DEFAULT_SERVICE = BSKY_SERVICE
 const HELP_DESK_LANG = 'en-us'
 export const HELP_DESK_URL = `https://blueskyweb.zendesk.com/hc/${HELP_DESK_LANG}`

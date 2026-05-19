@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {Keyboard, type TextInput, View} from 'react-native'
 import {
   ComAtprotoServerCreateSession,
@@ -7,7 +7,6 @@ import {
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {Trans} from '@lingui/react/macro'
-import crypto from 'crypto'
 import {
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   IDENTITY_VIEW,
@@ -126,7 +125,7 @@ export const LoginForm = ({
       setIsProcessing(true)
       setLoginUri('')
       try {
-        const randID = Buffer.from(crypto.randomBytes(20))
+        const randID = Buffer.from(crypto.getRandomValues(new Uint8Array(20)))
         const challengeId = toBase58Check(randID, 102)
 
         const details = new LoginConsentChallenge({
