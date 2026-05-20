@@ -1,14 +1,18 @@
 import {useQuery} from '@tanstack/react-query'
 import {GenericResponse} from 'verus-typescript-primitives'
+import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
+import {useVerusService} from '#/state/preferences'
 
 const RESPONSES_GET_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/responses/get`
 
 export async function getVerusIdRequestResponse({
   requestId,
+  verusIdInterface,
 }: {
   requestId: string
+  verusIdInterface: VerusIdInterface
 }): Promise<GenericResponse | null> {
   const response = await fetch(
     `${RESPONSES_GET_ENDPOINT}?requestId=${encodeURIComponent(requestId)}`,
@@ -27,6 +31,12 @@ export async function getVerusIdRequestResponse({
   const genericResponse = new GenericResponse()
   genericResponse.fromBuffer(buffer)
 
+  const isValid = await verusIdInterface.verifyGenericResponse(genericResponse)
+
+  if (!isValid) {
+    throw new Error('Invalid VerusID request response')
+  }
+
   return genericResponse
 }
 
@@ -42,11 +52,12 @@ export function useVerusIdRequestQuery({
   requestId: string
   enabled?: boolean
 }) {
+  const {verusIdInterface} = useVerusService()
   return useQuery({
     enabled: !!requestId && enabled !== false,
     queryKey: createVerusIdRequestQueryKey(requestId),
     queryFn: async () => {
-      return await getVerusIdRequestResponse({requestId})
+      return await getVerusIdRequestResponse({requestId, verusIdInterface})
     },
     refetchInterval: query => {
       return query.state.data ? false : 1000
