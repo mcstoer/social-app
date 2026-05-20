@@ -16,29 +16,25 @@
     "posttest": "pnpm run lint",
     "test": "jest"
   },
-  "devDependencies": {
-    "@types/body-parser": "^1.19.5",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "@types/node": "^24.12.2",
-    "globals": "^15.13.0",
-    "jest": "^29.7.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.7.3",
-    "typescript-eslint": "^8.17.0"
-  },
   "dependencies": {
     "@types/bn.js": "5.1.1",
     "axios": "1.16.0",
     "base64url": "https://github.com/VerusCoin/base64url.git",
     "bn.js": "5.2.1",
-    "body-parser": "^1.20.3",
-    "cors": "^2.8.5",
-    "crypto-browserify": "^3.12.1",
-    "dotenv": "^16.4.5",
+    "cors": "2.8.5",
+    "crypto-browserify": "3.12.1",
+    "dotenv": "16.4.5",
     "express": "5.1.0",
-    "verus-typescript-primitives": "git+https://github.com/mcstoer/verus-typescript-primitives.git#key-updates-and-additions",
-    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git#a2519d42650e0bd014e73ab0cbc26c2cadd4a672",
-    "verusid-ts-client": "git+https://github.com/michaeltout/verusid-ts-client.git#fa8c07d215a5013779c20afd2cda42b5af10dab6"
+    "verus-typescript-primitives": "git+https://github.com/VerusCoin/verus-typescript-primitives",
+    "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client",
+    "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client"
+  },
+  "devDependencies": {
+    "@types/cors": "2.8.17",
+    "@types/express": "5.0.6",
+    "@types/node": "24.12.2",
+    "jest": "29.7.0",
+    "tsx": "4.19.0",
+    "typescript": "5.7.3"
   }
 }

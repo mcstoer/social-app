@@ -1,4 +1,3 @@
-import * as bodyParser from 'body-parser'
 import * as express from 'express'
 import {ProvisioningRequest} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningRequest'
 
@@ -15,11 +14,11 @@ const idtransfer = process.env.IDTRANSFER === 'true'
 
 const provisioningRouter = express.Router()
 
-provisioningRouter.get('/generate', bodyParser.json(), async (req, res) => {
+provisioningRouter.get('/generate', express.json(), async (req, res) => {
   res.status(200).json('temp')
 })
 
-provisioningRouter.post('/', bodyParser.json(), async (req, res) => {
+provisioningRouter.post('/', express.json(), async (req, res) => {
   const provisioningRequest = new ProvisioningRequest(req.body)
 
   if (idtransfer) {
@@ -47,7 +46,7 @@ provisioningRouter.post('/', bodyParser.json(), async (req, res) => {
   }
 })
 
-provisioningRouter.get('/:decisionId', bodyParser.json(), async (req, res) => {
+provisioningRouter.get('/:decisionId', express.json(), async (req, res) => {
   const provisioningResponse = await checkProvisioningStatus(
     req.params.decisionId,
   )
