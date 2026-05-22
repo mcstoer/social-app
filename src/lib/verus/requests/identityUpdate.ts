@@ -8,7 +8,7 @@ import {
 import {
   generateIdentityUpdateRequestDetails,
   type IdentityUpdateRequestOptions,
-} from './details/identityUpdate'
+} from './details/identityUpdateDetail'
 
 export function generateIdentityUpdateRequestOrdinals(
   options: IdentityUpdateRequestOptions,

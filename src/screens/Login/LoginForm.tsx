@@ -7,26 +7,22 @@ import {
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {Trans} from '@lingui/react/macro'
-import {
-  IDENTITY_CREDENTIAL_PLAINLOGIN,
-  IDENTITY_VIEW,
-  LOGIN_CONSENT_WEBHOOK_VDXF_KEY,
-  LoginConsentChallenge,
-  LoginConsentRequest,
-  RedirectUri,
-  RequestedPermission,
-  toBase58Check,
-} from 'verus-typescript-primitives'
+import {type GenericRequest} from 'verus-typescript-primitives'
 
-import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
-import {parseVerusIdLogin} from '#/lib/verus/login'
+import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {
+  generateLoginRequestOrdinals,
+  processLoginResponse,
+} from '#/lib/verus/requests/login'
 import {logger} from '#/logger'
 import {emitVerusIDLoginCompleted} from '#/state/events'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
-import {useVerusIdLoginQuery} from '#/state/queries/verus/useVerusIdLoginQuery'
+import {useVerusService} from '#/state/preferences/verus-service'
+import {useVerusGetIdentity} from '#/state/queries/verus/useVerusGetIdentityQuery'
+import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSessionApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
@@ -105,12 +101,15 @@ export const LoginForm = ({
     useVerusIdCredentialUpdateDialogControl()
   const removeVerusIdAccountLinkControl =
     useRemoveVerusIdAccountLinkDialogControl()
+  const {verusIdInterface} = useVerusService()
+  const getIdentity = useVerusGetIdentity()
 
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
+  const loginRequestRef = useRef<GenericRequest | null>(null)
 
   const {data: verusIdLoginResult, error: verusIdLoginError} =
-    useVerusIdLoginQuery({
+    useVerusIdRequestQuery({
       requestId: loginIdRef.current,
       enabled: isVerusIdLogin && loginIdRef.current !== '',
     })
@@ -125,71 +124,31 @@ export const LoginForm = ({
       setIsProcessing(true)
       setLoginUri('')
       try {
-        const randID = Buffer.from(crypto.getRandomValues(new Uint8Array(20)))
-        const challengeId = toBase58Check(randID, 102)
+        const ordinals = generateLoginRequestOrdinals()
 
-        const details = new LoginConsentChallenge({
-          challenge_id: challengeId,
-          requested_access: [
-            new RequestedPermission(IDENTITY_VIEW.vdxfid),
-            new RequestedPermission(IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid),
-          ],
-          redirect_uris: [
-            new RedirectUri(
-              `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/confirm-login`,
-              LOGIN_CONSENT_WEBHOOK_VDXF_KEY.vdxfid,
-            ),
-          ],
-          created_at: Math.floor(Date.now() / 1000),
-        })
-
-        // Sign the request using a signing server.
-        const response = await fetch(
-          `${LOCAL_DEV_VSKY_SERVER}/api/v1/login/sign-login-request`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(details.toJson()),
-          },
+        const signedRequest = await createAndSignGenericRequest(
+          verusIdInterface,
+          ordinals,
         )
 
-        if (!response.ok) {
-          logger.warn('Failed to sign the request', {
-            error: response.statusText,
-          })
-          setError('Failed to sign the request using the signing server')
-          setIsProcessing(false)
-          return
-        }
-
-        const res = await response.json()
-
-        if (res.error) {
-          logger.warn('Failed to sign the request', {error: res.error})
-          setError('Failed to sign the request using the signing server')
-          setIsProcessing(false)
-          return
-        }
-
-        const signedRequest = new LoginConsentRequest(res)
+        loginRequestRef.current = signedRequest
+        loginIdRef.current = signedRequest.requestID!.toAddress()
         setLoginUri(signedRequest.toWalletDeeplinkUri())
-        loginIdRef.current = challengeId
         setError('')
       } catch (e: any) {
         const errMsg = e.toString()
         logger.warn('Failed to login', {error: errMsg})
         setError(cleanError(errMsg))
         loginIdRef.current = ''
+        loginRequestRef.current = null
       }
       setIsProcessing(false)
     }
 
     if (isVerusIdLogin) {
-      createAndSignLoginRequest()
+      void createAndSignLoginRequest()
     }
-  }, [isVerusIdLogin, setError])
+  }, [isVerusIdLogin, setError, verusIdInterface])
 
   const onPressSelectService = useCallback(() => {
     Keyboard.dismiss()
@@ -351,55 +310,80 @@ export const LoginForm = ({
 
   // Handle retrieval of the login response
   useEffect(() => {
-    if (!verusIdLoginResult) {
+    if (!verusIdLoginResult || !loginRequestRef.current) {
       return
     }
 
-    try {
+    const handleLoginResponse = async () => {
       setIsProcessing(true)
+
+      let result
+      try {
+        result = await processLoginResponse(
+          loginRequestRef.current!,
+          verusIdLoginResult,
+          getIdentity,
+        )
+      } catch (e: any) {
+        // The VerusID itself could not be validated.
+        const errMsg = e.toString()
+        logger.warn('Failed to verify VerusSky login response', {error: errMsg})
+        setError(cleanError(errMsg))
+        verusIdLoginFailed.current = true
+        setIsVerusIdLogin(false)
+        setIsProcessing(false)
+        onAttemptFailed()
+        return
+      }
+
+      // The VerusID is valid, so record the session even when the stored
+      // credentials are missing, so they can be updated after a manual sign in.
       vskySessionValueRef.current = {
         auth: '',
-        id: verusIdLoginResult.identity.identityaddress || '',
-        name: verusIdLoginResult.identity.name,
+        id: result.identity.identityaddress || '',
+        name: result.identity.name,
       }
 
-      const credentials = parseVerusIdLogin(verusIdLoginResult.loginResponse)
+      if (!result.credentials) {
+        const errMsg = result.credentialError ?? ''
+        let message = ''
 
-      identifierValueRef.current = credentials.username
-      passwordValueRef.current = credentials.password
-    } catch (e: any) {
-      const errMsg = e.toString()
-      let message = ''
+        if (errMsg.includes('Missing username')) {
+          message = `Missing username from VerusID sign in.`
+        } else if (errMsg.includes('Missing password')) {
+          message = `Missing password from VerusID sign in.`
+        } else if (
+          errMsg.includes('Invalid credential format') ||
+          errMsg.includes('Invalid credentials') ||
+          errMsg.includes('Missing sign in credentials') ||
+          errMsg.includes('Missing plain login credential')
+        ) {
+          message = `Missing username and password from VerusID sign in.`
+        }
 
-      if (errMsg.includes('Missing username')) {
-        message = `Missing username from VerusID sign in.`
-      } else if (errMsg.includes('Missing password')) {
-        message = `Missing password from VerusID sign in.`
-      } else if (
-        errMsg.includes('Invalid credential format') ||
-        errMsg.includes('Invalid credentials') ||
-        errMsg.includes('Missing sign in credentials')
-      ) {
-        message = `Missing username and password from VerusID sign in.`
+        message += ` Please sign in manually.`
+        setError(_(msg`${message}`))
+
+        verusIdLoginFailed.current = true
+
+        // Select to save the login as a way to update the failed VerusID login credentials.
+        setSaveLoginWithVerusId(true)
+
+        setIsVerusIdLogin(false)
+
+        setIsProcessing(false)
+        onAttemptFailed()
+        return
       }
 
-      message += ` Please sign in manually.`
-      setError(_(msg`${message}`))
-
-      verusIdLoginFailed.current = true
-
-      // Select to save the login as a way to update the failed VerusID login credentials.
-      setSaveLoginWithVerusId(true)
-
-      setIsVerusIdLogin(false)
+      identifierValueRef.current = result.credentials.username
+      passwordValueRef.current = result.credentials.password
 
       setIsProcessing(false)
-      onAttemptFailed()
-      return
+      onPressNext()
     }
 
-    setIsProcessing(false)
-    onPressNext()
+    handleLoginResponse()
 
     // onPressNext doesn't change so it is fine to exclude from the dependencies
     // eslint-disable-next-line react-compiler/react-compiler
@@ -415,13 +399,11 @@ export const LoginForm = ({
     const errMsg = verusIdLoginError.message
     logger.warn('Failed to verify VerusSky login response', {error: errMsg})
 
-    if (errMsg.includes('Invalid login response')) {
+    if (errMsg.includes('Invalid VerusID request response')) {
       setError(
         _(msg`Invalid login response. Please try again or sign in manually.`),
       )
-    } else if (
-      errMsg.includes('Unable to fetch details on the signing identity')
-    ) {
+    } else if (errMsg.includes('Failed to fetch VerusID request response')) {
       setError(_(msg`Unable to verify the signer of the login.`))
     } else {
       setError(cleanError(errMsg))

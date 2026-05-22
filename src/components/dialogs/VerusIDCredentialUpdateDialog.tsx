@@ -16,7 +16,7 @@ import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
 import {
   generateIdentityUpdateRequestOrdinals,
   processIdentityUpdateResponse,
-} from '#/lib/verus/requests/identityUpdateRequest'
+} from '#/lib/verus/requests/identityUpdate'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
