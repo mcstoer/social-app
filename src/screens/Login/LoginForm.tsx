@@ -107,6 +107,7 @@ export const LoginForm = ({
   const [loginUri, setLoginUri] = useState<string>('')
   const loginIdRef = useRef<string>('')
   const loginRequestRef = useRef<GenericRequest | null>(null)
+  const ivkRef = useRef<Buffer | null>(null)
 
   const {data: verusIdLoginResult, error: verusIdLoginError} =
     useVerusIdRequestQuery({
@@ -124,7 +125,7 @@ export const LoginForm = ({
       setIsProcessing(true)
       setLoginUri('')
       try {
-        const ordinals = generateLoginRequestOrdinals()
+        const {ordinals, ivk} = await generateLoginRequestOrdinals()
 
         const signedRequest = await createAndSignGenericRequest(
           verusIdInterface,
@@ -132,6 +133,7 @@ export const LoginForm = ({
         )
 
         loginRequestRef.current = signedRequest
+        ivkRef.current = ivk
         loginIdRef.current = signedRequest.requestID!.toAddress()
         setLoginUri(signedRequest.toWalletDeeplinkUri())
         setError('')
@@ -141,6 +143,7 @@ export const LoginForm = ({
         setError(cleanError(errMsg))
         loginIdRef.current = ''
         loginRequestRef.current = null
+        ivkRef.current = null
       }
       setIsProcessing(false)
     }
@@ -323,6 +326,7 @@ export const LoginForm = ({
           loginRequestRef.current!,
           verusIdLoginResult,
           getIdentity,
+          ivkRef.current!,
         )
       } catch (e: any) {
         // The VerusID itself could not be validated.

@@ -42,6 +42,11 @@ export function cleanError(str: any): string {
   if (str.includes('Unable to resolve handle')) {
     return t`Unable to resolve handle`
   }
+  // VerusSky specific errors.
+  if (str.includes('Signing request failed')) {
+    return t`Unable to sign VerusID request`
+  }
+
   if (str.startsWith('Error: ')) {
     return str.slice('Error: '.length)
   }
