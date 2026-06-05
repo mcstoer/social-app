@@ -23,8 +23,9 @@ import {useAccountSwitcher} from '#/lib/hooks/useAccountSwitcher'
 import {useColorSchemeStyle} from '#/lib/hooks/useColorSchemeStyle'
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {
+  type ChatNotificationPayload,
   getNotificationPayload,
-  type NotificationPayload,
+  isChatNotificationPayload,
   notificationToURL,
   storePayloadForAccountSwitch,
 } from '#/lib/hooks/useNotificationHandler'
@@ -44,6 +45,7 @@ import {
   type State,
 } from '#/lib/routes/types'
 import {bskyTitle} from '#/lib/strings/headings'
+import {CHAT_INVITE_CODE_REGEX} from '#/lib/strings/url-helpers'
 import {logger} from '#/logger'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
 import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
@@ -83,6 +85,7 @@ import {MessagesScreen} from '#/screens/Messages/ChatList'
 import {MessagesConversationScreen} from '#/screens/Messages/Conversation'
 import {MessagesConversationSettingsScreen} from '#/screens/Messages/ConversationSettings'
 import {MessagesInboxScreen} from '#/screens/Messages/Inbox'
+import {MessagesJoinRequestsScreen} from '#/screens/Messages/JoinRequests'
 import {MessagesSettingsScreen} from '#/screens/Messages/Settings'
 import {ModerationScreen} from '#/screens/Moderation'
 import {Screen as ModerationVerificationSettings} from '#/screens/Moderation/VerificationSettings'
@@ -116,16 +119,6 @@ import {InterestsSettingsScreen} from '#/screens/Settings/InterestsSettings'
 import {LanguageSettingsScreen} from '#/screens/Settings/LanguageSettings'
 import {LegacyNotificationSettingsScreen} from '#/screens/Settings/LegacyNotificationSettings'
 import {NotificationSettingsScreen} from '#/screens/Settings/NotificationSettings'
-import {ActivityNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/ActivityNotificationSettings'
-import {LikeNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/LikeNotificationSettings'
-import {LikesOnRepostsNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/LikesOnRepostsNotificationSettings'
-import {MentionNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/MentionNotificationSettings'
-import {MiscellaneousNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/MiscellaneousNotificationSettings'
-import {NewFollowerNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/NewFollowerNotificationSettings'
-import {QuoteNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/QuoteNotificationSettings'
-import {ReplyNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/ReplyNotificationSettings'
-import {RepostNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/RepostNotificationSettings'
-import {RepostsOnRepostsNotificationSettingsScreen} from '#/screens/Settings/NotificationSettings/RepostsOnRepostsNotificationSettings'
 import {PrivacyAndSecuritySettingsScreen} from '#/screens/Settings/PrivacyAndSecuritySettings'
 import {SettingsScreen} from '#/screens/Settings/Settings'
 import {ThreadPreferencesScreen} from '#/screens/Settings/ThreadPreferences'
@@ -148,6 +141,7 @@ import {setNavigationMetadata} from '#/analytics/metadata'
 import {IS_LIQUID_GLASS, IS_NATIVE, IS_WEB} from '#/env'
 import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
+import {renderMessagesSplitViewLayout} from './screens/Messages/components/splitView/MessagesSplitViewLayout'
 import {listenVerusIDLoginCompleted} from './state/events'
 
 const navigationRef = createNavigationContainerRef<AllNavigatorParams>()
@@ -456,86 +450,6 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         options={{title: title(msg`Notification settings`), requireAuth: true}}
       />
       <Stack.Screen
-        name="ReplyNotificationSettings"
-        getComponent={() => ReplyNotificationSettingsScreen}
-        options={{
-          title: title(msg`Reply notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="MentionNotificationSettings"
-        getComponent={() => MentionNotificationSettingsScreen}
-        options={{
-          title: title(msg`Mention notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="QuoteNotificationSettings"
-        getComponent={() => QuoteNotificationSettingsScreen}
-        options={{
-          title: title(msg`Quote notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="LikeNotificationSettings"
-        getComponent={() => LikeNotificationSettingsScreen}
-        options={{
-          title: title(msg`Like notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="RepostNotificationSettings"
-        getComponent={() => RepostNotificationSettingsScreen}
-        options={{
-          title: title(msg`Repost notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="NewFollowerNotificationSettings"
-        getComponent={() => NewFollowerNotificationSettingsScreen}
-        options={{
-          title: title(msg`New follower notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="LikesOnRepostsNotificationSettings"
-        getComponent={() => LikesOnRepostsNotificationSettingsScreen}
-        options={{
-          title: title(msg`Likes of your reposts notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="RepostsOnRepostsNotificationSettings"
-        getComponent={() => RepostsOnRepostsNotificationSettingsScreen}
-        options={{
-          title: title(msg`Reposts of your reposts notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="ActivityNotificationSettings"
-        getComponent={() => ActivityNotificationSettingsScreen}
-        options={{
-          title: title(msg`Activity notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
-        name="MiscellaneousNotificationSettings"
-        getComponent={() => MiscellaneousNotificationSettingsScreen}
-        options={{
-          title: title(msg`Miscellaneous notifications`),
-          requireAuth: true,
-        }}
-      />
-      <Stack.Screen
         name="ContentAndMediaSettings"
         getComponent={() => ContentAndMediaSettingsScreen}
         options={{
@@ -577,26 +491,33 @@ function commonScreens(Stack: typeof Flat, unreadCountLabel?: string) {
         getComponent={() => TopicScreen}
         options={{title: title(msg`Topic`)}}
       />
-      <Stack.Screen
-        name="MessagesConversation"
-        getComponent={() => MessagesConversationScreen}
-        options={{title: title(msg`Chat`), requireAuth: true}}
-      />
-      <Stack.Screen
-        name="MessagesConversationSettings"
-        getComponent={() => MessagesConversationSettingsScreen}
-        options={{title: title(msg`Group chat settings`), requireAuth: true}}
-      />
-      <Stack.Screen
-        name="MessagesSettings"
-        getComponent={() => MessagesSettingsScreen}
-        options={{title: title(msg`Chat settings`), requireAuth: true}}
-      />
-      <Stack.Screen
-        name="MessagesInbox"
-        getComponent={() => MessagesInboxScreen}
-        options={{title: title(msg`Chat request inbox`), requireAuth: true}}
-      />
+      <Stack.Group screenLayout={renderMessagesSplitViewLayout}>
+        <Stack.Screen
+          name="MessagesConversation"
+          getComponent={() => MessagesConversationScreen}
+          options={{title: title(msg`Chat`), requireAuth: true}}
+        />
+        <Stack.Screen
+          name="MessagesConversationSettings"
+          getComponent={() => MessagesConversationSettingsScreen}
+          options={{title: title(msg`Group chat settings`), requireAuth: true}}
+        />
+        <Stack.Screen
+          name="MessagesJoinRequests"
+          getComponent={() => MessagesJoinRequestsScreen}
+          options={{title: title(msg`Requests to join`), requireAuth: true}}
+        />
+        <Stack.Screen
+          name="MessagesSettings"
+          getComponent={() => MessagesSettingsScreen}
+          options={{title: title(msg`Chat settings`), requireAuth: true}}
+        />
+        <Stack.Screen
+          name="MessagesInbox"
+          getComponent={() => MessagesInboxScreen}
+          options={{title: title(msg`Chat request inbox`), requireAuth: true}}
+        />
+      </Stack.Group>
       <Stack.Screen
         name="NotificationsActivityList"
         getComponent={() => NotificationsActivityListScreen}
@@ -845,6 +766,7 @@ const FlatNavigator = ({
         name="Messages"
         getComponent={() => MessagesScreen}
         options={{title: title(msg`Messages`), requireAuth: true}}
+        layout={renderMessagesSplitViewLayout}
       />
       <Flat.Screen
         name="Start"
@@ -895,6 +817,19 @@ const LINKING = {
       return buildStateObject('Flat', 'Home', params)
     }
 
+    // Chat invite URLs (`/c/:code`) are handled by `useIntentHandler`, which
+    // opens the GroupChatJoinDialog (or the logged-out join flow). Route the
+    // path to Home so the dialog overlays Home instead of NotFound. On native,
+    // react-navigation strips the `bluesky://` prefix and passes the path
+    // without a leading slash, so normalize before matching.
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`
+    if (CHAT_INVITE_CODE_REGEX.test(normalizedPath.split('?')[0])) {
+      if (IS_NATIVE) {
+        return buildStateObject('HomeTab', 'Home', params)
+      }
+      return buildStateObject('Flat', 'Home', params)
+    }
+
     if (IS_NATIVE) {
       if (name === 'Search') {
         return buildStateObject('SearchTab', 'Search', params)
@@ -924,6 +859,7 @@ const LINKING = {
 
 function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const ax = useAnalytics()
+  // eslint-disable-next-line react-compiler/react-compiler
   const notyLogger = ax.logger.useChild(ax.logger.Context.Notifications)
   const theme = useColorSchemeStyle(DefaultTheme, DarkTheme)
   const {currentAccount, accounts} = useSession()
@@ -938,14 +874,14 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const linkingUrl = Linking.useLinkingURL()
 
   /**
-   * Handle navigation to a conversation, or prepares for account switch.
+   * Handle navigation to the messages tab, or prepares for account switch.
    *
    * Non-reactive because we need the latest data from some hooks
    * after an async call - sfn
    */
-  const handleChatMessage = useNonReactiveCallback(
-    (payload: Extract<NotificationPayload, {reason: 'chat-message'}>) => {
-      notyLogger.debug(`handleChatMessage`, {payload})
+  const handleChatNotification = useNonReactiveCallback(
+    (payload: ChatNotificationPayload) => {
+      notyLogger.debug(`handleChatNotification`, {payload})
 
       if (payload.recipientDid !== currentAccount?.did) {
         // handled in useNotificationHandler after account switch finishes
@@ -954,18 +890,29 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
 
         const account = accounts.find(a => a.did === payload.recipientDid)
         if (account) {
-          onPressSwitchAccount(account, 'Notification')
+          void onPressSwitchAccount(account, 'Notification')
         } else {
           setShowLoggedOut(true)
         }
-      } else {
+      } else if (
+        payload.reason === 'chat-message' ||
+        payload.reason === 'chat-reaction' ||
+        payload.reason === 'chat-added-to-group'
+      ) {
+        // chat-added-to-group routes to the convo because the recipient was
+        // just added and now has access.
         // @ts-expect-error nested navigators aren't typed -sfn
-        navigate('MessagesTab', {
+        void navigate('MessagesTab', {
           screen: 'Messages',
           params: {
             pushToConversation: payload.convoId,
           },
         })
+      } else {
+        // chat-removed-from-group, chat-join-request-rejected: the convo is
+        // no longer accessible to the recipient, so just open the list.
+        // @ts-expect-error nested navigators aren't typed -sfn
+        navigate('MessagesTab', {screen: 'Messages'})
       }
     },
   )
@@ -1001,8 +948,8 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
           causedBoot: true,
         })
 
-        if (payload.reason === 'chat-message') {
-          handleChatMessage(payload)
+        if (isChatNotificationPayload(payload)) {
+          handleChatNotification(payload)
         } else {
           const path = notificationToURL(payload)
 
@@ -1012,7 +959,7 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
           } else if (path) {
             const [screen, params] = router.matchPath(path)
             // @ts-expect-error nested navigators aren't typed -sfn
-            navigate('HomeTab', {screen, params})
+            void navigate('HomeTab', {screen, params})
             notyLogger.debug(`handlePushNotificationEntry: navigate`, {
               screen,
               params,
@@ -1137,7 +1084,7 @@ function navigate<K extends keyof AllNavigatorParams>(
         }
         navigationRef.addListener('state', handler)
 
-        // @ts-ignore I dont know what would make typescript happy but I have a life -prf
+        // @ts-ignore I don't know what would make typescript happy but I have a life -prf
         navigationRef.navigate(name, params)
       }),
       timeout(1e3),
@@ -1150,7 +1097,7 @@ function resetToTab(
   tabName: 'HomeTab' | 'SearchTab' | 'MessagesTab' | 'NotificationsTab',
 ) {
   if (navigationRef.isReady()) {
-    navigate(tabName)
+    void navigate(tabName)
     if (navigationRef.canGoBack()) {
       navigationRef.dispatch(StackActions.popToTop()) //we need to check .canGoBack() before calling it
     }

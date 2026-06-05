@@ -159,7 +159,7 @@ import {
   composerReducer,
   createComposerState,
   type EmbedDraft,
-  MAX_IMAGES,
+  MAX_GALLERY_IMAGES,
   type PostAction,
   type PostDraft,
   type ThreadDraft,
@@ -176,6 +176,65 @@ import {clearThumbnailCache} from './videos/VideoTranscodeBackdrop'
 
 type CancelRef = {
   onPressCancel: () => void
+}
+
+function applyGalleryCap(
+  currentCount: number,
+  incoming: ComposerImage[],
+):
+  | {status: 'full'}
+  | {status: 'partial'; accepted: ComposerImage[]; dropped: number}
+  | {status: 'ok'; accepted: ComposerImage[]} {
+  const remaining = MAX_GALLERY_IMAGES - currentCount
+  if (remaining <= 0) {
+    return {status: 'full'}
+  }
+  if (incoming.length > remaining) {
+    return {
+      status: 'partial',
+      accepted: incoming.slice(0, remaining),
+      dropped: incoming.length - remaining,
+    }
+  }
+  return {status: 'ok', accepted: incoming}
+}
+
+function useAddImagesWithCap(
+  currentCount: number,
+  dispatchPostAction: (action: PostAction) => void,
+) {
+  const {t: l} = useLingui()
+  return useCallback(
+    (next: ComposerImage[]) => {
+      const result = applyGalleryCap(currentCount, next)
+      if (result.status === 'full') {
+        Toast.show(
+          l({
+            message: `You can only add up to ${MAX_GALLERY_IMAGES} images per post`,
+            comment:
+              'Toast shown when the user tries to add more images but the post gallery is already at the cap',
+          }),
+          {type: 'warning'},
+        )
+        return
+      }
+      if (result.status === 'partial') {
+        Toast.show(
+          l({
+            message: `Only ${result.accepted.length} of ${next.length} ${plural(next.length, {one: 'image', other: 'images'})} added; limit is ${MAX_GALLERY_IMAGES}`,
+            comment:
+              'Toast shown when adding images would exceed the post gallery cap; only the first N are kept',
+          }),
+          {type: 'warning'},
+        )
+      }
+      dispatchPostAction({
+        type: 'embed_add_images',
+        images: result.accepted,
+      })
+    },
+    [currentCount, dispatchPostAction, l],
+  )
 }
 
 type Props = ComposerOpts
@@ -611,7 +670,11 @@ export const ComposePost = ({
       ax.metric('draft:save', {
         isNewDraft,
         hasText: posts.some(p => p.richtext.text.trim().length > 0),
-        hasImages: posts.some(p => p.embed.media?.type === 'images'),
+        hasImages: posts.some(
+          p =>
+            p.embed.media?.type === 'images' ||
+            p.embed.media?.type === 'gallery',
+        ),
         hasVideo: posts.some(p => p.embed.media?.type === 'video'),
         hasGif: posts.some(p => p.embed.media?.type === 'gif'),
         hasQuote: posts.some(p => !!p.embed.quote),
@@ -780,7 +843,10 @@ export const ComposePost = ({
     for (let i = 0; i < thread.posts.length; i++) {
       const media = thread.posts[i].embed.media
       if (media) {
-        if (media.type === 'images' && media.images.some(img => !img.alt)) {
+        if (
+          (media.type === 'images' || media.type === 'gallery') &&
+          media.images.some(img => !img.alt)
+        ) {
           return l`One or more images is missing alt text.`
         }
         if (media.type === 'gif' && !media.alt) {
@@ -810,7 +876,7 @@ export const ComposePost = ({
           )),
     )
 
-  const getFilteredThread = (): {
+  const getFilteredThread = useCallback((): {
     type: 'none' | 'trailing-only' | 'non-trailing'
     filteredThread: ThreadDraft
   } => {
@@ -838,7 +904,7 @@ export const ComposePost = ({
       type: hasNonTrailingEmpty ? 'non-trailing' : 'trailing-only',
       filteredThread,
     }
-  }
+  }, [thread])
 
   const onPressPublish = useCallback(async () => {
     if (isPublishing) {
@@ -877,24 +943,12 @@ export const ComposePost = ({
     try {
       logger.info(`composer: posting...`)
       postUri = (
-        await apilib.post(
-          agent,
-          queryClient,
-          {
-            thread: filteredThread,
-            replyTo: replyTo?.uri,
-            onStateChange: setPublishingStage,
-            langs: currentLanguages,
-          },
-          {
-            highResolutionImages: ax.features.enabled(
-              ax.features.ImageUploadsHighResolution,
-            ),
-            increasedBlobSizeLimit: ax.features.enabled(
-              ax.features.ImageUploadsBlobSize2mbEnabled,
-            ),
-          },
-        )
+        await apilib.post(agent, queryClient, {
+          thread: filteredThread,
+          replyTo: replyTo?.uri,
+          onStateChange: setPublishingStage,
+          langs: currentLanguages,
+        })
       ).uris[0]
 
       /*
@@ -943,12 +997,17 @@ export const ComposePost = ({
       logger.error(e, {
         message: `Composer: create post failed`,
         hasImages: filteredThread.posts.some(
-          p => p.embed.media?.type === 'images',
+          p =>
+            p.embed.media?.type === 'images' ||
+            p.embed.media?.type === 'gallery',
         ),
       })
 
       let err = cleanError(e.message)
-      if (err.includes('not locate record')) {
+      if (
+        e instanceof apilib.ReplyDeletedError ||
+        err.includes('not locate record')
+      ) {
         err = l`We're sorry! The post you are replying to has been deleted.`
       } else if (e instanceof EmbeddingDisabledError) {
         err = l`This post's author has disabled quote posts.`
@@ -962,7 +1021,8 @@ export const ComposePost = ({
         for (let post of filteredThread.posts) {
           ax.metric('post:create', {
             imageCount:
-              post.embed.media?.type === 'images'
+              post.embed.media?.type === 'images' ||
+              post.embed.media?.type === 'gallery'
                 ? post.embed.media.images.length
                 : 0,
             isReply: index > 0 || !!replyTo,
@@ -1008,7 +1068,7 @@ export const ComposePost = ({
     setLangPrefs.savePostLanguageToHistory()
     if (initQuote) {
       // We want to wait for the quote count to update before we call `onPost`, which will refetch data
-      whenAppViewReady(agent, initQuote.uri, res => {
+      void whenAppViewReady(agent, initQuote.uri, res => {
         const anchor = res.data.thread.at(0)
         if (
           AppBskyUnspeccedDefs.isThreadItemPost(anchor?.value) &&
@@ -1056,7 +1116,6 @@ export const ComposePost = ({
     l,
     ax,
     agent,
-    thread,
     canPost,
     isPublishing,
     currentLanguages,
@@ -1074,6 +1133,7 @@ export const ComposePost = ({
     cleanupPublishedDraft,
     loadedDraftCreatedAt,
     emptyPostsPromptControl,
+    getFilteredThread,
   ])
 
   const handleConfirmSkipEmpty = () => {
@@ -1404,15 +1464,11 @@ let ComposerPost = memo(function ComposerPost({
     [dispatch, post.id],
   )
 
-  const onImageAdd = useCallback(
-    (next: ComposerImage[]) => {
-      dispatchPost({
-        type: 'embed_add_images',
-        images: next,
-      })
-    },
-    [dispatchPost],
-  )
+  const postImagesCount =
+    post.embed.media?.type === 'images' || post.embed.media?.type === 'gallery'
+      ? post.embed.media.images.length
+      : 0
+  const onImageAdd = useAddImagesWithCap(postImagesCount, dispatchPost)
 
   const onNewLink = useCallback(
     (uri: string) => {
@@ -1717,7 +1773,7 @@ function ComposerEmbeds({
   const video = embed.media?.type === 'video' ? embed.media.video : null
   return (
     <>
-      {embed.media?.type === 'images' && (
+      {(embed.media?.type === 'images' || embed.media?.type === 'gallery') && (
         <Gallery images={embed.media.images} dispatch={dispatch} />
       )}
 
@@ -1828,7 +1884,11 @@ function ComposerPills({
 }) {
   const t = useTheme()
   const media = post.embed.media
-  const hasMedia = media?.type === 'images' || media?.type === 'video'
+  const hasMedia =
+    media?.type === 'images' ||
+    media?.type === 'gallery' ||
+    media?.type === 'gif' ||
+    media?.type === 'video'
   const hasLink = !!post.embed.link
 
   // Don't render anything if no pills are going to be displayed
@@ -1917,15 +1977,16 @@ function ComposerFooter({
   >(undefined)
 
   const media = post.embed.media
-  const images = media?.type === 'images' ? media.images : []
+  const images =
+    media?.type === 'images' || media?.type === 'gallery' ? media.images : []
   const video = media?.type === 'video' ? media.video : null
-  const isMaxImages = images.length >= MAX_IMAGES
+  const isMaxImages = images.length >= MAX_GALLERY_IMAGES
   const isMaxVideos = !!video
 
   let selectedAssetsCount = 0
   let isMediaSelectionDisabled = false
 
-  if (media?.type === 'images') {
+  if (media?.type === 'images' || media?.type === 'gallery') {
     isMediaSelectionDisabled = isMaxImages
     selectedAssetsCount = images.length
   } else if (media?.type === 'video') {
@@ -1935,15 +1996,7 @@ function ComposerFooter({
     isMediaSelectionDisabled = !!media
   }
 
-  const onImageAdd = useCallback(
-    (next: ComposerImage[]) => {
-      dispatch({
-        type: 'embed_add_images',
-        images: next,
-      })
-    },
-    [dispatch],
-  )
+  const onImageAdd = useAddImagesWithCap(images.length, dispatch)
 
   const onSelectGif = useCallback(
     (gif: Gif) => {
@@ -2026,7 +2079,11 @@ function ComposerFooter({
                 autoOpen={openGallery}
               />
               <OpenCameraBtn
-                disabled={media?.type === 'images' ? isMaxImages : !!media}
+                disabled={
+                  media?.type === 'images' || media?.type === 'gallery'
+                    ? isMaxImages
+                    : !!media
+                }
                 onAdd={onImageAdd}
               />
               <SelectGifBtn onSelectGif={onSelectGif} disabled={!!media} />

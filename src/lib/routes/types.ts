@@ -56,16 +56,6 @@ export type CommonNavigatorParams = {
   ActivityPrivacySettings: undefined
   ContentAndMediaSettings: undefined
   NotificationSettings: undefined
-  ReplyNotificationSettings: undefined
-  MentionNotificationSettings: undefined
-  QuoteNotificationSettings: undefined
-  LikeNotificationSettings: undefined
-  RepostNotificationSettings: undefined
-  NewFollowerNotificationSettings: undefined
-  LikesOnRepostsNotificationSettings: undefined
-  RepostsOnRepostsNotificationSettings: undefined
-  ActivityNotificationSettings: undefined
-  MiscellaneousNotificationSettings: undefined
   InterestsSettings: undefined
   AboutSettings: undefined
   AppIconSettings: undefined
@@ -75,6 +65,7 @@ export type CommonNavigatorParams = {
   Topic: {topic: string}
   MessagesConversation: {conversation: string; embed?: string; accept?: true}
   MessagesConversationSettings: {conversation: string}
+  MessagesJoinRequests: {conversation: string}
   MessagesSettings: undefined
   MessagesInbox: undefined
   NotificationsActivityList: {posts: string}
@@ -140,7 +131,7 @@ export type AllNavigatorParams = CommonNavigatorParams & {
   Notifications: undefined
   MyProfileTab: undefined
   MessagesTab: undefined
-  Messages: {animation?: 'push' | 'pop'}
+  Messages: {pushToConversation?: string; animation?: 'push' | 'pop'}
 }
 
 // NOTE

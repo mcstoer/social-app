@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useEffect, useMemo} from 'react'
 import {View} from 'react-native'
 import Animated, {
   Easing,
@@ -8,6 +8,11 @@ import Animated, {
   withDelay,
   withTiming,
 } from 'react-native-reanimated'
+import {
+  moderateProfile,
+  type ModerationOpts,
+  type ModerationUI,
+} from '@atproto/api'
 
 import {useSession} from '#/state/session'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
@@ -23,22 +28,37 @@ type Layout = {
   border?: boolean
 }
 
-type Props = {
-  animate?: boolean
-  profiles: bsky.profile.AnyProfileView[]
-  size?: number
-}
-
 export function AvatarBubbles({
   animate = false,
   profiles: allProfiles,
+  self = false,
   size = 120,
-}: Props) {
+  moderationOpts,
+}: {
+  animate?: boolean
+  profiles: bsky.profile.AnyProfileView[]
+  /**
+   * By default, when there are more than 2 profiles, the current user is
+   * filtered out (so you don't see yourself among your own group's members).
+   * Set this to `true` for cases where every passed profile should appear,
+   * e.g. an invite preview where the owner is meaningful regardless of viewer.
+   */
+  self?: boolean
+  size?: number
+  moderationOpts?: ModerationOpts
+}) {
   const {currentAccount} = useSession()
   const profiles =
-    allProfiles.length > 2
-      ? allProfiles.filter(p => p.did !== currentAccount?.did)
+    !self && allProfiles.length > 2
+      ? allProfiles.filter(p => p?.did != null && p.did !== currentAccount?.did)
       : allProfiles
+  const moderations = useMemo(() => {
+    if (!moderationOpts) return []
+    return profiles.map(p => {
+      return moderateProfile(p, moderationOpts)
+    })
+  }, [profiles, moderationOpts])
+
   const scale = size / 120
   const marginOffset = size < 120 ? -2 : 0
 
@@ -90,6 +110,7 @@ export function AvatarBubbles({
             y={layout.y}
             zIndex={layout.zIndex}
             includeProfileBorder={layout.border}
+            moderation={moderations[i]?.ui('avatar')}
           />
         ))}
       </View>
@@ -105,6 +126,7 @@ function AvatarBubble({
   y,
   zIndex,
   includeProfileBorder,
+  moderation,
 }: {
   profile?: bsky.profile.AnyProfileView
   scale: SharedValue<number>
@@ -113,6 +135,7 @@ function AvatarBubble({
   y: number
   zIndex?: number
   includeProfileBorder?: boolean
+  moderation?: ModerationUI
 }) {
   const t = useTheme()
 
@@ -140,6 +163,7 @@ function AvatarBubble({
           type="user"
           hideLiveBadge
           noBorder
+          moderation={moderation}
         />
       ) : (
         <AvatarPlaceholder size={size} />

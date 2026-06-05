@@ -6,6 +6,7 @@ import {
   type ModerationDecision,
   type ModerationOpts,
 } from '@atproto/api'
+import {plural} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react/macro'
 import {useQueryClient} from '@tanstack/react-query'
 
@@ -24,6 +25,7 @@ import {
   precacheConvoQuery,
   useMarkAsReadMutation,
 } from '#/state/queries/messages/conversation'
+import {JOIN_REQUESTS_THRESHOLD} from '#/state/queries/messages/list-join-requests'
 import {unstableCacheProfileView} from '#/state/queries/profile'
 import {useSession} from '#/state/session'
 import {TimeElapsed} from '#/view/com/util/TimeElapsed'
@@ -39,7 +41,9 @@ import {getSystemMessageInfo} from '#/components/dms/getSystemMessageInfo'
 import {LeaveConvoPrompt} from '#/components/dms/LeaveConvoPrompt'
 import {type ConvoWithDetails, parseConvoView} from '#/components/dms/util'
 import {Bell2Off_Filled_Corner0_Rounded as BellStroke} from '#/components/icons/Bell2'
+import {type Props as SVGIconProps} from '#/components/icons/common'
 import {Envelope_Open_Stroke2_Corner0_Rounded as EnvelopeOpen} from '#/components/icons/EnveopeOpen'
+import {Lock_Stroke2_Corner2_Rounded as LockIcon} from '#/components/icons/Lock'
 import {Trash_Stroke2_Corner0_Rounded} from '#/components/icons/Trash'
 import {Link} from '#/components/Link'
 import {useMenuControl} from '#/components/Menu'
@@ -50,16 +54,19 @@ import {Text} from '#/components/Typography'
 import {useAnalytics} from '#/analytics'
 import {IS_NATIVE} from '#/env'
 import type * as bsky from '#/types/bsky'
+import {useIsWithinSplitView} from './splitView/context'
 
 export const ChatListItemPortal = createPortalGroup()
 
 export function ChatListItem({
   convo: convoView,
   showMenu = true,
+  selected = false,
   children,
 }: {
   convo: ChatBskyConvoDefs.ConvoView
   showMenu?: boolean
+  selected?: boolean
   children?: React.ReactNode
 }) {
   const {currentAccount} = useSession()
@@ -77,7 +84,8 @@ export function ChatListItem({
         <DirectChatItem
           convo={convo}
           moderationOpts={moderationOpts}
-          showMenu={showMenu}>
+          showMenu={showMenu}
+          selected={selected}>
           {children}
         </DirectChatItem>
       )
@@ -87,7 +95,8 @@ export function ChatListItem({
         <GroupChatItem
           convo={convo}
           moderationOpts={moderationOpts}
-          showMenu={showMenu}>
+          showMenu={showMenu}
+          selected={selected}>
           {children}
         </GroupChatItem>
       )
@@ -102,15 +111,18 @@ function DirectChatItem({
   convo,
   moderationOpts,
   showMenu,
+  selected,
   children,
 }: {
   convo: Extract<ConvoWithDetails, {kind: 'direct'}>
   moderationOpts: ModerationOpts
   showMenu?: boolean
+  selected?: boolean
   children?: React.ReactNode
 }) {
   const {t: l} = useLingui()
   const profile = useProfileShadow(convo.primaryMember)
+  const {isWithinSplitView} = useIsWithinSplitView()
 
   const moderation = useMemo(
     () => moderateProfile(profile, moderationOpts),
@@ -128,7 +140,7 @@ function DirectChatItem({
       avatar={
         <PreviewableUserAvatar
           profile={profile}
-          size={52}
+          size={isWithinSplitView ? 48 : 52}
           moderation={moderation.ui('avatar')}
         />
       }
@@ -144,15 +156,18 @@ function DirectChatItem({
           : l`This conversation is with a deleted or a deactivated account. Press for options`
       }
       showMenu={showMenu}
+      selected={selected}
       isDeletedAccount={isDeletedAccount}
       isBlockedAccount={moderation.blocked}
       showProfileBadges
       postAlerts={
-        <PostAlerts
-          modui={moderation.ui('contentList')}
-          size="lg"
-          style={[a.pt_xs]}
-        />
+        isWithinSplitView ? null : (
+          <PostAlerts
+            modui={moderation.ui('contentList')}
+            size="sm"
+            style={[a.pb_2xs, a.max_w_full, a.overflow_hidden]}
+          />
+        )
       }>
       {children}
     </BaseChatItem>
@@ -163,15 +178,18 @@ function GroupChatItem({
   convo,
   moderationOpts,
   showMenu,
+  selected,
   children,
 }: {
   convo: Extract<ConvoWithDetails, {kind: 'group'}>
   moderationOpts: ModerationOpts
   showMenu?: boolean
+  selected?: boolean
   children?: React.ReactNode
 }) {
   const {t: l} = useLingui()
   const groupOwner = useMaybeProfileShadow(convo.primaryMember)
+  const {isWithinSplitView} = useIsWithinSplitView()
 
   const moderation = useMemo(
     () =>
@@ -184,14 +202,35 @@ function GroupChatItem({
   return (
     <BaseChatItem
       convo={convo}
-      avatar={<AvatarBubbles profiles={convo.members} size={52} />}
+      avatar={
+        <AvatarBubbles
+          profiles={convo.members}
+          size={isWithinSplitView ? 48 : 52}
+          moderationOpts={moderationOpts}
+        />
+      }
       title={chatName}
       accessibilityHint={l`Go to the group chat named "${chatName}"`}
       primaryProfile={groupOwner}
       primaryProfileModeration={moderation}
       isBlockedAccount={false}
       isDeletedAccount={false}
+      requestInfo={
+        convo.details.unreadJoinRequestCount
+          ? convo.details.unreadJoinRequestCount > JOIN_REQUESTS_THRESHOLD
+            ? l({
+                message: `${JOIN_REQUESTS_THRESHOLD}+ new join requests`,
+                context:
+                  'Displayed when there are more than 20 requests to join a group chat',
+              })
+            : plural(convo.details.unreadJoinRequestCount, {
+                one: '# new join request',
+                other: '# new join requests',
+              })
+          : undefined
+      }
       showProfileBadges={false}
+      selected={selected}
       showMenu={showMenu}>
       {children}
     </BaseChatItem>
@@ -203,12 +242,14 @@ function BaseChatItem({
   avatar,
   title,
   subtitle,
+  requestInfo,
   accessibilityHint,
   isDeletedAccount,
   isBlockedAccount,
   primaryProfile,
   primaryProfileModeration,
   showMenu,
+  selected,
   showProfileBadges,
   postAlerts,
   children,
@@ -217,12 +258,14 @@ function BaseChatItem({
   avatar: React.ReactNode
   title: string
   subtitle?: string
+  requestInfo?: string
   accessibilityHint: string
   isDeletedAccount: boolean
   isBlockedAccount: boolean
   primaryProfile?: Shadow<bsky.profile.AnyProfileView>
   primaryProfileModeration?: ModerationDecision
   showMenu?: boolean
+  selected?: boolean
   showProfileBadges: boolean
   postAlerts?: React.ReactNode
   children?: React.ReactNode
@@ -235,16 +278,16 @@ function BaseChatItem({
   const leaveConvoControl = useDialogControl()
   const {mutate: markAsRead} = useMarkAsReadMutation()
   const {gtMobile} = useBreakpoints()
+  const {isWithinSplitView} = useIsWithinSplitView()
 
   const playHaptic = useHaptics()
   const queryClient = useQueryClient()
   const hasUnread =
-    convo.view.unreadCount > 0 &&
     !isDeletedAccount &&
-    !(
-      convo.kind === 'group' &&
-      convo.details.lockStatus === 'locked-permanently'
-    )
+    (convo.view.unreadCount > 0 ||
+      (convo.kind === 'group' &&
+        (convo.details.unreadJoinRequestCount ?? 0) > 0)) &&
+    (convo.kind !== 'group' || convo.details.lockStatus === 'unlocked')
 
   const blockInfo = useMemo(() => {
     if (!primaryProfileModeration) return {listBlocks: [], userBlock: undefined}
@@ -264,72 +307,87 @@ function BaseChatItem({
     isDeletedAccount ||
     (convo.kind === 'group' && convo.details.lockStatus !== 'unlocked')
 
-  const {lastMessage, lastMessageSentAt, latestReportableMessage} =
-    useMemo(() => {
-      let lastMessage = l`No messages yet`
+  const {
+    lastMessage,
+    LastMessageIcon,
+    lastMessageSentAt,
+    latestReportableMessage,
+  } = useMemo(() => {
+    let lastMessage = l`No messages yet`
 
-      let lastMessageSentAt: string | null = null
+    let LastMessageIcon: React.ComponentType<SVGIconProps> | null = null
 
-      let latestReportableMessage: ChatBskyConvoDefs.MessageView | undefined
+    let lastMessageSentAt: string | null = null
 
-      // Deleted message
-      if (ChatBskyConvoDefs.isDeletedMessageView(convo.view.lastMessage)) {
+    let latestReportableMessage: ChatBskyConvoDefs.MessageView | undefined
+
+    // Deleted message
+    if (ChatBskyConvoDefs.isDeletedMessageView(convo.view.lastMessage)) {
+      lastMessageSentAt = convo.view.lastMessage.sentAt
+
+      lastMessage = isDeletedAccount
+        ? l`Conversation deleted`
+        : l`Message deleted`
+    }
+
+    // Message
+    if (ChatBskyConvoDefs.isMessageView(convo.view.lastMessage)) {
+      const info = getMessageInfo({
+        convo: convo.view,
+        currentAccountDid: currentAccount?.did,
+        i18n,
+      })
+      if (info) {
+        lastMessage = info.message ?? lastMessage
+        lastMessageSentAt = info.sentAt
+        latestReportableMessage = info.reportableMessage
+      }
+    }
+
+    // Reaction
+    if (ChatBskyConvoDefs.isMessageAndReactionView(convo.view.lastReaction)) {
+      const info = getReactionInfo({
+        convo: convo.view,
+        currentAccountDid: currentAccount?.did,
+        i18n,
+      })
+      if (
+        info &&
+        (!lastMessageSentAt ||
+          new Date(lastMessageSentAt) < new Date(info.createdAt))
+      ) {
+        lastMessage = info.message
+        lastMessageSentAt = info.createdAt
+      }
+    }
+
+    // System message
+    if (ChatBskyConvoDefs.isSystemMessageView(convo.view.lastMessage)) {
+      const info = getSystemMessageInfo(
+        convo.view.lastMessage.data,
+        new Map(convo.view.members.map(m => [m.did, m])),
+        {short: true},
+      )
+      if (info) {
+        lastMessage = i18n._(info.message)
+        LastMessageIcon = info.Icon
         lastMessageSentAt = convo.view.lastMessage.sentAt
-
-        lastMessage = isDeletedAccount
-          ? l`Conversation deleted`
-          : l`Message deleted`
       }
+    }
 
-      // Message
-      if (ChatBskyConvoDefs.isMessageView(convo.view.lastMessage)) {
-        const info = getMessageInfo({
-          convo: convo.view,
-          currentAccountDid: currentAccount?.did,
-          i18n,
-        })
-        if (info) {
-          lastMessage = info.message ?? lastMessage
-          lastMessageSentAt = info.sentAt
-          latestReportableMessage = info.reportableMessage
-        }
-      }
+    // Chat locked - override message
+    if (convo.kind === 'group' && convo.details.lockStatus !== 'unlocked') {
+      lastMessage = l`This chat is locked`
+      LastMessageIcon = LockIcon
+    }
 
-      // Reaction
-      if (ChatBskyConvoDefs.isMessageAndReactionView(convo.view.lastReaction)) {
-        const info = getReactionInfo({
-          convo: convo.view,
-          currentAccountDid: currentAccount?.did,
-          i18n,
-        })
-        if (
-          info &&
-          (!lastMessageSentAt ||
-            new Date(lastMessageSentAt) < new Date(info.createdAt))
-        ) {
-          lastMessage = info.message
-          lastMessageSentAt = info.createdAt
-        }
-      }
-
-      // System message
-      if (ChatBskyConvoDefs.isSystemMessageView(convo.view.lastMessage)) {
-        const info = getSystemMessageInfo(
-          convo.view.lastMessage.data,
-          new Map(convo.view.members.map(m => [m.did, m])),
-        )
-        if (info) {
-          lastMessage = i18n._(info.message)
-          lastMessageSentAt = convo.view.lastMessage.sentAt
-        }
-      }
-
-      return {
-        lastMessage,
-        lastMessageSentAt,
-        latestReportableMessage,
-      }
-    }, [l, convo, currentAccount?.did, isDeletedAccount, i18n])
+    return {
+      lastMessage,
+      LastMessageIcon,
+      lastMessageSentAt,
+      latestReportableMessage,
+    }
+  }, [l, convo, currentAccount?.did, isDeletedAccount, i18n])
 
   const [showActions, setShowActions] = useState(false)
 
@@ -389,6 +447,8 @@ function BaseChatItem({
     },
   }
 
+  const isGroupConvo = convo.kind === 'group'
+
   const actions = hasUnread
     ? {
         leftFirst: markReadAction,
@@ -397,6 +457,8 @@ function BaseChatItem({
     : {
         leftFirst: deleteAction,
       }
+
+  const avatarSize = isWithinSplitView ? 48 : 52
 
   return (
     <ChatListItemPortal.Provider>
@@ -407,7 +469,7 @@ function BaseChatItem({
           // @ts-expect-error web only
           onFocus={onFocus}
           onBlur={onMouseLeave}
-          style={[a.relative, t.atoms.bg]}>
+          style={[a.relative, t.atoms.bg, isWithinSplitView && a.mx_sm]}>
           <View
             style={[
               a.z_10,
@@ -443,19 +505,29 @@ function BaseChatItem({
               <View
                 style={[
                   a.flex_row,
-                  isDeletedAccount ? a.align_center : a.align_start,
+                  isDeletedAccount || isGroupConvo
+                    ? a.align_center
+                    : a.align_start,
                   a.flex_1,
                   a.px_lg,
                   a.py_md,
                   a.gap_md,
+                  isWithinSplitView && a.rounded_sm,
+                  {
+                    backgroundColor: hasUnread
+                      ? t.palette.primary_25
+                      : t.palette.contrast_0,
+                  },
                   (hovered || pressed || focused) && t.atoms.bg_contrast_25,
+                  selected && t.atoms.bg_contrast_50,
                 ]}>
                 {/* Avatar goes here */}
-                <View style={{width: 52, height: 52}} />
+                <View style={{width: avatarSize, height: avatarSize}} />
 
                 <View
-                  style={[a.flex_1, a.justify_center, web({paddingRight: 45})]}>
-                  <View style={[a.w_full, a.flex_row, a.align_end, a.pb_2xs]}>
+                  style={[a.flex_1, a.justify_center, web({paddingRight: 40})]}>
+                  <View
+                    style={[a.w_full, a.flex_row, a.align_center, a.pb_2xs]}>
                     <View style={[a.flex_shrink]}>
                       <Text
                         emoji
@@ -474,7 +546,7 @@ function BaseChatItem({
                     {showProfileBadges && primaryProfile && (
                       <ProfileBadges
                         profile={primaryProfile}
-                        size="md"
+                        size="sm"
                         style={[a.pl_xs, a.self_center]}
                       />
                     )}
@@ -490,7 +562,7 @@ function BaseChatItem({
                                 t.atoms.text_contrast_medium,
                                 web({whiteSpace: 'preserve nowrap'}),
                               ]}>
-                              &middot; {timeElapsed}
+                              {timeElapsed}
                             </Text>
                           )}
                         </TimeElapsed>
@@ -505,61 +577,79 @@ function BaseChatItem({
                           web({whiteSpace: 'preserve nowrap'}),
                         ]}>
                         {' '}
-                        &middot;{' '}
                         <BellStroke
                           size="xs"
                           style={[t.atoms.text_contrast_medium]}
                         />
                       </Text>
                     )}
+                    {hasUnread && (
+                      <View
+                        style={[
+                          a.rounded_full,
+                          {
+                            backgroundColor: isDimStyle
+                              ? t.palette.contrast_200
+                              : t.palette.primary_500,
+                            height: 8,
+                            width: 8,
+                            marginLeft: 6,
+                          },
+                          web({whiteSpace: 'preserve nowrap'}),
+                        ]}
+                      />
+                    )}
                   </View>
 
                   {subtitle && (
                     <Text
                       numberOfLines={1}
-                      style={[
-                        a.text_sm,
-                        t.atoms.text_contrast_medium,
-                        a.pb_xs,
-                      ]}>
+                      style={[a.text_sm, t.atoms.text_contrast_medium, a.pb_xs]}
+                      emoji>
                       {subtitle}
                     </Text>
                   )}
 
-                  <Text
-                    emoji
-                    numberOfLines={2}
-                    style={[
-                      a.text_sm,
-                      a.leading_snug,
-                      hasUnread ? a.font_semi_bold : t.atoms.text_contrast_high,
-                      isDimStyle && t.atoms.text_contrast_medium,
-                    ]}>
-                    {lastMessage}
-                  </Text>
-
                   {postAlerts}
+
+                  {requestInfo && (
+                    <Text
+                      numberOfLines={1}
+                      style={[
+                        hasUnread ? a.font_medium : t.atoms.text_contrast_high,
+                        isDimStyle && t.atoms.text_contrast_medium,
+                        a.pb_2xs,
+                      ]}
+                      emoji>
+                      {requestInfo}
+                    </Text>
+                  )}
+
+                  <View style={[a.flex_row, a.align_center]}>
+                    {LastMessageIcon && (
+                      <LastMessageIcon
+                        size="xs"
+                        style={[
+                          a.mr_2xs,
+                          hasUnread
+                            ? t.atoms.text_contrast_high
+                            : t.atoms.text_contrast_medium,
+                        ]}
+                      />
+                    )}
+                    <Text
+                      emoji
+                      numberOfLines={2}
+                      style={[
+                        hasUnread ? a.font_medium : t.atoms.text_contrast_high,
+                        isDimStyle && t.atoms.text_contrast_medium,
+                      ]}>
+                      {lastMessage}
+                    </Text>
+                  </View>
 
                   {children}
                 </View>
-
-                {hasUnread && (
-                  <View
-                    style={[
-                      a.absolute,
-                      a.rounded_full,
-                      {
-                        backgroundColor: isDimStyle
-                          ? t.palette.contrast_200
-                          : t.palette.primary_500,
-                        height: 7,
-                        width: 7,
-                        top: 15,
-                        right: 12,
-                      },
-                    ]}
-                  />
-                )}
               </View>
             )}
           </Link>

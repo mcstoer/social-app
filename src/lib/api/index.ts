@@ -1,12 +1,12 @@
 import {
   type $Typed,
   type AppBskyEmbedExternal,
+  type AppBskyEmbedGallery,
   type AppBskyEmbedImages,
   type AppBskyEmbedRecord,
   type AppBskyEmbedRecordWithMedia,
   type AppBskyEmbedVideo,
-  type AppBskyFeedPost,
-  AtUri,
+  AppBskyFeedPost,
   BlobRef,
   type BskyAgent,
   type ComAtprotoLabelDefs,
@@ -22,6 +22,7 @@ import {sha256} from 'js-sha256'
 import {CID} from 'multiformats/cid'
 import * as Hasher from 'multiformats/hashes/hasher'
 
+import {IMAGE_SIZE_CONFIG_POSTS} from '#/lib/constants'
 import {isNetworkError} from '#/lib/strings/errors'
 import {shortenLinks, stripInvalidMentions} from '#/lib/strings/rich-text-manip'
 import {logger} from '#/logger'
@@ -39,6 +40,7 @@ import {
   type PostDraft,
   type ThreadDraft,
 } from '#/view/com/composer/state/composer'
+import * as bsky from '#/types/bsky'
 import {createGIFDescription} from '../gif-alt-text'
 import {uploadBlob} from './upload-blob'
 
@@ -51,16 +53,10 @@ interface PostOpts {
   langs?: string[]
 }
 
-type FeatureFlags = {
-  highResolutionImages?: boolean
-  increasedBlobSizeLimit?: boolean
-}
-
 export async function post(
   agent: BskyAgent,
   queryClient: QueryClient,
   opts: PostOpts,
-  featureFlags?: FeatureFlags,
 ) {
   const thread = opts.thread
   opts.onStateChange?.(t`Processing...`)
@@ -97,7 +93,6 @@ export async function post(
       queryClient,
       draft,
       opts.onStateChange,
-      featureFlags,
     )
     let labels: $Typed<ComAtprotoLabelDefs.SelfLabels> | undefined
     if (draft.labels.length) {
@@ -184,7 +179,8 @@ export async function post(
       writes: writes,
       validate: true,
     })
-  } catch (e: any) {
+  } catch (err) {
+    const e = err as Error
     logger.error(`Failed to create post`, {
       safeMessage: e.message,
     })
@@ -214,21 +210,41 @@ async function resolveRT(agent: BskyAgent, richtext: RichText) {
   return rt
 }
 
+export class ReplyDeletedError extends Error {
+  constructor() {
+    super('Could not resolve reply')
+  }
+}
+
 async function resolveReply(agent: BskyAgent, replyTo: string) {
-  const replyToUrip = new AtUri(replyTo)
-  const parentPost = await agent.getPost({
-    repo: replyToUrip.host,
-    rkey: replyToUrip.rkey,
+  const {data} = await agent.app.bsky.feed.getPosts({
+    uris: [replyTo],
   })
-  if (parentPost) {
-    const parentRef = {
-      uri: parentPost.uri,
-      cid: parentPost.cid,
+  const parentPost = data.posts[0]
+  if (!parentPost) {
+    throw new ReplyDeletedError()
+  }
+
+  const parentRef = {
+    uri: parentPost.uri,
+    cid: parentPost.cid,
+  }
+  let rootRef = parentRef
+
+  if (
+    bsky.dangerousIsType<AppBskyFeedPost.Record>(
+      parentPost.record,
+      AppBskyFeedPost.isRecord,
+    )
+  ) {
+    if (parentPost.record.reply) {
+      rootRef = parentPost.record.reply.root
     }
-    return {
-      root: parentPost.value.reply?.root || parentRef,
-      parent: parentRef,
-    }
+  }
+
+  return {
+    root: rootRef,
+    parent: parentRef,
   }
 }
 
@@ -237,9 +253,9 @@ async function resolveEmbed(
   queryClient: QueryClient,
   draft: PostDraft,
   onStateChange: ((state: string) => void) | undefined,
-  featureFlags?: FeatureFlags,
 ): Promise<
   | $Typed<AppBskyEmbedImages.Main>
+  | $Typed<AppBskyEmbedGallery.Main>
   | $Typed<AppBskyEmbedVideo.Main>
   | $Typed<AppBskyEmbedExternal.Main>
   | $Typed<AppBskyEmbedRecord.Main>
@@ -248,13 +264,7 @@ async function resolveEmbed(
 > {
   if (draft.embed.quote) {
     const [resolvedMedia, resolvedQuote] = await Promise.all([
-      resolveMedia(
-        agent,
-        queryClient,
-        draft.embed,
-        onStateChange,
-        featureFlags,
-      ),
+      resolveMedia(agent, queryClient, draft.embed, onStateChange),
       resolveRecord(agent, queryClient, draft.embed.quote.uri),
     ])
     if (resolvedMedia) {
@@ -277,7 +287,6 @@ async function resolveEmbed(
     queryClient,
     draft.embed,
     onStateChange,
-    featureFlags,
   )
   if (resolvedMedia) {
     return resolvedMedia
@@ -303,10 +312,10 @@ async function resolveMedia(
   queryClient: QueryClient,
   embedDraft: EmbedDraft,
   onStateChange: ((state: string) => void) | undefined,
-  featureFlags?: FeatureFlags,
 ): Promise<
   | $Typed<AppBskyEmbedExternal.Main>
   | $Typed<AppBskyEmbedImages.Main>
+  | $Typed<AppBskyEmbedGallery.Main>
   | $Typed<AppBskyEmbedVideo.Main>
   | undefined
 > {
@@ -319,10 +328,10 @@ async function resolveMedia(
     const images: AppBskyEmbedImages.Image[] = await Promise.all(
       imagesDraft.map(async (image, i) => {
         logger.debug(`Compressing image #${i}`)
-        const {path, width, height, mime} = await compressImage(image, {
-          highResolution: featureFlags?.highResolutionImages,
-          increasedBlobSizeLimit: featureFlags?.increasedBlobSizeLimit,
-        })
+        const {path, width, height, mime} = await compressImage(
+          image,
+          IMAGE_SIZE_CONFIG_POSTS,
+        )
         logger.debug(`Uploading image #${i}`)
         const res = await uploadBlob(agent, path, mime)
         return {
@@ -335,6 +344,34 @@ async function resolveMedia(
     return {
       $type: 'app.bsky.embed.images',
       images,
+    }
+  }
+  if (embedDraft.media?.type === 'gallery') {
+    const imagesDraft = embedDraft.media.images
+    logger.debug(`Uploading images`, {
+      count: imagesDraft.length,
+    })
+    onStateChange?.(t`Uploading images...`)
+    const items: $Typed<AppBskyEmbedGallery.Image>[] = await Promise.all(
+      imagesDraft.map(async (image, i) => {
+        logger.debug(`Compressing image #${i}`)
+        const {path, width, height, mime} = await compressImage(
+          image,
+          IMAGE_SIZE_CONFIG_POSTS,
+        )
+        logger.debug(`Uploading image #${i}`)
+        const res = await uploadBlob(agent, path, mime)
+        return {
+          $type: 'app.bsky.embed.gallery#image' as const,
+          image: res.data.blob,
+          alt: image.alt,
+          aspectRatio: {width, height},
+        }
+      }),
+    )
+    return {
+      $type: 'app.bsky.embed.gallery',
+      items,
     }
   }
   if (
@@ -422,7 +459,17 @@ async function resolveMedia(
           title: resolvedLink.title,
           description: resolvedLink.description,
           thumb: blob,
-          associatedRecord: resolvedLink.associatedRecord,
+          associatedRefs: resolvedLink.associatedRefs,
+        },
+      }
+    }
+    if (resolvedLink.type === 'chat-invite' && resolvedLink.view) {
+      return {
+        $type: 'app.bsky.embed.external',
+        external: {
+          uri: resolvedLink.uri,
+          title: resolvedLink.view.name,
+          description: `${resolvedLink.view.memberCount}/${resolvedLink.view.memberLimit}`,
         },
       }
     }
@@ -469,6 +516,7 @@ async function computeCid(record: AppBskyFeedPost.Record): Promise<string> {
 }
 
 // Returns a transformed version of the object for use in DAG-CBOR.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function prepareForHashing(v: any): any {
   // IMPORTANT: BlobRef#ipld() returns the correct object we need for hashing,
   // the API client will convert this for you but we're hashing in the client,
@@ -491,9 +539,10 @@ function prepareForHashing(v: any): any {
 
   // Walk through plain objects
   if (isPlainObject(v)) {
-    const obj: any = {}
+    const obj: Record<string, unknown> = {}
     let pure = true
     for (const key in v) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       let value = v[key]
       // `value` is undefined
       if (value === undefined) {
@@ -512,6 +561,7 @@ function prepareForHashing(v: any): any {
   return v
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPlainObject(v: any): boolean {
   if (typeof v !== 'object' || v === null) {
     return false

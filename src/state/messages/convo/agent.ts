@@ -1,9 +1,12 @@
 import {
+  type $Typed,
+  type AppBskyEmbedRecord,
   type AtpAgent,
   type ChatBskyActorDefs,
   ChatBskyConvoDefs,
   type ChatBskyConvoGetLog,
   type ChatBskyConvoSendMessage,
+  type ChatBskyEmbedJoinLink,
   type ChatBskyGroupDefs,
 } from '@atproto/api'
 import {XRPCError} from '@atproto/api'
@@ -104,7 +107,13 @@ export class Convo {
   > = new Map()
   private pendingMessages: Map<
     string,
-    {id: string; message: ChatBskyConvoSendMessage.InputSchema['message']}
+    {
+      id: string
+      message: ChatBskyConvoSendMessage.InputSchema['message']
+      optimisticEmbedView?:
+        | $Typed<AppBskyEmbedRecord.View>
+        | $Typed<ChatBskyEmbedJoinLink.View>
+    }
   > = new Map()
   private deletedMessages: Set<string> = new Set()
   private relatedProfiles: Map<string, ChatBskyActorDefs.ProfileViewBasic> =
@@ -934,7 +943,12 @@ export class Convo {
 
   private pendingMessageFailure: 'recoverable' | 'unrecoverable' | null = null
 
-  sendMessage(message: ChatBskyConvoSendMessage.InputSchema['message']) {
+  sendMessage(
+    message: ChatBskyConvoSendMessage.InputSchema['message'],
+    optimisticEmbedView?:
+      | $Typed<AppBskyEmbedRecord.View>
+      | $Typed<ChatBskyEmbedJoinLink.View>,
+  ) {
     // Ignore empty messages for now since they have no other purpose atm
     if (!message.text.trim() && !message.embed) return
 
@@ -946,6 +960,7 @@ export class Convo {
     this.pendingMessages.set(tempId, {
       id: tempId,
       message,
+      optimisticEmbedView,
     })
     if (this.convo?.view.status === 'request') {
       this.updateConvo({
@@ -1292,7 +1307,7 @@ export class Convo {
         key: m.id,
         message: {
           ...m.message,
-          embed: undefined,
+          embed: m.optimisticEmbedView,
           $type: 'chat.bsky.convo.defs#messageView',
           id: nanoid(),
           rev: '__fake__',
