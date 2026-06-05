@@ -6,11 +6,10 @@
 
 Before you begin, make sure you have the following installed:
 
-- [Node.js 20.19.4 or higher](https://nodejs.org/en/download/)
-    - Node.js 22 does **not** work
-    - Node.js 20.19.5 (LTS) is recommended
-    - For Windows users: [Node.js 20.19.5 download](https://nodejs.org/en/download/archive/v20.19.5)
-- [Yarn package manager](https://yarnpkg.com/getting-started/install)
+- [Node.js 24.15.0 or higher](https://nodejs.org/en/download/)
+    - Node.js 24.15.0 (LTS) is recommended
+    - For Windows users: [Node.js 24.15.0 download](https://nodejs.org/en/download/archive/v24.15.0)
+- [pnpm package manager](https://pnpm.io/installation)
 - The following Verus Desktop Wallet development environment branches (required for local development):
     - [Verus Desktop (password-manager)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager)
     - [Verus Login Consent Client (password-manager)](https://github.com/mcstoer/verus-login-consent-client/tree/password-manager)
@@ -43,18 +42,18 @@ Deeplinks should work out of the box when you install the Verus Desktop Wallet o
 3. Variables you **must** set:
     - `EXPO_PUBLIC_IADDRESS`: The i-address that is signing the responses. This can be a name in the format of "Name@".
 
-## Running the VerusSky Web App 
+## Running the VerusSky Web App
 
 First install all required dependencies:
 ```bash
-yarn dev:setup
+pnpm dev:setup
 ```
 
 ### Development Mode
 
 Start the development servers:
 ```bash
-yarn dev:run
+pnpm dev:run
 ```
 
 Once the servers are running, you can access the web app at `http://localhost:19006`.
@@ -63,19 +62,19 @@ Once the servers are running, you can access the web app at `http://localhost:19
 
 Extract and compile the lingui translations:
 ```bash
-yarn intl:build
+pnpm intl:build
 ```
 
 To build the SPA bundle:
 ```bash
-yarn build-web
+pnpm build-web
 ```
 
 Follow the instructions in the [bskyweb README](/bskyweb/README.md) to run the golang daemon.
 
 In `vskysigningserver` directory, start the signing server:
 ```bash
-yarn dev
+pnpm dev
 ```
 
 Once the servers are running, you can access the web app at `http://localhost:8100`.
@@ -90,7 +89,7 @@ The VerusSky app uses a configuration file that is stored in the following direc
 | macOS            | `~/Library/Application Support/VerusSky/` |
 | Windows          | `%APPDATA%\VerusSky\`                     |
 
-Each time ater updating the configuration file you must run:
+Each time after updating the configuration file you must run:
 ```bash
-yarn dev:setup
+pnpm dev:setup
 ```

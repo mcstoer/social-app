@@ -1,7 +1,8 @@
 # VerusSky Signing Server
 
-This is for signing login requests.
+This is for signing requests and receiving responses for the web version of VerusSky.
 
 ## Running the Server
 
-- `yarn dev` 
+- `pnpm install`
+- `pnpm dev`

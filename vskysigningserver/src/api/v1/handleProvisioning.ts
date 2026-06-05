@@ -20,7 +20,7 @@ import {
 } from 'verus-typescript-primitives'
 import {ProvisioningRequest} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningRequest'
 import {type ProvisioningResponse} from 'verus-typescript-primitives/dist/vdxf/classes/provisioning/ProvisioningResponse'
-import VerusdRpcInterface from 'verusd-rpc-ts-client/src/VerusdRpcInterface'
+import VerusdRpcInterface from 'verusd-rpc-ts-client/lib/VerusdRpcInterface'
 import {VerusIdInterface} from 'verusid-ts-client'
 
 import {

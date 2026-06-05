@@ -1,0 +1,12 @@
+# Standalone pnpm project (not part of the social-app workspace).
+allowBuilds:
+  esbuild: true
+  secp256k1: true
+  tiny-secp256k1: true
+# Verus libraries have git subdependencies.
+blockExoticSubdeps: false
+# The Verus bitcoin-ops fork omits evals.json from its `files` allowlist, so
+# pnpm's npm-pack of the git dep drops it. @bitgo/utxo-lib requires it at load
+# (optccparams.js), so we restore it via patch.
+patchedDependencies:
+  'bitcoin-ops@1.4.1': patches/bitcoin-ops@1.4.1.patch

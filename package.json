@@ -91,8 +91,8 @@
     "open-analyzer": "EXPO_PUBLIC_OPEN_ANALYZER=1 pnpm build-web",
     "icons:optimize": "svgo -f ./assets/icons",
     "prettier": "prettier --check .",
-    "dev:setup": "pnpm install && cd vskysigningserver && yarn && cd ..",
-    "dev:run": "pnpm concurrently \"pnpm web\" \"cd vskysigningserver && yarn dev\" --names \"web,signing\" --prefix-colors \"blue,yellow\""
+    "dev:setup": "pnpm install && cd vskysigningserver && pnpm install && cd ..",
+    "dev:run": "pnpm concurrently \"pnpm web\" \"cd vskysigningserver && pnpm dev\" --names \"web,signing\" --prefix-colors \"blue,yellow\""
   },
   "dependencies": {
     "@atproto/api": "0.20.9",
