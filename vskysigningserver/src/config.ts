@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv'
 import {fromBase58Check, toIAddress} from 'verus-typescript-primitives'
-import VerusdRpcInterface from 'verusd-rpc-ts-client/src/VerusdRpcInterface'
+import VerusdRpcInterface from 'verusd-rpc-ts-client/lib/VerusdRpcInterface'
 import {VerusIdInterface} from 'verusid-ts-client'
 
 import {fetchVerusDaemonConfig} from './services/daemonCredentials'

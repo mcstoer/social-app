@@ -153,6 +153,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "bcp-47": "^2.1.0",
     "bcp-47-match": "^2.0.3",
+    "bn.js": "5.2.1",
     "crypto-browserify": "3.12.1",
     "date-fns": "^4.4.0",
     "email-validator": "^2.0.4",
