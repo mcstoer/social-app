@@ -15,6 +15,7 @@ import {createFullHandle} from '#/lib/strings/handles'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
 import {
   generateLoginRequestOrdinals,
+  type LoginResponse,
   processLoginResponse,
 } from '#/lib/verus/requests/login'
 import {logger} from '#/logger'
@@ -320,7 +321,7 @@ export const LoginForm = ({
     const handleLoginResponse = async () => {
       setIsProcessing(true)
 
-      let result
+      let result: LoginResponse
       try {
         result = await processLoginResponse(
           loginRequestRef.current!,
@@ -328,10 +329,13 @@ export const LoginForm = ({
           getIdentity,
           ivkRef.current!,
         )
-      } catch (e: any) {
+      } catch (e: unknown) {
         // The VerusID itself could not be validated.
-        const errMsg = e.toString()
-        logger.warn('Failed to verify VerusSky login response', {error: errMsg})
+        const errMsg =
+          e instanceof Error ? e.toString() : 'Unable to process login'
+        logger.warn('Failed to verify VerusSky login response', {
+          safeMessage: e,
+        })
         setError(cleanError(errMsg))
         verusIdLoginFailed.current = true
         setIsVerusIdLogin(false)

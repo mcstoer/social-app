@@ -18,6 +18,7 @@ import {
 
 import {type VerusGetIdentityQueryResult} from '#/state/queries/verus/useVerusGetIdentityQuery'
 import {getVerusCrypto} from '../zsupport/crypto.web'
+import {decryptDataFromDaemonSignData} from '../zsupport/decrypt'
 import {generateAppEncryptionRequestDetails} from './details/appEncryptionDetail'
 import {
   type AuthenticationRequestOptions,
@@ -80,14 +81,15 @@ export async function generateLoginRequestOrdinals(
     seed: seed,
   })
 
-  const zaddress = channelKeys.address
-  const ivk = channelKeys.ivk
+  const zaddress = Buffer.from(channelKeys.address)
+  const ivk = Buffer.from(channelKeys.ivk)
+
+  const encryptResponseToAddress = new SaplingPaymentAddress()
+  encryptResponseToAddress.fromBuffer(zaddress)
 
   const appEncryptionOrdinal = new AppEncryptionRequestOrdinalVDXFObject({
     data: generateAppEncryptionRequestDetails({
-      encryptResponseToAddress: SaplingPaymentAddress.fromAddressString(
-        zaddress.toString(),
-      ),
+      encryptResponseToAddress,
     }),
   })
 
@@ -125,9 +127,6 @@ export async function processLoginResponse(
   const getIdentityResult = await getIdentity(signingAddress)
   const signingIdentity = getIdentityResult.identity
 
-  // If getting the keys fails, then the whole login should fail.
-  const verusCrypto = await getVerusCrypto()
-
   // Prepare the data response details in a map for quick lookup against the
   // request IDs in the request.
   const dataResponseMap = new Map<string, DataResponseOrdinalVDXFObject>()
@@ -142,12 +141,12 @@ export async function processLoginResponse(
   }
 
   const appEncryptionRequestID = request.details.find(
-    (ordinal): ordinal is UserDataRequestOrdinalVDXFObject =>
-      ordinal instanceof UserDataRequestOrdinalVDXFObject,
+    (ordinal): ordinal is AppEncryptionRequestOrdinalVDXFObject =>
+      ordinal instanceof AppEncryptionRequestOrdinalVDXFObject,
   )?.data.requestID
 
   if (!appEncryptionRequestID) {
-    throw new Error('Missing request ID for the user data in the request')
+    throw new Error('Missing request ID for the app encryption in the request')
   }
 
   const encryptedAppEncryptionOrdinal = dataResponseMap.get(
@@ -160,16 +159,13 @@ export async function processLoginResponse(
     )
   }
 
-  const encryptedAppEncryptionData = encryptedAppEncryptionOrdinal.data
-
-  const decrypted = verusCrypto.decryptData({
-    data_to_decrypt: encryptedAppEncryptionData.data.objectdata,
-    ivk: ivk,
-  })
-
-  const appEncryptionDetailBuffer = Buffer.from(decrypted.toString(), 'hex')
+  // If getting the keys fails, then the whole login should fail.
+  const contentsBuffer = await decryptDataFromDaemonSignData(
+    encryptedAppEncryptionOrdinal.data.data,
+    ivk,
+  )
   const appEncryptionDetail = new AppEncryptionResponseDetails()
-  appEncryptionDetail.fromBuffer(appEncryptionDetailBuffer)
+  appEncryptionDetail.fromBuffer(contentsBuffer)
 
   // Allow for VerusID login with invalid credentials so that the user can easily update
   // their stored credentials after a manual login.
