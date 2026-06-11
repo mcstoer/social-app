@@ -735,6 +735,9 @@ importers:
       verusid-ts-client:
         specifier: git+https://github.com/VerusCoin/verusid-ts-client
         version: https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/2eec86c7f06d13c8b04ddc1473fce32c450d2a31
+      veruszsupportlib:
+        specifier: github:iamahmedshahh/zsupportextension#fc535d82cec88aad9097c6dc3d1d464c7fb7636f
+        version: https://codeload.github.com/iamahmedshahh/zsupportextension/tar.gz/fc535d82cec88aad9097c6dc3d1d464c7fb7636f
       vm-browserify:
         specifier: 1.1.2
         version: 1.1.2
@@ -1651,7 +1654,7 @@ packages:
     resolution: {integrity: sha512-+Neg+nsqUhYOPlvyITHXYzKUTJofyxYdLQTzNjufamifBzxLGTpgn2KKUfvGNsGovlUYzlyPZj+CB6je2D7mhw==}
 
   '@bitgo/utxo-lib@https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/1051d8eedf42573403532e51c4bc2846e7caaba9':
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/1051d8eedf42573403532e51c4bc2846e7caaba9}
+    resolution: {gitHosted: true, integrity: sha512-zpMAC7rYF4Hlx8jWzLTc27oT3M9lT2j4SG86l/bQxJwBTLM2XoLuvVi3s8HuOmp3G8EjgROp+0Rr3s2Pplr6oQ==, tarball: https://codeload.github.com/VerusCoin/BitGoJS/tar.gz/1051d8eedf42573403532e51c4bc2846e7caaba9}
     version: 1.9.6
     engines: {node: '>=10.22.0', npm: '>=3.10.10'}
 
@@ -4518,6 +4521,9 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
+
+  buffer@6.0.3:
+    resolution: {integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==}
 
   bytes@3.1.2:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
@@ -9528,12 +9534,17 @@ packages:
     version: 1.0.0
 
   verusd-rpc-ts-client@https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/fee3d2b217c2b3b9f63da4527bb852e1cbc5edf2:
-    resolution: {gitHosted: true, tarball: https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/fee3d2b217c2b3b9f63da4527bb852e1cbc5edf2}
+    resolution: {gitHosted: true, integrity: sha512-MckFeAZsFn6i/AYwm1NeDg5JImZxwD48NpzH09grBb2+WFW4f+/A286GHU2ZQKywTCR9rykMYYqHYeM8XIlIyw==, tarball: https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/fee3d2b217c2b3b9f63da4527bb852e1cbc5edf2}
     version: 0.1.0
 
   verusid-ts-client@https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/2eec86c7f06d13c8b04ddc1473fce32c450d2a31:
     resolution: {gitHosted: true, integrity: sha512-q19x5SLKsCXe9S9O9h974hKjHBGpNy9xua/KSsmz4JEfZOQFRhHRb42juVlqUkJz0giuzk0A0zDKQHD0tkhzvg==, tarball: https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/2eec86c7f06d13c8b04ddc1473fce32c450d2a31}
     version: 0.1.0
+
+  veruszsupportlib@https://codeload.github.com/iamahmedshahh/zsupportextension/tar.gz/fc535d82cec88aad9097c6dc3d1d464c7fb7636f:
+    resolution: {gitHosted: true, integrity: sha512-AE6Nk69QOsG4z1Nt//AImQg+58ZbxPcYYYnGm0egneAeh+1ctv9+i3OHIZuyKpKuIbBItLi1MYSTOrtxuLaqkQ==, tarball: https://codeload.github.com/iamahmedshahh/zsupportextension/tar.gz/fc535d82cec88aad9097c6dc3d1d464c7fb7636f}
+    version: 1.0.0
+    engines: {node: '>=18'}
 
   vlq@1.0.1:
     resolution: {integrity: sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==}
@@ -14268,6 +14279,11 @@ snapshots:
   buffer-xor@1.0.3: {}
 
   buffer@5.7.1:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
+  buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
@@ -19949,6 +19965,14 @@ snapshots:
       - debug
       - react-native-b4a
       - supports-color
+
+  veruszsupportlib@https://codeload.github.com/iamahmedshahh/zsupportextension/tar.gz/fc535d82cec88aad9097c6dc3d1d464c7fb7636f:
+    dependencies:
+      bn.js: 5.2.3
+      buffer: 6.0.3
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+    transitivePeerDependencies:
+      - react-native-b4a
 
   vlq@1.0.1: {}
 

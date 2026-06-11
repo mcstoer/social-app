@@ -17,8 +17,7 @@ import {
 } from 'verus-typescript-primitives'
 
 import {type VerusGetIdentityQueryResult} from '#/state/queries/verus/useVerusGetIdentityQuery'
-import {getVerusCrypto} from '../zsupport/crypto.web'
-import {decryptDataFromDaemonSignData} from '../zsupport/decrypt'
+import {decryptDescriptor, zGetEncryptionAddress} from '../zsupport/crypto'
 import {generateAppEncryptionRequestDetails} from './details/appEncryptionDetail'
 import {
   type AuthenticationRequestOptions,
@@ -58,8 +57,6 @@ export interface LoginRequestOrdinals {
 export async function generateLoginRequestOrdinals(
   options?: LoginRequestOptions,
 ): Promise<LoginRequestOrdinals> {
-  const verusCrypto = await getVerusCrypto()
-
   const authentication = new AuthenticationRequestOrdinalVDXFObject({
     data: generateAuthenticationRequestDetails(options?.auth),
   })
@@ -77,7 +74,7 @@ export async function generateLoginRequestOrdinals(
   })
 
   const seed = Buffer.from(crypto.getRandomValues(new Uint8Array(32)))
-  const channelKeys = verusCrypto.zGetEncryptionAddress({
+  const channelKeys = await zGetEncryptionAddress({
     seed: seed,
   })
 
@@ -145,6 +142,7 @@ export async function processLoginResponse(
       ordinal instanceof AppEncryptionRequestOrdinalVDXFObject,
   )?.data.requestID
 
+  // If getting the keys fails, then the whole login should fail.
   if (!appEncryptionRequestID) {
     throw new Error('Missing request ID for the app encryption in the request')
   }
@@ -159,13 +157,16 @@ export async function processLoginResponse(
     )
   }
 
-  // If getting the keys fails, then the whole login should fail.
-  const contentsBuffer = await decryptDataFromDaemonSignData(
-    encryptedAppEncryptionOrdinal.data.data,
+  // decryptDescriptor unwraps the CVDXF_Data envelope that the daemon's
+  // signdata adds before encrypting, returning the CDataDescriptor wrapper.
+  // We actually want the contents of that descriptor, so we then
+  // extract the objectdata to get the hex buffer of the detail.
+  const decryptedDescriptor = await decryptDescriptor({
+    descriptor: encryptedAppEncryptionOrdinal.data.data,
     ivk,
-  )
+  })
   const appEncryptionDetail = new AppEncryptionResponseDetails()
-  appEncryptionDetail.fromBuffer(contentsBuffer)
+  appEncryptionDetail.fromBuffer(decryptedDescriptor.objectdata)
 
   // Allow for VerusID login with invalid credentials so that the user can easily update
   // their stored credentials after a manual login.

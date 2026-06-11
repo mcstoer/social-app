@@ -1,6 +1,7 @@
 // Buffer is needed for working with Verus-related libraries.
 // eslint-disable-next-line import-x/no-nodejs-modules
 import {type Buffer} from 'buffer'
+import {type DataDescriptor} from 'verus-typescript-primitives'
 
 export interface DerivationKeys {
   seed?: Buffer
@@ -38,9 +39,21 @@ export interface DecryptParams {
   ssk?: Buffer
 }
 
-export interface VerusCryptoApi {
-  version: string
-  zGetEncryptionAddress: (params: DerivationKeys) => ChannelKeys
-  encryptData: (params: EncryptParams) => EncryptedPayload
-  decryptData: (params: DecryptParams) => Buffer
+export interface DecryptDescriptorParams {
+  descriptor: DataDescriptor
+  ivk?: Buffer
+  ssk?: Buffer
+}
+
+type MaybePromise<T> = T | Promise<T>
+
+// Web is sync and native is possibly async, so we use MaybePromise to have a
+// shared API.
+export type VerusCryptoApi = {
+  zGetEncryptionAddress(params: DerivationKeys): MaybePromise<ChannelKeys>
+  encryptData(params: EncryptParams): MaybePromise<EncryptedPayload>
+  decryptData(params: DecryptParams): MaybePromise<Buffer>
+  decryptDescriptor(
+    params: DecryptDescriptorParams,
+  ): MaybePromise<DataDescriptor>
 }

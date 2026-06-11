@@ -259,6 +259,7 @@
     "verus-typescript-primitives": "git+https://github.com/VerusCoin/verus-typescript-primitives",
     "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client",
     "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client",
+    "veruszsupportlib": "github:iamahmedshahh/zsupportextension#fc535d82cec88aad9097c6dc3d1d464c7fb7636f",
     "vm-browserify": "1.1.2",
     "zod": "^3.25.76"
   },

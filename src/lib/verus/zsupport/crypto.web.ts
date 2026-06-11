@@ -1,17 +1,22 @@
-/*
- * The Verus crypto primitives are provided by a browser extension that injects
- * a WASM-backed API onto `window.verusCrypto`. The extension dispatches a
- * `verusCryptoReady` event once its WASM module has finished initializing.
- *
- * This file is the single seam between the app and that global. Everything
- * else in the app should depend on `getVerusCrypto()` and the exported param
- * types, never on `window` directly, so that a future native implementation
- * (a bundled library) can be dropped in as `crypto.native.ts` without touching
- * any callers.
- */
+// Buffer is needed for working with Verus-related libraries.
+// eslint-disable-next-line import-x/no-nodejs-modules
+import {Buffer} from 'buffer'
+import {type DataDescriptor} from 'verus-typescript-primitives'
+import * as zsupport from 'veruszsupportlib'
+
+import {
+  type ChannelKeys,
+  type DecryptDescriptorParams,
+  type DecryptParams,
+  type DerivationKeys,
+  type EncryptedPayload,
+  type EncryptParams,
+  type VerusCryptoApi,
+} from './crypto.types'
 
 export type {
   ChannelKeys,
+  DecryptDescriptorParams,
   DecryptParams,
   DerivationKeys,
   EncryptedPayload,
@@ -19,43 +24,52 @@ export type {
   VerusCryptoApi,
 } from './crypto.types'
 
-import {type VerusCryptoApi} from './crypto.types'
-
-const READY_EVENT = 'verusCryptoReady'
-const READY_TIMEOUT_MS = 1000
-
-/*
- * The extension adds the api at window.verusCrypto.
- */
-declare global {
-  interface Window {
-    verusCrypto?: VerusCryptoApi
+export function zGetEncryptionAddress(params: DerivationKeys): ChannelKeys {
+  const keys = zsupport.z_getEncryptionAddress(params)
+  return {
+    address: Buffer.from(keys.address),
+    ivk: Buffer.from(keys.ivk),
+    extfvk: Buffer.from(keys.extfvk),
+    spendingKey: keys.spendingKey ? Buffer.from(keys.spendingKey) : null,
   }
 }
+zGetEncryptionAddress satisfies VerusCryptoApi['zGetEncryptionAddress']
 
-/*
- * The extension sends out a `verusCryptoReady` event once its WASM module has finished initializing.
- */
-export function getVerusCrypto(): Promise<VerusCryptoApi> {
-  if (window.verusCrypto) {
-    return Promise.resolve(window.verusCrypto)
-  }
-
-  return new Promise<VerusCryptoApi>((resolve, reject) => {
-    const timer = setTimeout(() => {
-      window.removeEventListener(READY_EVENT, onReady)
-      reject(new Error('Verus crypto extension not available'))
-    }, READY_TIMEOUT_MS)
-
-    function onReady() {
-      clearTimeout(timer)
-      if (window.verusCrypto) {
-        resolve(window.verusCrypto)
-      } else {
-        reject(new Error('Verus crypto ready event fired without API'))
-      }
-    }
-
-    window.addEventListener(READY_EVENT, onReady, {once: true})
+export function encryptData({
+  address,
+  data_to_encrypt,
+  returnSsk,
+}: EncryptParams): EncryptedPayload {
+  const payload = zsupport.encryptData({
+    address,
+    data: data_to_encrypt,
+    returnSsk,
   })
+  return {
+    ephemeralPublicKey: Buffer.from(payload.ephemeralPublicKey),
+    encrypted_data: Buffer.from(payload.objectdata),
+    symmetricKey: payload.symmetricKey
+      ? Buffer.from(payload.symmetricKey)
+      : null,
+  }
 }
+encryptData satisfies VerusCryptoApi['encryptData']
+
+export function decryptData({
+  ivk,
+  epk,
+  data_to_decrypt,
+  ssk,
+}: DecryptParams): Buffer {
+  return Buffer.from(
+    zsupport.decryptData({objectdata: data_to_decrypt, epk, ivk, ssk}),
+  )
+}
+decryptData satisfies VerusCryptoApi['decryptData']
+
+export function decryptDescriptor(
+  params: DecryptDescriptorParams,
+): DataDescriptor {
+  return zsupport.decryptDescriptor(params)
+}
+decryptDescriptor satisfies VerusCryptoApi['decryptDescriptor']
