@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {View} from 'react-native'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
@@ -8,7 +8,6 @@ import {
   DATA_TYPE_OBJECT_CREDENTIAL,
   IDENTITY_CREDENTIAL,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
-  PROOFS_CONTROLLER_BLUESKY,
 } from 'verus-typescript-primitives'
 
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
@@ -19,7 +18,6 @@ import {
 } from '#/lib/verus/requests/identityUpdate'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
-import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSession} from '#/state/session'
@@ -46,59 +44,22 @@ export function useVerusIdCredentialUpdateDialogControl() {
 
 export function VerusIDCredentialUpdateDialog() {
   const {_} = useLingui()
-  const {currentAccount} = useSession()
-  const control = useVerusIdCredentialUpdateDialogControl()
-  const accountLinkingControl =
-    useGlobalDialogsControlContext().verusIdAccountLinkingDialogControl
-  const removeAccountLinkControl =
-    useGlobalDialogsControlContext().removeVerusIdAccountLinkDialogControl
-  const openRemoveAccountLink = control.value?.openRemoveAccountLinkDialog
-  const checkVerusIDAccountLink =
-    control.value?.checkVerusIDAccountLink ?? false
-  const {data: linkedVerusID} = useLinkedVerusIDQuery(
-    PROOFS_CONTROLLER_BLUESKY.vdxfid,
-    currentAccount?.did,
-    checkVerusIDAccountLink && control.control.isOpen,
-  )
+  const credentialUpdateControl = useVerusIdCredentialUpdateDialogControl()
+  const passedOnClose = credentialUpdateControl.value?.onClose
 
-  const onClose = useCallback(async () => {
-    control.clear()
-
-    if (openRemoveAccountLink) {
-      removeAccountLinkControl.open()
-      return
-    }
-
-    if (!currentAccount || currentAccount.type !== 'vsky') {
-      return
-    }
-
-    const identity = currentAccount.name + '@'
-
-    if (
-      checkVerusIDAccountLink &&
-      (!linkedVerusID || linkedVerusID.identity !== identity)
-    ) {
-      accountLinkingControl.open({showSettingsMessage: true})
-    }
-  }, [
-    control,
-    openRemoveAccountLink,
-    currentAccount,
-    linkedVerusID,
-    removeAccountLinkControl,
-    accountLinkingControl,
-    checkVerusIDAccountLink,
-  ])
+  const onClose = () => {
+    credentialUpdateControl.clear()
+    passedOnClose?.()
+  }
 
   return (
-    <Dialog.Outer control={control.control} onClose={onClose}>
+    <Dialog.Outer control={credentialUpdateControl.control} onClose={onClose}>
       <Dialog.Handle />
 
       <Dialog.ScrollableInner
         label={_(msg`Update VerusID Sign in Credentials`)}
         style={web({maxWidth: 400})}>
-        <Inner initialPassword={control.value?.password} />
+        <Inner initialPassword={credentialUpdateControl.value?.password} />
         <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>

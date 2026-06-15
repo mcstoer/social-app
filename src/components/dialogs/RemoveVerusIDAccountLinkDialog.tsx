@@ -31,10 +31,16 @@ export function useRemoveVerusIdAccountLinkDialogControl() {
 
 export function RemoveVerusIDAccountLinkDialog() {
   const {_} = useLingui()
-  const {control} = useRemoveVerusIdAccountLinkDialogControl()
+  const removeRemoveLinkControl = useRemoveVerusIdAccountLinkDialogControl()
+  const passedOnClose = removeRemoveLinkControl.value?.onClose
+
+  const onClose = () => {
+    removeRemoveLinkControl.clear()
+    passedOnClose?.()
+  }
 
   return (
-    <Dialog.Outer control={control}>
+    <Dialog.Outer control={removeRemoveLinkControl.control} onClose={onClose}>
       <Dialog.Handle />
 
       <Dialog.ScrollableInner

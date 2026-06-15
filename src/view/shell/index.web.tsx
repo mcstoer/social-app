@@ -20,6 +20,7 @@ import {EmailDialog} from '#/components/dialogs/EmailDialog'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {NuxDialogs} from '#/components/dialogs/nuxs'
+import {PostLoginSteps} from '#/components/dialogs/PostLoginSteps'
 import {RemoveVerusIDAccountLinkDialog} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
 import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
@@ -75,6 +76,7 @@ function ShellInner() {
       <VerusIDCredentialUpdateDialog />
       <VerusIDAccountLinkingDialog />
       <RemoveVerusIDAccountLinkDialog />
+      <PostLoginSteps />
       <AgeAssuranceRedirectDialog />
       <LinkWarningDialog />
       <Lightbox />

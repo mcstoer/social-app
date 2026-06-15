@@ -19,7 +19,6 @@ import {
   processLoginResponse,
 } from '#/lib/verus/requests/login'
 import {logger} from '#/logger'
-import {emitVerusIDLoginCompleted} from '#/state/events'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useVerusGetIdentity} from '#/state/queries/verus/useVerusGetIdentityQuery'
@@ -27,10 +26,12 @@ import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQue
 import {useSessionApi} from '#/state/session'
 import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
+import {
+  type PostLoginStep,
+  usePostLoginStepsApi,
+} from '#/state/shell/post-login-steps'
 import {atoms as a, ios, useTheme, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
-import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
-import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {FormError} from '#/components/forms/FormError'
 import {HostingProvider} from '#/components/forms/HostingProvider'
 import * as TextField from '#/components/forms/TextField'
@@ -98,10 +99,7 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
-  const updateVerusCredentialsControl =
-    useVerusIdCredentialUpdateDialogControl()
-  const removeVerusIdAccountLinkControl =
-    useRemoveVerusIdAccountLinkDialogControl()
+  const {initialize: startPostLoginSteps} = usePostLoginStepsApi()
   const {verusIdInterface} = useVerusService()
   const getIdentity = useVerusGetIdentity()
 
@@ -231,26 +229,24 @@ export const LoginForm = ({
         )
       }
 
+      // Queue the after login dialogs.
       if (saveLoginWithVerusId) {
-        // Delay opening the dialog in order to allow for transitioning away from the login screen.
-        // Otherwise, the dialog does not appear.
-        setTimeout(() => {
-          updateVerusCredentialsControl.open({
+        const steps: PostLoginStep[] = [
+          {
+            type: 'update-verusid-credentials',
             password: passwordValueRef.current,
-            openRemoveAccountLinkDialog: openRemoveVerusIdLinkDialog,
-          })
-        }, 750)
+          },
+        ]
+        if (openRemoveVerusIdLinkDialog) {
+          steps.push({type: 'remove-verusid-account-link'})
+        }
+        startPostLoginSteps(steps)
       } else if (openRemoveVerusIdLinkDialog) {
-        // Don't trigger the VerusID check if the user is going to remove their linked VerusID.
-        // Delay by a small amount to allow for the authenticated agent to be fetched,
-        // as non-authenticated agents can't fetch the linked VerusID via the posts.
-        setTimeout(() => {
-          removeVerusIdAccountLinkControl.open()
-        }, 250)
+        // Don't trigger the VerusID check if the user is going to remove
+        // their linked VerusID.
+        startPostLoginSteps([{type: 'remove-verusid-account-link'}])
       } else if (validVerusIdLogin) {
-        setTimeout(() => {
-          emitVerusIDLoginCompleted()
-        }, 250)
+        startPostLoginSteps([{type: 'check-verusid-account-link'}])
       }
     } catch (e: any) {
       const errMsg = e.toString()
@@ -336,7 +332,9 @@ export const LoginForm = ({
         logger.warn('Failed to verify VerusSky login response', {
           safeMessage: e,
         })
-        setError(cleanError(errMsg))
+        setError(
+          'Failed to verify VerusSky login response: ' + cleanError(errMsg),
+        )
         verusIdLoginFailed.current = true
         setIsVerusIdLogin(false)
         setIsProcessing(false)

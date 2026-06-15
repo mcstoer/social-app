@@ -46,14 +46,6 @@ export function listenPostCreated(fn: () => void): UnlistenFn {
   return () => emitter.off('post-created', fn)
 }
 
-export function emitVerusIDLoginCompleted() {
-  emitter.emit('verusid-login-completed')
-}
-export function listenVerusIDLoginCompleted(fn: () => void): UnlistenFn {
-  emitter.on('verusid-login-completed', fn)
-  return () => emitter.off('verusid-login-completed', fn)
-}
-
 export function emitFocusSearch() {
   emitter.emit('focus-search')
 }

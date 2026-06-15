@@ -29,11 +29,15 @@ type ControlsContext = {
     password: string
     checkVerusIDAccountLink?: boolean
     openRemoveAccountLinkDialog?: boolean
+    onClose?: () => void
   }>
   verusIdAccountLinkingDialogControl: StatefulControl<{
     showSettingsMessage?: boolean
+    onClose?: () => void
   }>
-  removeVerusIdAccountLinkDialogControl: StatefulControl<void>
+  removeVerusIdAccountLinkDialogControl: StatefulControl<{
+    onClose?: () => void
+  }>
   reportDialogControl: StatefulControl<{subject: ReportSubject}>
 }
 
@@ -66,11 +70,15 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     password: string
     checkVerusIDAccountLink?: boolean
     openRemoveAccountLinkDialog?: boolean
+    onClose?: () => void
   }>()
   const verusIdAccountLinkingDialogControl = useStatefulDialogControl<{
     showSettingsMessage?: boolean
+    onClose?: () => void
   }>()
-  const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<void>()
+  const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<{
+    onClose?: () => void
+  }>()
   const reportDialogControl = useStatefulDialogControl<{
     subject: ReportSubject
   }>()

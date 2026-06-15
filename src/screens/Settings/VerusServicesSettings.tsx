@@ -102,7 +102,7 @@ export function VerusServicesSettingsScreen({}: Props) {
           {linkedVerusID && (
             <SettingsList.PressableItem
               label={l`Remove VerusID Link`}
-              onPress={() => removeVerusIdAccountLinkControl.open()}
+              onPress={() => removeVerusIdAccountLinkControl.open({})}
               destructive>
               <SettingsList.ItemIcon icon={CircleXIcon} />
               <SettingsList.ItemText>

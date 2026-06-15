@@ -39,12 +39,19 @@ export function useVerusIdAccountLinkingDialogControl() {
 
 export function VerusIDAccountLinkingDialog() {
   const {_} = useLingui()
-  const {control, value} = useVerusIdAccountLinkingDialogControl()
+  const accountLinkControl = useVerusIdAccountLinkingDialogControl()
+  const passedOnClose = accountLinkControl.value?.onClose
   const [stage, setStage] = useState(Stages.PreparingLinking)
+
+  const onClose = () => {
+    accountLinkControl.clear()
+    passedOnClose?.()
+  }
 
   return (
     <Dialog.Outer
-      control={control}
+      control={accountLinkControl.control}
+      onClose={onClose}
       nativeOptions={{
         preventDismiss: stage === Stages.SigningLinking,
       }}
@@ -53,7 +60,7 @@ export function VerusIDAccountLinkingDialog() {
           // Don't allow closing by background press as the user will navigate
           // back by clicking the background.
           if (stage !== Stages.SigningLinking) {
-            control.close()
+            accountLinkControl.control.close()
           }
         },
       }}>
@@ -65,7 +72,7 @@ export function VerusIDAccountLinkingDialog() {
         <Inner
           stage={stage}
           setStage={setStage}
-          showSettingsMessage={value?.showSettingsMessage}
+          showSettingsMessage={accountLinkControl.value?.showSettingsMessage}
         />
         <Dialog.Close />
       </Dialog.ScrollableInner>

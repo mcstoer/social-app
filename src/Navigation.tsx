@@ -16,7 +16,6 @@ import {
   NavigationContainer,
   StackActions,
 } from '@react-navigation/native'
-import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {timeout} from '#/lib/async/timeout'
 import {useAccountSwitcher} from '#/lib/hooks/useAccountSwitcher'
@@ -46,9 +45,7 @@ import {
 } from '#/lib/routes/types'
 import {bskyTitle} from '#/lib/strings/headings'
 import {CHAT_INVITE_CODE_REGEX} from '#/lib/strings/url-helpers'
-import {logger} from '#/logger'
 import {useUnreadNotifications} from '#/state/queries/notifications/unread'
-import {useGetLinkedVerusID} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useSession} from '#/state/session'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
 import {
@@ -135,14 +132,12 @@ import {
   EmailDialogScreenID,
   useEmailDialogControl,
 } from '#/components/dialogs/EmailDialog'
-import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useAnalytics} from '#/analytics'
 import {setNavigationMetadata} from '#/analytics/metadata'
 import {IS_LIQUID_GLASS, IS_NATIVE, IS_WEB} from '#/env'
 import {router} from '#/routes'
 import {Referrer} from '../modules/expo-bluesky-swiss-army'
 import {renderMessagesSplitViewLayout} from './screens/Messages/components/splitView/MessagesSplitViewLayout'
-import {listenVerusIDLoginCompleted} from './state/events'
 
 const navigationRef = createNavigationContainerRef<AllNavigatorParams>()
 
@@ -868,9 +863,6 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
   const previousScreen = useRef<string | undefined>(undefined)
   const emailDialogControl = useEmailDialogControl()
   const closeAllActiveElements = useCloseAllActiveElements()
-  const verusIdAccountLinkingDialogControl =
-    useVerusIdAccountLinkingDialogControl()
-  const getLinkedVerusId = useGetLinkedVerusID()
   const linkingUrl = Linking.useLinkingURL()
 
   /**
@@ -988,26 +980,6 @@ function RoutesContainer({children}: React.PropsWithChildren<{}>) {
       })
       snoozeEmailConfirmationPrompt()
     }
-    if (currentAccount && currentAccount.type === 'vsky') {
-      // Attach the event listener when it can be ready to be used.
-      listenVerusIDLoginCompleted(() => {
-        getLinkedVerusId(PROOFS_CONTROLLER_BLUESKY.vdxfid, currentAccount.did)
-          .then(linkedVerusID => {
-            const identity = currentAccount.name + '@'
-            if (!linkedVerusID || linkedVerusID.identity !== identity) {
-              verusIdAccountLinkingDialogControl.open({
-                showSettingsMessage: true,
-              })
-            }
-          })
-          .catch(error => {
-            logger.warn('Failed to fetch linked VerusID after login', {
-              error,
-            })
-          })
-      })
-    }
-
     ax.metric('init', {
       initMs: Math.round(
         // @ts-ignore Emitted by Metro in the bundle prelude

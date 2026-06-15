@@ -43,6 +43,7 @@ import {Provider as ComposerProvider} from '#/state/shell/composer'
 import {Provider as LandingProvider} from '#/state/shell/landing'
 import {Provider as LoggedOutViewProvider} from '#/state/shell/logged-out'
 import {Provider as OnboardingProvider} from '#/state/shell/onboarding'
+import {Provider as PostLoginStepsProvider} from '#/state/shell/post-login-steps'
 import {Provider as ProgressGuideProvider} from '#/state/shell/progress-guide'
 import {Provider as SelectedFeedProvider} from '#/state/shell/selected-feed'
 import {Provider as HiddenRepliesProvider} from '#/state/threadgate-hidden-replies'
@@ -225,7 +226,9 @@ function App() {
                             <LightboxStateProvider>
                               <PortalProvider>
                                 <LandingProvider>
-                                  <InnerApp />
+                                  <PostLoginStepsProvider>
+                                    <InnerApp />
+                                  </PostLoginStepsProvider>
                                 </LandingProvider>
                               </PortalProvider>
                             </LightboxStateProvider>
