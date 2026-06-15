@@ -1,8 +1,6 @@
 import {useEffect, useRef, useState} from 'react'
 import {View} from 'react-native'
-import {msg} from '@lingui/core/macro'
-import {useLingui} from '@lingui/react'
-import {Trans} from '@lingui/react/macro'
+import {Trans, useLingui} from '@lingui/react/macro'
 import {
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
@@ -43,7 +41,7 @@ export function useVerusIdCredentialUpdateDialogControl() {
 }
 
 export function VerusIDCredentialUpdateDialog() {
-  const {_} = useLingui()
+  const {t: l} = useLingui()
   const credentialUpdateControl = useVerusIdCredentialUpdateDialogControl()
   const passedOnClose = credentialUpdateControl.value?.onClose
 
@@ -57,7 +55,7 @@ export function VerusIDCredentialUpdateDialog() {
       <Dialog.Handle />
 
       <Dialog.ScrollableInner
-        label={_(msg`Update VerusID Sign in Credentials`)}
+        label={l`Update VerusID Sign in Credentials`}
         style={web({maxWidth: 400})}>
         <Inner initialPassword={credentialUpdateControl.value?.password} />
         <Dialog.Close />
@@ -67,7 +65,7 @@ export function VerusIDCredentialUpdateDialog() {
 }
 
 function Inner({initialPassword}: {initialPassword?: string}) {
-  const {_} = useLingui()
+  const {t: l} = useLingui()
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
@@ -98,26 +96,20 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     UpdateCredentials: {
       title:
         currentAccount?.type === 'vsky'
-          ? _(msg`Update VerusID sign in`)
-          : _(msg`Save sign in with VerusID`),
+          ? l`Update VerusID sign in`
+          : l`Save sign in with VerusID`,
       message:
         currentAccount?.type === 'vsky'
-          ? _(msg`Update the sign in credentials stored in your VerusID.`)
-          : _(
-              msg`Add your sign in credentials to your VerusID for seamless logins.`,
-            ),
+          ? l`Update the sign in credentials stored in your VerusID.`
+          : l`Add your sign in credentials to your VerusID for seamless logins.`,
     },
     AwaitingResponse: {
-      title: _(msg`Awaiting confirmation`),
-      message: _(
-        msg`Scan the QR code below or press Open Verus wallet to confirm the update.`,
-      ),
+      title: l`Awaiting confirmation`,
+      message: l`Scan the QR code below or press Open Verus wallet to confirm the update.`,
     },
     Done: {
-      title: _(msg`Update confirmed`),
-      message: _(
-        msg`Your VerusID sign in credentials update has been confirmed and will be applied soon.`,
-      ),
+      title: l`Update confirmed`,
+      message: l`Your VerusID sign in credentials update has been confirmed and will be applied soon.`,
     },
   }
 
@@ -133,30 +125,25 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           logger.debug('Successfully updated VerusSky credentials')
         } else {
           setError(
-            _(
-              msg`No transaction ID was found in the credentail update response.`,
-            ),
+            l`No transaction ID was found in the credentail update response.`,
           )
         }
       } catch (e) {
-        setError(_(msg`Failed to process the credential update response.`))
+        setError(l`Failed to process the credential update response.`)
       }
     }
-  }, [_, requestResponse])
+  }, [l, requestResponse])
 
   // Handle the errors for the credential update
   useEffect(() => {
     if (isRequestError) {
-      const errMsg =
-        requestError?.toString() || _(msg`Failed to update credentials`)
+      const errMsg = requestError?.toString() || l`Failed to update credentials`
       logger.warn('Error while checking for credential update response', {
         error: errMsg,
       })
       if (isNetworkError(requestError)) {
         setError(
-          _(
-            msg`Unable to contact the service. Please check your Internet connection.`,
-          ),
+          l`Unable to contact the service. Please check your Internet connection.`,
         )
       } else {
         setError(cleanError(errMsg))
@@ -164,26 +151,26 @@ function Inner({initialPassword}: {initialPassword?: string}) {
       setStage(Stages.UpdateCredentials)
       setIsProcessing(false)
     }
-  }, [isRequestError, requestError, _])
+  }, [isRequestError, requestError, l])
 
   const onUpdateCredentials = async () => {
     if (!name.trim()) {
-      setError(_(msg`Please enter your VerusID name`))
+      setError(l`Please enter your VerusID name`)
       return
     }
 
     if (!email.trim()) {
-      setError(_(msg`Please enter your email`))
+      setError(l`Please enter your email`)
       return
     }
 
     if (!password.trim()) {
-      setError(_(msg`Please enter your password`))
+      setError(l`Please enter your password`)
       return
     }
 
     if (!signingServiceInfo?.signingAddress) {
-      setError(_(msg`Unable to get the signing service identity address`))
+      setError(l`Unable to get the signing service identity address`)
       return
     }
 
@@ -226,17 +213,16 @@ function Inner({initialPassword}: {initialPassword?: string}) {
       } else if (IS_NATIVE) {
         // Mobile implementation will be different
         // This is a placeholder for the actual implementation
-        setError(_(msg`Mobile support coming soon`))
+        setError(l`Mobile support coming soon`)
         setIsProcessing(false)
       }
-    } catch (e: any) {
-      const errMsg = e.toString()
+    } catch (e: unknown) {
+      const errMsg =
+        e instanceof Error ? e.toString() : `Unable to contact the service`
       logger.warn('Failed to update Verus ID credentials', {error: e})
       if (isNetworkError(e)) {
         setError(
-          _(
-            msg`Unable to contact the service. Please check your Internet connection.`,
-          ),
+          l`Unable to contact the service. Please check your Internet connection.`,
         )
       } else {
         setError(cleanError(errMsg))
@@ -272,8 +258,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
             </TextField.LabelText>
             <TextField.Root>
               <TextField.Input
-                label={_(msg`VerusID Name`)}
-                placeholder={_(msg`Alice@`)}
+                label={l`VerusID Name`}
+                placeholder={l`Alice@`}
                 value={name}
                 onChangeText={setName}
                 autoCapitalize="none"
@@ -287,8 +273,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
             </TextField.LabelText>
             <TextField.Root>
               <TextField.Input
-                label={_(msg`Email`)}
-                placeholder={_(msg`alice@example.com`)}
+                label={l`Email`}
+                placeholder={l`alice@example.com`}
                 value={email}
                 onChangeText={setEmail}
                 autoCapitalize="none"
@@ -303,8 +289,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
             </TextField.LabelText>
             <TextField.Root>
               <TextField.Input
-                label={_(msg`Password`)}
-                placeholder={_(msg`At least 8 characters`)}
+                label={l`Password`}
+                placeholder={l`At least 8 characters`}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
@@ -328,11 +314,11 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         {stage === Stages.UpdateCredentials ? (
           <>
             <Button
-              label={_(msg`Update credentials`)}
+              label={l`Update credentials`}
               color="primary"
               size="large"
               disabled={isProcessing}
-              onPress={onUpdateCredentials}>
+              onPress={() => void onUpdateCredentials()}>
               <ButtonText>
                 <Trans>Update credentials</Trans>
               </ButtonText>
@@ -340,7 +326,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
             </Button>
             {IS_NATIVE && (
               <Button
-                label={_(msg`Cancel`)}
+                label={l`Cancel`}
                 color="secondary"
                 size="large"
                 disabled={isProcessing}
@@ -354,7 +340,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         ) : stage === Stages.AwaitingResponse ? (
           <>
             <Button
-              label={_(msg`Open credential update deeplink`)}
+              label={l`Open credential update deeplink`}
               color="primary"
               size="large"
               disabled={isProcessing}
@@ -367,7 +353,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           </>
         ) : stage === Stages.Done ? (
           <Button
-            label={_(msg`Close`)}
+            label={l`Close`}
             color="primary"
             size="large"
             onPress={() => control.close()}>
