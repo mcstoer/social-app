@@ -88,7 +88,10 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     error: requestError,
     isError: isRequestError,
   } = useVerusIdRequestQuery({
+    // The refs update correctly in this case.
+    // eslint-disable-next-line react-hooks/refs
     requestId: requestIdRef.current,
+    // eslint-disable-next-line react-hooks/refs
     enabled: stage === Stages.AwaitingResponse && !!requestIdRef.current,
   })
 
@@ -120,6 +123,9 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         const txid = processIdentityUpdateResponse(requestResponse)
 
         if (txid) {
+          // Works in this case because the re-render shows the next stage
+          // and no useEffect has it as a dependency.
+          // eslint-disable-next-line react-hooks/set-state-in-effect
           setStage(Stages.Done)
           setIsProcessing(false)
           logger.debug('Successfully updated VerusSky credentials')
@@ -142,6 +148,9 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         error: errMsg,
       })
       if (isNetworkError(requestError)) {
+        // Works in this case because the re-render shows the error and no useEffect
+        // has it as a dependency.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setError(
           l`Unable to contact the service. Please check your Internet connection.`,
         )

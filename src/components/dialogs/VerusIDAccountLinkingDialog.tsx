@@ -133,7 +133,7 @@ function Inner({
     },
   }
 
-  const onPrepareLink = async () => {
+  const onPrepareLink = () => {
     if (!name.trim()) {
       setError(_(msg`Please enter your VerusID name.`))
       return
@@ -153,7 +153,7 @@ function Inner({
       const details = `${linkIdentifier} 1: controller of VerusID '${name}' controls ${handle}`
       setDetailsToSign(details)
       setStage(Stages.SigningLinking)
-    } catch (e: any) {
+    } catch (e: unknown) {
       setError(_(msg`Failed to prepare linking details.`))
     } finally {
       setIsProcessing(false)
@@ -190,7 +190,7 @@ function Inner({
         setIsProcessing(false)
         return
       }
-    } catch (e: any) {
+    } catch (e: unknown) {
       setIsProcessing(false)
       setError(_(msg`Failed to verify signature. Please try again.`))
       return
@@ -245,7 +245,7 @@ function Inner({
       })
 
       setStage(Stages.Done)
-    } catch (e: any) {
+    } catch (e: unknown) {
       setError(
         _(
           msg`Failed to create a post for linking the VerusID. Please try again.`,
@@ -372,7 +372,7 @@ function Inner({
               color="primary"
               size="large"
               disabled={isProcessing}
-              onPress={onSubmitSignature}>
+              onPress={() => void onSubmitSignature()}>
               <ButtonText>
                 <Trans>Submit Signature and Create Post</Trans>
               </ButtonText>

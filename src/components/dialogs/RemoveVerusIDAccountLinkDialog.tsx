@@ -113,7 +113,7 @@ function Inner() {
       })
 
       setStage(Stages.Done)
-    } catch (e: any) {
+    } catch (e: unknown) {
       setError(_(msg`Failed to remove the VerusID link, please try again`))
     } finally {
       setIsProcessing(false)
@@ -150,7 +150,7 @@ function Inner() {
                   variant="solid"
                   color="negative"
                   size="large"
-                  onPress={onRemoveLink}
+                  onPress={() => void onRemoveLink()}
                   disabled={isProcessing}>
                   <ButtonText>
                     <Trans>Remove Link</Trans>
