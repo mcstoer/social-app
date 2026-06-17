@@ -60,6 +60,10 @@ export type Action =
       accountDid: string
       patch: Pick<SessionAccount, 'emailConfirmed' | 'emailAuthFactor'>
     }
+  | {
+      type: 'updated-account'
+      account: SessionAccount
+    }
 
 function createPublicAgentState(): AgentState {
   return {
@@ -261,6 +265,16 @@ let reducer = (state: State, action: Action): State => {
           }
           return a
         }),
+        needsPersist: true,
+      }
+    }
+    case 'updated-account': {
+      const {account} = action
+      return {
+        ...state,
+        accounts: state.accounts.map(a =>
+          a.did === account.did ? account : a,
+        ),
         needsPersist: true,
       }
     }

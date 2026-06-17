@@ -54,6 +54,11 @@ export type SessionApiContext = {
    * `persistSessionHandler`.
    */
   partialRefreshSession: () => Promise<void>
+  /**
+   * Updates the current account's VerusSky encryption settings to allow for
+   * immediate usage in encryption scenarios and dialogs.
+   */
+  updateVskyEncryption: (update: VskyEncryptionUpdate) => void
 }
 
 export type VskySession = {
@@ -65,6 +70,16 @@ export type VskySession = {
 
 export type VskyEncryption = {
   storeEncryptionKeys: boolean
+  hasBeenAskedToStoreKeys?: boolean
   encryptionKey?: SaplingPaymentAddress
   decryptionKey?: Buffer
 }
+
+/**
+ * The subset of VerusSky encryption fields that may be patched at runtime.
+ * Constrained to the flags so callers can't clobber the keys or the rest of the
+ * session, matching the safety intent of the `partial-refresh-session` action.
+ */
+export type VskyEncryptionUpdate = Partial<
+  Pick<VskyEncryption, 'storeEncryptionKeys' | 'hasBeenAskedToStoreKeys'>
+>

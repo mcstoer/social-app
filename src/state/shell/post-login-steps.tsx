@@ -4,6 +4,7 @@ export type PostLoginStep =
   | {type: 'update-verusid-credentials'; password: string}
   | {type: 'remove-verusid-account-link'}
   | {type: 'check-verusid-account-link'}
+  | {type: 'save-encryption-keys'}
 
 type State = {
   // Track the current did that is associated with the steps so we can clear it

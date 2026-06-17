@@ -38,6 +38,9 @@ type ControlsContext = {
   removeVerusIdAccountLinkDialogControl: StatefulControl<{
     onClose?: () => void
   }>
+  saveEncryptionKeysDialogControl: StatefulControl<{
+    onClose?: () => void
+  }>
   reportDialogControl: StatefulControl<{subject: ReportSubject}>
 }
 
@@ -79,6 +82,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   const removeVerusIdAccountLinkDialogControl = useStatefulDialogControl<{
     onClose?: () => void
   }>()
+  const saveEncryptionKeysDialogControl = useStatefulDialogControl<{
+    onClose?: () => void
+  }>()
   const reportDialogControl = useStatefulDialogControl<{
     subject: ReportSubject
   }>()
@@ -94,6 +100,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       verusIdCredentialUpdateDialogControl,
       verusIdAccountLinkingDialogControl,
       removeVerusIdAccountLinkDialogControl,
+      saveEncryptionKeysDialogControl,
       reportDialogControl,
     }),
     [
@@ -106,6 +113,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       verusIdCredentialUpdateDialogControl,
       verusIdAccountLinkingDialogControl,
       removeVerusIdAccountLinkDialogControl,
+      saveEncryptionKeysDialogControl,
       reportDialogControl,
     ],
   )

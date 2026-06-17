@@ -39,7 +39,11 @@ import {
   configureModerationForAccount,
   configureModerationForGuest,
 } from './moderation'
-import {type SessionAccount, type VskySession} from './types'
+import {
+  type SessionAccount,
+  type VskyEncryptionUpdate,
+  type VskySession,
+} from './types'
 import {isSessionExpired, isSignupQueued} from './util'
 
 export type ProxyHeaderValue = `${Did}#${AtprotoServiceType}`
@@ -73,6 +77,8 @@ export async function createAgentAndResume(
       encryption: {
         storeEncryptionKeys:
           storedAccount.encryption?.storeEncryptionKeys ?? false,
+        hasBeenAskedToStoreKeys:
+          storedAccount.encryption?.hasBeenAskedToStoreKeys ?? false,
         encryptionKey: storedAccount.encryption?.encryptionKey
           ? SaplingPaymentAddress.fromAddressString(
               storedAccount.encryption.encryptionKey,
@@ -330,15 +336,22 @@ export function agentToSessionAccount(
       name: agent.vskySession.name,
       // Serialize the appEncryption keys to strings, but only persist them when
       // the user has opted in via storeEncryptionKeys.
-      encryption: agent.vskySession.encryption?.storeEncryptionKeys
+      encryption: agent.vskySession.encryption
         ? {
-            storeEncryptionKeys: true,
-            encryptionKey:
-              agent.vskySession.encryption.encryptionKey?.toAddressString(),
-            decryptionKey:
-              agent.vskySession.encryption.decryptionKey?.toString('hex'),
+            storeEncryptionKeys:
+              agent.vskySession.encryption.storeEncryptionKeys,
+            hasBeenAskedToStoreKeys:
+              agent.vskySession.encryption.hasBeenAskedToStoreKeys,
+            ...(agent.vskySession.encryption.storeEncryptionKeys
+              ? {
+                  encryptionKey:
+                    agent.vskySession.encryption.encryptionKey?.toAddressString(),
+                  decryptionKey:
+                    agent.vskySession.encryption.decryptionKey?.toString('hex'),
+                }
+              : {}),
           }
-        : {storeEncryptionKeys: false},
+        : undefined,
       service: agent.serviceUrl.toString(),
       did: agent.session.did,
       handle: agent.session.handle,
@@ -374,6 +387,15 @@ export function agentToSessionAccount(
       pdsUrl: agent.pdsUrl?.toString(),
       isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
     }
+  }
+}
+
+export function updateAgentVskyEncryption(
+  agent: BskyAgent,
+  update: VskyEncryptionUpdate,
+) {
+  if (agent instanceof VskyAppAgent && agent.vskySession.encryption) {
+    Object.assign(agent.vskySession.encryption, update)
   }
 }
 
@@ -518,12 +540,13 @@ export async function createVskyAgentAndLogin(
     const existing = persisted.get('session').accounts.find(a => a.did === did)
 
     // Preserve user's existing choice to store encryption keys if possible.
-    if (
-      existing?.type === 'vsky' &&
-      existing.encryption?.storeEncryptionKeys &&
-      agent.vskySession.encryption
-    ) {
-      agent.vskySession.encryption.storeEncryptionKeys = true
+    if (existing?.type === 'vsky' && agent.vskySession.encryption) {
+      if (existing.encryption?.storeEncryptionKeys) {
+        agent.vskySession.encryption.storeEncryptionKeys = true
+      }
+      if (existing.encryption?.hasBeenAskedToStoreKeys) {
+        agent.vskySession.encryption.hasBeenAskedToStoreKeys = true
+      }
     }
   }
 

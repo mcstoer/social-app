@@ -10,6 +10,7 @@ import {
   usePostLoginStepsApi,
 } from '#/state/shell/post-login-steps'
 import {useRemoveVerusIdAccountLinkDialogControl} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
+import {useSaveEncryptionKeysDialogControl} from '#/components/dialogs/SaveEncryptionKeysDialog'
 import {useVerusIdAccountLinkingDialogControl} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 
@@ -27,6 +28,7 @@ export function PostLoginSteps() {
     useRemoveVerusIdAccountLinkDialogControl()
   const verusIdAccountLinkingDialogControl =
     useVerusIdAccountLinkingDialogControl()
+  const saveEncryptionKeysControl = useSaveEncryptionKeysDialogControl()
   const getLinkedVerusId = useGetLinkedVerusID()
 
   // Guards against re-running the current step on unrelated re-renders.
@@ -93,6 +95,17 @@ export function PostLoginSteps() {
           })
         break
       }
+      case 'save-encryption-keys': {
+        if (
+          currentAccount.type !== 'vsky' ||
+          currentAccount.encryption?.hasBeenAskedToStoreKeys
+        ) {
+          advance()
+          break
+        }
+        saveEncryptionKeysControl.open({onClose: advance})
+        break
+      }
     }
   }, [
     hasSession,
@@ -106,6 +119,7 @@ export function PostLoginSteps() {
     updateVerusCredentialsControl,
     removeVerusIdAccountLinkControl,
     verusIdAccountLinkingDialogControl,
+    saveEncryptionKeysControl,
   ])
 
   return null

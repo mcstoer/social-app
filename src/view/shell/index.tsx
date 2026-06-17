@@ -33,6 +33,7 @@ import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {NuxDialogs} from '#/components/dialogs/nuxs'
 import {PostLoginSteps} from '#/components/dialogs/PostLoginSteps'
 import {RemoveVerusIDAccountLinkDialog} from '#/components/dialogs/RemoveVerusIDAccountLinkDialog'
+import {SaveEncryptionKeysDialog} from '#/components/dialogs/SaveEncryptionKeysDialog'
 import {SigninDialog} from '#/components/dialogs/Signin'
 import {VerusIDAccountLinkingDialog} from '#/components/dialogs/VerusIDAccountLinkingDialog'
 import {VerusIDCredentialUpdateDialog} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
@@ -119,6 +120,7 @@ function ShellInner() {
       <VerusIDCredentialUpdateDialog />
       <VerusIDAccountLinkingDialog />
       <RemoveVerusIDAccountLinkDialog />
+      <SaveEncryptionKeysDialog />
       <PostLoginSteps />
       <AgeAssuranceRedirectDialog />
       <InAppBrowserConsentDialog />

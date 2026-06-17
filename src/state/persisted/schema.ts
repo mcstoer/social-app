@@ -34,10 +34,10 @@ const bskyAccountSchema = z.object({
 })
 
 /**
- * z-address and ivk strings for Verus encryption and decryptionKey, along with
- * a flag to indicate if the user wants them stored.
+ * Encryption related fields for VerusSky accounts.
  */
 const vskyEncryptionSchema = z.object({
+  hasBeenAskedToStoreKeys: z.boolean().optional(),
   storeEncryptionKeys: z.boolean(),
   encryptionKey: z.string().optional(),
   decryptionKey: z.string().optional(),

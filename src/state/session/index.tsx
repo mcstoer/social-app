@@ -24,6 +24,7 @@ import {
   createAgentAndResume,
   createVskyAgentAndLogin,
   sessionAccountToSession,
+  updateAgentVskyEncryption,
 } from './agent'
 import {type Action, getInitialState, reducer, type State} from './reducer'
 export {isSignupQueued} from './util'
@@ -60,6 +61,7 @@ const ApiContext = createContext<SessionApiContext>({
   resumeSession: async () => {},
   removeAccount: () => {},
   partialRefreshSession: async () => {},
+  updateVskyEncryption: () => {},
 })
 ApiContext.displayName = 'SessionApiContext'
 
@@ -304,6 +306,20 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     })
   }, [store, state, cancelPendingTask])
 
+  const updateVskyEncryption = useCallback<
+    SessionApiContext['updateVskyEncryption']
+  >(
+    patch => {
+      const agent = state.currentAgentState.agent as BskyAppAgent
+      updateAgentVskyEncryption(agent, patch)
+      const refreshedAccount = agentToSessionAccount(agent)
+      if (refreshedAccount) {
+        store.dispatch({type: 'updated-account', account: refreshedAccount})
+      }
+    },
+    [store, state],
+  )
+
   const removeAccount = useCallback<SessionApiContext['removeAccount']>(
     account => {
       addSessionDebugLog({
@@ -378,6 +394,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       resumeSession,
       removeAccount,
       partialRefreshSession,
+      updateVskyEncryption,
     }),
     [
       createAccount,
@@ -387,6 +404,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       resumeSession,
       removeAccount,
       partialRefreshSession,
+      updateVskyEncryption,
     ],
   )
 

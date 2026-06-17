@@ -229,24 +229,28 @@ export const LoginForm = ({
         )
       }
 
-      // Queue the after login dialogs.
+      const steps: PostLoginStep[] = []
       if (saveLoginWithVerusId) {
-        const steps: PostLoginStep[] = [
-          {
-            type: 'update-verusid-credentials',
-            password: passwordValueRef.current,
-          },
-        ]
+        steps.push({
+          type: 'update-verusid-credentials',
+          password: passwordValueRef.current,
+        })
         if (openRemoveVerusIdLinkDialog) {
           steps.push({type: 'remove-verusid-account-link'})
         }
-        startPostLoginSteps(steps)
       } else if (openRemoveVerusIdLinkDialog) {
         // Don't trigger the VerusID check if the user is going to remove
         // their linked VerusID.
-        startPostLoginSteps([{type: 'remove-verusid-account-link'}])
+        steps.push({type: 'remove-verusid-account-link'})
       } else if (validVerusIdLogin) {
-        startPostLoginSteps([{type: 'check-verusid-account-link'}])
+        steps.push({type: 'check-verusid-account-link'})
+      }
+      if (vskySession.encryption) {
+        steps.push({type: 'save-encryption-keys'})
+      }
+
+      if (steps.length) {
+        startPostLoginSteps(steps)
       }
     } catch (e: any) {
       const errMsg = e.toString()
