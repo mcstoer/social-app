@@ -34,6 +34,16 @@ const bskyAccountSchema = z.object({
 })
 
 /**
+ * z-address and ivk strings for Verus encryption and decryptionKey, along with
+ * a flag to indicate if the user wants them stored.
+ */
+const vskyEncryptionSchema = z.object({
+  storeEncryptionKeys: z.boolean(),
+  encryptionKey: z.string().optional(),
+  decryptionKey: z.string().optional(),
+})
+
+/**
  * An second account with an ID persisted to storage. It extends the existing Bluesky account in order to stay compatible with it.
  */
 const vskyAccountSchema = bskyAccountSchema.extend({
@@ -41,6 +51,7 @@ const vskyAccountSchema = bskyAccountSchema.extend({
   auth: z.string(),
   id: z.string(),
   name: z.string(),
+  encryption: vskyEncryptionSchema.optional(),
 })
 
 const accountSchema = z.discriminatedUnion('type', [

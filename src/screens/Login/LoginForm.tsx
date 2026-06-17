@@ -348,6 +348,14 @@ export const LoginForm = ({
         auth: '',
         id: result.identity.identityaddress || '',
         name: result.identity.name,
+        encryption:
+          result.encryptionKey && result.decryptionKey
+            ? {
+                storeEncryptionKeys: false,
+                encryptionKey: result.encryptionKey,
+                decryptionKey: result.decryptionKey,
+              }
+            : undefined,
       }
 
       if (!result.credentials) {

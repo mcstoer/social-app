@@ -41,8 +41,8 @@ export interface LoginResponse {
   identity: IdentityDefinition
   credentials?: LoginCredentials
   credentialError?: string
-  zaddress?: string
-  ivk?: string
+  encryptionKey?: SaplingPaymentAddress
+  decryptionKey?: Buffer
 }
 
 export interface LoginRequestOrdinals {
@@ -174,8 +174,8 @@ export async function processLoginResponse(
     return {
       identity: signingIdentity,
       credentials: extractLoginCredentials(request, dataResponseMap),
-      zaddress: appEncryptionDetail.address.toAddressString(),
-      ivk: appEncryptionDetail.incomingViewingKey.toString('hex'),
+      encryptionKey: appEncryptionDetail.address,
+      decryptionKey: appEncryptionDetail.incomingViewingKey,
     }
   } catch (e) {
     return {

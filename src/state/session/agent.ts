@@ -9,6 +9,7 @@ import {
   type Un$Typed,
 } from '@atproto/api'
 import {TID} from '@atproto/common-web'
+import {SaplingPaymentAddress} from 'verus-typescript-primitives'
 
 import {networkRetry} from '#/lib/async/retry'
 import {
@@ -21,6 +22,7 @@ import {
 } from '#/lib/constants'
 import {logger} from '#/logger'
 import {snoozeBirthdateUpdateAllowedForDid} from '#/state/birthdate'
+import * as persisted from '#/state/persisted'
 import {restrictChatSettings} from '#/state/queries/messages/restrictChatSettings'
 import {snoozeEmailConfirmationPrompt} from '#/state/shell/reminders'
 import {
@@ -62,11 +64,24 @@ export async function createAgentAndResume(
   // Restore either the standard BskyAppAgent or the VskyAppAgent.
   if (storedAccount.type === 'vsky') {
     const vskyAppAgent = new VskyAppAgent({service: storedAccount.service})
-    // Restore the VerusSky session separately from standard session.
+    // Restore the VerusSky session separately from standard session,
+    // re-hydrating the encryption keys.
     vskyAppAgent.vskySession = {
       auth: storedAccount.auth,
       id: storedAccount.id,
       name: storedAccount.name,
+      encryption: {
+        storeEncryptionKeys:
+          storedAccount.encryption?.storeEncryptionKeys ?? false,
+        encryptionKey: storedAccount.encryption?.encryptionKey
+          ? SaplingPaymentAddress.fromAddressString(
+              storedAccount.encryption.encryptionKey,
+            )
+          : undefined,
+        decryptionKey: storedAccount.encryption?.decryptionKey
+          ? Buffer.from(storedAccount.encryption.decryptionKey, 'hex')
+          : undefined,
+      },
     }
     agent = vskyAppAgent
   } else {
@@ -313,6 +328,17 @@ export function agentToSessionAccount(
       auth: agent.vskySession.auth,
       id: agent.vskySession.id,
       name: agent.vskySession.name,
+      // Serialize the appEncryption keys to strings, but only persist them when
+      // the user has opted in via storeEncryptionKeys.
+      encryption: agent.vskySession.encryption?.storeEncryptionKeys
+        ? {
+            storeEncryptionKeys: true,
+            encryptionKey:
+              agent.vskySession.encryption.encryptionKey?.toAddressString(),
+            decryptionKey:
+              agent.vskySession.encryption.decryptionKey?.toString('hex'),
+          }
+        : {storeEncryptionKeys: false},
       service: agent.serviceUrl.toString(),
       did: agent.session.did,
       handle: agent.session.handle,
@@ -486,6 +512,20 @@ export async function createVskyAgentAndLogin(
     authFactorToken,
     allowTakendown: true,
   })
+
+  const did = agent.session?.did
+  if (did) {
+    const existing = persisted.get('session').accounts.find(a => a.did === did)
+
+    // Preserve user's existing choice to store encryption keys if possible.
+    if (
+      existing?.type === 'vsky' &&
+      existing.encryption?.storeEncryptionKeys &&
+      agent.vskySession.encryption
+    ) {
+      agent.vskySession.encryption.storeEncryptionKeys = true
+    }
+  }
 
   const account = agentToSessionAccountOrThrow(agent)
   const gates = features.refresh({strategy: 'prefer-fresh-gates'})

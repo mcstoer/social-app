@@ -1,3 +1,5 @@
+import {type SaplingPaymentAddress} from 'verus-typescript-primitives'
+
 import {type PersistedAccount} from '#/state/persisted'
 import {type Metrics} from '#/analytics/metrics'
 
@@ -58,4 +60,11 @@ export type VskySession = {
   auth: string
   id: string
   name: string
+  encryption?: VskyEncryption
+}
+
+export type VskyEncryption = {
+  storeEncryptionKeys: boolean
+  encryptionKey?: SaplingPaymentAddress
+  decryptionKey?: Buffer
 }
