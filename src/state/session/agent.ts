@@ -394,8 +394,12 @@ export function updateAgentVskyEncryption(
   agent: BskyAgent,
   update: VskyEncryptionUpdate,
 ) {
-  if (agent instanceof VskyAppAgent && agent.vskySession.encryption) {
-    Object.assign(agent.vskySession.encryption, update)
+  if (agent instanceof VskyAppAgent) {
+    agent.vskySession.encryption = {
+      storeEncryptionKeys: false,
+      ...agent.vskySession.encryption,
+      ...update,
+    }
   }
 }
 

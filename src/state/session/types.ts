@@ -75,11 +75,4 @@ export type VskyEncryption = {
   decryptionKey?: Buffer
 }
 
-/**
- * The subset of VerusSky encryption fields that may be patched at runtime.
- * Constrained to the flags so callers can't clobber the keys or the rest of the
- * session, matching the safety intent of the `partial-refresh-session` action.
- */
-export type VskyEncryptionUpdate = Partial<
-  Pick<VskyEncryption, 'storeEncryptionKeys' | 'hasBeenAskedToStoreKeys'>
->
+export type VskyEncryptionUpdate = Partial<VskyEncryption>
