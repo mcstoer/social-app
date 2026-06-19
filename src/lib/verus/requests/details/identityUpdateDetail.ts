@@ -1,6 +1,8 @@
 import {
   IdentityUpdateRequestDetails,
   type IdentityUpdateRequestDetailsJson,
+  IdentityUpdateRequestOrdinalVDXFObject,
+  type OrdinalVDXFObject,
   type VerusCLIVerusIDJsonWithData,
 } from 'verus-typescript-primitives'
 
@@ -30,4 +32,14 @@ export function generateIdentityUpdateRequestDetails(
   )
 
   return updateDetails
+}
+
+export function generateIdentityUpdateRequestOrdinal(
+  options: IdentityUpdateRequestOptions,
+): OrdinalVDXFObject {
+  const detail = generateIdentityUpdateRequestDetails(options)
+  const identityUpdateOrdinal = new IdentityUpdateRequestOrdinalVDXFObject({
+    data: detail,
+  })
+  return identityUpdateOrdinal
 }

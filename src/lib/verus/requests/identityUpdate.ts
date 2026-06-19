@@ -1,23 +1,18 @@
 import {
   type GenericResponse,
-  IdentityUpdateRequestOrdinalVDXFObject,
   IdentityUpdateResponseOrdinalVDXFObject,
   type OrdinalVDXFObject,
 } from 'verus-typescript-primitives'
 
 import {
-  generateIdentityUpdateRequestDetails,
+  generateIdentityUpdateRequestOrdinal,
   type IdentityUpdateRequestOptions,
 } from './details/identityUpdateDetail'
 
 export function generateIdentityUpdateRequestOrdinals(
   options: IdentityUpdateRequestOptions,
 ): [OrdinalVDXFObject] {
-  const detail = generateIdentityUpdateRequestDetails(options)
-  const identityUpdateOrdinal = new IdentityUpdateRequestOrdinalVDXFObject({
-    data: detail,
-  })
-  return [identityUpdateOrdinal]
+  return [generateIdentityUpdateRequestOrdinal(options)]
 }
 
 export function processIdentityUpdateResponse(

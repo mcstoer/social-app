@@ -2,6 +2,7 @@ import type BN from 'bn.js'
 import {
   type CompactIAddressObject,
   UserDataRequestDetails,
+  UserDataRequestOrdinalVDXFObject,
 } from 'verus-typescript-primitives'
 
 import {generateRequestID} from '../../addresses'
@@ -25,5 +26,13 @@ export function generateUserDataRequestDetails(
     signer: options.signer,
     dataType: options.dataType,
     requestType: options.requestType,
+  })
+}
+
+export function generateUserDataRequestOrdinal(
+  options: UserDataRequestOptions,
+) {
+  return new UserDataRequestOrdinalVDXFObject({
+    data: generateUserDataRequestDetails(options),
   })
 }

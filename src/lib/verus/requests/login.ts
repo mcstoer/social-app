@@ -1,32 +1,34 @@
 import {
-  AppEncryptionRequestOrdinalVDXFObject,
-  AppEncryptionResponseDetails,
-  AuthenticationRequestOrdinalVDXFObject,
+  type AppEncryptionRequestOrdinalVDXFObject,
+  type AuthenticationRequestOrdinalVDXFObject,
   AuthenticationResponseOrdinalVDXFObject,
   Credential,
   DATA_TYPE_OBJECT_CREDENTIAL,
-  DataResponseOrdinalVDXFObject,
+  type DataResponseOrdinalVDXFObject,
   type GenericRequest,
   type GenericResponse,
   IDENTITY_CREDENTIAL_PLAINLOGIN,
   type IdentityDefinition,
-  SaplingPaymentAddress,
+  type SaplingPaymentAddress,
   UserDataRequestDetails,
   UserDataRequestOrdinalVDXFObject,
   VdxfUniValue,
 } from 'verus-typescript-primitives'
 
 import {type VerusGetIdentityQueryResult} from '#/state/queries/verus/useVerusGetIdentityQuery'
-import {decryptDescriptor, zGetEncryptionAddress} from '../zsupport/crypto'
-import {generateAppEncryptionRequestDetails} from './details/appEncryptionDetail'
+import {
+  extractAppEncryptionKeys,
+  generateAppEncryptionRequestOrdinal,
+} from './details/appEncryptionDetail'
 import {
   type AuthenticationRequestOptions,
-  generateAuthenticationRequestDetails,
+  generateAuthenticationRequestOrdinal,
 } from './details/authDetail'
 import {
-  generateUserDataRequestDetails,
+  generateUserDataRequestOrdinal,
   type UserDataRequestOptions,
 } from './details/userDataDetail'
+import {buildDataResponseMap} from './genericResponse'
 
 export interface LoginRequestOptions {
   auth?: AuthenticationRequestOptions
@@ -57,9 +59,7 @@ export interface LoginRequestOrdinals {
 export async function generateLoginRequestOrdinals(
   options?: LoginRequestOptions,
 ): Promise<LoginRequestOrdinals> {
-  const authentication = new AuthenticationRequestOrdinalVDXFObject({
-    data: generateAuthenticationRequestDetails(options?.auth),
-  })
+  const authentication = generateAuthenticationRequestOrdinal(options?.auth)
 
   const loginCredentials: UserDataRequestOptions = {
     searchDataKey: [
@@ -69,30 +69,14 @@ export async function generateLoginRequestOrdinals(
     requestType: UserDataRequestDetails.CREDENTIAL,
   }
 
-  const credentialOrdinal = new UserDataRequestOrdinalVDXFObject({
-    data: generateUserDataRequestDetails(loginCredentials),
-  })
+  const credentialOrdinal = generateUserDataRequestOrdinal(loginCredentials)
 
-  const seed = Buffer.from(crypto.getRandomValues(new Uint8Array(32)))
-  const channelKeys = await zGetEncryptionAddress({
-    seed: seed,
-  })
-
-  const zaddress = Buffer.from(channelKeys.address)
-  const ivk = Buffer.from(channelKeys.ivk)
-
-  const encryptResponseToAddress = new SaplingPaymentAddress()
-  encryptResponseToAddress.fromBuffer(zaddress)
-
-  const appEncryptionOrdinal = new AppEncryptionRequestOrdinalVDXFObject({
-    data: generateAppEncryptionRequestDetails({
-      encryptResponseToAddress,
-    }),
-  })
+  const {ordinal: appEncryptionOrdinal, ivk} =
+    await generateAppEncryptionRequestOrdinal()
 
   return {
     ordinals: [authentication, credentialOrdinal, appEncryptionOrdinal],
-    ivk: ivk,
+    ivk,
   }
 }
 
@@ -126,47 +110,14 @@ export async function processLoginResponse(
 
   // Prepare the data response details in a map for quick lookup against the
   // request IDs in the request.
-  const dataResponseMap = new Map<string, DataResponseOrdinalVDXFObject>()
-
-  for (const ordinal of response.details) {
-    if (
-      ordinal instanceof DataResponseOrdinalVDXFObject &&
-      ordinal.data.requestID
-    ) {
-      dataResponseMap.set(ordinal.data.requestID.toIAddress(), ordinal)
-    }
-  }
-
-  const appEncryptionRequestID = request.details.find(
-    (ordinal): ordinal is AppEncryptionRequestOrdinalVDXFObject =>
-      ordinal instanceof AppEncryptionRequestOrdinalVDXFObject,
-  )?.data.requestID
+  const dataResponseMap = buildDataResponseMap(response)
 
   // If getting the keys fails, then the whole login should fail.
-  if (!appEncryptionRequestID) {
-    throw new Error('Missing request ID for the app encryption in the request')
-  }
-
-  const encryptedAppEncryptionOrdinal = dataResponseMap.get(
-    appEncryptionRequestID.toIAddress(),
-  )
-
-  if (!encryptedAppEncryptionOrdinal) {
-    throw new Error(
-      'Missing encrypted app encryption ordinal in VerusID response',
-    )
-  }
-
-  // decryptDescriptor unwraps the CVDXF_Data envelope that the daemon's
-  // signdata adds before encrypting, returning the CDataDescriptor wrapper.
-  // We actually want the contents of that descriptor, so we then
-  // extract the objectdata to get the hex buffer of the detail.
-  const decryptedDescriptor = await decryptDescriptor({
-    descriptor: encryptedAppEncryptionOrdinal.data.data,
+  const {encryptionKey, decryptionKey} = await extractAppEncryptionKeys({
+    request,
+    dataResponseMap,
     ivk,
   })
-  const appEncryptionDetail = new AppEncryptionResponseDetails()
-  appEncryptionDetail.fromBuffer(decryptedDescriptor.objectdata)
 
   // Allow for VerusID login with invalid credentials so that the user can easily update
   // their stored credentials after a manual login.
@@ -174,8 +125,8 @@ export async function processLoginResponse(
     return {
       identity: signingIdentity,
       credentials: extractLoginCredentials(request, dataResponseMap),
-      encryptionKey: appEncryptionDetail.address,
-      decryptionKey: appEncryptionDetail.incomingViewingKey,
+      encryptionKey,
+      decryptionKey,
     }
   } catch (e) {
     return {

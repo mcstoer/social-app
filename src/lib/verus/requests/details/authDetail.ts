@@ -1,6 +1,7 @@
 import BN from 'bn.js'
 import {
   AuthenticationRequestDetails,
+  AuthenticationRequestOrdinalVDXFObject,
   type RecipientConstraint,
 } from 'verus-typescript-primitives'
 
@@ -22,5 +23,13 @@ export function generateAuthenticationRequestDetails(
     requestID: generateRequestID(),
     recipientConstraints: options.recipientConstraints,
     expiryTime: new BN(Math.floor(Date.now() / 1000) + expirySeconds),
+  })
+}
+
+export function generateAuthenticationRequestOrdinal(
+  options: AuthenticationRequestOptions = {},
+) {
+  return new AuthenticationRequestOrdinalVDXFObject({
+    data: generateAuthenticationRequestDetails(options),
   })
 }
