@@ -108,7 +108,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     },
     AwaitingResponse: {
       title: l`Awaiting confirmation`,
-      message: l`Scan the QR code below or press Open Verus wallet to confirm the update.`,
+      message: l`Scan the QR code below or press Open Verus Wallet to confirm the update.`,
     },
     Done: {
       title: l`Update confirmed`,

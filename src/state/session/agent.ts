@@ -41,6 +41,7 @@ import {
 } from './moderation'
 import {
   type SessionAccount,
+  type VskyEncryption,
   type VskyEncryptionUpdate,
   type VskySession,
 } from './types'
@@ -388,6 +389,15 @@ export function agentToSessionAccount(
       isSelfHosted: !agent.serviceUrl.toString().startsWith(BSKY_SERVICE),
     }
   }
+}
+
+export function getAgentVskyEncryption(
+  agent: BskyAgent,
+): VskyEncryption | undefined {
+  if (agent instanceof VskyAppAgent) {
+    return agent.vskySession.encryption
+  }
+  return undefined
 }
 
 export function updateAgentVskyEncryption(

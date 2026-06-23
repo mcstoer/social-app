@@ -41,6 +41,9 @@ type ControlsContext = {
   saveEncryptionKeysDialogControl: StatefulControl<{
     onClose?: () => void
   }>
+  getVskyEncryptionKeysDialogControl: StatefulControl<{
+    onClose?: () => void
+  }>
   reportDialogControl: StatefulControl<{subject: ReportSubject}>
 }
 
@@ -85,6 +88,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   const saveEncryptionKeysDialogControl = useStatefulDialogControl<{
     onClose?: () => void
   }>()
+  const getVskyEncryptionKeysDialogControl = useStatefulDialogControl<{
+    onClose?: () => void
+  }>()
   const reportDialogControl = useStatefulDialogControl<{
     subject: ReportSubject
   }>()
@@ -101,6 +107,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       verusIdAccountLinkingDialogControl,
       removeVerusIdAccountLinkDialogControl,
       saveEncryptionKeysDialogControl,
+      getVskyEncryptionKeysDialogControl,
       reportDialogControl,
     }),
     [
@@ -114,6 +121,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       verusIdAccountLinkingDialogControl,
       removeVerusIdAccountLinkDialogControl,
       saveEncryptionKeysDialogControl,
+      getVskyEncryptionKeysDialogControl,
       reportDialogControl,
     ],
   )

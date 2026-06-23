@@ -27,6 +27,7 @@ import {atoms as a, select, useTheme} from '#/alf'
 import {setSystemUITheme} from '#/alf/util/systemUI'
 import {AgeAssuranceRedirectDialog} from '#/components/ageAssurance/AgeAssuranceRedirectDialog'
 import {EmailDialog} from '#/components/dialogs/EmailDialog'
+import {GetVskyEncryptionKeysDialog} from '#/components/dialogs/GetVskyEncryptionKeysDialog'
 import {InAppBrowserConsentDialog} from '#/components/dialogs/InAppBrowserConsent'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
@@ -121,6 +122,7 @@ function ShellInner() {
       <VerusIDAccountLinkingDialog />
       <RemoveVerusIDAccountLinkDialog />
       <SaveEncryptionKeysDialog />
+      <GetVskyEncryptionKeysDialog />
       <PostLoginSteps />
       <AgeAssuranceRedirectDialog />
       <InAppBrowserConsentDialog />

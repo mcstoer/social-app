@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
@@ -5,7 +6,7 @@ import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
-import {useSession} from '#/state/session'
+import {useRequireVskyEncryptionKeys, useSession} from '#/state/session'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import {useDialogControl} from '#/components/Dialog'
@@ -15,6 +16,7 @@ import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/Veru
 import {VerusServiceDialog} from '#/components/dialogs/VerusServiceDialog'
 import {At_Stroke2_Corner2_Rounded as AtIcon} from '#/components/icons/At'
 import {ChainLink_Stroke2_Corner0_Rounded as ChainLinkIcon} from '#/components/icons/ChainLink'
+import {Check_Stroke2_Corner0_Rounded as CheckIcon} from '#/components/icons/Check'
 import {CircleX_Stroke2_Corner0_Rounded as CircleXIcon} from '#/components/icons/CircleX'
 import {Earth_Stroke2_Corner2_Rounded as EarthIcon} from '#/components/icons/Globe'
 import {Key_Stroke2_Corner2_Rounded as KeyIcon} from '#/components/icons/Key'
@@ -37,6 +39,8 @@ export function VerusServicesSettingsScreen({}: Props) {
   const updateVerusIDCredentialsUpdateControl =
     useVerusIdCredentialUpdateDialogControl()
   const verusServiceDialogControl = useDialogControl()
+  const requireEncryptionKeys = useRequireVskyEncryptionKeys()
+  const [encryptionKeysReady, setEncryptionKeysReady] = useState(false)
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID} = useLinkedVerusIDQuery(
@@ -158,6 +162,22 @@ export function VerusServicesSettingsScreen({}: Props) {
               <Trans>Verus Services Endpoint (Advanced)</Trans>
             </SettingsList.ItemText>
             <SettingsList.Chevron />
+          </SettingsList.PressableItem>
+          <SettingsList.Divider />
+          <SettingsList.PressableItem
+            label={l`Test encryption keys (temporary)`}
+            onPress={() =>
+              requireEncryptionKeys(() => setEncryptionKeysReady(true))
+            }>
+            <SettingsList.ItemIcon icon={KeyIcon} />
+            <SettingsList.ItemText>
+              <Trans>Test encryption keys (temporary)</Trans>
+            </SettingsList.ItemText>
+            {encryptionKeysReady ? (
+              <CheckIcon fill={t.palette.primary_500} size="md" />
+            ) : (
+              <SettingsList.Chevron />
+            )}
           </SettingsList.PressableItem>
         </SettingsList.Container>
       </Layout.Content>

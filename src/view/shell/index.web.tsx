@@ -17,6 +17,7 @@ import {Takendown} from '#/screens/Takendown'
 import {atoms as a, select, useBreakpoints, useTheme} from '#/alf'
 import {AgeAssuranceRedirectDialog} from '#/components/ageAssurance/AgeAssuranceRedirectDialog'
 import {EmailDialog} from '#/components/dialogs/EmailDialog'
+import {GetVskyEncryptionKeysDialog} from '#/components/dialogs/GetVskyEncryptionKeysDialog'
 import {LinkWarningDialog} from '#/components/dialogs/LinkWarning'
 import {MutedWordsDialog} from '#/components/dialogs/MutedWords'
 import {NuxDialogs} from '#/components/dialogs/nuxs'
@@ -78,6 +79,7 @@ function ShellInner() {
       <VerusIDAccountLinkingDialog />
       <RemoveVerusIDAccountLinkDialog />
       <SaveEncryptionKeysDialog />
+      <GetVskyEncryptionKeysDialog />
       <PostLoginSteps />
       <AgeAssuranceRedirectDialog />
       <LinkWarningDialog />

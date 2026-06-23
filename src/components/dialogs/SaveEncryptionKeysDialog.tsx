@@ -59,8 +59,8 @@ function Inner() {
         <View style={[a.gap_md]}>
           <Text style={[a.text_md, a.leading_snug]}>
             <Trans>
-              Saving your keys lets you use encryption services right away each
-              time you visit.
+              Saving your keys lets you use VerusSky privacy features right away
+              each time you visit.
             </Trans>
           </Text>
 

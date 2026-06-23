@@ -23,6 +23,7 @@ import {
   createAgentAndLogin,
   createAgentAndResume,
   createVskyAgentAndLogin,
+  getAgentVskyEncryption,
   sessionAccountToSession,
   updateAgentVskyEncryption,
 } from './agent'
@@ -480,6 +481,24 @@ export function useRequireAuth() {
     },
     [hasSession, signinDialogControl, closeAll],
   )
+}
+
+export function useRequireVskyEncryptionKeys() {
+  const agent = useAgent()
+  const closeAll = useCloseAllActiveElements()
+  const {getVskyEncryptionKeysDialogControl} = useGlobalDialogsControlContext()
+
+  return (fn: () => unknown) => {
+    const vskyEncryption = getAgentVskyEncryption(agent)
+    const encryptionKey = vskyEncryption?.encryptionKey
+    const decryptionKey = vskyEncryption?.decryptionKey
+    if (encryptionKey && decryptionKey) {
+      fn()
+    } else {
+      closeAll()
+      getVskyEncryptionKeysDialogControl.open({})
+    }
+  }
 }
 
 export function useAgent(): AtpAgent {
