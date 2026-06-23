@@ -99,10 +99,17 @@ function Inner() {
           )
       : '')
 
-  const uiStrings = {
+  const uiStrings: Record<
+    Stages,
+    {title: string; message: string; details?: string[]}
+  > = {
     Intro: {
       title: l`Get encryption keys`,
       message: l`Your encryption keys enable privacy features in VerusSky.`,
+      details: [
+        l`Saving your keys lets you use VerusSky privacy features right away each time you visit.`,
+        l`Only do this on devices you trust. If your keys are stolen, your encrypted data is no longer private.`,
+      ],
     },
     AwaitingResponse: {
       title: l`Awaiting confirmation`,
@@ -127,9 +134,8 @@ function Inner() {
       return
     }
 
-    setLocalError('')
-
     if (request && ivk && !isError) {
+      setLocalError('')
       setShowAwaitingResponse(true)
       return
     }
@@ -147,6 +153,7 @@ function Inner() {
         ordinals,
       )
 
+      setLocalError('')
       setIvk(newIvk)
       setRequest(signedRequest)
       setShowAwaitingResponse(true)
@@ -198,24 +205,15 @@ function Inner() {
           {uiStrings[stage].message}
         </Text>
 
-        {error ? <Admonition type="error">{error}</Admonition> : null}
+        {uiStrings[stage].details?.map(detail => (
+          <Text key={detail} style={[a.text_md, a.leading_snug]}>
+            {detail}
+          </Text>
+        ))}
       </View>
 
       {stage === Stages.Intro ? (
         <View style={[a.gap_md]}>
-          <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>
-              Saving your keys lets you use VerusSky privacy features right away
-              each time you visit.
-            </Trans>
-          </Text>
-
-          <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>
-              Only do this on devices you trust. If your keys are stolen, your
-              encrypted data is no longer private.
-            </Trans>
-          </Text>
           <Toggle.Item
             label={l`Save these keys on this device`}
             name="saveEncryptionKeys"
@@ -238,6 +236,8 @@ function Inner() {
           )}
         </>
       ) : null}
+
+      {error ? <Admonition type="error">{error}</Admonition> : null}
 
       <View style={[a.gap_sm]}>
         {stage === Stages.Intro ? (
