@@ -3,13 +3,13 @@ import {GenericRequest} from 'verus-typescript-primitives'
 import {idInterface, signingAddress} from '#/config'
 import {fetchWIF} from '#/services/signing'
 import {v2StoreInstance} from '../common/request-store'
-import {sigData} from '../helpers/signData'
+import {createSigData} from '../helpers/signData'
 
 export class SigningService {
   async signGenericRequest(buffer: Buffer): Promise<GenericRequest> {
     const request = new GenericRequest()
     request.fromBuffer(buffer)
-    request.signature = sigData
+    request.signature = createSigData()
 
     const wif = await fetchWIF(signingAddress)
     const signed = await idInterface.signGenericRequest(request, wif)

@@ -131,7 +131,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           logger.debug('Successfully updated VerusSky credentials')
         } else {
           setError(
-            l`No transaction ID was found in the credentail update response.`,
+            l`No transaction ID was found in the credential update response.`,
           )
         }
       } catch (e) {

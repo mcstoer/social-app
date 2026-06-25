@@ -43,6 +43,7 @@ type ControlsContext = {
   }>
   getVskyEncryptionKeysDialogControl: StatefulControl<{
     onClose?: () => void
+    onSuccess?: () => void
   }>
   reportDialogControl: StatefulControl<{subject: ReportSubject}>
 }
@@ -90,6 +91,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   }>()
   const getVskyEncryptionKeysDialogControl = useStatefulDialogControl<{
     onClose?: () => void
+    onSuccess?: () => void
   }>()
   const reportDialogControl = useStatefulDialogControl<{
     subject: ReportSubject

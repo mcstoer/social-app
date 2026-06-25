@@ -132,6 +132,8 @@ export async function processLoginResponse(
     return {
       identity: signingIdentity,
       credentialError: e instanceof Error ? e.message : String(e),
+      encryptionKey,
+      decryptionKey,
     }
   }
 }

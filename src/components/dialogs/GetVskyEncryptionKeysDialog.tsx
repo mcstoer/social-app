@@ -35,6 +35,7 @@ export function GetVskyEncryptionKeysDialog() {
   const {t: l} = useLingui()
   const getVskyEncryptionKeysControl = useGetVskyEncryptionKeysDialogControl()
   const passedOnClose = getVskyEncryptionKeysControl.value?.onClose
+  const onSuccess = getVskyEncryptionKeysControl.value?.onSuccess
 
   const onClose = () => {
     getVskyEncryptionKeysControl.clear()
@@ -50,14 +51,14 @@ export function GetVskyEncryptionKeysDialog() {
       <Dialog.ScrollableInner
         label={l`Get Encryption Keys`}
         style={web({maxWidth: 400})}>
-        <Inner />
+        <Inner onSuccess={onSuccess} />
         <Dialog.Close />
       </Dialog.ScrollableInner>
     </Dialog.Outer>
   )
 }
 
-function Inner() {
+function Inner({onSuccess}: {onSuccess?: () => void}) {
   const {t: l} = useLingui()
   const {currentAccount} = useSession()
   const {updateVskyEncryption} = useSessionApi()
@@ -117,7 +118,8 @@ function Inner() {
     },
     Done: {
       title: l`Encryption keys retrieved`,
-      message: l`Your encryption keys have been successfully retrieved! You can now use VerusSky's privacy features.`,
+      message: l`Your encryption keys have been successfully retrieved!`,
+      details: [l`You can now use VerusSky's privacy features.`],
     },
   }
 
@@ -193,6 +195,7 @@ function Inner() {
         hasBeenAskedToStoreKeys: true,
       })
       logger.debug('Successfully retrieved VerusSky encryption keys')
+      onSuccess?.()
     })
   }
 

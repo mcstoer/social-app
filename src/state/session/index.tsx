@@ -496,7 +496,7 @@ export function useRequireVskyEncryptionKeys() {
       fn()
     } else {
       closeAll()
-      getVskyEncryptionKeysDialogControl.open({})
+      getVskyEncryptionKeysDialogControl.open({onSuccess: fn})
     }
   }
 }
