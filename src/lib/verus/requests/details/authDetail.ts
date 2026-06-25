@@ -5,7 +5,7 @@ import {
   type RecipientConstraint,
 } from 'verus-typescript-primitives'
 
-import {generateRequestID} from '../../addresses'
+import {generateRequestID} from '#/lib/verus/addresses'
 
 const DEFAULT_EXPIRY_SECONDS = 3600
 

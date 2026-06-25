@@ -20,19 +20,28 @@ export function parseVerusIdLogin(login: LoginConsentResponse): {
   credential.fromBuffer(Buffer.from(credentialHex, 'hex'))
   const plainLogin = credential.credential
 
-  if (!plainLogin || !Array.isArray(plainLogin) || plainLogin.length < 2) {
-    if (!plainLogin || !Array.isArray(plainLogin)) {
-      throw new Error('Invalid credential format')
-    } else if (!plainLogin[0]) {
-      throw new Error('Missing username in credentials')
-    } else if (!plainLogin[1]) {
-      throw new Error('Missing password in credentials')
-    }
-    throw new Error('Invalid credentials')
+  if (!Array.isArray(plainLogin) || plainLogin.length < 2) {
+    throw new Error('Invalid credential format')
+  }
+
+  const [username, password] = plainLogin
+
+  if (typeof username !== 'string') {
+    throw new Error('Invalid username format')
+  }
+  if (typeof password !== 'string') {
+    throw new Error('Invalid password format')
+  }
+
+  if (username.trim().length === 0) {
+    throw new Error('Missing username in credentials')
+  }
+  if (password.trim().length === 0) {
+    throw new Error('Missing password in credentials')
   }
 
   return {
-    username: plainLogin[0],
-    password: plainLogin[1],
+    username,
+    password,
   }
 }

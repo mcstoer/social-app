@@ -5,7 +5,7 @@ import {
   UserDataRequestOrdinalVDXFObject,
 } from 'verus-typescript-primitives'
 
-import {generateRequestID} from '../../addresses'
+import {generateRequestID} from '#/lib/verus/addresses'
 
 export interface UserDataRequestOptions {
   searchDataKey: Array<{[key: string]: string}>

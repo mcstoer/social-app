@@ -9,8 +9,11 @@ import {
   SaplingPaymentAddress,
 } from 'verus-typescript-primitives'
 
-import {generateRequestID} from '../../addresses'
-import {decryptDescriptor, zGetEncryptionAddress} from '../../zsupport/crypto'
+import {generateRequestID} from '#/lib/verus/addresses'
+import {
+  decryptDescriptor,
+  zGetEncryptionAddress,
+} from '#/lib/verus/zsupport/crypto'
 
 export interface AppEncryptionKeys {
   encryptionKey: SaplingPaymentAddress

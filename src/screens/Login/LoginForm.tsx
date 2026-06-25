@@ -336,9 +336,7 @@ export const LoginForm = ({
         logger.warn('Failed to verify VerusSky login response', {
           safeMessage: e,
         })
-        setError(
-          'Failed to verify VerusSky login response: ' + cleanError(errMsg),
-        )
+        setError('Failed to verify VerusSky login response')
         verusIdLoginFailed.current = true
         setIsVerusIdLogin(false)
         setIsProcessing(false)
@@ -364,23 +362,31 @@ export const LoginForm = ({
 
       if (!result.credentials) {
         const errMsg = result.credentialError ?? ''
-        let message = ''
 
         if (errMsg.includes('Missing username')) {
-          message = `Missing username from VerusID sign in.`
+          setError(
+            _(
+              msg`Missing username from VerusID sign in. Please sign in manually.`,
+            ),
+          )
         } else if (errMsg.includes('Missing password')) {
-          message = `Missing password from VerusID sign in.`
+          setError(
+            _(
+              msg`Missing password from VerusID sign in. Please sign in manually.`,
+            ),
+          )
         } else if (
           errMsg.includes('Invalid credential format') ||
           errMsg.includes('Invalid credentials') ||
           errMsg.includes('Missing sign in credentials') ||
           errMsg.includes('Missing plain login credential')
         ) {
-          message = `Missing username and password from VerusID sign in.`
+          setError(
+            _(
+              msg`Missing username and password from VerusID sign in. Please sign in manually.`,
+            ),
+          )
         }
-
-        message += ` Please sign in manually.`
-        setError(_(msg`${message}`))
 
         verusIdLoginFailed.current = true
 

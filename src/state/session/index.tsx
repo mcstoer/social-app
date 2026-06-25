@@ -24,6 +24,7 @@ import {
   createAgentAndResume,
   createVskyAgentAndLogin,
   getAgentVskyEncryption,
+  isVskyAppAgent,
   sessionAccountToSession,
   updateAgentVskyEncryption,
 } from './agent'
@@ -312,6 +313,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   >(
     patch => {
       const agent = state.currentAgentState.agent as BskyAppAgent
+      if (!isVskyAppAgent(agent)) {
+        return
+      }
       updateAgentVskyEncryption(agent, patch)
       const refreshedAccount = agentToSessionAccount(agent)
       if (refreshedAccount) {

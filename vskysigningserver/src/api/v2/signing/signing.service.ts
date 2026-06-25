@@ -2,8 +2,8 @@ import {GenericRequest} from 'verus-typescript-primitives'
 
 import {idInterface, signingAddress} from '#/config'
 import {fetchWIF} from '#/services/signing'
-import {v2StoreInstance} from '../common/request-store'
-import {createSigData} from '../helpers/signData'
+import {v2StoreInstance} from '#/api/v2/common/request-store'
+import {createSigData} from '#/api/v2/helpers/signData'
 
 export class SigningService {
   async signGenericRequest(buffer: Buffer): Promise<GenericRequest> {

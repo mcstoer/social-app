@@ -628,4 +628,8 @@ class VskyAppAgent extends BskyAppAgent {
   }
 }
 
+export function isVskyAppAgent(agent: BskyAgent): agent is VskyAppAgent {
+  return agent instanceof VskyAppAgent
+}
+
 export type {VskyAppAgent}

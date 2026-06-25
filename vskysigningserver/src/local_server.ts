@@ -11,7 +11,7 @@ async function startServer() {
     await fetchWIF(process.env.SIGNING_ADDRESS as string)
   } catch (error: unknown) {
     if (error && typeof error === 'object' && 'code' in error) {
-      console.error('Unable to fetch wif for signing:', (error as any).code)
+      console.error('Unable to fetch wif for signing:', error.code)
     } else {
       console.error('Unable to fetch wif for signing:', error)
     }

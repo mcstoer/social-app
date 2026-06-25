@@ -26,9 +26,9 @@ import * as Dialog from '#/components/Dialog'
 import {useGlobalDialogsControlContext} from '#/components/dialogs/Context'
 import * as TextField from '#/components/forms/TextField'
 import {Loader} from '#/components/Loader'
+import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
 import {IS_NATIVE, IS_WEB} from '#/env'
-import {QrCodeInner} from '../StarterPack/QrCode'
 
 enum Stages {
   UpdateCredentials = 'UpdateCredentials',

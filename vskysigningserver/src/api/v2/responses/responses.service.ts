@@ -4,7 +4,7 @@ import {
 } from 'verus-typescript-primitives'
 
 import {idInterface} from '#/config'
-import {v2StoreInstance} from '../common/request-store'
+import {v2StoreInstance} from '#/api/v2/common/request-store'
 
 export class ResponsesService {
   getResponse(requestId: string): GenericResponse | undefined {
@@ -30,6 +30,15 @@ export class ResponsesService {
 
     const id = requestIDObj.toAddress()
 
+    const attempt = v2StoreInstance.getAttempt(id)
+
+    if (!attempt) {
+      console.log(
+        `Received response with unknown id ${id} at ${new Date().toLocaleTimeString()}`,
+      )
+      return {success: false, status: 400, message: 'Unknown response ID.'}
+    }
+
     const isValid = await this.verifyResponse(response)
 
     if (!isValid) {
@@ -39,26 +48,14 @@ export class ResponsesService {
       return {success: false, status: 400, message: 'Invalid response.'}
     }
 
-    if (!v2StoreInstance.hasAttempt(id)) {
-      console.log(
-        `Received response with unknown id ${id} at ${new Date().toLocaleTimeString()}`,
-      )
-      return {success: false, status: 400, message: 'Unknown response ID.'}
-    }
-
-    const attempt = v2StoreInstance.getAttempt(id)
-    const originalRequest = attempt?.request as GenericRequest | undefined
+    const originalRequest = attempt.request as GenericRequest
 
     console.log(
       `Received response with id ${id} at ${new Date().toLocaleTimeString()}`,
     )
 
-    const originalHash = originalRequest?.getRawDataSha256()
-    if (
-      !originalHash ||
-      !response?.requestHash ||
-      !originalHash.equals(response.requestHash)
-    ) {
+    const originalHash = originalRequest.getRawDataSha256()
+    if (!response.requestHash || !originalHash.equals(response.requestHash)) {
       console.log(`Request hash mismatch for response with id ${id}`)
       return {success: false, status: 400, message: 'Request hash mismatch.'}
     }

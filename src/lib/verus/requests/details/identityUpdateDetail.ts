@@ -6,7 +6,7 @@ import {
   type VerusCLIVerusIDJsonWithData,
 } from 'verus-typescript-primitives'
 
-import {generateRequestID} from '../../addresses'
+import {generateRequestID} from '#/lib/verus/addresses'
 
 export interface IdentityUpdateRequestOptions {
   identityJSON: VerusCLIVerusIDJsonWithData

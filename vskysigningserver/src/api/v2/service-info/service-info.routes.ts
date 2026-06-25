@@ -1,6 +1,6 @@
 import {type Response, Router} from 'express'
 
-import {signingAddress} from '../../../config'
+import {signingAddress} from '#/config'
 
 const router = Router()
 

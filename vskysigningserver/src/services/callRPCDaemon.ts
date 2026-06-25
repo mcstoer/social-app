@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import {verusDaemonConfig} from '../config'
+import {verusDaemonConfig} from '#/config'
 import {type VerusDaemonConfig} from './daemonCredentials'
 
 export interface error {

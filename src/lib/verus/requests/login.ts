@@ -41,10 +41,10 @@ export interface LoginCredentials {
 
 export interface LoginResponse {
   identity: IdentityDefinition
+  encryptionKey: SaplingPaymentAddress
+  decryptionKey: Buffer
   credentials?: LoginCredentials
   credentialError?: string
-  encryptionKey?: SaplingPaymentAddress
-  decryptionKey?: Buffer
 }
 
 export interface LoginRequestOrdinals {
@@ -103,37 +103,42 @@ export async function processLoginResponse(
     throw new Error('Missing signature in VerusID response')
   }
 
-  const signingAddress = signature.identityID.toIAddress()
-
-  const getIdentityResult = await getIdentity(signingAddress)
-  const signingIdentity = getIdentityResult.identity
-
   // Prepare the data response details in a map for quick lookup against the
   // request IDs in the request.
   const dataResponseMap = buildDataResponseMap(response)
 
+  const signingAddress = signature.identityID.toIAddress()
+  const getIdentityPromise = getIdentity(signingAddress)
+
   // If getting the keys fails, then the whole login should fail.
-  const {encryptionKey, decryptionKey} = await extractAppEncryptionKeys({
+  const keysPromise = extractAppEncryptionKeys({
     request,
     dataResponseMap,
     ivk,
   })
+
+  const [getIdentityResult, keysResult] = await Promise.all([
+    getIdentityPromise,
+    keysPromise,
+  ])
+  const signingIdentity = getIdentityResult.identity
+  const {encryptionKey, decryptionKey} = keysResult
 
   // Allow for VerusID login with invalid credentials so that the user can easily update
   // their stored credentials after a manual login.
   try {
     return {
       identity: signingIdentity,
-      credentials: extractLoginCredentials(request, dataResponseMap),
       encryptionKey,
       decryptionKey,
+      credentials: extractLoginCredentials(request, dataResponseMap),
     }
   } catch (e) {
     return {
       identity: signingIdentity,
-      credentialError: e instanceof Error ? e.message : String(e),
       encryptionKey,
       decryptionKey,
+      credentialError: e instanceof Error ? e.message : String(e),
     }
   }
 }

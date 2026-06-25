@@ -1,5 +1,5 @@
 import {type Identity} from '#/types/identity'
-import {verusDaemonConfig} from '../config'
+import {verusDaemonConfig} from '#/config'
 import {callRPCDaemon} from './callRPCDaemon'
 
 export const fetchWIF = async (iaddress: string): Promise<string> => {

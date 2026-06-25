@@ -9,8 +9,8 @@ import {
 import {type VerusIdInterface} from 'verusid-ts-client'
 
 import {LOCAL_DEV_VSKY_SERVER} from '#/lib/constants'
+import {generateRequestID} from '#/lib/verus/addresses'
 import {DEFAULT_CHAIN, VERUSSKY_APP_ID} from '#/env'
-import {generateRequestID} from '../addresses'
 
 const RESPONSES_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/responses`
 const SIGNING_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/signing`
