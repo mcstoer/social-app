@@ -1,6 +1,7 @@
 import {View} from 'react-native'
 import {Trans, useLingui} from '@lingui/react/macro'
 
+import {useEncryptionKeyDialogStrings} from '#/lib/verus/useEncryptionKeyDialogStrings'
 import {useSessionApi} from '#/state/session'
 import {atoms as a, web} from '#/alf'
 import {Button, ButtonText} from '#/components/Button'
@@ -40,6 +41,7 @@ function Inner() {
   const {t: l} = useLingui()
   const control = Dialog.useDialogContext()
   const {updateVskyEncryption} = useSessionApi()
+  const sharedStrings = useEncryptionKeyDialogStrings()
 
   const onChoose = (store: boolean) => {
     updateVskyEncryption({
@@ -58,17 +60,11 @@ function Inner() {
 
         <View style={[a.gap_md]}>
           <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>
-              Saving your keys lets you use VerusSky privacy features right away
-              each time you visit.
-            </Trans>
+            {sharedStrings.saveBenefit}
           </Text>
 
           <Text style={[a.text_md, a.leading_snug]}>
-            <Trans>
-              Only do this on devices you trust. If your keys are stolen, your
-              encrypted data is no longer private.
-            </Trans>
+            {sharedStrings.trustWarning}
           </Text>
         </View>
       </View>

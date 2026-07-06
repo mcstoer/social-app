@@ -25,6 +25,7 @@ import {
   createVskyAgentAndLogin,
   getAgentVskyEncryption,
   isVskyAppAgent,
+  rehydrateAgentVskyEncryptionFromAccount,
   sessionAccountToSession,
   updateAgentVskyEncryption,
 } from './agent'
@@ -374,6 +375,9 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
             prevSession,
             nextSession: agent.session,
           })
+          // Update from the syncedAccount separately from above since
+          // sessionAccountToSession is atproto specific.
+          rehydrateAgentVskyEncryptionFromAccount(agent, syncedAccount)
         }
       }
     })

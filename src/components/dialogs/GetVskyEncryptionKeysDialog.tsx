@@ -6,6 +6,7 @@ import {type GenericRequest} from 'verus-typescript-primitives'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {generateEncryptionKeysRequestOrdinals} from '#/lib/verus/requests/encryptionKeys'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {useEncryptionKeyDialogStrings} from '#/lib/verus/useEncryptionKeyDialogStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useGetEncryptionKeysQuery} from '#/state/queries/verus/useGetEncryptionKeysQuery'
@@ -64,6 +65,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const {updateVskyEncryption} = useSessionApi()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
+  const sharedStrings = useEncryptionKeyDialogStrings()
 
   const [showAwaitingResponse, setShowAwaitingResponse] = useState(false)
   const [request, setRequest] = useState<GenericRequest | null>(null)
@@ -107,10 +109,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
     Intro: {
       title: l`Get encryption keys`,
       message: l`Your encryption keys enable privacy features in VerusSky.`,
-      details: [
-        l`Saving your keys lets you use VerusSky privacy features right away each time you visit.`,
-        l`Only do this on devices you trust. If your keys are stolen, your encrypted data is no longer private.`,
-      ],
+      details: [sharedStrings.saveBenefit, sharedStrings.trustWarning],
     },
     AwaitingResponse: {
       title: l`Awaiting confirmation`,

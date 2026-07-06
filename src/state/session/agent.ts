@@ -413,6 +413,30 @@ export function updateAgentVskyEncryption(
   }
 }
 
+export function rehydrateAgentVskyEncryptionFromAccount(
+  agent: BskyAgent,
+  account: SessionAccount,
+) {
+  if (!isVskyAppAgent(agent) || account.type !== 'vsky') {
+    return
+  }
+
+  const encryption = account.encryption
+
+  if (!encryption?.encryptionKey || !encryption?.decryptionKey) {
+    return
+  }
+
+  updateAgentVskyEncryption(agent, {
+    storeEncryptionKeys: encryption.storeEncryptionKeys,
+    hasBeenAskedToStoreKeys: encryption.hasBeenAskedToStoreKeys,
+    encryptionKey: SaplingPaymentAddress.fromAddressString(
+      encryption.encryptionKey,
+    ),
+    decryptionKey: Buffer.from(encryption.decryptionKey, 'hex'),
+  })
+}
+
 export function sessionAccountToSession(
   account: SessionAccount,
 ): AtpSessionData {

@@ -14,9 +14,8 @@
     "strict": true,
     "declaration": false,
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
-      "#/*": ["src/*"]
+      "#/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "test/**/*.ts"]
