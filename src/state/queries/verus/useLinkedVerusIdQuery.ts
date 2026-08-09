@@ -7,16 +7,15 @@ import {
   type VerusIdLink,
 } from '#/lib/verus/accountLinking'
 import {useVerusService} from '#/state/preferences'
-import {STALE} from '#/state/queries'
+import {GCTIME, STALE} from '#/state/queries'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useSearchPostsQuery} from '#/state/queries/search-posts'
 import {useAgent} from '#/state/session'
+import {createQueryKey} from '../util'
 
-export const createLinkedVerusIDQueryKey = (did: string) => [
-  'verusid-linked',
-  did,
-]
+export const createLinkedVerusIDQueryKey = (did: string) =>
+  createQueryKey('verusid-linked', {did}, {persistedVersion: 1})
 
 export function useGetLinkedVerusID() {
   const queryClient = useQueryClient()
@@ -30,6 +29,7 @@ export function useGetLinkedVerusID() {
       return queryClient.fetchQuery({
         queryKey,
         staleTime: STALE.MINUTES.FIVE,
+        gcTime: GCTIME.INFINITY,
         queryFn: async () => {
           const profileRes = await agent.getProfile({actor: did})
           const handle = profileRes.data.handle
@@ -92,6 +92,7 @@ export function useLinkedVerusIDQuery(
   return useQuery({
     enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
     staleTime: STALE.MINUTES.FIVE,
+    gcTime: GCTIME.INFINITY,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
     queryFn: async (): Promise<VerusIdLink | null> => {
       return checkIfLinkedVerusID(
