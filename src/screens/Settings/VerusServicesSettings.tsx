@@ -24,6 +24,7 @@ import {Verified_Stroke2_Corner2_Rounded} from '#/components/icons/Verified'
 import {Warning_Stroke2_Corner0_Rounded as WarningIcon} from '#/components/icons/Warning'
 import {Zap_Stroke2_Corner0_Rounded as ZapIcon} from '#/components/icons/Zap'
 import * as Layout from '#/components/Layout'
+import {Loader} from '#/components/Loader'
 
 type Props = NativeStackScreenProps<
   CommonNavigatorParams,
@@ -43,10 +44,8 @@ export function VerusServicesSettingsScreen({}: Props) {
   const [encryptionKeysReady, setEncryptionKeysReady] = useState(false)
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
-  const {data: linkedVerusID} = useLinkedVerusIDQuery(
-    linkIdentifier,
-    currentAccount?.did,
-  )
+  const {data: linkedVerusID, isPending: isLinkedVerusIDPending} =
+    useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
 
   const {data: serviceStatus} = useVerusServiceStatusQuery()
 
@@ -71,7 +70,9 @@ export function VerusServicesSettingsScreen({}: Props) {
             </SettingsList.ItemText>
             <SettingsList.BadgeText style={[a.flex_1]}>
               {serviceStatus?.connected ? (
-                linkedVerusID ? (
+                isLinkedVerusIDPending ? (
+                  <Loader size="sm" />
+                ) : linkedVerusID ? (
                   linkedVerusID.identity
                 ) : (
                   <Trans>(no identity)</Trans>
