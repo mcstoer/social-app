@@ -69,14 +69,14 @@ export function VerusServicesSettingsScreen({}: Props) {
               <Trans>Linked VerusID</Trans>
             </SettingsList.ItemText>
             <SettingsList.BadgeText style={[a.flex_1]}>
-              {serviceStatus?.connected ? (
-                isLinkedVerusIDPending ? (
-                  <Loader size="sm" />
-                ) : linkedVerusID ? (
-                  linkedVerusID.identity
-                ) : (
-                  <Trans>(no identity)</Trans>
-                )
+              {linkedVerusID ? (
+                linkedVerusID.identity
+              ) : !currentAccount?.did ? (
+                <Trans>(unknown)</Trans>
+              ) : isLinkedVerusIDPending ? (
+                <Loader size="sm" />
+              ) : serviceStatus?.connected ? (
+                <Trans>(no identity)</Trans>
               ) : (
                 <Trans>(unknown)</Trans>
               )}
