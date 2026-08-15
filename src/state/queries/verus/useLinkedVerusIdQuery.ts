@@ -13,7 +13,6 @@ import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useSearchPostsQuery} from '#/state/queries/search-posts'
 import {useAgent} from '#/state/session'
 import {createQueryKey} from '../util'
-
 export const createLinkedVerusIDQueryKey = (did: string) =>
   createQueryKey('verusid-linked', {did}, {persistedVersion: 1})
 
@@ -69,7 +68,8 @@ export function useLinkedVerusIDQuery(
   enabled?: boolean,
 ) {
   const {verusIdInterface} = useVerusService()
-  const {data: resolvedDid} = useResolveDidQuery(name)
+  const {data: resolvedDid, isError: isResolvedDidError} =
+    useResolveDidQuery(name)
 
   const sort = 'latest'
   const query = linkIdentifier
@@ -77,7 +77,7 @@ export function useLinkedVerusIDQuery(
     return augmentSearchQuery(query || '', {did: resolvedDid})
   }, [query, resolvedDid])
 
-  const {data: results} = useSearchPostsQuery({
+  const {data: results, isError: isResultsError} = useSearchPostsQuery({
     query: augmentedQuery,
     sort,
     enabled: (enabled ?? true) && !!resolvedDid,
@@ -87,9 +87,11 @@ export function useLinkedVerusIDQuery(
     return results?.pages.flatMap(page => page.posts) || []
   }, [results])
 
-  const {data: profile} = useProfileQuery({did: resolvedDid})
+  const {data: profile, isError: isProfileError} = useProfileQuery({
+    did: resolvedDid,
+  })
 
-  return useQuery({
+  const outerQuery = useQuery({
     enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
     staleTime: STALE.MINUTES.FIVE,
     gcTime: GCTIME.INFINITY,
@@ -103,4 +105,9 @@ export function useLinkedVerusIDQuery(
       )
     },
   })
+
+  const isWrong =
+    !!name && (isResolvedDidError || isResultsError || isProfileError)
+
+  return {...outerQuery, isWrong}
 }

@@ -44,8 +44,11 @@ export function VerusServicesSettingsScreen({}: Props) {
   const [encryptionKeysReady, setEncryptionKeysReady] = useState(false)
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
-  const {data: linkedVerusID, isPending: isLinkedVerusIDPending} =
-    useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
+  const {
+    data: linkedVerusID,
+    isPending: isLinkedVerusIDPending,
+    isWrong: isLinkedVerusIDError,
+  } = useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
 
   const {data: serviceStatus} = useVerusServiceStatusQuery()
 
@@ -71,7 +74,7 @@ export function VerusServicesSettingsScreen({}: Props) {
             <SettingsList.BadgeText style={[a.flex_1]}>
               {linkedVerusID ? (
                 linkedVerusID.identity
-              ) : !currentAccount?.did ? (
+              ) : !currentAccount?.did || isLinkedVerusIDError ? (
                 <Trans>(unknown)</Trans>
               ) : isLinkedVerusIDPending ? (
                 <Loader size="sm" />
