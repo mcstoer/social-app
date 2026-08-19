@@ -68,8 +68,7 @@ export function useLinkedVerusIDQuery(
   enabled?: boolean,
 ) {
   const {verusIdInterface} = useVerusService()
-  const {data: resolvedDid, isError: isResolvedDidError} =
-    useResolveDidQuery(name)
+  const {data: resolvedDid} = useResolveDidQuery(name)
 
   const sort = 'latest'
   const query = linkIdentifier
@@ -77,7 +76,7 @@ export function useLinkedVerusIDQuery(
     return augmentSearchQuery(query || '', {did: resolvedDid})
   }, [query, resolvedDid])
 
-  const {data: results, isError: isResultsError} = useSearchPostsQuery({
+  const {data: results} = useSearchPostsQuery({
     query: augmentedQuery,
     sort,
     enabled: (enabled ?? true) && !!resolvedDid,
@@ -87,12 +86,14 @@ export function useLinkedVerusIDQuery(
     return results?.pages.flatMap(page => page.posts) || []
   }, [results])
 
-  const {data: profile, isError: isProfileError} = useProfileQuery({
+  const {data: profile} = useProfileQuery({
     did: resolvedDid,
   })
 
-  const outerQuery = useQuery({
-    enabled: (enabled ?? true) && !!results && !!profile && !!resolvedDid,
+  const isEnabled = (enabled ?? true) && !!results && !!profile && !!resolvedDid
+
+  const linkedVerusIDQuery = useQuery({
+    enabled: isEnabled,
     staleTime: STALE.MINUTES.FIVE,
     gcTime: GCTIME.INFINITY,
     queryKey: createLinkedVerusIDQueryKey(resolvedDid || ''),
@@ -106,8 +107,5 @@ export function useLinkedVerusIDQuery(
     },
   })
 
-  const isWrong =
-    !!name && (isResolvedDidError || isResultsError || isProfileError)
-
-  return {...outerQuery, isWrong}
+  return {...linkedVerusIDQuery, isDisabled: !isEnabled}
 }

@@ -47,7 +47,7 @@ export function VerusServicesSettingsScreen({}: Props) {
   const {
     data: linkedVerusID,
     isPending: isLinkedVerusIDPending,
-    isWrong: isLinkedVerusIDError,
+    isDisabled: isLinkedVerusIDDisabled,
   } = useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
 
   const {data: serviceStatus} = useVerusServiceStatusQuery()
@@ -74,7 +74,7 @@ export function VerusServicesSettingsScreen({}: Props) {
             <SettingsList.BadgeText style={[a.flex_1]}>
               {linkedVerusID ? (
                 linkedVerusID.identity
-              ) : !currentAccount?.did || isLinkedVerusIDError ? (
+              ) : isLinkedVerusIDDisabled ? (
                 <Trans>(unknown)</Trans>
               ) : isLinkedVerusIDPending ? (
                 <Loader size="sm" />
