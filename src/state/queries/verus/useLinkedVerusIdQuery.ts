@@ -11,8 +11,8 @@ import {GCTIME, STALE} from '#/state/queries'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
 import {useSearchPostsQuery} from '#/state/queries/search-posts'
+import {createQueryKey} from '#/state/queries/util'
 import {useAgent} from '#/state/session'
-import {createQueryKey} from '../util'
 export const createLinkedVerusIDQueryKey = (did: string) =>
   createQueryKey('verusid-linked', {did}, {persistedVersion: 1})
 
