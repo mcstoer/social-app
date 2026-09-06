@@ -18,6 +18,7 @@ import {
   useLinkedVerusIDQuery,
 } from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -97,6 +98,8 @@ function Inner({
   const agent = useAgent()
   const queryClient = useQueryClient()
 
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
     linkIdentifier,
@@ -134,6 +137,11 @@ function Inner({
   }
 
   const onPrepareLink = () => {
+    if (serviceStatusUnavailable) {
+      setError(_(msg`Verus service is unreachable, Please try again later!`))
+      return
+    }
+
     if (!name.trim()) {
       setError(_(msg`Please enter your VerusID name.`))
       return

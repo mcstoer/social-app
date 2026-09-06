@@ -11,6 +11,7 @@ import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useGetEncryptionKeysQuery} from '#/state/queries/verus/useGetEncryptionKeysQuery'
 import {useSession, useSessionApi} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -65,6 +66,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const {updateVskyEncryption} = useSessionApi()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
   const sharedStrings = useEncryptionKeyDialogStrings()
 
   const [showAwaitingResponse, setShowAwaitingResponse] = useState(false)
@@ -123,6 +125,13 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   }
 
   const onGetKeys = async () => {
+    if (serviceStatusUnavailable) {
+      setLocalError(
+        l`Unable to contact the service. Please check your Internet connection.`,
+      )
+      return
+    }
+
     if (IS_NATIVE) {
       setLocalError(l`Mobile support coming soon`)
       return
