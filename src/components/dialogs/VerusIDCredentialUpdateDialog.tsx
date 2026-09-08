@@ -19,6 +19,7 @@ import {useVerusService} from '#/state/preferences/verus-service'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSession} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -69,6 +70,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
+
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
 
   const [stage, setStage] = useState(Stages.UpdateCredentials)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -163,6 +166,13 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   }, [isRequestError, requestError, l])
 
   const onUpdateCredentials = async () => {
+    if (serviceStatusUnavailable) {
+      setError(
+        l`Verus Service is currently unreachable. Please try again later.`,
+      )
+      return
+    }
+
     if (!name.trim()) {
       setError(l`Please enter your VerusID name`)
       return

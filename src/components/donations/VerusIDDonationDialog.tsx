@@ -8,6 +8,7 @@ import {KNOWN_CURRENCY_IDS} from '#/lib/verus/constants'
 import {createAndSignVerusPayInvoice} from '#/lib/verus/requests/createVerusPayInvoice'
 import {useVerusService} from '#/state/preferences'
 import {useGetVerusCurrency} from '#/state/queries/verus/useVerusGetCurrencyQuery'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonText} from '#/components/Button'
@@ -130,10 +131,13 @@ function OptionsStage({
   const getVerusCurrency = useGetVerusCurrency()
   const {verusIdInterface, verusRpcInterface} = useVerusService()
 
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+
   const canContinue =
-    selected === DONATION_USD ||
-    selected === DONATION_EUR ||
-    (selected === DONATION_CUSTOM && !!customCurrency && !!customAmount)
+    !serviceStatusUnavailable &&
+    (selected === DONATION_USD ||
+      selected === DONATION_EUR ||
+      (selected === DONATION_CUSTOM && !!customCurrency && !!customAmount))
 
   const handleContinue = async () => {
     setError('')
@@ -282,6 +286,12 @@ function OptionsStage({
         </View>
       )}
 
+      {serviceStatusUnavailable && (
+        <Admonition type="error">
+          <Trans>Verus service is unreachable</Trans>
+        </Admonition>
+      )}
+
       {error ? <Admonition type="error">{error}</Admonition> : null}
 
       <Button
@@ -289,7 +299,7 @@ function OptionsStage({
         color="primary"
         size="large"
         disabled={!canContinue || isChecking}
-        onPress={handleContinue}>
+        onPress={() => void handleContinue()}>
         <ButtonText>
           {isChecking ? <Trans>Checking...</Trans> : <Trans>Continue</Trans>}
         </ButtonText>
