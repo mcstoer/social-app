@@ -11,6 +11,7 @@ import {
   useSetVerusServicePreferences,
   useVerusService,
 } from '#/state/preferences'
+import {createAxiosConfig} from '#/state/preferences/verus-service'
 import {atoms as a, useTheme} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -96,14 +97,7 @@ function VerusServiceInner() {
       const testInterface = new VerusdRpcInterface(
         newSettings.system,
         newSettings.url,
-        newSettings.auth
-          ? {
-              auth: {
-                username: newSettings.auth.username,
-                password: newSettings.auth.password,
-              },
-            }
-          : undefined,
+        createAxiosConfig(newSettings),
       )
 
       const info = await testInterface.getInfo()
@@ -127,9 +121,9 @@ function VerusServiceInner() {
       setVerusServicePreferences(newSettings)
 
       control.close()
-    } catch (e: any) {
+    } catch (e: unknown) {
       logger.error(`Failed to update the Verus Service endpoint`, {
-        safeMessage: e.message,
+        safeMessage: e instanceof Error ? e.message : String(e),
       })
       setError(
         _(msg`Failed to update the Verus Service endpoint. Please try again`),
@@ -248,7 +242,7 @@ function VerusServiceInner() {
             color="primary"
             size="large"
             label={_(msg`Update`)}
-            onPress={onUpdate}
+            onPress={() => void onUpdate}
             disabled={!hasChanges || isUpdating}>
             <ButtonText>
               <Trans>Update</Trans>

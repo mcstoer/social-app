@@ -5,8 +5,8 @@ import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useRequireVskyEncryptionKeys, useSession} from '#/state/session'
+import {useVerusServiceStatus} from '#/state/verus-service-status'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
 import {atoms as a, useTheme} from '#/alf'
 import {useDialogControl} from '#/components/Dialog'
@@ -50,7 +50,7 @@ export function VerusServicesSettingsScreen({}: Props) {
     isDisabled: isLinkedVerusIDDisabled,
   } = useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
 
-  const {data: serviceStatus} = useVerusServiceStatusQuery()
+  const serviceStatus = useVerusServiceStatus()
 
   return (
     <Layout.Screen>
@@ -78,7 +78,7 @@ export function VerusServicesSettingsScreen({}: Props) {
                 <Trans>(unknown)</Trans>
               ) : isLinkedVerusIDPending ? (
                 <Loader size="sm" />
-              ) : serviceStatus?.connected ? (
+              ) : serviceStatus === `connected` ? (
                 <Trans>(no identity)</Trans>
               ) : (
                 <Trans>(unknown)</Trans>
@@ -148,13 +148,15 @@ export function VerusServicesSettingsScreen({}: Props) {
               <Trans>Verus Services Endpoint Status</Trans>
             </SettingsList.ItemText>
             <SettingsList.BadgeText>
-              {serviceStatus?.connected ? (
+              {serviceStatus === `connected` ? (
                 <Trans>Connected</Trans>
+              ) : serviceStatus === `unknown` ? (
+                <Trans>Unknown</Trans>
               ) : (
                 <Trans>Disconnected</Trans>
               )}
             </SettingsList.BadgeText>
-            {!serviceStatus?.connected && (
+            {serviceStatus === `disconnected` && (
               <WarningIcon fill={t.palette.negative_500} size="md" />
             )}
           </SettingsList.Item>
