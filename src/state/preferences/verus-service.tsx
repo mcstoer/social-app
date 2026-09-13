@@ -25,14 +25,7 @@ const AXIOS_TIMEOUT = 5000
 export const createAxiosConfig = (preferences: VerusServicePreferences) => {
   return {
     timeout: AXIOS_TIMEOUT,
-    ...(preferences.auth
-      ? {
-          auth: {
-            username: preferences.auth.username,
-            password: preferences.auth.password,
-          },
-        }
-      : {}),
+    auth: preferences.auth,
   }
 }
 

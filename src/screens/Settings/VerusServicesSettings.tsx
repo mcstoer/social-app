@@ -78,7 +78,7 @@ export function VerusServicesSettingsScreen({}: Props) {
                 <Trans>(unknown)</Trans>
               ) : isLinkedVerusIDPending ? (
                 <Loader size="sm" />
-              ) : serviceStatus === `connected` ? (
+              ) : serviceStatus === 'connected' ? (
                 <Trans>(no identity)</Trans>
               ) : (
                 <Trans>(unknown)</Trans>
@@ -148,15 +148,15 @@ export function VerusServicesSettingsScreen({}: Props) {
               <Trans>Verus Services Endpoint Status</Trans>
             </SettingsList.ItemText>
             <SettingsList.BadgeText>
-              {serviceStatus === `connected` ? (
+              {serviceStatus === 'connected' ? (
                 <Trans>Connected</Trans>
-              ) : serviceStatus === `unknown` ? (
+              ) : serviceStatus === 'unknown' ? (
                 <Trans>Unknown</Trans>
               ) : (
                 <Trans>Disconnected</Trans>
               )}
             </SettingsList.BadgeText>
-            {serviceStatus === `disconnected` && (
+            {serviceStatus === 'disconnected' && (
               <WarningIcon fill={t.palette.negative_500} size="md" />
             )}
           </SettingsList.Item>
