@@ -257,8 +257,9 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
 
     if (serviceStatusUnavailable) {
       setFormError(
-        l`Verus Service is currently unreachable. Please try again later.`,
+        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
       )
+
       return
     }
 

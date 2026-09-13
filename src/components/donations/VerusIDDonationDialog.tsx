@@ -288,7 +288,10 @@ function OptionsStage({
 
       {serviceStatusUnavailable && (
         <Admonition type="error">
-          <Trans>Verus service is unreachable</Trans>
+          <Trans>
+            Unable to contact the Verus Service. Please check your Verus
+            Services settings and try again.
+          </Trans>
         </Admonition>
       )}
 

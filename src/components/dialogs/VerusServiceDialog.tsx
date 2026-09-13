@@ -242,7 +242,7 @@ function VerusServiceInner() {
             color="primary"
             size="large"
             label={_(msg`Update`)}
-            onPress={() => void onUpdate}
+            onPress={() => void onUpdate()}
             disabled={!hasChanges || isUpdating}>
             <ButtonText>
               <Trans>Update</Trans>

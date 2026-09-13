@@ -12,16 +12,13 @@ export function Provider({children}: {children: React.ReactNode}) {
     useVerusServiceStatusQuery()
 
   const status = useMemo<VerusServiceStatus>(() => {
-    if (daemonData?.connected === false || isDaemonPending) {
-      return 'disconnected'
-    }
     if (isDaemonPending) {
       return 'unknown'
     }
-    if (daemonData?.connected) {
-      return 'connected'
+    if (!daemonData?.connected) {
+      return 'disconnected'
     }
-    return 'disconnected'
+    return 'connected'
   }, [isDaemonPending, daemonData])
 
   return (
