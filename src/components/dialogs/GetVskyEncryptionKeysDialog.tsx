@@ -132,7 +132,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const onGetKeys = async () => {
     if (serviceStatusUnavailable) {
       setLocalError(
-        l`Unable to contact the service. Please check your Internet connection.`,
+        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
       )
       return
     }

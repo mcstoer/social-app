@@ -168,7 +168,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const onUpdateCredentials = async () => {
     if (serviceStatusUnavailable) {
       setError(
-        l`Verus Service is currently unreachable. Please try again later.`,
+        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
       )
       return
     }
