@@ -20,7 +20,7 @@ type StateContext = {
 
 type SetContext = (settings: VerusServicePreferences) => void
 
-const AXIOS_TIMEOUT = 5000
+const AXIOS_TIMEOUT = 10000
 
 export const createAxiosConfig = (preferences: VerusServicePreferences) => {
   return {
