@@ -15,6 +15,7 @@ import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {isIAddress, processIAddress} from '#/lib/verus/addresses'
 import {generateAccountLinkingRequestOrdinals} from '#/lib/verus/requests/accountLinking'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences'
 import {usePostDeleteMutation} from '#/state/queries/post'
@@ -256,9 +257,7 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     }
 
     if (serviceStatusUnavailable) {
-      setFormError(
-        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
-      )
+      setFormError(useVerusServiceUnavailableMessage)
 
       return
     }

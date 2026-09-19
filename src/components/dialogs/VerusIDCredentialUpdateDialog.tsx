@@ -14,6 +14,7 @@ import {
   generateIdentityUpdateRequestOrdinals,
   processIdentityUpdateResponse,
 } from '#/lib/verus/requests/identityUpdate'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
@@ -167,9 +168,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
 
   const onUpdateCredentials = async () => {
     if (serviceStatusUnavailable) {
-      setError(
-        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
-      )
+      setError(useVerusServiceUnavailableMessage)
       return
     }
 

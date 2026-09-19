@@ -7,6 +7,7 @@ import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {generateEncryptionKeysRequestOrdinals} from '#/lib/verus/requests/encryptionKeys'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
 import {useEncryptionKeyDialogStrings} from '#/lib/verus/useEncryptionKeyDialogStrings'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useGetEncryptionKeysQuery} from '#/state/queries/verus/useGetEncryptionKeysQuery'
@@ -131,9 +132,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
 
   const onGetKeys = async () => {
     if (serviceStatusUnavailable) {
-      setLocalError(
-        l`Unable to contact the Verus Service. Please check your Verus Services settings and try again.`,
-      )
+      setLocalError(useVerusServiceUnavailableMessage)
       return
     }
 
