@@ -6,6 +6,7 @@ import {Trans} from '@lingui/react/macro'
 
 import {KNOWN_CURRENCY_IDS} from '#/lib/verus/constants'
 import {createAndSignVerusPayInvoice} from '#/lib/verus/requests/createVerusPayInvoice'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {useVerusService} from '#/state/preferences'
 import {useGetVerusCurrency} from '#/state/queries/verus/useVerusGetCurrencyQuery'
 import {useVerusActionsUnavailable} from '#/state/verus-service-status'
@@ -132,6 +133,8 @@ function OptionsStage({
   const {verusIdInterface, verusRpcInterface} = useVerusService()
 
   const serviceStatusUnavailable = useVerusActionsUnavailable()
+
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const canContinue =
     !serviceStatusUnavailable &&
@@ -287,12 +290,7 @@ function OptionsStage({
       )}
 
       {serviceStatusUnavailable && (
-        <Admonition type="error">
-          <Trans>
-            Unable to contact the Verus Service. Please check your Verus
-            Services settings and try again.
-          </Trans>
-        </Admonition>
+        <Admonition type="error">{verusServiceUnavailableMessage}</Admonition>
       )}
 
       {error ? <Admonition type="error">{error}</Admonition> : null}
