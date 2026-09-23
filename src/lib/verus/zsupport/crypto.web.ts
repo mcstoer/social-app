@@ -2,7 +2,7 @@
 // eslint-disable-next-line import-x/no-nodejs-modules
 import {Buffer} from 'buffer'
 import {type DataDescriptor} from 'verus-typescript-primitives'
-import * as zsupport from 'veruszsupportlib'
+import * as zsupport from 'veruszsupportlibrary'
 
 import {
   type ChannelKeys,

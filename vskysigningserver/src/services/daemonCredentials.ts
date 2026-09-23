@@ -67,7 +67,8 @@ const parseConfigFile = (filePath: string): VerusDaemonConfig => {
   }
 
   const file = fs.readFileSync(filePath, 'utf-8')
-  const lines = file.split(os.EOL).filter(Boolean)
+  // Assume that line endings can be LF or CRLF, even on Windows.
+  const lines = file.split(/\r?\n/).filter(Boolean)
 
   const isConfigKey = (key: string): key is keyof VerusDaemonConfig => {
     return key in config
@@ -75,7 +76,11 @@ const parseConfigFile = (filePath: string): VerusDaemonConfig => {
 
   for (const line of lines) {
     const trimmedLine = line.trim()
-    const [key, value] = trimmedLine.split('=')
+    // Split on the first '=' only, since values like passwords may contain '='.
+    const separatorIndex = trimmedLine.indexOf('=')
+    if (separatorIndex === -1) continue
+    const key = trimmedLine.slice(0, separatorIndex)
+    const value = trimmedLine.slice(separatorIndex + 1)
 
     if (isConfigKey(key) && value) {
       config[key] = value

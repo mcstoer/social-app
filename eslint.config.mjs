@@ -337,5 +337,8 @@ export default defineConfig(
          },
        },
      },
+     rules: {
+       'import-x/no-nodejs-modules': 'off',
+     },
    },
 )
