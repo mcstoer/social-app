@@ -73,6 +73,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const {verusIdInterface} = useVerusService()
 
   const serviceStatusUnavailable = useVerusActionsUnavailable()
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const [stage, setStage] = useState(Stages.UpdateCredentials)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -168,7 +169,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
 
   const onUpdateCredentials = async () => {
     if (serviceStatusUnavailable) {
-      setError(useVerusServiceUnavailableMessage)
+      setError(verusServiceUnavailableMessage)
       return
     }
 

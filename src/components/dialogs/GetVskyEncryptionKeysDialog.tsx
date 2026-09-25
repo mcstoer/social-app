@@ -69,6 +69,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const {verusIdInterface} = useVerusService()
   const serviceStatusUnavailable = useVerusActionsUnavailable()
   const sharedStrings = useEncryptionKeyDialogStrings()
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const [showAwaitingResponse, setShowAwaitingResponse] = useState(false)
   const [request, setRequest] = useState<GenericRequest | null>(null)
@@ -132,7 +133,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
 
   const onGetKeys = async () => {
     if (serviceStatusUnavailable) {
-      setLocalError(useVerusServiceUnavailableMessage)
+      setLocalError(verusServiceUnavailableMessage)
       return
     }
 

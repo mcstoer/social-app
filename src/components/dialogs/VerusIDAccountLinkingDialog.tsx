@@ -97,6 +97,8 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
 
   const serviceStatusUnavailable = useVerusActionsUnavailable()
 
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
+
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
     linkIdentifier,
@@ -257,7 +259,7 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     }
 
     if (serviceStatusUnavailable) {
-      setFormError(useVerusServiceUnavailableMessage)
+      setFormError(verusServiceUnavailableMessage)
 
       return
     }
