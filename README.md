@@ -11,8 +11,8 @@ Before you begin, make sure you have the following installed:
     - For Windows users: [Node.js 24.15.0 download](https://nodejs.org/en/download/archive/v24.15.0)
 - [pnpm package manager](https://pnpm.io/installation)
 - The following Verus Desktop Wallet development environment branches (required for local development):
-    - [Verus Desktop (password-manager)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager)
-    - [Verus Login Consent Client (password-manager)](https://github.com/mcstoer/verus-login-consent-client/tree/password-manager)
+    - [Verus Desktop (password-manager-v2)](https://github.com/mcstoer/Verus-Desktop/tree/password-manager-v2)
+    - [Verus Login Consent Client (password-manager-v2)](https://github.com/mcstoer/verus-login-consent-client/tree/password-manager-v2)
 
 Follow their respective instructions to get the Verus Desktop Wallet running.
 
