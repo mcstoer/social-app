@@ -15,6 +15,7 @@ import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {isIAddress, processIAddress} from '#/lib/verus/addresses'
 import {generateAccountLinkingRequestOrdinals} from '#/lib/verus/requests/accountLinking'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences'
 import {usePostDeleteMutation} from '#/state/queries/post'
@@ -25,6 +26,7 @@ import {
   useLinkedVerusIDQuery,
 } from '#/state/queries/verus/useLinkedVerusIdQuery'
 import {useAgent, useSession} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -92,6 +94,10 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
   const {mutateAsync: deletePost} = usePostDeleteMutation()
   const agent = useAgent()
   const queryClient = useQueryClient()
+
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
@@ -249,6 +255,12 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
   const onContinue = async () => {
     if (IS_NATIVE) {
       setFormError(l`Mobile support coming soon`)
+      return
+    }
+
+    if (serviceStatusUnavailable) {
+      setFormError(verusServiceUnavailableMessage)
+
       return
     }
 
