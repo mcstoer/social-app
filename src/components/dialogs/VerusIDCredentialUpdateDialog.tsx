@@ -257,6 +257,10 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     }
   }
 
+  const displayedError = serviceStatusUnavailable
+    ? verusServiceUnavailableMessage
+    : error
+
   return (
     <View style={[a.gap_xl]}>
       <View style={[a.gap_sm]}>
@@ -266,7 +270,9 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           {uiStrings[stage].message}
         </Text>
 
-        {error ? <Admonition type="error">{error}</Admonition> : null}
+        {displayedError ? (
+          <Admonition type="error">{displayedError}</Admonition>
+        ) : null}
       </View>
 
       {stage === Stages.UpdateCredentials ? (
