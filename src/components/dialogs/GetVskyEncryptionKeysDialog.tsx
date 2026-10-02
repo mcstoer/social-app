@@ -98,6 +98,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const deeplinkUri = request?.toWalletDeeplinkUri()
 
   const getError = () => {
+    if (serviceStatusUnavailable) return verusServiceUnavailableMessage
     if (localError) return localError
     if (isError) {
       if (isNetworkError(requestError)) {

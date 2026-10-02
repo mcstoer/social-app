@@ -220,6 +220,7 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     : ''
 
   const getError = () => {
+    if (serviceStatusUnavailable) return verusServiceUnavailableMessage
     if (formError) return formError
     if (isLinkingResponseError) {
       if (isNetworkError(requestError)) {

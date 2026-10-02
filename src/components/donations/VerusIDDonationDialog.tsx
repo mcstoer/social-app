@@ -142,6 +142,10 @@ function OptionsStage({
       selected === DONATION_EUR ||
       (selected === DONATION_CUSTOM && !!customCurrency && !!customAmount))
 
+  const displayedError = serviceStatusUnavailable
+    ? verusServiceUnavailableMessage
+    : error
+
   const handleContinue = async () => {
     setError('')
     setIsChecking(true)
@@ -289,11 +293,9 @@ function OptionsStage({
         </View>
       )}
 
-      {serviceStatusUnavailable && (
-        <Admonition type="error">{verusServiceUnavailableMessage}</Admonition>
-      )}
-
-      {error ? <Admonition type="error">{error}</Admonition> : null}
+      {displayedError ? (
+        <Admonition type="error">{displayedError}</Admonition>
+      ) : null}
 
       <Button
         label={_(msg`Continue`)}
