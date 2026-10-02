@@ -6,8 +6,10 @@ import {Trans} from '@lingui/react/macro'
 
 import {KNOWN_CURRENCY_IDS} from '#/lib/verus/constants'
 import {createAndSignVerusPayInvoice} from '#/lib/verus/requests/createVerusPayInvoice'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {useVerusService} from '#/state/preferences'
 import {useGetVerusCurrency} from '#/state/queries/verus/useVerusGetCurrencyQuery'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonText} from '#/components/Button'
@@ -130,10 +132,19 @@ function OptionsStage({
   const getVerusCurrency = useGetVerusCurrency()
   const {verusIdInterface, verusRpcInterface} = useVerusService()
 
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
+
   const canContinue =
-    selected === DONATION_USD ||
-    selected === DONATION_EUR ||
-    (selected === DONATION_CUSTOM && !!customCurrency && !!customAmount)
+    !serviceStatusUnavailable &&
+    (selected === DONATION_USD ||
+      selected === DONATION_EUR ||
+      (selected === DONATION_CUSTOM && !!customCurrency && !!customAmount))
+
+  const displayedError = serviceStatusUnavailable
+    ? verusServiceUnavailableMessage
+    : error
 
   const handleContinue = async () => {
     setError('')
@@ -282,14 +293,16 @@ function OptionsStage({
         </View>
       )}
 
-      {error ? <Admonition type="error">{error}</Admonition> : null}
+      {displayedError ? (
+        <Admonition type="error">{displayedError}</Admonition>
+      ) : null}
 
       <Button
         label={_(msg`Continue`)}
         color="primary"
         size="large"
         disabled={!canContinue || isChecking}
-        onPress={handleContinue}>
+        onPress={() => void handleContinue()}>
         <ButtonText>
           {isChecking ? <Trans>Checking...</Trans> : <Trans>Continue</Trans>}
         </ButtonText>

@@ -14,11 +14,13 @@ import {
   generateIdentityUpdateRequestOrdinals,
   processIdentityUpdateResponse,
 } from '#/lib/verus/requests/identityUpdate'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useSigningAddressQuery} from '#/state/queries/verus/useSigningServiceInfoQuery'
 import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSession} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -69,6 +71,9 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const {currentAccount} = useSession()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
+
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const [stage, setStage] = useState(Stages.UpdateCredentials)
   const [isProcessing, setIsProcessing] = useState(false)
@@ -163,6 +168,11 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   }, [isRequestError, requestError, l])
 
   const onUpdateCredentials = async () => {
+    if (serviceStatusUnavailable) {
+      setError(verusServiceUnavailableMessage)
+      return
+    }
+
     if (!name.trim()) {
       setError(l`Please enter your VerusID name`)
       return
@@ -247,6 +257,10 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     }
   }
 
+  const displayedError = serviceStatusUnavailable
+    ? verusServiceUnavailableMessage
+    : error
+
   return (
     <View style={[a.gap_xl]}>
       <View style={[a.gap_sm]}>
@@ -256,7 +270,9 @@ function Inner({initialPassword}: {initialPassword?: string}) {
           {uiStrings[stage].message}
         </Text>
 
-        {error ? <Admonition type="error">{error}</Admonition> : null}
+        {displayedError ? (
+          <Admonition type="error">{displayedError}</Admonition>
+        ) : null}
       </View>
 
       {stage === Stages.UpdateCredentials ? (
