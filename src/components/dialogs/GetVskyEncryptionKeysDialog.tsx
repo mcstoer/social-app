@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {type GenericRequest} from 'verus-typescript-primitives'
@@ -11,6 +11,7 @@ import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnav
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useGetEncryptionKeysQuery} from '#/state/queries/verus/useGetEncryptionKeysQuery'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useSession, useSessionApi} from '#/state/session'
 import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
@@ -70,7 +71,10 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const serviceStatusUnavailable = useVerusActionsUnavailable()
   const sharedStrings = useEncryptionKeyDialogStrings()
   const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
-
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
   const [showAwaitingResponse, setShowAwaitingResponse] = useState(false)
   const [request, setRequest] = useState<GenericRequest | null>(null)
   const [ivk, setIvk] = useState<Buffer | null>(null)
@@ -134,8 +138,12 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
 
   const onGetKeys = async () => {
     if (serviceStatusUnavailable) {
-      setLocalError(verusServiceUnavailableMessage)
-      return
+      setIsProcessing(true)
+      const status = await refetchServiceStatus()
+      setIsProcessing(false)
+      if (status.isError || !status.data?.connected) {
+        return
+      }
     }
 
     if (IS_NATIVE) {

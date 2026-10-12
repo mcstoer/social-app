@@ -15,7 +15,6 @@ export function useVerusServiceStatusQuery() {
   return useQuery({
     staleTime: STALE.SECONDS.FIFTEEN,
     queryKey: RQKEY(state.url, state.system),
-    refetchInterval: STALE.SECONDS.FIFTEEN,
     async queryFn() {
       const info = await verusRpcInterface.getInfo()
       if (info.error) {
