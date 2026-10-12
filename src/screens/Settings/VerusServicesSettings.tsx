@@ -1,10 +1,11 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {type NativeStackScreenProps} from '@react-navigation/native-stack'
 import {PROOFS_CONTROLLER_BLUESKY} from 'verus-typescript-primitives'
 
 import {type CommonNavigatorParams} from '#/lib/routes/types'
 import {useLinkedVerusIDQuery} from '#/state/queries/verus/useLinkedVerusIdQuery'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useRequireVskyEncryptionKeys, useSession} from '#/state/session'
 import {useVerusServiceStatus} from '#/state/verus-service-status'
 import * as SettingsList from '#/screens/Settings/components/SettingsList'
@@ -51,6 +52,10 @@ export function VerusServicesSettingsScreen({}: Props) {
   } = useLinkedVerusIDQuery(linkIdentifier, currentAccount?.did)
 
   const serviceStatus = useVerusServiceStatus()
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
 
   return (
     <Layout.Screen>
