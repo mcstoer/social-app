@@ -47,6 +47,7 @@ import {Provider as PostLoginStepsProvider} from '#/state/shell/post-login-steps
 import {Provider as ProgressGuideProvider} from '#/state/shell/progress-guide'
 import {Provider as SelectedFeedProvider} from '#/state/shell/selected-feed'
 import {Provider as HiddenRepliesProvider} from '#/state/threadgate-hidden-replies'
+import {Provider as VerusServiceStatusProvider} from '#/state/verus-service-status'
 import {Shell} from '#/view/shell/index'
 import {ThemeProvider as Alf} from '#/alf'
 import {useColorModeTheme} from '#/alf/util/useColorModeTheme'
@@ -157,7 +158,9 @@ function InnerApp() {
                                                             <IntentDialogProvider>
                                                               <TranslateOnDeviceProvider>
                                                                 <HotkeysProvider>
-                                                                  <Shell />
+                                                                  <VerusServiceStatusProvider>
+                                                                    <Shell />
+                                                                  </VerusServiceStatusProvider>
                                                                   <ToastOutlet />
                                                                 </HotkeysProvider>
                                                               </TranslateOnDeviceProvider>
