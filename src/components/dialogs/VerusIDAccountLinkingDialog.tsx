@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {RichText} from '@bsky/sdk/richtext'
 import {Trans, useLingui} from '@lingui/react/macro'
@@ -31,6 +31,7 @@ import {
   usePdsClient,
   useSession,
 } from '#/state/session'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -102,11 +103,12 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
   const chatClient = useChatClient()
   const pdsClient = usePdsClient()
   const queryClient = useQueryClient()
-
   const serviceStatusUnavailable = useVerusActionsUnavailable()
-
   const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
-
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
     linkIdentifier,
@@ -271,9 +273,12 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     }
 
     if (serviceStatusUnavailable) {
-      setFormError(verusServiceUnavailableMessage)
-
-      return
+      setIsProcessing(true)
+      const status = await refetchServiceStatus()
+      setIsProcessing(false)
+      if (status.isError || !status.data?.connected) {
+        return
+      }
     }
 
     const handle = currentAccount?.handle

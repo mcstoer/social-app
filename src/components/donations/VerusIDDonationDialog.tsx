@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
@@ -9,6 +9,7 @@ import {createAndSignVerusPayInvoice} from '#/lib/verus/requests/createVerusPayI
 import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {useVerusService} from '#/state/preferences'
 import {useGetVerusCurrency} from '#/state/queries/verus/useVerusGetCurrencyQuery'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
@@ -52,6 +53,10 @@ export function VerusIDDonationDialog({
 
 function Inner({identity}: {identity: string}) {
   const {_} = useLingui()
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
   const [stage, setStage] = useState(Stage.Options)
   const [deeplinkUri, setDeeplinkUri] = useState('')
   // Lift the state out of the option selection to save it if the user chooses to go back.
@@ -131,9 +136,7 @@ function OptionsStage({
   const [error, setError] = useState('')
   const getVerusCurrency = useGetVerusCurrency()
   const {verusIdInterface, verusRpcInterface} = useVerusService()
-
   const serviceStatusUnavailable = useVerusActionsUnavailable()
-
   const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
 
   const canContinue =
