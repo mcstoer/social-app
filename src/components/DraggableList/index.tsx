@@ -1,9 +1,9 @@
 import {useLayoutEffect, useRef} from 'react'
-import {Gesture, GestureDetector} from 'react-native-gesture-handler'
+import {GestureDetector, usePanGesture} from 'react-native-gesture-handler'
 import Animated, {
   type AnimatedRef,
   measure,
-  runOnJS,
+  Reanimated3DefaultSpringConfig,
   scrollTo,
   type SharedValue,
   useAnimatedRef,
@@ -13,6 +13,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated'
+import {scheduleOnRN} from 'react-native-worklets'
 
 import {useHaptics} from '#/lib/haptics'
 import {atoms as a, useTheme, web} from '#/alf'
@@ -25,7 +26,7 @@ import {IS_IOS} from '#/env'
  *
  * All positioning is driven by a `slots` map (key → index) and translateY
  * (no discrete `top` changes). On drag end the new slot assignment is
- * computed on the UI thread first, then React state is updated via runOnJS.
+ * computed on the UI thread first, then React state is updated via scheduleOnRN.
  *
  * See SortableList.web.tsx for the web implementation using pointer events.
  */
@@ -41,7 +42,7 @@ interface SortableListProps<T> {
   itemHeight: number
   /** Ref to the parent Animated.ScrollView for auto-scroll. */
   scrollRef?: AnimatedRef<Animated.ScrollView>
-  /** Scroll offset shared value from useScrollViewOffset. */
+  /** Scroll offset shared value from useScrollOffset. */
   scrollOffset?: SharedValue<number>
 }
 
@@ -237,8 +238,8 @@ function SortableItem<T>({
   itemKey: string
   itemCount: number
   itemHeight: number
-  state: Animated.SharedValue<DragState>
-  dragY: Animated.SharedValue<number>
+  state: SharedValue<DragState>
+  dragY: SharedValue<number>
   scrollCompensation: SharedValue<number>
   isGestureActive: SharedValue<boolean>
   measureDone: SharedValue<boolean>
@@ -248,12 +249,13 @@ function SortableItem<T>({
   onDragEnd?: () => void
 }) {
   const t = useTheme()
-  const playHaptic = useHaptics()
+  const {dragStart: playDragStartHaptic, selection: playSelectionHaptic} =
+    useHaptics()
 
   const lastHapticSlot = useSharedValue(-1)
 
-  const gesture = Gesture.Pan()
-    .onStart(() => {
+  const gesture = usePanGesture({
+    onActivate: () => {
       'worklet'
       const s = state.get()
       const mySlot = s.slots[itemKey]
@@ -264,11 +266,11 @@ function SortableItem<T>({
       measureDone.set(false)
       lastHapticSlot.set(mySlot)
       if (onDragStart) {
-        runOnJS(onDragStart)()
+        scheduleOnRN(onDragStart)
       }
-      runOnJS(playHaptic)()
-    })
-    .onChange(e => {
+      scheduleOnRN(playDragStartHaptic)
+    },
+    onUpdate: e => {
       'worklet'
       const startSlot = state.get().dragStartSlot
       const minY = -startSlot * itemHeight
@@ -282,12 +284,12 @@ function SortableItem<T>({
         (startSlot * itemHeight + clampedY) / itemHeight,
       )
       const clampedSlot = Math.max(0, Math.min(currentSlot, itemCount - 1))
-      if (IS_IOS && clampedSlot !== lastHapticSlot.get()) {
+      if (clampedSlot !== lastHapticSlot.get()) {
         lastHapticSlot.set(clampedSlot)
-        runOnJS(playHaptic)('Light')
+        scheduleOnRN(playSelectionHaptic)
       }
-    })
-    .onEnd(() => {
+    },
+    onDeactivate: () => {
       'worklet'
       // Stop auto-scroll BEFORE the snap animation.
       isGestureActive.set(false)
@@ -325,31 +327,32 @@ function SortableItem<T>({
                 dragStartSlot: -1,
               })
               dragY.set(0)
-              runOnJS(onCommitReorder)(sorted)
+              scheduleOnRN(onCommitReorder, sorted)
             } else {
               const s = state.get()
               state.set({...s, activeKey: '', dragStartSlot: -1})
               dragY.set(0)
               if (onDragEnd) {
-                runOnJS(onDragEnd)()
+                scheduleOnRN(onDragEnd)
               }
             }
           }
         }),
       )
-    })
-    // Reset if the gesture is cancelled without onEnd firing.
-    .onFinalize(() => {
+    },
+    // Reset if the gesture is cancelled without onDeactivate firing.
+    onFinalize: () => {
       'worklet'
       isGestureActive.set(false)
       if (state.get().activeKey === itemKey && dragY.get() === 0) {
         const s = state.get()
         state.set({...s, activeKey: '', dragStartSlot: -1})
         if (onDragEnd) {
-          runOnJS(onDragEnd)()
+          scheduleOnRN(onDragEnd)
         }
       }
-    })
+    },
+  })
 
   // All vertical positioning is via translateY (no `top`). This avoids
   // discrete jumps when slots change — Reanimated smoothly animates from
@@ -370,18 +373,18 @@ function SortableItem<T>({
       return {
         transform: [
           {translateY: s.dragStartSlot * itemHeight + dragY.get()},
-          {scale: withSpring(1.03)},
+          {scale: withSpring(1.03, Reanimated3DefaultSpringConfig)},
         ],
         zIndex: 999,
         ...(IS_IOS
           ? {
               shadowColor: '#000',
               shadowOffset: {width: 0, height: 1},
-              shadowOpacity: withSpring(0.08),
-              shadowRadius: withSpring(4),
+              shadowOpacity: withSpring(0.08, Reanimated3DefaultSpringConfig),
+              shadowRadius: withSpring(4, Reanimated3DefaultSpringConfig),
             }
           : {
-              elevation: withSpring(3),
+              elevation: withSpring(3, Reanimated3DefaultSpringConfig),
             }),
       }
     }
@@ -391,11 +394,11 @@ function SortableItem<T>({
     const inactive = {
       ...(IS_IOS
         ? {
-            shadowOpacity: withSpring(0),
-            shadowRadius: withSpring(0),
+            shadowOpacity: withSpring(0, Reanimated3DefaultSpringConfig),
+            shadowRadius: withSpring(0, Reanimated3DefaultSpringConfig),
           }
         : {
-            elevation: withSpring(0),
+            elevation: withSpring(0, Reanimated3DefaultSpringConfig),
           }),
     }
 
@@ -425,7 +428,7 @@ function SortableItem<T>({
       return {
         transform: [
           {translateY: withTiming(baseY + offset, {duration: 200})},
-          {scale: withSpring(1)},
+          {scale: withSpring(1, Reanimated3DefaultSpringConfig)},
         ],
         zIndex: 0,
         ...inactive,

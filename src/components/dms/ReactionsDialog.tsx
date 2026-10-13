@@ -6,7 +6,6 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native'
-import {type ChatBskyActorDefs, type ChatBskyConvoDefs} from '@atproto/api'
 import {Trans, useLingui} from '@lingui/react/macro'
 
 import {HITSLOP_10} from '#/lib/constants'
@@ -19,15 +18,17 @@ import {DraggableScrollView} from '#/view/com/pager/DraggableScrollView'
 import {UserAvatar} from '#/view/com/util/UserAvatar'
 import {atoms as a, useTheme, web} from '#/alf'
 import * as Dialog from '#/components/Dialog'
+import {filterBlockedReactions} from '#/components/dms/util'
 import * as Toast from '#/components/Toast'
 import {Text} from '#/components/Typography'
 import {IS_NATIVE, IS_WEB} from '#/env'
+import {type chat} from '#/lexicons'
 import type * as bsky from '#/types/bsky'
 
 type Reaction = {
   key: string
   value: string
-  senders: ChatBskyConvoDefs.ReactionViewSender[]
+  senders: chat.bsky.convo.defs.ReactionViewSender[]
   count: number
 }
 
@@ -40,8 +41,8 @@ export function ReactionsDialog({
   onClose,
 }: {
   control: Dialog.DialogControlProps
-  relatedProfiles: Map<string, ChatBskyActorDefs.ProfileViewBasic>
-  message: ChatBskyConvoDefs.MessageView
+  relatedProfiles: Map<string, chat.bsky.actor.defs.ProfileViewBasic>
+  message: chat.bsky.convo.defs.MessageView
   onClose?: () => void
 }) {
   const {t: l} = useLingui()
@@ -52,10 +53,13 @@ export function ReactionsDialog({
 
   const [selected, setSelected] = useState('all')
 
-  const reactions = message.reactions
+  const reactions = useMemo(
+    () => filterBlockedReactions(message.reactions, relatedProfiles),
+    [message.reactions, relatedProfiles],
+  )
   const groupedReactions = useMemo(() => groupReactions(reactions), [reactions])
 
-  const filteredReactions = reactions?.filter(
+  const filteredReactions = reactions.filter(
     r => selected === 'all' || r.value === selected,
   )
 
@@ -69,7 +73,7 @@ export function ReactionsDialog({
       <ReactionTabs
         groupedReactions={groupedReactions}
         selected={selected}
-        totalReactions={reactions?.length ?? 0}
+        totalReactions={reactions.length}
         onFilter={setSelected}
       />
       <Dialog.Close />
@@ -96,7 +100,7 @@ export function ReactionsDialog({
         header={IS_WEB ? header : null}
         style={[web({maxWidth: 400})]}>
         {filteredReactions
-          ?.sort((a, b) => {
+          .sort((a, b) => {
             if (a.sender.did === currentAccount?.did) return -1
             if (b.sender.did === currentAccount?.did) return 1
             return 0
@@ -113,7 +117,7 @@ export function ReactionsDialog({
                 message={message}
                 profile={sender}
                 reaction={reaction}
-                allReactions={reactions ?? []}
+                allReactions={reactions}
                 selected={selected}
                 setSelected={setSelected}
               />
@@ -138,10 +142,10 @@ function ReactionRow({
   control: Dialog.DialogControlProps
   convo: ActiveConvoStates
   currentAccount?: SessionAccount
-  message: ChatBskyConvoDefs.MessageView
+  message: chat.bsky.convo.defs.MessageView
   profile: bsky.profile.AnyProfileView
-  reaction: ChatBskyConvoDefs.ReactionView
-  allReactions: ChatBskyConvoDefs.ReactionView[]
+  reaction: chat.bsky.convo.defs.ReactionView
+  allReactions: chat.bsky.convo.defs.ReactionView[]
   selected: string
   setSelected: React.Dispatch<React.SetStateAction<string>>
 }) {
@@ -251,7 +255,7 @@ function ReactionTabs({
   const t = useTheme()
   const {t: l} = useLingui()
 
-  const scrollViewRef = useRef<ScrollView>(null)
+  const scrollViewRef = useRef<React.ComponentRef<typeof ScrollView>>(null)
   const scrollState = useRef({x: 0, width: 0})
   const tabLayouts = useRef<Map<string, {x: number; width: number}>>(new Map())
 
@@ -394,7 +398,7 @@ function ReactionTab({
 }
 
 export function groupReactions(
-  reactions: ChatBskyConvoDefs.ReactionView[] | undefined,
+  reactions: chat.bsky.convo.defs.ReactionView[] | undefined,
 ): Reaction[] {
   const grouped = new Map<string, Reaction>()
   for (const reaction of reactions ?? []) {

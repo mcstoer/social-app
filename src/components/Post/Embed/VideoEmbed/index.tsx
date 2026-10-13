@@ -1,26 +1,32 @@
-import {useCallback, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 import {ActivityIndicator, View} from 'react-native'
 import {ImageBackground} from 'expo-image'
-import {type AppBskyEmbedVideo} from '@atproto/api'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {Trans} from '@lingui/react/macro'
 
+import {
+  createPlaybackTelemetry,
+  type PlaybackTelemetry,
+} from '#/lib/media/video/playbackTelemetry'
 import {ErrorBoundary} from '#/view/com/util/ErrorBoundary'
 import {atoms as a, platform} from '#/alf'
 import {Button} from '#/components/Button'
 import {useThrottledValue} from '#/components/hooks/useThrottledValue'
 import {ConstrainedImage} from '#/components/images/AutoSizedImage'
 import {PlayButtonIcon} from '#/components/video/PlayButtonIcon'
+import {useAnalytics} from '#/analytics'
+import {type app} from '#/lexicons'
 import {GifPresentationControls} from './GifPresentationControls'
 import {VideoEmbedInnerNative} from './VideoEmbedInner/VideoEmbedInnerNative'
 import * as VideoFallback from './VideoEmbedInner/VideoFallback'
 
 interface Props {
-  embed: AppBskyEmbedVideo.View
+  embed: app.bsky.embed.video.View
+  post?: app.bsky.feed.defs.PostView
 }
 
-export function VideoEmbed({embed}: Props) {
+export function VideoEmbed({embed, post}: Props) {
   const [key, setKey] = useState(0)
 
   const renderError = useCallback(
@@ -47,7 +53,7 @@ export function VideoEmbed({embed}: Props) {
 
   const contents = (
     <ErrorBoundary renderError={renderError} key={key}>
-      <InnerWrapper embed={embed} />
+      <InnerWrapper embed={embed} post={post} />
     </ErrorBoundary>
   )
 
@@ -64,8 +70,9 @@ export function VideoEmbed({embed}: Props) {
   )
 }
 
-function InnerWrapper({embed}: Props) {
+function InnerWrapper({embed, post}: Props) {
   const {_} = useLingui()
+  const ax = useAnalytics()
   const ref = useRef<{togglePlayback: () => void}>(null)
 
   const [status, setStatus] = useState<'playing' | 'paused' | 'pending'>(
@@ -74,6 +81,19 @@ function InnerWrapper({embed}: Props) {
   const [isLoading, setIsLoading] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const showSpinner = useThrottledValue(isActive && isLoading, 100)
+
+  /*
+   * Created lazily on first activation so videos that are never scrolled into
+   * the active position cost nothing.
+   */
+  const telemetryRef = useRef<PlaybackTelemetry | null>(null)
+  const impressionTrackedRef = useRef(false)
+  const playbackStartTrackedRef = useRef(false)
+  useEffect(() => {
+    return () => {
+      telemetryRef.current?.deactivated()
+    }
+  }, [])
 
   const showOverlay =
     !isActive ||
@@ -89,9 +109,62 @@ function InnerWrapper({embed}: Props) {
     <>
       <VideoEmbedInnerNative
         embed={embed}
-        setStatus={setStatus}
-        setIsLoading={setIsLoading}
-        setIsActive={setIsActive}
+        setStatus={s => {
+          setStatus(s)
+          if (s === 'playing') {
+            telemetryRef.current?.playing()
+          }
+        }}
+        setIsLoading={loading => {
+          setIsLoading(loading)
+          if (!loading) {
+            telemetryRef.current?.ready()
+          }
+        }}
+        setIsActive={active => {
+          setIsActive(active)
+          if (active) {
+            if (!impressionTrackedRef.current) {
+              impressionTrackedRef.current = true
+              ax.metric('video:impression', {
+                postUri: post?.uri,
+                postAuthorDid: post?.author.did,
+                context: 'embed',
+                presentation: embed.presentation === 'gif' ? 'gif' : 'video',
+              })
+            }
+            if (telemetryRef.current == null) {
+              telemetryRef.current = createPlaybackTelemetry({
+                surface: 'feed',
+                presentation: embed.presentation === 'gif' ? 'gif' : 'video',
+              })
+            }
+            telemetryRef.current.activated()
+          } else {
+            telemetryRef.current?.deactivated()
+          }
+        }}
+        onPlaybackStart={autoplay => {
+          if (playbackStartTrackedRef.current) return
+          playbackStartTrackedRef.current = true
+          ax.metric('video:playback:start', {
+            postUri: post?.uri,
+            postAuthorDid: post?.author.did,
+            context: 'embed',
+            presentation: embed.presentation === 'gif' ? 'gif' : 'video',
+            autoplay,
+          })
+        }}
+        onError={error => {
+          telemetryRef.current?.error(error)
+          ax.metric('video:playback:failed', {
+            surface: 'feed',
+            presentation: embed.presentation === 'gif' ? 'gif' : 'video',
+            errorClass: 'PlayerError',
+            errorMessage: error.slice(0, 256),
+            playlist: embed.playlist,
+          })
+        }}
         ref={ref}
       />
       <ImageBackground

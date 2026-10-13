@@ -1,10 +1,5 @@
 import {type StyleProp, StyleSheet, View, type ViewStyle} from 'react-native'
 import {Image} from 'expo-image'
-import {
-  AppBskyEmbedGallery,
-  type AppBskyEmbedImages,
-  type AppBskyFeedDefs,
-} from '@atproto/api'
 import {Trans, useLingui} from '@lingui/react/macro'
 
 import {shareImageModal} from '#/lib/media/manip'
@@ -17,6 +12,7 @@ import {MediaInsetBorder} from '#/components/MediaInsetBorder'
 import * as PeekMenu from '#/components/PeekMenu'
 import {Text} from '#/components/Typography'
 import {PlayButtonIcon} from '#/components/video/PlayButtonIcon'
+import {app} from '#/lexicons'
 import * as bsky from '#/types/bsky'
 
 /**
@@ -27,7 +23,7 @@ export function Embed({
   style,
   peekable = false,
 }: {
-  embed: AppBskyFeedDefs.PostView['embed']
+  embed: app.bsky.feed.defs.PostView['embed']
   style?: StyleProp<ViewStyle>
   peekable?: boolean
 }) {
@@ -59,9 +55,9 @@ export function Embed({
     const tiles: React.ReactNode[] = []
     for (const item of e.view.items) {
       if (tiles.length >= 4) break
-      if (!AppBskyEmbedGallery.isViewImage(item)) continue
+      if (!bsky.isType(app.bsky.embed.gallery.viewImage, item)) continue
       if (peekable) {
-        const image: AppBskyEmbedImages.ViewImage = {
+        const image: app.bsky.embed.images.ViewImage = {
           thumb: item.thumbnail,
           fullsize: item.fullsize,
           alt: item.alt,
@@ -107,7 +103,17 @@ export function Embed({
     // ignore any unknowns
     e.media.view !== null
   ) {
-    return <Embed embed={e.media.view} style={style} />
+    /*
+     * Every media arm's view is a `$Typed<...>` of a def that `PostView.embed`
+     * also admits, but TS will not narrow the parsed union back into the raw
+     * embed union, so the arm is re-asserted here.
+     */
+    return (
+      <Embed
+        embed={e.media.view as app.bsky.feed.defs.PostView['embed']}
+        style={style}
+      />
+    )
   }
 
   return null
@@ -127,10 +133,12 @@ export function ImageItem({
   thumbnail,
   alt,
   children,
+  maxWidth = 100,
 }: {
   thumbnail?: string
   alt?: string
   children?: React.ReactNode
+  maxWidth?: number
 }) {
   const t = useTheme()
 
@@ -141,7 +149,7 @@ export function ImageItem({
           {backgroundColor: 'black'},
           a.flex_1,
           a.aspect_square,
-          {maxWidth: 100},
+          {maxWidth},
           a.rounded_xs,
         ]}
         accessibilityLabel={alt}
@@ -152,7 +160,7 @@ export function ImageItem({
   }
 
   return (
-    <View style={[a.relative, a.flex_1, a.aspect_square, {maxWidth: 100}]}>
+    <View style={[a.flex_grow, a.relative, a.aspect_square, {maxWidth}]}>
       <Image
         key={thumbnail}
         source={{uri: thumbnail}}
@@ -200,7 +208,7 @@ export function VideoItem({
   )
 }
 
-function PeekableImageItem({image}: {image: AppBskyEmbedImages.ViewImage}) {
+function PeekableImageItem({image}: {image: app.bsky.embed.images.ViewImage}) {
   const {t: l} = useLingui()
   const saveImage = useSaveImageToMediaLibrary()
 

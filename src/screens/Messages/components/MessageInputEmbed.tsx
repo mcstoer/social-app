@@ -1,12 +1,8 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {LayoutAnimation, View} from 'react-native'
-import {
-  AppBskyFeedPost,
-  AppBskyRichtextFacet,
-  AtUri,
-  moderatePost,
-  RichText as RichTextAPI,
-} from '@atproto/api'
+import {AtUri} from '@atproto/syntax'
+import {moderatePost} from '@bsky/sdk/moderation'
+import {RichText as RichTextAPI} from '@bsky/sdk/richtext'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {type RouteProp, useNavigation, useRoute} from '@react-navigation/native'
 
@@ -36,6 +32,7 @@ import {ContentHider} from '#/components/moderation/ContentHider'
 import {PostAlerts} from '#/components/moderation/PostAlerts'
 import {RichText} from '#/components/RichText'
 import {Text} from '#/components/Typography'
+import {app} from '#/lexicons'
 import * as bsky from '#/types/bsky'
 
 /**
@@ -43,8 +40,7 @@ import * as bsky from '#/types/bsky'
  * embed: either a quoted post or a group chat invite link.
  */
 export type MessageEmbedState =
-  | {type: 'post'; uri: string}
-  | {type: 'invite'; code: string}
+  {type: 'post'; uri: string} | {type: 'invite'; code: string}
 
 export function useMessageEmbed() {
   const route =
@@ -52,12 +48,12 @@ export function useMessageEmbed() {
   const navigation = useNavigation<NavigationProp>()
   const embedFromParams = route.params.embed
 
-  const [embed, setEmbedState] = useState<MessageEmbedState | undefined>(
+  const [embed, setEmbed] = useState<MessageEmbedState | undefined>(
     embedFromParams ? {type: 'post', uri: embedFromParams} : undefined,
   )
 
   if (embedFromParams && embed?.type !== 'post') {
-    setEmbedState({type: 'post', uri: embedFromParams})
+    setEmbed({type: 'post', uri: embedFromParams})
   }
 
   return {
@@ -68,7 +64,7 @@ export function useMessageEmbed() {
           // Only the post embed is reflected in the route param (used by the
           // share-to-DM intent flow); invites are local-only.
           navigation.setParams({embed: ''})
-          setEmbedState(undefined)
+          setEmbed(undefined)
           return
         }
 
@@ -77,7 +73,7 @@ export function useMessageEmbed() {
         if (isBskyChatInviteUrl(embedUrl)) {
           const code = getChatInviteCodeFromUrl(embedUrl)
           if (code) {
-            setEmbedState({type: 'invite', code})
+            setEmbed({type: 'invite', code})
           }
           return
         }
@@ -86,7 +82,7 @@ export function useMessageEmbed() {
           const url = convertBskyAppUrlIfNeeded(embedUrl)
           const [_0, user, _1, rkey] = url.split('/').filter(Boolean)
           const uri = makeRecordUri(user, 'app.bsky.feed.post', rkey)
-          setEmbedState({type: 'post', uri})
+          setEmbed({type: 'post', uri})
         }
       },
       [embedFromParams, navigation],
@@ -106,7 +102,7 @@ export function useExtractEmbedFromFacets(
   for (const facet of rt.facets ?? []) {
     for (const feature of facet.features) {
       if (
-        AppBskyRichtextFacet.isLink(feature) &&
+        bsky.isType(app.bsky.richtext.facet.link, feature) &&
         (isBskyPostUrl(feature.uri) || isBskyChatInviteUrl(feature.uri))
       ) {
         uriFromFacet = feature.uri
@@ -166,13 +162,7 @@ function MessageInputPostEmbed({
   )
 
   const {rt, record} = useMemo(() => {
-    if (
-      post &&
-      bsky.dangerousIsType<AppBskyFeedPost.Record>(
-        post.record,
-        AppBskyFeedPost.isRecord,
-      )
-    ) {
+    if (post && bsky.isType(app.bsky.feed.post, post.record)) {
       return {
         rt: new RichTextAPI({
           text: post.record.text,
@@ -240,9 +230,9 @@ function MessageInputPostEmbed({
           </View>
           <ContentHider modui={moderation.ui('contentView')}>
             <PostAlerts
+              post={post}
               modui={moderation.ui('contentView')}
               style={a.py_xs}
-              size="sm"
             />
             {rt.text && (
               <RichText
@@ -273,7 +263,7 @@ function MessageInputInviteEmbed({
   const {t: l} = useLingui()
 
   return (
-    <ChatInvite.Root code={code}>
+    <ChatInvite.Root code={code} hasFixedHeight={false}>
       <View
         style={[
           a.flex_1,
@@ -303,25 +293,14 @@ function MessageInputInviteEmbed({
 }
 
 function MessageInputInviteEmbedBody() {
-  const t = useTheme()
-  const {loading, preview} = ChatInvite.useChatInvite()
+  const {status} = ChatInvite.useChatInvite()
 
-  if (loading) {
-    return (
-      <View style={[{minHeight: 64}, a.justify_center, a.align_center]}>
-        <Loader />
-      </View>
-    )
+  if (status === 'loading') {
+    return <ChatInvite.Loading style={{minHeight: 64}} />
   }
 
-  if (!preview) {
-    return (
-      <View style={[{minHeight: 64}, a.justify_center, a.align_center]}>
-        <Text style={[a.text_center, t.atoms.text_contrast_medium, a.italic]}>
-          <Trans>Could not load invite</Trans>
-        </Text>
-      </View>
-    )
+  if (status !== 'available') {
+    return <ChatInvite.Unavailable style={{minHeight: 64}} />
   }
 
   return <ChatInvite.Card size="small" />

@@ -1,9 +1,5 @@
 import {ScrollView, View} from 'react-native'
-import {
-  type ChatBskyActorDefs,
-  moderateProfile,
-  type ModerationOpts,
-} from '@atproto/api'
+import {moderateProfile, type ModerationOpts} from '@bsky/sdk/moderation'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
 import {Trans} from '@lingui/react/macro'
@@ -25,6 +21,7 @@ import {type ConvoWithDetails, parseConvoView} from '#/components/dms/util'
 import {ProfileBadges} from '#/components/ProfileBadges'
 import {Text} from '#/components/Typography'
 import {useAnalytics} from '#/analytics'
+import {type chat} from '#/lexicons'
 
 export function RecentChats({
   postUri,
@@ -116,7 +113,7 @@ function RecentChatItem({
   onPress: () => void
   moderationOpts: ModerationOpts
   convo: ConvoWithDetails
-  primaryMember: ChatBskyActorDefs.ProfileViewBasic
+  primaryMember: chat.bsky.actor.defs.ProfileViewBasic
 }) {
   const {_} = useLingui()
   const t = useTheme()
@@ -152,11 +149,7 @@ function RecentChatItem({
         a.align_center,
       ]}>
       {convo.kind === 'group' ? (
-        <AvatarBubbles
-          profiles={convo.members}
-          size={WIDTH - 8}
-          moderationOpts={moderationOpts}
-        />
+        <AvatarBubbles profiles={convo.members} size={WIDTH - 8} />
       ) : (
         <UserAvatar
           avatar={primaryProfile.avatar}

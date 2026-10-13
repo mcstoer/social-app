@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {Pressable, View} from 'react-native'
 import {
   useKeyboardHandler,
@@ -7,12 +7,13 @@ import {
 import Animated, {
   Extrapolation,
   interpolate,
-  runOnJS,
   useAnimatedStyle,
 } from 'react-native-reanimated'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
+import {scheduleOnRN} from 'react-native-worklets'
 import {GlassContainer} from 'expo-glass-effect'
 import {LinearGradient} from 'expo-linear-gradient'
+import {type $Typed} from '@atproto/lex'
 import {ScrollEdgeEffect} from '@bsky.app/expo-scroll-edge-effect'
 import {useLingui} from '@lingui/react/macro'
 import {countGraphemes} from 'unicode-segmenter/grapheme'
@@ -28,6 +29,7 @@ import {
 } from '#/state/messages/message-drafts'
 import {atoms as a, native, platform, tokens, useTheme, utils} from '#/alf'
 import {Composer, useComposerInternalApiRef} from '#/components/Composer'
+import {useMessageReplies} from '#/components/dms/MessageReplies'
 import * as EmojiPicker from '#/components/EmojiPicker'
 import {GlassView} from '#/components/GlassView'
 import {EmojiArc_Stroke2_Corner0_Rounded as EmojiSmileIcon} from '#/components/icons/Emoji'
@@ -35,34 +37,55 @@ import {PaperPlaneVertical_Filled_Stroke2_Corner1_Rounded as PaperPlaneIcon} fro
 import {Loader} from '#/components/Loader'
 import * as Toast from '#/components/Toast'
 import {IS_ANDROID, IS_IOS, IS_LIQUID_GLASS, IS_NATIVE, IS_WEB} from '#/env'
+import {type chat} from '#/lexicons'
+import {type MessageEmbedState} from './MessageInputEmbed'
 
 const MIN_HEIGHT = 40
 
 export function MessageComposer({
   textInputId,
   onSendMessage,
-  hasEmbed,
+  messageEmbed,
   setEmbed,
   children,
   loading = false,
 }: {
   textInputId?: string
-  onSendMessage: (message: string) => void
-  hasEmbed: boolean
+  onSendMessage: (
+    message: string,
+    embed?: MessageEmbedState,
+    replyTo?: $Typed<chat.bsky.convo.defs.MessageView>,
+  ) => void
+  messageEmbed: MessageEmbedState | undefined
   setEmbed: (embedUrl: string | undefined) => void
   children?: React.ReactNode
   loading?: boolean
 }) {
   const t = useTheme()
   const {t: l} = useLingui()
-  const playHaptic = useHaptics()
+  const haptics = useHaptics()
   const {needsEmailVerification} = useEmail()
   const editable = !needsEmailVerification && !loading
   const {getDraft, clearDraft} = useMessageDraft()
   const composerInternalApiRef = useComposerInternalApiRef()
+  const {replyTo, clearReply} = useMessageReplies()
 
   const [text, setText] = useState(getDraft)
   useSaveMessageDraft(text)
+
+  useEffect(() => {
+    if (!replyTo) return
+    composerInternalApiRef.current?.input?.focus()
+  }, [replyTo, composerInternalApiRef])
+
+  // On web, focus the input once the conversation is ready. The composer also
+  // mounts during the loading state (when it isn't editable), so a mount-time
+  // autoFocus would fire too early to land focus.
+  useEffect(() => {
+    if (IS_WEB && editable) {
+      composerInternalApiRef.current?.input?.focus()
+    }
+  }, [editable, composerInternalApiRef])
 
   // Android interactive dismiss sometimes doesn't blur the input
   const blur = useNonReactiveCallback(() => {
@@ -73,16 +96,31 @@ export function MessageComposer({
     onEnd: evt => {
       'worklet'
       if (IS_ANDROID && evt.progress === 0) {
-        runOnJS(blur)()
+        scheduleOnRN(blur)
       }
     },
   })
 
-  const submitDisabled = !editable || (!hasEmbed && text.trim().length === 0)
+  const submitDisabled =
+    !editable || (!messageEmbed && text.trim().length === 0)
 
-  const onSubmit = (message: string) => {
+  /*
+   * Guards against a second `onSubmit` firing (a fast double-tap, or a
+   * native double-dispatch of onPress) before React has re-rendered with
+   * the cleared input. `submitDisabled`/`text` are state, so they lag a
+   * frame behind the synchronous `.clear()` call below - a ref is needed
+   * to block re-entry within that window.
+   */
+  const isSubmittingRef = useRef(false)
+
+  const onSubmit = (
+    message: string,
+    embed: MessageEmbedState | undefined,
+    replyTo: chat.bsky.convo.defs.MessageView | null,
+  ) => {
     if (!editable) return
-    if (!hasEmbed && message.trim() === '') return
+    if (!embed && message.trim() === '') return
+    if (isSubmittingRef.current) return
     const graphemeCount = countGraphemes(message)
     if (graphemeCount > MAX_DM_GRAPHEME_LENGTH) {
       Toast.show(
@@ -92,9 +130,11 @@ export function MessageComposer({
       return
     }
 
+    isSubmittingRef.current = true
     clearDraft()
-    playHaptic()
+    haptics.confirm()
     setEmbed(undefined)
+    clearReply()
     composerInternalApiRef.current?.clear()
 
     if (IS_WEB) {
@@ -103,7 +143,17 @@ export function MessageComposer({
 
     // defer send by a frame so that the textinput resizes before we send the message
     requestAnimationFrame(() => {
-      onSendMessage(message)
+      isSubmittingRef.current = false
+      onSendMessage(
+        message,
+        embed,
+        replyTo
+          ? {
+              ...replyTo,
+              $type: 'chat.bsky.convo.defs#messageView',
+            }
+          : undefined,
+      )
     })
   }
 
@@ -129,18 +179,18 @@ export function MessageComposer({
       setTimeout(() => {
         if (isFlushingAutocorrectSuggestion.current) {
           isFlushingAutocorrectSuggestion.current = false
-          onSubmit(text)
+          onSubmit(text, messageEmbed, replyTo)
         }
       }, 20)
     } else {
-      onSubmit(text)
+      onSubmit(text, messageEmbed, replyTo)
     }
   }
 
   const handleChange = (nextText: string) => {
     if (IS_IOS && isFlushingAutocorrectSuggestion.current) {
       isFlushingAutocorrectSuggestion.current = false
-      onSubmit(nextText)
+      onSubmit(nextText, messageEmbed, replyTo)
     } else {
       setText(nextText)
     }
@@ -151,7 +201,7 @@ export function MessageComposer({
       <View
         collapsable={false}
         ref={native(
-          (node: View) =>
+          (node: React.ComponentRef<typeof View>) =>
             void composerInternalApiRef.current?.setAutocompleteAnchor(node),
         )}>
         <GlassContainer
@@ -171,7 +221,9 @@ export function MessageComposer({
                     composerInternalApiRef.current?.insert(emoji.native)
                   }
                   nextFocusRef={() =>
-                    composerInternalApiRef.current?.input?.element
+                    composerInternalApiRef.current?.input
+                      ?.element as unknown as
+                      {focus: () => void} | null | undefined
                   }>
                   <EmojiPicker.Trigger label={l`Open emoji picker`}>
                     {({props, state, control}) => (
@@ -215,13 +267,12 @@ export function MessageComposer({
                 placeholder={
                   loading
                     ? l({message: 'Loading chat…', context: 'placeholder'})
-                    : l({message: 'Message', context: 'action'})
+                    : l({message: 'Message', context: 'description'})
                 }
                 autocompletePlacement="top-start"
                 internalApiRef={composerInternalApiRef}
                 defaultValue={text}
                 editable={editable}
-                autoFocus={IS_WEB}
                 maxRows={12}
                 outerStyle={[a.flex_1]}
                 contentTextStyle={[a.text_md, a.leading_snug]}
@@ -306,8 +357,7 @@ function SubmitButton({
   )
 }
 
-// TODO: remove export when MessageInput is deleted
-export function ComposerContainer({children}: {children: React.ReactNode}) {
+function ComposerContainer({children}: {children: React.ReactNode}) {
   const {bottom: bottomInset} = useSafeAreaInsets()
   const {progress} = useReanimatedKeyboardAnimation()
   const t = useTheme()
@@ -326,7 +376,7 @@ export function ComposerContainer({children}: {children: React.ReactNode}) {
 
   if (IS_LIQUID_GLASS) {
     return (
-      <ScrollEdgeEffect edge="bottom">
+      <ScrollEdgeEffect edge="bottom" effect="soft">
         <Animated.View style={[a.w_full, animatedContainerStyle, a.pb_lg]}>
           {children}
         </Animated.View>
@@ -341,7 +391,7 @@ export function ComposerContainer({children}: {children: React.ReactNode}) {
             web: [
               a.pt_xs,
               a.pl_lg,
-              a.pb_lg,
+              {paddingBottom: tokens.space.lg + bottomInset},
               // prevent overlap with the scrollbar, which looks ugly
               a.pr_sm, // sm + sm = lg
               {width: `calc(100% - ${tokens.space.sm}px)` as '100%'},

@@ -8,10 +8,10 @@ import {
 } from 'react-native'
 import {msg} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react'
-import {DropdownMenu} from 'radix-ui'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import {useA11y} from '#/state/a11y'
-import {atoms as a, flatten, useTheme, web} from '#/alf'
+import {atoms as a, flatten, flattenToCSS, useTheme, web} from '#/alf'
 import type * as Dialog from '#/components/Dialog'
 import {useInteractionState} from '#/components/hooks/useInteractionState'
 import {
@@ -31,6 +31,8 @@ import {
 } from '#/components/Menu/types'
 import {Portal} from '#/components/Portal'
 import {Text} from '#/components/Typography'
+
+export {type DialogControlProps as MenuControlProps} from '#/components/Dialog'
 
 export {useMenuContext}
 
@@ -411,7 +413,7 @@ export function Divider() {
   const t = useTheme()
   return (
     <DropdownMenu.Separator
-      style={flatten([
+      style={flattenToCSS([
         a.my_xs,
         t.atoms.bg_contrast_100,
         a.flex_shrink_0,

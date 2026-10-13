@@ -129,10 +129,10 @@ const ImageAltTextInner = ({
                 onChangeText={text => {
                   setAltText(text)
                 }}
-                defaultValue={altText}
+                value={altText}
                 multiline
-                numberOfLines={3}
                 autoFocus
+                scrollEnabled={false}
               />
             </TextField.Root>
           </View>

@@ -1,20 +1,26 @@
 import {createContext, useContext, useEffect, useMemo, useState} from 'react'
-import {
-  measure,
-  type MeasuredDimensions,
-  runOnJS,
-  runOnUI,
-} from 'react-native-reanimated'
+import {measure, type MeasuredDimensions} from 'react-native-reanimated'
+import {scheduleOnRN, scheduleOnUI} from 'react-native-worklets'
 import {nanoid} from 'nanoid/non-secure'
 
 import {useNonReactiveCallback} from '#/lib/hooks/useNonReactiveCallback'
 import {useHotkeysContext} from '#/lib/hotkeys'
 import {type ImageSource} from '#/components/Lightbox/types'
 
+export type LightboxMetricsContext = {
+  layout: 'single' | 'grid' | 'carousel'
+  postUri: string
+  postAuthorDid: string
+  feedDescriptor?: string
+}
+
 export type Lightbox = {
   id: string
   images: ImageSource[]
   index: number
+  // Set for post photo embeds so the lightbox can emit post:photoEmbed:lightboxSwipe.
+  // Left unset for non-post contexts (e.g. profile avatar/banner lightbox).
+  metricsContext?: LightboxMetricsContext
 }
 
 const LightboxContext = createContext<{
@@ -63,7 +69,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       if (thumbRef) {
         // Measure the tapped image on the UI thread, then open with
         // the rect baked in so it's available from the first render.
-        // Only the rect (plain data) goes through runOnJS — AnimatedRef
+        // Only the rect (plain data) goes through scheduleOnRN — AnimatedRef
         // objects can't survive serialization across threads.
         const openWithRect = (rect: MeasuredDimensions | null) => {
           doOpen({
@@ -73,11 +79,11 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
             ),
           })
         }
-        runOnUI(() => {
+        scheduleOnUI(() => {
           'worklet'
           const rect = measure(thumbRef)
-          runOnJS(openWithRect)(rect)
-        })()
+          scheduleOnRN(openWithRect, rect)
+        })
       } else {
         doOpen(lightbox)
       }

@@ -7,7 +7,6 @@ import {
   useState,
 } from 'react'
 import {LayoutAnimation} from 'react-native'
-import {type ChatBskyConvoDefs} from '@atproto/api'
 import {useLingui} from '@lingui/react/macro'
 import {useQueryClient} from '@tanstack/react-query'
 
@@ -20,15 +19,16 @@ import {ReportDialog} from '#/components/moderation/ReportDialog'
 import * as Prompt from '#/components/Prompt'
 import {usePromptControl} from '#/components/Prompt'
 import * as Toast from '#/components/Toast'
+import {type chat} from '#/lexicons'
 import type * as bsky from '#/types/bsky'
 
 type MessageDialogsContextType = {
-  openDeleteMessage: (message: ChatBskyConvoDefs.MessageView) => void
+  openDeleteMessage: (message: chat.bsky.convo.defs.MessageView) => void
   openReportMessage: (
-    message: ChatBskyConvoDefs.MessageView,
+    message: chat.bsky.convo.defs.MessageView,
     senderProfile: bsky.profile.AnyProfileView | undefined,
   ) => void
-  openReactions: (message: ChatBskyConvoDefs.MessageView) => void
+  openReactions: (message: chat.bsky.convo.defs.MessageView) => void
 }
 
 const Context = createContext<MessageDialogsContextType | null>(null)
@@ -52,18 +52,18 @@ export function MessageOverlays({children}: {children: React.ReactNode}) {
   const reactionsControl = useDialogControl()
 
   const [deleteTarget, setDeleteTarget] =
-    useState<ChatBskyConvoDefs.MessageView | null>(null)
+    useState<chat.bsky.convo.defs.MessageView | null>(null)
   const [reportTarget, setReportTarget] = useState<{
-    message: ChatBskyConvoDefs.MessageView
+    message: chat.bsky.convo.defs.MessageView
     senderProfile: bsky.profile.AnyProfileView | undefined
   } | null>(null)
   const [afterReportTarget, setAfterReportTarget] =
-    useState<ChatBskyConvoDefs.MessageView | null>(null)
+    useState<chat.bsky.convo.defs.MessageView | null>(null)
   const [reactionsTarget, setReactionsTarget] =
-    useState<ChatBskyConvoDefs.MessageView | null>(null)
+    useState<chat.bsky.convo.defs.MessageView | null>(null)
 
   const openDeleteMessage = useCallback(
-    (message: ChatBskyConvoDefs.MessageView) => {
+    (message: chat.bsky.convo.defs.MessageView) => {
       setDeleteTarget(message)
       deleteControl.open()
     },
@@ -72,7 +72,7 @@ export function MessageOverlays({children}: {children: React.ReactNode}) {
 
   const openReportMessage = useCallback(
     (
-      message: ChatBskyConvoDefs.MessageView,
+      message: chat.bsky.convo.defs.MessageView,
       senderProfile: bsky.profile.AnyProfileView | undefined,
     ) => {
       setReportTarget({message, senderProfile})
@@ -82,7 +82,7 @@ export function MessageOverlays({children}: {children: React.ReactNode}) {
   )
 
   const openReactions = useCallback(
-    (message: ChatBskyConvoDefs.MessageView) => {
+    (message: chat.bsky.convo.defs.MessageView) => {
       setReactionsTarget(message)
     },
     [],
@@ -125,6 +125,22 @@ export function MessageOverlays({children}: {children: React.ReactNode}) {
     [openDeleteMessage, openReportMessage, openReactions],
   )
 
+  // `reactionsTarget` is a snapshot from when the dialog was opened. Read the
+  // live message out of the convo items so optimistic reaction changes (e.g.
+  // "Tap to remove") are reflected in the dialog without closing it first.
+  const reactionsMessage = useMemo(() => {
+    if (!reactionsTarget) return null
+    for (const item of convo.items) {
+      if (
+        (item.type === 'message' || item.type === 'pending-message') &&
+        item.message.id === reactionsTarget.id
+      ) {
+        return item.message
+      }
+    }
+    return reactionsTarget
+  }, [convo.items, reactionsTarget])
+
   const reportSubject = reportTarget
     ? ({
         view: 'message',
@@ -153,11 +169,11 @@ export function MessageOverlays({children}: {children: React.ReactNode}) {
           onClose={() => setAfterReportTarget(null)}
         />
       )}
-      {reactionsTarget && (
+      {reactionsMessage && (
         <ReactionsDialog
           control={reactionsControl}
           relatedProfiles={convo.relatedProfiles}
-          message={reactionsTarget}
+          message={reactionsMessage}
           onClose={() => setReactionsTarget(null)}
         />
       )}

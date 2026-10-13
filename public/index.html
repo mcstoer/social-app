@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="theme-color">
+    <!--
+      This viewport works for phones with notches.
+      It's optimized for gestures by disabling global zoom.
+     -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover"
+    />
+    <!--
+      Preconnect to essential domains
+    -->
+    <link rel="preconnect" href="https://bsky.social">
+    <link rel="preconnect" href="https://go.bsky.app">
+    <!-- let js set by leaving empty -->
+    <title></title>
+    <meta name="description" content="Social media as it should be. Find your community among millions of users, unleash your creativity, and have some fun again." />
+
+    <link rel="preload" as="font" type="font/woff2" href="/assets/assets/fonts/inter/InterVariable.woff2" crossorigin>
+
+    <style>
+      /**
+       * Minimum styles required to render splash.
+       *
+       * ALL OTHER STYLES BELONG IN `src/style.css`
+       *
+       * THIS NEEDS TO BE DUPLICATED IN `bskyweb/templates/base.html`
+       */
+      @font-face {
+        font-family: 'InterVariable';
+        src: url(/assets/assets/fonts/inter/InterVariable.woff2) format('woff2');
+        font-weight: 300 1000;
+        font-style: normal;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'InterVariableItalic';
+        src: url(/assets/assets/fonts/inter/InterVariable-Italic.woff2) format('woff2');
+        font-weight: 300 1000;
+        font-style: italic;
+        font-display: swap;
+      }
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+        font-family: InterVariable, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Liberation Sans', Helvetica, Arial, sans-serif;
+        text-rendering: optimizeLegibility;
+        /* Platform-specific reset */
+        -webkit-overflow-scrolling: touch;
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -ms-overflow-style: scrollbar;
+        font-synthesis-weight: none;
+      }
+      :root {
+        --text: black;
+        --background: white;
+        --backgroundLight: #e2e7ee;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          color-scheme: dark;
+          --text: white;
+          --background: black;
+          --backgroundLight: #232e3e;
+        }
+      }
+      html,
+      body,
+      #root {
+        display: flex;
+        flex: 1 0 auto;
+        min-height: 100%;
+        width: 100%;
+      }
+      html.theme--light,
+      html.theme--light body,
+      html.theme--light #root {
+        background-color: white;
+        --text: black;
+        --background: white;
+        --backgroundLight: #DCE2EA;
+      }
+      html.theme--dark,
+      html.theme--dark body,
+      html.theme--dark #root {
+        color-scheme: dark;
+        background-color: black;
+        --text: white;
+        --background: black;
+        --backgroundLight: #232E3E;
+      }
+      html.theme--dim,
+      html.theme--dim body,
+      html.theme--dim #root {
+        color-scheme: dark;
+        background-color: #151D28;
+        --text: white;
+        --background: #151D28;
+        --backgroundLight: #2C3A4E;
+      }
+      #splash {
+        display: flex;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      #splash svg {
+        position: relative;
+        top: -50px;
+        width: 100px;
+      }
+      /**
+       * We need these styles to prevent shifting due to scrollbar show/hide on
+       * OSs that have them enabled by default. This also handles cases where the
+       * screen wouldn't otherwise scroll, and therefore hide the scrollbar and
+       * shift the content, by forcing the page to show a scrollbar.
+       */
+      body {
+        width: 100%;
+        overflow-y: scroll;
+      }
+    </style>
+    <script>
+      const theme = localStorage.getItem('ALF_THEME')
+      if (theme) {
+        document.documentElement.classList.add(`theme--${theme}`)
+      }
+    </script>
+  </head>
+
+  <body>
+    <!--
+      A generic no script element with a reload button and a message.
+      Feel free to customize this however you'd like.
+    -->
+    <noscript>
+      <form
+        action=""
+        style="
+          background-color: #fff;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 9999;
+        "
+      >
+        <div
+          style="
+            font-size: 18px;
+            font-family: Helvetica, sans-serif;
+            line-height: 24px;
+            margin: 10%;
+            width: 80%;
+          "
+        >
+          <h1 lang="en">Bluesky</h1>
+          <p lang="en">Social media as it should be. Find your community among millions of users, unleash your creativity, and have some fun again.</p>
+          <div data-nosnippet>
+            <p lang="en">Enable JavaScript to use Bluesky.</p>
+            <p lang="en" style="margin: 20px 0;">
+              <button
+                type="submit"
+                style="
+                  background-color: #4630eb;
+                  border-radius: 100px;
+                  border: none;
+                  box-shadow: none;
+                  color: #fff;
+                  cursor: pointer;
+                  font-weight: bold;
+                  line-height: 20px;
+                  padding: 6px 16px;
+                "
+              >
+                Reload
+              </button>
+            </p>
+          </div>
+        </div>
+      </form>
+    </noscript>
+
+    <!-- The root element for your Expo app. -->
+    <div id="splash">
+      <!-- VerusSky SVG -->
+      <svg width="201" height="201" viewBox="0 0 201 201" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_1_20)">
+          <path d="M100.5 201C156.005 201 201 156.005 201 100.5C201 44.9954 156.005 0 100.5 0C44.9954 0 0 44.9954 0 100.5C0 156.005 44.9954 201 100.5 201Z" fill="white"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M100.5 0C155.968 0 201 45.0324 201 100.5C201 155.967 155.967 201 100.5 201C45.0326 201 0 155.968 0 100.5C0 45.0327 45.0326 0 100.5 0ZM51.2278 36.3533C55.0232 33.1034 60.3483 30.4339 64.9778 32.3137C73.3023 35.6939 95.6682 80.7852 95.6682 80.7852C95.6682 80.7852 126.953 36.3395 138.189 32.2864C142.022 30.9038 147.278 33.3358 151.286 36.3322C165.353 46.8492 166.806 61.5218 165.59 65.5923C164.062 70.7098 86.3523 169.309 86.3523 169.309C84.0283 168.361 37.9847 82.9026 35.4895 68.2802C33.105 54.3063 41.2179 44.8116 51.2278 36.3533V36.3533Z" fill="#3165D4"/>
+        </g>
+        <defs>
+          <clipPath id="clip0_1_20">
+            <rect width="201" height="201" fill="white"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
+    <div id="root">
+    </div>
+  </body>
+</html>

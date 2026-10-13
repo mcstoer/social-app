@@ -14,7 +14,6 @@ import Animated, {
   useAnimatedRef,
 } from 'react-native-reanimated'
 import {Image} from 'expo-image'
-import {type AppBskyEmbedImages} from '@atproto/api'
 import {utils} from '@bsky.app/alf'
 import {Trans, useLingui} from '@lingui/react/macro'
 import debounce from 'lodash.debounce'
@@ -41,12 +40,13 @@ import {PostEmbedViewContext} from '#/components/Post/Embed/types'
 import {Text} from '#/components/Typography'
 import {useAnalytics} from '#/analytics'
 import {IS_ANDROID, IS_WEB} from '#/env'
+import {type app} from '#/lexicons'
 
 export * from './const'
 export * from './maybeApplyGalleryOffsetStyles'
 
 interface GalleryProps {
-  images: AppBskyEmbedImages.ViewImage[]
+  images: app.bsky.embed.images.ViewImage[]
   onPress?: (
     index: number,
     containerRefs: AnimatedRef<any>[],
@@ -55,10 +55,17 @@ interface GalleryProps {
   onPressIn?: (index: number) => void
   viewContext?: PostEmbedViewContext
   isWithinQuote?: boolean
+  // Post context for the in-feed carousel swipe metric. Omit for non-post
+  // contexts (no event will be emitted).
+  metricsPostContext?: {
+    postUri: string
+    postAuthorDid: string
+    feedDescriptor?: string
+  }
 }
 
 const Context = createContext<{
-  bleedRef: React.RefObject<View | null>
+  bleedRef: React.RefObject<React.ComponentRef<typeof View> | null>
   bleedWidth: number
 }>({
   bleedRef: {current: null},
@@ -66,7 +73,7 @@ const Context = createContext<{
 })
 
 export function GalleryBleed({children}: {children: React.ReactNode}) {
-  const ref = useRef<View>(null)
+  const ref = useRef<React.ComponentRef<typeof View>>(null)
   const [bleedWidth, setBleedWidth] = useState(0)
 
   if (!isValidElement(children)) {
@@ -99,6 +106,7 @@ export function Gallery({
   onPressIn,
   viewContext,
   isWithinQuote,
+  metricsPostContext,
 }: GalleryProps) {
   const {t: l} = useLingui()
   const ax = useAnalytics()
@@ -107,7 +115,6 @@ export function Gallery({
   const bps = useBreakpoints()
   const window = useWindowDimensions()
   const isWithinChat = viewContext === PostEmbedViewContext.ChatMessage
-  const hideBadges = isWithinQuote
   const contentHeight = useMemo(() => {
     if (isWithinChat) {
       return 120
@@ -138,7 +145,7 @@ export function Gallery({
    * scroll position, so it works correctly for off-screen FlatList items.
    */
   const {bleedRef, bleedWidth} = useGalleryBleed()
-  const contentRef = useRef<View>(null)
+  const contentRef = useRef<React.ComponentRef<typeof View>>(null)
   const [contentDims, setContentDims] = useState<{x: number; width: number}>()
   const measure = () => {
     if (contentRef.current && bleedRef.current) {
@@ -161,7 +168,9 @@ export function Gallery({
 
   const flatListRef = useRef<FlatList>(null)
   const itemWidthsRef = useRef<Map<number, number>>(new Map())
-  const itemRefsRef = useRef<Map<number, View>>(new Map())
+  const itemRefsRef = useRef<Map<number, React.ComponentRef<typeof View>>>(
+    new Map(),
+  )
   const containerRefsRef = useRef<Map<number, AnimatedRef<any>>>(new Map())
   const thumbDimsRef = useRef<Map<number, Dimensions>>(new Map())
   const currentIndexRef = useRef(0)
@@ -169,13 +178,17 @@ export function Gallery({
   const emitSwipeMetric = useMemo(
     () =>
       debounce((fromIndex: number, toIndex: number) => {
-        ax.metric('post:gallery:swipe', {
+        if (!metricsPostContext) return
+        ax.metric('post:photoEmbed:carouselSwipe', {
           fromImage: fromIndex + 1, // convert to 1-based index for easier analysis
           toImage: toIndex + 1, // convert to 1-based index for easier analysis
           totalImages: images.length,
+          postUri: metricsPostContext.postUri,
+          postAuthorDid: metricsPostContext.postAuthorDid,
+          feedDescriptor: metricsPostContext.feedDescriptor,
         })
       }, 200),
-    [ax, images.length],
+    [ax, images.length, metricsPostContext],
   )
 
   const setCurrentIndex = (index: number) => {
@@ -238,7 +251,6 @@ export function Gallery({
               onPress?.(index, [containerRef], [dims])
             }
             onPressIn={() => onPressIn?.(index)}
-            hideBadge={isWithinQuote}
           />
         ))}
       </View>
@@ -264,9 +276,12 @@ export function Gallery({
           aria-label={l`Image gallery, ${images.length} images`}
           horizontal
           pagingEnabled={false}
-          // Disable Android's stretch overscroll, which can leave the carousel
-          // settled just off the left edge instead of aligned to x = 0
-          overScrollMode={IS_ANDROID ? 'never' : 'auto'}
+          // We use snapToOffsets on Android to ensure that if the stretch overscroll
+          // leaves the carousel slightly off the left edge, it snaps back to 0.
+          // This fixes the offset bug without disabling the native stretch behavior.
+          overScrollMode="auto"
+          snapToOffsets={IS_ANDROID ? [0] : undefined}
+          snapToEnd={false}
           showsHorizontalScrollIndicator={false}
           directionalLockEnabled
           nestedScrollEnabled
@@ -277,10 +292,6 @@ export function Gallery({
           renderItem={({item, index}) => {
             const openLightboxAtIndex = onPress
               ? () => {
-                  ax.metric('post:gallery:openLightbox', {
-                    fromImage: index + 1, // convert to 1-based index for easier analysis
-                    totalImages: images.length,
-                  })
                   const refs: AnimatedRef<any>[] = []
                   const dims: (Dimensions | null)[] = []
                   for (let i = 0; i < images.length; i++) {
@@ -292,7 +303,6 @@ export function Gallery({
               : undefined
             return (
               <GalleryImage
-                hideBadges={hideBadges}
                 largeAltBadge={largeAltBadge}
                 image={item}
                 contentHeight={contentHeight}
@@ -388,7 +398,6 @@ function GalleryImage({
   imageCount,
   onWidthChange,
   itemRef,
-  hideBadges,
   largeAltBadge,
   onContainerRef,
   onThumbDims,
@@ -397,12 +406,11 @@ function GalleryImage({
   onPreviewPress,
 }: {
   contentHeight: number
-  image: AppBskyEmbedImages.ViewImage
+  image: app.bsky.embed.images.ViewImage
   index: number
   imageCount: number
   onWidthChange: (index: number, width: number) => void
-  itemRef: (node: View | null) => void
-  hideBadges?: boolean
+  itemRef: (node: React.ComponentRef<typeof View> | null) => void
   largeAltBadge?: boolean
   onContainerRef: (index: number, ref: AnimatedRef<any>) => void
   onThumbDims: (index: number, dims: Dimensions) => void
@@ -479,9 +487,17 @@ function GalleryImage({
             loading={index === 0 ? 'eager' : 'lazy'}
             style={[dims]}
             onLoad={e => {
-              const ar = getAspectRatio(e.source)
-              if (ar && ar !== aspectRatio) {
-                setAspectRatio(ar)
+              /*
+               * Only sync from the loaded thumb if we don't already have a
+               * ratio from the record. The CDN scales thumbs to integer pixel
+               * dims, so its reported ratio drifts a fraction from the
+               * record's - re-syncing would jiggle the FlatList item widths.
+               */
+              if (aspectRatio === undefined) {
+                const ar = getAspectRatio(e.source)
+                if (ar !== undefined) {
+                  setAspectRatio(ar)
+                }
               }
               onThumbDims(index, {
                 width: e.source.width,
@@ -491,7 +507,7 @@ function GalleryImage({
             useAppleWebpCodec
           />
 
-          {!hideBadges && imageCount > 1 ? (
+          {imageCount > 1 ? (
             <View
               accessible={false}
               pointerEvents="none"
@@ -515,12 +531,16 @@ function GalleryImage({
                   a.font_bold,
                   largeAltBadge ? a.text_xs : {fontSize: 8},
                 ]}>
-                {index + 1}/{imageCount}
+                <Trans
+                  context="gallery-badge-image-position-numbers"
+                  comment="Badge showing the current image position out of the total number of images in a gallery.">
+                  {index + 1}/{imageCount}
+                </Trans>
               </Text>
             </View>
           ) : null}
 
-          {(hasAlt || isCropped) && !hideBadges ? (
+          {hasAlt || isCropped ? (
             <View
               accessible={false}
               style={[
@@ -537,6 +557,7 @@ function GalleryImage({
               ]}>
               {isCropped && (
                 <View
+                  accessible={false}
                   style={[
                     a.rounded_sm,
                     a.p_xs,
@@ -556,6 +577,7 @@ function GalleryImage({
               )}
               {hasAlt && (
                 <View
+                  accessible={false}
                   style={[
                     a.justify_center,
                     a.rounded_sm,

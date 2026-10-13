@@ -1,8 +1,10 @@
 import {useCallback, useRef, useState} from 'react'
 import {Pressable, View} from 'react-native'
-import {type ChatBskyConvoDefs, type ModerationOpts} from '@atproto/api'
+import {type ModerationOpts} from '@bsky/sdk/moderation'
+import {plural} from '@lingui/core/macro'
 import {useLingui} from '@lingui/react/macro'
 
+import {EMOJI_REACTION_LIMIT} from '#/lib/constants'
 import {useMaybeProfileShadow} from '#/state/cache/profile-shadow'
 import {useConvoActive} from '#/state/messages/convo'
 import {useSession} from '#/state/session'
@@ -11,20 +13,23 @@ import {MessageContextMenu} from '#/components/dms/MessageContextMenu'
 import {DotGrid3x1_Stroke2_Corner0_Rounded as DotsHorizontalIcon} from '#/components/icons/DotGrid'
 import {EmojiSmile_Stroke2_Corner0_Rounded as EmojiSmileIcon} from '#/components/icons/Emoji'
 import * as Toast from '#/components/Toast'
+import {type chat} from '#/lexicons'
 import type * as bsky from '#/types/bsky'
 import {EmojiReactionPicker} from './EmojiReactionPicker'
-import {canReact, hasReachedReactionLimit} from './util'
+import {
+  canReact,
+  hasReachedReactionLimit,
+  MESSAGE_BUBBLE_MAX_WIDTH,
+} from './util'
 
 export function ActionsWrapper({
   message,
-  hasReactions,
   isFromSelf,
   senderProfile,
   moderationOpts,
   children,
 }: {
-  message: ChatBskyConvoDefs.MessageView
-  hasReactions?: boolean
+  message: chat.bsky.convo.defs.MessageView
   isFromSelf: boolean
   senderProfile?: bsky.profile.AnyProfileView
   moderationOpts: ModerationOpts | undefined
@@ -72,7 +77,18 @@ export function ActionsWrapper({
           .removeReaction(message.id, emoji)
           .catch(() => Toast.show(l`Failed to remove emoji reaction`))
       } else {
-        if (hasReachedReactionLimit(message, currentAccount?.did)) return
+        if (hasReachedReactionLimit(message, currentAccount?.did)) {
+          Toast.show(
+            l`You cannot add more than ${plural(EMOJI_REACTION_LIMIT, {
+              one: '# emoji reaction',
+              other: '# emoji reactions',
+            })}`,
+            {
+              type: 'info',
+            },
+          )
+          return
+        }
         convo.addReaction(message.id, emoji).catch(() =>
           Toast.show(l`Failed to add emoji reaction`, {
             type: 'error',
@@ -100,7 +116,6 @@ export function ActionsWrapper({
           isFromSelf
             ? [a.mr_xs, {marginLeft: 'auto'}, a.flex_row_reverse]
             : [a.ml_xs, {marginRight: 'auto'}],
-          hasReactions ? [a.mb_2xl] : undefined,
         ]}>
         {reactionsAvailable && (
           <EmojiReactionPicker message={message} onEmojiSelect={onEmojiSelect}>
@@ -153,7 +168,10 @@ export function ActionsWrapper({
         </MessageContextMenu>
       </View>
       <View
-        style={[{maxWidth: '80%'}, isFromSelf ? a.align_end : a.align_start]}>
+        style={[
+          {maxWidth: MESSAGE_BUBBLE_MAX_WIDTH},
+          isFromSelf ? a.align_end : a.align_start,
+        ]}>
         {children}
       </View>
     </View>

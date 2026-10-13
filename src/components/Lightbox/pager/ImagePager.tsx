@@ -10,8 +10,11 @@
 import {useCallback, useEffect, useMemo, useState} from 'react'
 import {PixelRatio, StyleSheet, useWindowDimensions, View} from 'react-native'
 import {SystemBars} from 'react-native-edge-to-edge'
-import {Gesture} from 'react-native-gesture-handler'
-import PagerView from 'react-native-pager-view'
+import {usePanGesture} from 'react-native-gesture-handler'
+import PagerView, {
+  type PagerViewOnPageSelectedEvent,
+  type PageScrollStateChangedNativeEvent,
+} from 'react-native-pager-view'
 import Animated, {
   type AnimatableValue,
   type AnimatedRef,
@@ -20,8 +23,6 @@ import Animated, {
   measure,
   type MeasuredDimensions,
   ReduceMotion,
-  runOnJS,
-  runOnUI,
   type SharedValue,
   useAnimatedReaction,
   useAnimatedRef,
@@ -32,15 +33,17 @@ import Animated, {
   withSpring,
   type WithSpringConfig,
 } from 'react-native-reanimated'
+import {scheduleOnRN, scheduleOnUI} from 'react-native-worklets'
 import {Image} from 'expo-image'
 import * as ScreenOrientation from 'expo-screen-orientation'
+import {PlatformInfo} from '@bsky.app/expo-bluesky-swiss-army'
 
 import {type Dimensions} from '#/lib/media/types'
 import {useTheme} from '#/alf'
 import {setSystemUITheme} from '#/alf/util/systemUI'
 import {type Lightbox} from '#/components/Lightbox/state'
+import {useAnalytics} from '#/analytics'
 import {IS_IOS} from '#/env'
-import {PlatformInfo} from '../../../../modules/expo-bluesky-swiss-army'
 import {Footer} from '../chrome/Footer'
 import {Header} from '../chrome/Header'
 import {
@@ -59,13 +62,11 @@ const SLOW_SPRING: WithSpringConfig = {
   mass: IS_IOS ? 1.25 : 0.75,
   damping: 300,
   stiffness: 800,
-  restDisplacementThreshold: 0.001,
 }
 const FAST_SPRING: WithSpringConfig = {
   mass: IS_IOS ? 1.25 : 0.75,
   damping: 150,
   stiffness: 900,
-  restDisplacementThreshold: 0.001,
 }
 
 function canAnimate(lightbox: Lightbox): boolean {
@@ -90,6 +91,9 @@ export default function ImageViewRoot({
   'use no memo'
   const ref = useAnimatedRef<View>()
   const [activeLightbox, setActiveLightbox] = useState(nextLightbox)
+  // Lives here rather than in ImageView so it survives the remount
+  // when the orientation-based key below changes on rotation.
+  const [imageIndex, setImageIndex] = useState(nextLightbox?.index ?? 0)
   const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
     'portrait',
   )
@@ -100,6 +104,7 @@ export default function ImageViewRoot({
 
   if (!activeLightbox && nextLightbox) {
     setActiveLightbox(nextLightbox)
+    setImageIndex(nextLightbox.index)
   }
 
   useEffect(() => {
@@ -117,26 +122,22 @@ export default function ImageViewRoot({
 
     // https://github.com/software-mansion/react-native-reanimated/issues/6677
     rAF_FIXED(() => {
-      openProgress.set(() =>
-        isAnimated ? withClampedSpring(1, SLOW_SPRING) : 1,
-      )
+      openProgress.set(isAnimated ? withClampedSpring(1, SLOW_SPRING) : 1)
     })
     return () => {
       // https://github.com/software-mansion/react-native-reanimated/issues/6677
       rAF_FIXED(() => {
-        openProgress.set(() =>
-          isAnimated ? withClampedSpring(0, SLOW_SPRING) : 0,
-        )
+        openProgress.set(isAnimated ? withClampedSpring(0, SLOW_SPRING) : 0)
       })
     }
   }, [nextLightbox, openProgress, thumbRects])
 
   const onFullyClosed = useCallback(() => {
     setActiveLightbox(null)
-    runOnUI(() => {
+    scheduleOnUI(() => {
       'worklet'
       thumbRects.set({})
-    })()
+    })
     requestIdleCallback(() => {
       void Image.clearMemoryCache()
     })
@@ -146,7 +147,7 @@ export default function ImageViewRoot({
     () => openProgress.get() === 0,
     (isGone, wasGone) => {
       if (isGone && !wasGone) {
-        runOnJS(onFullyClosed)()
+        scheduleOnRN(onFullyClosed)
       }
     },
   )
@@ -157,10 +158,10 @@ export default function ImageViewRoot({
     () => openProgress.get() === 1,
     (isOpen, wasOpen) => {
       if (isOpen && !wasOpen) {
-        runOnJS(ScreenOrientation.unlockAsync)()
+        scheduleOnRN(ScreenOrientation.unlockAsync)
       } else if (!isOpen && wasOpen) {
         // default is PORTRAIT_UP - set via config plugin in app.config.js -sfn
-        runOnJS(ScreenOrientation.lockAsync)(PORTRAIT_UP)
+        scheduleOnRN(ScreenOrientation.lockAsync, PORTRAIT_UP)
       }
     },
   )
@@ -168,7 +169,7 @@ export default function ImageViewRoot({
   const onFlyAway = useCallback(() => {
     'worklet'
     openProgress.set(0)
-    runOnJS(onRequestClose)()
+    scheduleOnRN(onRequestClose)
   }, [onRequestClose, openProgress])
 
   return (
@@ -192,6 +193,8 @@ export default function ImageViewRoot({
           <ImageView
             key={activeLightbox.id + '-' + orientation}
             lightbox={activeLightbox}
+            imageIndex={imageIndex}
+            setImageIndex={setImageIndex}
             orientation={orientation}
             onRequestClose={onRequestClose}
             onPressSave={onPressSave}
@@ -209,6 +212,8 @@ export default function ImageViewRoot({
 
 function ImageView({
   lightbox,
+  imageIndex,
+  setImageIndex,
   orientation,
   onRequestClose,
   onPressSave,
@@ -219,6 +224,8 @@ function ImageView({
   thumbRects,
 }: {
   lightbox: Lightbox
+  imageIndex: number
+  setImageIndex: React.Dispatch<React.SetStateAction<number>>
   orientation: 'portrait' | 'landscape'
   onRequestClose: () => void
   onPressSave: (uri: string) => void
@@ -228,11 +235,14 @@ function ImageView({
   openProgress: SharedValue<number>
   thumbRects: SharedValue<Record<number, MeasuredDimensions | null>>
 }) {
-  const {images, index: initialImageIndex} = lightbox
+  const {images, metricsContext} = lightbox
+  // Capture at mount: after a rotation remount this is the preserved
+  // current index, so the pager re-opens on the same image.
+  const [initialImageIndex] = useState(imageIndex)
+  const ax = useAnalytics()
   const isAnimated = useMemo(() => canAnimate(lightbox), [lightbox])
   const [isScaled, setIsScaled] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
-  const [imageIndex, setImageIndex] = useState(initialImageIndex)
   const [showControls, setShowControls] = useState(true)
   const [isAltExpanded, setIsAltExpanded] = useState(false)
   const dismissSwipeTranslateY = useSharedValue(0)
@@ -308,7 +318,7 @@ function ImageView({
   const handleRequestClose = useCallback(() => {
     const activeRef = images[imageIndex]?.thumbRef
     if (isAnimated && activeRef) {
-      runOnUI(() => {
+      scheduleOnUI(() => {
         'worklet'
         const rect = measure(activeRef)
         thumbRects.modify(rects => {
@@ -316,8 +326,8 @@ function ImageView({
           rects[imageIndex] = rect
           return rects
         })
-        runOnJS(onRequestClose)()
-      })()
+        scheduleOnRN(onRequestClose)
+      })
     } else {
       onRequestClose()
     }
@@ -376,11 +386,25 @@ function ImageView({
       <PagerView
         scrollEnabled={!isScaled}
         initialPage={initialImageIndex}
-        onPageSelected={e => {
-          setImageIndex(e.nativeEvent.position)
+        onPageSelected={(e: PagerViewOnPageSelectedEvent) => {
+          const next = e.nativeEvent.position
+          setImageIndex(prev => {
+            if (metricsContext && prev !== next) {
+              ax.metric('post:photoEmbed:lightboxSwipe', {
+                layout: metricsContext.layout,
+                fromImage: prev + 1,
+                toImage: next + 1,
+                totalImages: images.length,
+                postUri: metricsContext.postUri,
+                postAuthorDid: metricsContext.postAuthorDid,
+                feedDescriptor: metricsContext.feedDescriptor,
+              })
+            }
+            return next
+          })
           setIsScaled(false)
         }}
-        onPageScrollStateChanged={e => {
+        onPageScrollStateChanged={(e: PageScrollStateChangedNativeEvent) => {
           setIsDragging(e.nativeEvent.pageScrollState !== 'idle')
         }}
         overdrag={true}
@@ -504,7 +528,7 @@ function LightboxImage({
     const dismissTranslateY =
       isActive && openProgressValue === 1 ? dismissSwipeTranslateY.get() : 0
 
-    if (openProgressValue === 0 && isFlyingAway.get()) {
+    if (openProgressValue === 0) {
       return {
         isHidden: true,
         isResting: false,
@@ -542,19 +566,19 @@ function LightboxImage({
     }
   })
 
-  const dismissSwipePan = Gesture.Pan()
-    .enabled(isActive && !isScaled)
-    .activeOffsetY([-10, 10])
-    .failOffsetX([-10, 10])
-    .maxPointers(1)
-    .onUpdate(e => {
+  const dismissSwipePan = usePanGesture({
+    enabled: isActive && !isScaled && !isScrollViewBeingDragged,
+    activeOffsetY: [-10, 10],
+    failOffsetX: [-10, 10],
+    maxPointers: 1,
+    onUpdate: e => {
       'worklet'
       if (openProgress.get() !== 1 || isFlyingAway.get()) {
         return
       }
       dismissSwipeTranslateY.set(e.translationY)
-    })
-    .onEnd(e => {
+    },
+    onDeactivate: e => {
       'worklet'
       if (openProgress.get() !== 1 || isFlyingAway.get()) {
         return
@@ -566,26 +590,26 @@ function LightboxImage({
           // This is a bug in Reanimated, but for now we'll work around it like this.
           dismissSwipeTranslateY.set(1)
         }
-        dismissSwipeTranslateY.set(() => {
-          'worklet'
-          return withDecay({
+        dismissSwipeTranslateY.set(
+          withDecay({
             velocity: e.velocityY,
             velocityFactor: Math.max(3500 / Math.abs(e.velocityY), 1), // Speed up if it's too slow.
             deceleration: 1, // Danger! This relies on the reaction below stopping it.
             reduceMotion: ReduceMotion.Never, // If this animation doesn't run, the image gets stuck - therefore override Reduce Motion
-          })
-        })
+          }),
+        )
       } else {
-        dismissSwipeTranslateY.set(() => {
-          'worklet'
-          return withSpring(0, {
+        dismissSwipeTranslateY.set(
+          withSpring(0, {
             stiffness: 700,
             damping: 50,
+            mass: 1,
             reduceMotion: ReduceMotion.Never,
-          })
-        })
+          }),
+        )
       }
-    })
+    },
+  })
 
   return (
     <ImageItem

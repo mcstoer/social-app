@@ -1,21 +1,17 @@
 import {useState} from 'react'
 import {View} from 'react-native'
-import {
-  ChatBskyGroupApproveJoinRequest,
-  type ChatBskyGroupListJoinRequests,
-  ChatBskyGroupRejectJoinRequest,
-} from '@atproto/api'
 import {Plural, Trans, useLingui} from '@lingui/react/macro'
 import {useNavigation} from '@react-navigation/native'
 import {type InfiniteData, useQueryClient} from '@tanstack/react-query'
 
 import {useBottomBarOffset} from '#/lib/hooks/useBottomBarOffset'
-import {isNetworkError} from '#/lib/hooks/useCleanError'
+import {isNetworkError} from '#/lib/network-error'
 import {
   type CommonNavigatorParams,
   type NativeStackScreenProps,
   type NavigationProp,
 } from '#/lib/routes/types'
+import {matchXrpcError} from '#/lib/xrpc-error'
 import {logger} from '#/logger'
 import {ConvoProvider, useConvo} from '#/state/messages/convo'
 import {ConvoStatus} from '#/state/messages/convo/types'
@@ -42,6 +38,8 @@ import {Loader} from '#/components/Loader'
 import * as ProfileCard from '#/components/ProfileCard'
 import * as Toast from '#/components/Toast'
 import {Text} from '#/components/Typography'
+import {useAnalytics} from '#/analytics'
+import {chat} from '#/lexicons'
 import type * as bsky from '#/types/bsky'
 import {InviteLinkDialog} from './components/InviteLinkDialog'
 
@@ -87,7 +85,6 @@ function JoinRequestsInner() {
           title={l`Something went wrong`}
           message={l`We couldn’t load this conversation’s join requests`}
           onRetry={() => convoState.error.retry()}
-          sideBorders={false}
         />
       </>
     )
@@ -130,6 +127,7 @@ function JoinRequestsList({
 }) {
   const t = useTheme()
   const {t: l} = useLingui()
+  const ax = useAnalytics()
   const moderationOpts = useModerationOpts()
   const bottomBarOffset = useBottomBarOffset()
   const {currentAccount} = useSession()
@@ -137,10 +135,12 @@ function JoinRequestsList({
   const queryClient = useQueryClient()
   const inviteLinkControl = Dialog.useDialogControl()
 
+  const convoId = convo.view.id
+
   const getRemainingRequestCount = () => {
     const data = queryClient.getQueryData<
-      InfiniteData<ChatBskyGroupListJoinRequests.OutputSchema>
-    >(createListJoinRequestsQueryKey({convoId: convo.view.id}))
+      InfiniteData<chat.bsky.group.listJoinRequests.$OutputBody>
+    >(createListJoinRequestsQueryKey({convoId}))
     return data?.pages.reduce((sum, page) => sum + page.requests.length, 0) ?? 0
   }
 
@@ -173,12 +173,13 @@ function JoinRequestsList({
     ) ?? 0
 
   const {mutate: approveJoinRequest, isPending: isApprovePending} =
-    useJoinRequestMutation('approve', convo.view.id, {
+    useJoinRequestMutation('approve', convoId, {
       onSuccess: () => {
+        ax.metric('groupchat:owner:joinRequest:accept', {convoId})
         Toast.show(l`Request approved.`)
         if (getRemainingRequestCount() < 1) {
           navigation.replace('MessagesConversationSettings', {
-            conversation: convo.view.id,
+            conversation: convoId,
           })
         }
       },
@@ -186,46 +187,47 @@ function JoinRequestsList({
         let errorMessage = l`Failed to accept join request`
         if (isNetworkError(error)) {
           errorMessage = l`A network error occurred. Please check your internet connection.`
-        } else if (
-          error instanceof ChatBskyGroupApproveJoinRequest.InvalidConvoError
-        ) {
-          errorMessage = l`Conversation not found.`
-        } else if (
-          error instanceof ChatBskyGroupApproveJoinRequest.InsufficientRoleError
-        ) {
-          errorMessage = l`Only admins can accept join requests.`
-        } else if (
-          error instanceof
-          ChatBskyGroupApproveJoinRequest.MemberLimitReachedError
-        ) {
-          errorMessage = l`The member limit has been reached.`
+        } else {
+          switch (matchXrpcError(error, chat.bsky.group.approveJoinRequest)) {
+            case 'InvalidConvo':
+              errorMessage = l`Conversation not found.`
+              break
+            case 'InsufficientRole':
+              errorMessage = l`Only admins can accept join requests.`
+              break
+            case 'MemberLimitReached':
+              errorMessage = l`The member limit has been reached.`
+              break
+          }
         }
         Toast.show(errorMessage, {type: 'error'})
       },
     })
 
   const {mutate: rejectJoinRequest, isPending: isRejectPending} =
-    useJoinRequestMutation('reject', convo.view.id, {
+    useJoinRequestMutation('reject', convoId, {
       onSuccess: () => {
-        Toast.show(l`Request ignored.`)
+        ax.metric('groupchat:owner:joinRequest:reject', {convoId})
+        Toast.show(l`Request rejected.`)
         if (getRemainingRequestCount() < 1) {
           navigation.replace('MessagesConversationSettings', {
-            conversation: convo.view.id,
+            conversation: convoId,
           })
         }
       },
       onError: error => {
-        let errorMessage = l`Failed to ignore join request`
+        let errorMessage = l`Failed to reject join request`
         if (isNetworkError(error)) {
           errorMessage = l`A network error occurred. Please check your internet connection.`
-        } else if (
-          error instanceof ChatBskyGroupRejectJoinRequest.InvalidConvoError
-        ) {
-          errorMessage = l`Conversation not found.`
-        } else if (
-          error instanceof ChatBskyGroupRejectJoinRequest.InsufficientRoleError
-        ) {
-          errorMessage = l`Only admins can ignore join requests.`
+        } else {
+          switch (matchXrpcError(error, chat.bsky.group.rejectJoinRequest)) {
+            case 'InvalidConvo':
+              errorMessage = l`Conversation not found.`
+              break
+            case 'InsufficientRole':
+              errorMessage = l`Only admins can reject join requests.`
+              break
+          }
         }
         Toast.show(errorMessage, {type: 'error'})
       },
@@ -377,7 +379,7 @@ function JoinRequestsList({
               style={[a.flex_1, a.align_center, a.justify_center, a.py_4xl]}>
               <Loader size="xl" />
             </View>
-          ) : null
+          ) : undefined
         }
         contentContainerStyle={
           showFooter ? {paddingBottom: footerHeight} : undefined
@@ -475,14 +477,14 @@ function RejectButton({
 
   return (
     <Button
-      label={l`Ignore join request`}
+      label={l`Reject join request`}
       size="small"
       color="secondary"
       disabled={disabled}
       onPress={onPress}>
       <ButtonText>
-        <Trans comment="Ignore a request to join a chat" context="button">
-          Ignore
+        <Trans comment="Reject a request to join a chat" context="button">
+          Reject
         </Trans>
       </ButtonText>
     </Button>

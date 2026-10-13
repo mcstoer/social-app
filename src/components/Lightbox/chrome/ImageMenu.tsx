@@ -2,15 +2,15 @@ import {useRef, useState} from 'react'
 import {Modal, Pressable, StyleSheet, View} from 'react-native'
 import Animated, {
   interpolate,
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
   withTiming,
 } from 'react-native-reanimated'
+import {scheduleOnRN} from 'react-native-worklets'
 import {useLingui} from '@lingui/react/macro'
 
-import {android, atoms as a, ios} from '#/alf'
+import {atoms as a} from '#/alf'
 import {ArrowShareRight_Stroke2_Corner2_Rounded as ShareIcon} from '#/components/icons/ArrowShareRight'
 import {type Props as IconProps} from '#/components/icons/common'
 import {DotGrid3x1_Stroke2_Corner0_Rounded as DotsIcon} from '#/components/icons/DotGrid'
@@ -25,7 +25,6 @@ type Props = {
 
 type Anchor = {x: number; y: number; width: number; height: number}
 
-const MENU_WIDTH = 160
 const GAP = 6
 const CARD_BG = '#000000'
 const CARD_BORDER = '#232e3e'
@@ -36,7 +35,7 @@ const TIMING_OUT = {duration: 150}
 
 export function ImageMenu({onPressShare, onPressSave}: Props) {
   const {t: l} = useLingui()
-  const triggerRef = useRef<View>(null)
+  const triggerRef = useRef<React.ComponentRef<typeof View>>(null)
   const [isMounted, setIsMounted] = useState(false)
   const [anchor, setAnchor] = useState<Anchor | null>(null)
   const progress = useSharedValue(0)
@@ -53,7 +52,7 @@ export function ImageMenu({onPressShare, onPressSave}: Props) {
     progress.set(
       withTiming(0, TIMING_OUT, finished => {
         if (finished) {
-          runOnJS(setIsMounted)(false)
+          scheduleOnRN(setIsMounted, false)
         }
       }),
     )
@@ -79,6 +78,7 @@ export function ImageMenu({onPressShare, onPressSave}: Props) {
         visible={isMounted}
         animationType="none"
         onRequestClose={close}
+        supportedOrientations={['portrait', 'landscape']}
         statusBarTranslucent>
         <Pressable
           accessibilityRole="button"
@@ -124,9 +124,8 @@ function MenuCard({
     <Animated.View
       style={[
         a.absolute,
+        a.self_start,
         styles.card,
-        android({alignSelf: 'flex-start'}),
-        ios({width: MENU_WIDTH}),
         {
           top: anchor.y + anchor.height + GAP,
           left: anchor.x,
@@ -186,7 +185,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.08)',
   },
   itemText: {
-    flex: 1,
     fontSize: 15,
     fontWeight: '500',
     lineHeight: 19.5,

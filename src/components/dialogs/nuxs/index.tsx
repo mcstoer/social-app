@@ -6,7 +6,6 @@ import {
   useMemo,
   useState,
 } from 'react'
-import {type AppBskyActorDefs} from '@atproto/api'
 
 import {logger} from '#/logger'
 import {STALE} from '#/state/queries'
@@ -19,13 +18,18 @@ import {useProfileQuery} from '#/state/queries/profile'
 import {type SessionAccount, useSession} from '#/state/session'
 import {useOnboardingState} from '#/state/shell'
 import {
-  DraftsAnnouncement,
-  enabled as isDraftsAnnouncementEnabled,
-} from '#/components/dialogs/nuxs/DraftsAnnouncement'
+  enabled as isGroupChatsAnnouncementEnabled,
+  GroupChatsAnnouncement,
+} from '#/components/dialogs/nuxs/GroupChatsAnnouncement'
+import {
+  enabled as isInviteFriendsAnnouncementEnabled,
+  InviteFriendsAnnouncement,
+} from '#/components/dialogs/nuxs/InviteFriendsAnnouncement'
 import {isSnoozed, snooze, unsnooze} from '#/components/dialogs/nuxs/snoozing'
 import {type EnabledCheckProps} from '#/components/dialogs/nuxs/utils'
 import {useAnalytics} from '#/analytics'
 import {useGeolocation} from '#/geolocation'
+import {type app} from '#/lexicons'
 
 type Context = {
   activeNux: Nux | undefined
@@ -37,8 +41,12 @@ const queuedNuxs: {
   enabled?: (props: EnabledCheckProps) => boolean
 }[] = [
   {
-    id: Nux.DraftsAnnouncement,
-    enabled: isDraftsAnnouncementEnabled,
+    id: Nux.GroupChatsAnnouncement,
+    enabled: isGroupChatsAnnouncementEnabled,
+  },
+  {
+    id: Nux.InviteFriendsAnnouncement,
+    enabled: isInviteFriendsAnnouncementEnabled,
   },
 ]
 
@@ -85,7 +93,7 @@ function Inner({
   preferences,
 }: {
   currentAccount: SessionAccount
-  currentProfile: AppBskyActorDefs.ProfileViewDetailed
+  currentProfile: app.bsky.actor.defs.ProfileViewDetailed
   preferences: UsePreferencesQueryResponse
 }) {
   const ax = useAnalytics()
@@ -108,14 +116,15 @@ function Inner({
     setActiveNux(undefined)
   }, [activeNux, setActiveNux])
 
-  if (__DEV__ && typeof window !== 'undefined') {
-    // @ts-ignore
+  useEffect(() => {
+    if (!__DEV__ || typeof window === 'undefined') return
+    // @ts-expect-error debug only
     window.clearNuxDialog = (id: Nux) => {
-      if (!__DEV__ || !id) return
+      if (!id) return
       resetNuxs([id])
       unsnooze()
     }
-  }
+  }, [resetNuxs])
 
   useEffect(() => {
     if (snoozed) return // comment this out to test
@@ -186,7 +195,13 @@ function Inner({
   return (
     <Context.Provider value={ctx}>
       {/*For example, activeNux === Nux.NeueTypography && <NeueTypography />*/}
-      {activeNux === Nux.DraftsAnnouncement && <DraftsAnnouncement />}
+      {activeNux === Nux.GroupChatsAnnouncement && <GroupChatsAnnouncement />}
+      {/*
+        Mounted unconditionally: it gates the announcement on `activeNux`
+        internally, so it can keep the invite-friends dialog mounted across
+        the announcement's dismissal during the "Try it" handoff.
+      */}
+      <InviteFriendsAnnouncement />
     </Context.Provider>
   )
 }

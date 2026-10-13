@@ -1,18 +1,23 @@
-import {type ChatBskyGroupWithdrawJoinRequest} from '@atproto/api'
-import {useMutation} from '@tanstack/react-query'
+import {useMutation, useQueryClient} from '@tanstack/react-query'
 
-import {DM_SERVICE_HEADERS} from '#/lib/constants'
 import {logger} from '#/logger'
-import {useAgent, useSession} from '#/state/session'
+import {useChatClient, useSession} from '#/state/session'
+import {chat} from '#/lexicons'
+import {
+  type ConvoRequestListQueryData,
+  optimisticDeleteJoinRequest,
+  RQKEY_ROOT as REQUESTS_RQKEY_ROOT,
+} from './list-conversation-requests'
 
 export function useWithdrawJoinGroupChatRequest({
   onSuccess,
   onError,
 }: {
-  onSuccess?: (data: ChatBskyGroupWithdrawJoinRequest.OutputSchema) => void
+  onSuccess?: (data: chat.bsky.group.withdrawJoinRequest.$OutputBody) => void
   onError?: (error: Error) => void
 } = {}) {
-  const agent = useAgent()
+  const client = useChatClient()
+  const queryClient = useQueryClient()
   const {hasSession} = useSession()
 
   return useMutation({
@@ -21,13 +26,13 @@ export function useWithdrawJoinGroupChatRequest({
         throw new Error('Must be logged in to withdraw a join request')
       if (!convoId) throw new Error('No convoId provided')
 
-      const res = await agent.chat.bsky.group.withdrawJoinRequest(
-        {convoId},
-        {headers: DM_SERVICE_HEADERS},
-      )
-      return res.data
+      return await client.call(chat.bsky.group.withdrawJoinRequest, {convoId})
     },
-    onSuccess: data => {
+    onSuccess: (data, {convoId}) => {
+      queryClient.setQueriesData<ConvoRequestListQueryData>(
+        {queryKey: [REQUESTS_RQKEY_ROOT]},
+        old => optimisticDeleteJoinRequest(convoId, old),
+      )
       onSuccess?.(data)
     },
     onError: error => {

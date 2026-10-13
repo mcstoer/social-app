@@ -1,24 +1,30 @@
 import {View} from 'react-native'
-import {type AppBskyActorDefs, type ModerationDecision} from '@atproto/api'
+import {type ModerationDecision} from '@bsky/sdk/moderation'
 
 import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
+import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {type Shadow} from '#/state/cache/types'
-import {atoms as a, useBreakpoints, useTheme} from '#/alf'
+import {atoms as a, platform, useBreakpoints, useTheme} from '#/alf'
+import {ProfileBadges} from '#/components/ProfileBadges'
 import {Text} from '#/components/Typography'
+import {VerusIDVerificationCheckButton} from '#/components/verification/verusid/VerusIDVerificationCheckButton'
+import {type app} from '#/lexicons'
 
 export function ProfileHeaderDisplayName({
   profile,
   moderation,
+  linkedVerusID,
 }: {
-  profile: Shadow<AppBskyActorDefs.ProfileViewDetailed>
+  profile: Shadow<app.bsky.actor.defs.ProfileViewDetailed>
   moderation: ModerationDecision
+  linkedVerusID?: VerusIdLink | null
 }) {
   const t = useTheme()
   const {gtMobile} = useBreakpoints()
 
   return (
-    <View pointerEvents="none">
+    <View>
       <Text
         emoji
         testID="profileHeaderDisplayName"
@@ -27,11 +33,26 @@ export function ProfileHeaderDisplayName({
           gtMobile ? a.text_4xl : a.text_3xl,
           a.self_start,
           a.font_bold,
+          a.leading_tight,
         ]}>
         {sanitizeDisplayName(
           profile.displayName || sanitizeHandle(profile.handle),
           moderation.ui('displayName'),
         )}
+        <View style={[a.pl_xs, {marginTop: platform({ios: 2})}]}>
+          <ProfileBadges profile={profile} size="lg" interactive />
+          {linkedVerusID && (
+            <VerusIDVerificationCheckButton
+              verusIdLink={linkedVerusID}
+              size="lg"
+            />
+          )}
+        </View>
+        {/*
+         * TODO: Workaround for a rounding bug in Android RN.
+         * Fixed upstream in RN main (facebook/react-native#56651); remove this
+         *  once we are on a release that contains it (0.86.0 should be good).
+         */}{' '}
       </Text>
     </View>
   )

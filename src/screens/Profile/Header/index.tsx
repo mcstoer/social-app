@@ -1,19 +1,14 @@
 import {memo, useMemo, useState} from 'react'
 import {type LayoutChangeEvent, StyleSheet, View} from 'react-native'
 import Animated, {
-  runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated'
 import {useSafeAreaInsets} from 'react-native-safe-area-context'
-import {
-  type AppBskyActorDefs,
-  type AppBskyLabelerDefs,
-  moderateProfile,
-  type ModerationOpts,
-  type RichText as RichTextAPI,
-} from '@atproto/api'
+import {scheduleOnRN} from 'react-native-worklets'
+import {moderateProfile, type ModerationOpts} from '@bsky/sdk/moderation'
+import {type RichText as RichTextAPI} from '@bsky/sdk/richtext'
 import {useIsFocused} from '@react-navigation/native'
 
 import {sanitizeHandle} from '#/lib/strings/handles'
@@ -27,6 +22,7 @@ import {atoms as a, useTheme} from '#/alf'
 import {Header} from '#/components/Layout'
 import * as ProfileCard from '#/components/ProfileCard'
 import {IS_NATIVE} from '#/env'
+import {type app} from '#/lexicons'
 import {
   HeaderLabelerButtons,
   ProfileHeaderLabeler,
@@ -61,8 +57,8 @@ ProfileHeaderLoading = memo(ProfileHeaderLoading)
 export {ProfileHeaderLoading}
 
 interface Props {
-  profile: AppBskyActorDefs.ProfileViewDetailed
-  labeler: AppBskyLabelerDefs.LabelerViewDetailed | undefined
+  profile: app.bsky.actor.defs.ProfileViewDetailed
+  labeler: app.bsky.labeler.defs.LabelerViewDetailed | undefined
   linkedVerusID: VerusIdLink | undefined | null
   descriptionRT: RichTextAPI | null
   moderationOpts: ModerationOpts
@@ -107,8 +103,8 @@ const MinimalHeader = memo(function MinimalHeader({
   hideBackButton = false,
 }: {
   onLayout: (e: LayoutChangeEvent) => void
-  profile: AppBskyActorDefs.ProfileViewDetailed
-  labeler?: AppBskyLabelerDefs.LabelerViewDetailed
+  profile: app.bsky.actor.defs.ProfileViewDetailed
+  labeler?: app.bsky.labeler.defs.LabelerViewDetailed
   hideBackButton?: boolean
 }) {
   const t = useTheme()
@@ -153,7 +149,7 @@ const MinimalHeader = memo(function MinimalHeader({
     () => scrollY.get() > 100,
     (value, prev) => {
       if (prev !== value) {
-        runOnJS(setVisible)(value)
+        scheduleOnRN(setVisible, value)
       }
     },
   )
