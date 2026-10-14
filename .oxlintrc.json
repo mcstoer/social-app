@@ -391,10 +391,21 @@
       "files": [
         "bskylink/**/*.{js,jsx,ts,tsx}",
         "bskyogcard/**/*.{js,jsx,ts,tsx}",
-        "dev-env/**/*.{js,jsx,ts,tsx}"
+        "dev-env/**/*.{js,jsx,ts,tsx}",
+        "vskysigningserver/**/*.{js,jsx,ts,tsx}"
       ],
       "rules": {
         "import/no-nodejs-modules": "off"
+      }
+    },
+    {
+      "files": [
+        "src/platform/polyfills.ts",
+        "src/platform/polyfills.web.ts"
+      ],
+      "rules": {
+        "import/no-nodejs-modules": "off",
+        "typescript/no-unsafe-member-access": "off"
       }
     },
     {

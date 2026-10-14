@@ -30,7 +30,33 @@ let config = getSentryExpoConfig(import.meta.dirname, {
       config.cacheVersion += ':PROFILE'
     }
 
+    // Add the Node modules needed by the Verus libraries.
+    const nodeModuleAliases: Record<string, string> = {
+      crypto: 'crypto-browserify',
+      stream: 'stream-browserify',
+      vm: 'vm-browserify',
+    }
+
     const resolver: CustomResolver = (context, moduleName, platform) => {
+      if (moduleName in nodeModuleAliases) {
+        return context.resolveRequest(
+          context,
+          nodeModuleAliases[moduleName],
+          platform,
+        )
+      }
+      /*
+       * Use the browser build of axios instead of the Node build, since the
+       * Node build needs several Node libraries (url, http2), whereas React
+       * Native supports the browser build's requirements.
+       */
+      if (moduleName === 'axios') {
+        return context.resolveRequest(
+          context,
+          'axios/dist/browser/axios.cjs',
+          platform,
+        )
+      }
       if (
         platform === 'web' &&
         /^react-native-gesture-handler(\/|$)/.test(moduleName)
@@ -74,6 +100,20 @@ let config = getSentryExpoConfig(import.meta.dirname, {
           inlineRequires: true as false, // ??? typescript why?
         },
       })
+
+    // These crypto classes used in @bitgo/utxo-lib can't be renamed by the minifier.
+    const {minifierConfig} = config.transformer
+    // @ts-expect-error readonly property
+    config.transformer.minifierConfig = {
+      ...minifierConfig,
+      mangle: {
+        ...(minifierConfig.mangle as Record<string, unknown> | undefined),
+        reserved: [
+          'BigInteger', // Needed for ParseCompact
+          'Point', // Needed for recoverFromSignature
+        ],
+      },
+    }
 
     return config as unknown as Record<string, unknown>
   },
