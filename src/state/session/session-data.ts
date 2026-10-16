@@ -32,18 +32,23 @@ export function isSignupQueued(accessJwt: string | undefined) {
  *
  * `pdsUrl` comes from the DID document or a pre-refresh stored value. It does
  * not fall back to the login service.
+ *
+ * `storedAccount` is used to keep the VerusSky fields, since the session data
+ * doesn't have them.
  */
 export function sessionDataToSessionAccount(
   session: SessionData | null | undefined,
   service: string,
-  storedPdsUrl?: string,
+  storedPdsUrl: string | undefined,
+  storedAccount: SessionAccount | undefined,
 ): SessionAccount | undefined {
   if (!session) {
     return undefined
   }
   const normalizedService = new URL(service).toString()
   const pdsUrl = extractPdsEndpoint(session.didDoc) ?? storedPdsUrl
-  return {
+  const account = {
+    type: 'bsky',
     service: normalizedService,
     did: session.did,
     handle: session.handle,
@@ -57,6 +62,17 @@ export function sessionDataToSessionAccount(
     status: session.status,
     pdsUrl: pdsUrl ? new URL(pdsUrl).toString() : undefined,
     isSelfHosted: !normalizedService.startsWith(BSKY_SERVICE),
+  } satisfies SessionAccount
+  if (storedAccount?.type !== 'vsky') {
+    return account
+  }
+  return {
+    ...account,
+    type: storedAccount.type,
+    auth: storedAccount.auth,
+    id: storedAccount.id,
+    name: storedAccount.name,
+    encryption: storedAccount.encryption,
   }
 }
 

@@ -181,12 +181,16 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
        * refresh would persist `pdsUrl: undefined` and the next cold start would
        * route pre-refresh requests to the entryway instead of the PDS.
        */
+      const storedAccount = store
+        .getState()
+        .accounts.find(a => a.did === accountDid)
       const refreshedAccount =
         sessionEvent === 'update' && sessionData
           ? sessionDataToSessionAccount(
               sessionData,
               sessionData.service,
-              store.getState().accounts.find(a => a.did === accountDid)?.pdsUrl,
+              storedAccount?.pdsUrl,
+              storedAccount,
             )
           : undefined
 
@@ -530,7 +534,16 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
      * The session's `onUpdated` hook dispatches the new tokens into the store,
      * but that lands a render away; this snapshot exposes them immediately.
      */
-    return sessionDataToSessionAccount(after, after.service)
+    const current = store.getState()
+    const storedAccount = current.accounts.find(
+      a => a.did === current.currentBundleState.did,
+    )
+    return sessionDataToSessionAccount(
+      after,
+      after.service,
+      undefined,
+      storedAccount,
+    )
   }, [store])
 
   const removeAccount = useCallback<SessionApiContext['removeAccount']>(

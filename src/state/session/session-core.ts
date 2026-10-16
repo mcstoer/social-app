@@ -318,6 +318,7 @@ export async function createSessionBundleAndResume(
       session.session,
       session.session.service,
       storedAccount.pdsUrl,
+      storedAccount,
     ) ?? storedAccount
 
   configureModerationForAccount(bundle, earlyAccount)
@@ -335,6 +336,7 @@ export async function createSessionBundleAndResume(
         session.session,
         session.session.service,
         storedAccount.pdsUrl,
+        storedAccount,
       ) ?? storedAccount,
   )
   hooks.arm()
@@ -430,6 +432,7 @@ export function createSessionBundleFromStoredAccount(
         session.session,
         session.session.service,
         storedAccount.pdsUrl,
+        storedAccount,
       ) ?? storedAccount)
   if (!shouldActivate(bundle, account)) {
     disposeBundle(bundle)
@@ -445,6 +448,8 @@ export function sessionDataToSessionAccountOrThrow(
   const account = sessionDataToSessionAccount(
     session.session,
     session.session.service,
+    undefined,
+    undefined,
   )
   if (!account) {
     throw Error('Expected an active session')

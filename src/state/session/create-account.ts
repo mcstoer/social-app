@@ -155,6 +155,8 @@ function snapshotNewAccount(
   const account = sessionDataToSessionAccount(
     session.session,
     session.session.service,
+    undefined,
+    undefined,
   )
   if (!account) {
     throw Error('Expected an active session')
