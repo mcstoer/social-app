@@ -5,7 +5,7 @@ import {
   toIAddress,
 } from 'verus-typescript-primitives'
 
-import {DEFAULT_CHAIN} from '#/env'
+import {DEFAULT_CHAIN} from '#/env/verussky'
 
 const I_ADDR_VERSION = 102
 

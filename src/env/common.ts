@@ -1,6 +1,5 @@
 import {type DidString} from '@atproto/syntax'
 
-import {processIAddress} from '#/lib/verus/addresses'
 import packageJson from '#/../package.json'
 
 /**
@@ -145,17 +144,3 @@ export const APP_CONFIG_PROD_URL = `https://app-config.workers.bsky.app`
 export const APP_CONFIG_URL = IS_DEV
   ? (APP_CONFIG_DEV_URL ?? APP_CONFIG_PROD_URL)
   : APP_CONFIG_PROD_URL
-
-/**
- * The chain to use for Verus operations.
- */
-export const DEFAULT_CHAIN: string =
-  process.env.EXPO_PUBLIC_DEFAULT_CHAIN || 'VRSCTEST'
-
-/**
- * The iaddress or name of the application's identity.
- */
-export const VERUSSKY_APP_ID = processIAddress(
-  process.env.EXPO_PUBLIC_VERUSSKY_APP_ID,
-  DEFAULT_CHAIN,
-)

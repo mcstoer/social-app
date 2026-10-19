@@ -38,7 +38,8 @@ import {
 import {Loader} from '#/components/Loader'
 import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
-import {DEFAULT_CHAIN, IS_NATIVE, IS_WEB} from '#/env'
+import {IS_NATIVE, IS_WEB} from '#/env'
+import {DEFAULT_CHAIN} from '#/env/verussky'
 
 enum Stages {
   Intro = 'Intro',
