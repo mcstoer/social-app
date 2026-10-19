@@ -34,6 +34,7 @@ export type SessionApiContext = {
       identifier: string
       password: string
       authFactorToken?: string | undefined
+      vskySession?: VskySession
     },
     logContext: Metrics['account:loggedIn']['logContext'],
   ) => Promise<void>

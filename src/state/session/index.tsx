@@ -45,6 +45,7 @@ import {
 import {
   applyVskyEncryptionUpdate,
   clearVskyKeys,
+  createVskySessionBundleAndLogin,
   getVskyEncryption,
 } from './vskySession'
 export type {SessionAccount} from '#/state/session/types'
@@ -317,10 +318,14 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
     async (params, logContext) => {
       addSessionDebugLog({type: 'method:start', method: 'login'})
       const signal = cancelPendingTask()
-      const {bundle, account} = await createSessionBundleAndLogin(
-        params,
-        onSessionChange,
-      )
+      // Log in with a VerusID when the login form passes a VerusSky session.
+      const {vskySession, ...loginParams} = params
+      const {bundle, account} = vskySession
+        ? await createVskySessionBundleAndLogin(
+            {...loginParams, vskySession},
+            onSessionChange,
+          )
+        : await createSessionBundleAndLogin(loginParams, onSessionChange)
 
       if (signal.aborted) {
         // The factory returns an armed bundle, so a superseded login must dispose it.
