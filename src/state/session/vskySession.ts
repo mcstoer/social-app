@@ -1,5 +1,6 @@
 import {SaplingPaymentAddress} from 'verus-typescript-primitives'
 
+import BroadcastChannel from '#/lib/broadcast'
 import {BSKY_SERVICE} from '#/lib/constants'
 import * as persisted from '#/state/persisted'
 import {createSessionBundleAndLogin, type OnSessionChange} from './session-core'
@@ -14,29 +15,66 @@ type VskyAccount = Extract<SessionAccount, {type: 'vsky'}>
 type SavedEncryption = VskyAccount['encryption']
 type VskyKeys = Pick<VskyEncryption, 'encryptionKey' | 'decryptionKey'>
 
+type KeyStrings = Pick<
+  NonNullable<SavedEncryption>,
+  'encryptionKey' | 'decryptionKey'
+>
+
+type KeysMessage =
+  | ({type: 'set'; did: string; id: string; savedAs?: string} & KeyStrings)
+  | {type: 'clear'; did?: string}
+
 type CachedKeys = {
   keys: VskyKeys
-  /** The VerusID these keys belong to. */
-  id: string
   /** The saved key strings these keys match, if they are saved. */
   savedAs?: string
 }
 
 /**
- * Stores the parsed VerusSky keys by DID. This is kept outside the session
- * bundle since the bundle is rebuilt on every sync and account switch.
+ * Stores the parsed VerusSky keys by DID, then by VerusID. This is kept outside
+ * the session bundle since the bundle is rebuilt on every sync and account
+ * switch. Keys from another tab can arrive before their account does, so
+ * keying by VerusID stops the old VerusID's keys from replacing them.
  */
-const keysByDid = new Map<string, CachedKeys>()
+const keysByDid = new Map<string, Map<string, CachedKeys>>()
+
+/**
+ * Shares keys with other web tabs, since unsaved keys never reach storage.
+ * Does nothing on native.
+ */
+const broadcast = new BroadcastChannel('VSKY_KEYS_BROADCAST_CHANNEL')
+broadcast.onmessage = ({data}: MessageEvent<KeysMessage>) => {
+  // Only update this tab, so tabs don't keep sending the message to each other.
+  if (data.type === 'clear') {
+    clearLocalKeys(data.did)
+  } else {
+    setLocalKeys(data.did, data.id, {
+      keys: parseSavedKeys(data),
+      savedAs: data.savedAs,
+    })
+  }
+}
 
 /**
  * Clears the keys for the given DID, or for every account if no DID is given.
  */
 export function clearVskyKeys(did?: string) {
+  clearLocalKeys(did)
+  broadcast.postMessage({type: 'clear', did} satisfies KeysMessage)
+}
+
+function clearLocalKeys(did?: string) {
   if (did) {
     keysByDid.delete(did)
   } else {
     keysByDid.clear()
   }
+}
+
+function setLocalKeys(did: string, id: string, cached: CachedKeys) {
+  const byId = keysByDid.get(did) ?? new Map<string, CachedKeys>()
+  byId.set(id, cached)
+  keysByDid.set(did, byId)
 }
 
 /**
@@ -51,15 +89,10 @@ export function getVskyEncryption(
   }
   const saved = account.encryption
   const savedAs = toSavedAs(saved)
-  let cached = keysByDid.get(account.did)
-  if (cached && cached.id !== account.id) {
-    // Clear the keys if another tab logged in with a different VerusID.
-    keysByDid.delete(account.did)
-    cached = undefined
-  }
+  let cached = keysByDid.get(account.did)?.get(account.id)
   if (savedAs && cached?.savedAs !== savedAs) {
-    cached = {keys: parseSavedKeys(saved), id: account.id, savedAs}
-    keysByDid.set(account.did, cached)
+    cached = {keys: parseSavedKeys(saved), savedAs}
+    setLocalKeys(account.did, account.id, cached)
   }
   if (!saved && !cached) {
     return undefined
@@ -95,11 +128,19 @@ export function applyVskyEncryptionUpdate(
       : {}),
   }
   if (encryptionKey || decryptionKey) {
-    keysByDid.set(account.did, {
+    const savedAs = toSavedAs(encryption)
+    setLocalKeys(account.did, account.id, {
       keys: {encryptionKey, decryptionKey},
-      id: account.id,
-      savedAs: toSavedAs(encryption),
+      savedAs,
     })
+    broadcast.postMessage({
+      type: 'set',
+      did: account.did,
+      id: account.id,
+      encryptionKey: encryptionKey?.toAddressString(),
+      decryptionKey: decryptionKey?.toString('hex'),
+      savedAs,
+    } satisfies KeysMessage)
   }
   return {...account, encryption}
 }
@@ -157,7 +198,7 @@ function toSavedAs(saved: SavedEncryption): string | undefined {
     : undefined
 }
 
-function parseSavedKeys(saved: SavedEncryption): VskyKeys {
+function parseSavedKeys(saved: KeyStrings | undefined): VskyKeys {
   return {
     encryptionKey: saved?.encryptionKey
       ? SaplingPaymentAddress.fromAddressString(saved.encryptionKey)

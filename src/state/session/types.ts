@@ -67,6 +67,8 @@ export type SessionApiContext = {
    * and `SignupQueued` branches synchronously on the fresh `accessJwt`.
    */
   refreshSession: () => Promise<SessionAccount | undefined>
+  /** Updates the current account's VerusSky encryption settings and keys. */
+  updateVskyEncryption: (update: VskyEncryptionUpdate) => void
 }
 
 export type VskySession = {

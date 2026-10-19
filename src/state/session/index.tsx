@@ -42,6 +42,11 @@ import {
   redactSessionData,
   redactState,
 } from './logging'
+import {
+  applyVskyEncryptionUpdate,
+  clearVskyKeys,
+  getVskyEncryption,
+} from './vskySession'
 export type {SessionAccount} from '#/state/session/types'
 
 import {clearPersistedQueryStorage} from '#/lib/persisted-query-storage'
@@ -77,6 +82,7 @@ const ApiContext = createContext<SessionApiContext>({
   removeAccount: () => {},
   partialRefreshSession: async () => {},
   refreshSession: () => Promise.resolve(undefined),
+  updateVskyEncryption: () => {},
 })
 ApiContext.displayName = 'SessionApiContext'
 
@@ -367,6 +373,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
           did: prevState.currentBundleState.did,
         })
         void clearPersistedQueryStorage(prevState.currentBundleState.did)
+        clearVskyKeys(prevState.currentBundleState.did)
       }
       // reset onboarding flow on logout
       onboardingDispatch({type: 'skip'})
@@ -397,6 +404,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       )
       addSessionDebugLog({type: 'method:end', method: 'logout'})
       clearAgeAssuranceServerDataForAll()
+      clearVskyKeys()
       for (const account of prevState.accounts) {
         void clearPersistedQueryStorage(account.did)
       }
@@ -564,8 +572,26 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
         account: redactAccount(account),
       })
       clearAgeAssuranceServerDataForDid({did: account.did})
+      clearVskyKeys(account.did)
     },
     [store, cancelPendingTask],
+  )
+
+  const updateVskyEncryption = useCallback<
+    SessionApiContext['updateVskyEncryption']
+  >(
+    update => {
+      const {accounts, currentBundleState} = store.getState()
+      const account = accounts.find(a => a.did === currentBundleState.did)
+      if (account?.type !== 'vsky') {
+        return
+      }
+      store.dispatch({
+        type: 'updated-account',
+        account: applyVskyEncryptionUpdate(account, update),
+      })
+    },
+    [store],
   )
   useEffect(() => {
     return persisted.onUpdate('session', nextSession => {
@@ -680,6 +706,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       removeAccount,
       partialRefreshSession,
       refreshSession,
+      updateVskyEncryption,
     }),
     [
       createAccount,
@@ -690,6 +717,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       removeAccount,
       partialRefreshSession,
       refreshSession,
+      updateVskyEncryption,
     ],
   )
 
@@ -778,6 +806,26 @@ export function useRequireAuth() {
     },
     [hasSession, signinDialogControl, closeAll],
   )
+}
+
+/**
+ * Runs `fn` if the current account has its encryption keys. Otherwise, opens
+ * the dialog to get the keys and runs `fn` once the user has them.
+ */
+export function useRequireVskyEncryptionKeys() {
+  const {currentAccount} = useSession()
+  const closeAll = useCloseAllActiveElements()
+  const {getVskyEncryptionKeysDialogControl} = useGlobalDialogsControlContext()
+
+  return (fn: () => unknown) => {
+    const encryption = getVskyEncryption(currentAccount)
+    if (encryption?.encryptionKey && encryption.decryptionKey) {
+      fn()
+    } else {
+      closeAll()
+      getVskyEncryptionKeysDialogControl.open({onSuccess: fn})
+    }
+  }
 }
 
 /**
