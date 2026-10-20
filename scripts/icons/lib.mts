@@ -681,7 +681,7 @@ export async function applyIconSet({check, outputRoot, result, sourceRoot}) {
   for (const [relative, contents] of result.svgOutputs) await compareOrWrite(sourceRoot, relative, contents)
   for (const [relative, contents] of result.tsOutputs) await compareOrWrite(outputRoot, relative, contents)
 
-  const existing = await listFiles(outputRoot)
+  const existing = (await listFiles(outputRoot)).map(file => file.split(path.sep).join('/'))
   for (const relative of existing.filter(file => file.endsWith('.tsx') && !result.tsOutputs.has(file))) {
     const target = path.join(outputRoot, relative)
     const contents = await fs.readFile(target, 'utf8')

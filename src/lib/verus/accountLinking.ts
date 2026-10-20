@@ -1,6 +1,6 @@
-import {type AppBskyFeedDefs, AppBskyFeedPost} from '@atproto/api'
 import {type VerusIdInterface} from 'verusid-ts-client'
 
+import {app} from '#/lexicons'
 import * as bsky from '#/types/bsky'
 
 export interface VerusIdLink {
@@ -11,7 +11,7 @@ export interface VerusIdLink {
 }
 
 function findVerusIdLink(
-  posts: AppBskyFeedDefs.PostView[],
+  posts: app.bsky.feed.defs.PostView[],
   linkIdentifier: string,
   handle: string,
 ): VerusIdLink | null {
@@ -25,7 +25,7 @@ function findVerusIdLink(
   )
 
   for (const post of posts) {
-    const record = bsky.validate(post.record, AppBskyFeedPost.validateRecord)
+    const record = bsky.matches(app.bsky.feed.post, post.record)
       ? post.record
       : undefined
 
@@ -67,7 +67,7 @@ async function verifyVerusIdLink(
 }
 
 export async function checkIfLinkedVerusID(
-  posts: AppBskyFeedDefs.PostView[],
+  posts: app.bsky.feed.defs.PostView[],
   linkIdentifier: string,
   verusIdInterface: VerusIdInterface,
   handle?: string,

@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {View} from 'react-native'
-import {RichText} from '@atproto/api'
+import {RichText} from '@bsky/sdk/richtext'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {useMutation, useQueryClient} from '@tanstack/react-query'
 import {nanoid} from 'nanoid/non-secure'
@@ -24,7 +24,12 @@ import {
   createLinkedVerusIDQueryKey,
   useLinkedVerusIDQuery,
 } from '#/state/queries/verus/useLinkedVerusIdQuery'
-import {useAgent, useSession} from '#/state/session'
+import {
+  useAppviewClient,
+  useChatClient,
+  usePdsClient,
+  useSession,
+} from '#/state/session'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -91,7 +96,9 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
   const {verusIdInterface} = useVerusService()
   const control = Dialog.useDialogContext()
   const {mutateAsync: deletePost} = usePostDeleteMutation()
-  const agent = useAgent()
+  const appviewClient = useAppviewClient()
+  const chatClient = useChatClient()
+  const pdsClient = usePdsClient()
   const queryClient = useQueryClient()
 
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
@@ -139,7 +146,7 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
       const richtext = new RichText({text: accountLink})
 
       // Create the linking post similar to the Composer.
-      const postResult = await apilib.post(agent, queryClient, {
+      const postResult = await apilib.post(queryClient, {
         thread: {
           posts: [
             {
@@ -156,6 +163,9 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
           }),
           threadgate: [{type: 'nobody'}],
         },
+        appviewClient,
+        chatClient,
+        pdsClient,
       })
 
       // Optimistically set the linked VerusID query data to the new link.

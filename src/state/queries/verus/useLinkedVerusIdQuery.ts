@@ -1,7 +1,7 @@
 import {useCallback, useMemo} from 'react'
+import {type DidString} from '@atproto/syntax'
 import {useQuery, useQueryClient} from '@tanstack/react-query'
 
-import {augmentSearchQuery} from '#/lib/strings/helpers'
 import {
   checkIfLinkedVerusID,
   type VerusIdLink,
@@ -10,19 +10,21 @@ import {useVerusService} from '#/state/preferences'
 import {GCTIME, STALE} from '#/state/queries'
 import {useProfileQuery} from '#/state/queries/profile'
 import {useResolveDidQuery} from '#/state/queries/resolve-uri'
-import {useSearchPostsQuery} from '#/state/queries/search-posts'
+import {useSearchPostsV2Query} from '#/state/queries/search-posts-v2'
 import {createQueryKey} from '#/state/queries/util'
-import {useAgent} from '#/state/session'
+import {useAppviewClient} from '#/state/session'
+import {app} from '#/lexicons'
+
 export const createLinkedVerusIDQueryKey = (did: string) =>
   createQueryKey('verusid-linked', {did}, {persistedVersion: 1})
 
 export function useGetLinkedVerusID() {
   const queryClient = useQueryClient()
-  const agent = useAgent()
+  const client = useAppviewClient()
   const {verusIdInterface} = useVerusService()
 
   return useCallback(
-    async (linkIdentifier: string, did: string) => {
+    async (linkIdentifier: string, did: DidString) => {
       const queryKey = createLinkedVerusIDQueryKey(did)
 
       return queryClient.fetchQuery({
@@ -30,24 +32,24 @@ export function useGetLinkedVerusID() {
         staleTime: STALE.MINUTES.FIVE,
         gcTime: GCTIME.INFINITY,
         queryFn: async () => {
-          const profileRes = await agent.getProfile({actor: did})
-          const handle = profileRes.data.handle
+          const profile = await client.call(app.bsky.actor.getProfile, {
+            actor: did,
+          })
+          const handle = profile.handle
 
           if (!handle) {
             return null
           }
 
-          const augmentedQuery = augmentSearchQuery(linkIdentifier, {
-            did,
-          })
-
-          const searchRes = await agent.app.bsky.feed.searchPosts({
-            q: augmentedQuery,
+          const searchRes = await client.call(app.bsky.feed.searchPostsV2, {
+            query: linkIdentifier,
+            authors: [did],
             limit: 25,
-            sort: 'latest',
+            sort: 'recent',
+            allTime: true,
           })
 
-          const posts = searchRes.data.posts ?? []
+          const posts = searchRes.posts
 
           return await checkIfLinkedVerusID(
             posts,
@@ -58,7 +60,7 @@ export function useGetLinkedVerusID() {
         },
       })
     },
-    [agent, queryClient, verusIdInterface],
+    [client, queryClient, verusIdInterface],
   )
 }
 
@@ -70,15 +72,10 @@ export function useLinkedVerusIDQuery(
   const {verusIdInterface} = useVerusService()
   const {data: resolvedDid} = useResolveDidQuery(name)
 
-  const sort = 'latest'
-  const query = linkIdentifier
-  const augmentedQuery = useMemo(() => {
-    return augmentSearchQuery(query || '', {did: resolvedDid})
-  }, [query, resolvedDid])
-
-  const {data: results} = useSearchPostsQuery({
-    query: augmentedQuery,
-    sort,
+  const {data: results} = useSearchPostsV2Query({
+    query: linkIdentifier,
+    sort: 'latest',
+    filters: {author: resolvedDid},
     enabled: (enabled ?? true) && !!resolvedDid,
   })
 
