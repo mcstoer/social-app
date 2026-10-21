@@ -127,9 +127,9 @@ function VerusServiceInner() {
       setVerusServicePreferences(newSettings)
 
       control.close()
-    } catch (e: any) {
+    } catch (e) {
       logger.error(`Failed to update the Verus Service endpoint`, {
-        safeMessage: e.message,
+        safeMessage: e,
       })
       setError(
         _(msg`Failed to update the Verus Service endpoint. Please try again`),

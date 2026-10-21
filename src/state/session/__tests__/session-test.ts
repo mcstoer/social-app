@@ -55,6 +55,8 @@ function makeAccount(
   const account = sessionDataToSessionAccount(
     session as unknown as SessionData,
     service,
+    undefined,
+    undefined,
   )
   if (!account) {
     throw new Error('Expected an account')
@@ -115,6 +117,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -155,6 +158,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -208,6 +212,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -259,6 +264,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "alice-access-jwt-1",
@@ -274,6 +280,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -325,6 +332,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "bob-access-jwt-1",
@@ -340,6 +348,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -389,6 +398,7 @@ describe('session', () => {
             "service": "https://jay.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "alice-access-jwt-2",
@@ -404,6 +414,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "bob-access-jwt-1",
@@ -419,6 +430,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -463,6 +475,7 @@ describe('session', () => {
             "service": "https://jay.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": undefined,
@@ -478,6 +491,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": undefined,
@@ -493,6 +507,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -555,6 +570,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -603,6 +619,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -720,6 +737,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -813,6 +831,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "alice-access-jwt-1",
@@ -828,6 +847,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -902,6 +922,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -955,6 +976,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1008,6 +1030,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1202,6 +1225,7 @@ describe('session', () => {
             "service": "https://bob.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "alice-access-jwt-1",
@@ -1217,6 +1241,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1456,6 +1481,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1520,6 +1546,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1612,6 +1639,7 @@ describe('session', () => {
             "service": "https://jay.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
           {
             "accessJwt": "bob-access-jwt-2",
@@ -1627,6 +1655,7 @@ describe('session', () => {
             "service": "https://alice.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {
@@ -1677,6 +1706,7 @@ describe('session', () => {
             "service": "https://clarence.com/",
             "signupQueued": false,
             "status": undefined,
+            "type": "bsky",
           },
         ],
         "currentBundleState": {

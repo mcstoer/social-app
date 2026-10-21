@@ -5,6 +5,9 @@ import {configure} from '@testing-library/react-native'
 
 configure({asyncUtilTimeout: 20000})
 
+// Name the app's identity, since Jest doesn't load .env and the Verus config needs it.
+process.env.EXPO_PUBLIC_VERUSSKY_APP_ID ??= 'TestApp@'
+
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 )
@@ -109,7 +112,8 @@ jest.mock('sentry-expo', () => ({
   },
 }))
 
-jest.mock('crypto', () => ({}))
+// Use Node's crypto, since the Verus libraries hash with it as soon as they load.
+jest.mock('crypto', () => jest.requireActual('node:crypto'))
 
 jest.mock('expo-application', () => ({
   nativeApplicationVersion: '1.0.0',

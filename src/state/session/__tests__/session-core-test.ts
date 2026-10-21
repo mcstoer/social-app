@@ -137,20 +137,33 @@ function makeSessionData(overrides: Partial<SessionData> = {}): SessionData {
 
 describe('sessionDataToSessionAccount', () => {
   it('returns undefined for a missing session', () => {
-    expect(sessionDataToSessionAccount(undefined, 'https://bsky.social')).toBe(
-      undefined,
-    )
-    expect(sessionDataToSessionAccount(null, 'https://bsky.social')).toBe(
-      undefined,
-    )
+    expect(
+      sessionDataToSessionAccount(
+        undefined,
+        'https://bsky.social',
+        undefined,
+        undefined,
+      ),
+    ).toBe(undefined)
+    expect(
+      sessionDataToSessionAccount(
+        null,
+        'https://bsky.social',
+        undefined,
+        undefined,
+      ),
+    ).toBe(undefined)
   })
 
   it('maps fields for a hosted account (no didDoc)', () => {
     const account = sessionDataToSessionAccount(
       makeSessionData(),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(account).toEqual({
+      type: 'bsky',
       service: 'https://bsky.social/',
       did: DID,
       handle: HANDLE,
@@ -171,6 +184,8 @@ describe('sessionDataToSessionAccount', () => {
     const account = sessionDataToSessionAccount(
       makeSessionData(),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(account.service).toBe('https://bsky.social/')
   })
@@ -179,6 +194,8 @@ describe('sessionDataToSessionAccount', () => {
     const account = sessionDataToSessionAccount(
       makeSessionData({didDoc: synthDidDoc(DID, PDS_URL)}),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(account.pdsUrl).toBe(`${PDS_URL}/`)
   })
@@ -187,6 +204,8 @@ describe('sessionDataToSessionAccount', () => {
     const account = sessionDataToSessionAccount(
       makeSessionData({didDoc: undefined}),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(account.pdsUrl).toBe(undefined)
   })
@@ -196,6 +215,7 @@ describe('sessionDataToSessionAccount', () => {
       makeSessionData({didDoc: {id: DID}}),
       'https://bsky.social',
       PDS_URL,
+      undefined,
     )!
     expect(account.pdsUrl).toBe(`${PDS_URL}/`)
   })
@@ -204,12 +224,16 @@ describe('sessionDataToSessionAccount', () => {
     const hosted = sessionDataToSessionAccount(
       makeSessionData(),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(hosted.isSelfHosted).toBe(false)
 
     const selfHosted = sessionDataToSessionAccount(
       makeSessionData({service: 'https://pds.example.com'}),
       'https://pds.example.com',
+      undefined,
+      undefined,
     )!
     expect(selfHosted.isSelfHosted).toBe(true)
   })
@@ -218,12 +242,16 @@ describe('sessionDataToSessionAccount', () => {
     const queued = sessionDataToSessionAccount(
       makeSessionData({accessJwt: 'queued-access-jwt'}),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(queued.signupQueued).toBe(true)
 
     const notQueued = sessionDataToSessionAccount(
       makeSessionData(),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(notQueued.signupQueued).toBe(false)
   })
@@ -236,6 +264,8 @@ describe('sessionDataToSessionAccount', () => {
         emailAuthFactor: undefined,
       }),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     expect(account.email).toBe(undefined)
     expect(account.emailConfirmed).toBe(false)
@@ -250,8 +280,11 @@ describe('sessionDataToSessionAccount', () => {
     const account = sessionDataToSessionAccount(
       makeSessionData({didDoc: synthDidDoc(DID, PDS_URL)}),
       'https://bsky.social',
+      undefined,
+      undefined,
     )!
     const golden: SessionAccount = {
+      type: 'bsky',
       service: 'https://bsky.social/',
       did: DID,
       handle: HANDLE,
@@ -269,10 +302,40 @@ describe('sessionDataToSessionAccount', () => {
     expect(Object.keys(account)).toEqual(Object.keys(golden))
     expect(JSON.stringify(account)).toBe(JSON.stringify(golden))
   })
+
+  it('keeps the VerusSky fields from the stored account on refresh', () => {
+    const storedAccount: SessionAccount = {
+      type: 'vsky',
+      service: 'https://bsky.social/',
+      did: DID,
+      handle: HANDLE,
+      accessJwt: 'old-access-jwt',
+      refreshJwt: 'old-refresh-jwt',
+      auth: 'auth',
+      id: 'iVerusId',
+      name: 'alice',
+      encryption: {storeEncryptionKeys: true, encryptionKey: 'zs1key'},
+    }
+    const account = sessionDataToSessionAccount(
+      makeSessionData({accessJwt: 'new-access-jwt'}),
+      'https://bsky.social',
+      undefined,
+      storedAccount,
+    )!
+    expect(account).toMatchObject({
+      type: 'vsky',
+      accessJwt: 'new-access-jwt',
+      auth: 'auth',
+      id: 'iVerusId',
+      name: 'alice',
+      encryption: {storeEncryptionKeys: true, encryptionKey: 'zs1key'},
+    })
+  })
 })
 
 describe('sessionAccountToSessionData', () => {
   const baseAccount: SessionAccount = {
+    type: 'bsky',
     service: 'https://bsky.social/',
     did: DID,
     handle: HANDLE,
@@ -327,6 +390,7 @@ describe('sessionAccountToSessionData', () => {
         data,
         account.service,
         account.pdsUrl,
+        undefined,
       )!
       expect(roundTripped).toEqual(account)
       expect(JSON.stringify(roundTripped)).toBe(JSON.stringify(account))
@@ -342,6 +406,8 @@ describe('sessionAccountToSessionData', () => {
     const roundTripped = sessionDataToSessionAccount(
       sessionAccountToSessionData(queued),
       queued.service,
+      undefined,
+      undefined,
     )!
     expect(roundTripped.signupQueued).toBe(true)
     expect(roundTripped).toEqual(queued)
@@ -358,6 +424,7 @@ describe('sessionAccountToSessionData', () => {
       sessionAccountToSessionData(selfHosted),
       selfHosted.service,
       selfHosted.pdsUrl,
+      undefined,
     )!
     expect(roundTripped).toEqual(selfHosted)
   })
@@ -498,7 +565,12 @@ function deriveRefreshedAccount(
   sessionData?: SessionData,
 ): SessionAccount | undefined {
   return event === 'update' && sessionData
-    ? sessionDataToSessionAccount(sessionData, sessionData.service)
+    ? sessionDataToSessionAccount(
+        sessionData,
+        sessionData.service,
+        undefined,
+        undefined,
+      )
     : undefined
 }
 
@@ -523,6 +595,8 @@ describe('session-hook payload threading (pre-commit ordering)', () => {
         liveGetterAtHookTime = sessionDataToSessionAccount(
           session.session,
           session.session.service,
+          undefined,
+          undefined,
         )
         /* Derive fresh data from the delivered payload. */
         refreshedAccountAtHookTime = deriveRefreshedAccount(event, sessionData)
@@ -762,6 +836,8 @@ describe('PasswordSession.refresh through armed hooks', () => {
     const snapshot = sessionDataToSessionAccount(
       session.session,
       session.session.service,
+      undefined,
+      undefined,
     )!
     expect(snapshot.accessJwt).toBe('access-jwt-2')
     expect(snapshot.refreshJwt).toBe('refresh-jwt-2')

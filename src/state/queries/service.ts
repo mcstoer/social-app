@@ -1,8 +1,8 @@
 import {useQuery} from '@tanstack/react-query'
 
-import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {VSKY_SERVICE} from '#/lib/constants'
 import {createServiceClient} from '#/lib/lexClient'
+import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {com} from '#/lexicons'
 
 const RQKEY_ROOT = 'service'

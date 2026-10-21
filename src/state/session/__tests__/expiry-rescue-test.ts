@@ -6,8 +6,11 @@ import {
 } from '../expiry-rescue'
 import {type SessionAccount} from '../types'
 
-function makeAccount(overrides: Partial<SessionAccount> = {}): SessionAccount {
+function makeAccount(
+  overrides: Partial<Extract<SessionAccount, {type: 'bsky'}>> = {},
+): SessionAccount {
   return {
+    type: 'bsky',
     service: 'https://bsky.social',
     did: 'did:plc:example123',
     handle: 'alice.test',

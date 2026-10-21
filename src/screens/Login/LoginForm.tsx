@@ -1,26 +1,47 @@
-import {useRef, useState} from 'react'
-import {Keyboard, type TextInput, View} from 'react-native'
+import {useEffect, useRef, useState} from 'react'
+import {Keyboard, Linking, type TextInput, View} from 'react-native'
 import {LexAuthFactorError} from '@atproto/lex-password-session'
 import {Trans, useLingui} from '@lingui/react/macro'
+import {type GenericRequest} from 'verus-typescript-primitives'
 
-import {DEFAULT_SERVICE, HITSLOP_10, HITSLOP_20} from '#/lib/constants'
+import {
+  BSKY_SERVICE,
+  DEFAULT_SERVICE,
+  HITSLOP_10,
+  HITSLOP_20,
+} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
 import {isBlueskyHostedUrl, toNiceHostingUrl} from '#/lib/strings/url-helpers'
+import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {
+  generateLoginRequestOrdinals,
+  type LoginResponse,
+  processLoginResponse,
+} from '#/lib/verus/requests/login'
 import {logger} from '#/logger'
 import {useSetHasCheckedForStarterPack} from '#/state/preferences/used-starter-packs'
+import {useVerusService} from '#/state/preferences/verus-service'
 import {
   type HostingProviderState,
   useHostingProvider,
 } from '#/state/queries/pds-detection'
+import {useVerusGetIdentity} from '#/state/queries/verus/useVerusGetIdentityQuery'
+import {useVerusIdRequestQuery} from '#/state/queries/verus/useVerusIdRequestQuery'
 import {useSession, useSessionApi} from '#/state/session'
+import {type VskySession} from '#/state/session/types'
 import {useLoggedOutViewControls} from '#/state/shell/logged-out'
+import {
+  type PostLoginStep,
+  usePostLoginStepsApi,
+} from '#/state/shell/post-login-steps'
 import {atoms as a, native, tokens, useBreakpoints, useTheme} from '#/alf'
 import * as Admonition from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {useDialogControl} from '#/components/Dialog'
 import * as TextField from '#/components/forms/TextField'
+import * as Toggle from '#/components/forms/Toggle'
 import {At_Stroke2_Corner0_Rounded as AtIcon} from '#/components/icons/At'
 import {TinyChevronBottom_Stroke2_Corner0_Rounded as TinyChevronIcon} from '#/components/icons/Chevron'
 import {Envelope_Stroke2_Corner0_Rounded as EmailIcon} from '#/components/icons/Envelope'
@@ -30,8 +51,10 @@ import {Lock_Stroke2_Corner0_Rounded as LockIcon} from '#/components/icons/Lock'
 import {Ticket_Stroke2_Corner0_Rounded as TicketIcon} from '#/components/icons/Ticket'
 import {createStaticClick, InlineLinkText} from '#/components/Link'
 import {Loader} from '#/components/Loader'
+import {QrCodeInner} from '#/components/StarterPack/QrCode'
 import {Text} from '#/components/Typography'
-import {IS_IOS, IS_NATIVE} from '#/env'
+import {IS_IOS, IS_NATIVE, IS_WEB} from '#/env'
+import {VERUSSKY_CONFIG} from '#/env/verussky'
 import {type com} from '#/lexicons'
 import {ConfirmHostingProviderDialog} from './components/ConfirmHostingProviderDialog'
 import {HostingProviderDialog} from './components/HostingProviderDialog'
@@ -71,6 +94,12 @@ export const LoginForm = ({
   const [errorField, setErrorField] = useState<
     'none' | 'identifier' | 'password' | '2fa'
   >('none')
+  const [isVerusIdLogin, setIsVerusIdLogin] = useState(
+    VERUSSKY_CONFIG.defaultLoginVerusid,
+  )
+  const [saveLoginWithVerusId, setSaveLoginWithVerusId] = useState(false)
+  const [openRemoveVerusIdLinkDialog, setOpenRemoveVerusIdLinkDialog] =
+    useState(false)
   const [isAuthFactorTokenNeeded, setIsAuthFactorTokenNeeded] = useState(false)
   const [showResolveError, setShowResolveError] = useState(false)
   const [identifier, setIdentifier] = useState(initialHandle || '')
@@ -80,6 +109,8 @@ export const LoginForm = ({
   const identifierRef = useRef<React.ComponentRef<typeof TextInput>>(null)
   const passwordRef = useRef<React.ComponentRef<typeof TextInput>>(null)
   const hasFocusedOnce = useRef(false)
+  const vskySessionValueRef = useRef<VskySession>({auth: '', id: '', name: ''})
+  const verusIdLoginFailed = useRef(false)
   const [revealPassword, setRevealPassword] = useState(false)
   const {t: l} = useLingui()
   const {login} = useSessionApi()
@@ -87,18 +118,37 @@ export const LoginForm = ({
   const requestNotificationsPermission = useRequestNotificationsPermission()
   const {setShowLoggedOut} = useLoggedOutViewControls()
   const setHasCheckedForStarterPack = useSetHasCheckedForStarterPack()
+  const {initialize: startPostLoginSteps} = usePostLoginStepsApi()
   const serverInputControl = useDialogControl()
   const confirmHostingProviderControl = useDialogControl()
   const [pendingLogin, setPendingLogin] = useState<{
     service: string
     fullIdent: string
-    passwordLength: number
+    password: string
   } | null>(null)
   const hostingProvider = useHostingProvider({
     identifier,
     defaultService: serviceUrl,
   })
   const {gtMobile} = useBreakpoints()
+  const {verusIdInterface} = useVerusService()
+  const getIdentity = useVerusGetIdentity()
+
+  const [loginUri, setLoginUri] = useState('')
+  const [loginId, setLoginId] = useState('')
+  const loginRequestRef = useRef<GenericRequest | null>(null)
+  const ivkRef = useRef<Buffer | null>(null)
+  /**
+   * The login request whose response was already handled. A refetch, such as
+   * on window focus, can deliver the same response again.
+   */
+  const handledLoginRequestRef = useRef<GenericRequest | null>(null)
+
+  const {data: verusIdLoginResult, error: verusIdLoginError} =
+    useVerusIdRequestQuery({
+      requestId: loginId,
+      enabled: isVerusIdLogin,
+    })
 
   /*
    * Surface an inline error on the username field only once detection has
@@ -110,14 +160,29 @@ export const LoginForm = ({
   const showUnresolvedError =
     hostingProvider.state.status === 'unresolved' && !identifierFocused
 
+  /** Gets the VerusSky session from a verified VerusID login, if there is one. */
+  const getVerifiedVskySession = () => {
+    const vskySession = vskySessionValueRef.current
+    return vskySession.id !== '' && vskySession.name !== ''
+      ? vskySession
+      : undefined
+  }
+
   /**
    * Performs the actual login attempt against a resolved service. Reads the
-   * password and 2FA token from the current form state, and manages
-   * `setIsProcessing` itself: it stays processing on success (the app
-   * transitions away) and clears it on any failure.
+   * 2FA token from the current form state, and manages `setIsProcessing`
+   * itself: it stays processing on success (the app transitions away) and
+   * clears it on any failure. The password is passed in, since a VerusID login
+   * gets it from the VerusID instead of the form.
    */
-  const attemptLogin = async (service: string, fullIdent: string) => {
+  const attemptLogin = async (
+    service: string,
+    fullIdent: string,
+    password: string,
+  ) => {
     setIsProcessing(true)
+
+    const vskySession = getVerifiedVskySession()
 
     try {
       // TODO remove double login
@@ -127,6 +192,7 @@ export const LoginForm = ({
           identifier: fullIdent,
           password,
           authFactorToken: authFactorToken.trim(),
+          vskySession,
         },
         'LoginForm',
       )
@@ -134,6 +200,31 @@ export const LoginForm = ({
       setShowLoggedOut(false)
       setHasCheckedForStarterPack(true)
       void requestNotificationsPermission('Login')
+
+      if (verusIdLoginFailed.current) {
+        logger.debug(
+          'Successfully logged in manually after VerusID login failed',
+        )
+      }
+
+      const steps: PostLoginStep[] = []
+      if (saveLoginWithVerusId) {
+        steps.push({type: 'update-verusid-credentials', password})
+        if (openRemoveVerusIdLinkDialog) {
+          steps.push({type: 'remove-verusid-account-link'})
+        }
+      } else if (openRemoveVerusIdLinkDialog) {
+        // Skip the linked VerusID check, since the user is removing the link.
+        steps.push({type: 'remove-verusid-account-link'})
+      } else if (vskySession) {
+        steps.push({type: 'check-verusid-account-link'})
+      }
+      if (vskySession?.encryption) {
+        steps.push({type: 'save-encryption-keys'})
+      }
+      if (steps.length) {
+        startPostLoginSteps(steps)
+      }
     } catch (err) {
       const errMsg = String(err)
       setIsProcessing(false)
@@ -158,7 +249,24 @@ export const LoginForm = ({
           logger.debug('Failed to login due to invalid credentials', {
             error: errMsg,
           })
-          setError(l`Incorrect username or password`)
+          /*
+           * Switch to the manual form when the VerusID's saved credentials are
+           * wrong. Saving the login is preselected so that the manual sign in
+           * updates them.
+           */
+          if (isVerusIdLogin) {
+            verusIdLoginFailed.current = true
+            setSaveLoginWithVerusId(true)
+            setIsVerusIdLogin(false)
+            // Clear the wrong credentials so they don't show in the form.
+            setIdentifier('')
+            setPassword('')
+            setError(
+              l`Unable to verify Bluesky credentials. Please sign in manually.`,
+            )
+          } else {
+            setError(l`Incorrect username or password`)
+          }
         } else if (isNetworkError(err)) {
           logger.warn('Failed to login due to network error', {error: errMsg})
           setError(
@@ -174,14 +282,25 @@ export const LoginForm = ({
     }
   }
 
-  const onPressNext = async () => {
+  /**
+   * Logs in with the form's username and password, or with the given
+   * credentials. A VerusID login passes its credentials in, since setting the
+   * form state wouldn't be seen until the next render.
+   */
+  const onPressNext = async (credentials?: {
+    identifier: string
+    password: string
+  }) => {
     if (isProcessing) return
     Keyboard.dismiss()
     setError('')
     setErrorField('none')
     setShowResolveError(false)
 
-    const normalizedIdentifier = identifier.toLowerCase().trim()
+    const loginPassword = credentials?.password ?? password
+    const normalizedIdentifier = (credentials?.identifier ?? identifier)
+      .toLowerCase()
+      .trim()
 
     if (!normalizedIdentifier) {
       setError(l`Please enter your username`)
@@ -189,7 +308,7 @@ export const LoginForm = ({
       return
     }
 
-    if (!password) {
+    if (!loginPassword) {
       setError(l`Please enter your password`)
       setErrorField('password')
       return
@@ -218,6 +337,16 @@ export const LoginForm = ({
           serviceDescription.availableUserDomains[0],
         )
       }
+    }
+
+    /*
+     * Skip the hosting provider check for a VerusID login, since it always
+     * signs in at the Bluesky service. The confirmation would otherwise name a
+     * server the password isn't sent to.
+     */
+    if (getVerifiedVskySession()) {
+      await attemptLogin(BSKY_SERVICE, fullIdent, loginPassword)
+      return
     }
 
     /*
@@ -260,13 +389,216 @@ export const LoginForm = ({
 
     if (needsConfirmation) {
       setIsProcessing(false)
-      setPendingLogin({service, fullIdent, passwordLength: password.length})
+      setPendingLogin({service, fullIdent, password: loginPassword})
       confirmHostingProviderControl.open()
       return
     }
 
-    await attemptLogin(service, fullIdent)
+    await attemptLogin(service, fullIdent, loginPassword)
   }
+
+  useEffect(() => {
+    // Create the login request for the QR code and deeplink.
+    const createAndSignLoginRequest = async () => {
+      setIsProcessing(true)
+      setLoginUri('')
+      // Stop polling the old request so its response isn't handled again.
+      setLoginId('')
+      try {
+        const {ordinals, ivk} = await generateLoginRequestOrdinals()
+        const signedRequest = await createAndSignGenericRequest(
+          verusIdInterface,
+          ordinals,
+        )
+
+        loginRequestRef.current = signedRequest
+        ivkRef.current = ivk
+        setLoginId(signedRequest.requestID!.toAddress())
+        setLoginUri(signedRequest.toWalletDeeplinkUri())
+        setError('')
+      } catch (err) {
+        logger.warn('Failed to create VerusID login request', {
+          error: String(err),
+        })
+        setError(cleanError(err))
+        setLoginId('')
+        loginRequestRef.current = null
+        ivkRef.current = null
+      }
+      setIsProcessing(false)
+    }
+
+    if (isVerusIdLogin) {
+      void createAndSignLoginRequest()
+    }
+  }, [isVerusIdLogin, setError, verusIdInterface])
+
+  // Log in once the VerusID login response arrives.
+  useEffect(() => {
+    if (!verusIdLoginResult || !loginRequestRef.current || !ivkRef.current) {
+      return
+    }
+    const loginRequest = loginRequestRef.current
+    const ivk = ivkRef.current
+    if (handledLoginRequestRef.current === loginRequest) {
+      return
+    }
+    handledLoginRequestRef.current = loginRequest
+    // Stop if the user switched away or a new request replaced this one.
+    const isCancelled = () => loginRequestRef.current !== loginRequest
+
+    const handleLoginResponse = async () => {
+      setIsProcessing(true)
+
+      /*
+       * Fail the whole login if the VerusID or its encryption keys can't be
+       * verified. processLoginResponse throws when the keys are missing.
+       */
+      let result: LoginResponse
+      try {
+        result = await processLoginResponse(
+          loginRequest,
+          verusIdLoginResult,
+          getIdentity,
+          ivk,
+        )
+      } catch (err) {
+        if (isCancelled()) {
+          setIsProcessing(false)
+          return
+        }
+        logger.warn('Failed to verify VerusID login response', {
+          safeMessage: err,
+        })
+        clearVskySession()
+        setError(
+          l`Unable to verify the VerusID sign in. Please try again or sign in manually.`,
+        )
+        verusIdLoginFailed.current = true
+        setIsVerusIdLogin(false)
+        setIsProcessing(false)
+        onAttemptFailed()
+        return
+      }
+      if (isCancelled()) {
+        setIsProcessing(false)
+        return
+      }
+
+      /*
+       * Keep the VerusSky session even when the saved credentials are missing.
+       * The user can then update them after signing in manually.
+       */
+      vskySessionValueRef.current = {
+        auth: '',
+        id: result.identity.identityaddress || '',
+        name: result.identity.name,
+        encryption: {
+          storeEncryptionKeys: false,
+          encryptionKey: result.encryptionKey,
+          decryptionKey: result.decryptionKey,
+        },
+      }
+
+      if (!result.credentials) {
+        const errMsg = result.credentialError ?? ''
+
+        if (errMsg.includes('Missing username')) {
+          setError(
+            l`Missing username from VerusID sign in. Please sign in manually.`,
+          )
+        } else if (errMsg.includes('Missing password')) {
+          setError(
+            l`Missing password from VerusID sign in. Please sign in manually.`,
+          )
+        } else if (
+          errMsg.includes('Invalid credential format') ||
+          errMsg.includes('Invalid credentials') ||
+          errMsg.includes('Missing sign in credentials') ||
+          errMsg.includes('Missing plain login credential')
+        ) {
+          setError(
+            l`Missing username and password from VerusID sign in. Please sign in manually.`,
+          )
+        }
+
+        verusIdLoginFailed.current = true
+        // Preselect saving so the manual sign in updates the saved credentials.
+        setSaveLoginWithVerusId(true)
+        setIsVerusIdLogin(false)
+        setIsProcessing(false)
+        onAttemptFailed()
+        return
+      }
+
+      const credentials = {
+        identifier: result.credentials.username,
+        password: result.credentials.password,
+      }
+      // Set the form too, so a 2FA code submits these credentials.
+      setIdentifier(credentials.identifier)
+      setPassword(credentials.password)
+      void onPressNext(credentials)
+    }
+
+    void handleLoginResponse()
+    // Only run when the response arrives, not every time onPressNext changes.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [verusIdLoginResult])
+
+  // Switch to the manual form when the VerusID login response can't be fetched.
+  useEffect(() => {
+    if (!verusIdLoginError) {
+      return
+    }
+
+    const errMsg = verusIdLoginError.message
+    logger.warn('Failed to fetch VerusID login response', {error: errMsg})
+
+    if (errMsg.includes('Invalid VerusID request response')) {
+      setError(l`Invalid login response. Please try again or sign in manually.`)
+    } else if (errMsg.includes('Failed to fetch VerusID request response')) {
+      setError(l`Unable to verify the signer of the login.`)
+    } else {
+      setError(cleanError(verusIdLoginError))
+    }
+
+    verusIdLoginFailed.current = true
+    setSaveLoginWithVerusId(true)
+    setIsVerusIdLogin(false)
+    setIsProcessing(false)
+    onAttemptFailed()
+  }, [verusIdLoginError, l, setError, onAttemptFailed])
+
+  /**
+   * Clears the VerusID login when the hosting provider changes, since it was
+   * for the old provider's account. Also called when a VerusID fails
+   * verification, so an earlier VerusID's session isn't kept.
+   */
+  const clearVskySession = () => {
+    vskySessionValueRef.current = {auth: '', id: '', name: ''}
+    verusIdLoginFailed.current = false
+  }
+
+  /**
+   * Opens the login deeplink. On web it opens in the same tab so that the
+   * navigation stack is kept.
+   */
+  const startVskyLogin = () => {
+    // Wait for the new request, since an empty link would reload the page.
+    if (isProcessing || !loginUri) return
+    if (IS_WEB) {
+      window.location.href = loginUri
+    } else {
+      void Linking.openURL(loginUri)
+    }
+  }
+
+  /*
+   * Once a VerusID login needs a 2FA code, Sign in submits the code instead of
+   * opening the deeplink again.
+   */
+  const isVskyDeeplinkButton = isVerusIdLogin && !isAuthFactorTokenNeeded
 
   return (
     <FormContainer testID="loginForm" titleText={<Trans>Sign in</Trans>}>
@@ -281,152 +613,205 @@ export const LoginForm = ({
         onSelectManual={url => {
           hostingProvider.override(url)
           setServiceUrl(url)
+          clearVskySession()
         }}
         onSelectAutomatic={() => {
           hostingProvider.clearOverride()
           setServiceUrl(DEFAULT_SERVICE)
+          clearVskySession()
         }}
       />
       <ConfirmHostingProviderDialog
         control={confirmHostingProviderControl}
         host={toNiceHostingUrl(pendingLogin?.service ?? '')}
         identifier={pendingLogin?.fullIdent ?? ''}
-        passwordLength={pendingLogin?.passwordLength ?? 0}
+        passwordLength={pendingLogin?.password.length ?? 0}
         onConfirm={() => {
           if (pendingLogin) {
-            void attemptLogin(pendingLogin.service, pendingLogin.fullIdent)
+            void attemptLogin(
+              pendingLogin.service,
+              pendingLogin.fullIdent,
+              pendingLogin.password,
+            )
           }
         }}
       />
-      <View>
-        <TextField.LabelText>
-          <Trans>Username or email</Trans>
-        </TextField.LabelText>
-        <TextField.Root
-          isInvalid={errorField === 'identifier' || showUnresolvedError}>
-          <TextField.Icon
-            icon={hostingProvider.state.status === 'email' ? EmailIcon : AtIcon}
-          />
-          <TextField.Input
-            testID="loginUsernameInput"
-            inputRef={identifierRef}
-            label={l`Username or email address`}
-            placeholder={null}
-            autoCapitalize="none"
-            autoFocus={!IS_IOS && !initialHandle}
-            autoCorrect={false}
-            autoComplete="username"
-            returnKeyType="next"
-            textContentType="username"
-            value={identifier}
-            onChangeText={v => {
-              setIdentifier(v)
-              if (errorField) setErrorField('none')
-              if (showResolveError) setShowResolveError(false)
-            }}
-            onFocus={() => setIdentifierFocused(true)}
-            onBlur={() => setIdentifierFocused(false)}
-            onSubmitEditing={() => {
-              passwordRef.current?.focus()
-            }}
-            blurOnSubmit={false} // prevents flickering due to onSubmitEditing going to next field
-            editable={!isProcessing}
-            accessibilityHint={l`Enter the username or email address you used when you created your account`}
-          />
-        </TextField.Root>
-        {showUnresolvedError && (
+      {!isVerusIdLogin ? (
+        <>
+          <View>
+            <TextField.LabelText>
+              <Trans>Username or email</Trans>
+            </TextField.LabelText>
+            <TextField.Root
+              isInvalid={errorField === 'identifier' || showUnresolvedError}>
+              <TextField.Icon
+                icon={
+                  hostingProvider.state.status === 'email' ? EmailIcon : AtIcon
+                }
+              />
+              <TextField.Input
+                testID="loginUsernameInput"
+                inputRef={identifierRef}
+                label={l`Username or email address`}
+                placeholder={null}
+                autoCapitalize="none"
+                autoFocus={!IS_IOS && !initialHandle}
+                autoCorrect={false}
+                autoComplete="username"
+                returnKeyType="next"
+                textContentType="username"
+                value={identifier}
+                onChangeText={v => {
+                  setIdentifier(v)
+                  if (errorField) setErrorField('none')
+                  if (showResolveError) setShowResolveError(false)
+                }}
+                onFocus={() => setIdentifierFocused(true)}
+                onBlur={() => setIdentifierFocused(false)}
+                onSubmitEditing={() => {
+                  passwordRef.current?.focus()
+                }}
+                blurOnSubmit={false} // prevents flickering due to onSubmitEditing going to next field
+                editable={!isProcessing}
+                accessibilityHint={l`Enter the username or email address you used when you created your account`}
+              />
+            </TextField.Root>
+            {showUnresolvedError && (
+              <Text
+                style={[
+                  a.text_sm,
+                  a.leading_snug,
+                  a.mt_sm,
+                  {color: t.palette.negative_500},
+                ]}>
+                <Trans>
+                  We couldn't find an account with that username. Please check
+                  that you've typed it correctly, or{' '}
+                  <InlineLinkText
+                    label={l`set your hosting provider manually`}
+                    style={[a.text_sm, a.leading_snug]}
+                    {...createStaticClick(() => serverInputControl.open())}>
+                    set your hosting provider manually
+                  </InlineLinkText>
+                  .
+                </Trans>
+              </Text>
+            )}
+          </View>
+
+          <View>
+            <TextField.LabelText>
+              <Trans>Password</Trans>
+            </TextField.LabelText>
+            <TextField.Root isInvalid={errorField === 'password'}>
+              <TextField.Icon icon={LockIcon} />
+              <TextField.Input
+                testID="loginPasswordInput"
+                inputRef={passwordRef}
+                label={l`Password`}
+                placeholder={null}
+                autoCapitalize="none"
+                autoFocus={!IS_IOS && !!initialHandle}
+                autoCorrect={false}
+                autoComplete="current-password"
+                returnKeyType="done"
+                enablesReturnKeyAutomatically={true}
+                secureTextEntry={!revealPassword}
+                value={password}
+                onChangeText={v => {
+                  setPassword(v)
+                  if (errorField) setErrorField('none')
+                }}
+                onSubmitEditing={() => void onPressNext()}
+                blurOnSubmit={false} // HACK: https://github.com/facebook/react-native/issues/21911#issuecomment-558343069 Keyboard blur behavior is now handled in onSubmitEditing
+                editable={!isProcessing}
+                accessibilityHint={l`Enter your password`}
+                onLayout={
+                  IS_IOS
+                    ? () => {
+                        if (hasFocusedOnce.current) return
+                        hasFocusedOnce.current = true
+                        // kinda dumb, but if we use `autoFocus` to focus an
+                        // input, it happens before the password input gets
+                        // rendered. this breaks the password autofill on iOS (it
+                        // only does the username part). delaying it until both
+                        // inputs are rendered fixes the autofill. when a handle is
+                        // prefilled we focus the password field directly so the
+                        // user can go straight to typing it -sfn
+                        if (initialHandle) {
+                          passwordRef.current?.focus()
+                        } else {
+                          identifierRef.current?.focus()
+                        }
+                      }
+                    : undefined
+                }
+                hitSlop={{...HITSLOP_20, right: 0}}
+              />
+              <RevealPasswordButton
+                active={revealPassword}
+                hasPassword={!!password}
+                onPress={() => setRevealPassword(r => !r)}
+              />
+            </TextField.Root>
+
+            {!isAuthFactorTokenNeeded && (
+              <Button
+                label={l`Forgot password?`}
+                accessibilityHint={l`Reset your password by sending a code to your email`}
+                style={[a.mt_md, a.self_start]}
+                hoverStyle={{opacity: 0.5}}
+                hitSlop={HITSLOP_10}
+                onPress={onPressForgotPassword}>
+                <ButtonText style={[t.atoms.text_contrast_medium]}>
+                  <Trans>Forgot password?</Trans>
+                </ButtonText>
+              </Button>
+            )}
+          </View>
+          <View style={[a.gap_sm]}>
+            <Toggle.Item
+              label={l`Save my sign in with VerusID`}
+              name="saveLoginWithVerusID"
+              value={saveLoginWithVerusId}
+              onChange={setSaveLoginWithVerusId}>
+              <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+                <Toggle.Platform />
+                <Text style={[a.text_md]}>
+                  <Trans>Save my sign in with VerusID</Trans>
+                </Text>
+              </View>
+            </Toggle.Item>
+            <Toggle.Item
+              label={l`Remove linked VerusID`}
+              name="removeLinkedVerusID"
+              value={openRemoveVerusIdLinkDialog}
+              onChange={setOpenRemoveVerusIdLinkDialog}>
+              <View style={[a.flex_row, a.align_center, a.gap_sm]}>
+                <Toggle.Platform />
+                <Text style={[a.text_md]}>
+                  <Trans>Remove linked VerusID</Trans>
+                </Text>
+              </View>
+            </Toggle.Item>
+          </View>
+        </>
+      ) : (
+        <View>
+          <TextField.LabelText>
+            <Trans>VerusID Sign in</Trans>
+          </TextField.LabelText>
           <Text
-            style={[
-              a.text_sm,
-              a.leading_snug,
-              a.mt_sm,
-              {color: t.palette.negative_500},
-            ]}>
-            <Trans>
-              We couldn't find an account with that username. Please check that
-              you've typed it correctly, or{' '}
-              <InlineLinkText
-                label={l`set your hosting provider manually`}
-                style={[a.text_sm, a.leading_snug]}
-                {...createStaticClick(() => serverInputControl.open())}>
-                set your hosting provider manually
-              </InlineLinkText>
-              .
-            </Trans>
+            style={[a.mt_xs, a.mb_sm, a.text_sm, t.atoms.text_contrast_medium]}>
+            <Trans>Scan the QR code below or press Sign in to continue</Trans>
           </Text>
-        )}
-      </View>
-
-      <View>
-        <TextField.LabelText>
-          <Trans>Password</Trans>
-        </TextField.LabelText>
-        <TextField.Root isInvalid={errorField === 'password'}>
-          <TextField.Icon icon={LockIcon} />
-          <TextField.Input
-            testID="loginPasswordInput"
-            inputRef={passwordRef}
-            label={l`Password`}
-            placeholder={null}
-            autoCapitalize="none"
-            autoFocus={!IS_IOS && !!initialHandle}
-            autoCorrect={false}
-            autoComplete="current-password"
-            returnKeyType="done"
-            enablesReturnKeyAutomatically={true}
-            secureTextEntry={!revealPassword}
-            value={password}
-            onChangeText={v => {
-              setPassword(v)
-              if (errorField) setErrorField('none')
-            }}
-            onSubmitEditing={() => void onPressNext()}
-            blurOnSubmit={false} // HACK: https://github.com/facebook/react-native/issues/21911#issuecomment-558343069 Keyboard blur behavior is now handled in onSubmitEditing
-            editable={!isProcessing}
-            accessibilityHint={l`Enter your password`}
-            onLayout={
-              IS_IOS
-                ? () => {
-                    if (hasFocusedOnce.current) return
-                    hasFocusedOnce.current = true
-                    // kinda dumb, but if we use `autoFocus` to focus an
-                    // input, it happens before the password input gets
-                    // rendered. this breaks the password autofill on iOS (it
-                    // only does the username part). delaying it until both
-                    // inputs are rendered fixes the autofill. when a handle is
-                    // prefilled we focus the password field directly so the
-                    // user can go straight to typing it -sfn
-                    if (initialHandle) {
-                      passwordRef.current?.focus()
-                    } else {
-                      identifierRef.current?.focus()
-                    }
-                  }
-                : undefined
-            }
-            hitSlop={{...HITSLOP_20, right: 0}}
-          />
-          <RevealPasswordButton
-            active={revealPassword}
-            hasPassword={!!password}
-            onPress={() => setRevealPassword(r => !r)}
-          />
-        </TextField.Root>
-
-        {!isAuthFactorTokenNeeded && (
-          <Button
-            label={l`Forgot password?`}
-            accessibilityHint={l`Reset your password by sending a code to your email`}
-            style={[a.mt_md, a.self_start]}
-            hoverStyle={{opacity: 0.5}}
-            hitSlop={HITSLOP_10}
-            onPress={onPressForgotPassword}>
-            <ButtonText style={[t.atoms.text_contrast_medium]}>
-              <Trans>Forgot password?</Trans>
-            </ButtonText>
-          </Button>
-        )}
-      </View>
+          {loginUri && (
+            <View style={[a.align_center, a.py_lg]}>
+              <QrCodeInner link={loginUri} useBackupSVG={false} />
+            </View>
+          )}
+        </View>
+      )}
       {isAuthFactorTokenNeeded && (
         <View>
           <TextField.LabelText>
@@ -546,18 +931,63 @@ export const LoginForm = ({
             </ButtonText>
           </Button>
         ) : (
-          <Button
-            testID="loginNextButton"
-            label={l`Sign in`}
-            accessibilityHint={l`Navigates to the next screen`}
-            color="primary"
-            size="large"
-            onPress={() => void onPressNext()}>
-            <ButtonText>
-              <Trans>Sign in</Trans>
-            </ButtonText>
-            {isProcessing && <ButtonIcon icon={Loader} />}
-          </Button>
+          <View style={[a.flex_row, a.gap_sm]}>
+            <Button
+              testID="loginMethodSwitchButton"
+              label={
+                isVerusIdLogin
+                  ? l`Sign in without VerusID`
+                  : l`Sign in with VerusID`
+              }
+              accessibilityHint={l`Switches login method`}
+              color="secondary"
+              size="large"
+              onPress={() => {
+                if (isVerusIdLogin) {
+                  /*
+                   * Drop the VerusID login so the manual sign in can't attach
+                   * it to another account. Clearing the request also stops a
+                   * late response from logging in.
+                   */
+                  setIdentifier('')
+                  setPassword('')
+                  clearVskySession()
+                  loginRequestRef.current = null
+                  ivkRef.current = null
+                  setLoginId('')
+                }
+                setIsVerusIdLogin(!isVerusIdLogin)
+                // Clear the link so that the old QR code doesn't appear briefly.
+                setLoginUri('')
+                setError('')
+              }}>
+              <ButtonText>
+                {isVerusIdLogin ? (
+                  <Trans>Sign in without VerusID</Trans>
+                ) : (
+                  <Trans>Sign in with VerusID</Trans>
+                )}
+              </ButtonText>
+            </Button>
+            <Button
+              testID="loginNextButton"
+              label={l`Sign in`}
+              accessibilityHint={
+                isVskyDeeplinkButton
+                  ? l`Opens the VerusID sign in on this device`
+                  : l`Navigates to the next screen`
+              }
+              color="primary"
+              size="large"
+              onPress={
+                isVskyDeeplinkButton ? startVskyLogin : () => void onPressNext()
+              }>
+              <ButtonText>
+                <Trans>Sign in</Trans>
+              </ButtonText>
+              {isProcessing && <ButtonIcon icon={Loader} />}
+            </Button>
+          </View>
         )}
       </View>
 

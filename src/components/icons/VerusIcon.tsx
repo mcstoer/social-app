@@ -1,9 +1,9 @@
-import React from 'react'
+import {forwardRef} from 'react'
 import Svg, {ClipPath, Defs, G, Path, Rect} from 'react-native-svg'
 
 import {type Props, useCommonSVGProps} from '#/components/icons/common'
 
-export const VerusIcon = React.forwardRef<Svg, Props>(
+export const VerusIcon = forwardRef<Svg, Props>(
   function VerusIconImpl(props, ref) {
     const {size, style, ...rest} = useCommonSVGProps(props)
 

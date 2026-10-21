@@ -38,9 +38,10 @@ export function makeDidDoc(pdsUrl: string, did: string = DID) {
 }
 
 export function makeAccount(
-  overrides: Partial<SessionAccount> = {},
+  overrides: Partial<Extract<SessionAccount, {type: 'bsky'}>> = {},
 ): SessionAccount {
   return {
+    type: 'bsky',
     service: SERVICE,
     did: DID,
     handle: HANDLE,

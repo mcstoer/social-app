@@ -54,8 +54,8 @@ async function signVerusPayInvoice(
   )
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to sign invoice')
+    const body = (await response.json()) as {error?: string}
+    throw new Error(body.error || 'Failed to sign invoice')
   }
 
   const data = await response.json()

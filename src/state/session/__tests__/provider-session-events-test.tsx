@@ -132,8 +132,11 @@ import {type SessionApiContext} from '#/state/session/types'
 const DID = 'did:plc:example123'
 const SERVICE = 'https://bsky.social/'
 
-function makeAccount(overrides: Partial<SessionAccount> = {}): SessionAccount {
+function makeAccount(
+  overrides: Partial<Extract<SessionAccount, {type: 'bsky'}>> = {},
+): SessionAccount {
   return {
+    type: 'bsky',
     service: SERVICE,
     did: DID,
     handle: 'alice.test',

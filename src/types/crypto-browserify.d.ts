@@ -1,4 +1,4 @@
 declare module 'crypto-browserify' {
-  const crypto: any
+  const crypto: typeof import('node:crypto')
   export = crypto
 }
