@@ -357,17 +357,16 @@ export const LoginForm = ({
      * throws - in that case we must NOT log in, since we can't be sure which
      * server to send the password to.
      */
-    let service: string
-    let did: string | null
+    let resolved: Awaited<ReturnType<typeof hostingProvider.resolveService>>
     try {
-      ;({service, did} =
-        await hostingProvider.resolveService(normalizedIdentifier))
+      resolved = await hostingProvider.resolveService(normalizedIdentifier)
     } catch (err) {
       logger.debug('Failed to resolve hosting provider', {error: String(err)})
       setIsProcessing(false)
       setShowResolveError(true)
       return
     }
+    const {service, did} = resolved
 
     /*
      * If detection landed on a non-Bluesky server, confirm before sending the
@@ -398,8 +397,16 @@ export const LoginForm = ({
   }
 
   useEffect(() => {
+    /*
+     * Ignore this request once the user switches away or a new request
+     * replaces it. Otherwise its late result would overwrite the newer state.
+     */
+    let isCancelled = false
+    let isPending = false
+
     // Create the login request for the QR code and deeplink.
     const createAndSignLoginRequest = async () => {
+      isPending = true
       setIsProcessing(true)
       setLoginUri('')
       // Stop polling the old request so its response isn't handled again.
@@ -410,6 +417,7 @@ export const LoginForm = ({
           verusIdInterface,
           ordinals,
         )
+        if (isCancelled) return
 
         loginRequestRef.current = signedRequest
         ivkRef.current = ivk
@@ -417,6 +425,7 @@ export const LoginForm = ({
         setLoginUri(signedRequest.toWalletDeeplinkUri())
         setError('')
       } catch (err) {
+        if (isCancelled) return
         logger.warn('Failed to create VerusID login request', {
           error: String(err),
         })
@@ -425,11 +434,20 @@ export const LoginForm = ({
         loginRequestRef.current = null
         ivkRef.current = null
       }
+      isPending = false
       setIsProcessing(false)
     }
 
     if (isVerusIdLogin) {
       void createAndSignLoginRequest()
+    }
+
+    return () => {
+      isCancelled = true
+      // Turn the form back on, since the cancelled request won't.
+      if (isPending) {
+        setIsProcessing(false)
+      }
     }
   }, [isVerusIdLogin, setError, verusIdInterface])
 
@@ -595,10 +613,12 @@ export const LoginForm = ({
   }
 
   /*
-   * Once a VerusID login needs a 2FA code, Sign in submits the code instead of
-   * opening the deeplink again.
+   * Once the VerusID is verified, "Sign in" submits its credentials instead of
+   * opening the deeplink again. This retries a login that failed after
+   * verification, or submits a 2FA code.
    */
-  const isVskyDeeplinkButton = isVerusIdLogin && !isAuthFactorTokenNeeded
+  const isVskyDeeplinkButton =
+    isVerusIdLogin && !isAuthFactorTokenNeeded && !getVerifiedVskySession()
 
   return (
     <FormContainer testID="loginForm" titleText={<Trans>Sign in</Trans>}>
@@ -943,15 +963,17 @@ export const LoginForm = ({
               color="secondary"
               size="large"
               onPress={() => {
+                /*
+                 * Drop the VerusID login so the manual sign in can't attach it
+                 * to another account. Switching back to VerusID starts a new
+                 * login, so "Sign in" opens the deeplink instead of retrying the
+                 * old one.
+                 */
+                clearVskySession()
                 if (isVerusIdLogin) {
-                  /*
-                   * Drop the VerusID login so the manual sign in can't attach
-                   * it to another account. Clearing the request also stops a
-                   * late response from logging in.
-                   */
+                  // Clearing the request also stops a late response from logging in.
                   setIdentifier('')
                   setPassword('')
-                  clearVskySession()
                   loginRequestRef.current = null
                   ivkRef.current = null
                   setLoginId('')
@@ -960,6 +982,9 @@ export const LoginForm = ({
                 // Clear the link so that the old QR code doesn't appear briefly.
                 setLoginUri('')
                 setError('')
+                // Drop the 2FA prompt, since it was for the other method's login.
+                setIsAuthFactorTokenNeeded(false)
+                setAuthFactorToken('')
               }}>
               <ButtonText>
                 {isVerusIdLogin ? (

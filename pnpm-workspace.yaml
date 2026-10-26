@@ -35,6 +35,7 @@ allowBuilds:
   secp256k1: true
   tiny-secp256k1: true
   'unrs-resolver': true
+  veruszsupportlib: false
 patchedDependencies:
   '@expo/cli@57.0.26': patches/@expo__cli@57.0.26.patch
   '@formatjs/bigdecimal@0.2.5': patches/@formatjs__bigdecimal@0.2.5.patch
@@ -52,6 +53,7 @@ patchedDependencies:
   'react-native-screens@4.26.2': patches/react-native-screens@4.26.2.patch
   'react-native-svg@15.15.4': patches/react-native-svg@15.15.4.patch
   'react-native@0.86.3': patches/react-native@0.86.3.patch
+  veruszsupportlib: patches/veruszsupportlib.patch
 minimumReleaseAgeExclude:
   - '@atproto/*'
   - '@atproto-labs/*'

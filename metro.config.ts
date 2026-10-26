@@ -101,17 +101,24 @@ let config = getSentryExpoConfig(import.meta.dirname, {
         },
       })
 
-    // These crypto classes used in @bitgo/utxo-lib can't be renamed by the minifier.
+    /*
+     * Keep the names of these crypto classes, since @bitgo/utxo-lib checks
+     * them with `constructor.name`. BigInteger is needed for ParseCompact and
+     * Point for recoverFromSignature. Also use keep_fnames, since Metro
+     * replaces `mangle.reserved` with its own list.
+     */
     const {minifierConfig} = config.transformer
+    const keepFnames = /^(BigInteger|Point)$/
     // @ts-expect-error readonly property
     config.transformer.minifierConfig = {
       ...minifierConfig,
       mangle: {
         ...(minifierConfig.mangle as Record<string, unknown> | undefined),
-        reserved: [
-          'BigInteger', // Needed for ParseCompact
-          'Point', // Needed for recoverFromSignature
-        ],
+        keep_fnames: keepFnames,
+      },
+      compress: {
+        ...(minifierConfig.compress as Record<string, unknown> | undefined),
+        keep_fnames: keepFnames,
       },
     }
 
@@ -119,6 +126,11 @@ let config = getSentryExpoConfig(import.meta.dirname, {
   },
 })
 
+/*
+ * The package's types declare this with no parameters and don't resolve for
+ * the `/index.js` import path.
+ */
+// oxlint-disable-next-line typescript/no-unsafe-call
 config = getBundleModeMetroConfig(config)
 
 export default config

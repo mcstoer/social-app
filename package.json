@@ -182,6 +182,7 @@
     "@types/node": "^24.12.2",
     "array.prototype.findlast": "^1.2.3",
     "array.prototype.findlastindex": "^1.2.6",
+    "assert": "2.1.0",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "bcp-47": "^2.1.0",
     "bcp-47-match": "^2.0.3",

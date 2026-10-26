@@ -1,0 +1,24 @@
+diff --git a/dist/index.es.js b/dist/index.es.js
+index 47157ac..45ccd0c 100644
+--- a/dist/index.es.js
++++ b/dist/index.es.js
+@@ -28,6 +28,10 @@
+   }
+   return g.instance.exports;
+ };
++const instantiateWasmSync = (A, I) => {
++  const C = h.from(I.replace(/^data:.*?base64,/, ""), "base64");
++  return new WebAssembly.Instance(new WebAssembly.Module(C), A).exports;
++};
+ function s(A, I, g, B) {
+   const C = i.decrypt_v_data(w(A) ? 0 : y(A), w(I) ? 0 : y(I), g, w(B) ? 0 : y(B));
+   if (C[2])
+@@ -275,7 +279,7 @@
+   i = A;
+ }
+ URL = globalThis.URL;
+-const SA = await V({ "./veruszsupport_bg.js": {
++const SA = instantiateWasmSync({ "./veruszsupport_bg.js": {
+   __wbg_new_from_slice_22da9388ac046e50: v,
+   __wbg_crypto_38df2bab126b63dc: X,
+   __wbg_process_44c7a14e11e9f69e: AA,
