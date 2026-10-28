@@ -578,6 +578,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
       })
       clearAgeAssuranceServerDataForDid({did: account.did})
       clearVskyKeys(account.did)
+      void clearPersistedQueryStorage(account.did)
     },
     [store, cancelPendingTask],
   )

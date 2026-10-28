@@ -6,7 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"path/filepath"
+	"path"
+	"strings"
 
 	"github.com/flosch/pongo2/v6"
 	"github.com/labstack/echo/v4"
@@ -28,10 +29,10 @@ func (l *RendererLoader) Abs(_, name string) string {
 	// Figure out why this method is being called
 	// twice on template names resulting in a failure to resolve
 	// the template name.
-	if filepath.HasPrefix(name, l.prefix) {
+	if strings.HasPrefix(name, l.prefix) {
 		return name
 	}
-	return filepath.Join(l.prefix, name)
+	return path.Join(l.prefix, name)
 }
 
 func (l *RendererLoader) Get(path string) (io.Reader, error) {
