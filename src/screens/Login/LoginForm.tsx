@@ -36,6 +36,7 @@ import * as Admonition from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import {useDialogControl} from '#/components/Dialog'
 import {TokenField} from '#/components/dialogs/EmailDialog/components/TokenField'
+import {VerusServiceDialog} from '#/components/dialogs/VerusServiceDialog'
 import {PasswordField} from '#/components/forms/PasswordField'
 import * as TextField from '#/components/forms/TextField'
 import * as Toggle from '#/components/forms/Toggle'
@@ -113,6 +114,7 @@ export const LoginForm = ({
   const {initialize: startPostLoginSteps} = usePostLoginStepsApi()
   const serverInputControl = useDialogControl()
   const confirmHostingProviderControl = useDialogControl()
+  const verusServiceControl = useDialogControl()
   const [pendingLogin, setPendingLogin] = useState<{
     service: string
     fullIdent: string
@@ -633,6 +635,11 @@ export const LoginForm = ({
           clearVskySession()
         }}
       />
+      <VerusServiceDialog
+        control={verusServiceControl}
+        // The verified VerusID was from the old service's chain.
+        onUpdate={clearVskySession}
+      />
       <ConfirmHostingProviderDialog
         control={confirmHostingProviderControl}
         host={toNiceHostingUrl(pendingLogin?.service ?? '')}
@@ -812,6 +819,11 @@ export const LoginForm = ({
             </View>
           )}
         </View>
+      )}
+      {(isVerusIdLogin ||
+        saveLoginWithVerusId ||
+        openRemoveVerusIdLinkDialog) && (
+        <VerusServiceIndicator onPress={() => verusServiceControl.open()} />
       )}
       {isAuthFactorTokenNeeded && (
         <View>
@@ -1010,6 +1022,34 @@ export const LoginForm = ({
         />
       )}
     </FormContainer>
+  )
+}
+
+/**
+ * Shows which Verus service (and so which chain) VerusID sign in uses, with a
+ * link to change it. This is inline text rather than a button so that it
+ * doesn't crowd the button row on web.
+ */
+function VerusServiceIndicator({onPress}: {onPress: () => void}) {
+  const t = useTheme()
+  const {t: l} = useLingui()
+  const {state} = useVerusService()
+  const system = state.system
+  const host = toNiceHostingUrl(state.url)
+
+  return (
+    <Text style={[a.text_sm, a.leading_snug, t.atoms.text_contrast_medium]}>
+      <Trans>
+        Using the {system} Verus service at {host}.{' '}
+        <InlineLinkText
+          testID="selectVerusServiceButton"
+          label={l`Change Verus service`}
+          style={[a.text_sm, a.leading_snug]}
+          {...createStaticClick(onPress)}>
+          Change
+        </InlineLinkText>
+      </Trans>
+    </Text>
   )
 }
 
