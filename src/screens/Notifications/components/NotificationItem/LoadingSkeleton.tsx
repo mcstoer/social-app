@@ -16,7 +16,7 @@ import * as Item from './Item'
 /**
  * A kind of skeleton row, after the notifications it stands in for: `group`
  * for a like or repost from several people, `reaction` for one from a single
- * person or a new post on the Activity tab, `follow`, `reply` (with its
+ * person or a new post on the Post alerts tab, `follow`, `reply` (with its
  * "replied to" line), and `mention` for mentions and quotes.
  */
 type SkeletonKind = 'group' | 'reaction' | 'follow' | 'reply' | 'mention'
@@ -117,8 +117,9 @@ function TodayHeaderSkeleton() {
   return (
     <View
       style={[
-        a.px_lg,
+        a.pr_lg,
         a.py_sm,
+        {paddingLeft: Item.ROW_PADDING_START},
         SHOW_ROW_BORDERS && [a.border_b, t.atoms.border_contrast_low],
       ]}>
       <Skele.Text style={[a.text_md, a.font_bold, {width: 48}]} />
@@ -170,7 +171,7 @@ function GroupSkeleton({index}: {index: number}) {
 
 /**
  * Stands in for a like or repost from one person, or a new post on the
- * Activity tab, sometimes of a post with images.
+ * Post alerts tab, sometimes of a post with images.
  */
 function ReactionSkeleton({index}: {index: number}) {
   const even = index % 2 === 0
@@ -197,8 +198,8 @@ function ReactionSkeleton({index}: {index: number}) {
 }
 
 /**
- * Stands in for a single follow: the headline, a short line of who you have
- * in common, the time, and a follow button.
+ * Stands in for a single follow: the headline with a follow button beside
+ * it, a short line of who you have in common, and the time.
  */
 function FollowSkeleton({index}: {index: number}) {
   const even = index % 2 === 0
@@ -207,13 +208,12 @@ function FollowSkeleton({index}: {index: number}) {
     <Row>
       <Item.AvatarSkeleton />
       <Item.Content>
-        <Lines style={a.text_md} widths={[even ? '60%' : '50%']} />
+        <Item.HeadlineWithButton button={<FollowButtonSkeleton />}>
+          <Lines style={a.text_md} widths={[even ? '60%' : '50%']} />
+        </Item.HeadlineWithButton>
         <Lines blend style={a.text_sm} widths={[even ? '45%' : '55%']} />
         <TimestampSkeleton />
       </Item.Content>
-      <Item.Trailing>
-        <FollowButtonSkeleton />
-      </Item.Trailing>
     </Row>
   )
 }
@@ -263,7 +263,7 @@ function FollowersSkeleton() {
   return (
     <>
       {/* Matches `FollowedYouHeader` */}
-      <View style={[a.px_lg, a.py_md]}>
+      <View style={[a.pr_lg, a.py_md, {paddingLeft: Item.ROW_PADDING_START}]}>
         <Skele.Text style={[a.text_md, {width: 96}]} />
       </View>
       {Array.from({length: FOLLOWER_ROW_COUNT}, (_, index) => (
@@ -321,7 +321,14 @@ function Row({
 }) {
   return (
     <View
-      style={[a.flex_row, a.align_start, a.gap_lg, a.px_lg, a.py_md, style]}>
+      style={[
+        a.flex_row,
+        a.align_start,
+        a.pr_lg,
+        a.py_md,
+        {gap: Item.ROW_GAP, paddingLeft: Item.ROW_PADDING_START},
+        style,
+      ]}>
       {children}
     </View>
   )
@@ -360,8 +367,8 @@ function TimestampSkeleton() {
 }
 
 /**
- * Stands in for `Item.AvatarRow` and its avatars. With `overflow`, a
- * fainter circle at the end stands in for its "+N" chip.
+ * Stands in for `Item.AvatarRow` and its avatars. With `overflow`, a fainter
+ * bar at the end stands in for its "+N" count.
  */
 function AvatarRowSkeleton({
   count,
@@ -375,7 +382,13 @@ function AvatarRowSkeleton({
       {Array.from({length: count}, (_, index) => (
         <Skele.Circle key={index} size={Item.PREVIEW_AVATAR_SIZE} />
       ))}
-      {overflow && <Skele.Circle blend size={Item.PREVIEW_AVATAR_SIZE} />}
+      {overflow && (
+        <Skele.Block
+          blend
+          // Inset by the toggle's padding, as the "+N" is
+          style={{width: 24, height: 12, marginLeft: Item.TOGGLE_PADDING}}
+        />
+      )}
     </View>
   )
 }

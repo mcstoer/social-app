@@ -26,7 +26,7 @@ import {type app} from '#/lexicons'
 import {PILL_LEFT, PILL_RIGHT_TEXT, PILL_VERTICAL} from '../pillSize'
 import {getLinkHost, getSupportProvider} from '../providers'
 import {buildProfileRow, GERM_KEY} from '../row'
-import {useProfileLinksEnabled, useProfileViewLinks} from '../state'
+import {useProfileViewLinks} from '../state'
 import {type ProfileLink} from '../types'
 import {LinkHoverPreview} from './LinkHoverPreview'
 import {ProfileLinkPill} from './LinkPill'
@@ -57,10 +57,9 @@ export function ProfileHeaderLinks({
 }) {
   const ax = useAnalytics()
   const {currentAccount} = useSession()
-  const enabled = useProfileLinksEnabled()
   const isOwnProfile = currentAccount?.did === profile.did
   const viewLinks = useProfileViewLinks(profile)
-  const links = !enabled || hidden ? [] : viewLinks
+  const links = hidden ? [] : viewLinks
   const supportLinkCount = links.filter(link =>
     getSupportProvider(link.url),
   ).length
@@ -68,6 +67,7 @@ export function ProfileHeaderLinks({
   useEffect(() => {
     if (links.length === 0) return
     ax.metric('profile:links:impression', {
+      profileDid: profile.did,
       linkCount: links.length,
       supportLinkCount,
       isOwnProfile,
@@ -124,6 +124,8 @@ function ProfileLinksRow({
 
   const logClick = (link: ProfileLink) => {
     ax.metric('profile:links:click', {
+      profileDid: profile.did,
+      linkUri: link.uri,
       domain: getLinkHost(link.url),
       supportProvider: getSupportProvider(link.url)?.name,
       isOwnProfile,
@@ -132,8 +134,11 @@ function ProfileLinksRow({
 
   const showPreview = (link: ProfileLink) => {
     ax.metric('profile:links:preview', {
+      profileDid: profile.did,
+      linkUri: link.uri,
       domain: getLinkHost(link.url),
       supportProvider: getSupportProvider(link.url)?.name,
+      isOwnProfile,
     })
     setActiveLink(link)
     previewControl.open()

@@ -8,6 +8,7 @@ import {BSKY_SERVICE, DEFAULT_SERVICE, HITSLOP_10} from '#/lib/constants'
 import {useRequestNotificationsPermission} from '#/lib/notifications/notifications'
 import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {createFullHandle} from '#/lib/strings/handles'
+import {checkAndFormatResetCode} from '#/lib/strings/password'
 import {isBlueskyHostedUrl, toNiceHostingUrl} from '#/lib/strings/url-helpers'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
 import {
@@ -183,7 +184,8 @@ export const LoginForm = ({
           service,
           identifier: fullIdent,
           password,
-          authFactorToken: authFactorToken.trim(),
+          authFactorToken:
+            checkAndFormatResetCode(authFactorToken) || authFactorToken.trim(),
           vskySession,
         },
         'LoginForm',
@@ -832,11 +834,11 @@ export const LoginForm = ({
             onSubmitEditing={() => void onPressNext()}
             editable={!isProcessing}
             isInvalid={errorField === '2fa'}
-            accessibilityHint={l`Input the code which has been emailed to you`}
+            accessibilityHint={l`Enter the code from your email or authenticator app`}
           />
           <Text style={[a.text_sm, t.atoms.text_contrast_medium, a.mt_sm]}>
             <Trans>
-              Check your email for a sign in code and enter it here.
+              Enter the sign in code from your email or authenticator app.
             </Trans>
           </Text>
         </View>

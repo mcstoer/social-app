@@ -7,16 +7,17 @@ import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {checkAndFormatResetCode} from '#/lib/strings/password'
 import {matchXrpcError} from '#/lib/xrpc-error'
 import {logger} from '#/logger'
-import {usePdsClient, useSession} from '#/state/session'
+import {usePdsClient, useSession, useSessionApi} from '#/state/session'
 import {ErrorMessage} from '#/view/com/util/error/ErrorMessage'
 import {android, atoms as a, web} from '#/alf'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
 import * as Dialog from '#/components/Dialog'
-import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {TokenField} from '#/components/dialogs/EmailDialog/components/TokenField'
+import {useVerusIdCredentialUpdateDialogControl} from '#/components/dialogs/VerusIDCredentialUpdateDialog'
 import {PasswordField} from '#/components/forms/PasswordField'
 import * as TextField from '#/components/forms/TextField'
 import {Loader} from '#/components/Loader'
+import * as Toast from '#/components/Toast'
 import {Text} from '#/components/Typography'
 import {IS_NATIVE} from '#/env'
 import {com} from '#/lexicons'
@@ -24,7 +25,6 @@ import {com} from '#/lexicons'
 enum Stages {
   RequestCode = 'RequestCode',
   ChangePassword = 'ChangePassword',
-  Done = 'Done',
 }
 
 export function ChangePasswordDialog({
@@ -33,27 +33,35 @@ export function ChangePasswordDialog({
   control: Dialog.DialogControlProps
 }) {
   const {height} = useWindowDimensions()
+  const [isProcessing, setIsProcessing] = useState(false)
 
   return (
     <Dialog.Outer
       control={control}
+      preventDismiss={isProcessing}
       nativeOptions={android({minHeight: height / 2})}>
       <Dialog.Handle />
-      <Inner />
+      <Inner isProcessing={isProcessing} setIsProcessing={setIsProcessing} />
     </Dialog.Outer>
   )
 }
 
-function Inner() {
+function Inner({
+  isProcessing,
+  setIsProcessing,
+}: {
+  isProcessing: boolean
+  setIsProcessing: (isProcessing: boolean) => void
+}) {
   const {t: l} = useLingui()
   const {currentAccount} = useSession()
   const client = usePdsClient()
+  const {logoutCurrentAccount} = useSessionApi()
   const control = Dialog.useDialogContext()
   const updateVerusIDCredentialsUpdateControl =
     useVerusIdCredentialUpdateDialogControl()
 
   const [stage, setStage] = useState(Stages.RequestCode)
-  const [isProcessing, setIsProcessing] = useState(false)
   const [resetCode, setResetCode] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [error, setError] = useState('')
@@ -66,10 +74,6 @@ function Inner() {
     ChangePassword: {
       title: l`Enter code`,
       message: l`Please enter the code you received and the new password you would like to use.`,
-    },
-    Done: {
-      title: l`Password changed`,
-      message: l`Your password has been changed successfully! Please use your new password when you sign in to Bluesky from now on.`,
     },
   }
 
@@ -128,7 +132,32 @@ function Inner() {
         token: formattedCode,
         password: newPassword,
       })
-      setStage(Stages.Done)
+      const updatedPassword = newPassword
+      setResetCode('')
+      setNewPassword('')
+      /*
+       * Resetting the password revokes every refresh token for this account,
+       * so the current session can no longer be refreshed. Sign out and ask
+       * the user to sign in again with the new password. Keep processing
+       * until the dialog has closed to prevent a second submission.
+       *
+       * Before signing out, offer to update the credentials stored in the
+       * user's VerusID so VerusID sign in keeps working. That dialog doesn't
+       * need the session, so the sign out waits until it closes.
+       */
+      control.close(() => {
+        updateVerusIDCredentialsUpdateControl.open({
+          password: updatedPassword,
+          onClose: () => {
+            logoutCurrentAccount('Settings')
+            Toast.show(
+              l`Password successfully reset. Please sign in with your new password.`,
+              {type: 'success'},
+            )
+          },
+        })
+      })
+      return
     } catch (error) {
       const e = error as Error
       if (isNetworkError(e)) {
@@ -164,6 +193,12 @@ function Inner() {
 
           <Text style={[a.text_md, a.leading_snug]}>
             {uiStrings[stage].message}
+          </Text>
+          <Text style={[a.text_md, a.leading_snug, a.font_semi_bold]}>
+            <Trans>
+              Changing your password will sign you out. You’ll need to sign in
+              again with your new password.
+            </Trans>
           </Text>
         </View>
 
@@ -228,7 +263,7 @@ function Inner() {
                 </Button>
               )}
             </>
-          ) : stage === Stages.ChangePassword ? (
+          ) : (
             <>
               <Button
                 label={l`Change password`}
@@ -255,23 +290,7 @@ function Inner() {
                 </ButtonText>
               </Button>
             </>
-          ) : stage === Stages.Done ? (
-            <Button
-              label={l`Close`}
-              color="primary"
-              size="large"
-              onPress={() => {
-                control.close(() => {
-                  updateVerusIDCredentialsUpdateControl.open({
-                    password: newPassword,
-                  })
-                })
-              }}>
-              <ButtonText>
-                <Trans>Close</Trans>
-              </ButtonText>
-            </Button>
-          ) : null}
+          )}
         </View>
       </View>
       <Dialog.Close />

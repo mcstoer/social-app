@@ -12,7 +12,7 @@ import {sanitizeHandle} from '#/lib/strings/handles'
 import {niceDate} from '#/lib/strings/time'
 import {useModerationOpts} from '#/state/preferences/moderation-opts'
 import {TimeElapsed} from '#/view/com/util/TimeElapsed'
-import {atoms as a, useTheme, web} from '#/alf'
+import {atoms as a, select, useTheme, web} from '#/alf'
 import {InlineLinkText} from '#/components/Link'
 import {ProfileBadges} from '#/components/ProfileBadges'
 import {ProfileHoverCard} from '#/components/ProfileHoverCard'
@@ -122,11 +122,7 @@ export function Name({profile}: {profile: bsky.profile.AnyProfileView}) {
           web({direction: 'ltr', unicodeBidi: 'isolate'}),
         ]}>
         {forceLTR(name)}
-        <ProfileBadges
-          profile={profile}
-          size="sm"
-          style={[a.px_2xs, {transform: [{translateY: 1}]}]}
-        />
+        <ProfileBadges profile={profile} size="sm" inline />
       </InlineLinkText>
     </ProfileHoverCard>
   )
@@ -139,18 +135,22 @@ export function Name({profile}: {profile: bsky.profile.AnyProfileView}) {
 export function Timestamp({date}: {date: string}) {
   const t = useTheme()
   const {i18n} = useLingui()
+  /*
+   * `contrast_300` is too faint in the dark themes, especially on the unread
+   * tint, so they're a step stronger (`#667B99` in dark, per design).
+   */
+  const color = select(t.name, {
+    light: t.palette.contrast_300,
+    dim: t.palette.contrast_500,
+    dark: t.palette.contrast_500,
+  })
 
   return (
     <TimeElapsed timestamp={date} timeToString={formatTimeAgo}>
       {({timeElapsed}) => (
         <Text
           title={niceDate(i18n, date)}
-          style={[
-            a.self_start,
-            a.text_sm,
-            t.atoms.text_contrast_low,
-            {color: t.palette.contrast_300},
-          ]}>
+          style={[a.self_start, a.text_sm, t.atoms.text_contrast_low, {color}]}>
           {timeElapsed}
         </Text>
       )}

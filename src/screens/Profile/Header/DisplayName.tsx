@@ -5,7 +5,7 @@ import {sanitizeDisplayName} from '#/lib/strings/display-names'
 import {sanitizeHandle} from '#/lib/strings/handles'
 import {type VerusIdLink} from '#/lib/verus/accountLinking'
 import {type Shadow} from '#/state/cache/types'
-import {atoms as a, platform, useBreakpoints, useTheme} from '#/alf'
+import {atoms as a, useBreakpoints, useTheme} from '#/alf'
 import {ProfileBadges} from '#/components/ProfileBadges'
 import {Text} from '#/components/Typography'
 import {VerusIDVerificationCheckButton} from '#/components/verification/verusid/VerusIDVerificationCheckButton'
@@ -39,15 +39,21 @@ export function ProfileHeaderDisplayName({
           profile.displayName || sanitizeHandle(profile.handle),
           moderation.ui('displayName'),
         )}
-        <View style={[a.pl_xs, {marginTop: platform({ios: 2})}]}>
-          <ProfileBadges profile={profile} size="lg" interactive />
-          {linkedVerusID && (
+        <ProfileBadges
+          profile={profile}
+          size="lg"
+          interactive
+          inline
+          style={[a.pl_xs]}
+        />
+        {linkedVerusID && (
+          <View style={[a.pl_xs]}>
             <VerusIDVerificationCheckButton
               verusIdLink={linkedVerusID}
               size="lg"
             />
-          )}
-        </View>
+          </View>
+        )}
         {/*
          * TODO: Workaround for a rounding bug in Android RN.
          * Fixed upstream in RN main (facebook/react-native#56651); remove this
