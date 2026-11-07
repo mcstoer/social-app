@@ -20,15 +20,13 @@ type StateContext = {
 
 type SetContext = (settings: VerusServicePreferences) => void
 
-const createAxiosConfig = (preferences: VerusServicePreferences) => {
-  return preferences.auth
-    ? {
-        auth: {
-          username: preferences.auth.username,
-          password: preferences.auth.password,
-        },
-      }
-    : undefined
+const AXIOS_TIMEOUT = 10000
+
+export const createAxiosConfig = (preferences: VerusServicePreferences) => {
+  return {
+    timeout: AXIOS_TIMEOUT,
+    auth: preferences.auth,
+  }
 }
 
 const createVerusdRpcInterface = (preferences: VerusServicePreferences) => {

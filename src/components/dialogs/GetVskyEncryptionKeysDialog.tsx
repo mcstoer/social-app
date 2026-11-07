@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {type GenericRequest} from 'verus-typescript-primitives'
@@ -7,10 +7,13 @@ import {cleanError, isNetworkError} from '#/lib/strings/errors'
 import {generateEncryptionKeysRequestOrdinals} from '#/lib/verus/requests/encryptionKeys'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
 import {useEncryptionKeyDialogStrings} from '#/lib/verus/useEncryptionKeyDialogStrings'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences/verus-service'
 import {useGetEncryptionKeysQuery} from '#/state/queries/verus/useGetEncryptionKeysQuery'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
 import {useSession, useSessionApi} from '#/state/session'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -65,8 +68,13 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const {updateVskyEncryption} = useSessionApi()
   const control = Dialog.useDialogContext()
   const {verusIdInterface} = useVerusService()
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
   const sharedStrings = useEncryptionKeyDialogStrings()
-
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
   const [showAwaitingResponse, setShowAwaitingResponse] = useState(false)
   const [request, setRequest] = useState<GenericRequest | null>(null)
   const [ivk, setIvk] = useState<Buffer | null>(null)
@@ -94,6 +102,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   const deeplinkUri = request?.toWalletDeeplinkUri()
 
   const getError = () => {
+    if (serviceStatusUnavailable) return verusServiceUnavailableMessage
     if (localError) return localError
     if (isError) {
       if (isNetworkError(requestError)) {
@@ -128,6 +137,15 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
   }
 
   const onGetKeys = async () => {
+    if (serviceStatusUnavailable) {
+      setIsProcessing(true)
+      const status = await refetchServiceStatus()
+      setIsProcessing(false)
+      if (status.isError || !status.data?.connected) {
+        return
+      }
+    }
+
     if (IS_NATIVE) {
       setLocalError(l`Mobile support coming soon`)
       return

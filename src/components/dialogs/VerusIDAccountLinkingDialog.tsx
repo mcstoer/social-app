@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {RichText} from '@bsky/sdk/richtext'
 import {Trans, useLingui} from '@lingui/react/macro'
@@ -15,6 +15,7 @@ import {shortenLinks} from '#/lib/strings/rich-text-manip'
 import {isIAddress, processIAddress} from '#/lib/verus/addresses'
 import {generateAccountLinkingRequestOrdinals} from '#/lib/verus/requests/accountLinking'
 import {createAndSignGenericRequest} from '#/lib/verus/requests/genericRequest'
+import {useVerusServiceUnavailableMessage} from '#/lib/verus/useVerusServiceUnavailableStrings'
 import {logger} from '#/logger'
 import {useVerusService} from '#/state/preferences'
 import {usePostDeleteMutation} from '#/state/queries/post'
@@ -30,6 +31,8 @@ import {
   usePdsClient,
   useSession,
 } from '#/state/session'
+import {useVerusServiceStatusQuery} from '#/state/queries/verus/useVerusServiceStatusQuery'
+import {useVerusActionsUnavailable} from '#/state/verus-service-status'
 import {atoms as a, useTheme, web} from '#/alf'
 import {Admonition} from '#/components/Admonition'
 import {Button, ButtonIcon, ButtonText} from '#/components/Button'
@@ -100,7 +103,12 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
   const chatClient = useChatClient()
   const pdsClient = usePdsClient()
   const queryClient = useQueryClient()
-
+  const serviceStatusUnavailable = useVerusActionsUnavailable()
+  const verusServiceUnavailableMessage = useVerusServiceUnavailableMessage()
+  const {refetch: refetchServiceStatus} = useVerusServiceStatusQuery()
+  useEffect(() => {
+    void refetchServiceStatus()
+  }, [refetchServiceStatus])
   const linkIdentifier = PROOFS_CONTROLLER_BLUESKY.vdxfid
   const {data: linkedVerusID, isPending} = useLinkedVerusIDQuery(
     linkIdentifier,
@@ -214,6 +222,7 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     : ''
 
   const getError = () => {
+    if (serviceStatusUnavailable) return verusServiceUnavailableMessage
     if (formError) return formError
     if (isLinkingResponseError) {
       if (isNetworkError(requestError)) {
@@ -261,6 +270,15 @@ function Inner({showSettingsMessage}: {showSettingsMessage?: boolean}) {
     if (IS_NATIVE) {
       setFormError(l`Mobile support coming soon`)
       return
+    }
+
+    if (serviceStatusUnavailable) {
+      setIsProcessing(true)
+      const status = await refetchServiceStatus()
+      setIsProcessing(false)
+      if (status.isError || !status.data?.connected) {
+        return
+      }
     }
 
     const handle = currentAccount?.handle
