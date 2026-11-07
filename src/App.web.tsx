@@ -28,7 +28,6 @@ import {Provider as HomeBadgeProvider} from '#/state/home-badge'
 import {MessagesProvider} from '#/state/messages'
 import {init as initPersistedState} from '#/state/persisted'
 import {Provider as PrefsStateProvider} from '#/state/preferences'
-import {BetaUserStorageSync} from '#/state/preferences/beta-user-sync'
 import {Provider as LabelDefsProvider} from '#/state/preferences/label-defs'
 import {Provider as ModerationOptsProvider} from '#/state/preferences/moderation-opts'
 import {Provider as UnreadNotifsProvider} from '#/state/queries/notifications/unread'
@@ -162,57 +161,7 @@ function InnerApp() {
                                                             <IntentDialogProvider>
                                                               <TranslateOnDeviceProvider>
                                                                 <HotkeysProvider>
-<<<<<<< HEAD
-                                                                  <Shell />
-                                                                </HotkeysProvider>
-                                                              </TranslateOnDeviceProvider>
-                                                            </IntentDialogProvider>
-                                                          </HideBottomBarBorderProvider>
-                                                        </EmailVerificationProvider>
-                                                      </ServiceConfigProvider>
-                                                    </ProgressGuideProvider>
-                                                  </SafeAreaProvider>
-                                                </MutedThreadsProvider>
-                                              </BackgroundNotificationPreferencesProvider>
-                                            </UnreadNotifsProvider>
-                                          </HomeBadgeProvider>
-                                        </HiddenRepliesProvider>
-                                      </SelectedFeedProvider>
-                                    </LoggedOutViewProvider>
-                                  </ModerationOptsProvider>
-                                </LabelDefsProvider>
-                              </MessagesProvider>
-                            </ComposerProvider>
-                          </AgeAssuranceV2Provider>
-                        </LiveEventsProvider>
-                      </PolicyUpdateOverlayProvider>
-                      <VerusServiceStatusProvider>
-                        <PolicyUpdateOverlayProvider>
-                          <LiveEventsProvider>
-                            <AgeAssuranceV2Provider>
-                              <ComposerProvider>
-                                <MessagesProvider>
-                                  {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
-                                  <LabelDefsProvider>
-                                    <ModerationOptsProvider>
-                                      <LoggedOutViewProvider>
-                                        <SelectedFeedProvider>
-                                          <HiddenRepliesProvider>
-                                            <HomeBadgeProvider>
-                                              <UnreadNotifsProvider>
-                                                <BackgroundNotificationPreferencesProvider>
-                                                  <MutedThreadsProvider>
-                                                    <SafeAreaProvider>
-                                                      <ProgressGuideProvider>
-                                                        <ServiceConfigProvider>
-                                                          <EmailVerificationProvider>
-                                                            <HideBottomBarBorderProvider>
-                                                              <IntentDialogProvider>
-                                                                <TranslateOnDeviceProvider>
-                                                                  <HotkeysProvider>
-=======
                                                                   <VerusServiceStatusProvider>
->>>>>>> dbfd40913 (- missing app native and web from last commit)
                                                                     <Shell />
                                                                   </VerusServiceStatusProvider>
                                                                   <ToastOutlet />

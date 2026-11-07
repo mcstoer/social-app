@@ -150,7 +150,6 @@ function InnerApp() {
         <ContextMenuProvider>
           <Splash isReady={isReady && hasCheckedLanding}>
             <VideoVolumeProvider>
-<<<<<<< HEAD:src/App.tsx
               <GestureHandlerRootView style={a.h_full}>
                 <Fragment
                   // Resets the entire tree below when it changes:
@@ -178,40 +177,14 @@ function InnerApp() {
                                                       <TrendingTopicsWidgetSync />
                                                       <EmailVerificationProvider>
                                                         <HideBottomBarBorderProvider>
-=======
-              <Fragment
-                // Resets the entire tree below when it changes:
-                key={currentAccount?.did}>
-                <AnalyticsFeaturesContext>
-                  <QueryProvider currentDid={currentAccount?.did}>
-                    <PolicyUpdateOverlayProvider>
-                      <LiveEventsProvider>
-                        <AgeAssuranceV2Provider>
-                          <ComposerProvider>
-                            <MessagesProvider>
-                              {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
-                              <LabelDefsProvider>
-                                <ModerationOptsProvider>
-                                  <LoggedOutViewProvider>
-                                    <SelectedFeedProvider>
-                                      <HiddenRepliesProvider>
-                                        <HomeBadgeProvider>
-                                          <UnreadNotifsProvider>
-                                            <BackgroundNotificationPreferencesProvider>
-                                              <MutedThreadsProvider>
-                                                <ProgressGuideProvider>
-                                                  <ServiceAccountManager>
-                                                    <EmailVerificationProvider>
-                                                      <HideBottomBarBorderProvider>
-                                                        <GestureHandlerRootView
-                                                          style={a.h_full}>
->>>>>>> dbfd40913 (- missing app native and web from last commit):src/App.native.tsx
                                                           <GlobalGestureEventsProvider>
                                                             <IntentDialogProvider>
                                                               <TranslateOnDeviceProvider>
                                                                 <TestCtrls />
-<<<<<<< HEAD:src/App.tsx
-                                                                <Shell />
+
+                                                                <VerusServiceStatusProvider>
+                                                                  <Shell />
+                                                                </VerusServiceStatusProvider>
                                                               </TranslateOnDeviceProvider>
                                                             </IntentDialogProvider>
                                                           </GlobalGestureEventsProvider>
@@ -238,37 +211,6 @@ function InnerApp() {
                 </Fragment>
                 <ToastOutlet />
               </GestureHandlerRootView>
-=======
-                                                                <VerusServiceStatusProvider>
-                                                                  <Shell />
-                                                                </VerusServiceStatusProvider>
-                                                                <ToastOutlet />
-                                                              </TranslateOnDeviceProvider>
-                                                            </IntentDialogProvider>
-                                                          </GlobalGestureEventsProvider>
-                                                        </GestureHandlerRootView>
-                                                      </HideBottomBarBorderProvider>
-                                                    </EmailVerificationProvider>
-                                                  </ServiceAccountManager>
-                                                </ProgressGuideProvider>
-                                              </MutedThreadsProvider>
-                                            </BackgroundNotificationPreferencesProvider>
-                                          </UnreadNotifsProvider>
-                                        </HomeBadgeProvider>
-                                      </HiddenRepliesProvider>
-                                    </SelectedFeedProvider>
-                                  </LoggedOutViewProvider>
-                                </ModerationOptsProvider>
-                              </LabelDefsProvider>
-                            </MessagesProvider>
-                          </ComposerProvider>
-                        </AgeAssuranceV2Provider>
-                      </LiveEventsProvider>
-                    </PolicyUpdateOverlayProvider>
-                  </QueryProvider>
-                </AnalyticsFeaturesContext>
-              </Fragment>
->>>>>>> dbfd40913 (- missing app native and web from last commit):src/App.native.tsx
             </VideoVolumeProvider>
           </Splash>
         </ContextMenuProvider>
