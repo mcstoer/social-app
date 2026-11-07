@@ -57,7 +57,6 @@ import {Provider as PostLoginStepsProvider} from '#/state/shell/post-login-steps
 import {Provider as ProgressGuideProvider} from '#/state/shell/progress-guide'
 import {Provider as SelectedFeedProvider} from '#/state/shell/selected-feed'
 import {Provider as HiddenRepliesProvider} from '#/state/threadgate-hidden-replies'
-import {Provider as VerusServiceStatusProvider} from '#/state/verus-service-status'
 import {TestCtrls} from '#/view/com/testing/TestCtrls'
 import {Shell} from '#/view/shell'
 import {atoms as a, ThemeProvider as Alf} from '#/alf'
@@ -181,10 +180,7 @@ function InnerApp() {
                                                             <IntentDialogProvider>
                                                               <TranslateOnDeviceProvider>
                                                                 <TestCtrls />
-
-                                                                <VerusServiceStatusProvider>
-                                                                  <Shell />
-                                                                </VerusServiceStatusProvider>
+                                                                <Shell />
                                                               </TranslateOnDeviceProvider>
                                                             </IntentDialogProvider>
                                                           </GlobalGestureEventsProvider>
