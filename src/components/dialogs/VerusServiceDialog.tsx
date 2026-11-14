@@ -22,18 +22,23 @@ import {Text} from '#/components/Typography'
 
 export function VerusServiceDialog({
   control,
+  onUpdate,
 }: {
   control: Dialog.DialogControlProps
+  /**
+   * Called after the dialog closes when the service was changed.
+   */
+  onUpdate?: () => void
 }) {
   return (
     <Dialog.Outer control={control}>
       <Dialog.Handle />
-      <VerusServiceInner />
+      <VerusServiceInner onUpdate={onUpdate} />
     </Dialog.Outer>
   )
 }
 
-function VerusServiceInner() {
+function VerusServiceInner({onUpdate}: {onUpdate?: () => void}) {
   const t = useTheme()
   const {_} = useLingui()
   const {state} = useVerusService()
@@ -125,7 +130,9 @@ function VerusServiceInner() {
 
       setVerusServicePreferences(newSettings)
 
-      control.close()
+      control.close(() => {
+        onUpdate?.()
+      })
     } catch (e) {
       logger.error(`Failed to update the Verus Service endpoint`, {
         safeMessage: e,
