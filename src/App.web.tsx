@@ -139,55 +139,55 @@ function InnerApp() {
                   key={currentAccount?.did}>
                   <AnalyticsFeaturesContext>
                     <QueryProvider currentDid={currentAccount?.did}>
-                      <BetaUserStorageSync />
-                      <PolicyUpdateOverlayProvider>
-                        <LiveEventsProvider>
-                          <AgeAssuranceV2Provider>
-                            <ComposerProvider>
-                              <MessagesProvider>
-                                {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
-                                <LabelDefsProvider>
-                                  <ModerationOptsProvider>
-                                    <LoggedOutViewProvider>
-                                      <SelectedFeedProvider>
-                                        <HiddenRepliesProvider>
-                                          <HomeBadgeProvider>
-                                            <UnreadNotifsProvider>
-                                              <BackgroundNotificationPreferencesProvider>
-                                                <MutedThreadsProvider>
-                                                  <SafeAreaProvider>
-                                                    <ProgressGuideProvider>
-                                                      <ServiceConfigProvider>
-                                                        <EmailVerificationProvider>
-                                                          <HideBottomBarBorderProvider>
-                                                            <IntentDialogProvider>
-                                                              <TranslateOnDeviceProvider>
-                                                                <HotkeysProvider>
-                                                                  <VerusServiceStatusProvider>
+                      <VerusServiceStatusProvider>
+                        <BetaUserStorageSync />
+                        <PolicyUpdateOverlayProvider>
+                          <LiveEventsProvider>
+                            <AgeAssuranceV2Provider>
+                              <ComposerProvider>
+                                <MessagesProvider>
+                                  {/* LabelDefsProvider MUST come before ModerationOptsProvider */}
+                                  <LabelDefsProvider>
+                                    <ModerationOptsProvider>
+                                      <LoggedOutViewProvider>
+                                        <SelectedFeedProvider>
+                                          <HiddenRepliesProvider>
+                                            <HomeBadgeProvider>
+                                              <UnreadNotifsProvider>
+                                                <BackgroundNotificationPreferencesProvider>
+                                                  <MutedThreadsProvider>
+                                                    <SafeAreaProvider>
+                                                      <ProgressGuideProvider>
+                                                        <ServiceConfigProvider>
+                                                          <EmailVerificationProvider>
+                                                            <HideBottomBarBorderProvider>
+                                                              <IntentDialogProvider>
+                                                                <TranslateOnDeviceProvider>
+                                                                  <HotkeysProvider>
                                                                     <Shell />
-                                                                  </VerusServiceStatusProvider>
-                                                                </HotkeysProvider>
-                                                              </TranslateOnDeviceProvider>
-                                                            </IntentDialogProvider>
-                                                          </HideBottomBarBorderProvider>
-                                                        </EmailVerificationProvider>
-                                                      </ServiceConfigProvider>
-                                                    </ProgressGuideProvider>
-                                                  </SafeAreaProvider>
-                                                </MutedThreadsProvider>
-                                              </BackgroundNotificationPreferencesProvider>
-                                            </UnreadNotifsProvider>
-                                          </HomeBadgeProvider>
-                                        </HiddenRepliesProvider>
-                                      </SelectedFeedProvider>
-                                    </LoggedOutViewProvider>
-                                  </ModerationOptsProvider>
-                                </LabelDefsProvider>
-                              </MessagesProvider>
-                            </ComposerProvider>
-                          </AgeAssuranceV2Provider>
-                        </LiveEventsProvider>
-                      </PolicyUpdateOverlayProvider>
+                                                                  </HotkeysProvider>
+                                                                </TranslateOnDeviceProvider>
+                                                              </IntentDialogProvider>
+                                                            </HideBottomBarBorderProvider>
+                                                          </EmailVerificationProvider>
+                                                        </ServiceConfigProvider>
+                                                      </ProgressGuideProvider>
+                                                    </SafeAreaProvider>
+                                                  </MutedThreadsProvider>
+                                                </BackgroundNotificationPreferencesProvider>
+                                              </UnreadNotifsProvider>
+                                            </HomeBadgeProvider>
+                                          </HiddenRepliesProvider>
+                                        </SelectedFeedProvider>
+                                      </LoggedOutViewProvider>
+                                    </ModerationOptsProvider>
+                                  </LabelDefsProvider>
+                                </MessagesProvider>
+                              </ComposerProvider>
+                            </AgeAssuranceV2Provider>
+                          </LiveEventsProvider>
+                        </PolicyUpdateOverlayProvider>
+                      </VerusServiceStatusProvider>
                     </QueryProvider>
                   </AnalyticsFeaturesContext>
                 </Fragment>
