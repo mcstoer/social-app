@@ -9,18 +9,26 @@ import {
   VStack,
 } from '@expo/ui/swift-ui'
 import {
+  background,
+  clipShape,
   containerBackground,
   font,
   foregroundStyle,
   frame,
+  layoutPriority,
   lineLimit,
   minimumScaleFactor,
   padding,
+  resizable,
   widgetURL,
 } from '@expo/ui/swift-ui/modifiers'
 
 export type TrendingTopicsWidgetProps = {
   emptyMessage?: string
+  /**
+   * Header for the small widget, which has no room for `title`.
+   */
+  shortTitle?: string
   title?: string
   topics?: {
     description?: string
@@ -41,12 +49,20 @@ function TrendingTopicsWidget(
   const isMedium = environment.widgetFamily === 'systemMedium'
   const topicLimit = isSmall || isMedium ? 3 : 5
   const topics = (props.topics ?? []).slice(0, topicLimit)
+  /**
+   * Width of both the butterfly and the rank column, so the header title lines
+   * up with the topic names.
+   */
+  const leadingWidth = isSmall ? 12 : 14
   const backgroundColor = isDark ? '#10161F' : '#FFFFFF'
   const textColor = isDark ? '#F1F3F5' : '#0A0A0A'
   const secondaryTextColor = isDark ? '#AEBBC9' : '#536471'
   const borderColor = isDark ? '#2E4052' : '#E5E7EB'
-  const rootDestination =
-    isSmall && topics[0] ? topics[0].destination : 'https://bsky.app/search'
+  /*
+   * Explore, tagged for `trendingWidget:explore:click` (see links.ts). Small
+   * widgets can't contain links, so this is their only tap target.
+   */
+  const rootDestination = `https://bsky.app/search?ref_src=widget&ref_size=${environment.widgetFamily}`
 
   function TopicRow({
     topic,
@@ -65,7 +81,7 @@ function TrendingTopicsWidget(
       <HStack alignment="top" spacing={5} modifiers={[padding({vertical: 3})]}>
         <Text
           modifiers={[
-            frame({width: 16, alignment: 'leading'}),
+            frame({width: leadingWidth, alignment: 'leading'}),
             font({size: 12, weight: 'medium'}),
             foregroundStyle(secondaryTextColor),
           ]}>
@@ -89,8 +105,8 @@ function TrendingTopicsWidget(
         modifiers={[padding({vertical: isMedium ? 3 : 7})]}>
         <Text
           modifiers={[
-            frame({width: 18, alignment: 'leading'}),
-            font({size: 13, weight: 'medium'}),
+            frame({width: leadingWidth, alignment: 'leading'}),
+            font({size: isMedium ? 13 : 14, weight: 'medium'}),
             foregroundStyle(secondaryTextColor),
           ]}>
           {rank}.
@@ -133,26 +149,35 @@ function TrendingTopicsWidget(
         padding({all: isSmall ? 14 : 18}),
         widgetURL(rootDestination),
       ]}>
-      {!isSmall ? (
-        <HStack spacing={6} modifiers={[padding({bottom: 4})]}>
-          <Image
-            systemName="chart.line.uptrend.xyaxis"
-            size={14}
-            color="#0085FF"
-          />
-          <Text
-            modifiers={[
-              font({size: isMedium ? 13 : 15, weight: 'bold'}),
-              foregroundStyle(textColor),
-            ]}>
-            {props.title ?? 'Trending on Bluesky'}
-          </Text>
-          <Spacer minLength={0} />
-        </HStack>
-      ) : null}
+      <HStack
+        spacing={isSmall ? 5 : 6}
+        modifiers={[padding({bottom: isSmall ? 2 : 4})]}>
+        {/* from the extension's asset catalog, see plugins/withTrendingWidget.js */}
+        <Image
+          assetName="BlueskyButterfly"
+          color="#0085FF"
+          modifiers={[
+            resizable(),
+            frame({width: leadingWidth, height: leadingWidth}),
+          ]}
+        />
+        <Text
+          modifiers={[
+            font({size: isSmall || isMedium ? 13 : 15, weight: 'bold'}),
+            foregroundStyle(textColor),
+            lineLimit(1),
+          ]}>
+          {isSmall
+            ? (props.shortTitle ?? 'Trending')
+            : (props.title ?? 'Trending on Bluesky')}
+        </Text>
+        <Spacer minLength={0} />
+      </HStack>
+      {/* the topics' layout priority leaves this only the spare room */}
+      <Spacer minLength={0} modifiers={[frame({maxHeight: 6})]} />
 
       {topics.length ? (
-        <VStack alignment="leading" spacing={0}>
+        <VStack alignment="leading" spacing={0} modifiers={[layoutPriority(1)]}>
           {topics.map((topic, index) => (
             <VStack key={topic.destination} alignment="leading" spacing={0}>
               <TopicRow topic={topic} rank={index + 1} />
@@ -175,6 +200,20 @@ function TrendingTopicsWidget(
             ]}>
             {props.emptyMessage ?? 'Open Bluesky to load trending topics.'}
           </Text>
+          {/* the whole widget opens the app, this just makes that obvious */}
+          {props.topics ? null : (
+            <Text
+              modifiers={[
+                font({size: 13, weight: 'semibold'}),
+                foregroundStyle('#FFFFFF'),
+                padding({horizontal: 14, vertical: 7}),
+                background('#0085FF'),
+                clipShape('capsule'),
+                padding({top: 6}),
+              ]}>
+              Open Bluesky
+            </Text>
+          )}
         </VStack>
       )}
     </VStack>

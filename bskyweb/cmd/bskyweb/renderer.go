@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"embed"
 	"errors"
 	"fmt"
 	"io"
+	"io/fs"
 	"path"
 	"strings"
 
@@ -15,13 +15,13 @@ import (
 
 type RendererLoader struct {
 	prefix string
-	fs     *embed.FS
+	fs     fs.FS
 }
 
-func NewRendererLoader(prefix string, fs *embed.FS) pongo2.TemplateLoader {
+func NewRendererLoader(prefix string, fsys fs.FS) pongo2.TemplateLoader {
 	return &RendererLoader{
 		prefix: prefix,
-		fs:     fs,
+		fs:     fsys,
 	}
 }
 func (l *RendererLoader) Abs(_, name string) string {
@@ -36,7 +36,7 @@ func (l *RendererLoader) Abs(_, name string) string {
 }
 
 func (l *RendererLoader) Get(path string) (io.Reader, error) {
-	b, err := l.fs.ReadFile(path)
+	b, err := fs.ReadFile(l.fs, path)
 	if err != nil {
 		return nil, fmt.Errorf("reading template %q failed: %w", path, err)
 	}
@@ -48,9 +48,9 @@ type Renderer struct {
 	Debug       bool
 }
 
-func NewRenderer(prefix string, fs *embed.FS, debug bool) *Renderer {
+func NewRenderer(prefix string, fsys fs.FS, debug bool) *Renderer {
 	return &Renderer{
-		TemplateSet: pongo2.NewSet(prefix, NewRendererLoader(prefix, fs)),
+		TemplateSet: pongo2.NewSet(prefix, NewRendererLoader(prefix, fsys)),
 		Debug:       debug,
 	}
 }

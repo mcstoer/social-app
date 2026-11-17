@@ -11,26 +11,13 @@ process.env.EXPO_PUBLIC_VERUSSKY_APP_ID ??= 'TestApp@'
 jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 )
-jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter', () => {
-  // eslint-disable-next-line import-x/no-nodejs-modules
-  const {EventEmitter} = require('events')
-  return {
-    __esModule: true,
-    default: EventEmitter,
-  }
-})
 
-jest.mock('react-native-safe-area-context', () => {
-  const inset = {top: 0, right: 0, bottom: 0, left: 0}
-  return {
-    SafeAreaProvider: jest.fn().mockImplementation(({children}) => children),
-    SafeAreaConsumer: jest.fn().mockImplementation(
-      /** @param {{children: (i: typeof inset) => unknown}} props */
-      ({children}) => children(inset),
-    ),
-    useSafeAreaInsets: jest.fn().mockImplementation(() => inset),
-  }
-})
+// The library's own mock keeps the real contexts (e.g. SafeAreaInsetsContext,
+// read by React Navigation) and supplies zero insets.
+jest.mock(
+  'react-native-safe-area-context',
+  () => require('react-native-safe-area-context/jest/mock').default,
+)
 
 jest.mock('expo-file-system/legacy', () => ({
   getInfoAsync: jest.fn().mockResolvedValue({exists: true, size: 100}),
@@ -121,6 +108,7 @@ jest.mock('expo-application', () => ({
 }))
 
 jest.mock('expo-modules-core', () => ({
+  requireOptionalNativeModule: jest.fn().mockReturnValue(null),
   requireNativeModule: jest.fn().mockImplementation(
     /** @param {string} moduleName */
     moduleName => {

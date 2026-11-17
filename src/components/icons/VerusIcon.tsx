@@ -5,15 +5,18 @@ import {type Props, useCommonSVGProps} from '#/components/icons/common'
 
 export const VerusIcon = forwardRef<Svg, Props>(
   function VerusIconImpl(props, ref) {
-    const {size, style, ...rest} = useCommonSVGProps(props)
+    const {width, height, viewBox, style, ...rest} = useCommonSVGProps(
+      props,
+      '0 0 201 201',
+    )
 
     return (
       <Svg
         {...rest}
         ref={ref}
-        viewBox="0 0 201 201"
-        width={size}
-        height={size}
+        viewBox={viewBox}
+        width={width}
+        height={height}
         style={[style]}>
         <Defs>
           <ClipPath id="clip0_1_20">
