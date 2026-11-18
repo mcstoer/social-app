@@ -52,11 +52,11 @@ function toError(e: unknown): Error {
   return e instanceof Error ? e : new Error(String(e))
 }
 
-export function zGetEncryptionAddress(
+export async function zGetEncryptionAddress(
   params: DerivationKeys,
 ): Promise<ChannelKeys> {
   try {
-    const keys = zGetEncryptionaddress(
+    const keys = await zGetEncryptionaddress(
       toArrayBuffer(params.seed),
       toArrayBuffer(params.spendingKey),
       params.hdIndex,
@@ -66,62 +66,60 @@ export function zGetEncryptionAddress(
       params.returnSecret ?? false,
     )
 
-    return Promise.resolve({
+    return {
       address: Buffer.from(keys.address),
       ivk: Buffer.from(keys.ivk),
       extfvk: Buffer.from(keys.extfvk),
       spendingKey: keys.spendingKey ? Buffer.from(keys.spendingKey) : null,
-    })
+    }
   } catch (e) {
-    return Promise.reject(toError(e))
+    throw toError(e)
   }
 }
 zGetEncryptionAddress satisfies VerusCryptoApi['zGetEncryptionAddress']
 
-export function encryptData({
+export async function encryptData({
   address,
   data_to_encrypt,
   returnSsk,
 }: EncryptParams): Promise<EncryptedPayload> {
   try {
-    const payload = encryptVData(
+    const payload = await encryptVData(
       toArrayBuffer(address),
       toArrayBuffer(data_to_encrypt),
       returnSsk ?? false,
     )
 
-    return Promise.resolve({
+    return {
       ephemeralPublicKey: Buffer.from(payload.ephemeralPublicKey),
       encrypted_data: Buffer.from(payload.encryptedData),
       symmetricKey: payload.symmetricKey
         ? Buffer.from(payload.symmetricKey)
         : null,
-    })
+    }
   } catch (e) {
-    return Promise.reject(toError(e))
+    throw toError(e)
   }
 }
 encryptData satisfies VerusCryptoApi['encryptData']
 
-export function decryptData({
+export async function decryptData({
   ivk,
   epk,
   data_to_decrypt,
   ssk,
 }: DecryptParams): Promise<Buffer> {
   try {
-    return Promise.resolve(
-      Buffer.from(
-        decryptVData(
-          toArrayBuffer(ivk),
-          toArrayBuffer(epk),
-          toArrayBuffer(data_to_decrypt),
-          toArrayBuffer(ssk),
-        ),
-      ),
+    const decrypted = await decryptVData(
+      toArrayBuffer(ivk),
+      toArrayBuffer(epk),
+      toArrayBuffer(data_to_decrypt),
+      toArrayBuffer(ssk),
     )
+
+    return Buffer.from(decrypted)
   } catch (e) {
-    return Promise.reject(toError(e))
+    throw toError(e)
   }
 }
 decryptData satisfies VerusCryptoApi['decryptData']

@@ -1295,7 +1295,7 @@ msgstr "1"
 msgid "24 hours"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:894
+#: src/screens/Login/LoginForm.tsx:906
 msgid "2FA Confirmation"
 msgstr ""
 
@@ -2579,11 +2579,11 @@ msgctxt "Name of app icon variant"
 msgid "Aurora"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:200
+#: src/components/dialogs/VerusServiceDialog.tsx:207
 msgid "Authentication (Optional)"
 msgstr "Authentication (Optional)"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:113
+#: src/components/dialogs/VerusServiceDialog.tsx:118
 msgid "Authentication failed. Please check your credentials."
 msgstr "Authentication failed. Please check your credentials."
 
@@ -2656,8 +2656,8 @@ msgstr "Awaiting review"
 #: src/screens/Login/ChooseAccountForm.tsx:99
 #: src/screens/Login/ForgotPasswordForm.tsx:123
 #: src/screens/Login/ForgotPasswordForm.tsx:128
-#: src/screens/Login/LoginForm.tsx:961
-#: src/screens/Login/LoginForm.tsx:966
+#: src/screens/Login/LoginForm.tsx:973
+#: src/screens/Login/LoginForm.tsx:978
 #: src/screens/Login/SetNewPasswordForm.tsx:136
 #: src/screens/Login/SetNewPasswordForm.tsx:142
 #: src/screens/Messages/components/ChatDisabled.tsx:161
@@ -3339,7 +3339,7 @@ msgstr ""
 msgid "Change Handle"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:1107
+#: src/screens/Login/LoginForm.tsx:1147
 msgid "Change hosting provider"
 msgstr "Change hosting provider"
 
@@ -3371,6 +3371,10 @@ msgstr "Change the items from outside. Resizing, reordering, and revealing are n
 #: src/components/Post/Translated/index.tsx:421
 msgid "Change the source language"
 msgstr "Change the source language"
+
+#: src/screens/Login/LoginForm.tsx:1123
+msgid "Change Verus service"
+msgstr "Change Verus service"
 
 #: src/screens/Settings/components/ChangePasswordDialog.tsx:71
 msgid "Change your password"
@@ -3551,7 +3555,7 @@ msgstr ""
 msgid "Choose a preset amount or enter a custom currency to donate."
 msgstr "Choose a preset amount or enter a custom currency to donate."
 
-#: src/screens/Login/LoginForm.tsx:852
+#: src/screens/Login/LoginForm.tsx:859
 msgid "Choose an account"
 msgstr "Choose an account"
 
@@ -3989,12 +3993,12 @@ msgstr "Connected"
 msgid "Connecting to service..."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:992
+#: src/screens/Login/LoginForm.tsx:1004
 msgid "Connecting to service…"
 msgstr "Connecting to service…"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:142
-#: src/screens/Login/LoginForm.tsx:998
+#: src/screens/Login/LoginForm.tsx:1010
 msgid "Connecting…"
 msgstr "Connecting…"
 
@@ -5578,7 +5582,7 @@ msgstr ""
 msgid "Enter a password"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:254
+#: src/components/dialogs/VerusServiceDialog.tsx:261
 msgid "Enter a VerusID that this service's wallet holds to have the service sign your requests. Your wallet must control the same VerusID. Leave this empty to have VerusSky sign them, your server would not sign requests if you leave this field empty."
 msgstr "Enter a VerusID that this service's wallet holds to have the service sign your requests. Your wallet must control the same VerusID. Leave this empty to have VerusSky sign them, your server would not sign requests if you leave this field empty."
 
@@ -5601,7 +5605,7 @@ msgstr ""
 msgid "Enter the 6-digit code sent to {prettyNumber}"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:910
+#: src/screens/Login/LoginForm.tsx:922
 msgid "Enter the code from your email or authenticator app"
 msgstr "Enter the code from your email or authenticator app"
 
@@ -5613,11 +5617,11 @@ msgstr ""
 msgid "Enter the email you used to create your account. We'll send you a \"reset code\" so you can set a new password."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:913
+#: src/screens/Login/LoginForm.tsx:925
 msgid "Enter the sign in code from your email or authenticator app."
 msgstr "Enter the sign in code from your email or authenticator app."
 
-#: src/screens/Login/LoginForm.tsx:737
+#: src/screens/Login/LoginForm.tsx:744
 msgid "Enter the username or email address you used when you created your account"
 msgstr ""
 
@@ -5630,7 +5634,7 @@ msgstr ""
 msgid "Enter your email address"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:785
+#: src/screens/Login/LoginForm.tsx:792
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:297
 msgid "Enter your password"
 msgstr ""
@@ -6223,7 +6227,7 @@ msgstr ""
 msgid "Failed to update Starter Pack opt-out"
 msgstr "Failed to update Starter Pack opt-out"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:134
+#: src/components/dialogs/VerusServiceDialog.tsx:141
 msgid "Failed to update the Verus Service endpoint. Please try again"
 msgstr "Failed to update the Verus Service endpoint. Please try again"
 
@@ -6763,8 +6767,8 @@ msgstr ""
 msgid "Forgot Password"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:810
 #: src/screens/Login/LoginForm.tsx:817
+#: src/screens/Login/LoginForm.tsx:824
 msgid "Forgot password?"
 msgstr ""
 
@@ -7501,16 +7505,16 @@ msgstr ""
 
 #: src/components/dialogs/ServerInput.tsx:138
 #: src/screens/Login/components/HostingProviderDialog.tsx:159
-#: src/screens/Login/LoginForm.tsx:1122
+#: src/screens/Login/LoginForm.tsx:1162
 msgid "Hosting provider"
 msgstr ""
 
 #. placeholder {0}: toNiceHostingUrl(state.pdsUrl)
-#: src/screens/Login/LoginForm.tsx:1118
+#: src/screens/Login/LoginForm.tsx:1158
 msgid "Hosting provider: {0}"
 msgstr "Hosting provider: {0}"
 
-#: src/screens/Login/LoginForm.tsx:1120
+#: src/screens/Login/LoginForm.tsx:1160
 msgid "Hosting provider: Bluesky"
 msgstr "Hosting provider: Bluesky"
 
@@ -7566,7 +7570,7 @@ msgstr ""
 msgid "If none are selected, all languages will be shown in your feeds."
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:203
+#: src/components/dialogs/VerusServiceDialog.tsx:210
 msgid "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
 msgstr "If the Verus service requires authentication, enter the credentials below. Credentials will only be stored locally on your device."
 
@@ -7813,7 +7817,7 @@ msgstr "Include posts made until this date"
 msgid "Include video timestamp ({videoTimestamp})"
 msgstr "Include video timestamp ({videoTimestamp})"
 
-#: src/screens/Login/LoginForm.tsx:271
+#: src/screens/Login/LoginForm.tsx:273
 msgid "Incorrect username or password"
 msgstr ""
 
@@ -7869,7 +7873,7 @@ msgstr "Introducing group chats"
 msgid "Introducing saved posts AKA bookmarks"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:246
+#: src/screens/Login/LoginForm.tsx:248
 #: src/screens/Settings/components/DisableEmail2FADialog.tsx:80
 msgid "Invalid 2FA confirmation code."
 msgstr ""
@@ -7887,7 +7891,7 @@ msgctxt "toast"
 msgid "Invalid interaction settings."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:617
+#: src/screens/Login/LoginForm.tsx:619
 msgid "Invalid login response. Please try again or sign in manually."
 msgstr "Invalid login response. Please try again or sign in manually."
 
@@ -9071,15 +9075,15 @@ msgstr ""
 msgid "Missing media"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:570
+#: src/screens/Login/LoginForm.tsx:572
 msgid "Missing password from VerusID sign in. Please sign in manually."
 msgstr "Missing password from VerusID sign in. Please sign in manually."
 
-#: src/screens/Login/LoginForm.tsx:579
+#: src/screens/Login/LoginForm.tsx:581
 msgid "Missing username and password from VerusID sign in. Please sign in manually."
 msgstr "Missing username and password from VerusID sign in. Please sign in manually."
 
-#: src/screens/Login/LoginForm.tsx:566
+#: src/screens/Login/LoginForm.tsx:568
 msgid "Missing username from VerusID sign in. Please sign in manually."
 msgstr "Missing username from VerusID sign in. Please sign in manually."
 
@@ -9372,7 +9376,7 @@ msgstr "Navigate to Starter Pack"
 
 #: src/screens/Login/ForgotPasswordForm.tsx:148
 #: src/screens/Login/ForgotPasswordForm.tsx:173
-#: src/screens/Login/LoginForm.tsx:1051
+#: src/screens/Login/LoginForm.tsx:1063
 msgid "Navigates to the next screen"
 msgstr ""
 
@@ -9574,7 +9578,7 @@ msgstr "New reply from <0/>"
 msgid "New Starter Pack"
 msgstr "New Starter Pack"
 
-#: src/screens/Login/LoginForm.tsx:1071
+#: src/screens/Login/LoginForm.tsx:1083
 msgid "New to Bluesky? <0>Sign up</0>"
 msgstr "New to Bluesky? <0>Sign up</0>"
 
@@ -10475,7 +10479,7 @@ msgstr "Opens {displayName} feed"
 msgid "Opens a dialog to add a content warning to your post"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:1108
+#: src/screens/Login/LoginForm.tsx:1148
 msgid "Opens a dialog to change the hosting provider you sign in to"
 msgstr "Opens a dialog to change the hosting provider you sign in to"
 
@@ -10578,7 +10582,7 @@ msgstr "Opens the invite friends sheet to share your profile"
 msgid "Opens the post composer"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:1050
+#: src/screens/Login/LoginForm.tsx:1062
 msgid "Opens the VerusID sign in on this device"
 msgstr "Opens the VerusID sign in on this device"
 
@@ -10737,10 +10741,10 @@ msgstr "Party GIFs"
 
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:328
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:332
-#: src/components/dialogs/VerusServiceDialog.tsx:228
-#: src/components/dialogs/VerusServiceDialog.tsx:232
-#: src/screens/Login/LoginForm.tsx:765
-#: src/screens/Login/LoginForm.tsx:771
+#: src/components/dialogs/VerusServiceDialog.tsx:235
+#: src/components/dialogs/VerusServiceDialog.tsx:239
+#: src/screens/Login/LoginForm.tsx:772
+#: src/screens/Login/LoginForm.tsx:778
 #: src/screens/Settings/AccountSettings.tsx:124
 #: src/screens/Settings/AccountSettings.tsx:128
 #: src/screens/Settings/components/DeleteAccountDialog.tsx:292
@@ -10993,7 +10997,7 @@ msgstr ""
 msgid "Please double-check that you have entered your email address correctly."
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:80
+#: src/components/dialogs/VerusServiceDialog.tsx:85
 msgid "Please enter a password for the provided username"
 msgstr "Please enter a password for the provided username"
 
@@ -11005,11 +11009,11 @@ msgstr ""
 msgid "Please enter a password. It must be at least 8 characters long."
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:62
+#: src/components/dialogs/VerusServiceDialog.tsx:67
 msgid "Please enter a service URL"
 msgstr "Please enter a service URL"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:75
+#: src/components/dialogs/VerusServiceDialog.tsx:80
 msgid "Please enter a system ID"
 msgstr "Please enter a system ID"
 
@@ -11032,7 +11036,7 @@ msgstr ""
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:70
+#: src/components/dialogs/VerusServiceDialog.tsx:75
 msgid "Please enter a valid URL"
 msgstr "Please enter a valid URL"
 
@@ -11085,11 +11089,11 @@ msgid "Please enter your new email address."
 msgstr ""
 
 #: src/components/dialogs/VerusIDCredentialUpdateDialog.tsx:202
-#: src/screens/Login/LoginForm.tsx:315
+#: src/screens/Login/LoginForm.tsx:317
 msgid "Please enter your password"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:309
+#: src/screens/Login/LoginForm.tsx:311
 msgid "Please enter your username"
 msgstr ""
 
@@ -11927,8 +11931,8 @@ msgstr "Remove link to VerusID"
 msgid "Remove Link to VerusID"
 msgstr "Remove Link to VerusID"
 
-#: src/screens/Login/LoginForm.tsx:836
 #: src/screens/Login/LoginForm.tsx:843
+#: src/screens/Login/LoginForm.tsx:850
 msgid "Remove linked VerusID"
 msgstr "Remove linked VerusID"
 
@@ -12500,7 +12504,7 @@ msgstr ""
 msgid "Reset password"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:811
+#: src/screens/Login/LoginForm.tsx:818
 msgid "Reset your password by sending a code to your email"
 msgstr "Reset your password by sending a code to your email"
 
@@ -12526,7 +12530,7 @@ msgstr "Restored post"
 msgid "Resync contacts"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:982
+#: src/screens/Login/LoginForm.tsx:994
 msgid "Retries signing in"
 msgstr ""
 
@@ -12546,8 +12550,8 @@ msgstr ""
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:56
 #: src/components/Post/Embed/VideoEmbed/VideoEmbedInner/VideoFallback.tsx:59
 #: src/components/StarterPack/ProfileStarterPacks.tsx:371
-#: src/screens/Login/LoginForm.tsx:981
-#: src/screens/Login/LoginForm.tsx:987
+#: src/screens/Login/LoginForm.tsx:993
+#: src/screens/Login/LoginForm.tsx:999
 #: src/screens/Messages/ChatList.tsx:429
 #: src/screens/Messages/components/MessageListError.tsx:24
 #: src/screens/Messages/Inbox.tsx:211
@@ -12704,8 +12708,8 @@ msgstr ""
 msgid "Save keys"
 msgstr "Save keys"
 
-#: src/screens/Login/LoginForm.tsx:824
 #: src/screens/Login/LoginForm.tsx:831
+#: src/screens/Login/LoginForm.tsx:838
 msgid "Save my sign in with VerusID"
 msgstr "Save my sign in with VerusID"
 
@@ -12810,7 +12814,7 @@ msgstr "Scan the QR code below or press Open Verus Wallet to get your keys."
 msgid "Scan the QR code below or press Open Verus Wallet to sign the linking details with your VerusID {rfqn}."
 msgstr "Scan the QR code below or press Open Verus Wallet to sign the linking details with your VerusID {rfqn}."
 
-#: src/screens/Login/LoginForm.tsx:882
+#: src/screens/Login/LoginForm.tsx:889
 msgid "Scan the QR code below or press Sign in to continue"
 msgstr "Scan the QR code below or press Sign in to continue"
 
@@ -13300,8 +13304,8 @@ msgstr ""
 msgid "Server address"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:162
-#: src/components/dialogs/VerusServiceDialog.tsx:166
+#: src/components/dialogs/VerusServiceDialog.tsx:169
+#: src/components/dialogs/VerusServiceDialog.tsx:173
 msgid "Service URL"
 msgstr "Service URL"
 
@@ -13322,7 +13326,7 @@ msgstr ""
 msgid "Set precisely which groups of people can reply to your post"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:154
+#: src/components/dialogs/VerusServiceDialog.tsx:161
 msgid "Set the Verus service endpoint to use for VerusID and media."
 msgstr "Set the Verus service endpoint to use for VerusID and media."
 
@@ -13338,11 +13342,11 @@ msgstr ""
 msgid "Set your birthdate below and we'll get you back to posting and exploring in no time!"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:752
+#: src/screens/Login/LoginForm.tsx:759
 msgid "set your hosting provider manually"
 msgstr "set your hosting provider manually"
 
-#: src/screens/Login/LoginForm.tsx:936
+#: src/screens/Login/LoginForm.tsx:948
 msgid "Set your hosting provider manually"
 msgstr "Set your hosting provider manually"
 
@@ -13724,9 +13728,9 @@ msgstr ""
 #: src/screens/Hashtag.tsx:233
 #: src/screens/Login/index.tsx:143
 #: src/screens/Login/index.tsx:165
-#: src/screens/Login/LoginForm.tsx:665
-#: src/screens/Login/LoginForm.tsx:1047
-#: src/screens/Login/LoginForm.tsx:1061
+#: src/screens/Login/LoginForm.tsx:667
+#: src/screens/Login/LoginForm.tsx:1059
+#: src/screens/Login/LoginForm.tsx:1073
 #: src/screens/Messages/JoinRequest.tsx:294
 #: src/screens/Messages/JoinRequest.tsx:300
 #: src/screens/Search/SearchResults.tsx:399
@@ -13748,7 +13752,7 @@ msgstr ""
 msgid "Sign in as {0}"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:864
+#: src/screens/Login/LoginForm.tsx:871
 msgid "Sign in as {accountName}"
 msgstr "Sign in as {accountName}"
 
@@ -13786,13 +13790,13 @@ msgstr "Sign in to VerusSky or create a new account"
 msgid "Sign in to view post"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:1008
-#: src/screens/Login/LoginForm.tsx:1041
+#: src/screens/Login/LoginForm.tsx:1020
+#: src/screens/Login/LoginForm.tsx:1053
 msgid "Sign in with VerusID"
 msgstr "Sign in with VerusID"
 
-#: src/screens/Login/LoginForm.tsx:1007
-#: src/screens/Login/LoginForm.tsx:1039
+#: src/screens/Login/LoginForm.tsx:1019
+#: src/screens/Login/LoginForm.tsx:1051
 msgid "Sign in without VerusID"
 msgstr "Sign in without VerusID"
 
@@ -13818,11 +13822,11 @@ msgstr ""
 msgid "Sign out?"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:251
+#: src/components/dialogs/VerusServiceDialog.tsx:258
 msgid "Sign requests with your VerusID (Optional)"
 msgstr "Sign requests with your VerusID (Optional)"
 
-#: src/screens/Login/LoginForm.tsx:1074
+#: src/screens/Login/LoginForm.tsx:1086
 msgid "Sign up"
 msgstr "Sign up"
 
@@ -13837,8 +13841,8 @@ msgstr ""
 msgid "Signed in as @{0}"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:264
-#: src/components/dialogs/VerusServiceDialog.tsx:268
+#: src/components/dialogs/VerusServiceDialog.tsx:271
+#: src/components/dialogs/VerusServiceDialog.tsx:275
 msgid "Signing VerusID"
 msgstr "Signing VerusID"
 
@@ -14026,7 +14030,7 @@ msgstr ""
 msgid "Sorry, we're unable to load account suggestions at this time."
 msgstr ""
 
-#: src/App.tsx:140
+#: src/App.tsx:141
 #: src/App.web.tsx:124
 msgid "Sorry! Your session expired. Please sign in again."
 msgstr ""
@@ -14398,7 +14402,7 @@ msgstr "Switch OTA channel"
 msgid "Switch to {0}"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:1010
+#: src/screens/Login/LoginForm.tsx:1022
 msgid "Switches login method"
 msgstr "Switches login method"
 
@@ -14409,8 +14413,8 @@ msgstr "Switches login method"
 msgid "System"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:179
-#: src/components/dialogs/VerusServiceDialog.tsx:183
+#: src/components/dialogs/VerusServiceDialog.tsx:186
+#: src/components/dialogs/VerusServiceDialog.tsx:190
 msgid "System ID"
 msgstr "System ID"
 
@@ -15718,7 +15722,7 @@ msgstr ""
 msgid "Unable to access location. You'll need to visit your system settings to enable location services for Bluesky."
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:120
+#: src/components/dialogs/VerusServiceDialog.tsx:125
 msgid "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again."
 msgstr "Unable to connect to the Verus Service endpoint. Please verify your input details are correct and try again."
 
@@ -15747,7 +15751,7 @@ msgstr ""
 
 #: src/screens/Login/ForgotPasswordForm.tsx:70
 #: src/screens/Login/index.tsx:100
-#: src/screens/Login/LoginForm.tsx:276
+#: src/screens/Login/LoginForm.tsx:278
 #: src/screens/Login/SetNewPasswordForm.tsx:82
 #: src/screens/Signup/index.tsx:89
 msgid "Unable to contact your service. Please check your Internet connection."
@@ -15787,15 +15791,15 @@ msgstr ""
 msgid "Unable to sign VerusID request"
 msgstr "Unable to sign VerusID request"
 
-#: src/screens/Login/LoginForm.tsx:268
+#: src/screens/Login/LoginForm.tsx:270
 msgid "Unable to verify Bluesky credentials. Please sign in manually."
 msgstr "Unable to verify Bluesky credentials. Please sign in manually."
 
-#: src/screens/Login/LoginForm.tsx:619
+#: src/screens/Login/LoginForm.tsx:621
 msgid "Unable to verify the signer of the login."
 msgstr "Unable to verify the signer of the login."
 
-#: src/screens/Login/LoginForm.tsx:533
+#: src/screens/Login/LoginForm.tsx:535
 msgid "Unable to verify the VerusID sign in. Please try again or sign in manually."
 msgstr "Unable to verify the VerusID sign in. Please try again or sign in manually."
 
@@ -16103,8 +16107,8 @@ msgstr "Until"
 msgid "Up to 50 people"
 msgstr "Up to 50 people"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:284
-#: src/components/dialogs/VerusServiceDialog.tsx:288
+#: src/components/dialogs/VerusServiceDialog.tsx:291
+#: src/components/dialogs/VerusServiceDialog.tsx:295
 #: src/screens/Settings/components/OTAInfo.tsx:66
 #: src/screens/Settings/components/OTAInfo.tsx:82
 msgid "Update"
@@ -16154,11 +16158,11 @@ msgstr "Update the sign in credentials stored in your VerusID."
 msgid "Update to {domain}"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:151
+#: src/components/dialogs/VerusServiceDialog.tsx:158
 msgid "Update Verus Service Endpoint"
 msgstr "Update Verus Service Endpoint"
 
-#: src/components/dialogs/VerusServiceDialog.tsx:142
+#: src/components/dialogs/VerusServiceDialog.tsx:149
 msgid "Update Verus Service Instance"
 msgstr "Update Verus Service Instance"
 
@@ -16340,8 +16344,8 @@ msgctxt "toast"
 msgid "User list updated"
 msgstr ""
 
-#: src/components/dialogs/VerusServiceDialog.tsx:212
-#: src/components/dialogs/VerusServiceDialog.tsx:216
+#: src/components/dialogs/VerusServiceDialog.tsx:219
+#: src/components/dialogs/VerusServiceDialog.tsx:223
 msgid "Username"
 msgstr "Username"
 
@@ -16361,11 +16365,11 @@ msgstr "Username is available"
 msgid "Username must only contain letters (a-z), numbers, and hyphens"
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:704
+#: src/screens/Login/LoginForm.tsx:711
 msgid "Username or email"
 msgstr "Username or email"
 
-#: src/screens/Login/LoginForm.tsx:716
+#: src/screens/Login/LoginForm.tsx:723
 msgid "Username or email address"
 msgstr ""
 
@@ -16378,6 +16382,10 @@ msgstr ""
 #: src/components/WhoCanReply.tsx:306
 msgid "users following <0>@{0}</0>"
 msgstr ""
+
+#: src/screens/Login/LoginForm.tsx:1119
+msgid "Using the {system} Verus service at {host}. <0>Change</0>"
+msgstr "Using the {system} Verus service at {host}. <0>Change</0>"
 
 #: src/screens/Settings/components/ChangeHandleDialog.tsx:451
 msgid "Value:"
@@ -16520,7 +16528,7 @@ msgstr "VerusID"
 msgid "VerusID Name"
 msgstr "VerusID Name"
 
-#: src/screens/Login/LoginForm.tsx:878
+#: src/screens/Login/LoginForm.tsx:885
 msgid "VerusID Sign in"
 msgstr "VerusID Sign in"
 
@@ -16893,7 +16901,7 @@ msgstr "We could not connect to the service that provides this custom feed. It m
 msgid "We could not find this list. It was probably deleted."
 msgstr ""
 
-#: src/screens/Login/LoginForm.tsx:748
+#: src/screens/Login/LoginForm.tsx:755
 msgid "We couldn't find an account with that username. Please check that you've typed it correctly, or <0>set your hosting provider manually</0>."
 msgstr "We couldn't find an account with that username. Please check that you've typed it correctly, or <0>set your hosting provider manually</0>."
 
@@ -16925,7 +16933,7 @@ msgstr "We couldn't load your account settings. Check your internet connection a
 msgid "We couldn’t reach this link. Check it, or save anyway."
 msgstr "We couldn’t reach this link. Check it, or save anyway."
 
-#: src/screens/Login/LoginForm.tsx:932
+#: src/screens/Login/LoginForm.tsx:944
 msgid "We couldn’t verify your hosting provider. Check your internet connection, or <0>set your hosting provider manually</0>."
 msgstr "We couldn’t verify your hosting provider. Check your internet connection, or <0>set your hosting provider manually</0>."
 
@@ -18248,7 +18256,7 @@ msgstr ""
 msgid "Your VerusID {rfqn} has been successfully linked to this account."
 msgstr "Your VerusID {rfqn} has been successfully linked to this account."
 
-#: src/screens/Login/LoginForm.tsx:856
+#: src/screens/Login/LoginForm.tsx:863
 msgid "Your VerusID has saved sign ins for these accounts."
 msgstr "Your VerusID has saved sign ins for these accounts."
 

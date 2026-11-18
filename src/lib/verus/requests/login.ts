@@ -99,7 +99,8 @@ export async function processLoginResponse(
   ivk: Buffer,
 ): Promise<LoginResponse> {
   assertResponseMatchesRequest(request, signedResponse)
-  // Verus Desktop may answer unencrypted; then this returns it unchanged.
+  // Verus Mobile and Verus Desktop encrypt the details to the request's address;
+  // an unencrypted reply is refused.
   const response = await decryptResponseDetails(request, signedResponse, ivk)
 
   // remove auth ordinal

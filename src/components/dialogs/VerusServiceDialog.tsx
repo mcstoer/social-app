@@ -59,10 +59,10 @@ function VerusServiceInner({onUpdate}: {onUpdate?: () => void}) {
     url !== state.url ||
     system !== state.system ||
     signingIdentity.trim() !== (state.signingIdentity || '') ||
-    (username !== (state.auth?.username || '') &&
-      password !== (state.auth?.password || ''))
+    username !== (state.auth?.username || '') ||
+    password !== (state.auth?.password || '')
 
-  const onUpdate = async () => {
+  const onSave = async () => {
     if (!url.trim()) {
       setError(_(msg`Please enter a service URL`))
       return
@@ -289,7 +289,7 @@ function VerusServiceInner({onUpdate}: {onUpdate?: () => void}) {
             color="primary"
             size="large"
             label={_(msg`Update`)}
-            onPress={() => void onUpdate()}
+            onPress={() => void onSave()}
             disabled={!hasChanges || isUpdating}>
             <ButtonText>
               <Trans>Update</Trans>
