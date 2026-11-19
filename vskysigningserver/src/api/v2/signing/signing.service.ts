@@ -1,9 +1,10 @@
 import {GenericRequest} from 'verus-typescript-primitives'
 
-import {idInterface, signingAddress} from '#/config'
-import {fetchWIF} from '#/services/signing'
 import {v2StoreInstance} from '#/api/v2/common/request-store'
+import {getRequestExpiry} from '#/api/v2/helpers/requestExpiry'
 import {createSigData} from '#/api/v2/helpers/signData'
+import {idInterface, REQUEST_TTL_SECONDS, signingAddress} from '#/config'
+import {fetchWIF} from '#/services/signing'
 
 export class SigningService {
   async signGenericRequest(buffer: Buffer): Promise<GenericRequest> {
@@ -21,7 +22,11 @@ export class SigningService {
     const requestID = signed.requestID
     if (requestID) {
       const storeKey = requestID.toAddress()
-      v2StoreInstance.setRequest(storeKey, signed)
+      v2StoreInstance.setRequest(
+        storeKey,
+        signed,
+        getRequestExpiry(signed, REQUEST_TTL_SECONDS),
+      )
     }
 
     return signed

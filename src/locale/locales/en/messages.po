@@ -15787,7 +15787,15 @@ msgstr "Unable to load your account"
 msgid "Unable to resolve handle"
 msgstr ""
 
-#: src/lib/strings/errors.ts:85
+#: src/lib/strings/errors.ts:89
+msgid "Unable to send VerusID request to the VerusSky server"
+msgstr "Unable to send VerusID request to the VerusSky server"
+
+#: src/lib/strings/errors.ts:88
+msgid "Unable to send VerusID request to the VerusSky server: {reason}"
+msgstr "Unable to send VerusID request to the VerusSky server: {reason}"
+
+#: src/lib/strings/errors.ts:92
 msgid "Unable to sign VerusID request"
 msgstr "Unable to sign VerusID request"
 

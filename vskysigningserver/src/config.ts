@@ -31,6 +31,36 @@ export const processAddress = (address: string, chain: string) => {
 
 export const signingAddress = processAddress(rawSigningAddress, CHAIN)
 
+// The i-address of the chain this server works on.
+export const SYSTEM_ID = processAddress(CHAIN, CHAIN)
+
+// Reads a whole number of at least 1 from the environment, or the default.
+const readPositiveInt = (name: string, fallback: number): number => {
+  const raw = process.env[name]
+  if (raw === undefined || raw.trim() === '') {
+    return fallback
+  }
+
+  const value = Number(raw)
+  if (!Number.isInteger(value) || value < 1) {
+    throw new Error(`${name} must be a whole number of at least 1`)
+  }
+  return value
+}
+
+// The longest a request waits for its reply before the server forgets it.
+// A request whose authentication details expire sooner is forgotten then.
+// Matches the expiry VerusSky gives authentication requests.
+export const REQUEST_TTL_SECONDS = readPositiveInt('REQUEST_TTL_SECONDS', 3600)
+
+// The most requests the server keeps waiting at once.
+export const MAX_PENDING_REQUESTS = readPositiveInt(
+  'MAX_PENDING_REQUESTS',
+  10_000,
+)
+
+export const MAX_ENVELOPE_BODY_SIZE = '64kb'
+
 export const verusDaemonConfig = fetchVerusDaemonConfig(
   CHAIN,
   process.env.VERUS_CONFIG_PATH,

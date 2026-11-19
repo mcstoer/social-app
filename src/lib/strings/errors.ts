@@ -81,6 +81,13 @@ export function cleanError(e: unknown): string {
     return t`Unable to resolve handle`
   }
   // VerusSky specific errors.
+  if (str.includes('Registering request failed')) {
+    // Keep the server's reason, such as the request having expired.
+    const reason = str.split('Registering request failed:')[1]?.trim()
+    return reason
+      ? t`Unable to send VerusID request to the VerusSky server: ${reason}`
+      : t`Unable to send VerusID request to the VerusSky server`
+  }
   if (str.includes('Signing request failed')) {
     return t`Unable to sign VerusID request`
   }

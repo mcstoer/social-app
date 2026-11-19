@@ -1,5 +1,6 @@
 import {raw, type RequestHandler, Router} from 'express'
 
+import {MAX_ENVELOPE_BODY_SIZE} from '#/config'
 import {signingController} from './signing.controller'
 
 const signingRouter = Router()
@@ -8,7 +9,7 @@ const signingRouter = Router()
 signingRouter.use(
   raw({
     type: 'application/octet-stream',
-    limit: '10mb',
+    limit: MAX_ENVELOPE_BODY_SIZE,
   }),
 )
 

@@ -1,5 +1,6 @@
 import {type Request, type Response} from 'express'
 
+import {StoreFullError} from '#/services/RequestResponseStore'
 import {signingService} from './signing.service'
 
 export class SigningController {
@@ -13,6 +14,10 @@ export class SigningController {
         .setHeader('Content-Type', 'application/octet-stream')
         .send(signed.toBuffer())
     } catch (error) {
+      if (error instanceof StoreFullError) {
+        res.status(503).send('Too many pending requests. Try again later.')
+        return
+      }
       console.error('Error signing request:', error)
       res.status(500).json({message: 'Internal server error'})
     }

@@ -14,7 +14,7 @@
     "compile": "tsc",
     "pretest": "pnpm run compile",
     "posttest": "pnpm run lint",
-    "test": "jest"
+    "test": "tsx --test test/*.test.ts"
   },
   "dependencies": {
     "@types/bn.js": "5.1.1",

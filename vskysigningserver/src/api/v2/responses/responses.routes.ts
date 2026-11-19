@@ -1,5 +1,6 @@
 import {raw, type RequestHandler, Router} from 'express'
 
+import {MAX_ENVELOPE_BODY_SIZE} from '#/config'
 import {responsesController} from './responses.controller'
 
 const router = Router()
@@ -14,7 +15,7 @@ const webhookRouter = Router()
 webhookRouter.use(
   raw({
     type: 'application/octet-stream',
-    limit: '10mb',
+    limit: MAX_ENVELOPE_BODY_SIZE,
   }),
 )
 webhookRouter.post(

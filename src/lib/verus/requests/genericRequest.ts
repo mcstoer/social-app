@@ -19,6 +19,7 @@ import {VERUSSKY_APP_ID} from '#/env/verussky'
 
 const RESPONSES_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/responses`
 const SIGNING_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/signing`
+const REQUESTS_ENDPOINT = `${LOCAL_DEV_VSKY_SERVER}/api/v2/requests`
 
 // useIntentHandler receives it.
 export const RESPONSE_REDIRECT_URI = 'bluesky://intent/verusid-response'
@@ -31,6 +32,11 @@ const responseURIs = IS_NATIVE
       ),
     ]
   : [ResponseURI.fromUriString(RESPONSES_ENDPOINT, ResponseURI.TYPE_POST)]
+
+// Wallets post the reply to the VerusSky server instead of opening a link.
+const repliesArePosted = responseURIs.some(uri =>
+  uri.type.eq(ResponseURI.TYPE_POST),
+)
 
 export interface GenericRequestOptions {
   /**
@@ -159,6 +165,25 @@ async function signGenericRequestWithService(
   return request
 }
 
+/**
+ * Tells the VerusSky server about a request that it didn't sign, so it accepts
+ * the reply the wallet posts there. The server checks the signature first.
+ */
+async function registerGenericRequest(request: GenericRequest): Promise<void> {
+  const response = await fetch(REQUESTS_ENDPOINT, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/octet-stream',
+    },
+    body: new Uint8Array(request.toBuffer()),
+  })
+
+  if (!response.ok) {
+    const reason = (await response.text().catch(() => '')).trim()
+    throw new Error(`Registering request failed: ${reason || response.status}`)
+  }
+}
+
 export async function createAndSignGenericRequest(
   verusIdInterface: VerusIdInterface,
   ordinals: OrdinalVDXFObject[],
@@ -176,12 +201,16 @@ export async function createAndSignGenericRequest(
   )
 
   if (signingIdentity) {
-    return signGenericRequestWithService(
+    const signed = await signGenericRequestWithService(
       verusIdInterface,
       system,
       request,
       signingIdentity,
     )
+    if (repliesArePosted) {
+      await registerGenericRequest(signed)
+    }
+    return signed
   }
 
   const signed = await signGenericRequest(request)
