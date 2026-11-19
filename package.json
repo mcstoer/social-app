@@ -179,7 +179,7 @@
     "@types/invariant": "^2.2.37",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^24.12.2",
-    "@veruszsupportlib/react-native-veruszsupport": "file:../veruszsupportlibrary/modules/react-native-veruszsupport",
+    "@veruszsupportlib/react-native-veruszsupport": "link:../veruszsupportlibrary/modules/react-native-veruszsupport",
     "array.prototype.findlast": "^1.2.3",
     "array.prototype.findlastindex": "^1.2.6",
     "assert": "2.1.0",

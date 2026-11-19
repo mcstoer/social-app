@@ -2,12 +2,7 @@
  * Native implementation. Runs the same Rust as the web build, through the
  * React Native package of veruszsupportlibrary.
  */
-import {
-  decryptVData,
-  encryptVData,
-  zGetEncryptionaddress,
-  ZSupportError,
-} from '@veruszsupportlib/react-native-veruszsupport'
+import * as zsupport from '@veruszsupportlib/react-native-veruszsupport'
 // eslint-disable-next-line import-x/no-nodejs-modules
 import {Buffer} from 'buffer'
 import {DataDescriptor, VdxfUniValue} from 'verus-typescript-primitives'
@@ -42,10 +37,9 @@ function toArrayBuffer(bytes?: Buffer | null): ArrayBuffer | undefined {
 
   return Uint8Array.from(bytes).buffer
 }
-
 // Rethrows a native module error as a predifned Rust error.
 function toError(e: unknown): Error {
-  if (e && ZSupportError.instanceOf(e)) {
+  if (e && zsupport.VerusZSupportError.instanceOf(e)) {
     return new Error(e.inner.message)
   }
 
@@ -56,7 +50,7 @@ export async function zGetEncryptionAddress(
   params: DerivationKeys,
 ): Promise<ChannelKeys> {
   try {
-    const keys = await zGetEncryptionaddress(
+    const keys = await zsupport.zGetEncryptionAddress(
       toArrayBuffer(params.seed),
       toArrayBuffer(params.spendingKey),
       params.hdIndex,
@@ -84,7 +78,7 @@ export async function encryptData({
   returnSsk,
 }: EncryptParams): Promise<EncryptedPayload> {
   try {
-    const payload = await encryptVData(
+    const payload = await zsupport.encryptData(
       toArrayBuffer(address),
       toArrayBuffer(data_to_encrypt),
       returnSsk ?? false,
@@ -110,7 +104,7 @@ export async function decryptData({
   ssk,
 }: DecryptParams): Promise<Buffer> {
   try {
-    const decrypted = await decryptVData(
+    const decrypted = await zsupport.decryptData(
       toArrayBuffer(ivk),
       toArrayBuffer(epk),
       toArrayBuffer(data_to_decrypt),
