@@ -32,6 +32,11 @@
           "expo-notifications",
           "expo-media-library"
         ]
+      },
+      "ios": {
+        "exclude": [
+          "@veruszsupportlib/react-native-veruszsupport"
+        ]
       }
     },
     "install": {
@@ -181,6 +186,7 @@
     "@types/invariant": "^2.2.37",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^24.12.2",
+    "@veruszsupportlib/react-native-veruszsupport": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/zsupport/veruszsupportlib-react-native-veruszsupport-1.0.0.tgz",
     "array.prototype.findlast": "^1.2.3",
     "array.prototype.findlastindex": "^1.2.6",
     "assert": "2.1.0",

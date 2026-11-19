@@ -4,6 +4,7 @@ import {Buffer} from 'buffer'
 import {type DataDescriptor} from 'verus-typescript-primitives'
 import * as zsupport from 'veruszsupportlibrary'
 
+import {assertDerivationKeys, callZsupport} from './crypto.shared'
 import {
   type ChannelKeys,
   type DecryptDescriptorParams,
@@ -23,9 +24,12 @@ export type {
   EncryptParams,
   VerusCryptoApi,
 } from './crypto.types'
+export {VerusCryptoError} from './errors'
 
 export function zGetEncryptionAddress(params: DerivationKeys): ChannelKeys {
-  const keys = zsupport.z_getEncryptionAddress(params)
+  assertDerivationKeys(params)
+
+  const keys = callZsupport(() => zsupport.z_getEncryptionAddress(params))
   return {
     address: Buffer.from(keys.address),
     ivk: Buffer.from(keys.ivk),
@@ -40,11 +44,9 @@ export function encryptData({
   data_to_encrypt,
   returnSsk,
 }: EncryptParams): EncryptedPayload {
-  const payload = zsupport.encryptData({
-    address,
-    data: data_to_encrypt,
-    returnSsk,
-  })
+  const payload = callZsupport(() =>
+    zsupport.encryptData({address, data: data_to_encrypt, returnSsk}),
+  )
   return {
     ephemeralPublicKey: Buffer.from(payload.ephemeralPublicKey),
     encrypted_data: Buffer.from(payload.objectdata),
@@ -61,15 +63,16 @@ export function decryptData({
   data_to_decrypt,
   ssk,
 }: DecryptParams): Buffer {
-  return Buffer.from(
+  const data = callZsupport(() =>
     zsupport.decryptData({objectdata: data_to_decrypt, epk, ivk, ssk}),
   )
+  return Buffer.from(data)
 }
 decryptData satisfies VerusCryptoApi['decryptData']
 
 export function decryptDescriptor(
   params: DecryptDescriptorParams,
 ): DataDescriptor {
-  return zsupport.decryptDescriptor(params)
+  return callZsupport(() => zsupport.decryptDescriptor(params))
 }
 decryptDescriptor satisfies VerusCryptoApi['decryptDescriptor']
