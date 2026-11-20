@@ -15761,6 +15761,10 @@ msgstr ""
 msgid "Unable to delete"
 msgstr ""
 
+#: src/lib/strings/errors.ts:95
+msgid "Unable to encrypt or decrypt VerusID data"
+msgstr "Unable to encrypt or decrypt VerusID data"
+
 #: src/screens/Messages/JoinRequests.tsx:355
 msgid "Unable to fetch join requests."
 msgstr "Unable to fetch join requests."

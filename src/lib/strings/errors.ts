@@ -91,6 +91,9 @@ export function cleanError(e: unknown): string {
   if (str.includes('Signing request failed')) {
     return t`Unable to sign VerusID request`
   }
+  if (str.startsWith('VerusZSupportError: ')) {
+    return t`Unable to encrypt or decrypt VerusID data`
+  }
   return toDisplayString(e, str)
 }
 
