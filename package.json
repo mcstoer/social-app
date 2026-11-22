@@ -179,7 +179,7 @@
     "@types/invariant": "^2.2.37",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^24.12.2",
-    "@veruszsupportlib/react-native-veruszsupport": "link:../veruszsupportlibrary/modules/react-native-veruszsupport",
+    "@veruszsupportlib/react-native-veruszsupport": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz",
     "array.prototype.findlast": "^1.2.3",
     "array.prototype.findlastindex": "^1.2.6",
     "assert": "2.1.0",
@@ -302,7 +302,8 @@
     "verus-typescript-primitives": "git+https://github.com/VerusCoin/verus-typescript-primitives.git#d5e3068021cfa83e3aae489403f4d63aad0c1a6c",
     "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client.git#f3dcd552d6940422e875f8f657ee3d8e2097b37b",
     "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client.git#3c5b0fe70f6a67154988c2ecf63b6a4579fe60cb",
-    "veruszsupportlibrary": "github:iamahmedshahh/veruszsupportlibrary#cf318db10905ea53b23c9b7d69462d8508825430",
+    "veruszsupportlib": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz",
+    "veruszsupportlibrary": "file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz",
     "vm-browserify": "1.1.2",
     "zod": "^3.25.76"
   },

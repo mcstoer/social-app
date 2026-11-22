@@ -230,7 +230,6 @@ patchedDependencies:
   react-native-screens@4.30.0: 18e03b9c4fbb68c76cd490df5afbafecb68381b8b49cb04459667b682711e840
   react-native-svg@15.16.0: ff404c031ff8a5d4ae26dcd41c3b59ddbad9953e4fabfc1df7368cb969e5032e
   react-native@0.88.1: 905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019
-  veruszsupportlib: d189a30bee586c3c9ddad17effe6ea6121e17f71698d092ab2c7069712988c3e
 
 importers:
 
@@ -426,8 +425,8 @@ importers:
         specifier: ^24.12.2
         version: 24.12.4
       '@veruszsupportlib/react-native-veruszsupport':
-        specifier: link:../veruszsupportlibrary/modules/react-native-veruszsupport
-        version: link:../veruszsupportlibrary/modules/react-native-veruszsupport
+        specifier: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz
+        version: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
       array.prototype.findlast:
         specifier: ^1.2.3
         version: 1.2.5
@@ -794,9 +793,12 @@ importers:
       verusid-ts-client:
         specifier: git+https://github.com/VerusCoin/verusid-ts-client.git#3c5b0fe70f6a67154988c2ecf63b6a4579fe60cb
         version: https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/3c5b0fe70f6a67154988c2ecf63b6a4579fe60cb(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
+      veruszsupportlib:
+        specifier: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz
+        version: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz(@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0))
       veruszsupportlibrary:
-        specifier: github:iamahmedshahh/veruszsupportlibrary#cf318db10905ea53b23c9b7d69462d8508825430
-        version: veruszsupportlib@git+https://github.com/iamahmedshahh/veruszsupportlibrary.git#cf318db10905ea53b23c9b7d69462d8508825430(patch_hash=d189a30bee586c3c9ddad17effe6ea6121e17f71698d092ab2c7069712988c3e)
+        specifier: file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz
+        version: veruszsupportlib@file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz(@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0))
       vm-browserify:
         specifier: 1.1.2
         version: 1.1.2
@@ -4829,6 +4831,9 @@ packages:
     resolution: {integrity: sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==}
     hasBin: true
 
+  '@ubjs/core@0.31.0-7':
+    resolution: {integrity: sha512-a9EqpoYlMpnjvE8H8COIvM7jBDJEi6KC/7MZQakbq9RZlX7ex8wjlCQIp51HGWIRAOuxCo9MOcmm+RQ4c8cfbw==}
+
   '@ungap/structured-clone@1.3.1':
     resolution: {integrity: sha512-mUFwbeTqrVgDQxFveS+df2yfap6iuP20NAKAsBt5jDEoOTDew+zwLAOilHCeQJOVSvmgCX4ogqIrA0mnyr08yQ==}
 
@@ -4955,6 +4960,13 @@ packages:
   '@vercel/oidc@3.2.0':
     resolution: {integrity: sha512-UycprH3T6n3jH0k44NHMa7pnFHGu/N05MjojYr+Mc6I7obkoLIJujSWwin1pCvdy/eOxrI/l3uDLQsmcrOb4ug==}
     engines: {node: '>= 20'}
+
+  '@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz':
+    resolution: {integrity: sha512-X//z27gTcoiqUejqpW3wSAITs0bnApsX0cjDmNWpxPjzhOVPlGd0VlgbhyQKCqpYG8ibAeHfLi+ncSkKK+hhHg==, tarball: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz}
+    version: 1.1.0
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -5416,10 +5428,6 @@ packages:
 
   blake2b-wasm@2.4.0:
     resolution: {integrity: sha512-S1kwmW2ZhZFFFOghcx73+ZajEfKBqhP82JMssxtLVMxlaPea1p9uoLiUZ5WYyHn0KddwbLc+0vh4wR0KBNoT5w==}
-
-  blake2b-wasm@https://codeload.github.com/VerusCoin/blake2b-wasm/tar.gz/a16070b30bb8d8aee670f0c69b642913eca79998:
-    resolution: {gitHosted: true, integrity: sha512-jOINKWYADnj87e7B61KmCfW2WFw+LWch1Nx5rk8eve1lMSWf3+162citizWkS6JA82AYumj7S21YzBEgsuF44w==, tarball: https://codeload.github.com/VerusCoin/blake2b-wasm/tar.gz/a16070b30bb8d8aee670f0c69b642913eca79998}
-    version: 2.0.0
 
   blake2b@https://codeload.github.com/VerusCoin/blake2b/tar.gz/578dc12b7b68a3ce76d1e1add1402b28a5890a6b:
     resolution: {gitHosted: true, integrity: sha512-GEeL7g7d9GL3IQLvW48tQDB6tab1oLevNYhKrVRmM9IMRhHTC3E42IqX0oiFu8GOfqZ16YERHCOmCR95QFKHfQ==, tarball: https://codeload.github.com/VerusCoin/blake2b/tar.gz/578dc12b7b68a3ce76d1e1add1402b28a5890a6b}
@@ -8103,9 +8111,6 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  nanoassert@1.0.0:
-    resolution: {integrity: sha512-gNkL8hXBP0QYvOh8FNHL/WhHYMaRSjivjq3wGOnyIoq6JaCRtghFJT//nEW2Y1C86JcVzagmdQPKaJbe7quA9w==}
-
   nanoassert@1.1.0:
     resolution: {integrity: sha512-C40jQ3NzfkP53NsO8kEOFd79p4b9kDXQMwgiY1z8ZwrDZgUyom0AHwGegF4Dm99L+YoYhuaB0ceerUcXmqr1rQ==}
 
@@ -9939,6 +9944,10 @@ packages:
   unicode-segmenter@0.14.5:
     resolution: {integrity: sha512-jHGmj2LUuqDcX3hqY12Ql+uhUTn8huuxNZGq7GvtF6bSybzH3aFgedYu/KTzQStEgt1Ra2F3HxadNXsNjb3m3g==}
 
+  uniffi-bindgen-react-native@0.31.0-7:
+    resolution: {integrity: sha512-nby2kXC+heUwtbOwKbJeZoGV5K8nNxp0kxoPhx2bK98k0MT9P6DA73jnbS7AER1eh0du8bR7Eeco7LcxxEs4bA==}
+    hasBin: true
+
   unimodules-app-loader@58.0.2:
     resolution: {integrity: sha512-d7vZN9/awIwPCqzfw1qR/geJEzv3ElW0VdwXFnPw29QZYoAZI0jqXGKPZVG1vQCfhEiWJtBX/nVm1XI8wshrDg==}
 
@@ -10086,10 +10095,25 @@ packages:
     resolution: {gitHosted: true, integrity: sha512-+AqtoWgMUUt5S1HrOJWdqIYqyh215mVGHTv14yeGFW8+Bo2peUA4JU6q0v1Dk80/OaewQUJTIMgMA9iA2ETnIw==, tarball: https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/3c5b0fe70f6a67154988c2ecf63b6a4579fe60cb}
     version: 0.1.0
 
-  veruszsupportlib@git+https://github.com/iamahmedshahh/veruszsupportlibrary.git#cf318db10905ea53b23c9b7d69462d8508825430:
-    resolution: {commit: cf318db10905ea53b23c9b7d69462d8508825430, repo: https://github.com/iamahmedshahh/veruszsupportlibrary.git, type: git}
-    version: 1.0.0
-    engines: {node: '>=18'}
+  veruszsupportlib@file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz:
+    resolution: {integrity: sha512-2VGQuWieVu78FI2SWKjRpydJfvZkx3DhRqddjwdVxfDrLc6uAde/HaFYnEU74AqA5xEBMrL0XK4ggfSwiLminw==, tarball: file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz}
+    version: 2.0.0
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      '@veruszsupportlib/react-native-veruszsupport': 2.0.0
+    peerDependenciesMeta:
+      '@veruszsupportlib/react-native-veruszsupport':
+        optional: true
+
+  veruszsupportlib@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz:
+    resolution: {integrity: sha512-mGKC6DvLLlfrHV1B2/y9tfkNIF1kDeJntHgRO5t/DT/JqJMrvaHD91fpEgY1hZwa1QyHzVqZbnFoHY31x08jnQ==, tarball: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz}
+    version: 1.1.0
+    engines: {node: '>=22.12'}
+    peerDependencies:
+      '@veruszsupportlib/react-native-veruszsupport': 1.1.0
+    peerDependenciesMeta:
+      '@veruszsupportlib/react-native-veruszsupport':
+        optional: true
 
   vlq@1.0.1:
     resolution: {integrity: sha512-gQpnTgkubC6hQgdIcRdYGDSDc+SaujOdyesZQMv6JlfQee/9Mp0Qhnys6WxDWvQnL5WZdT7o2Ul187aSt0Rq+w==}
@@ -14857,6 +14881,8 @@ snapshots:
     dependencies:
       '@typescript/old': typescript@6.0.3
 
+  '@ubjs/core@0.31.0-7': {}
+
   '@ungap/structured-clone@1.3.1': {}
 
   '@unrs/resolver-binding-android-arm-eabi@1.12.2':
@@ -14930,6 +14956,13 @@ snapshots:
     optional: true
 
   '@vercel/oidc@3.2.0': {}
+
+  '@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)':
+    dependencies:
+      '@ubjs/core': 0.31.0-7
+      react: 19.3.0
+      react-native: 0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1)
+      uniffi-bindgen-react-native: 0.31.0-7
 
   '@webassemblyjs/ast@1.14.1':
     dependencies:
@@ -15527,10 +15560,6 @@ snapshots:
       nanoassert: 2.0.0
     transitivePeerDependencies:
       - react-native-b4a
-
-  blake2b-wasm@https://codeload.github.com/VerusCoin/blake2b-wasm/tar.gz/a16070b30bb8d8aee670f0c69b642913eca79998:
-    dependencies:
-      nanoassert: 1.0.0
 
   blake2b@https://codeload.github.com/VerusCoin/blake2b/tar.gz/578dc12b7b68a3ce76d1e1add1402b28a5890a6b:
     dependencies:
@@ -18859,8 +18888,6 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  nanoassert@1.0.0: {}
-
   nanoassert@1.1.0: {}
 
   nanoassert@2.0.0: {}
@@ -20789,6 +20816,8 @@ snapshots:
 
   unicode-segmenter@0.14.5: {}
 
+  uniffi-bindgen-react-native@0.31.0-7: {}
+
   unimodules-app-loader@58.0.2: {}
 
   universalify@2.0.1: {}
@@ -20954,12 +20983,21 @@ snapshots:
       - react-native-b4a
       - supports-color
 
-  veruszsupportlib@git+https://github.com/iamahmedshahh/veruszsupportlibrary.git#cf318db10905ea53b23c9b7d69462d8508825430(patch_hash=d189a30bee586c3c9ddad17effe6ea6121e17f71698d092ab2c7069712988c3e):
+  veruszsupportlib@file:../veruszsupportlibrary/veruszsupportlib-2.0.0.tgz(@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)):
     dependencies:
-      blake2b: blake2b-wasm@https://codeload.github.com/VerusCoin/blake2b-wasm/tar.gz/a16070b30bb8d8aee670f0c69b642913eca79998
-      bn.js: 5.2.5
       buffer: 6.0.3
       verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
+    optionalDependencies:
+      '@veruszsupportlib/react-native-veruszsupport': https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
+    transitivePeerDependencies:
+      - react-native-b4a
+
+  veruszsupportlib@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz(@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)):
+    dependencies:
+      buffer: 6.0.3
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
+    optionalDependencies:
+      '@veruszsupportlib/react-native-veruszsupport': https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=905e68a17bb8b11f9e555f6c8dea94e2738f48b2c6e5f88e42ed2ef4e4778019)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
     transitivePeerDependencies:
       - react-native-b4a
 
