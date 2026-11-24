@@ -32,11 +32,6 @@
           "expo-notifications",
           "expo-media-library"
         ]
-      },
-      "ios": {
-        "exclude": [
-          "@veruszsupportlib/react-native-veruszsupport"
-        ]
       }
     },
     "install": {
@@ -186,7 +181,7 @@
     "@types/invariant": "^2.2.37",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^24.12.2",
-    "@veruszsupportlib/react-native-veruszsupport": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/zsupport/veruszsupportlib-react-native-veruszsupport-1.0.0.tgz",
+    "@veruszsupportlib/react-native-veruszsupport": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz",
     "array.prototype.findlast": "^1.2.3",
     "array.prototype.findlastindex": "^1.2.6",
     "assert": "2.1.0",
@@ -310,7 +305,7 @@
     "verus-typescript-primitives": "git+https://github.com/VerusCoin/verus-typescript-primitives",
     "verusd-rpc-ts-client": "git+https://github.com/VerusCoin/verusd-rpc-ts-client",
     "verusid-ts-client": "git+https://github.com/VerusCoin/verusid-ts-client",
-    "veruszsupportlibrary": "github:iamahmedshahh/veruszsupportlibrary#cf318db10905ea53b23c9b7d69462d8508825430",
+    "veruszsupportlib": "https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz",
     "vm-browserify": "1.1.2",
     "zod": "^3.25.76"
   },
@@ -392,7 +387,7 @@
       "^cborg$": "<rootDir>/node_modules/cborg/cborg.js"
     },
     "transformIgnorePatterns": [
-      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|nanoid|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|normalize-url|react-native-svg|@sentry/.*|sentry-expo|bcp-47-match|@atproto/.*|@bsky/sdk|tlds|multiformats|uint8arrays|@ipld/.*|cborg|await-lock)"
+      "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|nanoid|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|normalize-url|react-native-svg|@sentry/.*|sentry-expo|bcp-47-match|@atproto/.*|@bsky/sdk|tlds|multiformats|uint8arrays|@ipld/.*|cborg|await-lock|veruszsupportlib|@veruszsupportlib/.*)"
     ],
     "modulePathIgnorePatterns": [
       "__tests__/.*/__mocks__",

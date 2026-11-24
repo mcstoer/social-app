@@ -2,6 +2,7 @@ import {LexError, XrpcResponseError} from '@atproto/lex'
 import {beforeAll, describe, expect, it} from '@jest/globals'
 import {i18n} from '@lingui/core'
 
+import {VerusZSupportError} from '#/lib/verus/zsupport/errors'
 import {cleanError} from '../errors'
 
 /*
@@ -115,6 +116,15 @@ describe('cleanError', () => {
 
   it('strips a leading "Error: " from a plain error', () => {
     expect(cleanError(new Error('Something broke'))).toBe('Something broke')
+  })
+
+  it('matches the Verus crypto error branch for either kind', () => {
+    expect(
+      cleanError(new VerusZSupportError('InvalidInput', 'raw input')),
+    ).toBe('Unable to complete VerusID operation')
+    expect(cleanError(new VerusZSupportError('Crypto', 'raw crypto'))).toBe(
+      'Unable to complete VerusID operation',
+    )
   })
 
   it('passes strings through', () => {

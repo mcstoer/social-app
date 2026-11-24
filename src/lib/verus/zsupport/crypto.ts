@@ -1,8 +1,10 @@
-/*
- * Stub for native implementation that may use promises.
- */
+// Buffer is needed for working with Verus-related libraries.
+// eslint-disable-next-line import-x/no-nodejs-modules
+import {Buffer} from 'buffer'
 import {type DataDescriptor} from 'verus-typescript-primitives'
+import * as zsupport from 'veruszsupportlib'
 
+import {logger} from '#/logger'
 import {
   type ChannelKeys,
   type DecryptDescriptorParams,
@@ -10,9 +12,8 @@ import {
   type DerivationKeys,
   type EncryptedPayload,
   type EncryptParams,
-  type VerusCryptoApi,
 } from './crypto.types'
-import {VerusCryptoError} from './errors'
+import {isVerusCryptoError} from './errors'
 
 export type {
   ChannelKeys,
@@ -21,32 +22,61 @@ export type {
   DerivationKeys,
   EncryptedPayload,
   EncryptParams,
-  VerusCryptoApi,
 } from './crypto.types'
-export {VerusCryptoError} from './errors'
+export {isVerusCryptoError} from './errors'
 
-const NOT_SUPPORTED = 'Verus zsupport crypto is not yet supported on native'
+async function call<T>(run: () => Promise<T>): Promise<T> {
+  try {
+    return await run()
+  } catch (e) {
+    if (!isVerusCryptoError(e)) {
+      logger.error('Unexpected Verus crypto error', {safeMessage: e})
+    }
+    throw e
+  }
+}
 
-export function zGetEncryptionAddress(
-  _params: DerivationKeys,
+export async function zGetEncryptionAddress(
+  params: DerivationKeys,
 ): Promise<ChannelKeys> {
-  return Promise.reject(new VerusCryptoError(NOT_SUPPORTED))
+  const keys = await call(() => zsupport.zGetEncryptionAddress(params))
+  return {
+    address: Buffer.from(keys.address),
+    ivk: Buffer.from(keys.ivk),
+    extfvk: Buffer.from(keys.extfvk),
+    spendingKey: keys.spendingKey ? Buffer.from(keys.spendingKey) : null,
+  }
 }
-zGetEncryptionAddress satisfies VerusCryptoApi['zGetEncryptionAddress']
 
-export function encryptData(_params: EncryptParams): Promise<EncryptedPayload> {
-  return Promise.reject(new VerusCryptoError(NOT_SUPPORTED))
+export async function encryptData({
+  address,
+  data_to_encrypt,
+  returnSsk,
+}: EncryptParams): Promise<EncryptedPayload> {
+  const payload = await call(() =>
+    zsupport.encryptData({address, data: data_to_encrypt, returnSsk}),
+  )
+  return {
+    ephemeralPublicKey: Buffer.from(payload.epk),
+    encrypted_data: Buffer.from(payload.encryptedData),
+    symmetricKey: payload.ssk ? Buffer.from(payload.ssk) : null,
+  }
 }
-encryptData satisfies VerusCryptoApi['encryptData']
 
-export function decryptData(_params: DecryptParams): Promise<Buffer> {
-  return Promise.reject(new VerusCryptoError(NOT_SUPPORTED))
+export async function decryptData({
+  ivk,
+  epk,
+  data_to_decrypt,
+  ssk,
+}: DecryptParams): Promise<Buffer> {
+  const decrypted = await call(() =>
+    zsupport.decryptData({encryptedData: data_to_decrypt, epk, ivk, ssk}),
+  )
+  return Buffer.from(decrypted)
 }
-decryptData satisfies VerusCryptoApi['decryptData']
 
 export function decryptDescriptor(
-  _params: DecryptDescriptorParams,
+  params: DecryptDescriptorParams,
 ): Promise<DataDescriptor> {
-  return Promise.reject(new VerusCryptoError(NOT_SUPPORTED))
+  return call(() => zsupport.decryptDescriptor(params))
 }
-decryptDescriptor satisfies VerusCryptoApi['decryptDescriptor']

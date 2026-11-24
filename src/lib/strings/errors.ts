@@ -2,6 +2,7 @@ import {LexError} from '@atproto/lex'
 import {t} from '@lingui/core/macro'
 
 import {isNetworkError} from '#/lib/network-error'
+import {isVerusCryptoError} from '#/lib/verus/zsupport/errors'
 import {isXrpcError} from '#/lib/xrpc-error'
 
 export {isNetworkError} from '#/lib/network-error'
@@ -81,6 +82,9 @@ export function cleanError(e: unknown): string {
     return t`Unable to resolve handle`
   }
   // VerusSky specific errors.
+  if (isVerusCryptoError(e)) {
+    return t`Unable to complete VerusID operation`
+  }
   if (str.includes('Signing request failed')) {
     return t`Unable to sign VerusID request`
   }

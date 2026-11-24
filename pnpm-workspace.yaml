@@ -61,7 +61,6 @@ patchedDependencies:
   react-native-screens@4.30.1: patches/react-native-screens@4.30.1.patch
   'react-native-svg@15.16.0': patches/react-native-svg@15.16.0.patch
   react-native@0.88.1: patches/react-native@0.88.1.patch
-  veruszsupportlib: patches/veruszsupportlib.patch
 minimumReleaseAgeExclude:
   - '@atproto/*'
   - '@atproto-labs/*'

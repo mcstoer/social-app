@@ -99,8 +99,11 @@ jest.mock('sentry-expo', () => ({
   },
 }))
 
-// Use Node's crypto, since the Verus libraries hash with it as soon as they load.
 jest.mock('crypto', () => jest.requireActual('node:crypto'))
+
+jest.mock('@veruszsupportlib/react-native-veruszsupport', () => ({
+  VerusZSupportError: {instanceOf: () => false},
+}))
 
 jest.mock('expo-application', () => ({
   nativeApplicationVersion: '1.0.0',

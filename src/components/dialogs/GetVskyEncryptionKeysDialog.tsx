@@ -99,9 +99,7 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
       if (isNetworkError(requestError)) {
         return l`Unable to contact the service. Please check your Internet connection.`
       }
-      return cleanError(
-        requestError?.toString() || l`Failed to get encryption keys`,
-      )
+      return cleanError(requestError || l`Failed to get encryption keys`)
     }
     return ''
   }
@@ -164,15 +162,15 @@ function Inner({onSuccess}: {onSuccess?: () => void}) {
       setRequest(signedRequest)
       setShowAwaitingResponse(true)
     } catch (e: unknown) {
-      const errMsg =
-        e instanceof Error ? e.toString() : `Unable to contact the service`
       logger.warn('Failed to get encryption keys', {error: e})
       if (isNetworkError(e)) {
         setLocalError(
           l`Unable to contact the service. Please check your Internet connection.`,
         )
       } else {
-        setLocalError(cleanError(errMsg))
+        setLocalError(
+          cleanError(e instanceof Error ? e : `Unable to contact the service`),
+        )
       }
     } finally {
       setIsProcessing(false)

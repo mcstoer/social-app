@@ -44,16 +44,3 @@ export interface DecryptDescriptorParams {
   ivk?: Buffer
   ssk?: Buffer
 }
-
-type MaybePromise<T> = T | Promise<T>
-
-// Web is sync and native is possibly async, so we use MaybePromise to have a
-// shared API.
-export type VerusCryptoApi = {
-  zGetEncryptionAddress(params: DerivationKeys): MaybePromise<ChannelKeys>
-  encryptData(params: EncryptParams): MaybePromise<EncryptedPayload>
-  decryptData(params: DecryptParams): MaybePromise<Buffer>
-  decryptDescriptor(
-    params: DecryptDescriptorParams,
-  ): MaybePromise<DataDescriptor>
-}
