@@ -16,10 +16,11 @@ import {
   type FeedDescriptor,
   type FeedPostSliceItem,
 } from '#/state/queries/post-feed'
+import {useAppviewClient} from '#/state/session'
 import {getItemsForFeedback} from '#/view/com/posts/PostFeed'
 import {useAnalytics} from '#/analytics'
 import {app} from '#/lexicons'
-import {useAppviewClient} from './session'
+import * as bsky from '#/types/bsky'
 
 export const FEEDBACK_FEEDS = [...PROD_FEEDS, ...STAGING_FEEDS]
 
@@ -34,10 +35,60 @@ export const THIRD_PARTY_ALLOWED_INTERACTIONS = new Set<
   'app.bsky.feed.defs#interactionQuote',
   'app.bsky.feed.defs#interactionReply',
   'app.bsky.feed.defs#interactionRepost',
+  'app.bsky.feed.defs#interactionFollow',
   // This can be inferred from pagination requests for everything except the very last page
   // so it is fine to send. It is crucial for third party algorithmic feeds to receive these.
   'app.bsky.feed.defs#interactionSeen',
 ])
+
+/**
+ * The `payload` of an `interactionUnspecced` event. This is an implicit
+ * contract with Bluesky's own feeds, like our metrics: the lexicon leaves the
+ * shape open so we can add signals without a lexicon change. Third-party feeds
+ * never receive these events (see `isInteractionAllowed`).
+ *
+ * The item is the post the action was taken on. Actions with an undo send the
+ * undo as its own type, so the feed can reverse the signal.
+ */
+export type UnspeccedInteractionPayload =
+  | {type: 'save'}
+  | {type: 'unsave'}
+  | {type: 'hide'}
+  | {type: 'blockAuthor'}
+  | {type: 'muteAuthor'}
+  | {type: 'unmuteAuthor'}
+  /** `reason` is the report option the user picked. */
+  | {type: 'report'; reason?: string}
+
+/**
+ * An `interactionUnspecced` event about `item`, the post the action was taken
+ * on.
+ */
+export function unspeccedInteraction({
+  item,
+  feedContext,
+  reqId,
+  payload,
+}: {
+  item: app.bsky.feed.defs.Interaction['item']
+  feedContext: string | undefined
+  reqId: string | undefined
+  payload: UnspeccedInteractionPayload
+}): app.bsky.feed.defs.Interaction {
+  return {
+    item,
+    event: 'app.bsky.feed.defs#interactionUnspecced',
+    feedContext,
+    reqId,
+    payload,
+  }
+}
+
+/**
+ * Where an interaction happened, sent to the feed as `viewContext`. `thread` is
+ * the thread screen opened by tapping a post in a feed.
+ */
+export type FeedFeedbackViewContext = 'feed' | 'thread'
 
 export type StateContext = {
   enabled: boolean
@@ -59,11 +110,8 @@ stateContext.displayName = 'FeedFeedbackContext'
 export function useFeedFeedback(
   feedSourceInfo: FeedSourceInfo | undefined,
   hasSession: boolean,
+  viewContext: FeedFeedbackViewContext,
 ) {
-  const ax = useAnalytics()
-  const logger = ax.logger.useChild(ax.logger.Context.FeedFeedback)
-  const client = useAppviewClient()
-
   const feed =
     !!feedSourceInfo && isFeedSourceFeedInfo(feedSourceInfo)
       ? feedSourceInfo
@@ -71,16 +119,79 @@ export function useFeedFeedback(
 
   const isDiscover = isDiscoverFeed(feed?.feedDescriptor)
   const acceptsInteractions = Boolean(isDiscover || feed?.acceptsInteractions)
-  const proxyDid = feed?.view?.did
-  const enabled =
-    Boolean(feed) && Boolean(proxyDid) && acceptsInteractions && hasSession
+  const {enabled, sendInteraction} = useFeedFeedbackCore({
+    feedUri: feed?.uri,
+    feedDid: feed?.view?.did,
+    enabled: acceptsInteractions && hasSession,
+    viewContext,
+  })
+  /** Slice item identity maps to feed (re)fetches, not individual renders. */
+  const history = useRef<WeakSet<FeedPostSliceItem>>(new WeakSet())
 
-  const queue = useRef<Set<string>>(new Set())
-  const history = useRef<
-    // Use a WeakSet so that we don't need to clear it.
-    // This assumes that referential identity of slice items maps 1:1 to feed (re)fetches.
-    WeakSet<FeedPostSliceItem | app.bsky.feed.defs.Interaction>
-  >(new WeakSet())
+  const onItemSeen = useCallback(
+    (feedItem: any) => {
+      if (!enabled) {
+        return
+      }
+      const items = getItemsForFeedback(feedItem)
+      for (const {item: postItem, feedContext, reqId} of items) {
+        if (!history.current.has(postItem)) {
+          history.current.add(postItem)
+          sendInteraction({
+            item: postItem.uri,
+            event: 'app.bsky.feed.defs#interactionSeen',
+            feedContext,
+            reqId,
+          })
+        }
+      }
+    },
+    [enabled, sendInteraction],
+  )
+
+  return useMemo(() => {
+    return {
+      enabled,
+      // pass this method to the <List> onItemSeen
+      onItemSeen,
+      // call on various events
+      // queues the event to be sent with the throttled sendToFeed call
+      sendInteraction,
+      feedDescriptor: feed?.feedDescriptor,
+      feedSourceInfo: typeof feed === 'object' ? feed : undefined,
+    }
+  }, [enabled, onItemSeen, sendInteraction, feed])
+}
+
+/** Sends feedback without requiring feed metadata or post-feed rows. */
+export function useFeedFeedbackCore({
+  feedUri,
+  feedDid: proxyDid,
+  enabled: isEnabled,
+  viewContext,
+}: {
+  feedUri: string | undefined
+  /** The generator's service DID, not the account that owns the feed record. */
+  feedDid: string | undefined
+  enabled: boolean
+  viewContext: FeedFeedbackViewContext
+}) {
+  const ax = useAnalytics()
+  const logger = ax.logger.useChild(ax.logger.Context.FeedFeedback)
+  const client = useAppviewClient()
+
+  const enabled = Boolean(isEnabled && feedUri && proxyDid)
+  const feedDescriptor: FeedDescriptor | undefined = feedUri
+    ? `feedgen|${feedUri}`
+    : undefined
+
+  /*
+   * Keyed by `toKey` so the same interaction is only sent once per batch.
+   * Re-adding a key moves it to the end, so a toggle like save, unsave, save
+   * arrives as unsave then save, and the last event is the current state.
+   */
+  const queue = useRef<Map<string, app.bsky.feed.defs.Interaction>>(new Map())
+  const history = useRef<WeakSet<app.bsky.feed.defs.Interaction>>(new WeakSet())
 
   const flushEvents = useCallback(
     (stats: AggregatedStats | null, feedDescriptor: string) => {
@@ -119,28 +230,27 @@ export function useFeedFeedback(
   const throttledFlushAggregatedStats = useMemo(
     () =>
       throttle(
-        () =>
-          flushEvents(
-            aggregatedStats.current,
-            feed?.feedDescriptor ?? 'unknown',
-          ),
+        () => flushEvents(aggregatedStats.current, feedDescriptor ?? 'unknown'),
         45e3,
         {
           leading: true, // The outer call is already throttled somewhat.
           trailing: true,
         },
       ),
-    [feed?.feedDescriptor, flushEvents],
+    [feedDescriptor, flushEvents],
   )
 
   const sendToFeedNoDelay = useCallback(() => {
-    const interactions = Array.from(queue.current).map(toInteraction)
+    const interactions = Array.from(queue.current.values(), interaction => ({
+      ...interaction,
+      viewContext,
+    }))
     queue.current.clear()
 
     const interactionsToSend = interactions.filter(
       interaction =>
         interaction.event &&
-        isInteractionAllowed(enabled, feed?.feedDescriptor, interaction.event),
+        isInteractionAllowed(enabled, feedDescriptor, interaction.event),
     )
 
     if (interactionsToSend.length === 0) {
@@ -157,7 +267,7 @@ export function useFeedFeedback(
         app.bsky.feed.sendInteractions,
         {
           interactions: interactionsToSend,
-          feed: feed?.uri as AtUriString | undefined,
+          feed: feedUri as AtUriString | undefined,
         },
         {service: `${proxyDid as DidString}#bsky_fg`},
       )
@@ -172,7 +282,15 @@ export function useFeedFeedback(
     )
     throttledFlushAggregatedStats()
     logger.debug('flushed')
-  }, [client, throttledFlushAggregatedStats, proxyDid, enabled, feed])
+  }, [
+    client,
+    throttledFlushAggregatedStats,
+    proxyDid,
+    enabled,
+    feedUri,
+    feedDescriptor,
+    viewContext,
+  ])
 
   const sendToFeed = useMemo(
     () =>
@@ -195,65 +313,97 @@ export function useFeedFeedback(
     return () => sub.remove()
   }, [enabled, sendToFeed])
 
-  const onItemSeen = useCallback(
-    (feedItem: any) => {
-      if (!enabled) {
-        return
-      }
-      const items = getItemsForFeedback(feedItem)
-      for (const {item: postItem, feedContext, reqId} of items) {
-        if (!history.current.has(postItem)) {
-          history.current.add(postItem)
-          queue.current.add(
-            toString({
-              item: postItem.uri,
-              event: 'app.bsky.feed.defs#interactionSeen',
-              feedContext,
-              reqId,
-            }),
-          )
-          sendToFeed()
-        }
-      }
-    },
-    [enabled, sendToFeed],
-  )
-
   const sendInteraction = useCallback(
     (interaction: app.bsky.feed.defs.Interaction) => {
       if (!enabled) {
         return
       }
-      logger.debug('sendInteraction', {
-        ...interaction,
-      })
       if (!history.current.has(interaction)) {
         history.current.add(interaction)
-        queue.current.add(toString(interaction))
+        enqueue(queue.current, interaction)
         sendToFeed()
       }
     },
     [enabled, sendToFeed],
   )
 
-  return useMemo(() => {
-    return {
-      enabled,
-      // pass this method to the <List> onItemSeen
-      onItemSeen,
-      // call on various events
-      // queues the event to be sent with the throttled sendToFeed call
-      sendInteraction,
-      feedDescriptor: feed?.feedDescriptor,
-      feedSourceInfo: typeof feed === 'object' ? feed : undefined,
-    }
-  }, [enabled, onItemSeen, sendInteraction, feed])
+  return {enabled, sendInteraction}
 }
 
 export const FeedFeedbackProvider = stateContext.Provider
 
 export function useFeedFeedbackContext() {
   return useContext(stateContext)
+}
+
+/**
+ * A post as it was shown in a feed. Feed items provide this, so that the
+ * controls inside them can send feed feedback about the post without it being
+ * passed down as props.
+ */
+export type FeedItem = {
+  uri: app.bsky.feed.defs.Interaction['item']
+  authorDid: string
+  feedContext: string | undefined
+  reqId: string | undefined
+  /**
+   * The repost the post was shown through, if any. Likes and reposts record it
+   * as `via`.
+   */
+  via: {uri: string; cid: string} | undefined
+}
+
+/**
+ * The `via` for a feed item shown because of `reason`: the repost, if it was
+ * shown as one.
+ */
+export function repostVia(reason: unknown): FeedItem['via'] {
+  if (
+    bsky.isType(app.bsky.feed.defs.reasonRepost, reason) &&
+    reason.uri &&
+    reason.cid
+  ) {
+    return {uri: reason.uri, cid: reason.cid}
+  }
+}
+
+const feedItemContext = createContext<FeedItem | undefined>(undefined)
+feedItemContext.displayName = 'FeedItemContext'
+
+export const FeedItemProvider = feedItemContext.Provider
+
+/**
+ * The feed item this component is inside of, with helpers that send feed
+ * feedback about it. Outside a feed item, `item` is undefined and the helpers
+ * do nothing.
+ */
+export function useFeedItemFeedback() {
+  const {sendInteraction, feedDescriptor} = useFeedFeedbackContext()
+  const item = useContext(feedItemContext)
+
+  const send = (event: app.bsky.feed.defs.Interaction['event']) => {
+    if (!item) return
+    sendInteraction({
+      item: item.uri,
+      event,
+      feedContext: item.feedContext,
+      reqId: item.reqId,
+    })
+  }
+
+  const sendUnspecced = (payload: UnspeccedInteractionPayload) => {
+    if (!item) return
+    sendInteraction(
+      unspeccedInteraction({
+        item: item.uri,
+        feedContext: item.feedContext,
+        reqId: item.reqId,
+        payload,
+      }),
+    )
+  }
+
+  return {item, feedDescriptor, send, sendUnspecced}
 }
 
 // TODO
@@ -283,19 +433,23 @@ function isInteractionAllowed(
   return THIRD_PARTY_ALLOWED_INTERACTIONS.has(interaction)
 }
 
-function toString(interaction: app.bsky.feed.defs.Interaction): string {
-  return `${interaction.item}|${interaction.event}|${
-    interaction.feedContext || ''
-  }|${interaction.reqId || ''}`
+function enqueue(
+  queue: Map<string, app.bsky.feed.defs.Interaction>,
+  interaction: app.bsky.feed.defs.Interaction,
+) {
+  const key = toKey(interaction)
+  queue.delete(key)
+  queue.set(key, interaction)
 }
 
-function toInteraction(str: string): app.bsky.feed.defs.Interaction {
-  const [item, event, feedContext, reqId] = str.split('|')
-  /*
-   * The fields come from splitting an internally-built key, so neither the
-   * at-uri nor the event token is narrowed by the compiler here.
-   */
-  return {item, event, feedContext, reqId} as app.bsky.feed.defs.Interaction
+function toKey(interaction: app.bsky.feed.defs.Interaction): string {
+  return JSON.stringify([
+    interaction.item,
+    interaction.event,
+    interaction.feedContext ?? '',
+    interaction.reqId ?? '',
+    interaction.payload ?? null,
+  ])
 }
 
 type AggregatedStats = {

@@ -4,6 +4,7 @@ import {type AgeAssuranceRedirectDialogState} from '#/components/ageAssurance/Ag
 import * as Dialog from '#/components/Dialog'
 import {type Screen} from '#/components/dialogs/EmailDialog/types'
 import {type ReportSubject} from '#/components/moderation/ReportDialog'
+import {type ReportDialogProps} from '#/components/moderation/ReportDialog/types'
 
 type Control = Dialog.DialogControlProps
 
@@ -45,7 +46,10 @@ type ControlsContext = {
     onClose?: () => void
     onSuccess?: () => void
   }>
-  reportDialogControl: StatefulControl<{subject: ReportSubject}>
+  reportDialogControl: StatefulControl<{
+    subject: ReportSubject
+    onAfterSubmit?: ReportDialogProps['onAfterSubmit']
+  }>
 }
 
 const ControlsContext = createContext<ControlsContext | null>(null)
@@ -95,6 +99,7 @@ export function Provider({children}: React.PropsWithChildren<{}>) {
   }>()
   const reportDialogControl = useStatefulDialogControl<{
     subject: ReportSubject
+    onAfterSubmit?: ReportDialogProps['onAfterSubmit']
   }>()
 
   const ctx = useMemo<ControlsContext>(
