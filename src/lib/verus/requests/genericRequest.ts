@@ -30,7 +30,7 @@ async function createGenericRequest(
     createdAt: new BN((Date.now() / 1000).toFixed(0)),
     responseURIs,
     details: ordinals,
-    appOrDelegatedID: CompactIAddressObject.fromAddress(
+    appOrDelegatorID: CompactIAddressObject.fromAddress(
       VERUSSKY_APP_ID,
       DEFAULT_CHAIN,
     ),

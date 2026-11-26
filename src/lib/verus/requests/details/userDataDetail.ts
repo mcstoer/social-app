@@ -8,7 +8,7 @@ import {
 import {generateRequestID} from '#/lib/verus/addresses'
 
 export interface UserDataRequestOptions {
-  searchDataKey: Array<{[key: string]: string}>
+  searchDataKey: Array<{[key: string]: Buffer}>
   requestedKeys?: string[]
   signer?: CompactIAddressObject
   dataType: BN

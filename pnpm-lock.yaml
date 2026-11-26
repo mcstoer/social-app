@@ -173,7 +173,7 @@ overrides:
   psl: 1.9.0
   '@types/psl': 1.1.1
   react-native-screens: 4.30.1
-  verus-typescript-primitives: git+https://github.com/VerusCoin/verus-typescript-primitives.git#72d477b836538d6c734162b2c069538122263f3b
+  verus-typescript-primitives: git+https://github.com/VerusCoin/verus-typescript-primitives.git#d5e3068021cfa83e3aae489403f4d63aad0c1a6c
 
 packageExtensionsChecksum: sha256-KbeCj471Qk3TA758q8nLPkiGCPDA0TX18iO/Coy89lo=
 
@@ -759,13 +759,13 @@ importers:
         specifier: 0.14.5
         version: 0.14.5
       verus-typescript-primitives:
-        specifier: git+https://github.com/VerusCoin/verus-typescript-primitives.git#72d477b836538d6c734162b2c069538122263f3b
-        version: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+        specifier: git+https://github.com/VerusCoin/verus-typescript-primitives.git#d5e3068021cfa83e3aae489403f4d63aad0c1a6c
+        version: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
       verusd-rpc-ts-client:
-        specifier: git+https://github.com/VerusCoin/verusd-rpc-ts-client
+        specifier: git+https://github.com/VerusCoin/verusd-rpc-ts-client.git#f3dcd552d6940422e875f8f657ee3d8e2097b37b
         version: https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/f3dcd552d6940422e875f8f657ee3d8e2097b37b(debug@4.4.3(supports-color@8.1.1))
       verusid-ts-client:
-        specifier: git+https://github.com/VerusCoin/verusid-ts-client
+        specifier: git+https://github.com/VerusCoin/verusid-ts-client.git#5d81403323c8aa9d091f895100c4b9998a295e8f
         version: https://codeload.github.com/VerusCoin/verusid-ts-client/tar.gz/5d81403323c8aa9d091f895100c4b9998a295e8f(debug@4.4.3(supports-color@8.1.1))(supports-color@8.1.1)
       veruszsupportlib:
         specifier: https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz
@@ -9872,8 +9872,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  verus-typescript-primitives@https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b:
-    resolution: {gitHosted: true, integrity: sha512-IOHdy/1V8W2bZ7snW3A0bPjhAGEZkEguz0dk6VkEO/RBEtpGLb6rK/rilyIyDHyJ4xWWudUIRFkNp+SmrN1/oA==, tarball: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b}
+  verus-typescript-primitives@https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c:
+    resolution: {gitHosted: true, integrity: sha512-ZtefuNkknVMRvs8vMDiORh5WVyQljlpxZBPAStiAjhkteomNFNfnCCL2C+O7H/LwNsqwe+rM1VSAmQRJIbMavA==, tarball: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c}
     version: 1.0.0
 
   verusd-rpc-ts-client@https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/f3dcd552d6940422e875f8f657ee3d8e2097b37b:
@@ -11260,7 +11260,7 @@ snapshots:
       safe-buffer: 5.0.1
       typeforce: 1.11.3
       varuint-bitcoin: 1.0.4
-      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
       wif: 2.0.1
     transitivePeerDependencies:
       - react-native-b4a
@@ -20407,7 +20407,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  verus-typescript-primitives@https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b:
+  verus-typescript-primitives@https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c:
     dependencies:
       base64url: 3.0.1
       bech32: 2.0.0
@@ -20422,7 +20422,7 @@ snapshots:
     dependencies:
       axios: 1.13.5(debug@4.4.3(supports-color@8.1.1))
       blake2b: https://codeload.github.com/VerusCoin/blake2b/tar.gz/578dc12b7b68a3ce76d1e1add1402b28a5890a6b
-      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
     transitivePeerDependencies:
       - debug
       - react-native-b4a
@@ -20433,7 +20433,7 @@ snapshots:
       axios: 1.13.5(debug@4.4.3(supports-color@8.1.1))
       bignumber.js: 9.1.0
       bn.js: 5.2.3
-      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
       verusd-rpc-ts-client: https://codeload.github.com/VerusCoin/verusd-rpc-ts-client/tar.gz/f3dcd552d6940422e875f8f657ee3d8e2097b37b(debug@4.4.3(supports-color@8.1.1))
     transitivePeerDependencies:
       - debug
@@ -20443,7 +20443,7 @@ snapshots:
   veruszsupportlib@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-1.1.0.tgz(@veruszsupportlib/react-native-veruszsupport@https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=f3600467b577e319e2611f9fa8c97e12826db682ce562f6e5c548439e777d4ce)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)):
     dependencies:
       buffer: 6.0.3
-      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/72d477b836538d6c734162b2c069538122263f3b
+      verus-typescript-primitives: https://codeload.github.com/VerusCoin/verus-typescript-primitives/tar.gz/d5e3068021cfa83e3aae489403f4d63aad0c1a6c
     optionalDependencies:
       '@veruszsupportlib/react-native-veruszsupport': https://github.com/iamahmedshahh/veruszsupportlibrary/releases/download/v1.1.0/veruszsupportlib-react-native-veruszsupport-1.1.0.tgz(react-native@0.88.1(patch_hash=f3600467b577e319e2611f9fa8c97e12826db682ce562f6e5c548439e777d4ce)(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.88.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.3.0)(react@19.3.0)(supports-color@8.1.1))(react@19.3.0)
     transitivePeerDependencies:

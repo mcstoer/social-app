@@ -25,7 +25,7 @@ overrides:
   'psl': '1.9.0'
   '@types/psl': '1.1.1'
   'react-native-screens': '4.30.1'
-  'verus-typescript-primitives': 'git+https://github.com/VerusCoin/verus-typescript-primitives.git#72d477b836538d6c734162b2c069538122263f3b'
+  'verus-typescript-primitives': 'git+https://github.com/VerusCoin/verus-typescript-primitives.git#d5e3068021cfa83e3aae489403f4d63aad0c1a6c'
 allowBuilds:
   '@sentry/cli': true
   '@swc/core': false

@@ -63,7 +63,10 @@ export async function generateLoginRequestOrdinals(
 
   const loginCredentials: UserDataRequestOptions = {
     searchDataKey: [
-      {[IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]: 'Login Credentials'},
+      {
+        // Use a stubbed value until it needs to be something specific for the receiving wallets.
+        [IDENTITY_CREDENTIAL_PLAINLOGIN.vdxfid]: Buffer.alloc(32),
+      },
     ],
     dataType: UserDataRequestDetails.FULL_DATA,
     requestType: UserDataRequestDetails.CREDENTIAL,
