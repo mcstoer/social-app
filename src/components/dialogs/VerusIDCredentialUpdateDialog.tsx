@@ -1,4 +1,4 @@
-import {useEffect, useRef, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {View} from 'react-native'
 import {Trans, useLingui} from '@lingui/react/macro'
 import {
@@ -79,7 +79,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
   const [password, setPassword] = useState(initialPassword || '')
   const [error, setError] = useState('')
   const [deeplinkUri, setDeeplinkUri] = useState('')
-  const requestIdRef = useRef<string>('')
+  const [requestId, setRequestId] = useState('')
 
   const {data: signingServiceInfo} = useSigningAddressQuery()
 
@@ -88,11 +88,8 @@ function Inner({initialPassword}: {initialPassword?: string}) {
     error: requestError,
     isError: isRequestError,
   } = useVerusIdRequestQuery({
-    // The refs update correctly in this case.
-    // eslint-disable-next-line react-hooks/refs
-    requestId: requestIdRef.current,
-    // eslint-disable-next-line react-hooks/refs
-    enabled: stage === Stages.AwaitingResponse && !!requestIdRef.current,
+    requestId,
+    enabled: stage === Stages.AwaitingResponse && !!requestId,
   })
 
   const uiStrings = {
@@ -217,7 +214,7 @@ function Inner({initialPassword}: {initialPassword?: string}) {
         const requestIdString = signedRequest.requestID!.toAddress()
         setDeeplinkUri(signedRequest.toWalletDeeplinkUri())
 
-        requestIdRef.current = requestIdString
+        setRequestId(requestIdString)
         setStage(Stages.AwaitingResponse)
       } else if (IS_NATIVE) {
         // Mobile implementation will be different

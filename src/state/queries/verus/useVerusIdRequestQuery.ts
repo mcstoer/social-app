@@ -62,7 +62,7 @@ export function useVerusIdRequestQuery({
     refetchInterval: query => {
       return query.state.data ? false : 1000
     },
-    staleTime: 0,
+    staleTime: query => (query.state.data ? Infinity : 0),
     retry: false,
   })
 }

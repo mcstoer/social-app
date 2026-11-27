@@ -128,18 +128,12 @@ export const LoginForm = ({
   const getIdentity = useVerusGetIdentity()
 
   const [loginUri, setLoginUri] = useState('')
-  const [loginId, setLoginId] = useState('')
-  const loginRequestRef = useRef<GenericRequest | null>(null)
+  const [loginRequest, setLoginRequest] = useState<GenericRequest | null>(null)
   const ivkRef = useRef<Buffer | null>(null)
-  /**
-   * The login request whose response was already handled. A refetch, such as
-   * on window focus, can deliver the same response again.
-   */
-  const handledLoginRequestRef = useRef<GenericRequest | null>(null)
 
   const {data: verusIdLoginResult, error: verusIdLoginError} =
     useVerusIdRequestQuery({
-      requestId: loginId,
+      requestId: loginRequest?.requestID?.toAddress() ?? '',
       enabled: isVerusIdLogin,
     })
 
@@ -185,7 +179,7 @@ export const LoginForm = ({
           identifier: fullIdent,
           password,
           authFactorToken:
-                  checkAndFormatResetCode(authFactorToken) || authFactorToken.trim(),
+            checkAndFormatResetCode(authFactorToken) || authFactorToken.trim(),
           vskySession,
         },
         'LoginForm',
@@ -404,7 +398,7 @@ export const LoginForm = ({
       setIsProcessing(true)
       setLoginUri('')
       // Stop polling the old request so its response isn't handled again.
-      setLoginId('')
+      setLoginRequest(null)
       try {
         const {ordinals, ivk} = await generateLoginRequestOrdinals()
         const signedRequest = await createAndSignGenericRequest(
@@ -413,9 +407,8 @@ export const LoginForm = ({
         )
         if (isCancelled) return
 
-        loginRequestRef.current = signedRequest
         ivkRef.current = ivk
-        setLoginId(signedRequest.requestID!.toAddress())
+        setLoginRequest(signedRequest)
         setLoginUri(signedRequest.toWalletDeeplinkUri())
         setError('')
       } catch (err) {
@@ -424,8 +417,7 @@ export const LoginForm = ({
           error: String(err),
         })
         setError(cleanError(err))
-        setLoginId('')
-        loginRequestRef.current = null
+        setLoginRequest(null)
         ivkRef.current = null
       }
       isPending = false
@@ -447,17 +439,11 @@ export const LoginForm = ({
 
   // Log in once the VerusID login response arrives.
   useEffect(() => {
-    if (!verusIdLoginResult || !loginRequestRef.current || !ivkRef.current) {
+    if (!verusIdLoginResult || !loginRequest || !ivkRef.current) {
       return
     }
-    const loginRequest = loginRequestRef.current
     const ivk = ivkRef.current
-    if (handledLoginRequestRef.current === loginRequest) {
-      return
-    }
-    handledLoginRequestRef.current = loginRequest
-    // Stop if the user switched away or a new request replaced this one.
-    const isCancelled = () => loginRequestRef.current !== loginRequest
+    let isCancelled = false
 
     const handleLoginResponse = async () => {
       setIsProcessing(true)
@@ -475,7 +461,7 @@ export const LoginForm = ({
           ivk,
         )
       } catch (err) {
-        if (isCancelled()) {
+        if (isCancelled) {
           setIsProcessing(false)
           return
         }
@@ -492,7 +478,7 @@ export const LoginForm = ({
         onAttemptFailed()
         return
       }
-      if (isCancelled()) {
+      if (isCancelled) {
         setIsProcessing(false)
         return
       }
@@ -554,9 +540,13 @@ export const LoginForm = ({
     }
 
     void handleLoginResponse()
+
+    return () => {
+      isCancelled = true
+    }
     // Only run when the response arrives, not every time onPressNext changes.
     // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, [verusIdLoginResult])
+  }, [verusIdLoginResult, loginRequest])
 
   // Switch to the manual form when the VerusID login response can't be fetched.
   useEffect(() => {
@@ -949,9 +939,8 @@ export const LoginForm = ({
                   // Clearing the request also stops a late response from logging in.
                   setIdentifier('')
                   setPassword('')
-                  loginRequestRef.current = null
                   ivkRef.current = null
-                  setLoginId('')
+                  setLoginRequest(null)
                 }
                 setIsVerusIdLogin(!isVerusIdLogin)
                 // Clear the link so that the old QR code doesn't appear briefly.
